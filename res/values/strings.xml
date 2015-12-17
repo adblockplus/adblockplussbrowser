@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Adblock Plus for SBrowser</string>
+    <string name="automatic_updates">Configure automatic updates</string>
+    <string name="manage_subscriptions">Manage subscriptions</string>
+    <string name="enabled_subscriptions">Enabled</string>
+    <string name="available_subscriptions">Available</string>
+    <string name="initialization_title">Initialization</string>
+    <string name="initialization_message">Initializing &#8230;</string>
+    <string name="enable_acceptable_ads">Enable Acceptable Ads</string>
+    <string name="last_update">Updated:</string>
+    <string name="last_update_never">never</string>
+
+</resources>

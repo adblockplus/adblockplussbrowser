@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <PreferenceScreen android:title="@string/manage_subscriptions" >
+
+        <org.adblockplus.sbrowser.contentblocker.ListedSubscriptionsPreferenceCategory
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:title="@string/enabled_subscriptions" />
+
+        <org.adblockplus.sbrowser.contentblocker.ListedSubscriptionsPreferenceCategory
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:title="@string/available_subscriptions" />
+    </PreferenceScreen>
+
+    <ListPreference
+        android:defaultValue="1"
+        android:entries="@array/download_settings"
+        android:entryValues="@array/download_settings_values"
+        android:key="@string/key_automatic_updates"
+        android:title="@string/automatic_updates" />
+
+    <!--
+      <CheckBoxPreference
+        android:defaultValue="true"
+        android:enabled="false"
+        android:key="@string/key_acceptable_ads"
+        android:title="@string/enable_acceptable_ads" />
+    -->
+
+</PreferenceScreen>

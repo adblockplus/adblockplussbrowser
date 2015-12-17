@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.filterapp1"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <!-- package="org.adblockplus.adblockplussbrowser" -->
+
+    <uses-sdk
+        android:minSdkVersion="17"
+        android:targetSdkVersion="23" />
+
+    <uses-permission android:name="com.samsung.android.sbrowser.permission.CONTENTBLOCKER" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="org.adblockplus.sbrowser.contentblocker.MainPreferences"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver android:name="org.adblockplus.sbrowser.contentblocker.ConnectivityChanged" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <meta-data
+            android:name="com.samsung.android.sbrowser.contentBlocker.interfaceVersion"
+            android:value="API_1.0" />
+
+        <service android:name="org.adblockplus.sbrowser.contentblocker.engine.EngineService" />
+
+        <!--
+    <provider android:name="org.adblockplus.sbrowser.contentblocker.ContentBlockerContentProvider"
+              android:authorities="org.adblockplus.adblockplussbrowser.contentBlocker.contentProvider"
+              android:exported="true" />
+        -->
+
+        <provider
+            android:name="org.adblockplus.sbrowser.contentblocker.ContentBlockerContentProvider"
+            android:authorities="com.example.filterapp1.contentBlocker.contentProvider"
+            android:exported="true" />
+    </application>
+
+</manifest>

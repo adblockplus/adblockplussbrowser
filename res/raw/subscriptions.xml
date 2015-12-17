@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  - This file is part of the Adblock Plus web scripts,
+  - Copyright (C) 2006-2015 Eyeo GmbH
+  -
+  - Adblock Plus is free software: you can redistribute it and/or modify
+  - it under the terms of the GNU General Public License version 3 as
+  - published by the Free Software Foundation.
+  -
+  - Adblock Plus is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - GNU General Public License for more details.
+  -
+  - You should have received a copy of the GNU General Public License
+  - along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<subscriptions>
+  <subscription title="ABP Japanese Filters (日本語)" homepage="https://code.google.com/p/adblock-plus-japanese-filter/" type="ads" prefixes="ja">
+    <variants>
+      <variant title="ABP Japanese Filters" url="http://bit.ly/11QrCfx"/>
+    </variants>
+  </subscription>
+  <subscription title="Czech List (čeština)" homepage="http://dajbych.net/adblock/" type="ads" prefixes="cs">
+    <variants>
+      <variant title="Czech List" url="http://adblock.dajbych.net/adblock.txt"/>
+    </variants>
+  </subscription>
+  <subscription title="EasyList (English)" homepage="https://easylist.adblockplus.org/" type="ads" prefixes="en">
+    <variants>
+      <variant title="EasyList" url="https://easylist-downloads.adblockplus.org/easylist.txt"/>
+    </variants>
+    <supplements>
+  <subscription title="ABPindo (Bahasa Indonesia)" homepage="http://abpindo.blogspot.com/" type="ads" prefixes="id">
+    <variants>
+      <variant title="ABPindo+EasyList" url="https://easylist-downloads.adblockplus.org/abpindo+easylist.txt" complete="true"/>
+      <variant title="ABPindo" url="https://indonesianadblockrules.googlecode.com/hg/subscriptions/abpindo.txt"/>
+    </variants>
+  </subscription>
+  <subscription title="Adblock Polska (polski)" homepage="https://www.facebook.com/adblockpl" type="ads" prefixes="pl">
+    <variants>
+      <variant title="Adblock Polska" url="https://raw.githubusercontent.com/adblockpolska/Adblock_PL_List/master/adblock_polska.txt"/>
+    </variants>
+  </subscription>
+  <subscription title="Bulgarian list (български)" homepage="http://stanev.org/abp/" type="ads" prefixes="bg">
+    <variants>
+      <variant title="Bulgarian list+EasyList" url="https://easylist-downloads.adblockplus.org/bulgarian_list+easylist.txt" complete="true"/>
+      <variant title="Bulgarian list" url="http://stanev.org/abp/adblock_bg.txt"/>
+    </variants>
+  </subscription>
+  <subscription title="EasyList China (中文)" homepage="http://abpchina.org/forum/" type="ads" prefixes="zh">
+    <variants>
+      <variant title="EasyList China+EasyList" url="https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt" complete="true"/>
+      <variant title="EasyList China" url="https://easylist-downloads.adblockplus.org/easylistchina.txt"/>
+    </variants>
+    <supplements>
+  <subscription title="CJX's Annoyance List (removes self-promotion and privacy protection, 中文)" homepage="http://abpchina.org/forum/forum.php?mod=viewthread&amp;tid=29667" type="ads" prefixes="zh">
+    <variants>
+      <variant title="CJX's Annoyance List" url="https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjx-annoyance.txt"/>
+    </variants>
+  </subscription>
+    </supplements>
+  </subscription>
+  <subscription title="EasyList Czech and Slovak (čeština, slovenčina)" homepage="http://adblock.sk/" type="ads" prefixes="cs,sk">
+    <variants>
+      <variant title="EasyList Czech and Slovak+EasyList" url="https://easylist-downloads.adblockplus.org/easylistczechslovak+easylist.txt" complete="true"/>
+      <variant title="EasyList Czech and Slovak" url="https://raw.github.com/tomasko126/easylistczechandslovak/master/filters.txt"/>
+    </variants>
+  </subscription>
+  <subscription title="EasyList Dutch (Nederlands)" homepage="https://easylist.adblockplus.org/" type="ads" prefixes="nl">
+    <variants>
+      <variant title="EasyList Dutch+EasyList" url="https://easylist-downloads.adblockplus.org/easylistdutch+easylist.txt" complete="true"/>
+      <variant title="EasyList Dutch" url="https://easylist-downloads.adblockplus.org/easylistdutch.txt"/>
+    </variants>
+  </subscription>
+  <subscription title="EasyList Germany (Deutsch)" homepage="https://easylist.adblockplus.org/" type="ads" prefixes="de">
+    <variants>
+      <variant title="EasyList Germany+EasyList" url="https://easylist-downloads.adblockplus.org/easylistgermany+easylist.txt" complete="true"/>
+      <variant title="EasyList Germany" url="https://easylist-downloads.adblockplus.org/easylistgermany.txt"/>
+    </variants>
+  </subscription>
+  <subscription title="EasyList Hebrew (עברית)" homepage="https://github.com/ABPIsrael/EasyListHebrew" type="ads" prefixes="he">
+    <variants>
+      <variant title="EasyList Hebrew+EasyList" url="https://easylist-downloads.adblockplus.org/israellist+easylist.txt" complete="true"/>
+      <variant title="EasyList Hebrew" url="https://raw.githubusercontent.com/ABPIsrael/EasyListHebrew/master/EasyListHebrew.txt"/>
+    </variants>
+  </subscription>
+  <subscription title="EasyList Italy (italiano)" homepage="https://easylist.adblockplus.org/" type="ads" prefixes="it">
+    <variants>
+      <variant title="EasyList Italy+EasyList" url="https://easylist-downloads.adblockplus.org/easylistitaly+easylist.txt" complete="true"/>
+      <variant title="EasyList Italy" url="https://easylist-downloads.adblockplus.org/easylistitaly.txt"/>
+    </variants>
+  </subscription>
+  <subscription title="EasyList Lithuania (lietuvių kalba)" homepage="http://margevicius.lt/" type="ads" prefixes="lt">
+    <variants>
+      <variant title="EasyList Lithuania+EasyList" url="https://easylist-downloads.adblockplus.org/easylistlithuania+easylist.txt" complete="true"/>
+      <variant title="EasyList Lithuania" url="http://margevicius.lt/easylistlithuania.txt"/>
+    </variants>
+  </subscription>
+  <subscription title="EasyPrivacy (privacy protection)" homepage="https://easylist.adblockplus.org/" type="ads">
+    <variants>
+      <variant title="EasyPrivacy+EasyList" url="https://easylist-downloads.adblockplus.org/easyprivacy+easylist.txt" complete="true"/>
+      <variant title="EasyPrivacy" url="https://easylist-downloads.adblockplus.org/easyprivacy.txt"/>
+    </variants>
+  </subscription>
+  <subscription title="Icelandic ABP List (íslenska)" homepage="http://adblock.gardar.net/" type="ads" prefixes="is">
+    <variants>
+      <variant title="Icelandic ABP List" url="http://adblock.gardar.net/is.abp.txt"/>
+    </variants>
+  </subscription>
+  <subscription title="Latvian List (latviešu valoda)" homepage="https://notabug.org/latvian-list/adblock-latvian" type="ads" prefixes="lv">
+    <variants>
+      <variant title="Latvian List+EasyList" url="https://easylist-downloads.adblockplus.org/latvianlist+easylist.txt" complete="true"/>
+      <variant title="Latvian List" url="https://notabug.org/latvian-list/adblock-latvian/raw/master/lists/latvian-list.txt"/>
+    </variants>
+  </subscription>
+  <subscription title="Liste AR (العربية)" homepage="https://code.google.com/p/liste-ar-adblock/" type="ads" prefixes="ar">
+    <variants>
+      <variant title="Liste AR+Liste FR+EasyList" url="https://easylist-downloads.adblockplus.org/liste_ar+liste_fr+easylist.txt" complete="true"/>
+      <variant title="Liste AR" url="https://easylist-downloads.adblockplus.org/Liste_AR.txt"/>
+    </variants>
+  </subscription>
+  <subscription title="Liste FR (français)" homepage="http://adblock-listefr.com/" type="ads" prefixes="fr">
+    <variants>
+      <variant title="Liste FR+EasyList" url="https://easylist-downloads.adblockplus.org/liste_fr+easylist.txt" complete="true"/>
+      <variant title="Liste FR" url="https://easylist-downloads.adblockplus.org/liste_fr.txt"/>
+    </variants>
+  </subscription>
+  <subscription title="ROList (românesc)" homepage="http://www.zoso.ro/rolist" type="ads" prefixes="ro">
+    <variants>
+      <variant title="ROList+EasyList" url="https://easylist-downloads.adblockplus.org/rolist+easylist.txt" complete="true"/>
+      <variant title="ROList" url="http://www.zoso.ro/pages/rolist.txt"/>
+    </variants>
+  </subscription>
+  <subscription title="RU AdList (русский, українська)" homepage="https://forums.lanik.us/viewforum.php?f=102" type="ads" prefixes="ru,uk">
+    <variants>
+      <variant title="RuAdList+EasyList" url="https://easylist-downloads.adblockplus.org/ruadlist+easylist.txt" complete="true"/>
+      <variant title="RU AdList" url="https://easylist-downloads.adblockplus.org/advblock.txt"/>
+    </variants>
+  </subscription>
+  <subscription title="void.gr (ελληνικά)" homepage="http://www.void.gr/kargig/blog/greek-adblock-plus-filter/" type="ads" prefixes="gr">
+    <variants>
+      <variant title="void.gr" url="http://www.void.gr/kargig/void-gr-filters.txt"/>
+    </variants>
+  </subscription>
+    </supplements>
+  </subscription>
+  <subscription title="Estonian filters by Gurud.ee (Eesti keel)" homepage="http://gurud.ee/" type="ads" prefixes="et">
+    <variants>
+      <variant title="Estonian filters by Gurud.ee" url="http://gurud.ee/ab.txt"/>
+    </variants>
+  </subscription>
+  <subscription title="Filtros Nauscopicos (español)" homepage="http://nauscopio.nireblog.com/cat/filtrado" type="ads" prefixes="es">
+    <variants>
+      <variant title="Filtros Nauscopicos" url="http://abp.mozilla-hispano.org/nauscopio/filtros.txt"/>
+    </variants>
+  </subscription>
+  <subscription title="hufilter (magyar)" homepage="https://github.com/szpeter80/hufilter/wiki" type="ads" prefixes="hu">
+    <variants>
+      <variant title="hufilter" url="https://raw.githubusercontent.com/szpeter80/hufilter/master/hufilter.txt"/>
+    </variants>
+  </subscription>
+  <subscription title="Peter Lowe's list (English)" homepage="http://pgl.yoyo.org/adservers/" type="ads" prefixes="en">
+    <variants>
+      <variant title="Peter Lowe's list" url="http://pgl.yoyo.org/adservers/serverlist.php?hostformat=adblockplus&amp;mimetype=plaintext"/>
+    </variants>
+  </subscription>
+  <subscription title="Schacks Adblock Plus liste (dansk)" homepage="https://henrik.schack.dk/adblock/" type="ads" prefixes="da">
+    <variants>
+      <variant title="Schacks Adblock Plus liste" url="https://adblock.dk/block.csv"/>
+    </variants>
+  </subscription>
+  <subscription title="Xfiles (italiano)" homepage="http://noads.it/" type="ads" prefixes="it">
+    <variants>
+      <variant title="Xfiles" url="http://noads.it/filtri.txt"/>
+    </variants>
+  </subscription>
+  <subscription title="Adblock Warning Removal List (removes anti-adblock warnings and other obtrusive messages)" homepage="https://easylist.adblockplus.org/" type="other">
+    <variants>
+      <variant title="Adblock Warning Removal List" url="https://easylist-downloads.adblockplus.org/antiadblockfilters.txt"/>
+    </variants>
+  </subscription>
+  <subscription title="Adware filters (blocks ads injected by adware)" homepage="https://easylist.adblockplus.org/" type="other">
+    <variants>
+      <variant title="Adware filters" url="https://easylist-downloads.adblockplus.org/adwarefilters.txt"/>
+    </variants>
+  </subscription>
+  <subscription title="I don't care about cookies (filters obtrusive EU cookie law notices)" homepage="http://www.kiboke-studio.hr/i-dont-care-about-cookies/" type="other">
+    <variants>
+      <variant title="I don't care about cookies" url="http://www.kiboke-studio.hr/i-dont-care-about-cookies/abp/"/>
+    </variants>
+  </subscription>
+  <subscription title="Malware Domains (malware protection)" homepage="http://malwaredomains.com/" type="other">
+    <variants>
+      <variant title="Malware Domains" url="https://easylist-downloads.adblockplus.org/malwaredomains_full.txt"/>
+    </variants>
+  </subscription>
+  <subscription title="Prebake (filters obtrusive EU cookie law notices)" homepage="http://prebake.eu/" type="other">
+    <variants>
+      <variant title="Prebake" url="https://raw.github.com/liamja/Prebake/master/obtrusive.txt"/>
+    </variants>
+  </subscription>
+  <subscription title="Spam404 (blocks scam sites)" homepage="http://www.spam404.com/" type="other">
+    <variants>
+      <variant title="Spam404" url="https://spam404bl.com/spam404scamlist.txt"/>
+    </variants>
+  </subscription>
+</subscriptions>
