@@ -17,6 +17,7 @@
 
 package org.adblockplus.sbrowser.contentblocker;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -57,9 +58,15 @@ public class ContentBlockerContentProvider extends ContentProvider implements
 
     try
     {
+      Log.d(TAG, "Writing filters...");
+      final File filterFile = this.engine.createAndWriteFile();
+      if (filterFile == null)
+      {
+        Log.d(TAG, "No filters written, returning NULL");
+        return null;
+      }
       Log.d(TAG, "Delivering filters...");
-      return ParcelFileDescriptor.open(this.engine.createAndWriteFile(),
-          ParcelFileDescriptor.MODE_READ_ONLY);
+      return ParcelFileDescriptor.open(filterFile, ParcelFileDescriptor.MODE_READ_ONLY);
     }
     catch (IOException e)
     {

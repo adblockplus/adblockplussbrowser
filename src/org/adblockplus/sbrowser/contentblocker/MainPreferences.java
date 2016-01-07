@@ -86,5 +86,12 @@ public class MainPreferences extends PreferenceActivity implements
     {
       this.engine.connectivityChanged();
     }
+    else if (this.getString(R.string.key_acceptable_ads).equals(key))
+    {
+      boolean enabled = sharedPreferences.getBoolean(key, true);
+      final String id = "url:" + this.engine.getPrefsDefault(Engine.SUBSCRIPTIONS_EXCEPTIONSURL);
+      Log.d(TAG, "Acceptable ads " + (enabled ? "enabled" : "disabled"));
+      this.engine.changeSubscriptionState(id, enabled);
+    }
   }
 }

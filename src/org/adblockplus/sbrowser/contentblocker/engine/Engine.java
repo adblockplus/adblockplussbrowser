@@ -68,6 +68,8 @@ public final class Engine
   public static final String ACTION_UPDATE = "com.samsung.android.sbrowser.contentBlocker.ACTION_UPDATE";
   public static final String EASYLIST_URL = "https://easylist-downloads.adblockplus.org/easylist.txt";
 
+  public static final String SUBSCRIPTIONS_EXCEPTIONSURL = "subscriptions_exceptionsurl";
+
   private static final String URL_ENCODE_CHARSET = "UTF-8";
 
   private final ReentrantLock accessLock = new ReentrantLock();
@@ -177,6 +179,7 @@ public final class Engine
     this.lock();
     try
     {
+      Log.d(TAG, "Writing filters...");
       return this.subscriptions.createAndWriteFile();
     }
     finally
@@ -188,6 +191,20 @@ public final class Engine
   public static void runOnUiThread(final Runnable runnable)
   {
     new Handler(Looper.getMainLooper()).post(runnable);
+  }
+
+  public boolean isAcceptableAdsEnabled()
+  {
+    this.lock();
+    try
+    {
+      return this.subscriptions.isSubscriptionEnabled("url:"
+          + this.getPrefsDefault(SUBSCRIPTIONS_EXCEPTIONSURL));
+    }
+    finally
+    {
+      this.unlock();
+    }
   }
 
   static Engine create(final Context context) throws IOException
@@ -213,10 +230,23 @@ public final class Engine
     engine.subscriptions = Subscriptions.initialize(engine, context.getFilesDir(),
         context.getCacheDir());
 
+    final InputStream prefsJson = context.getResources().openRawResource(R.raw.prefs);
+    try
+    {
+      engine.jsonPrefs = JSONPrefs.create(prefsJson);
+    }
+    finally
+    {
+      prefsJson.close();
+    }
+
+    Log.d(TAG, "Finished reading JSON preferences");
+
     // Check if this is a fresh start, if so: initialize bundled easylist.
     if (engine.subscriptions.wasUnitialized())
     {
       Log.d(TAG, "Subscription storage was uninitialized, initializing...");
+
       final InputStream easylistTxt = context.getResources().openRawResource(R.raw.easylist);
       try
       {
@@ -230,8 +260,23 @@ public final class Engine
       {
         easylistTxt.close();
       }
-
       Log.d(TAG, "Added and enabled bundled easylist");
+
+      final InputStream exceptionsTxt = context.getResources()
+          .openRawResource(R.raw.exceptionrules);
+      try
+      {
+        final Subscription exceptions = engine.subscriptions.add(Subscription
+            .create(engine.getPrefsDefault(SUBSCRIPTIONS_EXCEPTIONSURL))
+            .parseLines(readLines(exceptionsTxt)));
+        exceptions.putMeta(Subscription.KEY_UPDATE_TIMESTAMP, "0");
+        exceptions.setEnabled(true);
+      }
+      finally
+      {
+        exceptionsTxt.close();
+      }
+      Log.d(TAG, "Added and enabled bundled exceptionslist");
 
       int additional = 0;
       for (final Subscription sub : engine.defaultSubscriptions.createSubscriptions())
@@ -246,18 +291,6 @@ public final class Engine
       Log.d(TAG, "Added " + additional + " additional default/built-in subscriptions");
       engine.subscriptions.persistSubscriptions();
     }
-
-    final InputStream prefsJson = context.getResources().openRawResource(R.raw.prefs);
-    try
-    {
-      engine.jsonPrefs = JSONPrefs.create(prefsJson);
-    }
-    finally
-    {
-      prefsJson.close();
-    }
-
-    Log.d(TAG, "Finished reading JSON preferences");
 
     engine.handlerThread = new Thread(new EventHandler(engine));
     engine.handlerThread.setDaemon(true);
@@ -326,7 +359,7 @@ public final class Engine
     }
     else
     {
-      sb.append("4%2B");
+      sb.append("4%2B"); // "4+" URL encoded
     }
 
     return new URL(sb.toString());

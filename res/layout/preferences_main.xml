@@ -23,12 +23,12 @@
         android:key="@string/key_automatic_updates"
         android:title="@string/automatic_updates" />
 
-    <!--
-      <CheckBoxPreference
-        android:defaultValue="true"
-        android:enabled="false"
-        android:key="@string/key_acceptable_ads"
-        android:title="@string/enable_acceptable_ads" />
-    -->
+    <PreferenceCategory android:title="@string/acceptable_ads_category" >
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/key_acceptable_ads"
+            android:title="@string/enable_acceptable_ads" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

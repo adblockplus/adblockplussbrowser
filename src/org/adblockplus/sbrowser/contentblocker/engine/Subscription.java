@@ -42,11 +42,14 @@ import java.util.Map.Entry;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
+import android.util.Log;
+
 /**
  * Simple subscription representation.
  */
 final class Subscription
 {
+  private static final String TAG = Subscription.class.getSimpleName();
   public static final String KEY_TITLE = "title";
   public static final String KEY_VERSION = "version";
   public static final String KEY_FORCED_TITLE = "_title";
@@ -488,6 +491,7 @@ final class Subscription
         }
         this.filtersValid = createFilterHash(new ArrayList<String>(this.filters)).equals(
             filtersHash);
+        Log.d(TAG, "Filters valid: " + this.filtersValid);
       }
     }
     finally

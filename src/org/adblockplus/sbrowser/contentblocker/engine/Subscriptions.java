@@ -67,10 +67,15 @@ final class Subscriptions
     for (;;)
     {
       final File file = new File(this.cacheFolder, String.format("tmp-%d.txt",
-          (int) (Math.random() * 1e-6)));
+          (int) (Math.random() * 1e8)));
       if (!file.exists())
       {
-        this.writeFile(file);
+        Log.d(TAG, "Writing filters to " + file);
+        if (!this.writeFile(file))
+        {
+          file.delete();
+          return null;
+        }
         return file;
       }
     }
@@ -96,6 +101,12 @@ final class Subscriptions
     return this.subscriptions.containsKey(id);
   }
 
+  public boolean isSubscriptionEnabled(final String id)
+  {
+    final Subscription sub = this.subscriptions.get(id);
+    return sub != null && sub.isEnabled();
+  }
+
   public boolean changeSubscriptionState(final String id, final boolean enabled) throws IOException
   {
     final Subscription sub = this.subscriptions.get(id);
@@ -108,24 +119,6 @@ final class Subscriptions
         if (enabled)
         {
           this.engine.enqueueDownload(sub, true);
-        }
-
-        boolean anyEnabled = false;
-        for (final Subscription s : this.subscriptions.values())
-        {
-          anyEnabled |= s.isEnabled();
-        }
-
-        if (!anyEnabled)
-        {
-          // TODO hack, if none is selected, select easylist
-          final Subscription easylist = this.subscriptions.get("url:" + Engine.EASYLIST_URL);
-          if (easylist != null)
-          {
-            easylist.setEnabled(true);
-            easylist.serializeMetaData(this.getMetaFile(easylist));
-            this.engine.enqueueDownload(easylist, true);
-          }
         }
 
         this.engine.sendUpdateBroadcast();
@@ -175,7 +168,7 @@ final class Subscriptions
    * @param output
    * @throws IOException
    */
-  private void writeFile(final File output) throws IOException
+  private boolean writeFile(final File output) throws IOException
   {
     final HashSet<String> filters = new HashSet<String>();
     for (final Subscription s : this.subscriptions.values())
@@ -190,20 +183,27 @@ final class Subscriptions
       }
     }
 
-    final BufferedWriter w = new BufferedWriter(
-        new OutputStreamWriter(new FileOutputStream(output), "UTF-8"));
-    try
+    if (!filters.isEmpty())
     {
-      for (final String filter : filters)
+      final BufferedWriter w = new BufferedWriter(
+          new OutputStreamWriter(new FileOutputStream(output), "UTF-8"));
+      try
       {
-        w.write(filter);
-        w.write('\n');
+        Log.d(TAG, "Writing " + filters.size() + " filters");
+        w.write("[Adblock Plus 2.0]\n");
+        for (final String filter : filters)
+        {
+          w.write(filter);
+          w.write('\n');
+        }
+      }
+      finally
+      {
+        w.close();
       }
     }
-    finally
-    {
-      w.close();
-    }
+
+    return !filters.isEmpty();
   }
 
   public Subscription add(final Subscription sub)
