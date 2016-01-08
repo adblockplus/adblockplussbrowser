@@ -24,7 +24,7 @@ import org.adblockplus.sbrowser.contentblocker.engine.Engine;
 import org.adblockplus.sbrowser.contentblocker.engine.EngineService;
 import org.adblockplus.sbrowser.contentblocker.engine.SubscriptionInfo;
 
-import com.example.filterapp1.R;
+import org.adblockplus.adblockplussbrowser.R;
 
 import android.content.Context;
 import android.preference.CheckBoxPreference;

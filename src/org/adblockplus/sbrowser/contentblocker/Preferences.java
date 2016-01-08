@@ -17,7 +17,7 @@
 
 package org.adblockplus.sbrowser.contentblocker;
 
-import com.example.filterapp1.R;
+import org.adblockplus.adblockplussbrowser.R;
 
 import android.os.Bundle;
 import android.preference.PreferenceFragment;

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.filterapp1"
+    package="org.adblockplus.adblockplussbrowser"
     android:versionCode="1"
-
-    <!-- package="org.adblockplus.adblockplussbrowser" -->
     android:versionName="1.0.0" >
 
     <uses-sdk
@@ -42,15 +40,9 @@
 
         <service android:name="org.adblockplus.sbrowser.contentblocker.engine.EngineService" />
 
-        <!--
-    <provider android:name="org.adblockplus.sbrowser.contentblocker.ContentBlockerContentProvider"
-              android:authorities="org.adblockplus.adblockplussbrowser.contentBlocker.contentProvider"
-              android:exported="true" />
-        -->
-
         <provider
             android:name="org.adblockplus.sbrowser.contentblocker.ContentBlockerContentProvider"
-            android:authorities="com.example.filterapp1.contentBlocker.contentProvider"
+            android:authorities="org.adblockplus.adblockplussbrowser.contentBlocker.contentProvider"
             android:exported="true" />
     </application>
 

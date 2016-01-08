@@ -33,7 +33,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Pattern;
 
-import com.example.filterapp1.R;
+import org.adblockplus.adblockplussbrowser.R;
 
 import android.content.Context;
 import android.content.Intent;

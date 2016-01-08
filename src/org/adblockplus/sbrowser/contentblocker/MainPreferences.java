@@ -20,7 +20,7 @@ package org.adblockplus.sbrowser.contentblocker;
 import org.adblockplus.sbrowser.contentblocker.engine.Engine;
 import org.adblockplus.sbrowser.contentblocker.engine.EngineService;
 
-import com.example.filterapp1.R;
+import org.adblockplus.adblockplussbrowser.R;
 
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
