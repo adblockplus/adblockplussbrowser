@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.filterapp1"
     android:versionCode="1"
-    android:versionName="1.0" >
 
     <!-- package="org.adblockplus.adblockplussbrowser" -->
+    android:versionName="1.0.0" >
 
     <uses-sdk
         android:minSdkVersion="17"
