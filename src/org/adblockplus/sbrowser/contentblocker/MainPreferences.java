@@ -17,16 +17,26 @@
 
 package org.adblockplus.sbrowser.contentblocker;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+
 import org.adblockplus.sbrowser.contentblocker.engine.Engine;
 import org.adblockplus.sbrowser.contentblocker.engine.EngineService;
-
 import org.adblockplus.adblockplussbrowser.R;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences;
+import android.content.res.Resources.NotFoundException;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.text.Html;
 import android.util.Log;
 
 public class MainPreferences extends PreferenceActivity implements
@@ -35,6 +45,7 @@ public class MainPreferences extends PreferenceActivity implements
   private static final String TAG = MainPreferences.class.getSimpleName();
   private ProgressDialog progressDialog = null;
   private Engine engine = null;
+  private AlertDialog setupDialog = null;
 
   @Override
   public void onCreate(Bundle savedInstanceState)
@@ -67,6 +78,23 @@ public class MainPreferences extends PreferenceActivity implements
     super.onStop();
   }
 
+  private void checkSetupStatus()
+  {
+    final boolean applicationActivated = PreferenceManager.getDefaultSharedPreferences(this)
+        .getBoolean(this.getString(R.string.key_application_activated), false);
+
+    if (!applicationActivated)
+    {
+      Log.d(TAG, "Showing setup dialog");
+      this.setupDialog = new AlertDialog.Builder(this)
+          .setCancelable(false)
+          .setTitle(R.string.setup_dialog_title)
+          .setMessage(Html.fromHtml(this.readTextFile(R.raw.setup_dialog)))
+          .create();
+      this.setupDialog.show();
+    }
+  }
+
   @Override
   public void onEngineCreated(Engine engine, boolean success)
   {
@@ -76,6 +104,33 @@ public class MainPreferences extends PreferenceActivity implements
     {
       this.progressDialog.dismiss();
       this.progressDialog = null;
+
+      final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+      final String keyAaInfoShown = this.getString(R.string.key_aa_info_shown);
+      final boolean aaInfoShown = prefs.getBoolean(keyAaInfoShown, false);
+      if (!aaInfoShown)
+      {
+        AlertDialog d = new AlertDialog.Builder(this)
+            .setCancelable(false)
+            .setTitle(R.string.aa_dialog_title)
+            .setMessage(Html.fromHtml(this.readTextFile(R.raw.aa_dialog)))
+            .setNeutralButton(R.string.aa_dialog_button, new OnClickListener()
+            {
+              @Override
+              public void onClick(DialogInterface dialog, int which)
+              {
+                prefs.edit()
+                    .putBoolean(keyAaInfoShown, true)
+                    .commit();
+                MainPreferences.this.checkSetupStatus();
+              }
+            }).create();
+        d.show();
+      }
+      else
+      {
+        this.checkSetupStatus();
+      }
     }
   }
 
@@ -92,6 +147,42 @@ public class MainPreferences extends PreferenceActivity implements
       final String id = "url:" + this.engine.getPrefsDefault(Engine.SUBSCRIPTIONS_EXCEPTIONSURL);
       Log.d(TAG, "Acceptable ads " + (enabled ? "enabled" : "disabled"));
       this.engine.changeSubscriptionState(id, enabled);
+    }
+    else if (this.getString(R.string.key_application_activated).equals(key))
+    {
+      if (this.setupDialog != null)
+      {
+        this.setupDialog.dismiss();
+        this.setupDialog = null;
+      }
+    }
+  }
+
+  private String readTextFile(int id)
+  {
+    try
+    {
+      final BufferedReader r = new BufferedReader(new InputStreamReader(this.getResources()
+          .openRawResource(id), "UTF-8"));
+      try
+      {
+        final StringBuilder sb = new StringBuilder();
+        for (String line = r.readLine(); line != null; line = r.readLine())
+        {
+          sb.append(line);
+          sb.append('\n');
+        }
+        return sb.toString();
+      }
+      finally
+      {
+        r.close();
+      }
+    }
+    catch (IOException e)
+    {
+      Log.e(TAG, "Resource reading failed for: " + id, e);
+      return "...";
     }
   }
 }

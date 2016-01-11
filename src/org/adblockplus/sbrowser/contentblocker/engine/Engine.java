@@ -81,6 +81,7 @@ public final class Engine
   private Thread handlerThread;
   private Downloader downloader;
   private final Context serviceContext;
+  private boolean wasFirstRun = false;
 
   private Engine(final Context context)
   {
@@ -207,6 +208,11 @@ public final class Engine
     }
   }
 
+  public boolean wasFirstRun()
+  {
+    return this.wasFirstRun;
+  }
+
   static Engine create(final Context context) throws IOException
   {
     final Engine engine = new Engine(context);
@@ -243,6 +249,7 @@ public final class Engine
     Log.d(TAG, "Finished reading JSON preferences");
 
     // Check if this is a fresh start, if so: initialize bundled easylist.
+    engine.wasFirstRun = engine.subscriptions.wasUnitialized();
     if (engine.subscriptions.wasUnitialized())
     {
       Log.d(TAG, "Subscription storage was uninitialized, initializing...");

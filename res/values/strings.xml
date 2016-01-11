@@ -8,9 +8,12 @@
     <string name="available_subscriptions">Available</string>
     <string name="initialization_title">Initialization</string>
     <string name="initialization_message">Initializing &#8230;</string>
-    <string name="enable_acceptable_ads">Allow some nonintrusive advertising</string>
+    <string name="enable_acceptable_ads">Allow some nonintrusive ads</string>
     <string name="last_update">Updated:</string>
     <string name="last_update_never">never</string>
     <string name="acceptable_ads_category">Acceptable Ads</string>
+    <string name="aa_dialog_title">You\'re in control</string>
+    <string name="aa_dialog_button">Got it</string>
+    <string name="setup_dialog_title">Enable Adblock Plus in your SBrowser settings</string>
 
 </resources>

@@ -170,6 +170,7 @@ final class Subscriptions
    */
   private boolean writeFile(final File output) throws IOException
   {
+    // TODO verify possible concurrency issues with downloading
     final HashSet<String> filters = new HashSet<String>();
     for (final Subscription s : this.subscriptions.values())
     {

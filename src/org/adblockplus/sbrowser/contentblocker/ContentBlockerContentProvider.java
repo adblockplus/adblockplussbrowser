@@ -21,15 +21,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.adblockplus.adblockplussbrowser.R;
 import org.adblockplus.sbrowser.contentblocker.engine.Engine;
 import org.adblockplus.sbrowser.contentblocker.engine.EngineService;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class ContentBlockerContentProvider extends ContentProvider implements
@@ -44,6 +47,20 @@ public class ContentBlockerContentProvider extends ContentProvider implements
     // As of SBC interface v1.4 we return `null` here to signal that we do not
     // use encryption
     return null;
+  }
+
+  private void setApplicationActivated()
+  {
+    final SharedPreferences prefs = PreferenceManager
+        .getDefaultSharedPreferences(this.getContext());
+    final String key = this.getContext().getString(R.string.key_application_activated);
+    final boolean applicationActived = prefs.getBoolean(key, false);
+    if (!applicationActived)
+    {
+      prefs.edit()
+          .putBoolean(key, true)
+          .commit();
+    }
   }
 
   @Override
@@ -66,6 +83,7 @@ public class ContentBlockerContentProvider extends ContentProvider implements
         return null;
       }
       Log.d(TAG, "Delivering filters...");
+      this.setApplicationActivated();
       return ParcelFileDescriptor.open(filterFile, ParcelFileDescriptor.MODE_READ_ONLY);
     }
     catch (IOException e)
