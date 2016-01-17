@@ -50,6 +50,7 @@ public final class Engine
 {
   private static final String TAG = Engine.class.getSimpleName();
 
+  // TODO make use of this regex's
   public static final Pattern RE_SUBSCRIPTION_HEADER = Pattern.compile(
       "\\[Adblock(?:\\s*Plus\\s*([\\d\\.]+)?)?\\]", Pattern.CASE_INSENSITIVE);
   public static final Pattern RE_FILTER_META = Pattern.compile("^\\s*!\\s*(\\w+)\\s*:\\s*(.*)");
@@ -71,6 +72,15 @@ public final class Engine
   public static final String SUBSCRIPTIONS_EXCEPTIONSURL = "subscriptions_exceptionsurl";
 
   private static final String URL_ENCODE_CHARSET = "UTF-8";
+
+  // The value below specifies an interval of [x, 2*x[, where x =
+  // INITIAL_UPDATE_CHECK_DELAY_SECONDS
+  private static final long INITIAL_UPDATE_CHECK_DELAY_SECONDS = 5;
+  private static final long UPDATE_CHECK_INTERVAL_MINUTES = 30;
+  private static final long BROADCAST_COMBINATION_DELAY_MILLIS = 2500;
+
+  private static final long MILLIS_PER_SECOND = 1000;
+  private static final long MILLIS_PER_MINUTE = 60 * MILLIS_PER_SECOND;
 
   private final ReentrantLock accessLock = new ReentrantLock();
   private DefaultSubscriptions defaultSubscriptions;
@@ -392,12 +402,13 @@ public final class Engine
     {
       Log.d(TAG, "Handler thread started");
       boolean interrupted = false;
-      boolean checked = false;
+      long nextUpdateCheck = System.currentTimeMillis()
+          + (long) ((1 + Math.random()) * INITIAL_UPDATE_CHECK_DELAY_SECONDS * MILLIS_PER_SECOND);
       while (!interrupted)
       {
         try
         {
-          final EngineEvent event = this.engine.engineEvents.poll(10, TimeUnit.SECONDS);
+          final EngineEvent event = this.engine.engineEvents.poll(100, TimeUnit.MILLISECONDS);
           engine.lock();
           try
           {
@@ -426,9 +437,11 @@ public final class Engine
                   break;
               }
             }
-            else if (!checked)
+
+            if (System.currentTimeMillis() > nextUpdateCheck)
             {
-              checked = true;
+              nextUpdateCheck = System.currentTimeMillis() + UPDATE_CHECK_INTERVAL_MINUTES * MILLIS_PER_MINUTE;
+
               this.engine.subscriptions.checkForUpdates();
             }
           }
