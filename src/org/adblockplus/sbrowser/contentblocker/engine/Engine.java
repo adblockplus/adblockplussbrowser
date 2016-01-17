@@ -470,7 +470,7 @@ public final class Engine
             if (currentTime > this.engine.nextUpdateBroadcast)
             {
               this.engine.nextUpdateBroadcast = Long.MAX_VALUE;
-
+              Log.d(TAG, "Sending update broadcast");
               this.engine.sendUpdateBroadcast();
             }
           }
