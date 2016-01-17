@@ -80,7 +80,7 @@ public class MainPreferences extends PreferenceActivity implements
     final boolean applicationActivated = PreferenceManager.getDefaultSharedPreferences(this)
         .getBoolean(this.getString(R.string.key_application_activated), false);
 
-    if (applicationActivated)
+    if (!applicationActivated)
     {
       Log.d(TAG, "Showing setup dialog");
       this.setupDialog = new AlertDialog.Builder(this)
