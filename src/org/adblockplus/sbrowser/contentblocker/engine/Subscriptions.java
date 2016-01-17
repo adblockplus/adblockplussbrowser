@@ -121,7 +121,7 @@ final class Subscriptions
           this.engine.enqueueDownload(sub, true);
         }
 
-        this.engine.sendUpdateBroadcast();
+        this.engine.requestUpdateBroadcast();
         return true;
       }
     }
@@ -282,7 +282,7 @@ final class Subscriptions
       if (sub.updateSubscription(responseCode, text, httpHeaders, this.getMetaFile(sub),
           this.getFiltersFile(sub)))
       {
-        this.engine.sendUpdateBroadcast();
+        this.engine.requestUpdateBroadcast();
       }
     }
   }

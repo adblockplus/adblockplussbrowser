@@ -92,6 +92,7 @@ public final class Engine
   private Downloader downloader;
   private final Context serviceContext;
   private boolean wasFirstRun = false;
+  private long nextUpdateBroadcast = Long.MAX_VALUE;
 
   private Engine(final Context context)
   {
@@ -118,12 +119,32 @@ public final class Engine
     this.accessLock.unlock();
   }
 
-  void sendUpdateBroadcast()
+  void requestUpdateBroadcast()
   {
-    final Intent intent = new Intent();
-    intent.setAction(ACTION_UPDATE);
-    intent.setData(Uri.parse("package:" + this.serviceContext.getPackageName()));
-    this.serviceContext.sendBroadcast(intent);
+    this.lock();
+    try
+    {
+      this.nextUpdateBroadcast = System.currentTimeMillis() + BROADCAST_COMBINATION_DELAY_MILLIS;
+    }
+    finally
+    {
+      this.unlock();
+    }
+  }
+
+  private void sendUpdateBroadcast()
+  {
+    runOnUiThread(new Runnable()
+    {
+      @Override
+      public void run()
+      {
+        final Intent intent = new Intent();
+        intent.setAction(ACTION_UPDATE);
+        intent.setData(Uri.parse("package:" + Engine.this.serviceContext.getPackageName()));
+        Engine.this.serviceContext.sendBroadcast(intent);
+      }
+    });
   }
 
   boolean canUseInternet()
@@ -438,11 +459,19 @@ public final class Engine
               }
             }
 
-            if (System.currentTimeMillis() > nextUpdateCheck)
+            final long currentTime = System.currentTimeMillis();
+            if (currentTime > nextUpdateCheck)
             {
-              nextUpdateCheck = System.currentTimeMillis() + UPDATE_CHECK_INTERVAL_MINUTES * MILLIS_PER_MINUTE;
+              nextUpdateCheck = currentTime + UPDATE_CHECK_INTERVAL_MINUTES * MILLIS_PER_MINUTE;
 
               this.engine.subscriptions.checkForUpdates();
+            }
+
+            if (currentTime > this.engine.nextUpdateBroadcast)
+            {
+              this.engine.nextUpdateBroadcast = Long.MAX_VALUE;
+
+              this.engine.sendUpdateBroadcast();
             }
           }
           finally
