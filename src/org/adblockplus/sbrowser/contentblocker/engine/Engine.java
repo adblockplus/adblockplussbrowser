@@ -38,6 +38,7 @@ import org.adblockplus.adblockplussbrowser.R;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -72,6 +73,7 @@ public final class Engine
   public static final String SUBSCRIPTIONS_EXCEPTIONSURL = "subscriptions_exceptionsurl";
 
   private static final String URL_ENCODE_CHARSET = "UTF-8";
+  private static final String PREFS_KEY_PREVIOUS_VERSION = "key_previous_version";
 
   // The value below specifies an interval of [x, 2*x[, where x =
   // INITIAL_UPDATE_CHECK_DELAY_SECONDS
@@ -249,9 +251,37 @@ public final class Engine
     return this.wasFirstRun;
   }
 
+  private void migrateFromPreviousVersion(final Context context)
+  {
+    try
+    {
+      final int versionCode = context.getPackageManager().getPackageInfo(context.getPackageName(),
+          0).versionCode;
+      final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+      int previous = prefs.getInt(PREFS_KEY_PREVIOUS_VERSION, 0);
+      if (versionCode > previous)
+      {
+        if (previous > 0)
+        {
+          // We can do possible migration stuff here
+          // Currently we only persist the new version code
+        }
+        prefs.edit().putInt(PREFS_KEY_PREVIOUS_VERSION, versionCode).commit();
+      }
+    }
+    catch (final Throwable t)
+    {
+      Log.e(TAG, "Failed on migration, please clear all application data", t);
+    }
+  }
+
   static Engine create(final Context context) throws IOException
   {
     final Engine engine = new Engine(context);
+
+    // Migration data from previous version (if needed)
+    engine.migrateFromPreviousVersion(context);
+    Log.d(TAG, "Migration done");
 
     engine.appInfo = AppInfo.create(context);
 
