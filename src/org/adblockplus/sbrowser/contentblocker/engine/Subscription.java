@@ -287,7 +287,15 @@ final class Subscription
 
   public static Subscription create(final String urlString) throws IOException
   {
-    return new Subscription(new URL(urlString));
+    try
+    {
+      return new Subscription(new URL(urlString));
+    }
+    catch (final IOException e)
+    {
+      Log.d(TAG, "Creation failed for: '" + urlString + "'");
+      throw e;
+    }
   }
 
   /**

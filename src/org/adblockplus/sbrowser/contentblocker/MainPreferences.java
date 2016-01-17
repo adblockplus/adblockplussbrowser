@@ -20,19 +20,16 @@ package org.adblockplus.sbrowser.contentblocker;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 
 import org.adblockplus.sbrowser.contentblocker.engine.Engine;
 import org.adblockplus.sbrowser.contentblocker.engine.EngineService;
 import org.adblockplus.adblockplussbrowser.R;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences;
-import android.content.res.Resources.NotFoundException;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
@@ -83,7 +80,7 @@ public class MainPreferences extends PreferenceActivity implements
     final boolean applicationActivated = PreferenceManager.getDefaultSharedPreferences(this)
         .getBoolean(this.getString(R.string.key_application_activated), false);
 
-    if (!applicationActivated)
+    if (applicationActivated)
     {
       Log.d(TAG, "Showing setup dialog");
       this.setupDialog = new AlertDialog.Builder(this)

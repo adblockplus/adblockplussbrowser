@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-final class DefaultSubscriptionInfo implements Comparable<DefaultSubscriptionInfo>
+public final class DefaultSubscriptionInfo implements Comparable<DefaultSubscriptionInfo>
 {
   private final static String KEY_TITLE = "title";
   private final static String KEY_URL = "url";

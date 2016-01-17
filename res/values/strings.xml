@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Adblock Plus for SBrowser</string>
+    <string name="app_name">Adblock Plus for Samsung Browser</string>
     <string name="automatic_updates">Configure automatic updates</string>
-    <string name="manage_subscriptions">Manage your filter lists</string>
-    <string name="enabled_subscriptions">Enabled</string>
-    <string name="available_subscriptions">Available</string>
+    <string name="manage_subscriptions">Configure your filter lists</string>
+    <string name="manage_subscriptions_summary">Change ad blocking languages</string>
+    <string name="more_blocking">More blocking options</string>
+    <string name="more_blocking_category">Other filter lists</string>
+    <string name="more_blocking_summary">Disable tracking and malware sites</string>
+    <!-- <string name="more_blocking_summary">Disable tracking and malware sites or add custom filter lists</string>  -->
+    <string name="enabled_subscriptions">Active for websites in &#8230;</string>
+    <string name="available_subscriptions">Other Languages</string>
     <string name="initialization_title">Initialization</string>
     <string name="initialization_message">Initializing &#8230;</string>
     <string name="enable_acceptable_ads">Allow some nonintrusive ads</string>

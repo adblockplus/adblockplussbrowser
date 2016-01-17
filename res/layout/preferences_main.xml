@@ -3,7 +3,9 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-    <PreferenceScreen android:title="@string/manage_subscriptions" >
+    <PreferenceScreen
+        android:summary="@string/manage_subscriptions_summary"
+        android:title="@string/manage_subscriptions" >
 
         <org.adblockplus.sbrowser.contentblocker.ListedSubscriptionsPreferenceCategory
             android:layout_width="fill_parent"
@@ -14,6 +16,16 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:title="@string/available_subscriptions" />
+    </PreferenceScreen>
+
+    <PreferenceScreen
+        android:summary="@string/more_blocking_summary"
+        android:title="@string/more_blocking" >
+
+        <org.adblockplus.sbrowser.contentblocker.MoreBlockingPreferenceCategory
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:title="@string/more_blocking_category" />
     </PreferenceScreen>
 
     <ListPreference

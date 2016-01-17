@@ -73,7 +73,7 @@ final class DefaultSubscriptions
     final ArrayList<Subscription> subs = new ArrayList<Subscription>();
     for (DefaultSubscriptionInfo info : this.linearSubscriptions)
     {
-      if (info.isComplete())
+      if (!info.getUrl().isEmpty() && (info.isComplete() || "other".equalsIgnoreCase(info.getType())))
       {
         final Subscription sub = Subscription.create(info.getUrl());
         sub.putMeta(Subscription.KEY_TITLE, info.getTitle());
@@ -83,12 +83,12 @@ final class DefaultSubscriptions
     return subs;
   }
 
-  public DefaultSubscriptionInfo getForUrl(String url)
+  public DefaultSubscriptionInfo getForUrl(final String url)
   {
     return this.urlMap.get(url);
   }
 
-  public DefaultSubscriptionInfo getForUrl(URL url)
+  public DefaultSubscriptionInfo getForUrl(final URL url)
   {
     return url != null ? this.getForUrl(url.toString()) : null;
   }

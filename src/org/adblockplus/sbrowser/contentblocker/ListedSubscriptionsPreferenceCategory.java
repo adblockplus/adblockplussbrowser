@@ -18,14 +18,17 @@
 package org.adblockplus.sbrowser.contentblocker;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
+import org.adblockplus.sbrowser.contentblocker.engine.DefaultSubscriptionInfo;
 import org.adblockplus.sbrowser.contentblocker.engine.Engine;
 import org.adblockplus.sbrowser.contentblocker.engine.EngineService;
 import org.adblockplus.sbrowser.contentblocker.engine.SubscriptionInfo;
-
 import org.adblockplus.adblockplussbrowser.R;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
@@ -36,24 +39,41 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
+@SuppressLint("DefaultLocale")
 public class ListedSubscriptionsPreferenceCategory extends PreferenceCategory implements
     EngineService.OnEngineCreatedCallback, OnPreferenceChangeListener
 {
   private Engine engine = null;
   private boolean isEnabledView = false;
 
-  public ListedSubscriptionsPreferenceCategory(Context context)
+  private static final String[] LANGUAGE_TRANSLATIONS =
+  {
+      "id", "Bahasa Indonesia",
+      "he", "עברית"
+  };
+
+  private static final HashMap<String, String> LANGUAGE_TRANSLATION_MAP = new HashMap<String, String>();
+
+  static
+  {
+    for (int i = 0; i < LANGUAGE_TRANSLATIONS.length; i += 2)
+    {
+      LANGUAGE_TRANSLATION_MAP.put(LANGUAGE_TRANSLATIONS[i], LANGUAGE_TRANSLATIONS[i + 1]);
+    }
+  }
+
+  public ListedSubscriptionsPreferenceCategory(final Context context)
   {
     super(context);
   }
 
-  public ListedSubscriptionsPreferenceCategory(Context context, AttributeSet attrs)
+  public ListedSubscriptionsPreferenceCategory(final Context context, final AttributeSet attrs)
   {
     super(context, attrs);
   }
 
   @Override
-  protected View onCreateView(ViewGroup parent)
+  protected View onCreateView(final ViewGroup parent)
   {
     return super.onCreateView(parent);
   }
@@ -66,10 +86,20 @@ public class ListedSubscriptionsPreferenceCategory extends PreferenceCategory im
   }
 
   @Override
-  public void onEngineCreated(Engine engine, boolean success)
+  public void onEngineCreated(final Engine engine, final boolean success)
   {
     this.engine = engine;
     this.isEnabledView = this.getTitleRes() == R.string.enabled_subscriptions;
+
+    final HashMap<String, Locale> localeMap = new HashMap<String, Locale>();
+    for (final Locale l : Locale.getAvailableLocales())
+    {
+      final String lang = l.getLanguage();
+      if (!lang.isEmpty())
+      {
+        localeMap.put(lang.toLowerCase(), l);
+      }
+    }
 
     if (success)
     {
@@ -84,32 +114,70 @@ public class ListedSubscriptionsPreferenceCategory extends PreferenceCategory im
           switch (sub.getType())
           {
             case ADS:
-            case OTHER:
-            case CUSTOM:
-              final CheckBoxPreference cbp = new CheckBoxPreference(this.getContext());
-              if (this.isEnabledView)
+              final DefaultSubscriptionInfo info = engine.getDefaultSubscriptionInfoForUrl(sub
+                  .getUrl());
+              if (info != null && !info.getPrefixes().isEmpty())
               {
+                final CheckBoxPreference cbp = new CheckBoxPreference(this.getContext());
+                if (this.isEnabledView)
+                {
+                  final StringBuilder sb = new StringBuilder();
+                  sb.append(this.getContext().getString(R.string.last_update));
+                  sb.append(' ');
+                  final long timestamp = sub.getLastUpdateTime();
+                  if (timestamp > 0)
+                  {
+                    sb.append(DateUtils.formatDateTime(this.getContext(), timestamp,
+                        DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME));
+                  }
+                  else
+                  {
+                    sb.append(this.getContext().getString(R.string.last_update_never));
+                  }
+                  cbp.setSummary(sb.toString());
+                }
+
+                cbp.setTitle(sub.getTitle());
+                final String[] prefixes = info.getPrefixes().split(",");
                 final StringBuilder sb = new StringBuilder();
-                sb.append(this.getContext().getString(R.string.last_update));
-                sb.append(' ');
-                final long timestamp = sub.getLastUpdateTime();
-                if (timestamp > 0)
+                for (String p : prefixes)
                 {
-                  sb.append(DateUtils.formatDateTime(this.getContext(), timestamp,
-                      DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME));
+                  final Locale loc = localeMap.get(p.trim().toLowerCase());
+                  if (loc != null)
+                  {
+                    if (sb.length() > 0)
+                    {
+                      sb.append(", ");
+                    }
+                    sb.append(loc.getDisplayLanguage(loc));
+                  }
+                  else
+                  {
+                    final String name = LANGUAGE_TRANSLATION_MAP.get(p.trim().toLowerCase());
+                    {
+                      if (name != null)
+                      {
+                        if (sb.length() > 0)
+                        {
+                          sb.append(", ");
+                        }
+                        sb.append(name);
+                      }
+                    }
+                  }
                 }
-                else
+
+                if (sb.length() > 0)
                 {
-                  sb.append(this.getContext().getString(R.string.last_update_never));
+                  cbp.setTitle(sb.toString());
                 }
-                cbp.setSummary(sb.toString());
+
+                cbp.setChecked(sub.isEnabled());
+                cbp.setPersistent(false);
+                cbp.setKey(sub.getId());
+                cbp.setOnPreferenceChangeListener(this);
+                this.addPreference(cbp);
               }
-              cbp.setTitle(sub.getTitle());
-              cbp.setChecked(sub.isEnabled());
-              cbp.setPersistent(false);
-              cbp.setKey(sub.getId());
-              cbp.setOnPreferenceChangeListener(this);
-              this.addPreference(cbp);
               break;
             default:
               break;

@@ -62,8 +62,8 @@ public final class Engine
   public static final Pattern RE_FILTER_CSSPROPERTY = Pattern
       .compile("\\[\\-abp\\-properties=([\"'])([^\"']+)\\1\\]");
 
-  public static final String USER_FILTERS_TITLE = "filters";
-  public static final String USER_EXCEPTIONS_TITLE = "exceptions";
+  public static final String USER_FILTERS_TITLE = "__filters";
+  public static final String USER_EXCEPTIONS_TITLE = "__exceptions";
 
   public static final String ACTION_UPDATE = "com.samsung.android.sbrowser.contentBlocker.ACTION_UPDATE";
   public static final String EASYLIST_URL = "https://easylist-downloads.adblockplus.org/easylist.txt";
@@ -206,6 +206,11 @@ public final class Engine
     {
       this.unlock();
     }
+  }
+
+  public DefaultSubscriptionInfo getDefaultSubscriptionInfoForUrl(final String url)
+  {
+    return this.defaultSubscriptions.getForUrl(url);
   }
 
   public boolean wasFirstRun()
@@ -514,6 +519,12 @@ public final class Engine
       {
         headers.put("If-Modified-Since", lastModified);
       }
+      final String etag = sub.getMeta(Subscription.KEY_HTTP_ETAG);
+      if (etag != null)
+      {
+        headers.put("If-None-Match", etag);
+      }
+      Log.d(TAG, headers.toString());
       this.downloader.enqueueDownload(this.createDownloadURL(sub), sub.getId(), headers);
     }
   }

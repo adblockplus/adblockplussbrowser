@@ -35,15 +35,16 @@ public class SubscriptionInfo implements Comparable<SubscriptionInfo>
 
   private final Type type;
   private final String id;
+  private final String url;
   private String title;
   private boolean enabled = false;
   private long lastUpdate;
 
-  SubscriptionInfo(final Type type, final String id, final String title, final boolean enabled,
-      final long lastUpdate)
+  SubscriptionInfo(final Type type, final String id, final String url, final String title, final boolean enabled, final long lastUpdate)
   {
     this.type = type;
     this.id = id;
+    this.url = url;
     this.title = title;
     this.enabled = enabled;
     this.lastUpdate = lastUpdate;
@@ -69,12 +70,17 @@ public class SubscriptionInfo implements Comparable<SubscriptionInfo>
     return this.title;
   }
 
+  public String getUrl()
+  {
+    return this.url;
+  }
+
   public long getLastUpdateTime()
   {
     return this.lastUpdate;
   }
 
-  void updateWith(Subscription subscription)
+  void updateWith(final Subscription subscription)
   {
     if (this.id.equals(subscription.getId()))
     {
@@ -135,13 +141,14 @@ public class SubscriptionInfo implements Comparable<SubscriptionInfo>
 
     return new SubscriptionInfo(type,
         subscription.getId(),
+        url,
         title,
         subscription.isEnabled(),
         subscription.getLastUpdateTimestamp());
   }
 
   @Override
-  public int compareTo(SubscriptionInfo another)
+  public int compareTo(final SubscriptionInfo another)
   {
     return this.getTitle().compareTo(another.getTitle());
   }
