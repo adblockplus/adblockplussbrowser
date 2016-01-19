@@ -124,14 +124,14 @@ public final class Engine
     this.accessLock.unlock();
   }
 
-  public boolean openSBrowserSettings()
+  public static boolean openSBrowserSettings(final Context activityContext)
   {
     final Intent intent = new Intent(ACTION_OPEN_SETTINGS);
-    final List<ResolveInfo> list = this.serviceContext.getPackageManager()
+    final List<ResolveInfo> list = activityContext.getPackageManager()
         .queryIntentActivities(intent, 0);
     if (list.size() > 0)
     {
-      this.serviceContext.startActivity(intent);
+      activityContext.startActivity(intent);
     }
     return list.size() > 0;
   }

@@ -87,6 +87,14 @@ public class MainPreferences extends PreferenceActivity implements
           .setCancelable(false)
           .setTitle(R.string.setup_dialog_title)
           .setMessage(Html.fromHtml(this.readTextFile(R.raw.setup_dialog)))
+          .setNeutralButton(R.string.setup_dialog_button, new OnClickListener()
+          {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+              Engine.openSBrowserSettings(MainPreferences.this);
+            }
+          })
           .create();
       this.setupDialog.show();
     }
