@@ -82,8 +82,10 @@ public final class Engine
   private static final long UPDATE_CHECK_INTERVAL_MINUTES = 30;
   private static final long BROADCAST_COMBINATION_DELAY_MILLIS = 2500;
 
-  private static final long MILLIS_PER_SECOND = 1000;
-  private static final long MILLIS_PER_MINUTE = 60 * MILLIS_PER_SECOND;
+  public static final long MILLIS_PER_SECOND = 1000;
+  public static final long MILLIS_PER_MINUTE = 60 * MILLIS_PER_SECOND;
+  public static final long MILLIS_PER_HOUR = 60 * MILLIS_PER_MINUTE;
+  public static final long MILLIS_PER_DAY = 24 * MILLIS_PER_HOUR;
 
   private final ReentrantLock accessLock = new ReentrantLock();
   private DefaultSubscriptions defaultSubscriptions;

@@ -62,16 +62,14 @@ final class Subscription
   public static final String KEY_HAS_FILTERS = "_has_filters";
   public static final String KEY_META_HASH = "_meta_hash";
 
-  public static final long MILLIS_PER_HOUR = 1000L * 60 * 60;
-  public static final long MILLIS_PER_DAY = MILLIS_PER_HOUR * 24;
-
-  public static final long MINIMAL_DOWNLOAD_INTERVAL = MILLIS_PER_HOUR / 4;
-  public static final long DOWNLOAD_RETRY_INTERVAL = MILLIS_PER_HOUR;
+  public static final long MINIMAL_DOWNLOAD_INTERVAL = Engine.MILLIS_PER_HOUR / 4;
+  public static final long DOWNLOAD_RETRY_INTERVAL = Engine.MILLIS_PER_HOUR;
 
   private static final HashSet<String> ALLOWED_META_KEYS = new HashSet<String>();
   private static final Locale LOCALE_EN = Locale.ENGLISH;
 
-  private final long updateInterval = (long) (MILLIS_PER_DAY * 4.5 + Math.random());
+  private final long updateInterval = Engine.MILLIS_PER_DAY
+      + (long) (Engine.MILLIS_PER_HOUR * 8. * Math.random());
 
   /**
    * List of meta keys that are allowed to import from a downloaded
