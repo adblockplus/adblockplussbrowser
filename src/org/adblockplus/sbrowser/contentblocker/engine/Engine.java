@@ -38,6 +38,7 @@ import org.adblockplus.adblockplussbrowser.R;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ResolveInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -66,6 +67,7 @@ public final class Engine
   public static final String USER_FILTERS_TITLE = "__filters";
   public static final String USER_EXCEPTIONS_TITLE = "__exceptions";
 
+  public static final String ACTION_OPEN_SETTINGS = "com.samsung.android.sbrowser.contentBlocker.ACTION_SETTING";
   public static final String ACTION_UPDATE = "com.samsung.android.sbrowser.contentBlocker.ACTION_UPDATE";
   public static final String EASYLIST_URL = "https://easylist-downloads.adblockplus.org/easylist.txt";
 
@@ -118,6 +120,18 @@ public final class Engine
   void unlock()
   {
     this.accessLock.unlock();
+  }
+
+  public boolean openSBrowserSettings()
+  {
+    final Intent intent = new Intent(ACTION_OPEN_SETTINGS);
+    final List<ResolveInfo> list = this.serviceContext.getPackageManager()
+        .queryIntentActivities(intent, 0);
+    if (list.size() > 0)
+    {
+      this.serviceContext.startActivity(intent);
+    }
+    return list.size() > 0;
   }
 
   void requestUpdateBroadcast()
