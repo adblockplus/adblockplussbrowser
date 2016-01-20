@@ -71,11 +71,7 @@ final class Subscriptions
       if (!file.exists())
       {
         Log.d(TAG, "Writing filters to " + file);
-        if (!this.writeFile(file))
-        {
-          file.delete();
-          return null;
-        }
+        this.writeFile(file);
         return file;
       }
     }
@@ -168,7 +164,7 @@ final class Subscriptions
    * @param output
    * @throws IOException
    */
-  private boolean writeFile(final File output) throws IOException
+  private void writeFile(final File output) throws IOException
   {
     final HashSet<String> filters = new HashSet<String>();
     for (final Subscription s : this.subscriptions.values())
@@ -183,27 +179,23 @@ final class Subscriptions
       }
     }
 
-    if (!filters.isEmpty())
+    final BufferedWriter w = new BufferedWriter(
+        new OutputStreamWriter(new FileOutputStream(output), "UTF-8"));
+    try
     {
-      final BufferedWriter w = new BufferedWriter(
-          new OutputStreamWriter(new FileOutputStream(output), "UTF-8"));
-      try
+      Log.d(TAG, "Writing " + filters.size() + " filters");
+      w.write("[Adblock Plus 2.0]\n");
+      w.write("! This file was automatically created.\n");
+      for (final String filter : filters)
       {
-        Log.d(TAG, "Writing " + filters.size() + " filters");
-        w.write("[Adblock Plus 2.0]\n");
-        for (final String filter : filters)
-        {
-          w.write(filter);
-          w.write('\n');
-        }
-      }
-      finally
-      {
-        w.close();
+        w.write(filter);
+        w.write('\n');
       }
     }
-
-    return !filters.isEmpty();
+    finally
+    {
+      w.close();
+    }
   }
 
   public Subscription add(final Subscription sub)

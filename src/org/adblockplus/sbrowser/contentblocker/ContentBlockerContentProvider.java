@@ -75,15 +75,10 @@ public class ContentBlockerContentProvider extends ContentProvider implements
 
     try
     {
+      this.setApplicationActivated();
       Log.d(TAG, "Writing filters...");
       final File filterFile = this.engine.createAndWriteFile();
-      if (filterFile == null)
-      {
-        Log.d(TAG, "No filters written, returning NULL");
-        return null;
-      }
       Log.d(TAG, "Delivering filters...");
-      this.setApplicationActivated();
       return ParcelFileDescriptor.open(filterFile, ParcelFileDescriptor.MODE_READ_ONLY);
     }
     catch (IOException e)
