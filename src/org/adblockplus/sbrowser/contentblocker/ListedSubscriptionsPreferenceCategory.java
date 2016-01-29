@@ -116,7 +116,6 @@ public class ListedSubscriptionsPreferenceCategory extends PreferenceCategory im
             case ADS:
               final DefaultSubscriptionInfo info = engine.getDefaultSubscriptionInfoForUrl(
                   sub.getUrl());
-              System.out.println(sub.getUrl() + ", " + info);
               if (info != null && !info.getPrefixes().isEmpty() && info.isComplete())
               {
                 final CheckBoxPreference cbp = new CheckBoxPreference(this.getContext());
