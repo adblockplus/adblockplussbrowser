@@ -18,6 +18,7 @@
 package org.adblockplus.sbrowser.contentblocker;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import org.adblockplus.sbrowser.contentblocker.engine.DefaultSubscriptionInfo;
@@ -40,6 +41,31 @@ public class MoreBlockingPreferenceCategory extends PreferenceCategory implement
     EngineService.OnEngineCreatedCallback, OnPreferenceChangeListener
 {
   private Engine engine = null;
+  private static final int[] WHITELISTED_LIST_TITLES =
+  {
+      R.string.subscription_disable_tracking,
+      R.string.subscription_disable_malware,
+      R.string.subscription_disable_anti_adblock,
+      R.string.subscription_disable_social_media
+  };
+
+  private static final String[] WHITELISTED_LIST_URLS =
+  {
+      "https://easylist-downloads.adblockplus.org/easyprivacy.txt",
+      "https://easylist-downloads.adblockplus.org/malwaredomains_full.txt",
+      "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt",
+      "https://easylist-downloads.adblockplus.org/fanboy-social.txt"
+  };
+
+  private static final HashMap<String, Integer> URL_TO_RES_ID_MAP = new HashMap<String, Integer>();
+
+  static
+  {
+    for (int i = 0; i < WHITELISTED_LIST_TITLES.length; i++)
+    {
+      URL_TO_RES_ID_MAP.put(WHITELISTED_LIST_URLS[i], WHITELISTED_LIST_TITLES[i]);
+    }
+  }
 
   public MoreBlockingPreferenceCategory(final Context context)
   {
@@ -80,7 +106,9 @@ public class MoreBlockingPreferenceCategory extends PreferenceCategory implement
       {
         final DefaultSubscriptionInfo info = engine.getDefaultSubscriptionInfoForUrl(sub.getUrl());
 
+        Integer resInt = URL_TO_RES_ID_MAP.get(sub.getUrl());
         if (!(aaLink.equals(sub.getUrl()) || sub.getTitle().startsWith("__"))
+            && resInt != null
             && (info == null || info.getPrefixes().isEmpty() || sub.getType() != SubscriptionInfo.Type.ADS))
         {
 
@@ -104,7 +132,7 @@ public class MoreBlockingPreferenceCategory extends PreferenceCategory implement
             cbp.setSummary(sb.toString());
           }
 
-          cbp.setTitle(sub.getTitle());
+          cbp.setTitle(this.getContext().getString(resInt.intValue()));
           cbp.setChecked(sub.isEnabled());
           cbp.setPersistent(false);
           cbp.setKey(sub.getId());

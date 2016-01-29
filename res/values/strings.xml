@@ -8,7 +8,7 @@
     <string name="more_blocking">More blocking options</string>
     <string name="more_blocking_category">Other filter lists</string>
     <string name="more_blocking_summary">Disable tracking and malware sites</string>
-    <!-- <string name="more_blocking_summary">Disable tracking and malware sites or add custom filter lists</string>  -->
+    <!-- <string name="more_blocking_summary">Disable tracking and malware sites or add custom filter lists</string> -->
     <string name="enabled_subscriptions">Active for websites in &#8230;</string>
     <string name="available_subscriptions">Other Languages</string>
     <string name="initialization_title">Initialization</string>
@@ -21,5 +21,9 @@
     <string name="aa_dialog_button">Got it</string>
     <string name="setup_dialog_title">Enable Adblock Plus in Samsung Internet Browser</string>
     <string name="setup_dialog_button">Configure Samsung Browser settings</string>
+    <string name="subscription_disable_tracking">Disable tracking</string>
+    <string name="subscription_disable_malware">Disable malware domains</string>
+    <string name="subscription_disable_anti_adblock">Disable anti-ad blocking messages</string>
+    <string name="subscription_disable_social_media">Disable social media buttons</string>
 
 </resources>

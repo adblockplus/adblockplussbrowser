@@ -73,7 +73,7 @@ final class DefaultSubscriptions
     final ArrayList<Subscription> subs = new ArrayList<Subscription>();
     for (DefaultSubscriptionInfo info : this.linearSubscriptions)
     {
-      if (!info.getUrl().isEmpty() && (info.isComplete() || "other".equalsIgnoreCase(info.getType())))
+      if (!info.getUrl().isEmpty())
       {
         final Subscription sub = Subscription.create(info.getUrl());
         sub.putMeta(Subscription.KEY_TITLE, info.getTitle());
