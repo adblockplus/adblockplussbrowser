@@ -136,6 +136,19 @@ public final class Engine
     return list.size() > 0;
   }
 
+  public static boolean hasCompatibleSBrowserInstalled(final Context activityContext)
+  {
+    try
+    {
+      return activityContext.getPackageManager()
+          .queryIntentActivities(new Intent(ACTION_OPEN_SETTINGS), 0).size() > 0;
+    }
+    catch (final Throwable t)
+    {
+      return false;
+    }
+  }
+
   void requestUpdateBroadcast()
   {
     this.lock();

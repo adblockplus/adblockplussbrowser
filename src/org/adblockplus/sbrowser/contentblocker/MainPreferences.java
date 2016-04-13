@@ -29,7 +29,9 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
@@ -40,6 +42,7 @@ public class MainPreferences extends PreferenceActivity implements
     EngineService.OnEngineCreatedCallback, SharedPreferences.OnSharedPreferenceChangeListener
 {
   private static final String TAG = MainPreferences.class.getSimpleName();
+  private static final String SBROWSER_APP_ID = "com.sec.android.app.sbrowser";
   private ProgressDialog progressDialog = null;
   private Engine engine = null;
   private AlertDialog setupDialog = null;
@@ -73,6 +76,69 @@ public class MainPreferences extends PreferenceActivity implements
   protected void onStop()
   {
     super.onStop();
+  }
+
+  private void checkForCompatibleSBrowserAndProceed()
+  {
+    if (!Engine.hasCompatibleSBrowserInstalled(this.getApplicationContext()))
+    {
+      final AlertDialog d = new AlertDialog.Builder(this)
+          .setCancelable(false)
+          .setTitle(R.string.sbrowser_dialog_title)
+          .setMessage(Html.fromHtml(this.readTextFile(R.raw.sbrowser_dialog)))
+          .setNeutralButton(R.string.sbrowser_dialog_button, new OnClickListener()
+          {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+              try
+              {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="
+                    + SBROWSER_APP_ID)));
+              }
+              catch (final Throwable t)
+              {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri
+                    .parse("https://play.google.com/store/apps/details?id=" + SBROWSER_APP_ID)));
+              }
+            }
+          }).create();
+      d.show();
+    }
+    else
+    {
+      this.checkAAStatusAndProceed();
+    }
+  }
+
+  private void checkAAStatusAndProceed()
+  {
+    final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+    final String keyAaInfoShown = this.getString(R.string.key_aa_info_shown);
+    final boolean aaInfoShown = prefs.getBoolean(keyAaInfoShown, false);
+    if (!aaInfoShown)
+    {
+      final AlertDialog d = new AlertDialog.Builder(this)
+          .setCancelable(false)
+          .setTitle(R.string.aa_dialog_title)
+          .setMessage(Html.fromHtml(this.readTextFile(R.raw.aa_dialog)))
+          .setNeutralButton(R.string.aa_dialog_button, new OnClickListener()
+          {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+              prefs.edit()
+                  .putBoolean(keyAaInfoShown, true)
+                  .commit();
+              MainPreferences.this.checkSetupStatus();
+            }
+          }).create();
+      d.show();
+    }
+    else
+    {
+      this.checkSetupStatus();
+    }
   }
 
   private void checkSetupStatus()
@@ -110,32 +176,7 @@ public class MainPreferences extends PreferenceActivity implements
       this.progressDialog.dismiss();
       this.progressDialog = null;
 
-      final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-      final String keyAaInfoShown = this.getString(R.string.key_aa_info_shown);
-      final boolean aaInfoShown = prefs.getBoolean(keyAaInfoShown, false);
-      if (!aaInfoShown)
-      {
-        AlertDialog d = new AlertDialog.Builder(this)
-            .setCancelable(false)
-            .setTitle(R.string.aa_dialog_title)
-            .setMessage(Html.fromHtml(this.readTextFile(R.raw.aa_dialog)))
-            .setNeutralButton(R.string.aa_dialog_button, new OnClickListener()
-            {
-              @Override
-              public void onClick(DialogInterface dialog, int which)
-              {
-                prefs.edit()
-                    .putBoolean(keyAaInfoShown, true)
-                    .commit();
-                MainPreferences.this.checkSetupStatus();
-              }
-            }).create();
-        d.show();
-      }
-      else
-      {
-        this.checkSetupStatus();
-      }
+      this.checkForCompatibleSBrowserAndProceed();
     }
   }
 

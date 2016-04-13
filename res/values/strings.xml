@@ -19,6 +19,8 @@
     <string name="acceptable_ads_category">Acceptable Ads</string>
     <string name="aa_dialog_title">You\'re in control</string>
     <string name="aa_dialog_button">Got it</string>
+    <string name="sbrowser_dialog_title">Update your browser</string>
+    <string name="sbrowser_dialog_button">Get update</string>
     <string name="setup_dialog_title">Enable Adblock Plus in Samsung Internet Browser</string>
     <string name="setup_dialog_button">Configure Samsung Browser settings</string>
     <string name="subscription_disable_tracking">Disable tracking</string>
