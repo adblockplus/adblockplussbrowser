@@ -47,6 +47,11 @@ public class MainPreferences extends PreferenceActivity implements
   private Engine engine = null;
   private AlertDialog setupDialog = null;
 
+  private SharedPreferences getSharedPreferences()
+  {
+    return PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+  }
+
   @Override
   public void onCreate(Bundle savedInstanceState)
   {
@@ -58,8 +63,23 @@ public class MainPreferences extends PreferenceActivity implements
         .replace(android.R.id.content, new Preferences())
         .commit();
 
-    PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext())
-        .registerOnSharedPreferenceChangeListener(this);
+    // This try/catch block is a workaround for a preference mismatch
+    // issue. We check for a type mismatch in one particular key and,
+    // if there's a mismatch, clean sweep the preferences.
+    // See: https://issues.adblockplus.org/ticket/3931
+    try
+    {
+      this.getSharedPreferences().getBoolean(
+          this.getString(R.string.key_application_activated),
+          false);
+    }
+    catch(final Throwable t)
+    {
+      this.getSharedPreferences()
+          .edit()
+          .clear()
+          .commit();
+    }
   }
 
   @Override
@@ -69,13 +89,15 @@ public class MainPreferences extends PreferenceActivity implements
         this.getString(R.string.initialization_title),
         this.getString(R.string.initialization_message));
     super.onStart();
-    EngineService.startService(this, this);
+    this.getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+    EngineService.startService(this.getApplicationContext(), this);
   }
 
   @Override
   protected void onStop()
   {
     super.onStop();
+    this.getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
   }
 
   private void checkForCompatibleSBrowserAndProceed()
@@ -113,7 +135,7 @@ public class MainPreferences extends PreferenceActivity implements
 
   private void checkAAStatusAndProceed()
   {
-    final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+    final SharedPreferences prefs = this.getSharedPreferences();
     final String keyAaInfoShown = this.getString(R.string.key_aa_info_shown);
     final boolean aaInfoShown = prefs.getBoolean(keyAaInfoShown, false);
     if (!aaInfoShown)
@@ -143,7 +165,7 @@ public class MainPreferences extends PreferenceActivity implements
 
   private void checkSetupStatus()
   {
-    final boolean applicationActivated = PreferenceManager.getDefaultSharedPreferences(this)
+    final boolean applicationActivated = this.getSharedPreferences()
         .getBoolean(this.getString(R.string.key_application_activated), false);
 
     if (!applicationActivated)
