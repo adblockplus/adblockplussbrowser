@@ -81,7 +81,7 @@ public class ListedSubscriptionsPreferenceCategory extends PreferenceCategory im
   @Override
   protected void onAttachedToActivity()
   {
-    EngineService.startService(this.getContext(), this);
+    EngineService.startService(this.getContext().getApplicationContext(), this);
     super.onAttachedToActivity();
   }
 

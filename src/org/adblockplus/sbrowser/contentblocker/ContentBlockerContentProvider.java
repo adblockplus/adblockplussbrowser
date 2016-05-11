@@ -49,12 +49,25 @@ public class ContentBlockerContentProvider extends ContentProvider implements
     return null;
   }
 
+  private static boolean getBooleanPref(final SharedPreferences prefs, final String key,
+      final boolean defValue)
+  {
+    try
+    {
+      return prefs.getBoolean(key, defValue);
+    }
+    catch (final Throwable t)
+    {
+      return defValue;
+    }
+  }
+
   private void setApplicationActivated()
   {
     final SharedPreferences prefs = PreferenceManager
-        .getDefaultSharedPreferences(this.getContext());
+        .getDefaultSharedPreferences(this.getContext().getApplicationContext());
     final String key = this.getContext().getString(R.string.key_application_activated);
-    final boolean applicationActived = prefs.getBoolean(key, false);
+    final boolean applicationActived = getBooleanPref(prefs, key, false);
     if (!applicationActived)
     {
       prefs.edit()
@@ -91,7 +104,7 @@ public class ContentBlockerContentProvider extends ContentProvider implements
   @Override
   public boolean onCreate()
   {
-    EngineService.startService(this.getContext(), this);
+    EngineService.startService(this.getContext().getApplicationContext(), this);
     return true;
   }
 
