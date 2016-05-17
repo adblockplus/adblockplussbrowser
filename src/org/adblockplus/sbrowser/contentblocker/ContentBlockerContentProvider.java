@@ -39,7 +39,8 @@ public class ContentBlockerContentProvider extends ContentProvider implements
     EngineService.OnEngineCreatedCallback
 {
   private static final String TAG = ContentBlockerContentProvider.class.getSimpleName();
-  private Engine engine = null;
+  private volatile Engine engine = null;
+  private volatile boolean engineInitDone = false;
 
   @Override
   public Bundle call(String method, String arg, Bundle extras)
@@ -80,10 +81,28 @@ public class ContentBlockerContentProvider extends ContentProvider implements
   public ParcelFileDescriptor openFile(final Uri uri, final String mode)
       throws FileNotFoundException
   {
+    if (!this.engineInitDone)
+    {
+      Log.i(TAG, "Engine not ready yet, waiting...");
+      while (!this.engineInitDone)
+      {
+        try
+        {
+          Thread.sleep(10);
+        }
+        catch (InterruptedException e)
+        {
+          Log.e(TAG, "Interrupted: " + e.getMessage(), e);
+          return null;
+        }
+      }
+      Log.i(TAG, "Engine ready");
+    }
+
     if (this.engine == null)
     {
-      Log.e(TAG, "Engine not initialized");
-      throw new FileNotFoundException("Engine not yet initialized");
+      Log.e(TAG, "Engine failed to initialize");
+      return null;
     }
 
     try
@@ -104,7 +123,9 @@ public class ContentBlockerContentProvider extends ContentProvider implements
   @Override
   public boolean onCreate()
   {
-    EngineService.startService(this.getContext().getApplicationContext(), this);
+    Log.i(TAG, "onCreate() called");
+    EngineService.startService(this.getContext().getApplicationContext(), this, false);
+    Log.i(TAG, "Requested service startup");
     return true;
   }
 
@@ -143,6 +164,8 @@ public class ContentBlockerContentProvider extends ContentProvider implements
   @Override
   public void onEngineCreated(Engine engine, boolean success)
   {
+    Log.i(TAG, "Service started, success: " + success);
+    this.engineInitDone = true;
     if (success)
     {
       this.engine = engine;

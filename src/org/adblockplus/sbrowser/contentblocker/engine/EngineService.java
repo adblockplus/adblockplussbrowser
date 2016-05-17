@@ -32,8 +32,8 @@ public final class EngineService extends Service
   private volatile Engine engine = null;
   private volatile boolean isInitialized = false;
   private Throwable failureCause = null;
-  private static final LinkedBlockingQueue<OnEngineCreatedCallback> ON_CREATED_CALLBACKS =
-      new LinkedBlockingQueue<EngineService.OnEngineCreatedCallback>();
+  private static final LinkedBlockingQueue<EngineCreatedCallbackWrapper> ON_CREATED_CALLBACKS =
+      new LinkedBlockingQueue<EngineCreatedCallbackWrapper>();
 
   @Override
   public int onStartCommand(Intent intent, int flags, int startId)
@@ -49,8 +49,21 @@ public final class EngineService extends Service
    */
   public static void startService(final Context context, final OnEngineCreatedCallback callback)
   {
+    startService(context, callback, true);
+  }
+
+  /**
+   *
+   * @param context
+   * @param callback
+   * @param runOnUiThread
+   *          {@code true} if the callback should be executed on the UI thread
+   */
+  public static void startService(final Context context, final OnEngineCreatedCallback callback,
+      final boolean runOnUiThread)
+  {
     context.startService(new Intent(context, EngineService.class));
-    ON_CREATED_CALLBACKS.offer(callback);
+    ON_CREATED_CALLBACKS.offer(new EngineCreatedCallbackWrapper(callback, runOnUiThread));
   }
 
   @Override
@@ -65,11 +78,6 @@ public final class EngineService extends Service
   public IBinder onBind(Intent intent)
   {
     return null;
-  }
-
-  public interface OnEngineCreatedCallback
-  {
-    public void onEngineCreated(Engine engine, boolean success);
   }
 
   private static void startDaemonThread(final Runnable runnable)
@@ -129,19 +137,28 @@ public final class EngineService extends Service
 
         for (;;)
         {
-          final OnEngineCreatedCallback callback = EngineService.ON_CREATED_CALLBACKS.take();
-          if (callback != null)
+          final EngineCreatedCallbackWrapper wrapper = EngineService.ON_CREATED_CALLBACKS.take();
+          if (wrapper != null)
           {
-            Engine.runOnUiThread(new Runnable()
+            if (wrapper.runOnUiThread)
             {
-              private final EngineService service = CreationNotifier.this.service;
-
-              @Override
-              public void run()
+              Engine.runOnUiThread(new Runnable()
               {
-                callback.onEngineCreated(this.service.engine, this.service.failureCause == null);
-              }
-            });
+                private final EngineService service = CreationNotifier.this.service;
+
+                @Override
+                public void run()
+                {
+                  wrapper.callback.onEngineCreated(this.service.engine,
+                      this.service.failureCause == null);
+                }
+              });
+            }
+            else
+            {
+              wrapper.callback.onEngineCreated(this.service.engine,
+                  this.service.failureCause == null);
+            }
           }
         }
       }
@@ -149,6 +166,24 @@ public final class EngineService extends Service
       {
         Log.e(TAG, "Notifier died: " + t.getMessage(), t);
       }
+    }
+  }
+
+  public interface OnEngineCreatedCallback
+  {
+    public void onEngineCreated(Engine engine, boolean success);
+  }
+
+  private static class EngineCreatedCallbackWrapper
+  {
+    final OnEngineCreatedCallback callback;
+    final boolean runOnUiThread;
+
+    public EngineCreatedCallbackWrapper(final OnEngineCreatedCallback callback,
+        final boolean runOnUiThread)
+    {
+      this.callback = callback;
+      this.runOnUiThread = runOnUiThread;
     }
   }
 }
