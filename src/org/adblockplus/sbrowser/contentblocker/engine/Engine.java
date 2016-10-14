@@ -254,6 +254,20 @@ public final class Engine
       final String key = this.serviceContext.getString(R.string.key_cached_filter_path);
       prefs.edit().putString(key, filterFile.getAbsolutePath()).commit();
 
+      Log.d(TAG, "Cleaning up cache...");
+      final File dummyFile = getDummyFilterFile(this.serviceContext);
+      final File[] cacheDirFiles = getFilterCacheDir(this.serviceContext).listFiles();
+      if (cacheDirFiles != null)
+      {
+        for (final File file : cacheDirFiles)
+        {
+          if (!file.equals(dummyFile) && !file.equals(filterFile))
+          {
+            Log.d(TAG, "Deleting file:" + file);
+            file.delete();
+          }
+        }
+      }
     }
     catch (IOException e)
     {

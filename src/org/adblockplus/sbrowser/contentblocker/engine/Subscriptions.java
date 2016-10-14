@@ -63,7 +63,6 @@ final class Subscriptions
 
   public File createAndWriteFile() throws IOException
   {
-    // TODO cache cleanups
     for (;;)
     {
       final File file = new File(this.cacheFolder, String.format("tmp-%d.txt",
