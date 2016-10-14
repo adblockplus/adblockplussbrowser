@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Preference keys -->
     <string name="key_automatic_updates">automatic_updates</string>
     <string name="key_acceptable_ads">acceptable_ads</string>
     <string name="key_application_activated">application_activated</string>
     <string name="key_aa_info_shown">aa_info_shown</string>
+    <string name="key_cached_filter_path">cached_filter_path</string>
 
 </resources>

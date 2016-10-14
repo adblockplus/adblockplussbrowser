@@ -27,6 +27,7 @@ import org.adblockplus.sbrowser.contentblocker.engine.EngineService;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
@@ -35,12 +36,9 @@ import android.os.ParcelFileDescriptor;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-public class ContentBlockerContentProvider extends ContentProvider implements
-    EngineService.OnEngineCreatedCallback
+public class ContentBlockerContentProvider extends ContentProvider
 {
   private static final String TAG = ContentBlockerContentProvider.class.getSimpleName();
-  private volatile Engine engine = null;
-  private volatile boolean engineInitDone = false;
 
   @Override
   public Bundle call(String method, String arg, Bundle extras)
@@ -81,35 +79,11 @@ public class ContentBlockerContentProvider extends ContentProvider implements
   public ParcelFileDescriptor openFile(final Uri uri, final String mode)
       throws FileNotFoundException
   {
-    if (!this.engineInitDone)
-    {
-      Log.i(TAG, "Engine not ready yet, waiting...");
-      while (!this.engineInitDone)
-      {
-        try
-        {
-          Thread.sleep(10);
-        }
-        catch (InterruptedException e)
-        {
-          Log.e(TAG, "Interrupted: " + e.getMessage(), e);
-          return null;
-        }
-      }
-      Log.i(TAG, "Engine ready");
-    }
-
-    if (this.engine == null)
-    {
-      Log.e(TAG, "Engine failed to initialize");
-      return null;
-    }
-
     try
     {
       this.setApplicationActivated();
       Log.d(TAG, "Writing filters...");
-      final File filterFile = this.engine.createAndWriteFile();
+      final File filterFile = Engine.getOrCreateCachedFilterFile(getContext());
       Log.d(TAG, "Delivering filters...");
       return ParcelFileDescriptor.open(filterFile, ParcelFileDescriptor.MODE_READ_ONLY);
     }
@@ -124,7 +98,7 @@ public class ContentBlockerContentProvider extends ContentProvider implements
   public boolean onCreate()
   {
     Log.i(TAG, "onCreate() called");
-    EngineService.startService(this.getContext().getApplicationContext(), this, false);
+    getContext().startService(new Intent(getContext(), EngineService.class));
     Log.i(TAG, "Requested service startup");
     return true;
   }
@@ -159,16 +133,5 @@ public class ContentBlockerContentProvider extends ContentProvider implements
       final String[] selectionArgs)
   {
     return 0;
-  }
-
-  @Override
-  public void onEngineCreated(Engine engine, boolean success)
-  {
-    Log.i(TAG, "Service started, success: " + success);
-    this.engineInitDone = true;
-    if (success)
-    {
-      this.engine = engine;
-    }
   }
 }

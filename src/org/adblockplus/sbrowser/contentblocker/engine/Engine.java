@@ -18,10 +18,14 @@
 package org.adblockplus.sbrowser.contentblocker.engine;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -164,6 +168,8 @@ public final class Engine
 
   private void sendUpdateBroadcast()
   {
+    createAndWriteFile();
+
     runOnUiThread(new Runnable()
     {
       @Override
@@ -236,13 +242,22 @@ public final class Engine
     this.engineEvents.add(new DownloadFinishedEvent(id, responseCode, response, headers));
   }
 
-  public File createAndWriteFile() throws IOException
+  public void createAndWriteFile()
   {
     this.lock();
     try
     {
       Log.d(TAG, "Writing filters...");
-      return this.subscriptions.createAndWriteFile();
+      final File filterFile = this.subscriptions.createAndWriteFile();
+
+      final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.serviceContext);
+      final String key = this.serviceContext.getString(R.string.key_cached_filter_path);
+      prefs.edit().putString(key, filterFile.getAbsolutePath()).commit();
+
+    }
+    catch (IOException e)
+    {
+      Log.e(TAG, "Failed to write filters", e);
     }
     finally
     {
@@ -327,8 +342,8 @@ public final class Engine
     }
 
     Log.d(TAG, "Finished reading 'subscriptions.xml'");
-    engine.subscriptions = Subscriptions.initialize(engine, context.getFilesDir(),
-        context.getCacheDir());
+    engine.subscriptions = Subscriptions.initialize(engine, getSubscriptionsDir(context),
+        getFilterCacheDir(context));
 
     final InputStream prefsJson = context.getResources().openRawResource(R.raw.prefs);
     try
@@ -393,6 +408,12 @@ public final class Engine
       engine.subscriptions.persistSubscriptions();
     }
 
+    final File cachedFilterFile = getCachedFilterFile(context);
+    if (cachedFilterFile == null || !cachedFilterFile.exists())
+    {
+      engine.sendUpdateBroadcast();
+    }
+
     engine.handlerThread = new Thread(new EventHandler(engine));
     engine.handlerThread.setDaemon(true);
     engine.handlerThread.start();
@@ -422,6 +443,68 @@ public final class Engine
       list.add(line);
     }
     return list;
+  }
+
+  public static File getOrCreateCachedFilterFile(Context context) throws IOException
+  {
+    final File cachedFilterFile = getCachedFilterFile(context);
+    if (cachedFilterFile != null && cachedFilterFile.exists())
+    {
+      Log.d(TAG, "Cached filter file found: " + cachedFilterFile);
+      return cachedFilterFile;
+    }
+
+    Log.d(TAG, "Cached filter file not found. Using dummy filter file");
+    final File dummyFilterFile = getDummyFilterFile(context);
+    if (!dummyFilterFile.exists())
+    {
+      Log.d(TAG, "Creating dummy filter file...");
+      dummyFilterFile.getParentFile().mkdirs();
+      final BufferedWriter writer = new BufferedWriter(
+          new OutputStreamWriter(new FileOutputStream(dummyFilterFile), "UTF-8"));
+      try
+      {
+        writeFilterHeaders(writer);
+      }
+      finally
+      {
+        writer.close();
+      }
+    }
+    return dummyFilterFile;
+  }
+
+  public static void writeFilterHeaders(Writer writer) throws IOException
+  {
+    writer.write("[Adblock Plus 2.0]\n");
+    writer.write("! This file was automatically created.\n");
+  }
+
+  private static File getCachedFilterFile(Context context)
+  {
+    final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    final String cachedFilterPath = prefs.getString(context.getString(R.string.key_cached_filter_path), null);
+    if (cachedFilterPath != null)
+    {
+      return new File(cachedFilterPath);
+    }
+
+    return null;
+  }
+
+  private static File getDummyFilterFile(Context context)
+  {
+    return new File(getFilterCacheDir(context), "dummy.txt");
+  }
+
+  private static File getFilterCacheDir(Context context)
+  {
+    return new File(context.getCacheDir(), "subscriptions");
+  }
+
+  private static File getSubscriptionsDir(Context context)
+  {
+    return new File(context.getFilesDir(), "subscriptions");
   }
 
   URL createDownloadURL(final Subscription sub) throws IOException

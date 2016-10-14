@@ -51,9 +51,9 @@ final class Subscriptions
   private Subscriptions(final Engine engine, final File appFolder, final File cacheFolder)
   {
     this.engine = engine;
-    this.subscriptionFolder = new File(appFolder, "subscriptions");
+    this.subscriptionFolder = appFolder;
     this.wasUnitialized = !this.subscriptionFolder.exists();
-    this.cacheFolder = new File(cacheFolder, "subscriptions");
+    this.cacheFolder = cacheFolder;
   }
 
   public boolean wasUnitialized()
@@ -184,8 +184,7 @@ final class Subscriptions
     try
     {
       Log.d(TAG, "Writing " + filters.size() + " filters");
-      w.write("[Adblock Plus 2.0]\n");
-      w.write("! This file was automatically created.\n");
+      Engine.writeFilterHeaders(w);
       for (final String filter : filters)
       {
         w.write(filter);
