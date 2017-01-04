@@ -56,7 +56,7 @@ public class MainPreferences extends PreferenceActivity implements
   public void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
-    PreferenceManager.setDefaultValues(this, R.layout.preferences_main, false);
+    PreferenceManager.setDefaultValues(this, R.xml.preferences_main, false);
 
     this.getFragmentManager()
         .beginTransaction()
