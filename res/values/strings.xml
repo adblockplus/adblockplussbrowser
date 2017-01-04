@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Adblock Plus for Samsung Browser</string>
+    <string name="app_name">Adblock Plus for Samsung Internet</string>
     <string name="automatic_updates">Configure automatic updates</string>
     <string name="manage_subscriptions">Configure your filter lists</string>
     <string name="manage_subscriptions_summary">Change ad blocking languages</string>
@@ -19,10 +19,10 @@
     <string name="acceptable_ads_category">Acceptable Ads</string>
     <string name="aa_dialog_title">You\'re in control</string>
     <string name="aa_dialog_button">Got it</string>
-    <string name="sbrowser_dialog_title">Update your browser</string>
+    <string name="sbrowser_dialog_title">Update Samsung Internet</string>
     <string name="sbrowser_dialog_button">Get update</string>
-    <string name="setup_dialog_title">Enable Adblock Plus in Samsung Internet Browser</string>
-    <string name="setup_dialog_button">Configure Samsung Browser settings</string>
+    <string name="setup_dialog_title">Enable Adblock Plus in Samsung Internet</string>
+    <string name="setup_dialog_button">Configure Samsung Internet settings</string>
     <string name="subscription_disable_tracking">Disable tracking</string>
     <string name="subscription_disable_malware">Disable malware domains</string>
     <string name="subscription_disable_anti_adblock">Disable anti-ad blocking messages</string>

@@ -1,5 +1,5 @@
-Adblock Plus for Samsung Internet Browser
-=========================================
+Adblock Plus for Samsung Internet
+=================================
 
 A content blocker application that serves our filter lists to Samsung's
 content blocker enabled internet browser.
