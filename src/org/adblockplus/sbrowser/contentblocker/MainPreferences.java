@@ -26,6 +26,7 @@ import org.adblockplus.sbrowser.contentblocker.engine.EngineService;
 import org.adblockplus.adblockplussbrowser.R;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -43,9 +44,9 @@ public class MainPreferences extends PreferenceActivity implements
 {
   private static final String TAG = MainPreferences.class.getSimpleName();
   private static final String SBROWSER_APP_ID = "com.sec.android.app.sbrowser";
-  private ProgressDialog progressDialog = null;
   private Engine engine = null;
-  private AlertDialog setupDialog = null;
+  private Dialog dialog;
+  private int dialogTitleResId;
 
   private SharedPreferences getSharedPreferences()
   {
@@ -85,8 +86,9 @@ public class MainPreferences extends PreferenceActivity implements
   @Override
   protected void onStart()
   {
-    this.progressDialog = ProgressDialog.show(this,
-        this.getString(R.string.initialization_title),
+    this.dialogTitleResId = R.string.initialization_title;
+    this.dialog = ProgressDialog.show(this,
+        this.getString(this.dialogTitleResId),
         this.getString(R.string.initialization_message));
     super.onStart();
     this.getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
@@ -98,15 +100,27 @@ public class MainPreferences extends PreferenceActivity implements
   {
     super.onStop();
     this.getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+    this.dismissDialog();
+  }
+
+  private void dismissDialog()
+  {
+    if (this.dialog != null)
+    {
+      this.dialogTitleResId = 0;
+      this.dialog.dismiss();
+      this.dialog = null;
+    }
   }
 
   private void checkForCompatibleSBrowserAndProceed()
   {
     if (!Engine.hasCompatibleSBrowserInstalled(this.getApplicationContext()))
     {
-      final AlertDialog d = new AlertDialog.Builder(this)
+      this.dialogTitleResId = R.string.sbrowser_dialog_title;
+      this.dialog = new AlertDialog.Builder(this)
           .setCancelable(false)
-          .setTitle(R.string.sbrowser_dialog_title)
+          .setTitle(this.dialogTitleResId)
           .setMessage(Html.fromHtml(this.readTextFile(R.raw.sbrowser_dialog)))
           .setNeutralButton(R.string.sbrowser_dialog_button, new OnClickListener()
           {
@@ -125,7 +139,7 @@ public class MainPreferences extends PreferenceActivity implements
               }
             }
           }).create();
-      d.show();
+      this.dialog.show();
     }
     else
     {
@@ -140,9 +154,10 @@ public class MainPreferences extends PreferenceActivity implements
     final boolean aaInfoShown = prefs.getBoolean(keyAaInfoShown, false);
     if (!aaInfoShown)
     {
-      final AlertDialog d = new AlertDialog.Builder(this)
+      this.dialogTitleResId = R.string.aa_dialog_title;
+      this.dialog = new AlertDialog.Builder(this)
           .setCancelable(false)
-          .setTitle(R.string.aa_dialog_title)
+          .setTitle(this.dialogTitleResId)
           .setMessage(Html.fromHtml(this.readTextFile(R.raw.aa_dialog)))
           .setNeutralButton(R.string.aa_dialog_button, new OnClickListener()
           {
@@ -155,7 +170,7 @@ public class MainPreferences extends PreferenceActivity implements
               MainPreferences.this.checkSetupStatus();
             }
           }).create();
-      d.show();
+      this.dialog.show();
     }
     else
     {
@@ -171,9 +186,10 @@ public class MainPreferences extends PreferenceActivity implements
     if (!applicationActivated)
     {
       Log.d(TAG, "Showing setup dialog");
-      this.setupDialog = new AlertDialog.Builder(this)
+      this.dialogTitleResId = R.string.setup_dialog_title;
+      this.dialog = new AlertDialog.Builder(this)
           .setCancelable(false)
-          .setTitle(R.string.setup_dialog_title)
+          .setTitle(this.dialogTitleResId)
           .setMessage(Html.fromHtml(this.readTextFile(R.raw.setup_dialog)))
           .setNeutralButton(R.string.setup_dialog_button, new OnClickListener()
           {
@@ -184,7 +200,7 @@ public class MainPreferences extends PreferenceActivity implements
             }
           })
           .create();
-      this.setupDialog.show();
+      this.dialog.show();
     }
   }
 
@@ -193,10 +209,9 @@ public class MainPreferences extends PreferenceActivity implements
   {
     Log.d(TAG, "onEngineCreated: " + success);
     this.engine = success ? engine : null;
-    if (this.progressDialog != null)
+    if (this.dialogTitleResId == R.string.initialization_title)
     {
-      this.progressDialog.dismiss();
-      this.progressDialog = null;
+      this.dismissDialog();
 
       this.checkForCompatibleSBrowserAndProceed();
     }
@@ -218,10 +233,9 @@ public class MainPreferences extends PreferenceActivity implements
     }
     else if (this.getString(R.string.key_application_activated).equals(key))
     {
-      if (this.setupDialog != null)
+      if (this.dialogTitleResId == R.string.setup_dialog_title)
       {
-        this.setupDialog.dismiss();
-        this.setupDialog = null;
+        this.dismissDialog();
       }
     }
   }
