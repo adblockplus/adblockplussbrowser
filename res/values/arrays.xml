@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string-array name="download_settings">
-    <item>On Wi-Fi only</item>
-    <item>Always</item>
+    <item>@string/download_settings_wifi</item>
+    <item>@string/download_settings_always</item>
   </string-array>
 </resources>

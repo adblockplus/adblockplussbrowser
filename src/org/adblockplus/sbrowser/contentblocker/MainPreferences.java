@@ -121,7 +121,7 @@ public class MainPreferences extends PreferenceActivity implements
       this.dialog = new AlertDialog.Builder(this)
           .setCancelable(false)
           .setTitle(this.dialogTitleResId)
-          .setMessage(Html.fromHtml(this.readTextFile(R.raw.sbrowser_dialog)))
+          .setMessage(Html.fromHtml(getString(R.string.sbrowser_dialog_message)))
           .setNeutralButton(R.string.sbrowser_dialog_button, new OnClickListener()
           {
             @Override
@@ -158,7 +158,7 @@ public class MainPreferences extends PreferenceActivity implements
       this.dialog = new AlertDialog.Builder(this)
           .setCancelable(false)
           .setTitle(this.dialogTitleResId)
-          .setMessage(Html.fromHtml(this.readTextFile(R.raw.aa_dialog)))
+          .setMessage(Html.fromHtml(getString(R.string.aa_dialog_message)))
           .setNeutralButton(R.string.aa_dialog_button, new OnClickListener()
           {
             @Override
@@ -190,7 +190,7 @@ public class MainPreferences extends PreferenceActivity implements
       this.dialog = new AlertDialog.Builder(this)
           .setCancelable(false)
           .setTitle(this.dialogTitleResId)
-          .setMessage(Html.fromHtml(this.readTextFile(R.raw.setup_dialog)))
+          .setMessage(Html.fromHtml(getString(R.string.setup_dialog_message)))
           .setNeutralButton(R.string.setup_dialog_button, new OnClickListener()
           {
             @Override
@@ -237,34 +237,6 @@ public class MainPreferences extends PreferenceActivity implements
       {
         this.dismissDialog();
       }
-    }
-  }
-
-  private String readTextFile(int id)
-  {
-    try
-    {
-      final BufferedReader r = new BufferedReader(new InputStreamReader(this.getResources()
-          .openRawResource(id), "UTF-8"));
-      try
-      {
-        final StringBuilder sb = new StringBuilder();
-        for (String line = r.readLine(); line != null; line = r.readLine())
-        {
-          sb.append(line);
-          sb.append('\n');
-        }
-        return sb.toString();
-      }
-      finally
-      {
-        r.close();
-      }
-    }
-    catch (IOException e)
-    {
-      Log.e(TAG, "Resource reading failed for: " + id, e);
-      return "...";
     }
   }
 }

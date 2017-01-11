@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Adblock Plus для Samsung Internet</string>
+    <string name="automatic_updates">Настроить автоматические обновления</string>
+    <string name="manage_subscriptions">Настроить свои списки фильтров</string>
+    <string name="manage_subscriptions_summary">Изменить языки блокировки рекламы</string>
+    <string name="more_blocking">Дополнительные настройки блокировки</string>
+    <string name="more_blocking_category">Другие списки фильтров</string>
+    <string name="more_blocking_summary">Блокировать отслеживающие и вредоносные сайты</string>
+    <string name="enabled_subscriptions">Активно для сайтов на &#8230;</string>
+    <string name="available_subscriptions">Другие языки</string>
+    <string name="initialization_title">Инициализация</string>
+    <string name="initialization_message">Инициализация &#8230;</string>
+    <string name="enable_acceptable_ads">Разрешить некоторую неинтрузивную рекламу</string>
+    <string name="last_update">Обновлено:</string>
+    <string name="last_update_never">никогда</string>
+    <string name="acceptable_ads_category">Допустимая реклама</string>
+    <string name="aa_dialog_title">У вас полный контроль</string>
+    <string name="aa_dialog_message"><![CDATA[Раздражающая реклама всегда заблокирована, в то время как неинтрузивная реклама по умолчанию отображается. Вы можете изменить эту настройку в любое время, используя функцию <b>«Разрешить некоторую неинтрузивную рекламу»</b>.]]></string>
+    <string name="aa_dialog_button">Есть</string>
+    <string name="sbrowser_dialog_title">Обновить Samsung Internet</string>
+    <string name="sbrowser_dialog_message"><![CDATA[<p>Для использования Adblock Plus вы должны обновить Samsung Internet до версии 4.0.</p><p>Нажмите «Получить обновление», чтобы обновить Samsung Internet. Как только загрузка будет завершена, нажмите «Открыть». Затем перезапустите Adblock Plus, чтобы завершить установку.</p>]]></string>
+    <string name="sbrowser_dialog_button">Получить обновление</string>
+    <string name="setup_dialog_title">Включить Adblock Plus в Samsung Internet</string>
+    <string name="setup_dialog_message"><![CDATA[<p>1. Активируйте функцию <b>«Блокировать содержимое»</b>.</p><p>2. Выберите <b>«Adblock Plus»</b>.</p>]]></string>
+    <string name="setup_dialog_button">Настроить Samsung Internet</string>
+    <string name="subscription_disable_tracking">Блокировать отслеживание</string>
+    <string name="subscription_disable_malware">Блокировать вредоносные домены</string>
+    <string name="subscription_disable_anti_adblock">Блокировать сообщения о блокировке рекламы</string>
+    <string name="subscription_disable_social_media">Блокировать кнопки социальных сетей</string>
+    <string name="download_settings_wifi">Только на Wi-Fi</string>
+    <string name="download_settings_always">Всегда</string>
+
+</resources>

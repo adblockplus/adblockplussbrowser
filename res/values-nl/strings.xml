@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Adblock Plus voor Samsung Internet</string>
+    <string name="automatic_updates">Automatische updates configureren</string>
+    <string name="manage_subscriptions">Filterlijsten configureren</string>
+    <string name="manage_subscriptions_summary">Talen voor het blokkeren van advertenties wijzigen</string>
+    <string name="more_blocking">Meer blokkeeropties</string>
+    <string name="more_blocking_category">Andere filterlijsten</string>
+    <string name="more_blocking_summary">Tracering en malwaresites uitschakelen</string>
+    <string name="enabled_subscriptions">Actief voor websites in het&#8230;</string>
+    <string name="available_subscriptions">Andere talen</string>
+    <string name="initialization_title">Initialisatie</string>
+    <string name="initialization_message">Initialiseren&#8230;</string>
+    <string name="enable_acceptable_ads">Enkele niet-opdringerige advertenties toestaan</string>
+    <string name="last_update">Bijgewerkt op:</string>
+    <string name="last_update_never">nooit</string>
+    <string name="acceptable_ads_category">Acceptabele advertenties</string>
+    <string name="aa_dialog_title">U hebt de touwtjes in handen</string>
+    <string name="aa_dialog_message"><![CDATA[Vervelende advertenties worden altijd geblokkeerd, terwijl niet-opdringerige advertenties standaard worden weergegeven. U kunt deze instelling op elk gewenst moment wijzigen via het configureren van de optie <b>Enkele niet-opdringerige advertenties toestaan</b>.]]></string>
+    <string name="aa_dialog_button">Duidelijk</string>
+    <string name="sbrowser_dialog_title">Samsung Internet bijwerken</string>
+    <string name="sbrowser_dialog_message"><![CDATA[<p>Voordat u Adblock Plus kunt gebruiken, moet u een update naar Samsung Internet 4.0 uitvoeren.</p><p>Tik op \"Update ophalen\" om Samsung Internet nu bij te werken. Tik na het downloaden op \"Openen\". Start Adblock Plus opnieuw op om de installatie te voltooien.</p>]]></string>
+    <string name="sbrowser_dialog_button">Update ophalen</string>
+    <string name="setup_dialog_title">Adblock Plus in Samsung Internet inschakelen</string>
+    <string name="setup_dialog_message"><![CDATA[<p>1. Schakel de functionaliteit <b>Inhoud blokkeren</b> in.</p><p>2. Selecteer <b>Adblock Plus</b>.</p>]]></string>
+    <string name="setup_dialog_button">Instellingen Samsung Internet configureren</string>
+    <string name="subscription_disable_tracking">Tracering uitschakelen</string>
+    <string name="subscription_disable_malware">Malwaredomeinen uitschakelen</string>
+    <string name="subscription_disable_anti_adblock">Anti-advertentieblokkeringsberichten uitschakelen</string>
+    <string name="subscription_disable_social_media">Knoppen sociale media uitschakelen</string>
+    <string name="download_settings_wifi">Alleen bij wifi</string>
+    <string name="download_settings_always">Altijd</string>
+
+</resources>

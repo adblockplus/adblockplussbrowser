@@ -18,14 +18,19 @@
     <string name="last_update_never">never</string>
     <string name="acceptable_ads_category">Acceptable Ads</string>
     <string name="aa_dialog_title">You\'re in control</string>
+    <string name="aa_dialog_message"><![CDATA[Annoying ads are always blocked, while nonintrusive ads are displayed by default. You can change this setting at any time by configuring the <b>Allow some nonintrusive ads</b> option.]]></string>
     <string name="aa_dialog_button">Got it</string>
     <string name="sbrowser_dialog_title">Update Samsung Internet</string>
+    <string name="sbrowser_dialog_message"><![CDATA[<p>Before you can use Adblock Plus, you must update to Samsung Internet 4.0.</p><p>Tap \"Get update\" to update Samsung Internet now. After the download is complete, tap \"Open\". Then, relaunch Adblock Plus to finish the installation.</p>]]></string>
     <string name="sbrowser_dialog_button">Get update</string>
     <string name="setup_dialog_title">Enable Adblock Plus in Samsung Internet</string>
+    <string name="setup_dialog_message"><![CDATA[<p>1. Activate the <b>Block content</b> functionality.</p><p>2. Select <b>Adblock Plus</b>.</p>]]></string>
     <string name="setup_dialog_button">Configure Samsung Internet settings</string>
     <string name="subscription_disable_tracking">Disable tracking</string>
     <string name="subscription_disable_malware">Disable malware domains</string>
     <string name="subscription_disable_anti_adblock">Disable anti-ad blocking messages</string>
     <string name="subscription_disable_social_media">Disable social media buttons</string>
+    <string name="download_settings_wifi">On Wi-Fi only</string>
+    <string name="download_settings_always">Always</string>
 
 </resources>

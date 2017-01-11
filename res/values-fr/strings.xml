@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Adblock Plus pour Samsung Internet</string>
+    <string name="automatic_updates">Configurer les mises à jour automatique</string>
+    <string name="manage_subscriptions">Configurer vos listes de filtres</string>
+    <string name="manage_subscriptions_summary">Changer la langue de blocage des publicités</string>
+    <string name="more_blocking">Autres options de blocage</string>
+    <string name="more_blocking_category">Autres listes de filtres</string>
+    <string name="more_blocking_summary">Désactiver les sites de suivi et de logiciels malveillants</string>
+    <string name="enabled_subscriptions">Actif pour les sites web en &#8230;</string>
+    <string name="available_subscriptions">Autres langues</string>
+    <string name="initialization_title">Initialisation</string>
+    <string name="initialization_message">Initialisation en cours &#8230;</string>
+    <string name="enable_acceptable_ads">Autoriser quelques publicités non intrusives</string>
+    <string name="last_update">Mis à jour :</string>
+    <string name="last_update_never">jamais</string>
+    <string name="acceptable_ads_category">Publicités Acceptables</string>
+    <string name="aa_dialog_title">Prenez le contrôle</string>
+    <string name="aa_dialog_message"><![CDATA[Les publicités gênantes sont toujours bloquées, tandis que les publicités non-intrusives sont affichées par défaut. Vous pouvez modifier ce paramètre à tout moment en configurant l\'option <b>Autoriser quelques publicités non intrusives</b>.]]></string>
+    <string name="aa_dialog_button">D\'accord</string>
+    <string name="sbrowser_dialog_title">Mettre Samsung Internet à jour</string>
+    <string name="sbrowser_dialog_message"><![CDATA[<p>Avant d\'utiliser Adblock Plus, vous devez mettre à jour Samsung Internet 4.0.</p><p>Tapez sur « Obtenir la mise à jour » pour mettre Samsung Internet à jour maintenant. Une fois le téléchargement terminé, tapez sur « Ouvrir ». Ensuite, relancez Adblock Plus pour terminer l\'installation.</p>]]></string>
+    <string name="sbrowser_dialog_button">Obtenir la mise à jour</string>
+    <string name="setup_dialog_title">Activer Adblock Plus pour Samsung Internet</string>
+    <string name="setup_dialog_message"><![CDATA[<p>1. Activez la fonction <b>Blocage du contenu</b>.</p><p>2. Sélectionnez <b>Adblock Plus</b>.</p>]]></string>
+    <string name="setup_dialog_button">Configurer les paramètres Samsung Internet</string>
+    <string name="subscription_disable_tracking">Désactiver le suivi</string>
+    <string name="subscription_disable_malware">Désactiver les domaines de logiciels malveillants</string>
+    <string name="subscription_disable_anti_adblock">Désactiver les messages anti-blocage des publicités</string>
+    <string name="subscription_disable_social_media">Désactiver les boutons des médias sociaux</string>
+    <string name="download_settings_wifi">Sur la Wi-Fi uniquement</string>
+    <string name="download_settings_always">Toujours</string>
+
+</resources>
