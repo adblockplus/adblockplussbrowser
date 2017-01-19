@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Adblock Plus</string>
+    <string name="app_name">Adblock Plus for Samsung Internet</string>
+    <string name="launcher_name">Adblock Plus</string>
     <string name="automatic_updates">Configure automatic updates</string>
     <string name="manage_subscriptions">Configure your filter lists</string>
     <string name="manage_subscriptions_summary">Change ad blocking languages</string>
