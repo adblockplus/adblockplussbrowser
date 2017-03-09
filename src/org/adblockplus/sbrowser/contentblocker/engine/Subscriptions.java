@@ -41,6 +41,9 @@ final class Subscriptions
   private static final String TAG = Subscriptions.class.getSimpleName();
   private static final String[] USER_SUBSCRIPTIONS =
   { Engine.USER_FILTERS_TITLE, Engine.USER_EXCEPTIONS_TITLE };
+  // Filters that begin with '|$' , '||$' , '@@|$' or '@@||$'
+  // See https://issues.adblockplus.org/ticket/4772
+  private static final String UNSUPPORTED_FILTERS_REGEX =  "^(\\|\\$|\\|\\|\\$|@@\\|\\$|@@\\|\\|\\$).*";
   private final HashMap<String, Subscription> subscriptions = new HashMap<String, Subscription>();
 
   private final Engine engine;
@@ -186,8 +189,17 @@ final class Subscriptions
       Engine.writeFilterHeaders(w);
       for (final String filter : filters)
       {
-        w.write(filter);
-        w.write('\n');
+        // This is a temporary fix to not write filters that might crash Samsung Internet
+        // See https://issues.adblockplus.org/ticket/4772
+        if (!filter.matches(UNSUPPORTED_FILTERS_REGEX))
+        {
+          w.write(filter);
+          w.write('\n');
+        }
+        else
+        {
+          Log.d(TAG, "Ignoring unsupported filter: " + filter);
+        }
       }
     }
     finally
