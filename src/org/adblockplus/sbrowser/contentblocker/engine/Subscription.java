@@ -42,6 +42,7 @@ import java.util.Map.Entry;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 /**
@@ -83,7 +84,7 @@ final class Subscription
   private final URL url;
   private final Type type;
   private final HashMap<String, String> meta = new HashMap<String, String>();
-  private HashSet<String> filters = null;
+  private final HashSet<String> filters = new HashSet<String>();
 
   private boolean metaDataValid = true;
   private boolean filtersValid = true;
@@ -320,9 +321,9 @@ final class Subscription
     this.putMeta(KEY_ENABLED, Boolean.toString(enable));
   }
 
-  public void getFilters(Collection<String> filters)
+  public void copyFilters(Collection<String> filters)
   {
-    if (this.filters != null)
+    if (filters != null)
     {
       filters.addAll(this.filters);
     }
@@ -330,7 +331,7 @@ final class Subscription
 
   public void clearFilters()
   {
-    this.filters = null;
+    this.filters.clear();
   }
 
   /**
@@ -389,7 +390,7 @@ final class Subscription
       Collections.sort(filters);
       for (final String filter : filters)
       {
-        md5.update(filter.getBytes("UTF-8"));
+        md5.update(filter.getBytes(Engine.CHARSET_UTF_8));
       }
       return byteArrayToHexString(md5.digest());
     }
@@ -426,18 +427,13 @@ final class Subscription
         new BufferedOutputStream(new FileOutputStream(filtersFile))));
     try
     {
-      if (this.filters == null)
+      filtersOut.writeInt(this.filters.size());
+      filtersOut.writeUTF(createFilterHash(new ArrayList<String>(this.filters)));
+      for (final String s : this.filters)
       {
-        filtersOut.writeInt(0);
-      }
-      else
-      {
-        filtersOut.writeInt(this.filters.size());
-        filtersOut.writeUTF(createFilterHash(new ArrayList<String>(this.filters)));
-        for (final String s : this.filters)
-        {
-          filtersOut.writeUTF(s);
-        }
+        final byte[] b = s.getBytes(Engine.CHARSET_UTF_8);
+        filtersOut.writeInt(b.length);
+        filtersOut.write(b);
       }
     }
     finally
@@ -452,14 +448,17 @@ final class Subscription
     this.serializeFilters(filtersFile);
   }
 
-  public static Subscription deserializeSubscription(final File metaFile) throws IOException
+  public static Subscription deserializeSubscription(final File metaFile)
   {
-    final DataInputStream in = new DataInputStream(new GZIPInputStream(new BufferedInputStream(
-        new FileInputStream(metaFile))));
+    Subscription sub = null;
+    DataInputStream in = null;
     try
     {
+      in = new DataInputStream(new GZIPInputStream(new BufferedInputStream(
+          new FileInputStream(metaFile))));
       final String urlString = in.readUTF();
-      final Subscription sub = new Subscription(urlString.length() > 0 ? new URL(urlString) : null);
+      sub = new Subscription(!TextUtils.isEmpty(urlString) ? new URL(urlString) : null);
+      sub.metaDataValid = false;
       final int numMetaEntries = in.readInt();
       for (int i = 0; i < numMetaEntries; i++)
       {
@@ -468,41 +467,67 @@ final class Subscription
         sub.meta.put(key, value);
       }
       sub.metaDataValid = createMetaDataHash(sub.meta).equals(sub.getMeta(KEY_META_HASH));
-      return sub;
+    }
+    catch (Throwable t)
+    {
+      // We catch Throwable here in order to return whatever we could retrieve from the meta file
     }
     finally
     {
-      in.close();
+      if (in != null)
+      {
+        try
+        {
+          in.close();
+        }
+        catch (IOException e)
+        {
+          // Ignored
+        }
+      }
     }
+    return sub;
   }
 
-  public void deserializeFilters(final File filtersFile) throws IOException
+  public void deserializeFilters(final File filtersFile)
   {
-    final DataInputStream in = new DataInputStream(new GZIPInputStream(new BufferedInputStream(
-        new FileInputStream(filtersFile))));
+    this.clearFilters();
+    this.filtersValid = false;
+    DataInputStream in = null;
     try
     {
+      in = new DataInputStream(new GZIPInputStream(new BufferedInputStream(
+          new FileInputStream(filtersFile))));
       final int numFilters = in.readInt();
-      if (numFilters == 0)
+      final String filtersHash = in.readUTF();
+      for (int i = 0; i < numFilters; i++)
       {
-        this.filters = null;
+        final int length = in.readInt();
+        final byte[] b = new byte[length];
+        in.readFully(b);
+        this.filters.add(new String(b, Engine.CHARSET_UTF_8));
       }
-      else
-      {
-        this.filters = new HashSet<String>();
-        final String filtersHash = in.readUTF();
-        for (int i = 0; i < numFilters; i++)
-        {
-          this.filters.add(in.readUTF());
-        }
-        this.filtersValid = createFilterHash(new ArrayList<String>(this.filters)).equals(
-            filtersHash);
-        Log.d(TAG, "Filters valid: " + this.filtersValid);
-      }
+      this.filtersValid = createFilterHash(new ArrayList<String>(this.filters)).equals(
+          filtersHash);
+      Log.d(TAG, "Filters valid: " + this.filtersValid);
+    }
+    catch (Throwable t)
+    {
+      // We catch Throwable here in order to load whatever we could retrieve from the filters file
     }
     finally
     {
-      in.close();
+      if (in != null)
+      {
+        try
+        {
+          in.close();
+        }
+        catch (IOException e)
+        {
+          // Ignored
+        }
+      }
     }
   }
 
@@ -514,11 +539,6 @@ final class Subscription
    */
   public Subscription parseLine(String input)
   {
-    if (this.filters == null)
-    {
-      this.filters = new HashSet<String>();
-    }
-
     final String line = input.trim();
     if (!line.isEmpty())
     {
@@ -621,7 +641,7 @@ final class Subscription
           }
           this.meta.put(KEY_DOWNLOAD_COUNT, Long.toString(this.getDownloadCount() + 1));
 
-          this.filters = new HashSet<String>();
+          this.clearFilters();
           this.parseText(text);
         }
       }

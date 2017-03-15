@@ -49,6 +49,7 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.util.Log;
 
 public final class Engine
@@ -77,7 +78,7 @@ public final class Engine
 
   public static final String SUBSCRIPTIONS_EXCEPTIONSURL = "subscriptions_exceptionsurl";
 
-  private static final String URL_ENCODE_CHARSET = "UTF-8";
+  public static final String CHARSET_UTF_8 = "UTF-8";
   private static final String PREFS_KEY_PREVIOUS_VERSION = "key_previous_version";
 
   // The value below specifies an interval of [x, 2*x[, where x =
@@ -440,7 +441,7 @@ public final class Engine
   public static String readFileAsString(InputStream instream) throws IOException
   {
     final StringBuilder sb = new StringBuilder();
-    final BufferedReader r = new BufferedReader(new InputStreamReader(instream, "UTF-8"));
+    final BufferedReader r = new BufferedReader(new InputStreamReader(instream, CHARSET_UTF_8));
     for (int ch = r.read(); ch != -1; ch = r.read())
     {
       sb.append((char) ch);
@@ -451,7 +452,7 @@ public final class Engine
   public static List<String> readLines(InputStream instream) throws IOException
   {
     final ArrayList<String> list = new ArrayList<String>();
-    final BufferedReader r = new BufferedReader(new InputStreamReader(instream, "UTF-8"));
+    final BufferedReader r = new BufferedReader(new InputStreamReader(instream, CHARSET_UTF_8));
     for (String line = r.readLine(); line != null; line = r.readLine())
     {
       list.add(line);
@@ -475,7 +476,7 @@ public final class Engine
       Log.d(TAG, "Creating dummy filter file...");
       dummyFilterFile.getParentFile().mkdirs();
       final BufferedWriter writer = new BufferedWriter(
-          new OutputStreamWriter(new FileOutputStream(dummyFilterFile), "UTF-8"));
+          new OutputStreamWriter(new FileOutputStream(dummyFilterFile), CHARSET_UTF_8));
       try
       {
         writeFilterHeaders(writer);
@@ -536,17 +537,17 @@ public final class Engine
     }
 
     sb.append("addonName=");
-    sb.append(URLEncoder.encode(this.appInfo.addonName, URL_ENCODE_CHARSET));
+    sb.append(URLEncoder.encode(this.appInfo.addonName, CHARSET_UTF_8));
     sb.append("&addonVersion=");
-    sb.append(URLEncoder.encode(this.appInfo.addonVersion, URL_ENCODE_CHARSET));
+    sb.append(URLEncoder.encode(this.appInfo.addonVersion, CHARSET_UTF_8));
     sb.append("&application=");
-    sb.append(URLEncoder.encode(this.appInfo.application, URL_ENCODE_CHARSET));
+    sb.append(URLEncoder.encode(this.appInfo.application, CHARSET_UTF_8));
     sb.append("&applicationVersion=");
-    sb.append(URLEncoder.encode(this.appInfo.applicationVersion, URL_ENCODE_CHARSET));
+    sb.append(URLEncoder.encode(this.appInfo.applicationVersion, CHARSET_UTF_8));
     sb.append("&platform=");
-    sb.append(URLEncoder.encode(this.appInfo.platform, URL_ENCODE_CHARSET));
+    sb.append(URLEncoder.encode(this.appInfo.platform, CHARSET_UTF_8));
     sb.append("&platformVersion=");
-    sb.append(URLEncoder.encode(this.appInfo.platformVersion, URL_ENCODE_CHARSET));
+    sb.append(URLEncoder.encode(this.appInfo.platformVersion, CHARSET_UTF_8));
     sb.append("&lastVersion=");
     sb.append(sub.getVersion());
     sb.append("&downloadCount=");
@@ -711,15 +712,18 @@ public final class Engine
     if (sub.getURL() != null && sub.shouldUpdate(forced))
     {
       final HashMap<String, String> headers = new HashMap<String, String>();
-      final String lastModified = sub.getMeta(Subscription.KEY_HTTP_LAST_MODIFIED);
-      if (lastModified != null)
+      if (sub.isMetaDataValid() && sub.isFiltersValid())
       {
-        headers.put("If-Modified-Since", lastModified);
-      }
-      final String etag = sub.getMeta(Subscription.KEY_HTTP_ETAG);
-      if (etag != null)
-      {
-        headers.put("If-None-Match", etag);
+        final String lastModified = sub.getMeta(Subscription.KEY_HTTP_LAST_MODIFIED);
+        if (!TextUtils.isEmpty(lastModified))
+        {
+          headers.put("If-Modified-Since", lastModified);
+        }
+        final String etag = sub.getMeta(Subscription.KEY_HTTP_ETAG);
+        if (!TextUtils.isEmpty(etag))
+        {
+          headers.put("If-None-Match", etag);
+        }
       }
       Log.d(TAG, headers.toString());
       this.downloader.enqueueDownload(this.createDownloadURL(sub), sub.getId(), headers);

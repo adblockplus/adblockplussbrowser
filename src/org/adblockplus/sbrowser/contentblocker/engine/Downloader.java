@@ -102,7 +102,7 @@ final class Downloader
 
     final StringBuilder sb = new StringBuilder();
     final BufferedReader r = new BufferedReader(new InputStreamReader(connection.getInputStream(),
-        "UTF-8"));
+        Engine.CHARSET_UTF_8));
     try
     {
       for (int ch = r.read(); ch != -1; ch = r.read())

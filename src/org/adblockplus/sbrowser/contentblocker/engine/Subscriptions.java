@@ -174,15 +174,18 @@ final class Subscriptions
       if (s.isEnabled())
       {
         Log.d(TAG, "Adding filters for '" + s.getId() + "'");
-        s.clearFilters();
         s.deserializeFilters(this.getFiltersFile(s));
-        s.getFilters(filters);
+        s.copyFilters(filters);
         s.clearFilters();
+      }
+      if ((!s.isMetaDataValid() || !s.isFiltersValid()) && s.getURL() != null)
+      {
+        this.engine.enqueueDownload(s, true);
       }
     }
 
     final BufferedWriter w = new BufferedWriter(
-        new OutputStreamWriter(new FileOutputStream(output), "UTF-8"));
+        new OutputStreamWriter(new FileOutputStream(output), Engine.CHARSET_UTF_8));
     try
     {
       Log.d(TAG, "Writing " + filters.size() + " filters");
@@ -221,7 +224,6 @@ final class Subscriptions
 
   public static Subscriptions initialize(final Engine engine, final File appFolder,
       final File cacheFolder)
-      throws IOException
   {
     final Subscriptions subs = new Subscriptions(engine, appFolder, cacheFolder);
 
@@ -237,7 +239,10 @@ final class Subscriptions
         if (metaFile.exists())
         {
           final Subscription sub = Subscription.deserializeSubscription(metaFile);
-          subs.subscriptions.put(sub.getId(), sub);
+          if (sub != null)
+          {
+            subs.subscriptions.put(sub.getId(), sub);
+          }
         }
       }
     }
