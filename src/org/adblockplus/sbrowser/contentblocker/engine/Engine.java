@@ -423,17 +423,17 @@ public final class Engine
       engine.subscriptions.persistSubscriptions();
     }
 
-    final File cachedFilterFile = getCachedFilterFile(context);
-    if (cachedFilterFile == null || !cachedFilterFile.exists())
-    {
-      engine.sendUpdateBroadcast();
-    }
-
     engine.handlerThread = new Thread(new EventHandler(engine));
     engine.handlerThread.setDaemon(true);
     engine.handlerThread.start();
 
     engine.downloader = Downloader.create(context, engine);
+
+    final File cachedFilterFile = getCachedFilterFile(context);
+    if (cachedFilterFile == null || !cachedFilterFile.exists())
+    {
+      engine.sendUpdateBroadcast();
+    }
 
     return engine;
   }
