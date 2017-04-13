@@ -31,5 +31,14 @@
     <string name="subscription_disable_social_media">Απενεργοποίηση των κουμπιών για τις πλατφόρμες κοινωνικής δικτύωσης</string>
     <string name="download_settings_wifi">Μόνο σε ασύρματο δίκτυο</string>
     <string name="download_settings_always">Πάντα</string>
+    <string name="whitelisted_websites">Λίστα επιτρεπόμενων ιστοσελίδων</string>
+    <string name="whitelisted_websites_summary">Απενεργοποιήστε τον φραγμό διαφημίσεων για τις συγκεκριμένες ιστοσελίδες</string>
+    <string name="whitelisted_websites_add_button">Προσθέστε μια ιστοσελίδα στη λίστα επιτρεπόμενων</string>
+    <string name="whitelist_website_dialog_title">Προσθέστε την ιστοσελίδα στη λίστα επιτρεπόμενων</string>
+    <string name="whitelist_website_dialog_message">Εισάγετε τη διεύθυνση (URL) της ιστοσελίδας</string>
+    <string name="whitelist_website_dialog_hint">www.someURL.com</string>
+    <string name="whitelist_website_invalid_url_error">Άκυρη διεύθυνση (URL)</string>
+    <string name="whitelist_remove_dialog_title">Αφαιρέστε την ιστοσελίδα από τη λίστα επιτρεπόμενων</string>
+    <string name="whitelist_remove_dialog_message">"Είστε σίγουροι ότι θέλετε να την αφαιρέσετε &lt;b>%1s&lt;/b>?"</string>
 
 </resources>

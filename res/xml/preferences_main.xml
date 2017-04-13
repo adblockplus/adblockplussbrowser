@@ -28,6 +28,13 @@
             android:title="@string/more_blocking_category" />
     </PreferenceScreen>
 
+    <PreferenceScreen
+        android:summary="@string/whitelisted_websites_summary"
+        android:title="@string/whitelisted_websites">
+
+        <org.adblockplus.sbrowser.contentblocker.WhitelistedWebsitesPreferenceCategory/>
+    </PreferenceScreen>
+
     <ListPreference
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

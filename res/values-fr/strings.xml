@@ -31,5 +31,14 @@
     <string name="subscription_disable_social_media">Désactiver les boutons des médias sociaux</string>
     <string name="download_settings_wifi">Sur la Wi-Fi uniquement</string>
     <string name="download_settings_always">Toujours</string>
+    <string name="whitelisted_websites">Sites Web sur liste blanche</string>
+    <string name="whitelisted_websites_summary">Désactiver le blocage des publicités pour les sites Web spécifiés</string>
+    <string name="whitelisted_websites_add_button">Ajouter un site Web à la liste blanche</string>
+    <string name="whitelist_website_dialog_title">Ajouter à la liste blanche</string>
+    <string name="whitelist_website_dialog_message">Saisissez l’URL du site Web</string>
+    <string name="whitelist_website_dialog_hint">www.someURL.com</string>
+    <string name="whitelist_website_invalid_url_error">URL invalide</string>
+    <string name="whitelist_remove_dialog_title">Supprimer le site Web figurant sur la liste blanche</string>
+    <string name="whitelist_remove_dialog_message">"Êtes-vous sûr(e) de vouloir supprimer &lt;b>%1s&lt;/b> ?"</string>
 
 </resources>

@@ -31,5 +31,14 @@
     <string name="subscription_disable_social_media">Sosyal medya düğmelerini devre dışı bırak</string>
     <string name="download_settings_wifi">Sadece Wi-Fi ile bağlıyken</string>
     <string name="download_settings_always">Her zaman</string>
+    <string name="whitelisted_websites">Güvenilir listesindeki web siteleri</string>
+    <string name="whitelisted_websites_summary">Belirtilen web siteleri için reklam engellemeyi devre dışı bırakın</string>
+    <string name="whitelisted_websites_add_button">Bir web sitesini güvenilir listesine ekleyin</string>
+    <string name="whitelist_website_dialog_title">Web sitesini güvenilir listesinde ayarlayın</string>
+    <string name="whitelist_website_dialog_message">Web sitesinin URL\'sini girin</string>
+    <string name="whitelist_website_dialog_hint">www.someURL.com</string>
+    <string name="whitelist_website_invalid_url_error">Geçersiz URL</string>
+    <string name="whitelist_remove_dialog_title">Güvenilir listesindeki web sitesini kaldırın</string>
+    <string name="whitelist_remove_dialog_message">"&lt;b>%1s&lt;/b> kaldırmak istediğinizden emin misiniz?"</string>
 
 </resources>

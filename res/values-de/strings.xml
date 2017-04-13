@@ -31,5 +31,14 @@
     <string name="subscription_disable_social_media">Social Media-Schaltflächen deaktivieren</string>
     <string name="download_settings_wifi">Nur bei WLAN</string>
     <string name="download_settings_always">Immer</string>
+    <string name="whitelisted_websites">Websites auf der Whitelist</string>
+    <string name="whitelisted_websites_summary">Werbeblockierung für die angegebenen Websites deaktivieren</string>
+    <string name="whitelisted_websites_add_button">Website zur Whitelist hinzufügen</string>
+    <string name="whitelist_website_dialog_title">Website auf Whitelist setzen</string>
+    <string name="whitelist_website_dialog_message">Website-URL eingeben</string>
+    <string name="whitelist_website_dialog_hint">www.someURL.com</string>
+    <string name="whitelist_website_invalid_url_error">Ungültige URL</string>
+    <string name="whitelist_remove_dialog_title">Website von der Whitelist entfernen</string>
+    <string name="whitelist_remove_dialog_message">"Möchtest du &lt;b>%1s&lt;/b> wirklich entfernen?"</string>
 
 </resources>

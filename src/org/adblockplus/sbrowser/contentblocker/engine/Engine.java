@@ -26,12 +26,17 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
@@ -154,7 +159,7 @@ public final class Engine
     }
   }
 
-  void requestUpdateBroadcast()
+  public void requestUpdateBroadcast()
   {
     this.lock();
     try
@@ -167,7 +172,7 @@ public final class Engine
     }
   }
 
-  private void sendUpdateBroadcast()
+  private void writeFileAndSendUpdateBroadcast()
   {
     createAndWriteFile();
 
@@ -243,13 +248,14 @@ public final class Engine
     this.engineEvents.add(new DownloadFinishedEvent(id, responseCode, response, headers));
   }
 
-  public void createAndWriteFile()
+  private void createAndWriteFile()
   {
     this.lock();
     try
     {
       Log.d(TAG, "Writing filters...");
       final File filterFile = this.subscriptions.createAndWriteFile();
+      writeWhitelistedWebsites(this.serviceContext, filterFile);
 
       final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.serviceContext);
       final String key = this.serviceContext.getString(R.string.key_cached_filter_path);
@@ -432,7 +438,7 @@ public final class Engine
     final File cachedFilterFile = getCachedFilterFile(context);
     if (cachedFilterFile == null || !cachedFilterFile.exists())
     {
-      engine.sendUpdateBroadcast();
+      engine.writeFileAndSendUpdateBroadcast();
     }
 
     return engine;
@@ -493,6 +499,42 @@ public final class Engine
   {
     writer.write("[Adblock Plus 2.0]\n");
     writer.write("! This file was automatically created.\n");
+  }
+
+  private static void writeWhitelistedWebsites(Context context, File filterFile) throws IOException
+  {
+    Log.d(TAG, "Writing whitelisted websites...");
+    final SharedPreferences prefs =
+        PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+    final String key = context.getString(R.string.key_whitelisted_websites);
+
+    final Set<String> whitelistedWebsites = new TreeSet<String>();
+    whitelistedWebsites.addAll(prefs.getStringSet(key, Collections.<String>emptySet()));
+
+    final BufferedWriter w = new BufferedWriter(
+        new OutputStreamWriter(new FileOutputStream(filterFile, true), CHARSET_UTF_8));
+    try
+    {
+      for (final String url : whitelistedWebsites)
+      {
+        try
+        {
+          final URI uri = new URI(url);
+          final String host = uri.getHost() != null ? uri.getHost() : uri.getPath();
+          w.write("@@||" + host + "^$document");
+          w.write('\n');
+        }
+        catch (URISyntaxException e)
+        {
+          Log.w(TAG, "Failed to parse whitelisted website: " + url);
+          continue;
+        }
+      }
+    }
+    finally
+    {
+      w.close();
+    }
   }
 
   private static File getCachedFilterFile(Context context)
@@ -627,7 +669,7 @@ public final class Engine
             {
               this.engine.nextUpdateBroadcast = Long.MAX_VALUE;
               Log.d(TAG, "Sending update broadcast");
-              this.engine.sendUpdateBroadcast();
+              this.engine.writeFileAndSendUpdateBroadcast();
             }
           }
           finally

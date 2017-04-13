@@ -32,5 +32,14 @@
     <string name="subscription_disable_social_media">Disable social media buttons</string>
     <string name="download_settings_wifi">On Wi-Fi only</string>
     <string name="download_settings_always">Always</string>
+    <string name="whitelisted_websites">Whitelisted websites</string>
+    <string name="whitelisted_websites_summary">Disable ad blocking for the specified websites</string>
+    <string name="whitelisted_websites_add_button">Add a website to the whitelist</string>
+    <string name="whitelist_website_dialog_title">Whitelist website</string>
+    <string name="whitelist_website_dialog_message">Enter the website URL</string>
+    <string name="whitelist_website_dialog_hint">www.someURL.com</string>
+    <string name="whitelist_website_invalid_url_error">Invalid URL</string>
+    <string name="whitelist_remove_dialog_title">Remove whitelisted website</string>
+    <string name="whitelist_remove_dialog_message">"Are you sure you want to remove &lt;b>%1s&lt;/b>?"</string>
 
 </resources>

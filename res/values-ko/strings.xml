@@ -31,5 +31,14 @@
     <string name="subscription_disable_social_media">소셜 미디어 비활성화 버튼</string>
     <string name="download_settings_wifi">Wi-Fi에서만</string>
     <string name="download_settings_always">항상</string>
+    <string name="whitelisted_websites">허용 목록에 추가된 웹사이트</string>
+    <string name="whitelisted_websites_summary">지정 웹사이트에 대하여 광고 차단을 해제함</string>
+    <string name="whitelisted_websites_add_button">허용 목록에 웹사이트 추가</string>
+    <string name="whitelist_website_dialog_title">허용 목록에 웹사이트 추가하기</string>
+    <string name="whitelist_website_dialog_message">웹사이트 URL 입력</string>
+    <string name="whitelist_website_dialog_hint">www.someURL.com</string>
+    <string name="whitelist_website_invalid_url_error">잘못된 URL</string>
+    <string name="whitelist_remove_dialog_title">허용 목록에 추가된 웹사이트 제거</string>
+    <string name="whitelist_remove_dialog_message">"정말 &lt;b>%1s&lt;/b>을(를) 제거할까요?"</string>
 
 </resources>

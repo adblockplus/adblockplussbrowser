@@ -31,5 +31,14 @@
     <string name="subscription_disable_social_media">Desactivar botones de redes sociales</string>
     <string name="download_settings_wifi">Solo con conexión Wi-Fi</string>
     <string name="download_settings_always">Siempre</string>
+    <string name="whitelisted_websites">Páginas web de la lista blanca</string>
+    <string name="whitelisted_websites_summary">Deshabilita el bloqueo de anuncios para las páginas web especificadas</string>
+    <string name="whitelisted_websites_add_button">Añade una página web a la lista blanca</string>
+    <string name="whitelist_website_dialog_title">Incluir página web en lista blanca</string>
+    <string name="whitelist_website_dialog_message">Introduce la URL de la página web</string>
+    <string name="whitelist_website_dialog_hint">www.someURL.com</string>
+    <string name="whitelist_website_invalid_url_error">URL no válida</string>
+    <string name="whitelist_remove_dialog_title">Elimina las páginas web de la lista blanca</string>
+    <string name="whitelist_remove_dialog_message">"¿Seguro que quieres eliminar &lt;b>%1s&lt;/b>?"</string>
 
 </resources>

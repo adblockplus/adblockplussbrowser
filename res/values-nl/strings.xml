@@ -31,5 +31,14 @@
     <string name="subscription_disable_social_media">Knoppen sociale media uitschakelen</string>
     <string name="download_settings_wifi">Alleen bij wifi</string>
     <string name="download_settings_always">Altijd</string>
+    <string name="whitelisted_websites">Websites op witte lijst</string>
+    <string name="whitelisted_websites_summary">Advertentieblokkering uitschakelen voor gespecificeerde websites</string>
+    <string name="whitelisted_websites_add_button">Een website toevoegen aan de witte lijst</string>
+    <string name="whitelist_website_dialog_title">Website op witte lijst</string>
+    <string name="whitelist_website_dialog_message">URL van website invoeren</string>
+    <string name="whitelist_website_dialog_hint">www.someURL.com</string>
+    <string name="whitelist_website_invalid_url_error">Ongeldige URL</string>
+    <string name="whitelist_remove_dialog_title">Website op witte lijst verwijderen</string>
+    <string name="whitelist_remove_dialog_message">"Weet u zeker dat u &lt;b>%1s&lt;/b> wilt verwijderen?"</string>
 
 </resources>

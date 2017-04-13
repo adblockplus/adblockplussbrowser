@@ -31,5 +31,14 @@
     <string name="subscription_disable_social_media">Блокировать кнопки социальных сетей</string>
     <string name="download_settings_wifi">Только на Wi-Fi</string>
     <string name="download_settings_always">Всегда</string>
+    <string name="whitelisted_websites">Белый список сайтов</string>
+    <string name="whitelisted_websites_summary">Отключить блокировку рекламы для выбранных сайтов</string>
+    <string name="whitelisted_websites_add_button">Добавить сайт в белый список</string>
+    <string name="whitelist_website_dialog_title">Добавить сайт в белый список</string>
+    <string name="whitelist_website_dialog_message">Введите URL сайта</string>
+    <string name="whitelist_website_dialog_hint">www.someURL.com</string>
+    <string name="whitelist_website_invalid_url_error">Неверный URL</string>
+    <string name="whitelist_remove_dialog_title">Удалить сайт из белого списка</string>
+    <string name="whitelist_remove_dialog_message">"Вы уверены, что хотите удалить &lt;b>%1s&lt;/b>?"</string>
 
 </resources>
