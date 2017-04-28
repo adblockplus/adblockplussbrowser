@@ -132,7 +132,7 @@ public class UrlInputOpenerPreference extends EditTextPreference implements Text
   {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
     {
-      super.setIcon(android.R.drawable.ic_menu_add);
+      super.setIcon(icon);
     }
   }
 
