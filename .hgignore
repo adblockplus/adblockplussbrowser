@@ -2,11 +2,25 @@ syntax: glob
 
 bin/
 gen/
-local.properties
 ant.properties
+local.properties
 
-#macOS
+# Gradle
+.gradle/
+build/
+
+# IntelliJ / Android Studio
+*.iml
+.idea/
+
+# Eclipse
+.settings/
+.classpath
+.project
+proguard/
+
+# macOS
 .DS_Store
 
-#Linux
+# Linux
 *~

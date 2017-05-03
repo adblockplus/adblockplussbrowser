@@ -1,0 +1,41 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    compileOptions {
+        sourceCompatibility = rootProject.ext.sourceCompatibilityVersion
+        targetCompatibility = rootProject.ext.targetCompatibilityVersion
+    }
+
+    defaultConfig {
+        applicationId "org.adblockplus.adblockplussbrowser"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 9
+        versionName '1.0.4'
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            res.srcDirs = ['res']
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt')
+            lintOptions {
+                disable 'MissingTranslation'
+            }
+        }
+    }
+}
+
+dependencies {
+    compile "com.android.support:support-v4:$rootProject.ext.androidSupportLibraryVersion"
+}
