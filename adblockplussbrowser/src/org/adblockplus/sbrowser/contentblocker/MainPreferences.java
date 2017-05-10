@@ -17,6 +17,10 @@
 
 package org.adblockplus.sbrowser.contentblocker;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import org.adblockplus.sbrowser.contentblocker.engine.Engine;
 import org.adblockplus.sbrowser.contentblocker.engine.EngineService;
 import org.adblockplus.adblockplussbrowser.R;
@@ -39,6 +43,7 @@ public class MainPreferences extends PreferenceActivity implements
     EngineService.OnEngineCreatedCallback, SharedPreferences.OnSharedPreferenceChangeListener
 {
   private static final String TAG = MainPreferences.class.getSimpleName();
+  private static final String SBROWSER_APP_ID = "com.sec.android.app.sbrowser";
   private Engine engine = null;
   private Dialog dialog;
   private int dialogTitleResId;
@@ -125,12 +130,12 @@ public class MainPreferences extends PreferenceActivity implements
               try
               {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="
-                    + Engine.SBROWSER_APP_ID)));
+                    + SBROWSER_APP_ID)));
               }
               catch (final Throwable t)
               {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri
-                    .parse("https://play.google.com/store/apps/details?id=" + Engine.SBROWSER_APP_ID)));
+                    .parse("https://play.google.com/store/apps/details?id=" + SBROWSER_APP_ID)));
               }
             }
           }).create();
@@ -185,8 +190,7 @@ public class MainPreferences extends PreferenceActivity implements
       this.dialog = new AlertDialog.Builder(this)
           .setCancelable(false)
           .setTitle(this.dialogTitleResId)
-          .setMessage(Html.fromHtml(getString(Engine.hasSamsungInternetVersion5OrNewer(MainPreferences.this) ?
-                  R.string.setup_dialog_message_sbrowser_5 : R.string.setup_dialog_message_sbrowser_4)))
+          .setMessage(Html.fromHtml(getString(R.string.setup_dialog_message)))
           .setNeutralButton(R.string.setup_dialog_button, new OnClickListener()
           {
             @Override

@@ -43,13 +43,10 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Pattern;
 
 import org.adblockplus.adblockplussbrowser.R;
-import org.adblockplus.sbrowser.contentblocker.MainPreferences;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -80,7 +77,6 @@ public final class Engine
   public static final String USER_FILTERS_TITLE = "__filters";
   public static final String USER_EXCEPTIONS_TITLE = "__exceptions";
 
-  public static final String SBROWSER_APP_ID = "com.sec.android.app.sbrowser";
   public static final String ACTION_OPEN_SETTINGS = "com.samsung.android.sbrowser.contentBlocker.ACTION_SETTING";
   public static final String ACTION_UPDATE = "com.samsung.android.sbrowser.contentBlocker.ACTION_UPDATE";
   public static final String EASYLIST_URL = "https://easylist-downloads.adblockplus.org/easylist.txt";
@@ -100,9 +96,6 @@ public final class Engine
   public static final long MILLIS_PER_MINUTE = 60 * MILLIS_PER_SECOND;
   public static final long MILLIS_PER_HOUR = 60 * MILLIS_PER_MINUTE;
   public static final long MILLIS_PER_DAY = 24 * MILLIS_PER_HOUR;
-
-  private static final int NO_FLAG = 0;
-  private static final int OLDEST_SAMSUNG_INTERNET_5_VERSIONCODE = 500000000;
 
   private final ReentrantLock accessLock = new ReentrantLock();
   private DefaultSubscriptions defaultSubscriptions;
@@ -162,29 +155,6 @@ public final class Engine
     }
     catch (final Throwable t)
     {
-      return false;
-    }
-  }
-
-  /**
-   * Starting with Samsung Internet 5.0, the way to enable ad blocking has changed. As a result, we
-   * need to check for the version of Samsung Internet and apply text changes to the first run slide.
-   *
-   * @param activityContext
-   * @return a boolean that indicates, if the user has Samsung Internet version 5.x
-   */
-  public static boolean hasSamsungInternetVersion5OrNewer(final Context activityContext)
-  {
-    try
-    {
-      PackageInfo packageInfo = activityContext.getPackageManager().getPackageInfo(SBROWSER_APP_ID, NO_FLAG);
-      return packageInfo.versionCode >= OLDEST_SAMSUNG_INTERNET_5_VERSIONCODE;
-    }
-    catch (PackageManager.NameNotFoundException e)
-    {
-      // Should never happen, as checkAAStatusAndProceed() should not be called if the user
-      // has no compatible SBrowser installed. Nevertheless we have to handle the Exception.
-      Log.d(TAG, "No compatible Samsung Browser found.", e);
       return false;
     }
   }
