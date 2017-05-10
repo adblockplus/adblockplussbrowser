@@ -18,7 +18,7 @@
     <string name="last_update_never">never</string>
     <string name="acceptable_ads_category">Acceptable Ads</string>
     <string name="aa_dialog_title">You\'re in control</string>
-    <string name="aa_dialog_message"><![CDATA[Annoying ads are always blocked, while nonintrusive ads are displayed by default. You can change this setting at any time by tapping the <b>Allow some nonintrusive ads</b> option.]]></string>
+    <string name="aa_dialog_message"><![CDATA[Annoying ads are always blocked, while nonintrusive ads are displayed by default. You can change this setting at any time by tapping the <b>Allow some nonintrusive advertising</b> option.]]></string>
     <string name="aa_dialog_button">Got it</string>
     <string name="sbrowser_dialog_title">You need Samsung Internet</string>
     <string name="sbrowser_dialog_message">Before you can use Adblock Plus, you must install Samsung Internet 4.0 or above.</string>
