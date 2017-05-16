@@ -22,7 +22,6 @@ import org.adblockplus.sbrowser.contentblocker.engine.EngineService;
 import org.adblockplus.adblockplussbrowser.R;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -34,13 +33,16 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.text.Html;
 import android.util.Log;
+import android.view.Gravity;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 public class MainPreferences extends PreferenceActivity implements
     EngineService.OnEngineCreatedCallback, SharedPreferences.OnSharedPreferenceChangeListener
 {
   private static final String TAG = MainPreferences.class.getSimpleName();
   private Engine engine = null;
-  private Dialog dialog;
+  private AlertDialog dialog;
   private int dialogTitleResId;
 
   private SharedPreferences getSharedPreferences()
@@ -197,6 +199,12 @@ public class MainPreferences extends PreferenceActivity implements
           })
           .create();
       this.dialog.show();
+
+      final Button btNeutral = this.dialog.getButton(AlertDialog.BUTTON_NEUTRAL);
+      final LinearLayout.LayoutParams btNeutralLayoutParams = (LinearLayout.LayoutParams) btNeutral.getLayoutParams();
+      btNeutralLayoutParams.width = LinearLayout.LayoutParams.MATCH_PARENT;
+      btNeutralLayoutParams.gravity = Gravity.CENTER;
+      btNeutral.setLayoutParams(btNeutralLayoutParams);
     }
   }
 
