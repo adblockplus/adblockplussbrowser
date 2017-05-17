@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <resources>
 
-    <string name="app_name">Samsung Internet용 Adblock Plus</string>
+    <string name="app_name">삼성 인터넷용 Adblock Plus</string>
     <string name="automatic_updates">자동 업데이트 구성</string>
     <string name="manage_subscriptions">필터 목록 구성</string>
     <string name="manage_subscriptions_summary">광고 차단 언어 변경</string>
     <string name="more_blocking">추가 차단 옵션</string>
     <string name="more_blocking_category">기타 필터 목록</string>
     <string name="more_blocking_summary">추적 및 멀웨어 사이트 비활성화</string>
-    <string name="enabled_subscriptions">다음 웹사이트에서 활성화&#8230;</string>
+    <string name="enabled_subscriptions">다음 웹사이트에서 활성화 &#8230;</string>
     <string name="available_subscriptions">기타 언어</string>
     <string name="initialization_title">초기화</string>
     <string name="initialization_message">초기화 중&#8230;</string>
@@ -17,14 +17,15 @@
     <string name="last_update_never">안 함</string>
     <string name="acceptable_ads_category">허용되는 광고</string>
     <string name="aa_dialog_title">관리 중</string>
-    <string name="aa_dialog_message"><![CDATA[기본적으로 사용자를 방해하지 않는 광고는 표시되고 성가신 광고는 항상 차단됩니다. <b>일부 비침입적 광고 허용</b> 옵션을 구성하여 이 설정을 언제든지 변경할 수 있습니다.]]></string>
+    <string name="aa_dialog_message"><![CDATA[성가신 광고가 항상 차단되며, 비침입적 광고는 기본적으로 표시됩니다. <b>"일부 비침입적 광고 허용"</b> 옵션을 선택하여 언제든지 이 설정을 변경할 수 있습니다.]]></string>
     <string name="aa_dialog_button">확인</string>
-    <string name="sbrowser_dialog_title">Samsung Internet 업데이트</string>
-    <string name="sbrowser_dialog_message"><![CDATA[<p>Adblock Plus를 사용하기 전에 Samsung Internet 4.0으로 업데이트해야 합니다.</p><p>\"업데이트 다운로드\"를 눌러 지금 Samsung Internet을 업데이트하십시오. 다운로드가 완료되면 \"열기\"를 누르십시오. 그런 다음 Adblock Plus를 다시 실행하여 설치를 완료하십시오.</p>]]></string>
-    <string name="sbrowser_dialog_button">업데이트 다운로드</string>
-    <string name="setup_dialog_title">Samsung Internet에서 Adblock Plus 활성화</string>
-    <string name="setup_dialog_message"><![CDATA[<p>1. <b>컨텐츠 차단</b>기능을 활성화합니다.</p><p>2. <b>Adblock Plus</b>를 선택합니다.</p>]]></string>
-    <string name="setup_dialog_button">Samsung Internet 설정 구성</string>
+    <string name="sbrowser_dialog_title">삼성 인터넷이 필요합니다</string>
+    <string name="sbrowser_dialog_message">Adblock Plus를 이용하기 전에 삼성 인터넷 4.0 이상을 설치해야 합니다.</string>
+    <string name="sbrowser_dialog_button">지금 설치</string>
+    <string name="setup_dialog_title">삼성 인터넷에서 Adblock Plus 활성화</string>
+    <string name="setup_dialog_message_sbrowser_4"><![CDATA[1. 삼성 인터넷을 엽니다.<br/>2. <b>"더보기"</b>을 탭하고 <b>"설정"</b>을 선택합니다.<br/>3. <b>"고급"</b>을 선택합니다.<br/>4. <b>"컨텐츠 차단"</b>을 탭합니다.<br/>5. <b>"컨텐츠 차단"</b> 기능이 활성화됩니다.<br/>6. 삼성 인터넷용 Adblock Plus를 선택합니다.]]></string>
+    <string name="setup_dialog_message_sbrowser_5"><![CDATA[1. 삼성 인터넷을 엽니다.<br/>2. &nbsp; <b>&#8942;</b> &nbsp; 을 탭하고<b>"확장 기능"</b>을 선택합니다.<br/>3. <b>"콘텐츠 차단 기능"</b>를 탭합니다.<br/>4. 삼성 인터넷용 Adblock Plus를 선택합니다.]]></string>
+    <string name="setup_dialog_button">삼성 인터넷 구성</string>
     <string name="subscription_disable_tracking">추적 비활성화</string>
     <string name="subscription_disable_malware">멀웨어 도메인 비활성화</string>
     <string name="subscription_disable_anti_adblock">광고 방지 차단 메시지 비활성화</string>
@@ -39,6 +40,6 @@
     <string name="whitelist_website_dialog_hint">www.someURL.com</string>
     <string name="whitelist_website_invalid_url_error">잘못된 URL</string>
     <string name="whitelist_remove_dialog_title">허용 목록에 추가된 웹사이트 제거</string>
-    <string name="whitelist_remove_dialog_message">"정말 &lt;b>%1s&lt;/b>을(를) 제거할까요?"</string>
+    <string name="whitelist_remove_dialog_message">정말 &lt;b>%1s&lt;/b>을(를) 제거할까요?</string>
 
 </resources>

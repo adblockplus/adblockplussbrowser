@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <resources>
 
     <string name="app_name">Adblock Plus para Samsung Internet</string>
@@ -8,7 +8,7 @@
     <string name="more_blocking">Mais opções de bloqueio</string>
     <string name="more_blocking_category">Outras listas de filtros</string>
     <string name="more_blocking_summary">Desativar sites de rastreio e malware</string>
-    <string name="enabled_subscriptions">Ativar para sites em&#8230;</string>
+    <string name="enabled_subscriptions">Ativar para sites em &#8230;</string>
     <string name="available_subscriptions">Outros idiomas</string>
     <string name="initialization_title">Inicialização</string>
     <string name="initialization_message">A inicializar&#8230;</string>
@@ -17,14 +17,15 @@
     <string name="last_update_never">nunca</string>
     <string name="acceptable_ads_category">Anúncios Aceitáveis</string>
     <string name="aa_dialog_title">O controlo é seu</string>
-    <string name="aa_dialog_message"><![CDATA[Os anúncios irritantes estão sempre bloqueados, enquanto os anúncios não intrusivos são apresentados por predefinição. Pode alterar estas definições a qualquer momento configurando a opção <b>Permitir alguns anúncios não intrusivos</b>.]]></string>
+    <string name="aa_dialog_message"><![CDATA[Os anúncios irritantes são sempre bloqueados, enquanto os anúncios não intrusivos são apresentados por defeito. Pode alterar esta definição quando quiser ao tocar na opção <b>Permitir alguma publicidade não-invasiva</b>.]]></string>
     <string name="aa_dialog_button">Percebido</string>
-    <string name="sbrowser_dialog_title">Atualizar Samsung Internet</string>
-    <string name="sbrowser_dialog_message"><![CDATA[<p>Antes de utilizar o Adblock Plus, deve atualizar para Samsung Internet 4.0.</p><p>Toque em \"Obter atualização\" para atualizar o Samsung Internet agora. Após a transferência, toque em \"Abrir\". Em seguida, reinicie o Adblock Plus para concluir a instalação.</p>]]></string>
-    <string name="sbrowser_dialog_button">Obter atualização</string>
-    <string name="setup_dialog_title">Ativar Adblock Plus em Samsung Internet</string>
-    <string name="setup_dialog_message"><![CDATA[<p>1. Ativar a funcionalidade <b>Bloquear conteúdo</b>.</p><p>2. Selecionar <b>Adblock Plus</b>.</p>]]></string>
-    <string name="setup_dialog_button">Configurar as definições de Samsung Internet</string>
+    <string name="sbrowser_dialog_title">Necessita do Samsung Internet</string>
+    <string name="sbrowser_dialog_message">Antes de poder usar o Adblock Plus, deve instalar Samsung Internet 4.0 ou superior.</string>
+    <string name="sbrowser_dialog_button">Instalar agora</string>
+    <string name="setup_dialog_title">Ativar Adblock Plus no Samsung Internet</string>
+    <string name="setup_dialog_message_sbrowser_4"><![CDATA[1. Abra o Samsung Internet.<br/>2. Toque em <b>Mais</b> e selecione <b>Definições</b>.<br/>3. Toque em <b>Avançado</b>.<br/>4. Toque em <b>Bloquear conteúdo</b>.<br/>5. Ative a funcionalidade <b>Bloquear conteúdo</b>.<br/>6. Selecione Adblock Plus para Samsung Internet.]]></string>
+    <string name="setup_dialog_message_sbrowser_5"><![CDATA[1. Abra o Samsung Internet.<br/>2. Toque em &nbsp; <b>&#8942;</b> &nbsp; y selecione <b>Extensões</b>.<br/>3. Toque em <b>Bloqueadores de conteúdo</b>.<br/>4. Selecione Adblock Plus para Samsung Internet.]]></string>
+    <string name="setup_dialog_button">Configure o Samsung Internet</string>
     <string name="subscription_disable_tracking">Desativar rastreio</string>
     <string name="subscription_disable_malware">Desativar domínios de malware</string>
     <string name="subscription_disable_anti_adblock">Desativar mensagens antibloqueio de anúncios</string>
@@ -39,6 +40,6 @@
     <string name="whitelist_website_dialog_hint">www.someURL.com</string>
     <string name="whitelist_website_invalid_url_error">URL inválido</string>
     <string name="whitelist_remove_dialog_title">Remover site Web na lista branca</string>
-    <string name="whitelist_remove_dialog_message">"Tem a certeza de que pretende remover &lt;b>%1s&lt;/b>?"</string>
+    <string name="whitelist_remove_dialog_message">Tem a certeza de que pretende remover &lt;b>%1s&lt;/b>?</string>
 
 </resources>

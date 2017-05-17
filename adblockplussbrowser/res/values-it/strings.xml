@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <resources>
 
-    <string name="app_name">Adblock Plus in Samsung Internet</string>
+    <string name="app_name">Adblock Plus per Samsung Internet</string>
     <string name="automatic_updates">Configura aggiornamenti automatici</string>
     <string name="manage_subscriptions">Configura i tuoi elenchi filtri</string>
     <string name="manage_subscriptions_summary">Modifica le lingue del blocco annunci</string>
     <string name="more_blocking">Altre opzioni di blocco</string>
     <string name="more_blocking_category">Altri elenchi filtri</string>
     <string name="more_blocking_summary">Disattiva i siti con malware e strumenti di tracciamento</string>
-    <string name="enabled_subscriptions">Attiva per i siti Web in&#8230;</string>
+    <string name="enabled_subscriptions">Attiva per i siti Web in &#8230;</string>
     <string name="available_subscriptions">Altre lingue</string>
     <string name="initialization_title">Inizializzazione</string>
     <string name="initialization_message">Inizializzazione in corso&#8230;</string>
@@ -17,14 +17,15 @@
     <string name="last_update_never">mai</string>
     <string name="acceptable_ads_category">Annunci Accettabili</string>
     <string name="aa_dialog_title">Sei tu a decidere</string>
-    <string name="aa_dialog_message"><![CDATA[Gli annunci fastidiosi vengono sempre bloccati, invece gli annunci non invasivi vengono visualizzati in maniera predefinita. Puoi modificare questa impostazione in qualunque momento configurando l\'opzione <b>Consenti pubblicità non invasive</b>.]]></string>
+    <string name="aa_dialog_message"><![CDATA[Gli annunci fastidiosi vengono sempre bloccati, invece gli annunci non invasivi vengono visualizzati in maniera predefinita. Puoi modificare questa impostazione in qualunque momento sfiorando l\'opzione <b>Consenti annunci non invasivi</b>.]]></string>
     <string name="aa_dialog_button">Ho capito</string>
-    <string name="sbrowser_dialog_title">Aggiorna Samsung Internet</string>
-    <string name="sbrowser_dialog_message"><![CDATA[<p>Prima di utilizzare Adblock Plus, completa l\'aggiornamento a Samsung Internet 4.0.</p><p>Tocca \"Ottieni aggiornamento\" per aggiornare Samsung Internet immediatamente. Al termine del download, tocca \"Apri\". Quindi avvia nuovamente Adblock Plus per terminare l\'installazione.</p>]]></string>
-    <string name="sbrowser_dialog_button">Ottieni aggiornamento</string>
-    <string name="setup_dialog_title">Attiva Adblock Plus in Samsung Internet</string>
-    <string name="setup_dialog_message"><![CDATA[<p>1. Attiva la funzionalità <b>Blocca contenuto</b>.</p><p>2. Seleziona <b>Adblock Plus</b>.</p>]]></string>
-    <string name="setup_dialog_button">Configura le impostazioni di Samsung Internet</string>
+    <string name="sbrowser_dialog_title">Hai bisogno di Samsung Internet</string>
+    <string name="sbrowser_dialog_message">Prima di poter utilizzare Adblock Plus, devi installare Samsung Internet 4.0 o superiore.</string>
+    <string name="sbrowser_dialog_button">Installa ora</string>
+    <string name="setup_dialog_title">Abilitare Adblock Plus in Samsung Internet</string>
+    <string name="setup_dialog_message_sbrowser_4"><![CDATA[1. Apri Samsung Internet.<br/>2. Sfiora <b>Altro</b> e seleziona <b>Impostazioni</b>.<br/>3. Sfiora <b>Avanzate</b>.<br/>4. Sfiora <b>Blocca contenuto</b>.<br/>5. Attiva la funzionalità <b>Blocca contenuto</b>.<br/>6. Seleziona Adblock Plus per Samsung Internet.]]></string>
+    <string name="setup_dialog_message_sbrowser_5"><![CDATA[1. Apri Samsung Internet.<br/>2. Sfiora &nbsp; <b>&#8942;</b> &nbsp; e seleziona <b>Estensioni</b>.<br/>3. Sfiora <b>Blocco dei contenuti</b>.<br/>4. Seleziona Adblock Plus per Samsung Internet.]]></string>
+    <string name="setup_dialog_button">Configura Samsung Internet</string>
     <string name="subscription_disable_tracking">Disattiva tracciamento</string>
     <string name="subscription_disable_malware">Disattiva domini con malware</string>
     <string name="subscription_disable_anti_adblock">Disattiva messaggi anti-blocco annunci</string>
@@ -39,6 +40,6 @@
     <string name="whitelist_website_dialog_hint">www.someURL.com</string>
     <string name="whitelist_website_invalid_url_error">URL non valido</string>
     <string name="whitelist_remove_dialog_title">Rimuovi sito web dalla lista bianca</string>
-    <string name="whitelist_remove_dialog_message">"Sei sicuro di voler rimuovere &lt;b>%1s&lt;/b>?"</string>
+    <string name="whitelist_remove_dialog_message">Sei sicuro di voler rimuovere &lt;b>%1s&lt;/b>?</string>
 
 </resources>

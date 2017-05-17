@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <resources>
 
     <string name="app_name">Adblock Plus voor Samsung Internet</string>
@@ -8,7 +8,7 @@
     <string name="more_blocking">Meer blokkeeropties</string>
     <string name="more_blocking_category">Andere filterlijsten</string>
     <string name="more_blocking_summary">Tracering en malwaresites uitschakelen</string>
-    <string name="enabled_subscriptions">Actief voor websites in het&#8230;</string>
+    <string name="enabled_subscriptions">Actief voor websites in het &#8230;</string>
     <string name="available_subscriptions">Andere talen</string>
     <string name="initialization_title">Initialisatie</string>
     <string name="initialization_message">Initialiseren&#8230;</string>
@@ -17,14 +17,15 @@
     <string name="last_update_never">nooit</string>
     <string name="acceptable_ads_category">Acceptabele advertenties</string>
     <string name="aa_dialog_title">U hebt de touwtjes in handen</string>
-    <string name="aa_dialog_message"><![CDATA[Vervelende advertenties worden altijd geblokkeerd, terwijl niet-opdringerige advertenties standaard worden weergegeven. U kunt deze instelling op elk gewenst moment wijzigen via het configureren van de optie <b>Enkele niet-opdringerige advertenties toestaan</b>.]]></string>
+    <string name="aa_dialog_message"><![CDATA[Vervelende advertenties worden altijd geblokkeerd, terwijl niet-opdringerige advertenties standaard worden weergegeven. U kunt deze instelling op elk gewenst moment wijzigen door op de optie <b>Enkele niet-opdringerige advertenties toestaan</b> tikken.]]></string>
     <string name="aa_dialog_button">Duidelijk</string>
-    <string name="sbrowser_dialog_title">Samsung Internet bijwerken</string>
-    <string name="sbrowser_dialog_message"><![CDATA[<p>Voordat u Adblock Plus kunt gebruiken, moet u een update naar Samsung Internet 4.0 uitvoeren.</p><p>Tik op \"Update ophalen\" om Samsung Internet nu bij te werken. Tik na het downloaden op \"Openen\". Start Adblock Plus opnieuw op om de installatie te voltooien.</p>]]></string>
-    <string name="sbrowser_dialog_button">Update ophalen</string>
-    <string name="setup_dialog_title">Adblock Plus in Samsung Internet inschakelen</string>
-    <string name="setup_dialog_message"><![CDATA[<p>1. Schakel de functionaliteit <b>Inhoud blokkeren</b> in.</p><p>2. Selecteer <b>Adblock Plus</b>.</p>]]></string>
-    <string name="setup_dialog_button">Instellingen Samsung Internet configureren</string>
+    <string name="sbrowser_dialog_title">U hebt Samsung Internet nodig</string>
+    <string name="sbrowser_dialog_message">Voordat u Adblock Plus kunt gebruiken, moet u Samsung Internet 4.0 of hoger installeren.</string>
+    <string name="sbrowser_dialog_button">Nu installeren</string>
+    <string name="setup_dialog_title">Schakel Adblock Plus in in Samsung Internet</string>
+    <string name="setup_dialog_message_sbrowser_4"><![CDATA[1. Open Samsung Internet.<br/>2. Tik op <b>Meer</b> en selecteer <b>Instellingen</b>.<br/>3. Tik op <b>Geavanceerd</b>.<br/>4. Tik op <b>Inhoud blokkeren</b>.<br/>5. Activeer de functionaliteit <b>Inhoud blokkeren</b>.<br/>6. Selecteer Adblock Plus voor Samsung Internet.]]></string>
+    <string name="setup_dialog_message_sbrowser_5"><![CDATA[1. Open Samsung Internet.<br/>2. Tik op &nbsp; <b>&#8942;</b> &nbsp; en selecteer <b>Extensies</b>.<br/>3. Tik op <b>Inhoudblokkeringen</b>.<br/>4. Selecteer Adblock Plus voor Samsung Internet.]]></string>
+    <string name="setup_dialog_button">Configureer Samsung Internet</string>
     <string name="subscription_disable_tracking">Tracering uitschakelen</string>
     <string name="subscription_disable_malware">Malwaredomeinen uitschakelen</string>
     <string name="subscription_disable_anti_adblock">Anti-advertentieblokkeringsberichten uitschakelen</string>
@@ -39,6 +40,6 @@
     <string name="whitelist_website_dialog_hint">www.someURL.com</string>
     <string name="whitelist_website_invalid_url_error">Ongeldige URL</string>
     <string name="whitelist_remove_dialog_title">Website op witte lijst verwijderen</string>
-    <string name="whitelist_remove_dialog_message">"Weet u zeker dat u &lt;b>%1s&lt;/b> wilt verwijderen?"</string>
+    <string name="whitelist_remove_dialog_message">Weet u zeker dat u &lt;b>%1s&lt;/b> wilt verwijderen?</string>
 
 </resources>

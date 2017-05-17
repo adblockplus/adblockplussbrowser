@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <resources>
 
     <string name="app_name">Adblock Plus dla Samsung Internet</string>
@@ -11,20 +11,21 @@
     <string name="enabled_subscriptions">Aktywny dla witryn w &#8230;</string>
     <string name="available_subscriptions">Inne języki</string>
     <string name="initialization_title">Inicjalizacja</string>
-    <string name="initialization_message">Trwa inicjalizacja &#8230;</string>
+    <string name="initialization_message">Trwa inicjalizacja&#8230;</string>
     <string name="enable_acceptable_ads">Zezwalaj na niektóre na nieinwazyjne reklamy</string>
     <string name="last_update">Zaktualizowano:</string>
     <string name="last_update_never">nigdy</string>
     <string name="acceptable_ads_category">Akceptowalne reklamy</string>
     <string name="aa_dialog_title">Masz kontrolę</string>
-    <string name="aa_dialog_message"><![CDATA[Irytujące reklamy są zawsze blokowane, a nieinwazyjne reklamy są domyślnie wyświetlane. To ustawienie można zmienić w dowolnym momencie, konfigurując opcję <b>Zezwalaj na niektóre nieinwazyjne reklamy</b>.]]></string>
+    <string name="aa_dialog_message"><![CDATA[Irytujące reklamy są zawsze blokowane, a nieinwazyjne reklamy są domyślnie wyświetlane. To ustawienie można zmienić w dowolnym momencie, wybierając opcję <b>Zezwalaj na niektóre nieinwazyjne reklamy</b>.]]></string>
     <string name="aa_dialog_button">Rozumiem</string>
-    <string name="sbrowser_dialog_title">Zaktualizuj Samsung Internet</string>
-    <string name="sbrowser_dialog_message"><![CDATA[<p>Aby korzystać z Adblock Plus, należy zaktualizować przeglądarkę Samsung Internet do wersji 4.0.</p><p>Dotknij przycisku \"Pobierz aktualizację\", aby zaktualizować przeglądarkę Samsung Internet teraz. Po ukończeniu pobierania dotknij przycisku \"Otwórz\". Następnie uruchom ponownie Adblock Plus, aby ukończyć instalację.</p>]]></string>
-    <string name="sbrowser_dialog_button">Pobierz aktualizację</string>
+    <string name="sbrowser_dialog_title">Potrzebujesz przeglądarki Samsung Internet</string>
+    <string name="sbrowser_dialog_message">Aby móc korzystać z aplikacji Adblock Plus, należy zainstalować przeglądarkę Samsung Internet 4.0 lub nowszą.</string>
+    <string name="sbrowser_dialog_button">Zainstaluj teraz</string>
     <string name="setup_dialog_title">Włącz Adblock Plus w Samsung Internet</string>
-    <string name="setup_dialog_message"><![CDATA[<p>1. Włącz funkcję <b>Blokuj zawartość</b>.</p><p>2. Wybierz <b>Adblock Plus</b>.</p>]]></string>
-    <string name="setup_dialog_button">Skonfiguruj ustawienia Samsung Internet</string>
+    <string name="setup_dialog_message_sbrowser_4"><![CDATA[1. Otwórz przeglądarkę Samsung Internet.<br/>2. Dotknij <b>Więcej</b> i wybierz <b>Ustawienia</b>.<br/>3. Dotknij <b>Zaawansowane</b>.<br/>4. Dotknij <b>Blokuj zawartość</b>.<br/>5. Aktywuj funkcję <b>Blokuj zawartość</b>.<br/>6. Wybierz Adblock Plus dla Samsung Internet.]]></string>
+    <string name="setup_dialog_message_sbrowser_5"><![CDATA[1. Otwórz przeglądarkę Samsung Internet.<br/>2. Dotknij &nbsp; <b>&#8942;</b> &nbsp; i wybierz <b>Rozszerzenia</b>.<br/>3. Dotknij <b>Blokowanie zawartości</b>.<br/>4. Wybierz Adblock Plus dla Samsung Internet.]]></string>
+    <string name="setup_dialog_button">Konfigurowanie przeglądarki Samsung Internet</string>
     <string name="subscription_disable_tracking">Wyłącz śledzenie</string>
     <string name="subscription_disable_malware">Wyłącz złośliwe domeny</string>
     <string name="subscription_disable_anti_adblock">Wyłącz komunikaty dotyczące blokowania reklam</string>
@@ -33,12 +34,12 @@
     <string name="download_settings_always">Zawsze</string>
     <string name="whitelisted_websites">Strony internetowe na białej liście</string>
     <string name="whitelisted_websites_summary">Wyłącz blokowanie reklam dla określonych stron internetowych</string>
-    <string name="whitelisted_websites_add_button">Dodaj strony internetowe na białą listę.</string>
-    <string name="whitelist_website_dialog_title">Dodaj stronę internetową do białej ilsty</string>
+    <string name="whitelisted_websites_add_button">Dodaj strony internetowe na białą listę</string>
+    <string name="whitelist_website_dialog_title">Dodaj stronę internetową do białej listy</string>
     <string name="whitelist_website_dialog_message">Podaj adres URL strony internetowej</string>
     <string name="whitelist_website_dialog_hint">www.someURL.com</string>
     <string name="whitelist_website_invalid_url_error">Niepoprawny adres URL</string>
     <string name="whitelist_remove_dialog_title">Usuń stronę internetową z białej listy</string>
-    <string name="whitelist_remove_dialog_message">"Czy na pewno chcesz usunąć &lt;b>%1s&lt;/b>?"</string>
+    <string name="whitelist_remove_dialog_message">Czy na pewno chcesz usunąć &lt;b>%1s&lt;/b>?</string>
 
 </resources>

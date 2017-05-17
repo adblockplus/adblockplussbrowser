@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <resources>
 
     <string name="app_name">Samsung Internet için Adblock Plus</string>
@@ -8,7 +8,7 @@
     <string name="more_blocking">Daha fazla engelleme seçeneği</string>
     <string name="more_blocking_category">Diğer filtre listeleri</string>
     <string name="more_blocking_summary">İzleme ve kötü amaçlı yazılım sitelerini devre dışı bırakma</string>
-    <string name="enabled_subscriptions">Aşağıdaki dillerdeki web siteleri için etkinleştir&#8230;</string>
+    <string name="enabled_subscriptions">Aşağıdaki dillerdeki web siteleri için etkinleştir &#8230;</string>
     <string name="available_subscriptions">Diğer Diller</string>
     <string name="initialization_title">Başlatma</string>
     <string name="initialization_message">Başlatılıyor&#8230;</string>
@@ -17,14 +17,15 @@
     <string name="last_update_never">hiçbir zaman</string>
     <string name="acceptable_ads_category">Kabul edilebilir reklamlar</string>
     <string name="aa_dialog_title">Kontrol sizde</string>
-    <string name="aa_dialog_message"><![CDATA[Rahatsız edici reklamlar her zaman engellenir; ancak rahatsız edici olmayan reklamlar görüntülenir. Bu ayarı istediğiniz zaman <b>Rahatsız etmeyen bazı reklamlara izin ver</b> seçeneğini kullanarak değiştirebilirsiniz.]]></string>
+    <string name="aa_dialog_message"><![CDATA[Rahatsız edici reklamlar her zaman engellenir; ancak rahatsız edici olmayan reklamlar görüntülenir. Bu ayarı istediğiniz zaman <b>Rahatsız etmeyen bazı reklamlara izin ver</b> seçeneğini dokunarak değiştirebilirsiniz.]]></string>
     <string name="aa_dialog_button">Anladım</string>
-    <string name="sbrowser_dialog_title">Samsung Internet\'i güncelleştir</string>
-    <string name="sbrowser_dialog_message"><![CDATA[<p>Adblock Plus\'ı kullanabilmeniz için ilk önce Samsung Internet 4.0 güncelleştirmesini yüklemeniz gerekir.</p><p>Samsung Internet\'i hemen güncelleştirmek için \"Güncelleştirmeyi indir\" seçeneğine dokunun. Güncelleştirmeyi indirdikten sonra \"AÇ\" seçeneğine dokunun.  Ardından, yükleme işlemini tamamlamak için Adblock Plus\'ı yeniden başlatın.</p>]]></string>
-    <string name="sbrowser_dialog_button">Güncelleştirmeyi indir</string>
+    <string name="sbrowser_dialog_title">Samsung Internet gereklidir</string>
+    <string name="sbrowser_dialog_message">Adblock Plus\'u yüklemeden önce Samsun Internet\'in 4.0 veya daha yeni bir sürümünü yüklemeniz gerekir.</string>
+    <string name="sbrowser_dialog_button">Şimdi yükle</string>
     <string name="setup_dialog_title">Samsung Internet\'e Adblock Plus\'ı etkinleştir</string>
-    <string name="setup_dialog_message"><![CDATA[<p>1. <b>İçeriği engelle</b> işlevini etkinleştirin.</p><p>2. <b>Adblock Plus</b> seçeneğini seçin.</p>]]></string>
-    <string name="setup_dialog_button">Samsung Internet ayarlarını yapılandır</string>
+    <string name="setup_dialog_message_sbrowser_4"><![CDATA[1. Samsung Internet\'i açın.<br/>2. <b>Dha fzla</b> seçeneğine dokunun ve <b>Ayarlar</b> seçeneğini seçin.<br/>3. <b>Gelişmiş</b> seçeneğine dokunun.<br/>4. <b>İçeriği engelle</b> seçeneğine dokunun.<br/>5. <b>İçeriği engelleme</b> işlevini etkinleştirin.<br/>6. Samsung Internet için Adblock Plus\'ı seçin.]]></string>
+    <string name="setup_dialog_message_sbrowser_5"><![CDATA[1. Samsung Internet\'i açın.<br/>2. &nbsp; <b>&#8942;</b> &nbsp; seçeneğine dokunun ve <b>Uzantılar</b> seçeneğini seçin.<br/>3. <b>İçerik engelleyiciler</b> seçeneğine dokunun.<br/>4. Samsung Internet için Adblock Plus\'ı seçin.]]></string>
+    <string name="setup_dialog_button">Samsung Internet\'i yapılandırma</string>
     <string name="subscription_disable_tracking">İzlemeyi devre dışı bırak</string>
     <string name="subscription_disable_malware">Kötü amaçlı yazılımlı etki alanlarını devre dışı bırak</string>
     <string name="subscription_disable_anti_adblock">Anti-reklam engelleme mesajlarını devre dışı bırak</string>
@@ -39,6 +40,6 @@
     <string name="whitelist_website_dialog_hint">www.someURL.com</string>
     <string name="whitelist_website_invalid_url_error">Geçersiz URL</string>
     <string name="whitelist_remove_dialog_title">Güvenilir listesindeki web sitesini kaldırın</string>
-    <string name="whitelist_remove_dialog_message">"&lt;b>%1s&lt;/b> kaldırmak istediğinizden emin misiniz?"</string>
+    <string name="whitelist_remove_dialog_message">&lt;b>%1s&lt;/b> kaldırmak istediğinizden emin misiniz?</string>
 
 </resources>
