@@ -38,7 +38,7 @@ import java.util.TreeSet;
 
 public class WhitelistedWebsitesPreferenceCategory extends PreferenceCategory
 {
-  private final Set<String> whitelistedWebsites = new TreeSet<String>();
+  private final Set<String> whitelistedWebsites = new TreeSet<>();
   private Engine engine;
 
   public WhitelistedWebsitesPreferenceCategory(Context context, AttributeSet attrs)

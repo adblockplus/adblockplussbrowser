@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -42,8 +43,8 @@ final class Downloader
   private final Engine engine;
   private final ReentrantLock accessLock = new ReentrantLock();
   private Thread downloaderThread;
-  private LinkedBlockingQueue<DownloadJob> downloadJobs = new LinkedBlockingQueue<DownloadJob>();
-  private HashSet<String> enqueuedIds = new HashSet<String>();
+  private LinkedBlockingQueue<DownloadJob> downloadJobs = new LinkedBlockingQueue<>();
+  private HashSet<String> enqueuedIds = new HashSet<>();
   private boolean downloaderEnabled = true;
 
   private Downloader(final Engine engine)
@@ -101,19 +102,14 @@ final class Downloader
     }
 
     final StringBuilder sb = new StringBuilder();
-    final BufferedReader r = new BufferedReader(new InputStreamReader(connection.getInputStream(),
-        Engine.CHARSET_UTF_8));
-    try
+    try (final BufferedReader r = new BufferedReader(new InputStreamReader(
+        connection.getInputStream(), StandardCharsets.UTF_8)))
     {
       for (int ch = r.read(); ch != -1; ch = r.read())
       {
         sb.append((char) ch);
       }
       job.responseText = sb.toString();
-    }
-    finally
-    {
-      r.close();
     }
   }
 
@@ -160,7 +156,7 @@ final class Downloader
     public void run()
     {
       Log.d(TAG, "Handler thread started");
-      final LinkedBlockingQueue<DownloadJob> reQueue = new LinkedBlockingQueue<DownloadJob>();
+      final LinkedBlockingQueue<DownloadJob> reQueue = new LinkedBlockingQueue<>();
       boolean interrupted = false;
       while (!interrupted)
       {
@@ -249,11 +245,11 @@ final class Downloader
   {
     private final URL url;
     private final String id;
-    private final HashMap<String, String> headers = new HashMap<String, String>();
+    private final HashMap<String, String> headers = new HashMap<>();
     private int retryCount = 0;
 
     private int responseCode = 0;
-    private HashMap<String, String> responseHeaders = new HashMap<String, String>();
+    private HashMap<String, String> responseHeaders = new HashMap<>();
     private String responseText = null;
 
     public DownloadJob(final URL url, final String id, final Map<String, String> headers)

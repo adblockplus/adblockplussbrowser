@@ -57,7 +57,7 @@ public class MoreBlockingPreferenceCategory extends PreferenceCategory implement
       "https://easylist-downloads.adblockplus.org/fanboy-social.txt"
   };
 
-  private static final HashMap<String, Integer> URL_TO_RES_ID_MAP = new HashMap<String, Integer>();
+  private static final HashMap<String, Integer> URL_TO_RES_ID_MAP = new HashMap<>();
 
   static
   {

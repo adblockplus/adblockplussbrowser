@@ -35,11 +35,11 @@ import org.xml.sax.helpers.DefaultHandler;
 
 final class DefaultSubscriptions
 {
-  private final List<DefaultSubscriptionInfo> subscriptions = new ArrayList<DefaultSubscriptionInfo>();
-  private final List<DefaultSubscriptionInfo> linearSubscriptions = new ArrayList<DefaultSubscriptionInfo>();
-  private final HashMap<String, DefaultSubscriptionInfo> urlMap = new HashMap<String, DefaultSubscriptionInfo>();
-  private final List<DefaultSubscriptionInfo> adsSubscriptions = new ArrayList<DefaultSubscriptionInfo>();
-  private final List<DefaultSubscriptionInfo> otherSubscriptions = new ArrayList<DefaultSubscriptionInfo>();
+  private final List<DefaultSubscriptionInfo> subscriptions = new ArrayList<>();
+  private final List<DefaultSubscriptionInfo> linearSubscriptions = new ArrayList<>();
+  private final HashMap<String, DefaultSubscriptionInfo> urlMap = new HashMap<>();
+  private final List<DefaultSubscriptionInfo> adsSubscriptions = new ArrayList<>();
+  private final List<DefaultSubscriptionInfo> otherSubscriptions = new ArrayList<>();
 
   private DefaultSubscriptions initialize()
   {
@@ -70,7 +70,7 @@ final class DefaultSubscriptions
 
   public List<Subscription> createSubscriptions() throws IOException
   {
-    final ArrayList<Subscription> subs = new ArrayList<Subscription>();
+    final ArrayList<Subscription> subs = new ArrayList<>();
     for (DefaultSubscriptionInfo info : this.linearSubscriptions)
     {
       if (!info.getUrl().isEmpty())
@@ -126,14 +126,9 @@ final class DefaultSubscriptions
       parser.parse(in, handler);
       return handler.subscriptions.initialize();
     }
-    catch (final ParserConfigurationException e)
+    catch (final ParserConfigurationException | SAXException e)
     {
-      throw new IOException("ParserConfigurationException: " + e.getMessage());
-    }
-    catch (final SAXException e)
-    {
-      e.printStackTrace();
-      throw new IOException("SAXException: " + e.getMessage());
+      throw new IOException(e.getClass().getSimpleName() + ": " + e.getMessage());
     }
   }
 
@@ -149,7 +144,7 @@ final class DefaultSubscriptions
     private final static String KEY_VARIANT = "variant";
 
     private final DefaultSubscriptions subscriptions = new DefaultSubscriptions();
-    private final LinkedList<DefaultSubscriptionInfo> subscriptionStack = new LinkedList<DefaultSubscriptionInfo>();
+    private final LinkedList<DefaultSubscriptionInfo> subscriptionStack = new LinkedList<>();
     private DefaultSubscriptionInfo subscription = null;
     private DefaultSubscriptionInfo variant = null;
 

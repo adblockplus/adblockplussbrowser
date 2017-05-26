@@ -52,7 +52,7 @@ public class ListedSubscriptionsPreferenceCategory extends PreferenceCategory im
       "he", "עברית"
   };
 
-  private static final HashMap<String, String> LANGUAGE_TRANSLATION_MAP = new HashMap<String, String>();
+  private static final HashMap<String, String> LANGUAGE_TRANSLATION_MAP = new HashMap<>();
 
   static
   {
@@ -91,7 +91,7 @@ public class ListedSubscriptionsPreferenceCategory extends PreferenceCategory im
     this.engine = engine;
     this.isEnabledView = this.getTitleRes() == R.string.enabled_subscriptions;
 
-    final HashMap<String, Locale> localeMap = new HashMap<String, Locale>();
+    final HashMap<String, Locale> localeMap = new HashMap<>();
     for (final Locale l : Locale.getAvailableLocales())
     {
       final String lang = l.getLanguage();

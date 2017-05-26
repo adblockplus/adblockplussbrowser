@@ -28,6 +28,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -66,7 +67,7 @@ final class Subscription
   public static final long MINIMAL_DOWNLOAD_INTERVAL = Engine.MILLIS_PER_HOUR / 4;
   public static final long DOWNLOAD_RETRY_INTERVAL = Engine.MILLIS_PER_HOUR;
 
-  private static final HashSet<String> ALLOWED_META_KEYS = new HashSet<String>();
+  private static final HashSet<String> ALLOWED_META_KEYS = new HashSet<>();
   private static final Locale LOCALE_EN = Locale.ENGLISH;
 
   private final long updateInterval = Engine.MILLIS_PER_DAY
@@ -83,8 +84,8 @@ final class Subscription
 
   private final URL url;
   private final Type type;
-  private final HashMap<String, String> meta = new HashMap<String, String>();
-  private final HashSet<String> filters = new HashSet<String>();
+  private final HashMap<String, String> meta = new HashMap<>();
+  private final HashSet<String> filters = new HashSet<>();
 
   private boolean metaDataValid = true;
   private boolean filtersValid = true;
@@ -371,7 +372,7 @@ final class Subscription
 
   private static String createMetaDataHash(final HashMap<String, String> meta) throws IOException
   {
-    final ArrayList<String> keyValues = new ArrayList<String>();
+    final ArrayList<String> keyValues = new ArrayList<>();
     for (final Entry<String, String> e : meta.entrySet())
     {
       if (!KEY_META_HASH.equals(e.getKey()))
@@ -390,7 +391,7 @@ final class Subscription
       Collections.sort(filters);
       for (final String filter : filters)
       {
-        md5.update(filter.getBytes(Engine.CHARSET_UTF_8));
+        md5.update(filter.getBytes(StandardCharsets.UTF_8));
       }
       return byteArrayToHexString(md5.digest());
     }
@@ -403,9 +404,8 @@ final class Subscription
   public void serializeMetaData(final File metaFile) throws IOException
   {
     this.putMeta(KEY_META_HASH, createMetaDataHash(this.meta));
-    final DataOutputStream metaOut = new DataOutputStream(new GZIPOutputStream(
-        new BufferedOutputStream(new FileOutputStream(metaFile))));
-    try
+    try (final DataOutputStream metaOut = new DataOutputStream(new GZIPOutputStream(
+        new BufferedOutputStream(new FileOutputStream(metaFile)))))
     {
       metaOut.writeUTF(this.url != null ? this.url.toString() : "");
       metaOut.writeInt(this.meta.size());
@@ -415,30 +415,21 @@ final class Subscription
         metaOut.writeUTF(e.getValue());
       }
     }
-    finally
-    {
-      metaOut.close();
-    }
   }
 
   public void serializeFilters(final File filtersFile) throws IOException
   {
-    final DataOutputStream filtersOut = new DataOutputStream(new GZIPOutputStream(
-        new BufferedOutputStream(new FileOutputStream(filtersFile))));
-    try
+    try (final DataOutputStream filtersOut = new DataOutputStream(new GZIPOutputStream(
+        new BufferedOutputStream(new FileOutputStream(filtersFile)))))
     {
       filtersOut.writeInt(this.filters.size());
-      filtersOut.writeUTF(createFilterHash(new ArrayList<String>(this.filters)));
+      filtersOut.writeUTF(createFilterHash(new ArrayList<>(this.filters)));
       for (final String s : this.filters)
       {
-        final byte[] b = s.getBytes(Engine.CHARSET_UTF_8);
+        final byte[] b = s.getBytes(StandardCharsets.UTF_8);
         filtersOut.writeInt(b.length);
         filtersOut.write(b);
       }
-    }
-    finally
-    {
-      filtersOut.close();
     }
   }
 
@@ -451,11 +442,9 @@ final class Subscription
   public static Subscription deserializeSubscription(final File metaFile)
   {
     Subscription sub = null;
-    DataInputStream in = null;
-    try
+    try (final DataInputStream in = new DataInputStream(new GZIPInputStream(new BufferedInputStream(
+        new FileInputStream(metaFile)))))
     {
-      in = new DataInputStream(new GZIPInputStream(new BufferedInputStream(
-          new FileInputStream(metaFile))));
       final String urlString = in.readUTF();
       sub = new Subscription(!TextUtils.isEmpty(urlString) ? new URL(urlString) : null);
       sub.metaDataValid = false;
@@ -472,20 +461,6 @@ final class Subscription
     {
       // We catch Throwable here in order to return whatever we could retrieve from the meta file
     }
-    finally
-    {
-      if (in != null)
-      {
-        try
-        {
-          in.close();
-        }
-        catch (IOException e)
-        {
-          // Ignored
-        }
-      }
-    }
     return sub;
   }
 
@@ -493,11 +468,9 @@ final class Subscription
   {
     this.clearFilters();
     this.filtersValid = false;
-    DataInputStream in = null;
-    try
+    try (final DataInputStream in = new DataInputStream(new GZIPInputStream(new BufferedInputStream(
+        new FileInputStream(filtersFile)))))
     {
-      in = new DataInputStream(new GZIPInputStream(new BufferedInputStream(
-          new FileInputStream(filtersFile))));
       final int numFilters = in.readInt();
       final String filtersHash = in.readUTF();
       for (int i = 0; i < numFilters; i++)
@@ -505,29 +478,15 @@ final class Subscription
         final int length = in.readInt();
         final byte[] b = new byte[length];
         in.readFully(b);
-        this.filters.add(new String(b, Engine.CHARSET_UTF_8));
+        this.filters.add(new String(b, StandardCharsets.UTF_8));
       }
-      this.filtersValid = createFilterHash(new ArrayList<String>(this.filters)).equals(
+      this.filtersValid = createFilterHash(new ArrayList<>(this.filters)).equals(
           filtersHash);
       Log.d(TAG, "Filters valid: " + this.filtersValid);
     }
     catch (Throwable t)
     {
       // We catch Throwable here in order to load whatever we could retrieve from the filters file
-    }
-    finally
-    {
-      if (in != null)
-      {
-        try
-        {
-          in.close();
-        }
-        catch (IOException e)
-        {
-          // Ignored
-        }
-      }
     }
   }
 
@@ -579,14 +538,12 @@ final class Subscription
 
   public Subscription parseText(final String string)
   {
-    final BufferedReader r = new BufferedReader(new StringReader(string));
-    try
+    try (final BufferedReader r = new BufferedReader(new StringReader(string)))
     {
       for (String line = r.readLine(); line != null; line = r.readLine())
       {
         this.parseLine(line);
       }
-      r.close();
     }
     catch (final IOException e)
     {

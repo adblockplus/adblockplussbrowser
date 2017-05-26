@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -44,7 +45,7 @@ final class Subscriptions
   // Filters that begin with '|$' , '||$' , '@@|$' or '@@||$'
   // See https://issues.adblockplus.org/ticket/4772
   private static final String UNSUPPORTED_FILTERS_REGEX =  "^(\\|\\$|\\|\\|\\$|@@\\|\\$|@@\\|\\|\\$).*";
-  private final HashMap<String, Subscription> subscriptions = new HashMap<String, Subscription>();
+  private final HashMap<String, Subscription> subscriptions = new HashMap<>();
 
   private final Engine engine;
   private final File subscriptionFolder;
@@ -81,7 +82,7 @@ final class Subscriptions
 
   List<SubscriptionInfo> getSubscriptions(final Engine engine)
   {
-    final ArrayList<SubscriptionInfo> subs = new ArrayList<SubscriptionInfo>();
+    final ArrayList<SubscriptionInfo> subs = new ArrayList<>();
     for (final Subscription sub : this.subscriptions.values())
     {
       subs.add(SubscriptionInfo.create(engine, sub));
@@ -168,7 +169,7 @@ final class Subscriptions
    */
   private void writeFile(final File output) throws IOException
   {
-    final HashSet<String> filters = new HashSet<String>();
+    final HashSet<String> filters = new HashSet<>();
     for (final Subscription s : this.subscriptions.values())
     {
       if (s.isEnabled())
@@ -184,9 +185,8 @@ final class Subscriptions
       }
     }
 
-    final BufferedWriter w = new BufferedWriter(
-        new OutputStreamWriter(new FileOutputStream(output), Engine.CHARSET_UTF_8));
-    try
+    try (final BufferedWriter w = new BufferedWriter(
+        new OutputStreamWriter(new FileOutputStream(output), StandardCharsets.UTF_8)))
     {
       Log.d(TAG, "Writing " + filters.size() + " filters");
       Engine.writeFilterHeaders(w);
@@ -204,10 +204,6 @@ final class Subscriptions
           Log.d(TAG, "Ignoring unsupported filter: " + filter);
         }
       }
-    }
-    finally
-    {
-      w.close();
     }
   }
 

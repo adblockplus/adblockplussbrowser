@@ -30,6 +30,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -87,7 +88,6 @@ public final class Engine
 
   public static final String SUBSCRIPTIONS_EXCEPTIONSURL = "subscriptions_exceptionsurl";
 
-  public static final String CHARSET_UTF_8 = "UTF-8";
   private static final String PREFS_KEY_PREVIOUS_VERSION = "key_previous_version";
 
   // The value below specifies an interval of [x, 2*x[, where x =
@@ -109,7 +109,7 @@ public final class Engine
   private Subscriptions subscriptions;
   private JSONPrefs jsonPrefs;
   private AppInfo appInfo;
-  private LinkedBlockingQueue<EngineEvent> engineEvents = new LinkedBlockingQueue<EngineEvent>();
+  private LinkedBlockingQueue<EngineEvent> engineEvents = new LinkedBlockingQueue<>();
   private Thread handlerThread;
   private Downloader downloader;
   private final Context serviceContext;
@@ -381,29 +381,19 @@ public final class Engine
 
     Log.d(TAG, "Creating engine, appInfo=" + engine.appInfo.toString());
 
-    final InputStream subscriptionsXml = context.getResources()
-        .openRawResource(R.raw.subscriptions);
-    try
+    try (final InputStream subscriptionsXml = context.getResources()
+        .openRawResource(R.raw.subscriptions))
     {
       engine.defaultSubscriptions = DefaultSubscriptions.fromStream(subscriptionsXml);
-    }
-    finally
-    {
-      subscriptionsXml.close();
     }
 
     Log.d(TAG, "Finished reading 'subscriptions.xml'");
     engine.subscriptions = Subscriptions.initialize(engine, getSubscriptionsDir(context),
         getFilterCacheDir(context));
 
-    final InputStream prefsJson = context.getResources().openRawResource(R.raw.prefs);
-    try
+    try (final InputStream prefsJson = context.getResources().openRawResource(R.raw.prefs))
     {
       engine.jsonPrefs = JSONPrefs.create(prefsJson);
-    }
-    finally
-    {
-      prefsJson.close();
     }
 
     Log.d(TAG, "Finished reading JSON preferences");
@@ -414,8 +404,7 @@ public final class Engine
     {
       Log.d(TAG, "Subscription storage was uninitialized, initializing...");
 
-      final InputStream easylistTxt = context.getResources().openRawResource(R.raw.easylist);
-      try
+      try (final InputStream easylistTxt = context.getResources().openRawResource(R.raw.easylist))
       {
         final Subscription easylist = engine.subscriptions.add(Subscription
             .create(EASYLIST_URL)
@@ -423,25 +412,16 @@ public final class Engine
         easylist.putMeta(Subscription.KEY_UPDATE_TIMESTAMP, "0");
         easylist.setEnabled(true);
       }
-      finally
-      {
-        easylistTxt.close();
-      }
       Log.d(TAG, "Added and enabled bundled easylist");
 
-      final InputStream exceptionsTxt = context.getResources()
-          .openRawResource(R.raw.exceptionrules);
-      try
+      try (final InputStream exceptionsTxt = context.getResources()
+          .openRawResource(R.raw.exceptionrules))
       {
         final Subscription exceptions = engine.subscriptions.add(Subscription
             .create(engine.getPrefsDefault(SUBSCRIPTIONS_EXCEPTIONSURL))
             .parseLines(readLines(exceptionsTxt)));
         exceptions.putMeta(Subscription.KEY_UPDATE_TIMESTAMP, "0");
         exceptions.setEnabled(true);
-      }
-      finally
-      {
-        exceptionsTxt.close();
       }
       Log.d(TAG, "Added and enabled bundled exceptionslist");
 
@@ -477,21 +457,27 @@ public final class Engine
   public static String readFileAsString(InputStream instream) throws IOException
   {
     final StringBuilder sb = new StringBuilder();
-    final BufferedReader r = new BufferedReader(new InputStreamReader(instream, CHARSET_UTF_8));
-    for (int ch = r.read(); ch != -1; ch = r.read())
+    try (final BufferedReader r = new BufferedReader(new InputStreamReader(
+        instream, StandardCharsets.UTF_8)))
     {
-      sb.append((char) ch);
+      for (int ch = r.read(); ch != -1; ch = r.read())
+      {
+        sb.append((char) ch);
+      }
     }
     return sb.toString();
   }
 
   public static List<String> readLines(InputStream instream) throws IOException
   {
-    final ArrayList<String> list = new ArrayList<String>();
-    final BufferedReader r = new BufferedReader(new InputStreamReader(instream, CHARSET_UTF_8));
-    for (String line = r.readLine(); line != null; line = r.readLine())
+    final ArrayList<String> list = new ArrayList<>();
+    try (final BufferedReader r = new BufferedReader(new InputStreamReader(
+        instream, StandardCharsets.UTF_8)))
     {
-      list.add(line);
+      for (String line = r.readLine(); line != null; line = r.readLine())
+      {
+        list.add(line);
+      }
     }
     return list;
   }
@@ -511,15 +497,10 @@ public final class Engine
     {
       Log.d(TAG, "Creating dummy filter file...");
       dummyFilterFile.getParentFile().mkdirs();
-      final BufferedWriter writer = new BufferedWriter(
-          new OutputStreamWriter(new FileOutputStream(dummyFilterFile), CHARSET_UTF_8));
-      try
+      try (final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
+          new FileOutputStream(dummyFilterFile), StandardCharsets.UTF_8)))
       {
         writeFilterHeaders(writer);
-      }
-      finally
-      {
-        writer.close();
       }
     }
     return dummyFilterFile;
@@ -538,12 +519,11 @@ public final class Engine
         PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
     final String key = context.getString(R.string.key_whitelisted_websites);
 
-    final Set<String> whitelistedWebsites = new TreeSet<String>();
+    final Set<String> whitelistedWebsites = new TreeSet<>();
     whitelistedWebsites.addAll(prefs.getStringSet(key, Collections.<String>emptySet()));
 
-    final BufferedWriter w = new BufferedWriter(
-        new OutputStreamWriter(new FileOutputStream(filterFile, true), CHARSET_UTF_8));
-    try
+    try (final BufferedWriter w = new BufferedWriter( new OutputStreamWriter(
+        new FileOutputStream(filterFile, true), StandardCharsets.UTF_8)))
     {
       for (final String url : whitelistedWebsites)
       {
@@ -560,10 +540,6 @@ public final class Engine
           continue;
         }
       }
-    }
-    finally
-    {
-      w.close();
     }
   }
 
@@ -609,17 +585,17 @@ public final class Engine
     }
 
     sb.append("addonName=");
-    sb.append(URLEncoder.encode(this.appInfo.addonName, CHARSET_UTF_8));
+    sb.append(URLEncoder.encode(this.appInfo.addonName, StandardCharsets.UTF_8.name()));
     sb.append("&addonVersion=");
-    sb.append(URLEncoder.encode(this.appInfo.addonVersion, CHARSET_UTF_8));
+    sb.append(URLEncoder.encode(this.appInfo.addonVersion, StandardCharsets.UTF_8.name()));
     sb.append("&application=");
-    sb.append(URLEncoder.encode(this.appInfo.application, CHARSET_UTF_8));
+    sb.append(URLEncoder.encode(this.appInfo.application, StandardCharsets.UTF_8.name()));
     sb.append("&applicationVersion=");
-    sb.append(URLEncoder.encode(this.appInfo.applicationVersion, CHARSET_UTF_8));
+    sb.append(URLEncoder.encode(this.appInfo.applicationVersion, StandardCharsets.UTF_8.name()));
     sb.append("&platform=");
-    sb.append(URLEncoder.encode(this.appInfo.platform, CHARSET_UTF_8));
+    sb.append(URLEncoder.encode(this.appInfo.platform, StandardCharsets.UTF_8.name()));
     sb.append("&platformVersion=");
-    sb.append(URLEncoder.encode(this.appInfo.platformVersion, CHARSET_UTF_8));
+    sb.append(URLEncoder.encode(this.appInfo.platformVersion, StandardCharsets.UTF_8.name()));
     sb.append("&lastVersion=");
     sb.append(sub.getVersion());
     sb.append("&downloadCount=");
@@ -761,7 +737,7 @@ public final class Engine
     private final String id;
     private final int responseCode;
     private final String response;
-    private final HashMap<String, String> headers = new HashMap<String, String>();
+    private final HashMap<String, String> headers = new HashMap<>();
 
     public DownloadFinishedEvent(final String id,
         final int responseCode,
@@ -783,7 +759,7 @@ public final class Engine
   {
     if (sub.getURL() != null && sub.shouldUpdate(forced))
     {
-      final HashMap<String, String> headers = new HashMap<String, String>();
+      final HashMap<String, String> headers = new HashMap<>();
       if (sub.isMetaDataValid() && sub.isFiltersValid())
       {
         final String lastModified = sub.getMeta(Subscription.KEY_HTTP_LAST_MODIFIED);

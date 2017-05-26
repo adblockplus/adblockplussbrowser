@@ -33,7 +33,7 @@ public final class EngineService extends Service
   private volatile boolean isInitialized = false;
   private Throwable failureCause = null;
   private static final LinkedBlockingQueue<EngineCreatedCallbackWrapper> ON_CREATED_CALLBACKS =
-      new LinkedBlockingQueue<EngineCreatedCallbackWrapper>();
+      new LinkedBlockingQueue<>();
 
   @Override
   public int onStartCommand(Intent intent, int flags, int startId)

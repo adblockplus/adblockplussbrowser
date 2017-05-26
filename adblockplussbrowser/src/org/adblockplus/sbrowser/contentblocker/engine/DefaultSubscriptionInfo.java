@@ -33,9 +33,9 @@ public final class DefaultSubscriptionInfo implements Comparable<DefaultSubscrip
   private final static String KEY_COMPLETE = "complete";
 
   DefaultSubscriptionInfo parent = null;
-  final List<DefaultSubscriptionInfo> variants = new ArrayList<DefaultSubscriptionInfo>();
-  final List<DefaultSubscriptionInfo> supplements = new ArrayList<DefaultSubscriptionInfo>();
-  final HashMap<String, String> attributes = new HashMap<String, String>();
+  final List<DefaultSubscriptionInfo> variants = new ArrayList<>();
+  final List<DefaultSubscriptionInfo> supplements = new ArrayList<>();
+  final HashMap<String, String> attributes = new HashMap<>();
 
   private String getValue(final String key)
   {
