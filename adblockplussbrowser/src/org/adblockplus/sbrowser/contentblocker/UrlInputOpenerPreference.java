@@ -19,12 +19,8 @@ package org.adblockplus.sbrowser.contentblocker;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
-import android.support.annotation.DrawableRes;
-import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -120,20 +116,6 @@ public class UrlInputOpenerPreference extends EditTextPreference implements Text
       return true;
     }
     return false;
-  }
-
-  public void setIcon(@DrawableRes int iconResId)
-  {
-    final Drawable drawable = ContextCompat.getDrawable(getContext(), iconResId);
-    setIcon(drawable);
-  }
-
-  public void setIcon(Drawable icon)
-  {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-    {
-      super.setIcon(icon);
-    }
   }
 
   public void setOnUrlReadyListener(OnUrlReadyListener listener)
