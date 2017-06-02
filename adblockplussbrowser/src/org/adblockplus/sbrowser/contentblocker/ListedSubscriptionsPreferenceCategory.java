@@ -26,13 +26,13 @@ import org.adblockplus.sbrowser.contentblocker.engine.DefaultSubscriptionInfo;
 import org.adblockplus.sbrowser.contentblocker.engine.Engine;
 import org.adblockplus.sbrowser.contentblocker.engine.EngineService;
 import org.adblockplus.sbrowser.contentblocker.engine.SubscriptionInfo;
+import org.adblockplus.sbrowser.contentblocker.preferences.MultilinePreferenceCategory;
 import org.adblockplus.adblockplussbrowser.R;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
-import android.preference.PreferenceCategory;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.text.format.DateUtils;
 import android.util.AttributeSet;
@@ -40,7 +40,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 @SuppressLint("DefaultLocale")
-public class ListedSubscriptionsPreferenceCategory extends PreferenceCategory implements
+public class ListedSubscriptionsPreferenceCategory extends MultilinePreferenceCategory implements
     EngineService.OnEngineCreatedCallback, OnPreferenceChangeListener
 {
   private Engine engine = null;

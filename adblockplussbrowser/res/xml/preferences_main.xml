@@ -4,6 +4,7 @@
     android:layout_height="fill_parent" >
 
     <PreferenceScreen
+        android:layout="@layout/multiline_preference"
         android:summary="@string/manage_subscriptions_summary"
         android:title="@string/manage_subscriptions" >
 
@@ -35,7 +36,7 @@
         <org.adblockplus.sbrowser.contentblocker.WhitelistedWebsitesPreferenceCategory/>
     </PreferenceScreen>
 
-    <ListPreference
+    <org.adblockplus.sbrowser.contentblocker.preferences.MultilineListPreference
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:defaultValue="1"
@@ -49,7 +50,7 @@
         android:layout_height="wrap_content"
         android:title="@string/acceptable_ads_category" >
 
-        <CheckBoxPreference
+        <org.adblockplus.sbrowser.contentblocker.preferences.MultilineCheckBoxPreference
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:defaultValue="true"

@@ -26,9 +26,9 @@ import org.adblockplus.sbrowser.contentblocker.engine.Engine;
 import org.adblockplus.sbrowser.contentblocker.engine.EngineService;
 import org.adblockplus.sbrowser.contentblocker.engine.SubscriptionInfo;
 import org.adblockplus.adblockplussbrowser.R;
+import org.adblockplus.sbrowser.contentblocker.preferences.MultilineCheckBoxPreference;
 
 import android.content.Context;
-import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.Preference.OnPreferenceChangeListener;
@@ -112,7 +112,7 @@ public class MoreBlockingPreferenceCategory extends PreferenceCategory implement
             && (info == null || info.getPrefixes().isEmpty() || sub.getType() != SubscriptionInfo.Type.ADS))
         {
 
-          final CheckBoxPreference cbp = new CheckBoxPreference(this.getContext());
+          final MultilineCheckBoxPreference cbp = new MultilineCheckBoxPreference(this.getContext());
 
           if (sub.isEnabled())
           {

@@ -27,12 +27,14 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Patterns;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.adblockplus.adblockplussbrowser.R;
+import org.adblockplus.sbrowser.contentblocker.util.PreferenceUtils;
 
 public class UrlInputOpenerPreference extends EditTextPreference implements TextWatcher,
     TextView.OnEditorActionListener
@@ -116,6 +118,13 @@ public class UrlInputOpenerPreference extends EditTextPreference implements Text
       return true;
     }
     return false;
+  }
+
+  @Override
+  protected void onBindView(View view)
+  {
+    super.onBindView(view);
+    PreferenceUtils.setMultilineTitle(view);
   }
 
   public void setOnUrlReadyListener(OnUrlReadyListener listener)
