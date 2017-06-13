@@ -54,14 +54,12 @@ final class Subscription
   private static final String TAG = Subscription.class.getSimpleName();
   public static final String KEY_TITLE = "title";
   public static final String KEY_VERSION = "version";
-  public static final String KEY_FORCED_TITLE = "_title";
   public static final String KEY_HTTP_ETAG = "_etag";
   public static final String KEY_HTTP_LAST_MODIFIED = "_last_modified";
   public static final String KEY_UPDATE_TIMESTAMP = "_update_timestamp";
   public static final String KEY_TRIED_UPDATE_TIMESTAMP = "_tried_update_timestamp";
   public static final String KEY_DOWNLOAD_COUNT = "_download_count";
   public static final String KEY_ENABLED = "_enabled";
-  public static final String KEY_HAS_FILTERS = "_has_filters";
   public static final String KEY_META_HASH = "_meta_hash";
 
   public static final long MINIMAL_DOWNLOAD_INTERVAL = Engine.MILLIS_PER_HOUR / 4;

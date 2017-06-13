@@ -18,8 +18,4 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
-    <style name="CategoryHeader">
-        <item name="android:textSize">20sp</item>
-    </style>
-
 </resources>

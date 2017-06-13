@@ -36,8 +36,6 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.text.format.DateUtils;
 import android.util.AttributeSet;
-import android.view.View;
-import android.view.ViewGroup;
 
 @SuppressLint("DefaultLocale")
 public class ListedSubscriptionsPreferenceCategory extends MultilinePreferenceCategory implements
@@ -70,12 +68,6 @@ public class ListedSubscriptionsPreferenceCategory extends MultilinePreferenceCa
   public ListedSubscriptionsPreferenceCategory(final Context context, final AttributeSet attrs)
   {
     super(context, attrs);
-  }
-
-  @Override
-  protected View onCreateView(final ViewGroup parent)
-  {
-    return super.onCreateView(parent);
   }
 
   @Override

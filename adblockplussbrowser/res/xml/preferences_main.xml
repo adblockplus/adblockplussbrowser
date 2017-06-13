@@ -1,32 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceScreen
         android:layout="@layout/multiline_preference"
         android:summary="@string/manage_subscriptions_summary"
-        android:title="@string/manage_subscriptions" >
+        android:title="@string/manage_subscriptions">
 
         <org.adblockplus.sbrowser.contentblocker.ListedSubscriptionsPreferenceCategory
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:title="@string/enabled_subscriptions" />
+            android:title="@string/enabled_subscriptions"/>
 
         <org.adblockplus.sbrowser.contentblocker.ListedSubscriptionsPreferenceCategory
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:title="@string/available_subscriptions" />
+            android:title="@string/available_subscriptions"/>
     </PreferenceScreen>
 
     <PreferenceScreen
         android:summary="@string/more_blocking_summary"
-        android:title="@string/more_blocking" >
+        android:title="@string/more_blocking">
 
         <org.adblockplus.sbrowser.contentblocker.MoreBlockingPreferenceCategory
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:title="@string/more_blocking_category" />
+            android:title="@string/more_blocking_category"/>
     </PreferenceScreen>
 
     <PreferenceScreen
@@ -37,26 +29,20 @@
     </PreferenceScreen>
 
     <org.adblockplus.sbrowser.contentblocker.preferences.MultilineListPreference
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
         android:defaultValue="1"
         android:entries="@array/download_settings"
         android:entryValues="@array/download_settings_values"
         android:key="@string/key_automatic_updates"
-        android:title="@string/automatic_updates" />
+        android:title="@string/automatic_updates"/>
 
     <PreferenceCategory
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:title="@string/acceptable_ads_category" >
+        android:title="@string/acceptable_ads_category">
 
         <org.adblockplus.sbrowser.contentblocker.preferences.MultilineCheckBoxPreference
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
             android:defaultValue="true"
             android:key="@string/key_acceptable_ads"
             android:singleLine="false"
-            android:title="@string/enable_acceptable_ads" />
+            android:title="@string/enable_acceptable_ads"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

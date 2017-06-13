@@ -34,8 +34,6 @@ import android.preference.PreferenceCategory;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.text.format.DateUtils;
 import android.util.AttributeSet;
-import android.view.View;
-import android.view.ViewGroup;
 
 public class MoreBlockingPreferenceCategory extends PreferenceCategory implements
     EngineService.OnEngineCreatedCallback, OnPreferenceChangeListener
@@ -75,12 +73,6 @@ public class MoreBlockingPreferenceCategory extends PreferenceCategory implement
   public MoreBlockingPreferenceCategory(final Context context, final AttributeSet attrs)
   {
     super(context, attrs);
-  }
-
-  @Override
-  protected View onCreateView(final ViewGroup parent)
-  {
-    return super.onCreateView(parent);
   }
 
   @Override

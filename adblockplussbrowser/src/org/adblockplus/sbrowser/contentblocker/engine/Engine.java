@@ -41,10 +41,8 @@ import java.util.TreeSet;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.regex.Pattern;
 
 import org.adblockplus.adblockplussbrowser.R;
-import org.adblockplus.sbrowser.contentblocker.MainPreferences;
 
 import android.content.Context;
 import android.content.Intent;
@@ -64,19 +62,6 @@ import android.util.Log;
 public final class Engine
 {
   private static final String TAG = Engine.class.getSimpleName();
-
-  // TODO make use of this regex's
-  public static final Pattern RE_SUBSCRIPTION_HEADER = Pattern.compile(
-      "\\[Adblock(?:\\s*Plus\\s*([\\d\\.]+)?)?\\]", Pattern.CASE_INSENSITIVE);
-  public static final Pattern RE_FILTER_META = Pattern.compile("^\\s*!\\s*(\\w+)\\s*:\\s*(.*)");
-  public static final Pattern RE_FILTER_ELEMHIDE = Pattern
-      .compile("^([^\\/\\*\\|\\@\"!]*?)#(\\@)?(?:([\\w\\-]+|\\*)((?:\\([\\w\\-]+(?:[$^*]?=[^\\(\\)\"]*)?\\))*)|#([^{}]+))$");
-  public static final Pattern RE_FILTER_REGEXP = Pattern
-      .compile("^(@@)?\\/.*\\/(?:\\$~?[\\w\\-]+(?:=[^,\\s]+)?(?:,~?[\\w\\-]+(?:=[^,\\s]+)?)*)?$");
-  public static final Pattern RE_FILTER_OPTIONS = Pattern
-      .compile("\\$(~?[\\w\\-]+(?:=[^,\\s]+)?(?:,~?[\\w\\-]+(?:=[^,\\s]+)?)*)$");
-  public static final Pattern RE_FILTER_CSSPROPERTY = Pattern
-      .compile("\\[\\-abp\\-properties=([\"'])([^\"']+)\\1\\]");
 
   public static final String USER_FILTERS_TITLE = "__filters";
   public static final String USER_EXCEPTIONS_TITLE = "__exceptions";
@@ -537,7 +522,6 @@ public final class Engine
         catch (URISyntaxException e)
         {
           Log.w(TAG, "Failed to parse whitelisted website: " + url);
-          continue;
         }
       }
     }

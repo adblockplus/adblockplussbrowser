@@ -171,7 +171,7 @@ public final class EngineService extends Service
 
   public interface OnEngineCreatedCallback
   {
-    public void onEngineCreated(Engine engine, boolean success);
+    void onEngineCreated(Engine engine, boolean success);
   }
 
   private static class EngineCreatedCallbackWrapper
