@@ -38,7 +38,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 public class MainPreferences extends PreferenceActivity implements
-    EngineService.OnEngineCreatedCallback, SharedPreferences.OnSharedPreferenceChangeListener
+    EngineService.OnEngineCreatedCallback, SharedPreferences.OnSharedPreferenceChangeListener,
+    Engine.SubscriptionUpdateCallback
 {
   private static final String TAG = MainPreferences.class.getSimpleName();
   private Engine engine = null;
@@ -213,6 +214,12 @@ public class MainPreferences extends PreferenceActivity implements
   {
     Log.d(TAG, "onEngineCreated: " + success);
     this.engine = success ? engine : null;
+
+    if (engine != null)
+    {
+      this.engine.setSubscriptionUpdateCallback(this);
+    }
+
     if (this.dialogTitleResId == R.string.initialization_title)
     {
       this.dismissDialog();
@@ -242,5 +249,19 @@ public class MainPreferences extends PreferenceActivity implements
         this.dismissDialog();
       }
     }
+  }
+
+  @Override
+  public void subscriptionUpdateRequested(final boolean enabled)
+  {
+    this.dialog = ProgressDialog.show(this, null, enabled
+        ? getString(R.string.add_subscription_dialog_message)
+        : getString(R.string.remove_subscription_dialog_message));
+  }
+
+  @Override
+  public void subscriptionUpdatedApplied()
+  {
+    this.dismissDialog();
   }
 }

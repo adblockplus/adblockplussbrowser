@@ -97,6 +97,7 @@ public final class Engine
   private LinkedBlockingQueue<EngineEvent> engineEvents = new LinkedBlockingQueue<>();
   private Thread handlerThread;
   private Downloader downloader;
+  private SubscriptionUpdateCallback subscriptionUpdateCallback;
   private final Context serviceContext;
   private boolean wasFirstRun = false;
   private long nextUpdateBroadcast = Long.MAX_VALUE;
@@ -174,17 +175,14 @@ public final class Engine
     }
   }
 
+  public void setSubscriptionUpdateCallback(final SubscriptionUpdateCallback subscriptionUpdateCallback)
+  {
+    this.subscriptionUpdateCallback = subscriptionUpdateCallback;
+  }
+
   public void requestUpdateBroadcast()
   {
-    this.lock();
-    try
-    {
-      this.nextUpdateBroadcast = System.currentTimeMillis() + BROADCAST_COMBINATION_DELAY_MILLIS;
-    }
-    finally
-    {
-      this.unlock();
-    }
+    this.nextUpdateBroadcast = System.currentTimeMillis() + BROADCAST_COMBINATION_DELAY_MILLIS;
   }
 
   private void writeFileAndSendUpdateBroadcast()
@@ -241,20 +239,24 @@ public final class Engine
 
   public List<SubscriptionInfo> getListedSubscriptions()
   {
-    this.lock();
-    try
-    {
-      return this.subscriptions.getSubscriptions(this);
-    }
-    finally
-    {
-      this.unlock();
-    }
+    return this.subscriptions.getSubscriptions(this);
   }
 
   public void changeSubscriptionState(final String id, final boolean enabled)
   {
+    if (this.subscriptionUpdateCallback != null)
+    {
+      subscriptionUpdateCallback.subscriptionUpdateRequested(enabled);
+    }
     this.engineEvents.add(new ChangeEnabledStateEvent(id, enabled));
+  }
+
+  public void subscriptionStateChanged()
+  {
+    if (this.subscriptionUpdateCallback != null)
+    {
+      subscriptionUpdateCallback.subscriptionUpdatedApplied();
+    }
   }
 
   void downloadFinished(final String id, final int responseCode, final String response,
@@ -765,5 +767,11 @@ public final class Engine
   public void connectivityChanged()
   {
     this.downloader.connectivityChanged();
+  }
+
+  public interface SubscriptionUpdateCallback
+  {
+    void subscriptionUpdateRequested(boolean enabled);
+    void subscriptionUpdatedApplied();
   }
 }

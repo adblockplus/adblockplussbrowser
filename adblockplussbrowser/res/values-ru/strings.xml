@@ -41,5 +41,7 @@
     <string name="whitelist_website_invalid_url_error">Неверный URL</string>
     <string name="whitelist_remove_dialog_title">Удалить сайт из белого списка</string>
     <string name="whitelist_remove_dialog_message">Вы уверены, что хотите удалить &lt;b>%1s&lt;/b>?</string>
+    <string name="add_subscription_dialog_message">Добавление подписки&#8230;</string>
+    <string name="remove_subscription_dialog_message">Удаление подписки&#8230;</string>
 
 </resources>

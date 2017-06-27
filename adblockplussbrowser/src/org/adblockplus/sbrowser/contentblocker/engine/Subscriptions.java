@@ -120,6 +120,7 @@ final class Subscriptions
           this.engine.enqueueDownload(sub, true);
         }
 
+        this.engine.subscriptionStateChanged();
         this.engine.requestUpdateBroadcast();
         return true;
       }

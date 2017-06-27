@@ -41,5 +41,7 @@
     <string name="whitelist_website_invalid_url_error">잘못된 URL</string>
     <string name="whitelist_remove_dialog_title">허용 목록에 추가된 웹사이트 제거</string>
     <string name="whitelist_remove_dialog_message">정말 &lt;b>%1s&lt;/b>을(를) 제거할까요?</string>
+    <string name="add_subscription_dialog_message">구독 추가 중&#8230;</string>
+    <string name="remove_subscription_dialog_message">구독 삭제 중&#8230;</string>
 
 </resources>

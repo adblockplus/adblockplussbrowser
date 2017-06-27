@@ -41,5 +41,7 @@
     <string name="whitelist_website_invalid_url_error">URL no válida</string>
     <string name="whitelist_remove_dialog_title">Elimina las páginas web de la lista blanca</string>
     <string name="whitelist_remove_dialog_message">¿Seguro que quieres eliminar &lt;b>%1s&lt;/b>?</string>
+    <string name="add_subscription_dialog_message">Agregando suscripción&#8230;</string>
+    <string name="remove_subscription_dialog_message">Quitando suscripción&#8230;</string>
 
 </resources>

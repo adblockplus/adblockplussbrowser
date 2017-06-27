@@ -41,5 +41,7 @@
     <string name="whitelist_website_invalid_url_error">Ongeldige URL</string>
     <string name="whitelist_remove_dialog_title">Website op witte lijst verwijderen</string>
     <string name="whitelist_remove_dialog_message">Weet u zeker dat u &lt;b>%1s&lt;/b> wilt verwijderen?</string>
+    <string name="add_subscription_dialog_message">Abonnement toevoegen&#8230;</string>
+    <string name="remove_subscription_dialog_message">Abonnement verwijderen&#8230;</string>
 
 </resources>

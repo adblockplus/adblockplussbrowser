@@ -42,5 +42,7 @@
     <string name="whitelist_website_invalid_url_error">Invalid URL</string>
     <string name="whitelist_remove_dialog_title">Remove whitelisted website</string>
     <string name="whitelist_remove_dialog_message">"Are you sure you want to remove &lt;b>%1s&lt;/b>?"</string>
+    <string name="add_subscription_dialog_message">Adding subscription&#8230;</string>
+    <string name="remove_subscription_dialog_message">Removing subscription&#8230;</string>
 
 </resources>
