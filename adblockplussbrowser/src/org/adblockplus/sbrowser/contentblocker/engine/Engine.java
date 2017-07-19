@@ -43,10 +43,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.adblockplus.adblockplussbrowser.R;
+import org.adblockplus.sbrowser.contentblocker.util.SharedPrefsUtils;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -55,7 +55,6 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
-import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -72,8 +71,6 @@ public final class Engine
   public static final String EASYLIST_URL = "https://easylist-downloads.adblockplus.org/easylist.txt";
 
   public static final String SUBSCRIPTIONS_EXCEPTIONSURL = "subscriptions_exceptionsurl";
-
-  private static final String PREFS_KEY_PREVIOUS_VERSION = "key_previous_version";
 
   // The value below specifies an interval of [x, 2*x[, where x =
   // INITIAL_UPDATE_CHECK_DELAY_SECONDS
@@ -212,10 +209,8 @@ public final class Engine
       return false;
     }
 
-    final SharedPreferences prefs = PreferenceManager
-        .getDefaultSharedPreferences(this.serviceContext);
-    final boolean wifiOnly = prefs.getString(
-        this.serviceContext.getString(R.string.key_automatic_updates), "1").equals("1");
+    final boolean wifiOnly = "1".equals(SharedPrefsUtils.getString(
+        this.serviceContext, R.string.key_automatic_updates , "1"));
 
     if (wifiOnly)
     {
@@ -274,9 +269,8 @@ public final class Engine
       final File filterFile = this.subscriptions.createAndWriteFile();
       writeWhitelistedWebsites(this.serviceContext, filterFile);
 
-      final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.serviceContext);
-      final String key = this.serviceContext.getString(R.string.key_cached_filter_path);
-      prefs.edit().putString(key, filterFile.getAbsolutePath()).commit();
+      SharedPrefsUtils.putString(
+          this.serviceContext, R.string.key_cached_filter_path, filterFile.getAbsolutePath());
 
       Log.d(TAG, "Cleaning up cache...");
       final File dummyFile = getDummyFilterFile(this.serviceContext);
@@ -338,16 +332,18 @@ public final class Engine
     {
       final int versionCode = context.getPackageManager().getPackageInfo(context.getPackageName(),
           0).versionCode;
-      final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-      int previous = prefs.getInt(PREFS_KEY_PREVIOUS_VERSION, 0);
-      if (versionCode > previous)
+
+      final int previousVersionCode = SharedPrefsUtils.getInt(
+          context, R.string.key_previous_version_code, 0);
+
+      if (versionCode > previousVersionCode)
       {
-        if (previous > 0)
+        if (previousVersionCode > 0)
         {
           // We can do possible migration stuff here
           // Currently we only persist the new version code
         }
-        prefs.edit().putInt(PREFS_KEY_PREVIOUS_VERSION, versionCode).commit();
+        SharedPrefsUtils.putInt(context, R.string.key_previous_version_code, versionCode);
       }
     }
     catch (final Throwable t)
@@ -502,12 +498,9 @@ public final class Engine
   private static void writeWhitelistedWebsites(Context context, File filterFile) throws IOException
   {
     Log.d(TAG, "Writing whitelisted websites...");
-    final SharedPreferences prefs =
-        PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
-    final String key = context.getString(R.string.key_whitelisted_websites);
-
     final Set<String> whitelistedWebsites = new TreeSet<>();
-    whitelistedWebsites.addAll(prefs.getStringSet(key, Collections.<String>emptySet()));
+    whitelistedWebsites.addAll(SharedPrefsUtils.getStringSet(
+        context, R.string.key_whitelisted_websites, Collections.<String>emptySet()));
 
     try (final BufferedWriter w = new BufferedWriter( new OutputStreamWriter(
         new FileOutputStream(filterFile, true), StandardCharsets.UTF_8)))
@@ -531,8 +524,9 @@ public final class Engine
 
   private static File getCachedFilterFile(Context context)
   {
-    final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-    final String cachedFilterPath = prefs.getString(context.getString(R.string.key_cached_filter_path), null);
+    final String cachedFilterPath = SharedPrefsUtils.getString(
+        context, R.string.key_cached_filter_path, null);
+
     if (cachedFilterPath != null)
     {
       return new File(cachedFilterPath);

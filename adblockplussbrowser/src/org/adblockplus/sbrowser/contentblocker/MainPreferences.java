@@ -20,13 +20,13 @@ package org.adblockplus.sbrowser.contentblocker;
 import org.adblockplus.sbrowser.contentblocker.engine.Engine;
 import org.adblockplus.sbrowser.contentblocker.engine.EngineService;
 import org.adblockplus.adblockplussbrowser.R;
+import org.adblockplus.sbrowser.contentblocker.util.SharedPrefsUtils;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
@@ -38,18 +38,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 public class MainPreferences extends PreferenceActivity implements
-    EngineService.OnEngineCreatedCallback, SharedPreferences.OnSharedPreferenceChangeListener,
+    EngineService.OnEngineCreatedCallback, SharedPrefsUtils.OnSharedPreferenceChangeListener,
     Engine.SubscriptionUpdateCallback
 {
   private static final String TAG = MainPreferences.class.getSimpleName();
   private Engine engine = null;
   private AlertDialog dialog;
   private int dialogTitleResId;
-
-  private SharedPreferences getSharedPreferences()
-  {
-    return PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
-  }
 
   @Override
   public void onCreate(Bundle savedInstanceState)
@@ -61,24 +56,6 @@ public class MainPreferences extends PreferenceActivity implements
         .beginTransaction()
         .replace(android.R.id.content, new Preferences())
         .commit();
-
-    // This try/catch block is a workaround for a preference mismatch
-    // issue. We check for a type mismatch in one particular key and,
-    // if there's a mismatch, clean sweep the preferences.
-    // See: https://issues.adblockplus.org/ticket/3931
-    try
-    {
-      this.getSharedPreferences().getBoolean(
-          this.getString(R.string.key_application_activated),
-          false);
-    }
-    catch(final Throwable t)
-    {
-      this.getSharedPreferences()
-          .edit()
-          .clear()
-          .commit();
-    }
   }
 
   @Override
@@ -89,7 +66,7 @@ public class MainPreferences extends PreferenceActivity implements
         this.getString(this.dialogTitleResId),
         this.getString(R.string.initialization_message));
     super.onStart();
-    this.getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+    SharedPrefsUtils.registerOnSharedPreferenceChangeListener(this, this);
     EngineService.startService(this.getApplicationContext(), this);
   }
 
@@ -97,7 +74,7 @@ public class MainPreferences extends PreferenceActivity implements
   protected void onStop()
   {
     super.onStop();
-    this.getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+    SharedPrefsUtils.unregisterOnSharedPreferenceChangeListener(this, this);
     this.dismissDialog();
   }
 
@@ -147,9 +124,7 @@ public class MainPreferences extends PreferenceActivity implements
 
   private void checkAAStatusAndProceed()
   {
-    final SharedPreferences prefs = this.getSharedPreferences();
-    final String keyAaInfoShown = this.getString(R.string.key_aa_info_shown);
-    final boolean aaInfoShown = prefs.getBoolean(keyAaInfoShown, false);
+    final boolean aaInfoShown = SharedPrefsUtils.getBoolean(this, R.string.key_aa_info_shown, false);
     if (!aaInfoShown)
     {
       this.dialogTitleResId = R.string.aa_dialog_title;
@@ -162,9 +137,7 @@ public class MainPreferences extends PreferenceActivity implements
             @Override
             public void onClick(DialogInterface dialog, int which)
             {
-              prefs.edit()
-                  .putBoolean(keyAaInfoShown, true)
-                  .commit();
+              SharedPrefsUtils.putBoolean(MainPreferences.this, R.string.key_aa_info_shown, true);
               MainPreferences.this.checkSetupStatus();
             }
           }).create();
@@ -178,8 +151,8 @@ public class MainPreferences extends PreferenceActivity implements
 
   private void checkSetupStatus()
   {
-    final boolean applicationActivated = this.getSharedPreferences()
-        .getBoolean(this.getString(R.string.key_application_activated), false);
+    final boolean applicationActivated = SharedPrefsUtils.getBoolean(
+        this, R.string.key_application_activated, false);
 
     if (!applicationActivated)
     {
@@ -229,7 +202,7 @@ public class MainPreferences extends PreferenceActivity implements
   }
 
   @Override
-  public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
+  public void onSharedPreferenceChanged(String key)
   {
     if (this.getString(R.string.key_automatic_updates).equals(key) && this.engine != null)
     {
@@ -237,7 +210,7 @@ public class MainPreferences extends PreferenceActivity implements
     }
     else if (this.getString(R.string.key_acceptable_ads).equals(key))
     {
-      boolean enabled = sharedPreferences.getBoolean(key, true);
+      final boolean enabled = SharedPrefsUtils.getBoolean(this, R.string.key_acceptable_ads, true);
       final String id = "url:" + this.engine.getPrefsDefault(Engine.SUBSCRIPTIONS_EXCEPTIONSURL);
       Log.d(TAG, "Acceptable ads " + (enabled ? "enabled" : "disabled"));
       this.engine.changeSubscriptionState(id, enabled);

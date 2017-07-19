@@ -24,16 +24,15 @@ import java.io.IOException;
 import org.adblockplus.adblockplussbrowser.R;
 import org.adblockplus.sbrowser.contentblocker.engine.Engine;
 import org.adblockplus.sbrowser.contentblocker.engine.EngineService;
+import org.adblockplus.sbrowser.contentblocker.util.SharedPrefsUtils;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class ContentBlockerContentProvider extends ContentProvider
@@ -48,30 +47,14 @@ public class ContentBlockerContentProvider extends ContentProvider
     return null;
   }
 
-  private static boolean getBooleanPref(final SharedPreferences prefs, final String key,
-      final boolean defValue)
-  {
-    try
-    {
-      return prefs.getBoolean(key, defValue);
-    }
-    catch (final Throwable t)
-    {
-      return defValue;
-    }
-  }
-
   private void setApplicationActivated()
   {
-    final SharedPreferences prefs = PreferenceManager
-        .getDefaultSharedPreferences(this.getContext().getApplicationContext());
-    final String key = this.getContext().getString(R.string.key_application_activated);
-    final boolean applicationActived = getBooleanPref(prefs, key, false);
-    if (!applicationActived)
+    final boolean applicationActivated = SharedPrefsUtils.getBoolean(
+        this.getContext(), R.string.key_application_activated, false);
+
+    if (!applicationActivated)
     {
-      prefs.edit()
-          .putBoolean(key, true)
-          .commit();
+      SharedPrefsUtils.putBoolean(this.getContext(), R.string.key_application_activated, true);
     }
   }
 

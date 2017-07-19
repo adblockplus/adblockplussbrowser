@@ -20,10 +20,8 @@ package org.adblockplus.sbrowser.contentblocker;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.preference.DialogPreference;
 import android.preference.PreferenceCategory;
-import android.preference.PreferenceManager;
 import android.text.Html;
 import android.util.AttributeSet;
 import android.view.View;
@@ -31,6 +29,7 @@ import android.view.View;
 import org.adblockplus.adblockplussbrowser.R;
 import org.adblockplus.sbrowser.contentblocker.engine.Engine;
 import org.adblockplus.sbrowser.contentblocker.engine.EngineService;
+import org.adblockplus.sbrowser.contentblocker.util.SharedPrefsUtils;
 
 import java.util.Collections;
 import java.util.Set;
@@ -70,11 +69,11 @@ public class WhitelistedWebsitesPreferenceCategory extends PreferenceCategory
 
   private void initEntries()
   {
-    final SharedPreferences prefs =
-        PreferenceManager.getDefaultSharedPreferences(this.getContext().getApplicationContext());
-    final String key = this.getContext().getString(R.string.key_whitelisted_websites);
+    final Set<String> whitelistedWebsites = SharedPrefsUtils.getStringSet(
+        this.getContext(), R.string.key_whitelisted_websites, Collections.<String>emptySet());
+
     this.whitelistedWebsites.clear();
-    this.whitelistedWebsites.addAll(prefs.getStringSet(key, Collections.<String>emptySet()));
+    this.whitelistedWebsites.addAll(whitelistedWebsites);
     this.refreshEntries();
   }
 
@@ -114,21 +113,18 @@ public class WhitelistedWebsitesPreferenceCategory extends PreferenceCategory
   private void whitelistWebsite(String url)
   {
     this.whitelistedWebsites.add(url);
-    final SharedPreferences prefs =
-        PreferenceManager.getDefaultSharedPreferences(this.getContext().getApplicationContext());
-    final String key = this.getContext().getString(R.string.key_whitelisted_websites);
-    prefs.edit().putStringSet(key, this.whitelistedWebsites).apply();
-    this.refreshEntries();
-    this.engine.requestUpdateBroadcast();
+    this.storeWhitelistedWebsites();
   }
 
   private void removeWhitelistedWebsite(String url)
   {
     this.whitelistedWebsites.remove(url);
-    final SharedPreferences prefs =
-        PreferenceManager.getDefaultSharedPreferences(this.getContext().getApplicationContext());
-    final String key = this.getContext().getString(R.string.key_whitelisted_websites);
-    prefs.edit().putStringSet(key, this.whitelistedWebsites).apply();
+    this.storeWhitelistedWebsites();
+  }
+
+  private void storeWhitelistedWebsites() {
+    SharedPrefsUtils.putStringSet(
+        this.getContext(), R.string.key_whitelisted_websites, this.whitelistedWebsites);
     this.refreshEntries();
     this.engine.requestUpdateBroadcast();
   }

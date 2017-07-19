@@ -7,6 +7,7 @@
     <string name="key_application_activated">application_activated</string>
     <string name="key_aa_info_shown">aa_info_shown</string>
     <string name="key_cached_filter_path">cached_filter_path</string>
+    <string name="key_previous_version_code">previous_version_code</string>
     <string name="key_whitelisted_websites">whitelisted_websites</string>
 
 </resources>
