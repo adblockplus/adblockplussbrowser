@@ -56,6 +56,7 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.util.Log;
 
 public final class Engine
@@ -66,22 +67,17 @@ public final class Engine
   public static final String USER_EXCEPTIONS_TITLE = "__exceptions";
 
   public static final String SBROWSER_APP_ID = "com.sec.android.app.sbrowser";
-  public static final String ACTION_OPEN_SETTINGS = "com.samsung.android.sbrowser.contentBlocker.ACTION_SETTING";
-  public static final String ACTION_UPDATE = "com.samsung.android.sbrowser.contentBlocker.ACTION_UPDATE";
-  public static final String EASYLIST_URL = "https://easylist-downloads.adblockplus.org/easylist.txt";
+  private static final String ACTION_OPEN_SETTINGS = "com.samsung.android.sbrowser.contentBlocker.ACTION_SETTING";
+  private static final String ACTION_UPDATE = "com.samsung.android.sbrowser.contentBlocker.ACTION_UPDATE";
+  private static final String EASYLIST_URL = "https://easylist-downloads.adblockplus.org/easylist.txt";
 
   public static final String SUBSCRIPTIONS_EXCEPTIONSURL = "subscriptions_exceptionsurl";
 
   // The value below specifies an interval of [x, 2*x[, where x =
-  // INITIAL_UPDATE_CHECK_DELAY_SECONDS
-  private static final long INITIAL_UPDATE_CHECK_DELAY_SECONDS = 5;
-  private static final long UPDATE_CHECK_INTERVAL_MINUTES = 30;
-  private static final long BROADCAST_COMBINATION_DELAY_MILLIS = 2500;
-
-  public static final long MILLIS_PER_SECOND = 1000;
-  public static final long MILLIS_PER_MINUTE = 60 * MILLIS_PER_SECOND;
-  public static final long MILLIS_PER_HOUR = 60 * MILLIS_PER_MINUTE;
-  public static final long MILLIS_PER_DAY = 24 * MILLIS_PER_HOUR;
+  // INITIAL_UPDATE_CHECK_DELAY
+  private static final long INITIAL_UPDATE_CHECK_DELAY = 5 * DateUtils.SECOND_IN_MILLIS;
+  private static final long UPDATE_CHECK_INTERVAL = 30 * DateUtils.MINUTE_IN_MILLIS;
+  private static final long BROADCAST_COMBINATION_DELAY = 2500;
 
   private static final int NO_FLAG = 0;
   private static final int OLDEST_SAMSUNG_INTERNET_5_VERSIONCODE = 500000000;
@@ -91,7 +87,7 @@ public final class Engine
   private Subscriptions subscriptions;
   private JSONPrefs jsonPrefs;
   private AppInfo appInfo;
-  private LinkedBlockingQueue<EngineEvent> engineEvents = new LinkedBlockingQueue<>();
+  private final LinkedBlockingQueue<EngineEvent> engineEvents = new LinkedBlockingQueue<>();
   private Thread handlerThread;
   private Downloader downloader;
   private SubscriptionUpdateCallback subscriptionUpdateCallback;
@@ -179,7 +175,7 @@ public final class Engine
 
   public void requestUpdateBroadcast()
   {
-    this.nextUpdateBroadcast = System.currentTimeMillis() + BROADCAST_COMBINATION_DELAY_MILLIS;
+    this.nextUpdateBroadcast = System.currentTimeMillis() + BROADCAST_COMBINATION_DELAY;
   }
 
   private void writeFileAndSendUpdateBroadcast()
@@ -426,7 +422,7 @@ public final class Engine
     engine.handlerThread.setDaemon(true);
     engine.handlerThread.start();
 
-    engine.downloader = Downloader.create(context, engine);
+    engine.downloader = Downloader.create(engine);
 
     final File cachedFilterFile = getCachedFilterFile(context);
     if (cachedFilterFile == null || !cachedFilterFile.exists())
@@ -608,7 +604,7 @@ public final class Engine
       Log.d(TAG, "Handler thread started");
       boolean interrupted = false;
       long nextUpdateCheck = System.currentTimeMillis()
-          + (long) ((1 + Math.random()) * INITIAL_UPDATE_CHECK_DELAY_SECONDS * MILLIS_PER_SECOND);
+          + (long) ((1 + Math.random()) * INITIAL_UPDATE_CHECK_DELAY);
       while (!interrupted)
       {
         try
@@ -646,7 +642,7 @@ public final class Engine
             final long currentTime = System.currentTimeMillis();
             if (currentTime > nextUpdateCheck)
             {
-              nextUpdateCheck = currentTime + UPDATE_CHECK_INTERVAL_MINUTES * MILLIS_PER_MINUTE;
+              nextUpdateCheck = currentTime + UPDATE_CHECK_INTERVAL;
 
               this.engine.subscriptions.checkForUpdates();
             }
@@ -688,7 +684,7 @@ public final class Engine
 
     private final EngineEventType type;
 
-    protected EngineEvent(final EngineEventType type)
+    EngineEvent(final EngineEventType type)
     {
       this.type = type;
     }

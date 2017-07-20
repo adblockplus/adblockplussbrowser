@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.adblockplus.sbrowser.contentblocker.engine.Subscription.Type;
@@ -50,26 +51,26 @@ final class Subscriptions
   private final Engine engine;
   private final File subscriptionFolder;
   private final File cacheFolder;
-  private final boolean wasUnitialized;
+  private final boolean wasUninitialized;
 
   private Subscriptions(final Engine engine, final File appFolder, final File cacheFolder)
   {
     this.engine = engine;
     this.subscriptionFolder = appFolder;
-    this.wasUnitialized = !this.subscriptionFolder.exists();
+    this.wasUninitialized = !this.subscriptionFolder.exists();
     this.cacheFolder = cacheFolder;
   }
 
   public boolean wasUnitialized()
   {
-    return this.wasUnitialized;
+    return this.wasUninitialized;
   }
 
   public File createAndWriteFile() throws IOException
   {
     for (;;)
     {
-      final File file = new File(this.cacheFolder, String.format("tmp-%d.txt",
+      final File file = new File(this.cacheFolder, String.format(Locale.ENGLISH, "tmp-%d.txt",
           (int) (Math.random() * 1e8)));
       if (!file.exists())
       {
@@ -90,7 +91,7 @@ final class Subscriptions
     return subs;
   }
 
-  void getSubscriptions(final List<Subscription> list)
+  void loadSubscriptions(final List<Subscription> list)
   {
     list.addAll(this.subscriptions.values());
   }

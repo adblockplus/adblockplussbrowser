@@ -33,6 +33,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 public class ContentBlockerContentProvider extends ContentProvider
@@ -40,7 +41,7 @@ public class ContentBlockerContentProvider extends ContentProvider
   private static final String TAG = ContentBlockerContentProvider.class.getSimpleName();
 
   @Override
-  public Bundle call(String method, String arg, Bundle extras)
+  public Bundle call(@NonNull String method, String arg, Bundle extras)
   {
     // As of SBC interface v1.4 we return `null` here to signal that we do not
     // use encryption
@@ -59,7 +60,7 @@ public class ContentBlockerContentProvider extends ContentProvider
   }
 
   @Override
-  public ParcelFileDescriptor openFile(final Uri uri, final String mode)
+  public ParcelFileDescriptor openFile(@NonNull final Uri uri, @NonNull final String mode)
       throws FileNotFoundException
   {
     try
@@ -87,32 +88,32 @@ public class ContentBlockerContentProvider extends ContentProvider
   }
 
   @Override
-  public Cursor query(final Uri uri, final String[] projection, final String selection,
+  public Cursor query(@NonNull final Uri uri, final String[] projection, final String selection,
       final String[] selectionArgs, final String sortOrder)
   {
     return null;
   }
 
   @Override
-  public String getType(final Uri uri)
+  public String getType(@NonNull final Uri uri)
   {
     return null;
   }
 
   @Override
-  public Uri insert(final Uri uri, final ContentValues values)
+  public Uri insert(@NonNull final Uri uri, final ContentValues values)
   {
     return null;
   }
 
   @Override
-  public int delete(final Uri uri, final String selection, final String[] selectionArgs)
+  public int delete(@NonNull final Uri uri, final String selection, final String[] selectionArgs)
   {
     return 0;
   }
 
   @Override
-  public int update(final Uri uri, final ContentValues values, final String selection,
+  public int update(@NonNull final Uri uri, final ContentValues values, final String selection,
       final String[] selectionArgs)
   {
     return 0;

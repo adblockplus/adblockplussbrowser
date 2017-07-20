@@ -31,7 +31,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.util.Log;
 
 @SuppressLint("DefaultLocale")
@@ -43,8 +42,8 @@ final class Downloader
   private final Engine engine;
   private final ReentrantLock accessLock = new ReentrantLock();
   private Thread downloaderThread;
-  private LinkedBlockingQueue<DownloadJob> downloadJobs = new LinkedBlockingQueue<>();
-  private HashSet<String> enqueuedIds = new HashSet<>();
+  private final LinkedBlockingQueue<DownloadJob> downloadJobs = new LinkedBlockingQueue<>();
+  private final HashSet<String> enqueuedIds = new HashSet<>();
   private boolean downloaderEnabled = true;
 
   private Downloader(final Engine engine)
@@ -77,12 +76,9 @@ final class Downloader
   {
     final HttpURLConnection connection = (HttpURLConnection) job.url.openConnection();
     connection.setRequestMethod("GET");
-    if (job.headers != null)
+    for (final Entry<String, String> e : job.headers.entrySet())
     {
-      for (final Entry<String, String> e : job.headers.entrySet())
-      {
-        connection.addRequestProperty(e.getKey(), e.getValue());
-      }
+      connection.addRequestProperty(e.getKey(), e.getValue());
     }
     connection.connect();
 
@@ -130,7 +126,7 @@ final class Downloader
     }
   }
 
-  public static Downloader create(final Context context, final Engine engine)
+  public static Downloader create(final Engine engine)
   {
     final Downloader downloader = new Downloader(engine);
 
@@ -249,7 +245,7 @@ final class Downloader
     private int retryCount = 0;
 
     private int responseCode = 0;
-    private HashMap<String, String> responseHeaders = new HashMap<>();
+    private final HashMap<String, String> responseHeaders = new HashMap<>();
     private String responseText = null;
 
     public DownloadJob(final URL url, final String id, final Map<String, String> headers)

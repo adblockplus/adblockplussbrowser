@@ -17,6 +17,8 @@
 
 package org.adblockplus.sbrowser.contentblocker.engine;
 
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -84,7 +86,7 @@ public final class DefaultSubscriptionInfo implements Comparable<DefaultSubscrip
   }
 
   @Override
-  public int compareTo(final DefaultSubscriptionInfo o)
+  public int compareTo(@NonNull final DefaultSubscriptionInfo o)
   {
     final int cmp = this.getTitle().compareTo(o.getTitle());
     if (cmp != 0)

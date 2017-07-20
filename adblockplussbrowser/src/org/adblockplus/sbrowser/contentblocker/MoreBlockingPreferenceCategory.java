@@ -124,7 +124,7 @@ public class MoreBlockingPreferenceCategory extends PreferenceCategory implement
             cbp.setSummary(sb.toString());
           }
 
-          cbp.setTitle(this.getContext().getString(resInt.intValue()));
+          cbp.setTitle(this.getContext().getString(resInt));
           cbp.setChecked(sub.isEnabled());
           cbp.setPersistent(false);
           cbp.setKey(sub.getId());
@@ -139,7 +139,7 @@ public class MoreBlockingPreferenceCategory extends PreferenceCategory implement
   public boolean onPreferenceChange(final Preference preference, final Object newValue)
   {
     final String id = preference.getKey();
-    final boolean enabled = ((Boolean) newValue).booleanValue();
+    final boolean enabled = (Boolean) newValue;
 
     this.engine.changeSubscriptionState(id, enabled);
 

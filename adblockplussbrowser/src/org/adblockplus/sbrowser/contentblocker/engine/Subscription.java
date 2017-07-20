@@ -32,6 +32,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -44,6 +45,7 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.util.Log;
 
 /**
@@ -62,23 +64,24 @@ final class Subscription
   public static final String KEY_ENABLED = "_enabled";
   public static final String KEY_META_HASH = "_meta_hash";
 
-  public static final long MINIMAL_DOWNLOAD_INTERVAL = Engine.MILLIS_PER_HOUR / 4;
-  public static final long DOWNLOAD_RETRY_INTERVAL = Engine.MILLIS_PER_HOUR;
-
-  private static final HashSet<String> ALLOWED_META_KEYS = new HashSet<>();
-  private static final Locale LOCALE_EN = Locale.ENGLISH;
-
-  private final long updateInterval = Engine.MILLIS_PER_DAY
-      + (long) (Engine.MILLIS_PER_HOUR * 8. * Math.random());
+  private static final long MINIMAL_DOWNLOAD_INTERVAL = DateUtils.HOUR_IN_MILLIS / 4;
+  private static final long DOWNLOAD_RETRY_INTERVAL = DateUtils.HOUR_IN_MILLIS;
 
   /**
    * List of meta keys that are allowed to import from a downloaded
    * subscription.
    */
   private static final String[] ALLOWED_META_KEYS_ARRAY =
-  {
-      "checksum", KEY_VERSION, KEY_TITLE, "last modified", "expires", "homepage", "licence"
-  };
+      {
+          "checksum", KEY_VERSION, KEY_TITLE, "last modified", "expires", "homepage", "licence"
+      };
+  private static final HashSet<String> ALLOWED_META_KEYS =
+      new HashSet<>(Arrays.asList(ALLOWED_META_KEYS_ARRAY));
+
+  private static final Locale LOCALE_EN = Locale.ENGLISH;
+
+  private final long updateInterval = DateUtils.DAY_IN_MILLIS
+      + (long) (DateUtils.HOUR_IN_MILLIS * 8. * Math.random());
 
   private final URL url;
   private final Type type;
@@ -87,14 +90,6 @@ final class Subscription
 
   private boolean metaDataValid = true;
   private boolean filtersValid = true;
-
-  static
-  {
-    for (final String s : ALLOWED_META_KEYS_ARRAY)
-    {
-      ALLOWED_META_KEYS.add(s);
-    }
-  }
 
   /**
    * Subscription type.
@@ -356,9 +351,9 @@ final class Subscription
   private static String byteArrayToHexString(final byte[] array)
   {
     final StringBuilder sb = new StringBuilder(array.length * 2);
-    for (int i = 0; i < array.length; i++)
+    for (final byte b : array)
     {
-      final int value = array[i] & 255;
+      final int value = b & 255;
       if (value < 16)
       {
         sb.append('0');
@@ -402,8 +397,8 @@ final class Subscription
   public void serializeMetaData(final File metaFile) throws IOException
   {
     this.putMeta(KEY_META_HASH, createMetaDataHash(this.meta));
-    try (final DataOutputStream metaOut = new DataOutputStream(new GZIPOutputStream(
-        new BufferedOutputStream(new FileOutputStream(metaFile)))))
+    try (final DataOutputStream metaOut = new DataOutputStream(new BufferedOutputStream(
+        new GZIPOutputStream(new FileOutputStream(metaFile)))))
     {
       metaOut.writeUTF(this.url != null ? this.url.toString() : "");
       metaOut.writeInt(this.meta.size());
@@ -417,8 +412,8 @@ final class Subscription
 
   public void serializeFilters(final File filtersFile) throws IOException
   {
-    try (final DataOutputStream filtersOut = new DataOutputStream(new GZIPOutputStream(
-        new BufferedOutputStream(new FileOutputStream(filtersFile)))))
+    try (final DataOutputStream filtersOut = new DataOutputStream(new BufferedOutputStream(
+        new GZIPOutputStream(new FileOutputStream(filtersFile)))))
     {
       filtersOut.writeInt(this.filters.size());
       filtersOut.writeUTF(createFilterHash(new ArrayList<>(this.filters)));
@@ -440,7 +435,7 @@ final class Subscription
   public static Subscription deserializeSubscription(final File metaFile)
   {
     Subscription sub = null;
-    try (final DataInputStream in = new DataInputStream(new GZIPInputStream(new BufferedInputStream(
+    try (final DataInputStream in = new DataInputStream(new BufferedInputStream(new GZIPInputStream(
         new FileInputStream(metaFile)))))
     {
       final String urlString = in.readUTF();
@@ -466,7 +461,7 @@ final class Subscription
   {
     this.clearFilters();
     this.filtersValid = false;
-    try (final DataInputStream in = new DataInputStream(new GZIPInputStream(new BufferedInputStream(
+    try (final DataInputStream in = new DataInputStream(new BufferedInputStream(new GZIPInputStream(
         new FileInputStream(filtersFile)))))
     {
       final int numFilters = in.readInt();

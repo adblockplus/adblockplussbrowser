@@ -10,4 +10,8 @@
     <string name="key_previous_version_code">previous_version_code</string>
     <string name="key_whitelisted_websites">whitelisted_websites</string>
 
+    <!-- Preference values -->
+    <string name="download_settings_value_wifi">1</string>
+    <string name="download_settings_value_always">2</string>
+
 </resources>

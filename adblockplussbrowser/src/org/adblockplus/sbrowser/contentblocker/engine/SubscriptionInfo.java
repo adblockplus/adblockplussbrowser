@@ -17,6 +17,8 @@
 
 package org.adblockplus.sbrowser.contentblocker.engine;
 
+import android.support.annotation.NonNull;
+
 /**
  * Class for querying subscription information from the engine.
  */
@@ -40,7 +42,7 @@ public class SubscriptionInfo implements Comparable<SubscriptionInfo>
   private boolean enabled = false;
   private long lastUpdate;
 
-  SubscriptionInfo(final Type type, final String id, final String url, final String title, final boolean enabled, final long lastUpdate)
+  private SubscriptionInfo(final Type type, final String id, final String url, final String title, final boolean enabled, final long lastUpdate)
   {
     this.type = type;
     this.id = id;
@@ -148,7 +150,7 @@ public class SubscriptionInfo implements Comparable<SubscriptionInfo>
   }
 
   @Override
-  public int compareTo(final SubscriptionInfo another)
+  public int compareTo(@NonNull final SubscriptionInfo another)
   {
     return this.getTitle().compareTo(another.getTitle());
   }

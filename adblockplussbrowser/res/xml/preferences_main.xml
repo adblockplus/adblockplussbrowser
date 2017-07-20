@@ -29,7 +29,7 @@
     </PreferenceScreen>
 
     <org.adblockplus.sbrowser.contentblocker.preferences.MultilineListPreference
-        android:defaultValue="1"
+        android:defaultValue="@string/download_settings_value_wifi"
         android:entries="@array/download_settings"
         android:entryValues="@array/download_settings_values"
         android:key="@string/key_automatic_updates"

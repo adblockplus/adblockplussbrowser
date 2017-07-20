@@ -183,7 +183,7 @@ public class ListedSubscriptionsPreferenceCategory extends MultilinePreferenceCa
   public boolean onPreferenceChange(final Preference preference, final Object newValue)
   {
     final String id = preference.getKey();
-    final boolean enabled = ((Boolean) newValue).booleanValue();
+    final boolean enabled = (Boolean) newValue;
 
     this.engine.changeSubscriptionState(id, enabled);
 
