@@ -34,6 +34,22 @@ android {
             }
         }
     }
+
+    afterEvaluate { project ->
+        project.tasks.prepareReleaseDependencies << {
+            updateBundledLists()
+            println('Bundled lists updated at ' + new Date().format('dd MMM yyyy, HH:mm:ss zzz'))
+        }
+    }
+}
+
+def updateBundledLists() {
+    new URL(rootProject.ext.easyListUpdateUrl).withInputStream {
+        i -> new File(rootProject.ext.easyListFilePath).withOutputStream { it << i }
+    }
+    new URL(rootProject.ext.exceptionRulesUpdateUrl).withInputStream {
+        i -> new File(rootProject.ext.exceptionRulesFilePath).withOutputStream { it << i }
+    }
 }
 
 dependencies {
