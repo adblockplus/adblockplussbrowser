@@ -25,7 +25,6 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -35,6 +34,7 @@ import android.widget.Toast;
 
 import org.adblockplus.adblockplussbrowser.R;
 import org.adblockplus.sbrowser.contentblocker.util.PreferenceUtils;
+import org.apache.commons.validator.routines.DomainValidator;
 
 public class UrlInputOpenerPreference extends EditTextPreference implements TextWatcher,
     TextView.OnEditorActionListener
@@ -99,7 +99,7 @@ public class UrlInputOpenerPreference extends EditTextPreference implements Text
   @Override
   public void afterTextChanged(Editable s)
   {
-    setPositiveButtonEnabled(isValidUrl());
+    setPositiveButtonEnabled(isValidDomain());
   }
 
   @Override
@@ -107,7 +107,7 @@ public class UrlInputOpenerPreference extends EditTextPreference implements Text
   {
     if (actionId == EditorInfo.IME_ACTION_DONE)
     {
-      if (this.isValidUrl())
+      if (this.isValidDomain())
       {
         mAlertDialog.getButton(AlertDialog.BUTTON_POSITIVE).performClick();
       }
@@ -132,9 +132,9 @@ public class UrlInputOpenerPreference extends EditTextPreference implements Text
     this.onUrlReadyListener = listener;
   }
 
-  private boolean isValidUrl()
+  private boolean isValidDomain()
   {
-    return Patterns.WEB_URL.matcher(getUrl()).matches();
+    return DomainValidator.getInstance().isValid(getUrl());
   }
 
   private String getUrl()

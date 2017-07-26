@@ -28,7 +28,7 @@ android {
     buildTypes {
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt')
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             lintOptions {
                 disable 'MissingTranslation'
             }
@@ -38,4 +38,7 @@ android {
 
 dependencies {
     compile "com.android.support:support-v4:$rootProject.ext.androidSupportLibraryVersion"
+    compile (group: 'commons-validator', name: 'commons-validator', version: '+') {
+        exclude group: 'commons-logging', module: 'commons-logging'
+    }
 }
