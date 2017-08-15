@@ -93,6 +93,11 @@ final class DefaultSubscriptions
     return url != null ? this.getForUrl(url.toString()) : null;
   }
 
+  public List<DefaultSubscriptionInfo> getAdsSubscriptions()
+  {
+    return adsSubscriptions;
+  }
+
   private void listSubscriptions(final List<DefaultSubscriptionInfo> output)
   {
     for (final DefaultSubscriptionInfo s : this.subscriptions)

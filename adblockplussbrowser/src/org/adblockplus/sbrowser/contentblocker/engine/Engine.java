@@ -44,6 +44,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import org.adblockplus.adblockplussbrowser.R;
 import org.adblockplus.sbrowser.contentblocker.util.SharedPrefsUtils;
+import org.adblockplus.sbrowser.contentblocker.util.SubscriptionUtils;
 
 import android.content.Context;
 import android.content.Intent;
@@ -67,9 +68,9 @@ public final class Engine
   public static final String USER_EXCEPTIONS_TITLE = "__exceptions";
 
   public static final String SBROWSER_APP_ID = "com.sec.android.app.sbrowser";
+  public static final String EASYLIST_URL = "https://easylist-downloads.adblockplus.org/easylist.txt";
   private static final String ACTION_OPEN_SETTINGS = "com.samsung.android.sbrowser.contentBlocker.ACTION_SETTING";
   private static final String ACTION_UPDATE = "com.samsung.android.sbrowser.contentBlocker.ACTION_UPDATE";
-  private static final String EASYLIST_URL = "https://easylist-downloads.adblockplus.org/easylist.txt";
 
   public static final String SUBSCRIPTIONS_EXCEPTIONSURL = "subscriptions_exceptionsurl";
 
@@ -205,6 +206,11 @@ public final class Engine
       return false;
     }
 
+    if (wasFirstRun())
+    {
+      return true;
+    }
+
     final boolean wifiOnly = "1".equals(SharedPrefsUtils.getString(
         this.serviceContext, R.string.key_automatic_updates , "1"));
 
@@ -317,9 +323,24 @@ public final class Engine
     return this.defaultSubscriptions.getForUrl(url);
   }
 
-  public boolean wasFirstRun()
+  /**
+   * If the user starts the app for the first time, we force to update the subscription which was
+   * selected as the default, no matter if he has a WIFI connection or not. From the second start
+   * we only update when the user has a WIFI connection.
+   *
+   * @return a boolean that indicated if this is the first start of the app
+   */
+  private boolean wasFirstRun()
   {
-    return this.wasFirstRun;
+    if (wasFirstRun)
+    {
+      this.wasFirstRun = false;
+      return true;
+    }
+    else
+    {
+      return false;
+    }
   }
 
   private void migrateFromPreviousVersion(final Context context)
@@ -386,7 +407,9 @@ public final class Engine
       try (final InputStream easylistTxt = context.getResources().openRawResource(R.raw.easylist))
       {
         final Subscription easylist = engine.subscriptions.add(Subscription
-            .create(EASYLIST_URL)
+            // Use bundled EasyList as default and update it with locale specific list later
+            // see: https://issues.adblockplus.org/ticket/5237
+            .create(SubscriptionUtils.chooseDefaultSubscriptionUrl(engine.defaultSubscriptions.getAdsSubscriptions()))
             .parseLines(readLines(easylistTxt)));
         easylist.putMeta(Subscription.KEY_UPDATE_TIMESTAMP, "0");
         easylist.setEnabled(true);
