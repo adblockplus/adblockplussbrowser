@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- About URLs -->
+    <string name="url_privacy_policy">https://adblockplus.org/privacy</string>
+    <string name="url_terms_of_use">https://adblockplus.org/terms</string>
+
     <!-- Preference keys -->
     <string name="key_automatic_updates">automatic_updates</string>
     <string name="key_acceptable_ads">acceptable_ads</string>

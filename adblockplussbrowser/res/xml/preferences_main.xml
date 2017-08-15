@@ -45,4 +45,20 @@
             android:title="@string/enable_acceptable_ads"/>
     </PreferenceCategory>
 
+    <PreferenceScreen android:title="@string/about">
+        <Preference android:title="@string/privacy_policy">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/url_privacy_policy"/>
+        </Preference>
+        <Preference android:title="@string/terms_of_use">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/url_terms_of_use"/>
+        </Preference>
+        <PreferenceScreen android:title="@string/imprint" >
+            <org.adblockplus.sbrowser.contentblocker.preferences.ImprintPreference/>
+        </PreferenceScreen>
+    </PreferenceScreen>
+
 </PreferenceScreen>
