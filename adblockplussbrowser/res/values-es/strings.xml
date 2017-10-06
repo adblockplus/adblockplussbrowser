@@ -43,5 +43,10 @@
     <string name="whitelist_remove_dialog_message">¿Seguro que quieres eliminar &lt;b>%1s&lt;/b>?</string>
     <string name="add_subscription_dialog_message">Agregando suscripción&#8230;</string>
     <string name="remove_subscription_dialog_message">Quitando suscripción&#8230;</string>
+    <string name="about">Acerca de</string>
+    <string name="privacy_policy">Política de privacidad</string>
+    <string name="terms_of_use">Términos de uso</string>
+    <string name="imprint">Pie de imprenta</string>
+    <string name="imprint_text"><![CDATA[<p><b><font color=\"#ffffff\">eyeo GmbH</font></b> <br/>Lichtstraße 25<br/>50825 Cologne<br/>Germany</p> <p>Asistencia: <br/><a href=\"https://adblockplus.org/forum/\">Foro de Adblock Plus</a> <br/>Correo electrónico:<br/><a href=\"mailto:info@eyeo.com\">info@eyeo.com</a> <br/>Teléfono:<br/>+49 (0)221 / 65028 598 <br/>Fax:<br/>+49 (0)221 / 65028 599</p> <p>Número de identificación a efectos de IVA:<br/>DE279292414 <br/>Tribunal de primera instancia de Colonia: <br/>HRB 73508</p> <p><b><font color=\"#ffffff\">Directores ejecutivos</font></b>: <br/>Till Faida <br/>Felix Dahlke <br/>Steffen Kiedel</p>]]></string>
 
 </resources>

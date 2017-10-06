@@ -43,5 +43,10 @@
     <string name="whitelist_remove_dialog_message">정말 &lt;b>%1s&lt;/b>을(를) 제거할까요?</string>
     <string name="add_subscription_dialog_message">구독 추가 중&#8230;</string>
     <string name="remove_subscription_dialog_message">구독 삭제 중&#8230;</string>
+    <string name="about">관련 정보</string>
+    <string name="privacy_policy">개인 정보 보호 정책</string>
+    <string name="terms_of_use">이용 약관</string>
+    <string name="imprint">발행자</string>
+    <string name="imprint_text"><![CDATA[<p><b><font color=\"#ffffff\">eyeo GmbH</font></b> <br/>Lichtstraße 25<br/>50825 Cologne <br/>Germany</p> <p>지원: <br/><a href=\"https://adblockplus.org/forum/\">Adblock Plus 포럼</a> <br/>이메일:<br/><a href=\"mailto:info@eyeo.com\">info@eyeo.com</a> <br/>전화:<br/>+49 (0)221 / 65028 598 <br/>팩스:<br/>+49 (0)221 / 65028 599</p> <p>VAT 번호:<br/>DE279292414 <br/>쾰른 지방 법원: <br/>HRB 73508</p> <p><b><font color=\"#ffffff\">전무이사</font></b>: <br/>Till Faida <br/>Felix Dahlke <br/>Steffen Kiedel</p>]]></string>
 
 </resources>

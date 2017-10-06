@@ -43,5 +43,10 @@
     <string name="whitelist_remove_dialog_message">Είστε σίγουροι ότι θέλετε να την αφαιρέσετε &lt;b>%1s&lt;/b>?</string>
     <string name="add_subscription_dialog_message">Προσθήκη εγγραφής&#8230;</string>
     <string name="remove_subscription_dialog_message">Αφαίρεση εγγραφής&#8230;</string>
+    <string name="about">Σχετικά με</string>
+    <string name="privacy_policy">Πολιτική απορρήτου</string>
+    <string name="terms_of_use">Όροι χρήσης</string>
+    <string name="imprint">Imprint</string>
+    <string name="imprint_text"><![CDATA[<p><b><font color=\"#ffffff\">eyeo GmbH</font></b> <br/>Lichtstraße 25<br/>50825 Cologne<br/>Germany</p> <p>Υποστήριξη: <br/><a href=\"https://adblockplus.org/forum/\">Φόρουμ Adblock Plus</a> <br/>Email:<br/><a href=\"mailto:info@eyeo.com\">info@eyeo.com</a> <br/>Τηλέφωνο:<br/>+49 (0)221 / 65028 598 <br/>Φαξ:<br/>+49 (0)221 / 65028 599</p> <p>Αριθμός ΦΠΑ:<br/>DE279292414 <br/>Πρωτοδικείο Κολωνίας: <br/>HRB 73508</p> <p><b><font color=\"#ffffff\">Διευθύνοντες σύμβουλοι</font></b>: <br/>Till Faida <br/>Felix Dahlke <br/>Steffen Kiedel</p>]]></string>
 
 </resources>

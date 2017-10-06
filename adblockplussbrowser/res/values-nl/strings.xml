@@ -43,5 +43,10 @@
     <string name="whitelist_remove_dialog_message">Weet u zeker dat u &lt;b>%1s&lt;/b> wilt verwijderen?</string>
     <string name="add_subscription_dialog_message">Abonnement toevoegen&#8230;</string>
     <string name="remove_subscription_dialog_message">Abonnement verwijderen&#8230;</string>
+    <string name="about">Over</string>
+    <string name="privacy_policy">Privacybeleid</string>
+    <string name="terms_of_use">Gebruiksvoorwaarden</string>
+    <string name="imprint">Impressum</string>
+    <string name="imprint_text"><![CDATA[<p><b><font color=\"#ffffff\">eyeo GmbH</font></b> <br/>Lichtstraße 25<br/>50825 Cologne <br/>Germany</p> <p>Support: <br/><a href=\"https://adblockplus.org/forum/\">Adblock Plus Forum</a> <br/>E-mail:<br/><a href=\"mailto:info@eyeo.com\">info@eyeo.com</a> <br/>Telefoon:<br/>+49 (0)221 / 65028 598 <br/>Fax:<br/>+49 (0)221 / 65028 599</p> <p>BTW-NUMMER:<br/>DE279292414 <br/>Rechtbank In Keulen: <br/>HRB 73508</p> <p><b><font color=\"#ffffff\">Directie</font></b>: <br/>Till Faida <br/>Felix Dahlke <br/>Steffen Kiedel</p>]]></string>
 
 </resources>

@@ -43,5 +43,10 @@
     <string name="whitelist_remove_dialog_message">Вы уверены, что хотите удалить &lt;b>%1s&lt;/b>?</string>
     <string name="add_subscription_dialog_message">Добавление подписки&#8230;</string>
     <string name="remove_subscription_dialog_message">Удаление подписки&#8230;</string>
+    <string name="about">О нас</string>
+    <string name="privacy_policy">Политика конфиденциальности</string>
+    <string name="terms_of_use">Условия использования</string>
+    <string name="imprint">Imprint</string>
+    <string name="imprint_text"><![CDATA[<p><b><font color=\"#ffffff\">eyeo GmbH</font></b> <br/>Lichtstraße 25<br/>50825 Cologne<br/>Germany</p> <p>Поддержка: <br/><a href=\"https://adblockplus.org/forum/\">Adblock Plus Forum</a> <br/>Эл. почта:<br/><a href=\"mailto:info@eyeo.com\">info@eyeo.com</a> <br/>Телефон:<br/>+49 (0)221 / 65028 598 <br/>Факс:<br/>+49 (0)221 / 65028 599</p> <p>НДС №:<br/>DE279292414 <br/>Федеральный суд Кельна: <br/>HRB 73508</p> <p><b><font color=\"#ffffff\">Директора</font></b>: <br/>Till Faida <br/>Felix Dahlke <br/>Steffen Kiedel</p>]]></string>
 
 </resources>
