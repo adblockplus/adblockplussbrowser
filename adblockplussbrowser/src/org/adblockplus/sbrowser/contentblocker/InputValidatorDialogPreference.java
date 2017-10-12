@@ -21,10 +21,13 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
+import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -33,22 +36,31 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.adblockplus.adblockplussbrowser.R;
+import org.adblockplus.sbrowser.contentblocker.engine.Engine;
 import org.adblockplus.sbrowser.contentblocker.util.PreferenceUtils;
 import org.apache.commons.validator.routines.DomainValidator;
 
-public class UrlInputOpenerPreference extends EditTextPreference implements TextWatcher,
+public class InputValidatorDialogPreference extends EditTextPreference implements TextWatcher,
     TextView.OnEditorActionListener
 {
 
-  private OnUrlReadyListener onUrlReadyListener;
-  private AlertDialog mAlertDialog;
+  public enum ValidationType
+  {
+    DOMAIN,
+    URL
+  }
 
-  public UrlInputOpenerPreference(Context context)
+  private static final String TAG = InputValidatorDialogPreference.class.getSimpleName();
+  private OnInputReadyListener onInputReadyListener;
+  private AlertDialog alertDialog;
+  private ValidationType validationType;
+
+  public InputValidatorDialogPreference(Context context)
   {
     this(context, null);
   }
 
-  public UrlInputOpenerPreference(Context context, AttributeSet attrs)
+  public InputValidatorDialogPreference(Context context, AttributeSet attrs)
   {
     super(context, attrs);
 
@@ -67,7 +79,7 @@ public class UrlInputOpenerPreference extends EditTextPreference implements Text
   {
     super.showDialog(state);
 
-    mAlertDialog = (AlertDialog) getDialog();
+    alertDialog = (AlertDialog) getDialog();
     // Positive button is disabled until a valid URL is entered
     this.setPositiveButtonEnabled(false);
   }
@@ -77,10 +89,10 @@ public class UrlInputOpenerPreference extends EditTextPreference implements Text
   {
     super.onDialogClosed(positiveResult);
 
-    mAlertDialog = null;
-    if (positiveResult && this.onUrlReadyListener != null)
+    alertDialog = null;
+    if (positiveResult && this.onInputReadyListener != null)
     {
-      this.onUrlReadyListener.onUrlReady(getUrl());
+      this.onInputReadyListener.onInputReady(getInput());
     }
   }
 
@@ -99,7 +111,7 @@ public class UrlInputOpenerPreference extends EditTextPreference implements Text
   @Override
   public void afterTextChanged(Editable s)
   {
-    setPositiveButtonEnabled(isValidDomain());
+    setPositiveButtonEnabled(isValidInput());
   }
 
   @Override
@@ -107,9 +119,9 @@ public class UrlInputOpenerPreference extends EditTextPreference implements Text
   {
     if (actionId == EditorInfo.IME_ACTION_DONE)
     {
-      if (this.isValidDomain())
+      if (this.isValidInput())
       {
-        mAlertDialog.getButton(AlertDialog.BUTTON_POSITIVE).performClick();
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).performClick();
       }
       else
       {
@@ -127,31 +139,59 @@ public class UrlInputOpenerPreference extends EditTextPreference implements Text
     PreferenceUtils.setMultilineTitle(view);
   }
 
-  public void setOnUrlReadyListener(OnUrlReadyListener listener)
+  public void setValidationType(@NonNull final ValidationType validationType)
   {
-    this.onUrlReadyListener = listener;
+    this.validationType = validationType;
+  }
+
+  public void setOnInputReadyListener(OnInputReadyListener listener)
+  {
+    this.onInputReadyListener = listener;
   }
 
   private boolean isValidDomain()
   {
-    return DomainValidator.getInstance().isValid(getUrl());
+    return DomainValidator.getInstance().isValid(getInput());
   }
 
-  private String getUrl()
+  private boolean isValidUrl()
+  {
+    return Patterns.WEB_URL.matcher(getInput()).matches();
+  }
+
+  private boolean isValidInput()
+  {
+    if (validationType == null)
+    {
+      Log.i(TAG, "ValidationType was not defined and is therefore set to" +
+          " ValidationType.URL per default. Please consider to set in manually.");
+      validationType = ValidationType.URL;
+    }
+
+    switch (validationType)
+    {
+      case DOMAIN:
+        return isValidDomain();
+      default:
+        return isValidUrl();
+    }
+  }
+
+  private String getInput()
   {
     return getEditText().getText().toString();
   }
 
   private void setPositiveButtonEnabled(boolean enabled)
   {
-    if (mAlertDialog != null)
+    if (alertDialog != null)
     {
-      mAlertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(enabled);
+      alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(enabled);
     }
   }
 
-  public interface OnUrlReadyListener
+  public interface OnInputReadyListener
   {
-    void onUrlReady(String url);
+    void onInputReady(String input);
   }
 }

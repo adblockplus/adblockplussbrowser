@@ -220,6 +220,11 @@ final class Subscriptions
     return this.subscriptions.get(id);
   }
 
+  public boolean remove(final String id)
+  {
+    return this.subscriptions.remove(id) != null;
+  }
+
   public static Subscriptions initialize(final Engine engine, final File appFolder,
       final File cacheFolder)
   {

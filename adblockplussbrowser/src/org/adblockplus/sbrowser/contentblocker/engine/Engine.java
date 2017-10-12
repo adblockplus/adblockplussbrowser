@@ -256,6 +256,22 @@ public final class Engine
     }
   }
 
+  public void createAndAddSubscriptionFromUrl(final String url,
+      final SubscriptionAddedCallback callback) throws IOException
+  {
+    final Subscription sub = Subscription.create(url);
+    sub.putMeta(Subscription.KEY_TITLE, url);
+    sub.setEnabled(true);
+    subscriptions.add(sub);
+    subscriptions.persistSubscription(sub);
+    callback.subscriptionAdded();
+  }
+
+  public void removeSubscriptionById(final String subscriptionId)
+  {
+    subscriptions.remove(subscriptionId);
+  }
+
   void downloadFinished(final String id, final int responseCode, final String response,
       final Map<String, String> headers)
   {
@@ -409,7 +425,8 @@ public final class Engine
         final Subscription easylist = engine.subscriptions.add(Subscription
             // Use bundled EasyList as default and update it with locale specific list later
             // see: https://issues.adblockplus.org/ticket/5237
-            .create(SubscriptionUtils.chooseDefaultSubscriptionUrl(engine.defaultSubscriptions.getAdsSubscriptions()))
+            .create(SubscriptionUtils.chooseDefaultSubscriptionUrl(
+                engine.defaultSubscriptions.getAdsSubscriptions()))
             .parseLines(readLines(easylistTxt)));
         easylist.putMeta(Subscription.KEY_UPDATE_TIMESTAMP, "0");
         easylist.setEnabled(true);
@@ -611,6 +628,11 @@ public final class Engine
     return new URL(sb.toString());
   }
 
+  public boolean isAcceptableAdsUrl(final SubscriptionInfo subscriptionInfo)
+  {
+    return getPrefsDefault(SUBSCRIPTIONS_EXCEPTIONSURL).equals(subscriptionInfo.getUrl());
+  }
+
   private static class EventHandler implements Runnable
   {
     private static final String TAG = EventHandler.class.getSimpleName();
@@ -786,5 +808,10 @@ public final class Engine
   {
     void subscriptionUpdateRequested(boolean enabled);
     void subscriptionUpdatedApplied();
+  }
+
+  public interface SubscriptionAddedCallback
+  {
+    void subscriptionAdded();
   }
 }

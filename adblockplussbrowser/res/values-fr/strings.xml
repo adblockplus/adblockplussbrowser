@@ -43,6 +43,7 @@
     <string name="whitelist_remove_dialog_message">Êtes-vous sûr(e) de vouloir supprimer &lt;b>%1s&lt;/b> ?</string>
     <string name="add_subscription_dialog_message">Ajout de souscription en cours&#8230;</string>
     <string name="remove_subscription_dialog_message">Suppression de souscription en cours&#8230;</string>
+    <string name="add_another_list">Ajouter une autre liste de filtres</string>
     <string name="about">À propos</string>
     <string name="privacy_policy">Politique de respect de la vie privée</string>
     <string name="terms_of_use">Conditions d’utilisation</string>

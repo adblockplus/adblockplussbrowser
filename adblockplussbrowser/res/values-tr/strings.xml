@@ -43,6 +43,7 @@
     <string name="whitelist_remove_dialog_message">&lt;b>%1s&lt;/b> kaldırmak istediğinizden emin misiniz?</string>
     <string name="add_subscription_dialog_message">Abonelik ekleniyor&#8230;</string>
     <string name="remove_subscription_dialog_message">Abonelik kaldırılıyor&#8230;</string>
+    <string name="add_another_list">Başka bir filtre listesi ekle</string>
     <string name="about">Hakkında</string>
     <string name="privacy_policy">Gizlilik Politikası</string>
     <string name="terms_of_use">Kullanım Şartları</string>

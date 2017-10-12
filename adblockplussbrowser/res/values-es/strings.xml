@@ -43,6 +43,7 @@
     <string name="whitelist_remove_dialog_message">¿Seguro que quieres eliminar &lt;b>%1s&lt;/b>?</string>
     <string name="add_subscription_dialog_message">Agregando suscripción&#8230;</string>
     <string name="remove_subscription_dialog_message">Quitando suscripción&#8230;</string>
+    <string name="add_another_list">Agregar otra lista de filtros</string>
     <string name="about">Acerca de</string>
     <string name="privacy_policy">Política de privacidad</string>
     <string name="terms_of_use">Términos de uso</string>

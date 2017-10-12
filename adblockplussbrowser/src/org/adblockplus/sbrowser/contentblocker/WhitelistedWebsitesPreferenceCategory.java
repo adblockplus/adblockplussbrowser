@@ -94,17 +94,18 @@ public class WhitelistedWebsitesPreferenceCategory extends PreferenceCategory
       this.addPreference(whitelistedWebsitePreference);
     }
 
-    final UrlInputOpenerPreference urlPreference = new UrlInputOpenerPreference(this.getContext());
+    final InputValidatorDialogPreference urlPreference = new InputValidatorDialogPreference(this.getContext());
+    urlPreference.setValidationType(InputValidatorDialogPreference.ValidationType.DOMAIN);
     urlPreference.setTitle(R.string.whitelisted_websites_add_button);
     urlPreference.setDialogTitle(R.string.whitelist_website_dialog_title);
     urlPreference.setDialogMessage(R.string.whitelist_website_dialog_message);
     urlPreference.getEditText().setHint(R.string.whitelist_website_dialog_hint);
-    urlPreference.setOnUrlReadyListener(new UrlInputOpenerPreference.OnUrlReadyListener()
+    urlPreference.setOnInputReadyListener(new InputValidatorDialogPreference.OnInputReadyListener()
     {
       @Override
-      public void onUrlReady(String url)
+      public void onInputReady(String input)
       {
-        WhitelistedWebsitesPreferenceCategory.this.whitelistWebsite(url);
+        WhitelistedWebsitesPreferenceCategory.this.whitelistWebsite(input);
       }
     });
     this.addPreference(urlPreference);

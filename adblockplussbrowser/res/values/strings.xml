@@ -49,5 +49,7 @@
     <string name="terms_of_use">Terms of Use</string>
     <string name="imprint">Imprint</string>
     <string name="imprint_text"><![CDATA[<p><b><font color=\"#ffffff\">eyeo GmbH</font></b><br/>Lichtstraße 25<br/>50825 Cologne<br/>Germany</p><p>Support:<br/><a href=\"https://adblockplus.org/forum/\">Adblock Plus Forum</a><br/>Email:<br/><a href=\"mailto:info@eyeo.com\">info@eyeo.com</a><br/>Telephone:<br/>+49 (0)221 / 65028 598<br/>Fax:<br/>+49 (0)221 / 65028 599</p><p>VAT-ID:<br/>DE279292414<br/>District Court Cologne:<br/>HRB 73508</p><p><b><font color=\"#ffffff\">Managing Directors</font></b>:<br/>Till Faida<br/>Felix Dahlke<br/>Steffen Kiedel</p>]]></string>
+    <string name="add_another_list">Add another filter list</string>
+    <string name="add_another_list_url_hint">https://www.example.com/filterlist.txt</string>
 
 </resources>

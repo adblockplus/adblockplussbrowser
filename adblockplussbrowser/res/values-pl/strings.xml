@@ -43,6 +43,7 @@
     <string name="whitelist_remove_dialog_message">Czy na pewno chcesz usunąć &lt;b>%1s&lt;/b>?</string>
     <string name="add_subscription_dialog_message">Dodawanie subskrypcji&#8230;</string>
     <string name="remove_subscription_dialog_message">Usuwanie subskrypcji&#8230;</string>
+    <string name="add_another_list">Dodaj inne listy filtrów</string>
     <string name="about">Informacje</string>
     <string name="privacy_policy">Zasady ochrony prywatności</string>
     <string name="terms_of_use">Warunki użytkowania</string>
