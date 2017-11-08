@@ -36,7 +36,7 @@ android {
     }
 
     afterEvaluate { project ->
-        project.tasks.prepareReleaseDependencies << {
+        project.tasks.generateReleaseResources << {
             updateBundledLists()
             println('Bundled lists updated at ' + new Date().format('dd MMM yyyy, HH:mm:ss zzz'))
         }
