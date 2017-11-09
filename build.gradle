@@ -1,15 +1,21 @@
 buildscript {
+    // buildscript block is evaluated at the very beginning. Properties defined in the ext block
+    // don't exist at that time.
+    ext.kotlinVersion = '1.1.51'
     repositories {
+        google()
         jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     }
 }
 
 allprojects {
     repositories {
         jcenter()
+        mavenCentral()
         maven {
             url 'https://maven.google.com/'
             name 'Google'

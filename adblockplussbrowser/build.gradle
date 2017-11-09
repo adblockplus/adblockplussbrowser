@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -53,6 +54,7 @@ def updateBundledLists() {
 }
 
 dependencies {
+    testCompile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion"
     compile "com.android.support:support-v4:$rootProject.ext.androidSupportLibraryVersion"
     compile (group: 'commons-validator', name: 'commons-validator', version: '+') {
         exclude group: 'commons-logging', module: 'commons-logging'
