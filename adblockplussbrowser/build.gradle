@@ -21,7 +21,6 @@ android {
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
-            java.srcDirs = ['src']
             res.srcDirs = ['res']
         }
     }
@@ -36,8 +35,15 @@ android {
         }
     }
 
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
     afterEvaluate { project ->
         project.tasks.generateReleaseResources << {
+
             updateBundledLists()
             println('Bundled lists updated at ' + new Date().format('dd MMM yyyy, HH:mm:ss zzz'))
         }
@@ -55,6 +61,9 @@ def updateBundledLists() {
 
 dependencies {
     testImplementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion"
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.11.0'
+    testImplementation 'org.robolectric:robolectric:3.5.1'
     implementation "com.android.support:support-v4:$rootProject.ext.androidSupportLibraryVersion"
     implementation (group: 'commons-validator', name: 'commons-validator', version: '+') {
         exclude group: 'commons-logging', module: 'commons-logging'
