@@ -20,6 +20,7 @@ package org.adblockplus.sbrowser.contentblocker.engine;
 import java.util.Locale;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Build;
 
 @SuppressLint("DefaultLocale")
@@ -83,10 +84,16 @@ public class AppInfo
   public static class Builder
   {
     private static final String SBROWSER_PACKAGE_NAME = "com.sec.android.app.sbrowser";
+    private static final String SBROWSER_BETA_PACKAGE_NAME = "com.sec.android.app.sbrowser.beta";
+    private static final String SBROWSER_APP_NAME = "sbrowser";
+    private static final String YANDEX_PACKAGE_NAME = "com.yandex.browser";
+    private static final String YANDEX_ALPHA_PACKAGE_NAME = "com.yandex.browser.alpha";
+    private static final String YANDEX_BETA_PACKAGE_NAME = "com.yandex.browser.beta";
+    private static final String YANDEX_APP_NAME = "yandex";
 
     private String addonName = "adblockplussbrowser";
     private String addonVersion = "0";
-    private String application = "sbrowser";
+    private String application = "";
     private String applicationVersion = "0";
     private String platform = "android";
     private String platformVersion = Integer.toString(Build.VERSION.SDK_INT);
@@ -116,6 +123,8 @@ public class AppInfo
 
       this.locale = Locale.getDefault().toString().replace('_', '-');
 
+      this.application = checkForCompatibleInstalledBrowser(context.getPackageManager());
+
       return this;
     }
 
@@ -123,6 +132,39 @@ public class AppInfo
     {
       return new AppInfo(this.addonName, this.addonVersion, this.application,
           this.applicationVersion, this.platform, this.platformVersion, this.locale);
+    }
+
+    private String checkForCompatibleInstalledBrowser(final PackageManager packageManager)
+    {
+      StringBuilder installedCompatibleBrowser = new StringBuilder();
+
+      if (isPackageInstalled(packageManager, SBROWSER_PACKAGE_NAME)
+          || isPackageInstalled(packageManager, SBROWSER_BETA_PACKAGE_NAME))
+      {
+        installedCompatibleBrowser.append(SBROWSER_APP_NAME);
+      }
+
+      if (isPackageInstalled(packageManager, YANDEX_PACKAGE_NAME)
+          || isPackageInstalled(packageManager, YANDEX_ALPHA_PACKAGE_NAME)
+          || isPackageInstalled(packageManager, YANDEX_BETA_PACKAGE_NAME))
+      {
+        installedCompatibleBrowser.append(YANDEX_APP_NAME);
+      }
+
+      return installedCompatibleBrowser.toString();
+    }
+
+    private boolean isPackageInstalled(final PackageManager packageManager, final String packageName)
+    {
+      try
+      {
+        packageManager.getPackageInfo(packageName, 0);
+        return true;
+      }
+      catch (PackageManager.NameNotFoundException e)
+      {
+        return false;
+      }
     }
   }
 }
