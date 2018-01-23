@@ -105,17 +105,13 @@ public class SharedPrefsUtils
   public static void registerOnSharedPreferenceChangeListener(Context context,
       OnSharedPreferenceChangeListener listener)
   {
-    getDefaultSharedPreferences(context).registerOnSharedPreferenceChangeListener(
-        new OnSharedPreferenceChangeListenerWrapper(listener)
-    );
+    getDefaultSharedPreferences(context).registerOnSharedPreferenceChangeListener(listener);
   }
 
   public static void unregisterOnSharedPreferenceChangeListener(Context context,
       OnSharedPreferenceChangeListener listener)
   {
-    getDefaultSharedPreferences(context).unregisterOnSharedPreferenceChangeListener(
-        new OnSharedPreferenceChangeListenerWrapper(listener)
-    );
+    getDefaultSharedPreferences(context).unregisterOnSharedPreferenceChangeListener(listener);
   }
 
   private static SharedPreferences getDefaultSharedPreferences(Context context)
@@ -123,45 +119,16 @@ public class SharedPrefsUtils
     return PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
   }
 
-  private static class OnSharedPreferenceChangeListenerWrapper
+  public abstract static class OnSharedPreferenceChangeListener
       implements SharedPreferences.OnSharedPreferenceChangeListener
   {
 
-    private final OnSharedPreferenceChangeListener listener;
-
-    OnSharedPreferenceChangeListenerWrapper(OnSharedPreferenceChangeListener listener) {
-      this.listener = listener;
-    }
-
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
+    public final void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
     {
-      this.listener.onSharedPreferenceChanged(key);
+      this.onSharedPreferenceChanged(key);
     }
 
-    @Override
-    public boolean equals(Object obj)
-    {
-      if (this == obj)
-      {
-        return true;
-      }
-      else if (obj instanceof OnSharedPreferenceChangeListenerWrapper)
-      {
-        return this.listener.equals(((OnSharedPreferenceChangeListenerWrapper) obj).listener);
-      }
-      return false;
-    }
-
-    @Override
-    public int hashCode()
-    {
-      return this.listener.hashCode();
-    }
-  }
-
-  public interface OnSharedPreferenceChangeListener
-  {
-    void onSharedPreferenceChanged(String key);
+    protected abstract void onSharedPreferenceChanged(String key);
   }
 }

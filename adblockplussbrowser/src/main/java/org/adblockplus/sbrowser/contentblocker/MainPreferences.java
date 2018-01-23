@@ -38,8 +38,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 public class MainPreferences extends PreferenceActivity implements
-    EngineService.OnEngineCreatedCallback, SharedPrefsUtils.OnSharedPreferenceChangeListener,
-    Engine.SubscriptionUpdateCallback
+    EngineService.OnEngineCreatedCallback, Engine.SubscriptionUpdateCallback
 {
   private static final String TAG = MainPreferences.class.getSimpleName();
   private Engine engine = null;
@@ -66,7 +65,7 @@ public class MainPreferences extends PreferenceActivity implements
         this.getString(this.dialogTitleResId),
         this.getString(R.string.initialization_message));
     super.onStart();
-    SharedPrefsUtils.registerOnSharedPreferenceChangeListener(this, this);
+    SharedPrefsUtils.registerOnSharedPreferenceChangeListener(this, listener);
     EngineService.startService(this.getApplicationContext(), this);
   }
 
@@ -74,7 +73,7 @@ public class MainPreferences extends PreferenceActivity implements
   protected void onStop()
   {
     super.onStop();
-    SharedPrefsUtils.unregisterOnSharedPreferenceChangeListener(this, this);
+    SharedPrefsUtils.unregisterOnSharedPreferenceChangeListener(this, listener);
     this.dismissDialog();
   }
 
@@ -202,29 +201,6 @@ public class MainPreferences extends PreferenceActivity implements
   }
 
   @Override
-  public void onSharedPreferenceChanged(String key)
-  {
-    if (this.getString(R.string.key_automatic_updates).equals(key) && this.engine != null)
-    {
-      this.engine.connectivityChanged();
-    }
-    else if (this.getString(R.string.key_acceptable_ads).equals(key))
-    {
-      final boolean enabled = SharedPrefsUtils.getBoolean(this, R.string.key_acceptable_ads, true);
-      final String id = "url:" + this.engine.getPrefsDefault(Engine.SUBSCRIPTIONS_EXCEPTIONSURL);
-      Log.d(TAG, "Acceptable ads " + (enabled ? "enabled" : "disabled"));
-      this.engine.changeSubscriptionState(id, enabled);
-    }
-    else if (this.getString(R.string.key_application_activated).equals(key))
-    {
-      if (this.dialogTitleResId == R.string.setup_dialog_title)
-      {
-        this.dismissDialog();
-      }
-    }
-  }
-
-  @Override
   public void subscriptionUpdateRequested(final boolean enabled)
   {
     this.dialog = ProgressDialog.show(this, null, enabled
@@ -237,4 +213,32 @@ public class MainPreferences extends PreferenceActivity implements
   {
     this.dismissDialog();
   }
+
+  private final SharedPrefsUtils.OnSharedPreferenceChangeListener listener =
+      new SharedPrefsUtils.OnSharedPreferenceChangeListener()
+  {
+    @Override
+    protected void onSharedPreferenceChanged(String key)
+    {
+      if (getString(R.string.key_automatic_updates).equals(key) && engine != null)
+      {
+        engine.connectivityChanged();
+      }
+      else if (getString(R.string.key_acceptable_ads).equals(key))
+      {
+        final boolean enabled = SharedPrefsUtils.getBoolean
+            (MainPreferences.this, R.string.key_acceptable_ads, true);
+        final String id = "url:" + engine.getPrefsDefault(Engine.SUBSCRIPTIONS_EXCEPTIONSURL);
+        Log.d(TAG, "Acceptable ads " + (enabled ? "enabled" : "disabled"));
+        engine.changeSubscriptionState(id, enabled);
+      }
+      else if (getString(R.string.key_application_activated).equals(key))
+      {
+        if (dialogTitleResId == R.string.setup_dialog_title)
+        {
+          dismissDialog();
+        }
+      }
+    }
+  };
 }
