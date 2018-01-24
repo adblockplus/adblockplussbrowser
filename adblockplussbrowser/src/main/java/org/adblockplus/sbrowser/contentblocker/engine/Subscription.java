@@ -64,7 +64,7 @@ final class Subscription
   public static final String KEY_ENABLED = "_enabled";
   public static final String KEY_META_HASH = "_meta_hash";
 
-  private static final long MINIMAL_DOWNLOAD_INTERVAL = DateUtils.HOUR_IN_MILLIS / 4;
+  private static final long MINIMAL_DOWNLOAD_INTERVAL = DateUtils.MINUTE_IN_MILLIS;
   private static final long DOWNLOAD_RETRY_INTERVAL = DateUtils.HOUR_IN_MILLIS;
 
   /**

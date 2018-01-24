@@ -109,7 +109,8 @@ final class Downloader
     }
   }
 
-  public void enqueueDownload(final URL url, final String id, final Map<String, String> headers)
+  public void enqueueDownload(final URL url, final String id, final Map<String, String> headers,
+      final boolean allowMetered)
   {
     this.lock();
     try
@@ -117,7 +118,7 @@ final class Downloader
       if (!this.enqueuedIds.contains(id))
       {
         this.enqueuedIds.add(id);
-        this.downloadJobs.add(new DownloadJob(url, id, headers));
+        this.downloadJobs.add(new DownloadJob(url, id, headers, allowMetered));
       }
     }
     finally
@@ -167,7 +168,7 @@ final class Downloader
           job = this.downloader.downloadJobs.poll(5 * 60, TimeUnit.SECONDS);
           if (job != null)
           {
-            if (this.downloader.engine.canUseInternet())
+            if (this.downloader.engine.canUseInternet(job.allowMetered))
             {
               Log.d(TAG, "Downloading '" + job.id + "' using " + job.url);
               download(job);
@@ -241,6 +242,7 @@ final class Downloader
   {
     private final URL url;
     private final String id;
+    private final boolean allowMetered;
     private final HashMap<String, String> headers = new HashMap<>();
     private int retryCount = 0;
 
@@ -248,10 +250,11 @@ final class Downloader
     private final HashMap<String, String> responseHeaders = new HashMap<>();
     private String responseText = null;
 
-    public DownloadJob(final URL url, final String id, final Map<String, String> headers)
+    public DownloadJob(final URL url, final String id, final Map<String, String> headers, boolean allowMetered)
     {
       this.url = url;
       this.id = id;
+      this.allowMetered = allowMetered;
       if (headers != null)
       {
         this.headers.putAll(headers);

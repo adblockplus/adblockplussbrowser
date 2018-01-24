@@ -43,6 +43,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.adblockplus.adblockplussbrowser.R;
+import org.adblockplus.sbrowser.contentblocker.util.ConnectivityUtils;
 import org.adblockplus.sbrowser.contentblocker.util.SharedPrefsUtils;
 import org.adblockplus.sbrowser.contentblocker.util.SubscriptionUtils;
 
@@ -59,6 +60,7 @@ import android.os.Looper;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 public final class Engine
 {
@@ -196,42 +198,24 @@ public final class Engine
     });
   }
 
-  boolean canUseInternet()
+  boolean canUseInternet(final boolean allowMetered)
   {
-    final ConnectivityManager connManager = (ConnectivityManager) this.serviceContext
-        .getSystemService(Context.CONNECTIVITY_SERVICE);
-    final NetworkInfo current = connManager.getActiveNetworkInfo();
-    if (current == null)
-    {
-      return false;
-    }
+    // allow a metered connection to update default subscriptions at the first run.
+    // See https://issues.adblockplus.org/ticket/5237
+    return ConnectivityUtils.canUseInternet(serviceContext, allowMetered || wasFirstRun());
+  }
 
-    if (wasFirstRun())
+  public void forceUpdateSubscriptions(final boolean allowMetered)
+  {
+    try
     {
-      return true;
+      subscriptions.checkForUpdates(true, allowMetered);
+      Toast.makeText(serviceContext, serviceContext.getText(R.string.updating_subscriptions), Toast.LENGTH_LONG).show();
     }
-
-    final boolean wifiOnly = "1".equals(SharedPrefsUtils.getString(
-        this.serviceContext, R.string.key_automatic_updates , "1"));
-
-    if (wifiOnly)
+    catch (IOException e)
     {
-      if (current.isConnected() && !current.isRoaming())
-      {
-        switch (current.getType())
-        {
-          case ConnectivityManager.TYPE_BLUETOOTH:
-          case ConnectivityManager.TYPE_ETHERNET:
-          case ConnectivityManager.TYPE_WIFI:
-          case ConnectivityManager.TYPE_WIMAX:
-            return true;
-          default:
-            return false;
-        }
-      }
-      return false;
+      Log.e(TAG, "Failed checking for updates", e);
     }
-    return current.isConnected();
   }
 
   public List<SubscriptionInfo> getListedSubscriptions()
@@ -689,7 +673,7 @@ public final class Engine
             {
               nextUpdateCheck = currentTime + UPDATE_CHECK_INTERVAL;
 
-              this.engine.subscriptions.checkForUpdates();
+              this.engine.subscriptions.checkForUpdates(false, false);
             }
 
             if (currentTime > this.engine.nextUpdateBroadcast)
@@ -776,7 +760,8 @@ public final class Engine
     }
   }
 
-  public void enqueueDownload(final Subscription sub, final boolean forced) throws IOException
+  public void enqueueDownload(final Subscription sub, final boolean forced,
+      final boolean allowMetered) throws IOException
   {
     if (sub.getURL() != null && sub.shouldUpdate(forced))
     {
@@ -795,7 +780,7 @@ public final class Engine
         }
       }
       Log.d(TAG, headers.toString());
-      this.downloader.enqueueDownload(this.createDownloadURL(sub), sub.getId(), headers);
+      this.downloader.enqueueDownload(this.createDownloadURL(sub), sub.getId(), headers, allowMetered);
     }
   }
 

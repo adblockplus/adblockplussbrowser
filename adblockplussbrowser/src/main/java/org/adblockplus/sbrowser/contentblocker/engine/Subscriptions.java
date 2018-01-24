@@ -118,7 +118,7 @@ final class Subscriptions
         sub.serializeMetaData(this.getMetaFile(sub));
         if (enabled)
         {
-          this.engine.enqueueDownload(sub, true);
+          this.engine.enqueueDownload(sub, true, false);
         }
 
         this.engine.subscriptionStateChanged();
@@ -183,7 +183,7 @@ final class Subscriptions
       }
       if ((!s.isMetaDataValid() || !s.isFiltersValid()) && s.getURL() != null)
       {
-        this.engine.enqueueDownload(s, true);
+        this.engine.enqueueDownload(s, true, false);
       }
     }
 
@@ -270,13 +270,13 @@ final class Subscriptions
     }
   }
 
-  public void checkForUpdates() throws IOException
+  public void checkForUpdates(final boolean forced, final boolean allowMetered) throws IOException
   {
     for (Subscription sub : this.subscriptions.values())
     {
       if (sub.isEnabled())
       {
-        this.engine.enqueueDownload(sub, false);
+        this.engine.enqueueDownload(sub, forced, allowMetered);
       }
     }
   }

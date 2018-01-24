@@ -35,6 +35,10 @@
         android:key="@string/key_automatic_updates"
         android:title="@string/automatic_updates"/>
 
+    <Preference android:title="@string/update_subscriptions"
+        android:key="@string/key_force_update_subscriptions"
+        android:summary="@string/update_subscriptions_summary"/>
+
     <PreferenceCategory
         android:title="@string/acceptable_ads_category">
 

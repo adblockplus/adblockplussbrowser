@@ -20,15 +20,18 @@ package org.adblockplus.sbrowser.contentblocker;
 import org.adblockplus.sbrowser.contentblocker.engine.Engine;
 import org.adblockplus.sbrowser.contentblocker.engine.EngineService;
 import org.adblockplus.adblockplussbrowser.R;
+import org.adblockplus.sbrowser.contentblocker.util.ConnectivityUtils;
 import org.adblockplus.sbrowser.contentblocker.util.SharedPrefsUtils;
 
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.text.Html;
@@ -38,7 +41,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 public class MainPreferences extends PreferenceActivity implements
-    EngineService.OnEngineCreatedCallback, Engine.SubscriptionUpdateCallback
+    EngineService.OnEngineCreatedCallback, Engine.SubscriptionUpdateCallback,
+    Preference.OnPreferenceClickListener
 {
   private static final String TAG = MainPreferences.class.getSimpleName();
   private Engine engine = null;
@@ -53,7 +57,7 @@ public class MainPreferences extends PreferenceActivity implements
 
     this.getFragmentManager()
         .beginTransaction()
-        .replace(android.R.id.content, new Preferences())
+        .replace(android.R.id.content, new Preferences(), Preferences.class.getSimpleName())
         .commit();
   }
 
@@ -198,6 +202,12 @@ public class MainPreferences extends PreferenceActivity implements
 
       this.checkForCompatibleSBrowserAndProceed();
     }
+
+    final Fragment preferecesFragment = getFragmentManager()
+        .findFragmentByTag(Preferences.class.getSimpleName());
+    final Preference button = ((Preferences) preferecesFragment)
+        .findPreference(getString(R.string.key_force_update_subscriptions));
+    button.setOnPreferenceClickListener(this);
   }
 
   @Override
@@ -212,6 +222,53 @@ public class MainPreferences extends PreferenceActivity implements
   public void subscriptionUpdatedApplied()
   {
     this.dismissDialog();
+  }
+
+  @Override
+  public boolean onPreferenceClick(Preference preference)
+  {
+    if (getString(R.string.key_force_update_subscriptions).equals(preference.getKey()))
+    {
+      if (ConnectivityUtils.hasNonMeteredConnection(this))
+      {
+        engine.forceUpdateSubscriptions(false);
+      }
+      else
+      {
+        boolean meteredInternetAvailable = ConnectivityUtils.canUseInternet(this, true);
+        this.dialog = new AlertDialog.Builder(this)
+            .setTitle(R.string.update_subscriptions)
+            .setMessage(
+                meteredInternetAvailable
+                ? R.string.metered_connection_warning
+                : R.string.check_your_connection)
+            .setNegativeButton(android.R.string.cancel, new OnClickListener()
+            {
+              @Override
+              public void onClick(DialogInterface dialog, int which)
+              {
+                dialog.cancel();
+              }
+            })
+            .create();
+
+        if (meteredInternetAvailable)
+        {
+          this.dialog.setButton(DialogInterface.BUTTON_POSITIVE, getString(android.R.string.yes),
+              new OnClickListener()
+              {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i)
+                {
+                  engine.forceUpdateSubscriptions(true);
+                }
+              });
+        }
+        this.dialog.show();
+      }
+      return true;
+    }
+    return false;
   }
 
   private final SharedPrefsUtils.OnSharedPreferenceChangeListener listener =
