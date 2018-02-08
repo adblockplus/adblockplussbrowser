@@ -49,5 +49,10 @@
     <string name="terms_of_use">Gebruiksvoorwaarden</string>
     <string name="imprint">Impressum</string>
     <string name="imprint_text"><![CDATA[<p><b><font color=\"#ffffff\">eyeo GmbH</font></b> <br/>Lichtstraße 25<br/>50825 Cologne <br/>Germany</p> <p>Support: <br/><a href=\"https://adblockplus.org/forum/\">Adblock Plus Forum</a> <br/>E-mail:<br/><a href=\"mailto:info@eyeo.com\">info@eyeo.com</a> <br/>Telefoon:<br/>+49 (0)221 / 65028 598 <br/>Fax:<br/>+49 (0)221 / 65028 599</p> <p>BTW-NUMMER:<br/>DE279292414 <br/>Rechtbank In Keulen: <br/>HRB 73508</p> <p><b><font color=\"#ffffff\">Directie</font></b>: <br/>Till Faida <br/>Felix Dahlke <br/>Steffen Kiedel</p>]]></string>
+    <string name="update_subscriptions">Abonnementen bijwerken</string>
+    <string name="update_subscriptions_summary">Alle actieve abonnementen bijwerken</string>
+    <string name="updating_subscriptions">De abonnementen worden op de achtergrond bijgewerkt…</string>
+    <string name="metered_connection_warning">U gebruikt het data-abonnement van uw telefoon. Weet u zeker dat u wilt bijwerken? Dit kan even duren.</string>
+    <string name="check_your_connection">Het lijkt erop dat u offline bent. Controleer uw internetverbinding.</string>
 
 </resources>

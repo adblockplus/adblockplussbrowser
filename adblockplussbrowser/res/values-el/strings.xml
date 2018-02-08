@@ -49,5 +49,10 @@
     <string name="terms_of_use">Όροι χρήσης</string>
     <string name="imprint">Imprint</string>
     <string name="imprint_text"><![CDATA[<p><b><font color=\"#ffffff\">eyeo GmbH</font></b> <br/>Lichtstraße 25<br/>50825 Cologne<br/>Germany</p> <p>Υποστήριξη: <br/><a href=\"https://adblockplus.org/forum/\">Φόρουμ Adblock Plus</a> <br/>Email:<br/><a href=\"mailto:info@eyeo.com\">info@eyeo.com</a> <br/>Τηλέφωνο:<br/>+49 (0)221 / 65028 598 <br/>Φαξ:<br/>+49 (0)221 / 65028 599</p> <p>Αριθμός ΦΠΑ:<br/>DE279292414 <br/>Πρωτοδικείο Κολωνίας: <br/>HRB 73508</p> <p><b><font color=\"#ffffff\">Διευθύνοντες σύμβουλοι</font></b>: <br/>Till Faida <br/>Felix Dahlke <br/>Steffen Kiedel</p>]]></string>
+    <string name="update_subscriptions">Ενημέρωση συνδρομών</string>
+    <string name="update_subscriptions_summary">Ενημέρωση όλων των ενεργών συνδρομών</string>
+    <string name="updating_subscriptions">Ενημέρωση συνδρομών στο παρασκήνιο…</string>
+    <string name="metered_connection_warning">Χρησιμοποιείτε το πρόγραμμα δεδομένων του τηλεφώνου σας. Σίγουρα θέλετε να ενημερώσετε; Μπορεί να πάρει κάποιο χρόνο.</string>
+    <string name="check_your_connection">Φαίνεται ότι είστε εκτός σύνδεσης. Ελέγξτε τη σύνδεσή σας στο διαδίκτυο.</string>
 
 </resources>

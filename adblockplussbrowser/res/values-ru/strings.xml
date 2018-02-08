@@ -49,5 +49,10 @@
     <string name="terms_of_use">Условия использования</string>
     <string name="imprint">Imprint</string>
     <string name="imprint_text"><![CDATA[<p><b><font color=\"#ffffff\">eyeo GmbH</font></b> <br/>Lichtstraße 25<br/>50825 Cologne<br/>Germany</p> <p>Поддержка: <br/><a href=\"https://adblockplus.org/forum/\">Adblock Plus Forum</a> <br/>Эл. почта:<br/><a href=\"mailto:info@eyeo.com\">info@eyeo.com</a> <br/>Телефон:<br/>+49 (0)221 / 65028 598 <br/>Факс:<br/>+49 (0)221 / 65028 599</p> <p>НДС №:<br/>DE279292414 <br/>Федеральный суд Кельна: <br/>HRB 73508</p> <p><b><font color=\"#ffffff\">Директора</font></b>: <br/>Till Faida <br/>Felix Dahlke <br/>Steffen Kiedel</p>]]></string>
+    <string name="update_subscriptions">Обновить подписки</string>
+    <string name="update_subscriptions_summary">Обновить все активные подписки</string>
+    <string name="updating_subscriptions">Обновление подписок в фоновом режиме…</string>
+    <string name="metered_connection_warning">Вы используете трафик своего телефона. Вы уверены, что хотите выполнить обновление? Это может занять некоторое время.</string>
+    <string name="check_your_connection">Похоже, вы не в сети. Проверьте свое соединение с Интернетом.</string>
 
 </resources>

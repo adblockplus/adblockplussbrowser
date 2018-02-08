@@ -49,5 +49,10 @@
     <string name="terms_of_use">Warunki użytkowania</string>
     <string name="imprint">Informacje o nadruku</string>
     <string name="imprint_text"><![CDATA[<p><b><font color=\"#ffffff\">eyeo GmbH</font></b> <br/>Lichtstraße 25<br/>50825 Cologne<br/>Germany</p> <p>Pomoc: <br/><a href=\"https://adblockplus.org/forum/\">Forum Adblock Plus</a> <br/>E-mail:<br/><a href=\"mailto:info@eyeo.com\">info@eyeo.com</a> <br/>Telefon:<br/>+49 (0)221 / 65028 598 <br/>Faks:<br/>+49 (0)221 / 65028 599</p> <p>Nr VAT:<br/>DE279292414 <br/>Sąd rejonowy w Kolonii: <br/>HRB 73508</p> <p><b><font color=\"#ffffff\">Dyrektorzy zarządzający</font></b>: <br/>Till Faida <br/>Felix Dahlke <br/>Steffen Kiedel</p>]]></string>
+    <string name="update_subscriptions">Zaktualizuj subskrypcje</string>
+    <string name="update_subscriptions_summary">Zaktualizuj wszystkie aktywne subskrypcje</string>
+    <string name="updating_subscriptions">Aktualizowanie subskrypcji w tle…</string>
+    <string name="metered_connection_warning">Korzystasz z planu taryfowego telefonu. Czy na pewno chcesz aktualizować? Może to zająć trochę czasu.</string>
+    <string name="check_your_connection">Wygląda na to, że jesteś offline. Sprawdź połączenie z Internetem.</string>
 
 </resources>

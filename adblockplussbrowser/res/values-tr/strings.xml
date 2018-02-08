@@ -49,5 +49,10 @@
     <string name="terms_of_use">Kullanım Şartları</string>
     <string name="imprint">Damga</string>
     <string name="imprint_text"><![CDATA[<p><b><font color=\"#ffffff\">eyeo GmbH</font></b> <br/>Lichtstraße 25<br/>50825 Cologne<br/>Germany</p> <p>Destek Hattı: <br/><a href=\"https://adblockplus.org/forum/\">Adblock Plus Forum</a> <br/>E-posta:<br/><a href=\"mailto:info@eyeo.com\">info@eyeo.com</a> <br/>Telefon:<br/>+49 (0)221 / 65028 598 <br/>Faks:<br/>+49 (0)221 / 65028 599</p> <p>KDV No.:<br/>DE279292414 <br/>Köln Bölge Mahkemesi: <br/>HRB 73508</p> <p><b><font color=\"#ffffff\">Yönetim Direktörleri</font></b>: <br/>Till Faida <br/>Felix Dahlke <br/>Steffen Kiedel</p>]]></string>
+    <string name="update_subscriptions">Abonelikleri güncelle</string>
+    <string name="update_subscriptions_summary">Tüm aktif abonelikleri güncelle</string>
+    <string name="updating_subscriptions">Abonelikler arka planda güncelleniyor…</string>
+    <string name="metered_connection_warning">Telefonunuzun veri planını kullanıyorsunuz. Güncellemek istediğinizden emin misiniz? Bu işlem biraz zaman alabilir.</string>
+    <string name="check_your_connection">Çevrimdışı görünüyorsunuz. Lütfen internet bağlantınızı kontrol edin.</string>
 
 </resources>
