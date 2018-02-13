@@ -43,7 +43,7 @@
     <string name="whitelist_remove_dialog_message">Sei sicuro di voler rimuovere &lt;b>%1s&lt;/b>?</string>
     <string name="add_subscription_dialog_message">Aggiunta dell’iscrizione in corso&#8230;</string>
     <string name="remove_subscription_dialog_message">Rimozione dell’iscrizione in corso&#8230;</string>
-    <string name="add_another_list">Aggiungere un\\\'altra lista di filtri</string>
+    <string name="add_another_list">Aggiungere un\'altra lista di filtri</string>
     <string name="about">A proposito</string>
     <string name="privacy_policy">Informativa sulla privacy</string>
     <string name="terms_of_use">Termini di utilizzo</string>
@@ -52,7 +52,7 @@
     <string name="update_subscriptions">Aggiorna abbonamenti</string>
     <string name="update_subscriptions_summary">Aggiorna tutti gli abbonamenti attivi</string>
     <string name="updating_subscriptions">Aggiornamento degli abbonamenti in background in corso…</string>
-    <string name="metered_connection_warning">Stai utilizzando il piano dati del tuo telefono. Aggiornare? Potrebbe essere necessario un po\\\' di tempo.</string>
-    <string name="check_your_connection">Sembra che tu sia \\\"offline\\\". Controlla la tua connessione Internet.</string>
+    <string name="metered_connection_warning">Stai utilizzando il piano dati del tuo telefono. Aggiornare? Potrebbe essere necessario un po\' di tempo.</string>
+    <string name="check_your_connection">Sembra che tu sia \"offline\". Controlla la tua connessione Internet.</string>
 
 </resources>
