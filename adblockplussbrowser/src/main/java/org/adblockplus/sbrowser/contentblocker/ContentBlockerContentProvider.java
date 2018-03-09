@@ -23,7 +23,7 @@ import java.io.IOException;
 
 import org.adblockplus.adblockplussbrowser.R;
 import org.adblockplus.sbrowser.contentblocker.engine.Engine;
-import org.adblockplus.sbrowser.contentblocker.engine.EngineService;
+import org.adblockplus.sbrowser.contentblocker.engine.EngineManager;
 import org.adblockplus.sbrowser.contentblocker.util.SharedPrefsUtils;
 
 import android.content.ContentProvider;
@@ -82,8 +82,8 @@ public class ContentBlockerContentProvider extends ContentProvider
   public boolean onCreate()
   {
     Log.i(TAG, "onCreate() called");
-    getContext().startService(new Intent(getContext(), EngineService.class));
-    Log.i(TAG, "Requested service startup");
+    EngineManager.getInstance().retrieveEngine(getContext(), null);
+    Log.i(TAG, "Requested engine startup");
     return true;
   }
 

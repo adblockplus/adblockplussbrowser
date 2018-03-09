@@ -52,8 +52,6 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
@@ -94,13 +92,13 @@ public final class Engine
   private Thread handlerThread;
   private Downloader downloader;
   private SubscriptionUpdateCallback subscriptionUpdateCallback;
-  private final Context serviceContext;
+  private final Context context;
   private boolean wasFirstRun = false;
   private long nextUpdateBroadcast = Long.MAX_VALUE;
 
   private Engine(final Context context)
   {
-    this.serviceContext = context;
+    this.context = context;
   }
 
   public String getPrefsDefault(final String key)
@@ -123,23 +121,23 @@ public final class Engine
     this.accessLock.unlock();
   }
 
-  public static boolean openSBrowserSettings(final Context activityContext)
+  public static boolean openSBrowserSettings(final Context context)
   {
     final Intent intent = new Intent(ACTION_OPEN_SETTINGS);
-    final List<ResolveInfo> list = activityContext.getPackageManager()
+    final List<ResolveInfo> list = context.getPackageManager()
         .queryIntentActivities(intent, 0);
     if (list.size() > 0)
     {
-      activityContext.startActivity(intent);
+      context.startActivity(intent);
     }
     return list.size() > 0;
   }
 
-  public static boolean hasCompatibleSBrowserInstalled(final Context activityContext)
+  public static boolean hasCompatibleSBrowserInstalled(final Context context)
   {
     try
     {
-      return activityContext.getPackageManager()
+      return context.getPackageManager()
           .queryIntentActivities(new Intent(ACTION_OPEN_SETTINGS), 0).size() > 0;
     }
     catch (final Throwable t)
@@ -152,14 +150,14 @@ public final class Engine
    * Starting with Samsung Internet 5.0, the way to enable ad blocking has changed. As a result, we
    * need to check for the version of Samsung Internet and apply text changes to the first run slide.
    *
-   * @param activityContext
+   * @param context
    * @return a boolean that indicates, if the user has Samsung Internet version 5.x
    */
-  public static boolean hasSamsungInternetVersion5OrNewer(final Context activityContext)
+  public static boolean hasSamsungInternetVersion5OrNewer(final Context context)
   {
     try
     {
-      PackageInfo packageInfo = activityContext.getPackageManager().getPackageInfo(SBROWSER_APP_ID, NO_FLAG);
+      PackageInfo packageInfo = context.getPackageManager().getPackageInfo(SBROWSER_APP_ID, NO_FLAG);
       return packageInfo.versionCode >= OLDEST_SAMSUNG_INTERNET_5_VERSIONCODE;
     }
     catch (PackageManager.NameNotFoundException e)
@@ -192,8 +190,8 @@ public final class Engine
       {
         final Intent intent = new Intent();
         intent.setAction(ACTION_UPDATE);
-        intent.setData(Uri.parse("package:" + Engine.this.serviceContext.getPackageName()));
-        Engine.this.serviceContext.sendBroadcast(intent);
+        intent.setData(Uri.parse("package:" + Engine.this.context.getPackageName()));
+        Engine.this.context.sendBroadcast(intent);
       }
     });
   }
@@ -202,7 +200,7 @@ public final class Engine
   {
     // allow a metered connection to update default subscriptions at the first run.
     // See https://issues.adblockplus.org/ticket/5237
-    return ConnectivityUtils.canUseInternet(serviceContext, allowMetered || wasFirstRun());
+    return ConnectivityUtils.canUseInternet(context, allowMetered || wasFirstRun());
   }
 
   public void forceUpdateSubscriptions(final boolean allowMetered)
@@ -210,7 +208,7 @@ public final class Engine
     try
     {
       subscriptions.checkForUpdates(true, allowMetered);
-      Toast.makeText(serviceContext, serviceContext.getText(R.string.updating_subscriptions), Toast.LENGTH_LONG).show();
+      Toast.makeText(context, context.getText(R.string.updating_subscriptions), Toast.LENGTH_LONG).show();
     }
     catch (IOException e)
     {
@@ -269,14 +267,14 @@ public final class Engine
     {
       Log.d(TAG, "Writing filters...");
       final File filterFile = this.subscriptions.createAndWriteFile();
-      writeWhitelistedWebsites(this.serviceContext, filterFile);
+      writeWhitelistedWebsites(this.context, filterFile);
 
       SharedPrefsUtils.putString(
-          this.serviceContext, R.string.key_cached_filter_path, filterFile.getAbsolutePath());
+          this.context, R.string.key_cached_filter_path, filterFile.getAbsolutePath());
 
       Log.d(TAG, "Cleaning up cache...");
-      final File dummyFile = getDummyFilterFile(this.serviceContext);
-      final File[] cacheDirFiles = getFilterCacheDir(this.serviceContext).listFiles();
+      final File dummyFile = getDummyFilterFile(this.context);
+      final File[] cacheDirFiles = getFilterCacheDir(this.context).listFiles();
       if (cacheDirFiles != null)
       {
         for (final File file : cacheDirFiles)

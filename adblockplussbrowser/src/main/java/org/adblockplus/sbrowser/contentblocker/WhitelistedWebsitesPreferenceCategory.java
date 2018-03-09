@@ -28,14 +28,15 @@ import android.view.View;
 
 import org.adblockplus.adblockplussbrowser.R;
 import org.adblockplus.sbrowser.contentblocker.engine.Engine;
-import org.adblockplus.sbrowser.contentblocker.engine.EngineService;
+import org.adblockplus.sbrowser.contentblocker.engine.EngineManager;
 import org.adblockplus.sbrowser.contentblocker.util.SharedPrefsUtils;
 
 import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class WhitelistedWebsitesPreferenceCategory extends PreferenceCategory
+public class WhitelistedWebsitesPreferenceCategory extends PreferenceCategory implements
+    EngineManager.OnEngineCreatedCallback
 {
   private final Set<String> whitelistedWebsites = new TreeSet<>();
   private Engine engine;
@@ -51,20 +52,17 @@ public class WhitelistedWebsitesPreferenceCategory extends PreferenceCategory
   protected void onAttachedToActivity()
   {
     super.onAttachedToActivity();
-    EngineService.startService(this.getContext().getApplicationContext(),
-        new EngineService.OnEngineCreatedCallback()
-        {
-          @Override
-          public void onEngineCreated(Engine engine, boolean success)
-          {
-            if (!success)
-            {
-              return;
-            }
-            WhitelistedWebsitesPreferenceCategory.this.engine = engine;
-            WhitelistedWebsitesPreferenceCategory.this.initEntries();
-          }
-        });
+    EngineManager.getInstance().retrieveEngine(getContext(), this);
+  }
+
+  @Override
+  public void onEngineCreated(Engine engine)
+  {
+    this.engine = engine;
+    if (this.engine != null)
+    {
+      initEntries();
+    }
   }
 
   private void initEntries()
@@ -123,11 +121,15 @@ public class WhitelistedWebsitesPreferenceCategory extends PreferenceCategory
     this.storeWhitelistedWebsites();
   }
 
-  private void storeWhitelistedWebsites() {
+  private void storeWhitelistedWebsites()
+  {
     SharedPrefsUtils.putStringSet(
         this.getContext(), R.string.key_whitelisted_websites, this.whitelistedWebsites);
     this.refreshEntries();
-    this.engine.requestUpdateBroadcast();
+    if (engine != null)
+    {
+      this.engine.requestUpdateBroadcast();
+    }
   }
 
   private static class WhitelistedWebsitePreference extends DialogPreference

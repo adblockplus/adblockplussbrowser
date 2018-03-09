@@ -38,8 +38,6 @@
             android:name="com.samsung.android.sbrowser.contentBlocker.interfaceVersion"
             android:value="API_1.0" />
 
-        <service android:name="org.adblockplus.sbrowser.contentblocker.engine.EngineService" />
-
         <provider
             android:name="org.adblockplus.sbrowser.contentblocker.ContentBlockerContentProvider"
             android:authorities="org.adblockplus.adblockplussbrowser.contentBlocker.contentProvider"

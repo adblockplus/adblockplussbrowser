@@ -18,7 +18,7 @@
 package org.adblockplus.sbrowser.contentblocker;
 
 import org.adblockplus.sbrowser.contentblocker.engine.Engine;
-import org.adblockplus.sbrowser.contentblocker.engine.EngineService;
+import org.adblockplus.sbrowser.contentblocker.engine.EngineManager;
 import org.adblockplus.adblockplussbrowser.R;
 import org.adblockplus.sbrowser.contentblocker.util.ConnectivityUtils;
 import org.adblockplus.sbrowser.contentblocker.util.SharedPrefsUtils;
@@ -41,7 +41,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 public class MainPreferences extends PreferenceActivity implements
-    EngineService.OnEngineCreatedCallback, Engine.SubscriptionUpdateCallback,
+    EngineManager.OnEngineCreatedCallback, Engine.SubscriptionUpdateCallback,
     Preference.OnPreferenceClickListener
 {
   private static final String TAG = MainPreferences.class.getSimpleName();
@@ -70,7 +70,7 @@ public class MainPreferences extends PreferenceActivity implements
         this.getString(R.string.initialization_message));
     super.onStart();
     SharedPrefsUtils.registerOnSharedPreferenceChangeListener(this, listener);
-    EngineService.startService(this.getApplicationContext(), this);
+    EngineManager.getInstance().retrieveEngine(this, this);
   }
 
   @Override
@@ -79,6 +79,13 @@ public class MainPreferences extends PreferenceActivity implements
     super.onStop();
     SharedPrefsUtils.unregisterOnSharedPreferenceChangeListener(this, listener);
     this.dismissDialog();
+  }
+
+  @Override
+  protected void onDestroy()
+  {
+    EngineManager.getInstance().removeOnEngineCreatedCallback(this);
+    super.onDestroy();
   }
 
   private void dismissDialog()
@@ -186,10 +193,10 @@ public class MainPreferences extends PreferenceActivity implements
   }
 
   @Override
-  public void onEngineCreated(Engine engine, boolean success)
+  public void onEngineCreated(Engine engine)
   {
-    Log.d(TAG, "onEngineCreated: " + success);
-    this.engine = success ? engine : null;
+    Log.d(TAG, "onEngineCreated: " + (engine != null));
+    this.engine = engine;
 
     if (engine != null)
     {
@@ -205,9 +212,12 @@ public class MainPreferences extends PreferenceActivity implements
 
     final Fragment preferecesFragment = getFragmentManager()
         .findFragmentByTag(Preferences.class.getSimpleName());
-    final Preference button = ((Preferences) preferecesFragment)
-        .findPreference(getString(R.string.key_force_update_subscriptions));
-    button.setOnPreferenceClickListener(this);
+    if (preferecesFragment != null)
+    {
+      final Preference button = ((Preferences) preferecesFragment)
+          .findPreference(getString(R.string.key_force_update_subscriptions));
+      button.setOnPreferenceClickListener(this);
+    }
   }
 
   @Override
@@ -231,7 +241,10 @@ public class MainPreferences extends PreferenceActivity implements
     {
       if (ConnectivityUtils.hasNonMeteredConnection(this))
       {
-        engine.forceUpdateSubscriptions(false);
+        if (engine != null)
+        {
+          engine.forceUpdateSubscriptions(false);
+        }
       }
       else
       {
@@ -260,7 +273,10 @@ public class MainPreferences extends PreferenceActivity implements
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i)
                 {
-                  engine.forceUpdateSubscriptions(true);
+                  if (engine != null)
+                  {
+                    engine.forceUpdateSubscriptions(true);
+                  }
                 }
               });
         }
@@ -281,7 +297,7 @@ public class MainPreferences extends PreferenceActivity implements
       {
         engine.connectivityChanged();
       }
-      else if (getString(R.string.key_acceptable_ads).equals(key))
+      else if (getString(R.string.key_acceptable_ads).equals(key) && engine != null)
       {
         final boolean enabled = SharedPrefsUtils.getBoolean
             (MainPreferences.this, R.string.key_acceptable_ads, true);

@@ -18,7 +18,7 @@
 package org.adblockplus.sbrowser.contentblocker;
 
 import org.adblockplus.sbrowser.contentblocker.engine.Engine;
-import org.adblockplus.sbrowser.contentblocker.engine.EngineService;
+import org.adblockplus.sbrowser.contentblocker.engine.EngineManager;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -26,7 +26,7 @@ import android.content.Intent;
 import android.util.Log;
 
 public class ConnectivityChanged extends BroadcastReceiver implements
-    EngineService.OnEngineCreatedCallback
+    EngineManager.OnEngineCreatedCallback
 {
   private static final String TAG = ConnectivityChanged.class.getSimpleName();
 
@@ -38,14 +38,14 @@ public class ConnectivityChanged extends BroadcastReceiver implements
     if (intent != null && ACTION.equals(intent.getAction()))
     {
       Log.d(TAG, "Triggering connectivity changed event");
-      EngineService.startService(context, this);
+      EngineManager.getInstance().retrieveEngine(context, this);
     }
   }
 
   @Override
-  public void onEngineCreated(Engine engine, boolean success)
+  public void onEngineCreated(Engine engine)
   {
-    if (success)
+    if (engine != null)
     {
       engine.connectivityChanged();
     }

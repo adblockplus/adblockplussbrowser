@@ -24,7 +24,7 @@ import java.util.Locale;
 
 import org.adblockplus.sbrowser.contentblocker.engine.DefaultSubscriptionInfo;
 import org.adblockplus.sbrowser.contentblocker.engine.Engine;
-import org.adblockplus.sbrowser.contentblocker.engine.EngineService;
+import org.adblockplus.sbrowser.contentblocker.engine.EngineManager;
 import org.adblockplus.sbrowser.contentblocker.engine.SubscriptionInfo;
 import org.adblockplus.sbrowser.contentblocker.preferences.MultilinePreferenceCategory;
 import org.adblockplus.adblockplussbrowser.R;
@@ -39,7 +39,7 @@ import android.util.AttributeSet;
 
 @SuppressLint("DefaultLocale")
 public class ListedSubscriptionsPreferenceCategory extends MultilinePreferenceCategory implements
-    EngineService.OnEngineCreatedCallback, OnPreferenceChangeListener
+    EngineManager.OnEngineCreatedCallback, OnPreferenceChangeListener
 {
   private Engine engine = null;
   private boolean isEnabledView = false;
@@ -73,15 +73,36 @@ public class ListedSubscriptionsPreferenceCategory extends MultilinePreferenceCa
   @Override
   protected void onAttachedToActivity()
   {
-    EngineService.startService(this.getContext().getApplicationContext(), this);
+    EngineManager.getInstance().retrieveEngine(getContext(), this);
     super.onAttachedToActivity();
   }
 
   @Override
-  public void onEngineCreated(final Engine engine, final boolean success)
+  public void onEngineCreated(final Engine engine)
   {
     this.engine = engine;
+    if (this.engine != null)
+    {
+      initEntries();
+    }
+  }
+
+  @Override
+  public boolean onPreferenceChange(final Preference preference, final Object newValue)
+  {
+    if (engine != null)
+    {
+      final String id = preference.getKey();
+      final boolean enabled = (Boolean) newValue;
+      this.engine.changeSubscriptionState(id, enabled);
+    }
+    return true;
+  }
+
+  private void initEntries()
+  {
     this.isEnabledView = this.getTitleRes() == R.string.enabled_subscriptions;
+    this.removeAll();
 
     final HashMap<String, Locale> localeMap = new HashMap<>();
     for (final Locale l : Locale.getAvailableLocales())
@@ -93,100 +114,85 @@ public class ListedSubscriptionsPreferenceCategory extends MultilinePreferenceCa
       }
     }
 
-    if (success)
+    final List<SubscriptionInfo> subs = engine.getListedSubscriptions();
+    Collections.sort(subs);
+
+    for (final SubscriptionInfo sub : subs)
     {
-      final List<SubscriptionInfo> subs = engine.getListedSubscriptions();
-      Collections.sort(subs);
-      this.removeAll();
-
-      for (final SubscriptionInfo sub : subs)
+      if (sub.isEnabled() == this.isEnabledView)
       {
-        if (sub.isEnabled() == this.isEnabledView)
+        switch (sub.getType())
         {
-          switch (sub.getType())
-          {
-            case ADS:
-              final DefaultSubscriptionInfo info = engine.getDefaultSubscriptionInfoForUrl(
-                  sub.getUrl());
-              if (info != null && !info.getPrefixes().isEmpty() && info.isComplete())
+          case ADS:
+            final DefaultSubscriptionInfo info = engine.getDefaultSubscriptionInfoForUrl(
+                sub.getUrl());
+            if (info != null && !info.getPrefixes().isEmpty() && info.isComplete())
+            {
+              final CheckBoxPreference cbp = new CheckBoxPreference(this.getContext());
+              if (this.isEnabledView)
               {
-                final CheckBoxPreference cbp = new CheckBoxPreference(this.getContext());
-                if (this.isEnabledView)
-                {
-                  final StringBuilder sb = new StringBuilder();
-                  sb.append(this.getContext().getString(R.string.last_update));
-                  sb.append(' ');
-                  final long timestamp = sub.getLastUpdateTime();
-                  if (timestamp > 0)
-                  {
-                    sb.append(DateUtils.formatDateTime(this.getContext(), timestamp,
-                        DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME));
-                  }
-                  else
-                  {
-                    sb.append(this.getContext().getString(R.string.last_update_never));
-                  }
-                  cbp.setSummary(sb.toString());
-                }
-
-                cbp.setTitle(sub.getTitle());
-                final String[] prefixes = info.getPrefixes().split(",");
                 final StringBuilder sb = new StringBuilder();
-                for (String p : prefixes)
+                sb.append(this.getContext().getString(R.string.last_update));
+                sb.append(' ');
+                final long timestamp = sub.getLastUpdateTime();
+                if (timestamp > 0)
                 {
-                  final Locale loc = localeMap.get(p.trim().toLowerCase());
-                  if (loc != null)
-                  {
-                    if (sb.length() > 0)
-                    {
-                      sb.append(", ");
-                    }
-                    sb.append(loc.getDisplayLanguage(loc));
-                  }
-                  else
-                  {
-                    final String name = LANGUAGE_TRANSLATION_MAP.get(p.trim().toLowerCase());
-                    {
-                      if (name != null)
-                      {
-                        if (sb.length() > 0)
-                        {
-                          sb.append(", ");
-                        }
-                        sb.append(name);
-                      }
-                    }
-                  }
+                  sb.append(DateUtils.formatDateTime(this.getContext(), timestamp,
+                      DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME));
                 }
-
-                if (sb.length() > 0)
+                else
                 {
-                  cbp.setTitle(sb.toString());
+                  sb.append(this.getContext().getString(R.string.last_update_never));
                 }
-
-                cbp.setChecked(sub.isEnabled());
-                cbp.setPersistent(false);
-                cbp.setKey(sub.getId());
-                cbp.setOnPreferenceChangeListener(this);
-                this.addPreference(cbp);
+                cbp.setSummary(sb.toString());
               }
-              break;
-            default:
-              break;
-          }
+
+              cbp.setTitle(sub.getTitle());
+              final String[] prefixes = info.getPrefixes().split(",");
+              final StringBuilder sb = new StringBuilder();
+              for (String p : prefixes)
+              {
+                final Locale loc = localeMap.get(p.trim().toLowerCase());
+                if (loc != null)
+                {
+                  if (sb.length() > 0)
+                  {
+                    sb.append(", ");
+                  }
+                  sb.append(loc.getDisplayLanguage(loc));
+                }
+                else
+                {
+                  final String name = LANGUAGE_TRANSLATION_MAP.get(p.trim().toLowerCase());
+                  {
+                    if (name != null)
+                    {
+                      if (sb.length() > 0)
+                      {
+                        sb.append(", ");
+                      }
+                      sb.append(name);
+                    }
+                  }
+                }
+              }
+
+              if (sb.length() > 0)
+              {
+                cbp.setTitle(sb.toString());
+              }
+
+              cbp.setChecked(sub.isEnabled());
+              cbp.setPersistent(false);
+              cbp.setKey(sub.getId());
+              cbp.setOnPreferenceChangeListener(this);
+              this.addPreference(cbp);
+            }
+            break;
+          default:
+            break;
         }
       }
     }
-  }
-
-  @Override
-  public boolean onPreferenceChange(final Preference preference, final Object newValue)
-  {
-    final String id = preference.getKey();
-    final boolean enabled = (Boolean) newValue;
-
-    this.engine.changeSubscriptionState(id, enabled);
-
-    return true;
   }
 }

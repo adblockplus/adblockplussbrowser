@@ -27,7 +27,7 @@ import java.util.Map;
 
 import org.adblockplus.sbrowser.contentblocker.engine.DefaultSubscriptionInfo;
 import org.adblockplus.sbrowser.contentblocker.engine.Engine;
-import org.adblockplus.sbrowser.contentblocker.engine.EngineService;
+import org.adblockplus.sbrowser.contentblocker.engine.EngineManager;
 import org.adblockplus.sbrowser.contentblocker.engine.SubscriptionInfo;
 import org.adblockplus.adblockplussbrowser.R;
 import org.adblockplus.sbrowser.contentblocker.preferences.MultilineCheckBoxPreference;
@@ -41,7 +41,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 
 public class MoreBlockingPreferenceCategory extends PreferenceCategory implements
-    EngineService.OnEngineCreatedCallback, OnPreferenceChangeListener, Engine.SubscriptionAddedCallback
+    EngineManager.OnEngineCreatedCallback, OnPreferenceChangeListener, Engine.SubscriptionAddedCallback
 {
   private Engine engine = null;
   private static final int[] WHITELISTED_LIST_TITLES =
@@ -83,16 +83,16 @@ public class MoreBlockingPreferenceCategory extends PreferenceCategory implement
   @Override
   protected void onAttachedToActivity()
   {
-    EngineService.startService(this.getContext().getApplicationContext(), this);
+    EngineManager.getInstance().retrieveEngine(getContext(), this);
     super.onAttachedToActivity();
   }
 
   @Override
-  public void onEngineCreated(final Engine engine, final boolean success)
+  public void onEngineCreated(final Engine engine)
   {
     this.engine = engine;
 
-    if (success)
+    if (engine != null)
     {
       refreshEntries();
     }
@@ -126,13 +126,13 @@ public class MoreBlockingPreferenceCategory extends PreferenceCategory implement
         }
         cbp.setSummary(sb.toString());
       }
-      else
+      else if (sub.getType() == SubscriptionInfo.Type.CUSTOM)
       {
-        if (sub.getType() == SubscriptionInfo.Type.CUSTOM)
+        if (engine != null)
         {
           engine.removeSubscriptionById(sub.getId());
-          continue;
         }
+        continue;
       }
 
       cbp.setTitle(resInt == null ? sub.getTitle() : getContext().getString(resInt));
@@ -155,12 +155,15 @@ public class MoreBlockingPreferenceCategory extends PreferenceCategory implement
       {
         if (!input.toLowerCase().startsWith("http://") && !input.toLowerCase().startsWith("https://"))
         {
-          input =  "http://" + input;
+          input = "http://" + input;
         }
 
         try
         {
-          engine.createAndAddSubscriptionFromUrl(input, MoreBlockingPreferenceCategory.this);
+          if (engine != null)
+          {
+            engine.createAndAddSubscriptionFromUrl(input, MoreBlockingPreferenceCategory.this);
+          }
         }
         catch (IOException e)
         {
@@ -201,6 +204,11 @@ public class MoreBlockingPreferenceCategory extends PreferenceCategory implement
   private List<SubscriptionInfo> getMoreBlockingPreferenceSubscriptions()
   {
     List<SubscriptionInfo> moreBlockingPreferenceSubscriptions = new ArrayList<>(5);
+    if (engine == null)
+    {
+      return moreBlockingPreferenceSubscriptions;
+    }
+
     for (SubscriptionInfo sub : engine.getListedSubscriptions())
     {
       final DefaultSubscriptionInfo info = engine.getDefaultSubscriptionInfoForUrl(sub.getUrl());
@@ -233,11 +241,12 @@ public class MoreBlockingPreferenceCategory extends PreferenceCategory implement
   @Override
   public boolean onPreferenceChange(final Preference preference, final Object newValue)
   {
-    final String id = preference.getKey();
-    final boolean enabled = (Boolean) newValue;
-
-    this.engine.changeSubscriptionState(id, enabled);
-
+    if (engine != null)
+    {
+      final String id = preference.getKey();
+      final boolean enabled = (Boolean) newValue;
+      this.engine.changeSubscriptionState(id, enabled);
+    }
     return true;
   }
 
