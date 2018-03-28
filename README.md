@@ -39,23 +39,6 @@ Importing into Android Studio
 
 Open Android Studio and select *Open an existing Android Studio Project*, then navigate to the `adblockplussbrowser` dir.
 
-Importing into Eclipse
-----------------------
-
-#### Requirements
-
-- [Android SDK][1]
-- [Eclipse][3]
-- ADT (Android Developer Tools), available via *Eclipse Marketplace*
-- We're compiling against Android API 25, so make sure you have that API
-  installed.
-- JDK 7 or above
-
-#### Importing
-
-Choose *File*->*New*->*Other*->*Android*->*Android Project from Existing Code*,
-then navigate to the `adblockplussbrowser/adblockplussbrowser` dir.
-
 
 Testing
 -------

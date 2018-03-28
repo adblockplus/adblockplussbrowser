@@ -1,8 +1,6 @@
 syntax: glob
 
-bin/
-gen/
-ant.properties
+# Local configuration file (sdk path, etc)
 local.properties
 
 # Gradle
@@ -12,12 +10,6 @@ build/
 # IntelliJ / Android Studio
 *.iml
 .idea/
-
-# Eclipse
-.settings/
-.classpath
-.project
-proguard/
 
 # macOS
 .DS_Store
