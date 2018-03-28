@@ -33,7 +33,7 @@
 
         <provider
             android:name="org.adblockplus.sbrowser.contentblocker.ContentBlockerContentProvider"
-            android:authorities="org.adblockplus.adblockplussbrowser.contentBlocker.contentProvider"
+            android:authorities="${applicationId}.contentBlocker.contentProvider"
             android:exported="true" />
     </application>
 

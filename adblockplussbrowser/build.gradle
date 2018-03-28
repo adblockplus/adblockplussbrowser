@@ -35,6 +35,19 @@ android {
         }
     }
 
+    flavorDimensions "region"
+
+    productFlavors {
+        world {
+            dimension "region"
+        }
+
+        cn {
+            dimension "region"
+            applicationIdSuffix ".cn"
+        }
+    }
+
     testOptions {
         unitTests {
             includeAndroidResources = true
@@ -42,10 +55,14 @@ android {
     }
 
     afterEvaluate { project ->
-        project.tasks.generateReleaseResources << {
 
-            updateBundledLists()
-            println('Bundled lists updated at ' + new Date().format('dd MMM yyyy, HH:mm:ss zzz'))
+        project.tasks.all { task ->
+            if (task.name.matches("generate.*Release.*Resources")) {
+                task.doLast {
+                    updateBundledLists()
+                    println('Bundled lists updated at ' + new Date().format('dd MMM yyyy, HH:mm:ss zzz'))
+                }
+            }
         }
     }
 }
