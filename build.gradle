@@ -1,7 +1,7 @@
 buildscript {
     // buildscript block is evaluated at the very beginning. Properties defined in the ext block
     // don't exist at that time.
-    ext.kotlinVersion = '1.1.51'
+    ext.kotlinVersion = '1.2.31'
     repositories {
         google()
         jcenter()
@@ -14,12 +14,8 @@ buildscript {
 
 allprojects {
     repositories {
+        google()
         jcenter()
-        mavenCentral()
-        maven {
-            url 'https://maven.google.com/'
-            name 'Google'
-        }
     }
 }
 
@@ -27,8 +23,8 @@ ext {
     minSdkVersion = 21
     targetSdkVersion = 27
     compileSdkVersion = 27
-    buildToolsVersion = '27.0.0'
-    androidSupportLibraryVersion = '27.0.0'
+    buildToolsVersion = '27.0.3'
+    androidSupportLibraryVersion = '27.1.0'
     sourceCompatibilityVersion = JavaVersion.VERSION_1_7
     targetCompatibilityVersion = JavaVersion.VERSION_1_7
     easyListUpdateUrl = 'https://easylist-downloads.adblockplus.org/easylist.txt'
