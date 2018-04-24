@@ -68,7 +68,6 @@ public final class Engine
   public static final String USER_EXCEPTIONS_TITLE = "__exceptions";
 
   public static final String SBROWSER_APP_ID = "com.sec.android.app.sbrowser";
-  public static final String EASYLIST_URL = "https://easylist-downloads.adblockplus.org/easylist.txt";
   private static final String ACTION_OPEN_SETTINGS = "com.samsung.android.sbrowser.contentBlocker.ACTION_SETTING";
   private static final String ACTION_UPDATE = "com.samsung.android.sbrowser.contentBlocker.ACTION_UPDATE";
 

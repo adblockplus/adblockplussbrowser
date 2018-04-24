@@ -20,6 +20,7 @@ package org.adblockplus.sbrowser.contentblocker.util;
 import java.util.List;
 import java.util.Locale;
 
+import org.adblockplus.adblockplussbrowser.BuildConfig;
 import org.adblockplus.sbrowser.contentblocker.engine.DefaultSubscriptionInfo;
 import org.adblockplus.sbrowser.contentblocker.engine.Engine;
 
@@ -27,6 +28,9 @@ import android.content.res.Resources;
 
 public class SubscriptionUtils
 {
+
+  public static final String EASYLIST_URL = "https://easylist-downloads.adblockplus.org/easylist.txt";
+  private static final String EASYLIST_CHINA_URL ="https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt";
 
   private static final String INDONESIAN_OLD = "in";
   private static final String INDONESIAN_NEW = "id";
@@ -42,6 +46,10 @@ public class SubscriptionUtils
    */
   public static String chooseDefaultSubscriptionUrl(List<DefaultSubscriptionInfo> defaultSubscriptions)
   {
+    if (BuildConfig.FLAVOR.equals(BuildConfig.FLAVOR_REGION_CHINA))
+    {
+      return EASYLIST_CHINA_URL;
+    }
     for (final DefaultSubscriptionInfo info : defaultSubscriptions)
     {
       if (info != null && info.getPrefixes().contains(getDeviceLanguageCode()) && info.isComplete())
@@ -49,7 +57,7 @@ public class SubscriptionUtils
         return info.getUrl();
       }
     }
-    return Engine.EASYLIST_URL;
+    return EASYLIST_URL;
   }
 
   @SuppressWarnings("deprecation")

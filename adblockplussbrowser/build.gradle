@@ -17,6 +17,8 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 14
         versionName '1.1.4'
+        buildConfigField "String", "FLAVOR_REGION_WORLD", '"world"'
+        buildConfigField "String", "FLAVOR_REGION_CHINA", '"china"'
     }
 
     sourceSets {
@@ -43,7 +45,7 @@ android {
             dimension "region"
         }
 
-        cn {
+        china {
             dimension "region"
             applicationIdSuffix ".cn"
         }
@@ -60,7 +62,7 @@ android {
         project.tasks.all { task ->
             if (task.name.matches("generate.*Release.*Resources")) {
                 task.doLast {
-                    updateBundledLists()
+                    updateBundledLists(task.name)
                     println('Bundled lists updated at ' + new Date().format('dd MMM yyyy, HH:mm:ss zzz'))
                 }
             }
@@ -68,8 +70,10 @@ android {
     }
 }
 
-def updateBundledLists() {
-    new URL(rootProject.ext.easyListUpdateUrl).withInputStream {
+def updateBundledLists(taskName) {
+    def easylistUrl = taskName.contains("China") ?
+            rootProject.ext.easyListChinaUpdateUrl : rootProject.ext.easyListDefaultUpdateUrl
+    new URL(easylistUrl).withInputStream {
         i -> new File(rootProject.ext.easyListFilePath).withOutputStream { it << i }
     }
     new URL(rootProject.ext.exceptionRulesUpdateUrl).withInputStream {

@@ -54,7 +54,7 @@ class UtilsTest
     fun subscriptionUtilsChooseDefaultSubscriptionForEmptyList()
     {
         assertEquals(SubscriptionUtils.chooseDefaultSubscriptionUrl(
-                emptyList<DefaultSubscriptionInfo>()), Engine.EASYLIST_URL)
+                emptyList<DefaultSubscriptionInfo>()), SubscriptionUtils.EASYLIST_URL)
     }
 
     @Test
@@ -62,7 +62,7 @@ class UtilsTest
     {
         Resources.getSystem().configuration.setLocale(Locale.CHINA)
         assertNotEquals(SubscriptionUtils.chooseDefaultSubscriptionUrl(
-                mockedDefaultSubs?.adsSubscriptions), Engine.EASYLIST_URL)
+                mockedDefaultSubs?.adsSubscriptions), SubscriptionUtils.EASYLIST_URL)
     }
 
     @Test
@@ -78,7 +78,7 @@ class UtilsTest
     {
         Resources.getSystem().configuration.setLocale(Locale.forLanguageTag("ab-xy"))
         assertEquals(SubscriptionUtils.chooseDefaultSubscriptionUrl(
-                mockedDefaultSubs?.adsSubscriptions), Engine.EASYLIST_URL)
+                mockedDefaultSubs?.adsSubscriptions), SubscriptionUtils.EASYLIST_URL)
     }
 
     @Test
