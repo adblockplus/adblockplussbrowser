@@ -31,6 +31,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.adblockplus.sbrowser.contentblocker.engine.Subscription.Type;
+import org.adblockplus.sbrowser.contentblocker.util.SubscriptionUtils;
 
 import android.util.Log;
 
@@ -144,6 +145,11 @@ final class Subscriptions
     return filtersFile;
   }
 
+  File getNotificationDataFile()
+  {
+    return new File (this.subscriptionFolder, Notification.NOTIFICATION_DATA_FILE_NAME);
+  }
+
   File getMetaFile(final Subscription sub)
   {
     return new File(getFiltersFile(sub).getAbsolutePath() + ".meta");
@@ -174,7 +180,7 @@ final class Subscriptions
     final HashSet<String> filters = new HashSet<>();
     for (final Subscription s : this.subscriptions.values())
     {
-      if (s.isEnabled())
+      if (s.isEnabled() && !SubscriptionUtils.isNotificationSubscription(s.getId()))
       {
         Log.d(TAG, "Adding filters for '" + s.getId() + "'");
         s.deserializeFilters(this.getFiltersFile(s));

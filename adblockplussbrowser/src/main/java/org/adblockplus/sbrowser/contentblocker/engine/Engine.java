@@ -47,6 +47,9 @@ import org.adblockplus.sbrowser.contentblocker.util.ConnectivityUtils;
 import org.adblockplus.sbrowser.contentblocker.util.SharedPrefsUtils;
 import org.adblockplus.sbrowser.contentblocker.util.SubscriptionUtils;
 
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -55,6 +58,7 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.PersistableBundle;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -92,12 +96,15 @@ public final class Engine
   private Downloader downloader;
   private SubscriptionUpdateCallback subscriptionUpdateCallback;
   private final Context context;
+  private ComponentName componentName;
   private boolean wasFirstRun = false;
   private long nextUpdateBroadcast = Long.MAX_VALUE;
+  private int jobId = 0;
 
   private Engine(final Context context)
   {
     this.context = context;
+    this.componentName = new ComponentName(context, DownloadJobService.class);
   }
 
   public String getPrefsDefault(final String key)
@@ -425,6 +432,12 @@ public final class Engine
       }
       Log.d(TAG, "Added and enabled bundled exceptionslist");
 
+      // The Notification should be download regularly.
+      // See https://issues.adblockplus.org/ticket/6238
+      final Subscription notification = engine.subscriptions.add(Subscription
+          .create(Notification.NOTIFICATION_URL));
+      notification.setEnabled(true);
+
       int additional = 0;
       for (final Subscription sub : engine.defaultSubscriptions.createSubscriptions())
       {
@@ -655,8 +668,16 @@ public final class Engine
                   final DownloadFinishedEvent dfe = (DownloadFinishedEvent) event;
                   Log.d(TAG, "Download finished for '" + dfe.id + "' with response code "
                       + dfe.responseCode);
-                  this.engine.subscriptions.updateSubscription(dfe.id, dfe.responseCode,
-                      dfe.response, dfe.headers);
+                  if (SubscriptionUtils.isNotificationSubscription(dfe.id))
+                  {
+                    Notification.update(engine.context, dfe.responseCode, dfe.response,
+                        engine.subscriptions.getNotificationDataFile());
+                  }
+                  else
+                  {
+                    this.engine.subscriptions.updateSubscription(dfe.id, dfe.responseCode,
+                        dfe.response, dfe.headers);
+                  }
                   break;
                 }
                 default:
@@ -760,24 +781,54 @@ public final class Engine
   public void enqueueDownload(final Subscription sub, final boolean forced,
       final boolean allowMetered) throws IOException
   {
-    if (sub.getURL() != null && sub.shouldUpdate(forced))
+    // For now we want to use JobScheduler only for the Notification download.
+    // See https://issues.adblockplus.org/ticket/6238.
+    if (SubscriptionUtils.isNotificationSubscription(sub.getId()))
     {
-      final HashMap<String, String> headers = new HashMap<>();
-      if (sub.isMetaDataValid() && sub.isFiltersValid())
+      if (Notification.shouldUpdate(context))
       {
-        final String lastModified = sub.getMeta(Subscription.KEY_HTTP_LAST_MODIFIED);
-        if (!TextUtils.isEmpty(lastModified))
-        {
-          headers.put("If-Modified-Since", lastModified);
-        }
-        final String etag = sub.getMeta(Subscription.KEY_HTTP_ETAG);
-        if (!TextUtils.isEmpty(etag))
-        {
-          headers.put("If-None-Match", etag);
-        }
+        scheduleJob(this.createDownloadURL(sub), sub.getId(), allowMetered);
       }
-      Log.d(TAG, headers.toString());
-      this.downloader.enqueueDownload(this.createDownloadURL(sub), sub.getId(), headers, allowMetered);
+    }
+    else
+    {
+      if (sub.getURL() != null && sub.shouldUpdate(forced))
+      {
+        final HashMap<String, String> headers = new HashMap<>();
+        if (sub.isMetaDataValid() && sub.isFiltersValid())
+        {
+          final String lastModified = sub.getMeta(Subscription.KEY_HTTP_LAST_MODIFIED);
+          if (!TextUtils.isEmpty(lastModified))
+          {
+            headers.put("If-Modified-Since", lastModified);
+          }
+          final String etag = sub.getMeta(Subscription.KEY_HTTP_ETAG);
+          if (!TextUtils.isEmpty(etag))
+          {
+            headers.put("If-None-Match", etag);
+          }
+        }
+        this.downloader.enqueueDownload(this.createDownloadURL(sub), sub.getId(), headers, allowMetered);
+      }
+    }
+  }
+
+  private void scheduleJob(final URL url, final String id, final boolean allowMetered)
+  {
+    final JobInfo.Builder builder = new JobInfo.Builder(jobId++, componentName);
+    builder.setRequiredNetworkType(allowMetered
+            ? JobInfo.NETWORK_TYPE_UNMETERED
+            : JobInfo.NETWORK_TYPE_ANY);
+
+    final PersistableBundle extras = new PersistableBundle();
+    extras.putString(Notification.KEY_EXTRA_ID, id);
+    extras.putString(Notification.KEY_EXTRA_URL, url.toString());
+    builder.setExtras(extras);
+
+    final JobScheduler scheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+    if (scheduler != null)
+    {
+      scheduler.schedule(builder.build());
     }
   }
 

@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.adblockplus.adblockplussbrowser.BuildConfig;
+import org.adblockplus.sbrowser.contentblocker.engine.Notification;
 import org.adblockplus.sbrowser.contentblocker.engine.DefaultSubscriptionInfo;
 import org.adblockplus.sbrowser.contentblocker.engine.Engine;
 
@@ -95,5 +96,10 @@ public class SubscriptionUtils
       default:
         return language;
     }
+  }
+
+  public static boolean isNotificationSubscription(final String id)
+  {
+    return id != null && id.contains(Notification.NOTIFICATION_URL);
   }
 }

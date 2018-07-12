@@ -31,6 +31,7 @@ import org.adblockplus.sbrowser.contentblocker.engine.EngineManager;
 import org.adblockplus.sbrowser.contentblocker.engine.SubscriptionInfo;
 import org.adblockplus.adblockplussbrowser.R;
 import org.adblockplus.sbrowser.contentblocker.preferences.MultilineCheckBoxPreference;
+import org.adblockplus.sbrowser.contentblocker.util.SubscriptionUtils;
 
 import android.content.Context;
 import android.preference.Preference;
@@ -213,6 +214,11 @@ public class MoreBlockingPreferenceCategory extends PreferenceCategory implement
     {
       final DefaultSubscriptionInfo info = engine.getDefaultSubscriptionInfoForUrl(sub.getUrl());
       Integer resInt = URL_TO_RES_ID_MAP.get(sub.getUrl());
+
+      if (SubscriptionUtils.isNotificationSubscription(sub.getId()))
+      {
+        continue;
+      }
 
       if (sub.getType() == SubscriptionInfo.Type.CUSTOM)
       {

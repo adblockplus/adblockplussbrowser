@@ -19,4 +19,8 @@
     <string name="download_settings_value_wifi">1</string>
     <string name="download_settings_value_always">2</string>
 
+    <!-- Notification -->
+    <string name="key_last_tried_notification_update_timestamp">last_tried_notification_update_timestamp</string>
+    <string name="key_last_notification_update_timestamp">last_notification_update_timestamp</string>
+
 </resources>

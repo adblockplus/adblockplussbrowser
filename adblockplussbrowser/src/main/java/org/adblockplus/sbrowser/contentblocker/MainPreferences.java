@@ -17,6 +17,7 @@
 
 package org.adblockplus.sbrowser.contentblocker;
 
+import org.adblockplus.sbrowser.contentblocker.engine.DownloadJobService;
 import org.adblockplus.sbrowser.contentblocker.engine.Engine;
 import org.adblockplus.sbrowser.contentblocker.engine.EngineManager;
 import org.adblockplus.adblockplussbrowser.R;
@@ -71,6 +72,7 @@ public class MainPreferences extends PreferenceActivity implements
     super.onStart();
     SharedPrefsUtils.registerOnSharedPreferenceChangeListener(this, listener);
     EngineManager.getInstance().retrieveEngine(this, this);
+    startService(new Intent(this, DownloadJobService.class));
   }
 
   @Override
@@ -78,6 +80,7 @@ public class MainPreferences extends PreferenceActivity implements
   {
     super.onStop();
     SharedPrefsUtils.unregisterOnSharedPreferenceChangeListener(this, listener);
+    stopService(new Intent(this, DownloadJobService.class));
     this.dismissDialog();
   }
 

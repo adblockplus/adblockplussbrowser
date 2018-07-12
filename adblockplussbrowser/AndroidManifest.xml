@@ -36,6 +36,10 @@
             android:name="org.adblockplus.sbrowser.contentblocker.ContentBlockerContentProvider"
             android:authorities="${applicationId}.contentBlocker.contentProvider"
             android:exported="true" />
+
+        <service
+            android:name="org.adblockplus.sbrowser.contentblocker.engine.DownloadJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 
 </manifest>

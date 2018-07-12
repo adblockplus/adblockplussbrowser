@@ -64,6 +64,25 @@ public class SharedPrefsUtils
     }
   }
 
+  public static void putLong(final Context context, final int keyResId, final long value)
+  {
+    final SharedPreferences.Editor editor = getDefaultSharedPreferences(context).edit();
+    editor.putLong(context.getString(keyResId), value).apply();
+  }
+
+  public static long getLong(final Context context, final int keyResId, final long defValue)
+  {
+    final SharedPreferences preferences = getDefaultSharedPreferences(context);
+    try
+    {
+      return preferences.getLong(context.getString(keyResId), defValue);
+    }
+    catch (final ClassCastException e)
+    {
+      return defValue;
+    }
+  }
+
   public static void putString(Context context, int keyResId, String value)
   {
     final SharedPreferences.Editor editor = getDefaultSharedPreferences(context).edit();
