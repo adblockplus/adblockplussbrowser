@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">三星浏览器专用 Adblock Plus</string>
+    <string name="automatic_updates">配置自动更新</string>
+    <string name="manage_subscriptions">配置过滤器列表</string>
+    <string name="manage_subscriptions_summary">更改广告屏蔽语言</string>
+    <string name="more_blocking">更多过滤选项</string>
+    <string name="more_blocking_category">其他过滤器列表</string>
+    <string name="more_blocking_summary">禁止跟踪和恶意网站</string>
+    <string name="enabled_subscriptions">较常访问以下语言的网站 &#8230;</string>
+    <string name="available_subscriptions">其他语言</string>
+    <string name="initialization_title">初始化</string>
+    <string name="initialization_message">正在初始化 &#8230;</string>
+    <string name="enable_acceptable_ads">允许一些非侵入式广告</string>
+    <string name="last_update">已更新：</string>
+    <string name="last_update_never">从不</string>
+    <string name="acceptable_ads_category">可接受广告</string>
+    <string name="aa_dialog_title">一切在您的掌控之下</string>
+    <string name="aa_dialog_message"><![CDATA[总是屏蔽烦人的广告，而默认会显示非侵入式广告。您可以通过点击<b>允许一些非侵入性广告</b>选项随时更改此设置。]]></string>
+    <string name="aa_dialog_button">明白了</string>
+    <string name="sbrowser_dialog_title">您需要三星浏览器</string>
+    <string name="sbrowser_dialog_message">要使用 Adblock Plus，您必须安装三星浏览器 4.0 或更高版本。</string>
+    <string name="sbrowser_dialog_button">现在安装</string>
+    <string name="setup_dialog_title">在三星浏览器中启用 Adblock Plus</string>
+    <string name="setup_dialog_message_sbrowser_4"><![CDATA[1. 打开三星浏览器。<br/>2. 点击<b>更多</b>，然后选择<b>设置</b>。.<br/>3. 点击<b>高级</b>。.<br/>4. 点击<b>屏蔽内容</b>。.<br/>5. 激活<b>屏蔽内容</b>功能。<br/>6. 选择三星浏览器专用 Adblock Plus。]]></string>
+    <string name="setup_dialog_message_sbrowser_5"><![CDATA[1. 打开三星浏览器。<br/>2. 点击&nbsp; <b>&#8942;</b> &nbsp; 并选择<b>扩展</b>。<br/>3. 点击<b>内容拦截器</b>。<br/>4. 选择三星浏览器专用 Adblock Plus。 ]]></string>
+    <string name="setup_dialog_button">配置三星浏览器</string>
+    <string name="subscription_disable_tracking">禁止跟踪</string>
+    <string name="subscription_disable_malware">禁用恶意软件域</string>
+    <string name="subscription_disable_anti_adblock">禁用反广告过滤消息</string>
+    <string name="subscription_disable_social_media">禁用社交媒体按钮</string>
+    <string name="download_settings_wifi">仅 Wi-Fi 环境</string>
+    <string name="download_settings_always">总是</string>
+    <string name="whitelisted_websites">白名单网站</string>
+    <string name="whitelisted_websites_summary">针对指定网站禁用广告拦截功能</string>
+    <string name="whitelisted_websites_add_button">将一个网站添加到白名单</string>
+    <string name="whitelist_website_dialog_title">将网站列入白名单</string>
+    <string name="whitelist_website_dialog_message">输入网站URL</string>
+    <string name="whitelist_website_dialog_hint">www.someURL.com</string>
+    <string name="whitelist_website_invalid_url_error">无效的 URL</string>
+    <string name="whitelist_remove_dialog_title">移除列入白名单的网站</string>
+    <string name="whitelist_remove_dialog_message">"是否确定要移除 &lt;b>%1s&lt;/b>？"</string>
+    <string name="add_subscription_dialog_message">添加订阅&#8230;</string>
+    <string name="remove_subscription_dialog_message">移除订阅&#8230;</string>
+    <string name="about">关于</string>
+    <string name="privacy_policy">隐私政策</string>
+    <string name="terms_of_use">使用条款</string>
+    <string name="imprint">版本说明</string>
+    <string name="imprint_text"><![CDATA[<p><b><font color=\"#ffffff\">eyeo GmbH</font></b><br/>Lichtstraße 25<br/>50825 Cologne<br/>Germany</p><p>支持：<br/><a href=\"https://adblockplus.org/forum/\">Adblock Plus 论坛</a><br/>电子邮箱：<br/><a href=\"mailto:info@eyeo.com\">info@eyeo.com</a><br/>电话：<br/>+49 (0)221 / 65028 598<br/>传真：<br/>+49 (0)221 / 65028 599</p><p>增值税号：<br/>DE279292414<br/>科隆地方法院：<br/>HRB 73508</p><p><b><font color=\"#ffffff\">董事总经理</font></b>：<br/>Till Faida<br/>Felix Dahlke<br/>Steffen Kiedel</p>]]></string>
+    <string name="add_another_list">添加其他过滤列表</string>
+    <string name="add_another_list_url_hint">https://www.example.com/filterlist.txt</string>
+    <string name="update_subscriptions">更新订阅</string>
+    <string name="update_subscriptions_summary">更新所有活动订阅</string>
+    <string name="updating_subscriptions">正在后台更新订阅...</string>
+    <string name="metered_connection_warning">您正在使用手机的数据计划。您确定要更新吗？这可能需要一段时间。</string>
+    <string name="check_your_connection">您似乎离线了。请检查您的互联网连接。</string>
+
+</resources>
