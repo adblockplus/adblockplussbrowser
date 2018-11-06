@@ -388,7 +388,7 @@ public final class Engine
     try (final InputStream subscriptionsXml = context.getResources()
         .openRawResource(R.raw.subscriptions))
     {
-      engine.defaultSubscriptions = DefaultSubscriptions.fromStream(subscriptionsXml);
+      engine.defaultSubscriptions = DefaultSubscriptions.Companion.fromStream(subscriptionsXml);
     }
 
     Log.d(TAG, "Finished reading 'subscriptions.xml'");
@@ -413,8 +413,7 @@ public final class Engine
         final Subscription easylist = engine.subscriptions.add(Subscription
             // Use bundled EasyList as default and update it with locale specific list later
             // see: https://issues.adblockplus.org/ticket/5237
-            .create(SubscriptionUtils.chooseDefaultSubscriptionUrl(
-                engine.defaultSubscriptions.getAdsSubscriptions()))
+            .create(SubscriptionUtils.chooseDefaultSubscriptionUrl(engine.defaultSubscriptions.get()))
             .parseLines(readLines(easylistTxt)));
         easylist.putMeta(Subscription.KEY_UPDATE_TIMESTAMP, "0");
         easylist.setEnabled(true);
@@ -439,7 +438,7 @@ public final class Engine
       notification.setEnabled(true);
 
       int additional = 0;
-      for (final Subscription sub : engine.defaultSubscriptions.createSubscriptions())
+      for (final Subscription sub : createSubscriptions(engine.defaultSubscriptions))
       {
         if (!engine.subscriptions.hasSubscription(sub.getId()))
         {
@@ -578,6 +577,22 @@ public final class Engine
   private static File getSubscriptionsDir(Context context)
   {
     return new File(context.getFilesDir(), "subscriptions");
+  }
+
+  static List<Subscription> createSubscriptions(final DefaultSubscriptions defaultSubscriptions)
+          throws IOException
+  {
+    final ArrayList<Subscription> subs = new ArrayList<>();
+    for (DefaultSubscriptionInfo info : defaultSubscriptions.get())
+    {
+      if (!info.getUrl().isEmpty())
+      {
+        final Subscription sub = Subscription.create(info.getUrl());
+        sub.putMeta(Subscription.KEY_TITLE, info.getTitle());
+        subs.add(sub);
+      }
+    }
+    return subs;
   }
 
   URL createDownloadURL(final Subscription sub) throws IOException

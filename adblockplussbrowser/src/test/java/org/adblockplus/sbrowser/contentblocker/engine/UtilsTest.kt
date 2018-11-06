@@ -43,7 +43,7 @@ class UtilsTest
     @Before
     fun setup()
     {
-        context = RuntimeEnvironment.application
+        context = RuntimeEnvironment.application.applicationContext
         mockedDefaultSubs = mock(DefaultSubscriptions::class.java)
         RuntimeEnvironment.application.resources
                 .openRawResource(R.raw.subscriptions).use{ subscriptionsXml -> mockedDefaultSubs =
@@ -62,7 +62,7 @@ class UtilsTest
     {
         Resources.getSystem().configuration.setLocale(Locale.CHINA)
         assertNotEquals(SubscriptionUtils.chooseDefaultSubscriptionUrl(
-                mockedDefaultSubs?.adsSubscriptions), SubscriptionUtils.EASYLIST_URL)
+                mockedDefaultSubs.get()), SubscriptionUtils.EASYLIST_URL)
     }
 
     @Test
@@ -70,7 +70,7 @@ class UtilsTest
     {
         Resources.getSystem().configuration.setLocale(Locale.GERMANY)
         assertEquals(SubscriptionUtils.chooseDefaultSubscriptionUrl(
-                mockedDefaultSubs?.adsSubscriptions), EASYLIST_GERMANY_COMPLETE_URL)
+                mockedDefaultSubs.get()), EASYLIST_GERMANY_COMPLETE_URL)
     }
 
     @Test
@@ -78,7 +78,7 @@ class UtilsTest
     {
         Resources.getSystem().configuration.setLocale(Locale.forLanguageTag("ab-xy"))
         assertEquals(SubscriptionUtils.chooseDefaultSubscriptionUrl(
-                mockedDefaultSubs?.adsSubscriptions), SubscriptionUtils.EASYLIST_URL)
+                mockedDefaultSubs.get()), SubscriptionUtils.EASYLIST_URL)
     }
 
     @Test

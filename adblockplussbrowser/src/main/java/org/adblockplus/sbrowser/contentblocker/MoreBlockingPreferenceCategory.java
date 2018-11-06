@@ -226,18 +226,11 @@ public class MoreBlockingPreferenceCategory extends PreferenceCategory implement
         continue;
       }
 
-      if (info != null && !info.isComplete() && sub.isEnabled())
-      {
-        moreBlockingPreferenceSubscriptions.add(sub);
-        continue;
-      }
-
       if ((!(engine.isAcceptableAdsUrl(sub)) || sub.getTitle().startsWith("__"))
           && resInt != null
           && (info == null || info.getPrefixes().isEmpty() || sub.getType() != SubscriptionInfo.Type.ADS))
       {
         moreBlockingPreferenceSubscriptions.add(sub);
-        continue;
       }
     }
 

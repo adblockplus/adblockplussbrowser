@@ -26,6 +26,9 @@ android {
             manifest.srcFile 'AndroidManifest.xml'
             res.srcDirs = ['res']
         }
+        test {
+            resources.srcDirs += ['src/test/resources']
+        }
     }
 
     buildTypes {
@@ -82,7 +85,7 @@ def updateBundledLists(taskName) {
 }
 
 dependencies {
-    testImplementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:2.16.0'
     testImplementation 'org.robolectric:robolectric:3.8'

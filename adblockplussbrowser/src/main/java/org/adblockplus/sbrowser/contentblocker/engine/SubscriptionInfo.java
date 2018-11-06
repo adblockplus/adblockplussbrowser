@@ -39,10 +39,11 @@ public class SubscriptionInfo implements Comparable<SubscriptionInfo>
   private final String id;
   private final String url;
   private String title;
-  private boolean enabled = false;
+  private boolean enabled;
   private long lastUpdate;
 
-  private SubscriptionInfo(final Type type, final String id, final String url, final String title, final boolean enabled, final long lastUpdate)
+  private SubscriptionInfo(final Type type, final String id, final String url, final String title,
+                           final boolean enabled, final long lastUpdate)
   {
     this.type = type;
     this.id = id;
@@ -82,16 +83,6 @@ public class SubscriptionInfo implements Comparable<SubscriptionInfo>
     return this.lastUpdate;
   }
 
-  void updateWith(final Subscription subscription)
-  {
-    if (this.id.equals(subscription.getId()))
-    {
-      this.enabled = subscription.isEnabled();
-      this.title = subscription.getTitle();
-      this.lastUpdate = subscription.getLastUpdateTimestamp();
-    }
-  }
-
   static SubscriptionInfo create(final Engine engine, final Subscription subscription)
   {
     final DefaultSubscriptionInfo defaultSubscription = engine
@@ -110,11 +101,11 @@ public class SubscriptionInfo implements Comparable<SubscriptionInfo>
           {
             type = Type.ACCEPTABLE_ADS;
           }
-          else if ("ads".equalsIgnoreCase(defaultSubscription.getType()))
+          else if (Type.ADS.toString().equalsIgnoreCase(defaultSubscription.getType()))
           {
             type = Type.ADS;
           }
-          else if ("other".equalsIgnoreCase(defaultSubscription.getType()))
+          else
           {
             type = Type.OTHER;
           }
