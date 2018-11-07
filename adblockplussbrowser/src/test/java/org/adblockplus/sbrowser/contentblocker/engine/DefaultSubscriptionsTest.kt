@@ -49,7 +49,7 @@ class DefaultSubscriptionsTest {
     {
         val subscriptions = DefaultSubscriptions.fromStream(getTestResourceAsStream(emptySubscriptions))
         Assert.assertNotNull(subscriptions)
-        Assert.assertTrue(subscriptions.get().isEmpty())
+        Assert.assertTrue(subscriptions!!.subscriptions.isEmpty())
 
         Assert.assertNull(subscriptions.getForUrl(EASYLIST_GERMANY_COMPLETE_URL))
     }
@@ -65,7 +65,7 @@ class DefaultSubscriptionsTest {
     {
         val subscriptions = DefaultSubscriptions.fromStream(
                 RuntimeEnvironment.application.resources.openRawResource(R.raw.subscriptions))
-        Assert.assertTrue(subscriptions.getForUrl(EASYLIST_GERMANY_COMPLETE_URL)!!.title.isNotBlank())
+        Assert.assertTrue(subscriptions?.getForUrl(EASYLIST_GERMANY_COMPLETE_URL)!!.title.isNotBlank())
         Assert.assertTrue(subscriptions.getForUrl(EASYLIST_GERMANY_COMPLETE_URL)!!.url.isNotBlank())
         Assert.assertTrue(subscriptions.getForUrl(EASYLIST_GERMANY_COMPLETE_URL)!!.author.isNotBlank())
         Assert.assertTrue(subscriptions.getForUrl(EASYLIST_GERMANY_COMPLETE_URL)!!.prefixes.isNotBlank())

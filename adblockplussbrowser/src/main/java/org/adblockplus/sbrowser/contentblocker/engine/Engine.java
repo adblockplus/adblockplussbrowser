@@ -388,7 +388,7 @@ public final class Engine
     try (final InputStream subscriptionsXml = context.getResources()
         .openRawResource(R.raw.subscriptions))
     {
-      engine.defaultSubscriptions = DefaultSubscriptions.Companion.fromStream(subscriptionsXml);
+      engine.defaultSubscriptions = DefaultSubscriptions.fromStream(subscriptionsXml);
     }
 
     Log.d(TAG, "Finished reading 'subscriptions.xml'");
@@ -413,7 +413,7 @@ public final class Engine
         final Subscription easylist = engine.subscriptions.add(Subscription
             // Use bundled EasyList as default and update it with locale specific list later
             // see: https://issues.adblockplus.org/ticket/5237
-            .create(SubscriptionUtils.chooseDefaultSubscriptionUrl(engine.defaultSubscriptions.get()))
+            .create(SubscriptionUtils.chooseDefaultSubscriptionUrl(engine.defaultSubscriptions.getSubscriptions()))
             .parseLines(readLines(easylistTxt)));
         easylist.putMeta(Subscription.KEY_UPDATE_TIMESTAMP, "0");
         easylist.setEnabled(true);
@@ -583,7 +583,7 @@ public final class Engine
           throws IOException
   {
     final ArrayList<Subscription> subs = new ArrayList<>();
-    for (DefaultSubscriptionInfo info : defaultSubscriptions.get())
+    for (DefaultSubscriptionInfo info : defaultSubscriptions.getSubscriptions())
     {
       if (!info.getUrl().isEmpty())
       {
