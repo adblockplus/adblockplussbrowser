@@ -30,24 +30,25 @@ import java.io.InputStream
 @RunWith(RobolectricTestRunner::class)
 class DefaultSubscriptionsTest {
 
-    private val nonExistingResource = "not_existing.xml"
-    private val emptySubscriptions = "subscriptions_empty.xml"
-    private val brokenSubscriptions = "subscriptions_malformed.xml"
-
-    private val EASYLIST_GERMANY_COMPLETE_URL =
-            "https://easylist-downloads.adblockplus.org/easylistgermany+easylist.txt"
+    companion object {
+        private const val NON_EXISTING_RESOURCE = "not_existing.xml"
+        private const val EMPTY_SUBSCRIPTIONS = "subscriptions_empty.xml"
+        private const val BROKEN_SUBSCRIPTIONS = "subscriptions_malformed.xml"
+        private const val EASYLIST_GERMANY_COMPLETE_URL =
+                "https://easylist-downloads.adblockplus.org/easylistgermany+easylist.txt"
+    }
 
     @Test
     fun openResourcesForTesting()
     {
-        Assert.assertNull(getTestResourceAsStream(nonExistingResource))
-        Assert.assertNotNull(getTestResourceAsStream(emptySubscriptions))
+        Assert.assertNull(getTestResourceAsStream(NON_EXISTING_RESOURCE))
+        Assert.assertNotNull(getTestResourceAsStream(EMPTY_SUBSCRIPTIONS))
     }
 
     @Test
     fun parseEmptySubscriptions()
     {
-        val subscriptions = DefaultSubscriptions.fromStream(getTestResourceAsStream(emptySubscriptions))
+        val subscriptions = DefaultSubscriptions.fromStream(getTestResourceAsStream(EMPTY_SUBSCRIPTIONS))
         Assert.assertNotNull(subscriptions)
         Assert.assertTrue(subscriptions!!.subscriptions.isEmpty())
 
@@ -57,7 +58,7 @@ class DefaultSubscriptionsTest {
     @Test(expected = IOException::class)
     fun parseBrokenSubscriptions()
     {
-        DefaultSubscriptions.fromStream(getTestResourceAsStream(brokenSubscriptions))
+        DefaultSubscriptions.fromStream(getTestResourceAsStream(BROKEN_SUBSCRIPTIONS))
     }
 
     @Test

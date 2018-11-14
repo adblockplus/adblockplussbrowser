@@ -100,7 +100,7 @@ public class ListedSubscriptionsPreferenceCategory extends MultilinePreferenceCa
 
   private void initEntries()
   {
-    boolean isEnabledView = this.getTitleRes() == R.string.enabled_subscriptions;
+    final boolean isEnabledView = this.getTitleRes() == R.string.enabled_subscriptions;
     this.removeAll();
 
     final HashMap<String, Locale> localeMap = new HashMap<>();

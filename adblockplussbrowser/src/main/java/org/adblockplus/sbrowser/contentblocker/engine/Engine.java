@@ -413,7 +413,8 @@ public final class Engine
         final Subscription easylist = engine.subscriptions.add(Subscription
             // Use bundled EasyList as default and update it with locale specific list later
             // see: https://issues.adblockplus.org/ticket/5237
-            .create(SubscriptionUtils.chooseDefaultSubscriptionUrl(engine.defaultSubscriptions.getSubscriptions()))
+            .create(SubscriptionUtils.chooseDefaultSubscriptionUrl(
+                    engine.defaultSubscriptions.getSubscriptions()))
             .parseLines(readLines(easylistTxt)));
         easylist.putMeta(Subscription.KEY_UPDATE_TIMESTAMP, "0");
         easylist.setEnabled(true);
@@ -579,11 +580,11 @@ public final class Engine
     return new File(context.getFilesDir(), "subscriptions");
   }
 
-  static List<Subscription> createSubscriptions(final DefaultSubscriptions defaultSubscriptions)
+  private static List<Subscription> createSubscriptions(final DefaultSubscriptions defaultSubscriptions)
           throws IOException
   {
     final ArrayList<Subscription> subs = new ArrayList<>();
-    for (DefaultSubscriptionInfo info : defaultSubscriptions.getSubscriptions())
+    for (final DefaultSubscriptionInfo info : defaultSubscriptions.getSubscriptions())
     {
       if (!info.getUrl().isEmpty())
       {

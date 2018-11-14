@@ -48,37 +48,33 @@ class DefaultSubscriptions internal constructor (subscriptionInfoList: List<Defa
 
     fun getForUrl(url: String?) = urlMap[url]
 
-    fun getForUrl(url: URL?): DefaultSubscriptionInfo? {
-        return if (url != null) getForUrl(url.toString()) else null
-    }
+    fun getForUrl(url: URL?): DefaultSubscriptionInfo? =
+            if (url != null) getForUrl(url.toString()) else null
 }
 
 private class SubscriptionParser : DefaultHandler() {
 
-    private val KEY_SUBSCRIPTION = "subscription"
+    companion object {
+        private const val KEY_SUBSCRIPTION = "subscription"
+    }
 
-    val subscriptionInfoList: ArrayList<DefaultSubscriptionInfo> = arrayListOf()
-    var subscriptions: DefaultSubscriptions? = null
-    var subscription: DefaultSubscriptionInfo? = null
+    val subscriptionInfoList = arrayListOf<DefaultSubscriptionInfo>()
+    lateinit var subscriptions: DefaultSubscriptions
+    lateinit var subscription: DefaultSubscriptionInfo
 
     override fun startElement(uri: String?, localName: String?, qualifiedName: String?,
                               attributes: Attributes?) {
-        super.startElement(uri, localName, qualifiedName, attributes)
-
         if (KEY_SUBSCRIPTION == qualifiedName) {
             subscription = DefaultSubscriptionInfo()
             for (i in 0 until attributes!!.length) {
-                subscription!!.attributes[attributes.getQName(i)] = attributes.getValue(i)
+                subscription.attributes[attributes.getQName(i)] = attributes.getValue(i)
             }
         }
     }
 
     override fun endElement(uri: String?, localName: String?, qualifiedName: String?) {
-        super.endElement(uri, localName, qualifiedName)
-
         if (KEY_SUBSCRIPTION == qualifiedName) {
-            subscriptionInfoList.add(subscription!!)
-            subscription = null
+            subscriptionInfoList.add(subscription)
         }
     }
 
