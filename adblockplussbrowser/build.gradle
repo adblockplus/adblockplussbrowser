@@ -20,14 +20,7 @@ android {
         buildConfigField "String", "FLAVOR_REGION_WORLD", '"world"'
         buildConfigField "String", "FLAVOR_REGION_CHINA", '"china"'
     }
-
-    sourceSets {
-        main {
-            manifest.srcFile 'AndroidManifest.xml'
-            res.srcDirs = ['res']
-        }
-    }
-
+    
     buildTypes {
         release {
             minifyEnabled true
