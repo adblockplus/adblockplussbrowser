@@ -82,10 +82,10 @@ def updateBundledLists(taskName) {
 }
 
 dependencies {
-    testImplementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:2.18.0'
-    testImplementation 'org.robolectric:robolectric:3.8'
+    testImplementation 'org.robolectric:robolectric:4.0-beta-1'
     implementation "com.android.support:support-v4:$rootProject.ext.androidSupportLibraryVersion"
     implementation (group: 'commons-validator', name: 'commons-validator', version: '1.6') {
         exclude group: 'commons-logging', module: 'commons-logging'

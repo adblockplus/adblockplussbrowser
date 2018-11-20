@@ -42,7 +42,6 @@ public class ListedSubscriptionsPreferenceCategory extends MultilinePreferenceCa
     EngineManager.OnEngineCreatedCallback, OnPreferenceChangeListener
 {
   private Engine engine = null;
-  private boolean isEnabledView = false;
 
   private static final String[] LANGUAGE_TRANSLATIONS =
   {
@@ -101,7 +100,7 @@ public class ListedSubscriptionsPreferenceCategory extends MultilinePreferenceCa
 
   private void initEntries()
   {
-    this.isEnabledView = this.getTitleRes() == R.string.enabled_subscriptions;
+    final boolean isEnabledView = this.getTitleRes() == R.string.enabled_subscriptions;
     this.removeAll();
 
     final HashMap<String, Locale> localeMap = new HashMap<>();
@@ -119,17 +118,17 @@ public class ListedSubscriptionsPreferenceCategory extends MultilinePreferenceCa
 
     for (final SubscriptionInfo sub : subs)
     {
-      if (sub.isEnabled() == this.isEnabledView)
+      if (sub.isEnabled() == isEnabledView)
       {
         switch (sub.getType())
         {
           case ADS:
             final DefaultSubscriptionInfo info = engine.getDefaultSubscriptionInfoForUrl(
                 sub.getUrl());
-            if (info != null && !info.getPrefixes().isEmpty() && info.isComplete())
+            if (info != null && !info.getPrefixes().isEmpty())
             {
               final CheckBoxPreference cbp = new CheckBoxPreference(this.getContext());
-              if (this.isEnabledView)
+              if (isEnabledView)
               {
                 final StringBuilder sb = new StringBuilder();
                 sb.append(this.getContext().getString(R.string.last_update));

@@ -35,6 +35,7 @@ import java.util.Locale
 @RunWith(RobolectricTestRunner::class)
 class UtilsTest
 {
+
     private lateinit var mockedDefaultSubs: DefaultSubscriptions
     private lateinit var context: Context
     private val EASYLIST_GERMANY_COMPLETE_URL =
@@ -47,7 +48,7 @@ class UtilsTest
         mockedDefaultSubs = mock(DefaultSubscriptions::class.java)
         RuntimeEnvironment.application.resources
                 .openRawResource(R.raw.subscriptions).use{ subscriptionsXml -> mockedDefaultSubs =
-                DefaultSubscriptions.fromStream(subscriptionsXml) }
+                DefaultSubscriptions.fromStream(subscriptionsXml)!! }
     }
 
     @Test
@@ -62,7 +63,7 @@ class UtilsTest
     {
         Resources.getSystem().configuration.setLocale(Locale.CHINA)
         assertNotEquals(SubscriptionUtils.chooseDefaultSubscriptionUrl(
-                mockedDefaultSubs?.adsSubscriptions), SubscriptionUtils.EASYLIST_URL)
+                mockedDefaultSubs.subscriptions), SubscriptionUtils.EASYLIST_URL)
     }
 
     @Test
@@ -70,7 +71,7 @@ class UtilsTest
     {
         Resources.getSystem().configuration.setLocale(Locale.GERMANY)
         assertEquals(SubscriptionUtils.chooseDefaultSubscriptionUrl(
-                mockedDefaultSubs?.adsSubscriptions), EASYLIST_GERMANY_COMPLETE_URL)
+                mockedDefaultSubs.subscriptions), EASYLIST_GERMANY_COMPLETE_URL)
     }
 
     @Test
@@ -78,7 +79,7 @@ class UtilsTest
     {
         Resources.getSystem().configuration.setLocale(Locale.forLanguageTag("ab-xy"))
         assertEquals(SubscriptionUtils.chooseDefaultSubscriptionUrl(
-                mockedDefaultSubs?.adsSubscriptions), SubscriptionUtils.EASYLIST_URL)
+                mockedDefaultSubs.subscriptions), SubscriptionUtils.EASYLIST_URL)
     }
 
     @Test

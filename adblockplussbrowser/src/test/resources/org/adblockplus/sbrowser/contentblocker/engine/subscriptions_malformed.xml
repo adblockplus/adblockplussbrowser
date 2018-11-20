@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!--
+  - This file is part of the Adblock Plus web scripts,
+  - Copyright (C) 2006-present eyeo GmbH
+  -
+  - Adblock Plus is free software: you can redistribute it and/or modify
+  - it under the terms of the GNU General Public License version 3 as
+  - published by the Free Software Foundation.
+  -
+  - Adblock Plus is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - GNU General Public License for more details.
+  -
+  - You should have received a copy of the GNU General Public License
+  - along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<subscriptions>
+    <subscription title="EasyList"
+        specialization="English"
+        url="https://easylist-downloads.adblockplus.org/easylist.txt"
+        homepage="https://easylist.to/"
+        prefixes="en"
+        author="fanboy, MonztA, Famlam, Khrin"
+        type="ads">
+    <subscription title="ABPindo+EasyList"
+        specialization="Bahasa Indonesia"
+        url="https://easylist-downloads.adblockplus.org/abpindo+easylist.txt"
+        homepage="http://abpindo.blogspot.com/"
+        prefixes="id"
+        author="heradhis"
+        type="ads"/>
+    <subscription title="ABPVN List+EasyList"
+        specialization="Tiếng Việt"
+        url="https://easylist-downloads.adblockplus.org/abpvn+easylist.txt"
+        homepage="http://abpvn.com/"
+        prefixes="vi"
+        author="Hoàng Rio"
+        type="ads"/>
+</subscriptions>

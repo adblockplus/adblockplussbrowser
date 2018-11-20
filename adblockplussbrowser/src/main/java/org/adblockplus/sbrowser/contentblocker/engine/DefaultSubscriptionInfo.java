@@ -32,11 +32,7 @@ public final class DefaultSubscriptionInfo implements Comparable<DefaultSubscrip
   private final static String KEY_SPECIALIZATION = "specialization";
   private final static String KEY_HOMEPAGE = "homepage";
   private final static String KEY_TYPE = "type";
-  private final static String KEY_COMPLETE = "complete";
 
-  DefaultSubscriptionInfo parent = null;
-  final List<DefaultSubscriptionInfo> variants = new ArrayList<>();
-  final List<DefaultSubscriptionInfo> supplements = new ArrayList<>();
   final HashMap<String, String> attributes = new HashMap<>();
 
   private String getValue(final String key)
@@ -78,11 +74,6 @@ public final class DefaultSubscriptionInfo implements Comparable<DefaultSubscrip
   public String getType()
   {
     return this.getValue(KEY_TYPE);
-  }
-
-  public boolean isComplete()
-  {
-    return this.getValue(KEY_COMPLETE).equals("true");
   }
 
   @Override

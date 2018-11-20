@@ -53,7 +53,7 @@ public class SubscriptionUtils
     }
     for (final DefaultSubscriptionInfo info : defaultSubscriptions)
     {
-      if (info != null && info.getPrefixes().contains(getDeviceLanguageCode()) && info.isComplete())
+      if (info != null && info.getPrefixes().contains(getDeviceLanguageCode()))
       {
         return info.getUrl();
       }
