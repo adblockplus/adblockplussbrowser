@@ -40,6 +40,10 @@ Importing into Android Studio
 Open Android Studio and select *Open an existing Android Studio Project*, then navigate to the `adblockplussbrowser` dir.
 
 
+### Upload translations source file
+
+If new strings that require translation have been added to the project, the gradle task `uploadTranslationsSourceFile()` must be started manually. It uploads the strings.xml file to the XTM backend and the C&T team is automatically notified that new translations are needed. In case of a successful upload, you should see an according status message printed out.
+
 Testing
 -------
 
