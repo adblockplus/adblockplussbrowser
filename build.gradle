@@ -32,4 +32,6 @@ ext {
     exceptionRulesUpdateUrl = 'https://easylist-downloads.adblockplus.org/exceptionrules.txt'
     easyListFilePath = file('adblockplussbrowser/src/main/res/raw/easylist.txt').absolutePath
     exceptionRulesFilePath = file('adblockplussbrowser/src/main/res/raw/exceptionrules.txt').absolutePath
+    translationsSourceFilePath = file('adblockplussbrowser/src/main/res/values/strings.xml').absolutePath
+    localPropertiesPath = file('local.properties').absolutePath
 }

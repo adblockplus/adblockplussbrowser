@@ -1,0 +1,74 @@
+import groovy.transform.Canonical
+
+import static groovyx.net.http.ContentTypes.JSON
+import groovy.json.JsonSlurper
+import groovyx.net.http.*
+import static groovyx.net.http.MultipartContent.multipart
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "io.github.http-builder-ng:http-builder-ng-okhttp:1.0.3"
+    }
+}
+
+@Canonical
+class AuthenticationRequest {
+    String client
+    String password
+    int userId
+}
+
+task uploadTranslationsSourceFile() {
+    Properties properties = new Properties()
+    properties.load(new File(rootProject.ext.localPropertiesPath).newDataInputStream())
+    String token = authorize(properties)
+    File uploadFile = new File(rootProject.ext.translationsSourceFilePath)
+    try {
+        upload(properties, token, uploadFile)
+    } catch (groovyx.net.http.HttpException e) {
+        println ' Error performing file upload: ' + e
+    }
+}
+
+String authorize(Properties properties) {
+    String customer = properties.getProperty('xtm.customer')
+    String password = properties.getProperty('xtm.password')
+    int userId = Integer.parseInt(properties.getProperty('xtm.userId'))
+    OkHttpBuilder.configure {
+        request.uri = properties.getProperty('xtm.request.baseUrl')
+        request.contentType = JSON[0]
+    }.post {
+        request.uri.path = properties.getProperty('xtm.request.authRequestPath')
+        request.body = new AuthenticationRequest(customer, password, userId)
+        response.parser(JSON[0]) { ChainedHttpConfig cfg, FromServer fs ->
+            def authentication = new JsonSlurper().parseText(fs.inputStream.text)
+            return authentication.token
+        }
+    }
+}
+
+void upload(Properties properties, String token, File uploadFile) {
+    OkHttpBuilder.configure {
+        request.uri = properties.getProperty('xtm.request.baseUrl')
+        request.headers['Authorization'] = 'XTM-Basic ' + token
+        request.contentType = 'multipart/form-data'
+    }.post {
+        request.uri.path = properties.getProperty('xtm.request.uploadSourceFilePath')
+        request.body = multipart {
+            part 'files[0].file', 'strings.xml', 'application/xml', uploadFile
+            field 'matchType', 'MATCH_NAMES'
+        }
+        request.encoder 'multipart/form-data', OkHttpEncoders.&multipart
+        response.success { FromServer fs, Object body ->
+            println 'Uploaded translations source file successfully.'
+        }
+        response.failure { FromServer fs, Object body ->
+            println 'Error uploading translations source file: ' + body.toString()
+        }
+    }
+}
