@@ -30,6 +30,6 @@ ext {
     easyListDefaultUpdateUrl = 'https://easylist-downloads.adblockplus.org/easylist.txt'
     easyListChinaUpdateUrl = 'https://easylist-downloads.adblockplus.org/easylistchina+easylistchina_compliance+easylist.txt'
     exceptionRulesUpdateUrl = 'https://easylist-downloads.adblockplus.org/exceptionrules.txt'
-    easyListFilePath = file('adblockplussbrowser/res/raw/easylist.txt').absolutePath
-    exceptionRulesFilePath = file('adblockplussbrowser/res/raw/exceptionrules.txt').absolutePath
+    easyListFilePath = file('adblockplussbrowser/src/main/res/raw/easylist.txt').absolutePath
+    exceptionRulesFilePath = file('adblockplussbrowser/src/main/res/raw/exceptionrules.txt').absolutePath
 }
