@@ -27,8 +27,6 @@
     <string name="setup_dialog_message_sbrowser_5"><![CDATA[1. 삼성 인터넷을 엽니다.<br/>2. &nbsp; <u><b>&#8942;</b></u> &nbsp; 을 탭하고 <u><b>확장 기능</b></u>을 선택합니다.<br/>3. <u><b>콘텐츠 차단 기능</b></u>를 탭합니다.<br/>4. 삼성 인터넷용 Adblock Plus를 선택합니다.]]></string>
     <string name="setup_dialog_button">삼성 인터넷 구성</string>
     <string name="subscription_disable_tracking">추적 비활성화</string>
-    <string name="subscription_disable_malware">멀웨어 도메인 비활성화</string>
-    <string name="subscription_disable_anti_adblock">광고 방지 차단 메시지 비활성화</string>
     <string name="subscription_disable_social_media">소셜 미디어 비활성화 버튼</string>
     <string name="download_settings_wifi">Wi-Fi에서만</string>
     <string name="download_settings_always">항상</string>

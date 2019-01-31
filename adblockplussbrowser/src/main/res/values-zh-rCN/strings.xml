@@ -27,8 +27,6 @@
     <string name="setup_dialog_message_sbrowser_5"><![CDATA[1. 打开三星浏览器。<br/>2. 点击&nbsp; <b>&#8942;</b> &nbsp; 并选择<b>扩展</b>。<br/>3. 点击<b>内容拦截器</b>。<br/>4. 选择三星浏览器专用 Adblock Plus。 ]]></string>
     <string name="setup_dialog_button">配置三星浏览器</string>
     <string name="subscription_disable_tracking">禁止跟踪</string>
-    <string name="subscription_disable_malware">禁用恶意软件域</string>
-    <string name="subscription_disable_anti_adblock">禁用反广告过滤消息</string>
     <string name="subscription_disable_social_media">禁用社交媒体按钮</string>
     <string name="download_settings_wifi">仅 Wi-Fi 环境</string>
     <string name="download_settings_always">总是</string>

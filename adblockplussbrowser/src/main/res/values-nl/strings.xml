@@ -27,8 +27,6 @@
     <string name="setup_dialog_message_sbrowser_5"><![CDATA[1. Open Samsung Internet.<br/>2. Tik op &nbsp; <b>&#8942;</b> &nbsp; en selecteer <b>Extensies</b>.<br/>3. Tik op <b>Inhoudblokkeringen</b>.<br/>4. Selecteer Adblock Plus voor Samsung Internet.]]></string>
     <string name="setup_dialog_button">Configureer Samsung Internet</string>
     <string name="subscription_disable_tracking">Tracering uitschakelen</string>
-    <string name="subscription_disable_malware">Malwaredomeinen uitschakelen</string>
-    <string name="subscription_disable_anti_adblock">Anti-advertentieblokkeringsberichten uitschakelen</string>
     <string name="subscription_disable_social_media">Knoppen sociale media uitschakelen</string>
     <string name="download_settings_wifi">Alleen bij wifi</string>
     <string name="download_settings_always">Altijd</string>
