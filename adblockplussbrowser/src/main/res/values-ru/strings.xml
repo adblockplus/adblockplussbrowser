@@ -27,8 +27,6 @@
     <string name="setup_dialog_message_sbrowser_5"><![CDATA[1. Откройте Интернет Samsung.<br/>2. Нажмите на &nbsp; <b>&#8942;</b> &nbsp; и выберите <b>«Расширения»</b>.<br/>3. Нажмите на <b>«Блокировщики содержимого»</b>.<br/>4. Выберите Adblock Plus для Интернет Samsung.]]></string>
     <string name="setup_dialog_button">Настройте Интернет Samsung</string>
     <string name="subscription_disable_tracking">Блокировать отслеживание</string>
-    <string name="subscription_disable_malware">Блокировать вредоносные домены</string>
-    <string name="subscription_disable_anti_adblock">Блокировать сообщения о блокировке рекламы</string>
     <string name="subscription_disable_social_media">Блокировать кнопки социальных сетей</string>
     <string name="download_settings_wifi">Только на Wi-Fi</string>
     <string name="download_settings_always">Всегда</string>
