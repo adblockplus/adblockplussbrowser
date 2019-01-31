@@ -63,6 +63,9 @@
         <PreferenceScreen android:title="@string/imprint" >
             <org.adblockplus.sbrowser.contentblocker.preferences.ImprintPreference/>
         </PreferenceScreen>
+        <Preference android:title="@string/app_name"
+            android:summary="@string/app_version"
+            android:enabled="false"/>
     </PreferenceScreen>
 
 </PreferenceScreen>
