@@ -27,8 +27,6 @@
     <string name="setup_dialog_message_sbrowser_5"><![CDATA[1. Ανοίξτε το Samsung Internet.<br/>2. Επιλέξτε &nbsp; <b>&#8942;</b> &nbsp; και <b>Eπεκτάσεις</b>.<br/>3. Επιλέξτε <b>Εργαλ. αποκλεισμού περιεχομένου</b>.<br/>4. Επιλέξτε Adblock Plus για Samsung Internet.]]></string>
     <string name="setup_dialog_button">Διαμορφώστε το Samsung Internet</string>
     <string name="subscription_disable_tracking">Απενεργοποίηση παρακολούθησης</string>
-    <string name="subscription_disable_malware">Απενεργοποίηση τομέων λογισμικών κακόβουλης λειτουργίας</string>
-    <string name="subscription_disable_anti_adblock">Απενεργοποίηση μηνυμάτων κατά της φραγής διαφημίσεων</string>
     <string name="subscription_disable_social_media">Απενεργοποίηση των κουμπιών για τις πλατφόρμες κοινωνικής δικτύωσης</string>
     <string name="download_settings_wifi">Μόνο σε ασύρματο δίκτυο</string>
     <string name="download_settings_always">Πάντα</string>

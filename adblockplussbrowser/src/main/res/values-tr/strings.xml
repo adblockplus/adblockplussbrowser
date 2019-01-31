@@ -27,8 +27,6 @@
     <string name="setup_dialog_message_sbrowser_5"><![CDATA[1. Samsung Internet\'i açın.<br/>2. &nbsp; <b>&#8942;</b> &nbsp; seçeneğine dokunun ve <b>Uzantılar</b> seçeneğini seçin.<br/>3. <b>İçerik engelleyiciler</b> seçeneğine dokunun.<br/>4. Samsung Internet için Adblock Plus\'ı seçin.]]></string>
     <string name="setup_dialog_button">Samsung Internet\'i yapılandırma</string>
     <string name="subscription_disable_tracking">İzlemeyi devre dışı bırak</string>
-    <string name="subscription_disable_malware">Kötü amaçlı yazılımlı etki alanlarını devre dışı bırak</string>
-    <string name="subscription_disable_anti_adblock">Anti-reklam engelleme mesajlarını devre dışı bırak</string>
     <string name="subscription_disable_social_media">Sosyal medya düğmelerini devre dışı bırak</string>
     <string name="download_settings_wifi">Sadece Wi-Fi ile bağlıyken</string>
     <string name="download_settings_always">Her zaman</string>

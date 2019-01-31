@@ -48,16 +48,12 @@ public class MoreBlockingPreferenceCategory extends PreferenceCategory implement
   private static final int[] WHITELISTED_LIST_TITLES =
   {
       R.string.subscription_disable_tracking,
-      R.string.subscription_disable_malware,
-      R.string.subscription_disable_anti_adblock,
       R.string.subscription_disable_social_media
   };
 
   private static final String[] WHITELISTED_LIST_URLS =
   {
       "https://easylist-downloads.adblockplus.org/easyprivacy.txt",
-      "https://easylist-downloads.adblockplus.org/malwaredomains_full.txt",
-      "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt",
       "https://easylist-downloads.adblockplus.org/fanboy-social.txt"
   };
 

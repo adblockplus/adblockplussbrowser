@@ -27,8 +27,6 @@
     <string name="setup_dialog_message_sbrowser_5"><![CDATA[1. Abra o Samsung Internet.<br/>2. Toque em &nbsp; <b>&#8942;</b> &nbsp; y selecione <b>Extensões</b>.<br/>3. Toque em <b>Bloqueadores de conteúdo</b>.<br/>4. Selecione Adblock Plus para Samsung Internet.]]></string>
     <string name="setup_dialog_button">Configure o Samsung Internet</string>
     <string name="subscription_disable_tracking">Desativar rastreio</string>
-    <string name="subscription_disable_malware">Desativar domínios de malware</string>
-    <string name="subscription_disable_anti_adblock">Desativar mensagens antibloqueio de anúncios</string>
     <string name="subscription_disable_social_media">Desativar botões de redes sociais</string>
     <string name="download_settings_wifi">Apenas em Wi-Fi</string>
     <string name="download_settings_always">Sempre</string>
