@@ -46,6 +46,11 @@ android {
         }
     }
 
+    applicationVariants.all { variant ->
+        variant.resValue "string", "app_version",
+                "${defaultConfig.versionName} - ${variant.productFlavors[0].name}"
+    }
+
     testOptions {
         unitTests {
             includeAndroidResources = true
