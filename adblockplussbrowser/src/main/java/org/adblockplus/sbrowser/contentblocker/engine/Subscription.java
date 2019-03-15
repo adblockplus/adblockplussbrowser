@@ -48,6 +48,8 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
 
+import org.adblockplus.sbrowser.contentblocker.util.SubscriptionUtils;
+
 /**
  * Simple subscription representation.
  */
@@ -564,6 +566,15 @@ final class Subscription
       }
       else
       {
+        if (SubscriptionUtils.isNotificationSubscription(getId()))
+        {
+          this.meta.put(KEY_UPDATE_TIMESTAMP, Long.toString(System.currentTimeMillis()));
+          this.meta.put(KEY_DOWNLOAD_COUNT, Long.toString(this.getDownloadCount() + 1));
+          this.meta.put(KEY_VERSION, Notification.getNotificationVersion(text));
+          Notification.persistNotificationData(filtersFile, text);
+          this.serializeMetaData(metaFile);
+          return false;
+        }
         // Update succeeded, update filters
         filtersChanged = true;
         this.meta.put(KEY_UPDATE_TIMESTAMP, Long.toString(System.currentTimeMillis()));
