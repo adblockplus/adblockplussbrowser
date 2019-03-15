@@ -701,16 +701,8 @@ public final class Engine
                   final DownloadFinishedEvent dfe = (DownloadFinishedEvent) event;
                   Log.d(TAG, "Download finished for '" + dfe.id + "' with response code "
                       + dfe.responseCode);
-                  if (SubscriptionUtils.isNotificationSubscription(dfe.id))
-                  {
-                    Notification.update(engine.context, dfe.responseCode, dfe.response,
-                        engine.subscriptions.getNotificationDataFile());
-                  }
-                  else
-                  {
-                    this.engine.subscriptions.updateSubscription(dfe.id, dfe.responseCode,
+                  this.engine.subscriptions.updateSubscription(dfe.id, dfe.responseCode,
                         dfe.response, dfe.headers);
-                  }
                   break;
                 }
                 default:
@@ -814,35 +806,32 @@ public final class Engine
   public void enqueueDownload(final Subscription sub, final boolean forced,
       final boolean allowMetered) throws IOException
   {
-    // For now we want to use JobScheduler only for the Notification download.
-    // See https://issues.adblockplus.org/ticket/6238.
-    if (SubscriptionUtils.isNotificationSubscription(sub.getId()))
+
+    if (sub.getURL() != null && sub.shouldUpdate(forced))
     {
-      if (Notification.shouldUpdate(context))
+      // For now we want to use JobScheduler only for the Notification download.
+      // See https://issues.adblockplus.org/ticket/6238.
+      if (SubscriptionUtils.isNotificationSubscription(sub.getId()))
       {
         scheduleJob(this.createDownloadURL(sub), sub.getId(), allowMetered);
+        return;
       }
-    }
-    else
-    {
-      if (sub.getURL() != null && sub.shouldUpdate(forced))
+
+      final HashMap<String, String> headers = new HashMap<>();
+      if (sub.isMetaDataValid() && sub.isFiltersValid())
       {
-        final HashMap<String, String> headers = new HashMap<>();
-        if (sub.isMetaDataValid() && sub.isFiltersValid())
+        final String lastModified = sub.getMeta(Subscription.KEY_HTTP_LAST_MODIFIED);
+        if (!TextUtils.isEmpty(lastModified))
         {
-          final String lastModified = sub.getMeta(Subscription.KEY_HTTP_LAST_MODIFIED);
-          if (!TextUtils.isEmpty(lastModified))
-          {
-            headers.put("If-Modified-Since", lastModified);
-          }
-          final String etag = sub.getMeta(Subscription.KEY_HTTP_ETAG);
-          if (!TextUtils.isEmpty(etag))
-          {
-            headers.put("If-None-Match", etag);
-          }
+          headers.put("If-Modified-Since", lastModified);
         }
-        this.downloader.enqueueDownload(this.createDownloadURL(sub), sub.getId(), headers, allowMetered);
+        final String etag = sub.getMeta(Subscription.KEY_HTTP_ETAG);
+        if (!TextUtils.isEmpty(etag))
+        {
+          headers.put("If-None-Match", etag);
+        }
       }
+      this.downloader.enqueueDownload(this.createDownloadURL(sub), sub.getId(), headers, allowMetered);
     }
   }
 

@@ -145,11 +145,6 @@ final class Subscriptions
     return filtersFile;
   }
 
-  File getNotificationDataFile()
-  {
-    return new File (this.subscriptionFolder, Notification.NOTIFICATION_DATA_FILE_NAME);
-  }
-
   File getMetaFile(final Subscription sub)
   {
     return new File(getFiltersFile(sub).getAbsolutePath() + ".meta");
