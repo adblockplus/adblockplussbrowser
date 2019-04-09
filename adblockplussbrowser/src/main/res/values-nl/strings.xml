@@ -8,7 +8,7 @@
 
     <string name="app_name">&product_name; voor Samsung Internet</string>
     <string name="sbrowser_dialog_message">Voordat u &product_name; kunt gebruiken, moet u Samsung Internet 4.0 of hoger installeren.</string>
-    <string name="setup_dialog_title">Schakel &product_name; in in Samsung Internet</string>
+    <string name="setup_dialog_title">Schakel &product_name; in Samsung Internet</string>
     <string name="setup_dialog_message_sbrowser_4">1. Open Samsung Internet. \n2. Tik op <b>Meer</b> en selecteer <b>Instellingen</b>. \n3. Tik op <b>Geavanceerd</b>. \n4. Tik op <b>Inhoud blokkeren</b>. \n5. Activeer de functionaliteit <b>Inhoud blokkeren</b>. \n6. Selecteer &product_name; voor Samsung Internet.</string>
     <string name="setup_dialog_message_sbrowser_5">1. Open Samsung Internet. \n2. Tik op \u00A0<b>&#8942;</b>\u00A0 en selecteer <b>Extensies</b>. \n3. Tik op <b>Inhoudblokkeringen</b>. \n4. Selecteer &product_name; voor Samsung Internet.</string>
 
