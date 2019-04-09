@@ -1,7 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE resources [
+    <!ENTITY product_name "Adblock Plus">
+]>
+
 <resources>
 
-    <string name="app_name">Adblock Plus dla Samsung Internet</string>
+    <string name="app_name">&product_name; dla Samsung Internet</string>
+    <string name="sbrowser_dialog_message">Aby móc korzystać z aplikacji &product_name;, należy zainstalować przeglądarkę Samsung Internet 4.0 lub nowszą.</string>
+    <string name="setup_dialog_title">Włącz &product_name; w Samsung Internet</string>
+    <string name="setup_dialog_message_sbrowser_4">1. Otwórz przeglądarkę Samsung Internet. \n2. Dotknij <b>Więcej</b> i wybierz <b>Ustawienia</b>. \n3. Dotknij <b>Zaawansowane</b>. \n4. Dotknij <b>Blokuj zawartość</b>. \n5. Aktywuj funkcję <b>Blokuj zawartość</b>. \n6. Wybierz &product_name; dla Samsung Internet.</string>
+    <string name="setup_dialog_message_sbrowser_5">1. Otwórz przeglądarkę Samsung Internet. \n2. Dotknij \u00A0<b>&#8942;</b>\u00A0 i wybierz <b>Rozszerzenia</b>. \n3. Dotknij <b>Blokowanie zawartości</b>. \n4. Wybierz &product_name; dla Samsung Internet.</string>
+
     <string name="automatic_updates">Skonfiguruj aktualizacje automatyczne</string>
     <string name="manage_subscriptions">Skonfiguruj listy filtrów</string>
     <string name="manage_subscriptions_summary">Zmień języki blokowania reklam</string>
@@ -20,11 +30,7 @@
     <string name="aa_dialog_message"><![CDATA[Irytujące reklamy są zawsze blokowane, a nieinwazyjne reklamy są domyślnie wyświetlane. To ustawienie można zmienić w dowolnym momencie, wybierając opcję <b>Zezwalaj na niektóre nieinwazyjne reklamy</b>.]]></string>
     <string name="aa_dialog_button">Rozumiem</string>
     <string name="sbrowser_dialog_title">Potrzebujesz przeglądarki Samsung Internet</string>
-    <string name="sbrowser_dialog_message">Aby móc korzystać z aplikacji Adblock Plus, należy zainstalować przeglądarkę Samsung Internet 4.0 lub nowszą.</string>
     <string name="sbrowser_dialog_button">Zainstaluj teraz</string>
-    <string name="setup_dialog_title">Włącz Adblock Plus w Samsung Internet</string>
-    <string name="setup_dialog_message_sbrowser_4"><![CDATA[1. Otwórz przeglądarkę Samsung Internet.<br/>2. Dotknij <b>Więcej</b> i wybierz <b>Ustawienia</b>.<br/>3. Dotknij <b>Zaawansowane</b>.<br/>4. Dotknij <b>Blokuj zawartość</b>.<br/>5. Aktywuj funkcję <b>Blokuj zawartość</b>.<br/>6. Wybierz Adblock Plus dla Samsung Internet.]]></string>
-    <string name="setup_dialog_message_sbrowser_5"><![CDATA[1. Otwórz przeglądarkę Samsung Internet.<br/>2. Dotknij &nbsp; <b>&#8942;</b> &nbsp; i wybierz <b>Rozszerzenia</b>.<br/>3. Dotknij <b>Blokowanie zawartości</b>.<br/>4. Wybierz Adblock Plus dla Samsung Internet.]]></string>
     <string name="setup_dialog_button">Konfigurowanie przeglądarki Samsung Internet</string>
     <string name="subscription_disable_tracking">Wyłącz śledzenie</string>
     <string name="subscription_disable_social_media">Wyłącz przyciski mediów społecznościowych</string>
