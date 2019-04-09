@@ -3,10 +3,10 @@
 
     <string name="app_name">三星浏览器专用 Adblock Plus</string>
     <string name="automatic_updates">配置自动更新</string>
-    <string name="manage_subscriptions">配置过滤器列表</string>
+    <string name="manage_subscriptions">配置过滤列表</string>
     <string name="manage_subscriptions_summary">更改广告屏蔽语言</string>
     <string name="more_blocking">更多过滤选项</string>
-    <string name="more_blocking_category">其他过滤器列表</string>
+    <string name="more_blocking_category">其他过滤列表</string>
     <string name="more_blocking_summary">禁止跟踪和恶意网站</string>
     <string name="enabled_subscriptions">较常访问以下语言的网站 &#8230;</string>
     <string name="available_subscriptions">其他语言</string>
