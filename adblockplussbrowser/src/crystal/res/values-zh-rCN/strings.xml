@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE resources [
+    <!ENTITY product_name "Crystal">
+]>
+
+<resources>
+    <string name="app_name">三星浏览器专用 &product_name;</string>
+    <string name="sbrowser_dialog_message">要使用 &product_name;，您必须安装三星浏览器 4.0 或更高版本。</string>
+    <string name="setup_dialog_title">在三星浏览器中启用 &product_name;</string>
+    <string name="setup_dialog_message_sbrowser_4">1. 打开三星浏览器。 \n2. 点击<b>更多</b>，然后选择<b>设置</b>。. \n3. 点击<b>高级</b>。. \n4. 点击<b>屏蔽内容</b>。. \n5. 激活<b>屏蔽内容</b>功能。 \n6. 选择三星浏览器专用 &product_name;。</string>
+    <string name="setup_dialog_message_sbrowser_5">1. 打开三星浏览器。 \n2. 点击\u00A0<b>&#8942;</b>\u00A0 并选择<b>扩展</b>。 \n3. 点击<b>内容拦截器</b>。 \n4. 选择三星浏览器专用 &product_name;。</string>
+</resources>

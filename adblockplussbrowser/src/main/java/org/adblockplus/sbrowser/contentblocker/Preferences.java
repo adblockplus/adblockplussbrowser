@@ -17,10 +17,13 @@
 
 package org.adblockplus.sbrowser.contentblocker;
 
+import org.adblockplus.adblockplussbrowser.BuildConfig;
 import org.adblockplus.adblockplussbrowser.R;
 
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceScreen;
 
 public class Preferences extends PreferenceFragment
 {
@@ -29,5 +32,12 @@ public class Preferences extends PreferenceFragment
   {
     super.onCreate(savedInstanceState);
     this.addPreferencesFromResource(R.xml.preferences_main);
+
+    final Preference aboutScreen = findPreference(getString(R.string.key_about));
+    final boolean isAbpFlavor = BuildConfig.FLAVOR_product.equals(BuildConfig.FLAVOR_PRODUCT_ABP);
+    if (aboutScreen != null && !isAbpFlavor) {
+      final PreferenceScreen prefScreen = getPreferenceScreen();
+      prefScreen.removePreference(aboutScreen);
+    }
   }
 }

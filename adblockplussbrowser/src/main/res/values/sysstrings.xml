@@ -14,6 +14,7 @@
     <string name="key_previous_version_code">previous_version_code</string>
     <string name="key_whitelisted_websites">whitelisted_websites</string>
     <string name="key_force_update_subscriptions">force_update_subscriptions</string>
+    <string name="key_about">about</string>
 
     <!-- Preference values -->
     <string name="download_settings_value_wifi">1</string>

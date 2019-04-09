@@ -49,7 +49,9 @@
             android:title="@string/enable_acceptable_ads"/>
     </PreferenceCategory>
 
-    <PreferenceScreen android:title="@string/about">
+    <PreferenceScreen
+        android:key="@string/key_about"
+        android:title="@string/about">
         <Preference android:title="@string/privacy_policy">
             <intent
                 android:action="android.intent.action.VIEW"

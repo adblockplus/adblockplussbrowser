@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE resources [
+    <!ENTITY product_name "Crystal">
+]>
+
+<resources>
+    <string name="app_name">&product_name; für Samsung Internet</string>
+    <string name="sbrowser_dialog_message">Vor der Anwendung von &product_name; muss Samsung Internet 4.0 oder höher installiert werden.</string>
+    <string name="setup_dialog_title">&product_name; in Samsung Internet aktivieren</string>
+    <string name="setup_dialog_message_sbrowser_4">1. Öffne Samsung Internet.\n2. Wähle <b>Mehr</b> und klicke auf <b>Einstellungen</b>.\n3. Wähle <b>Erweitert</b>.\n4. Wähle <b>Inhalt sperren</b>.\n5. Aktiviere die Funktion <b>Inhalt sperren</b>.\n6. Wähle &product_name; für Samsung Internet.</string>
+    <string name="setup_dialog_message_sbrowser_5">1. Öffne Samsung Internet.\n2. Wähle \u00A0<b>&#8942;</b>\u00A0 und anschließend <b>Erweiterungen</b>.\n3. Wähle <b>Inhaltssperren</b>.\n4. Wähle &product_name; für Samsung Internet.</string>
+</resources>

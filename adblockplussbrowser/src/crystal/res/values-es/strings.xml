@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE resources [
+    <!ENTITY product_name "Crystal">
+]>
+
+<resources>
+    <string name="app_name">&product_name; para Internet de Samsung</string>
+    <string name="sbrowser_dialog_message">Para poder utilizar &product_name;, debes instalar Internet de Samsung 4.0 o superior.</string>
+    <string name="setup_dialog_title">Activar &product_name; en Internet de Samsung</string>
+    <string name="setup_dialog_message_sbrowser_4">1. Abre Internet de Samsung. \n2. Toca <b>Más</b> y selecciona <b>Ajustes</b>. \n3. Toca <b>Avanzado</b>. \n4. Toca <b>Bloquear contenido</b>. \n5. Activa la funcionalidad <b>Bloquear contenido</b>. \n6. Selecciona &product_name; para Internet de Samsung.</string>
+    <string name="setup_dialog_message_sbrowser_5">1. Abre Internet de Samsung. \n2. Toca \u00A0<b>&#8942;</b>\u00A0 y selecciona <b>Extensiones</b>. \n3. Toca <b>Bloqueadores de contenido</b>. \n4. Selecciona &product_name; para Internet de Samsung.</string>
+</resources>
