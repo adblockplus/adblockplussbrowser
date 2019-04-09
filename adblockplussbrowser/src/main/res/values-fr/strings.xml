@@ -12,12 +12,12 @@
     <string name="available_subscriptions">Autres langues</string>
     <string name="initialization_title">Initialisation</string>
     <string name="initialization_message">Initialisation en cours&#8230;</string>
-    <string name="enable_acceptable_ads">Autoriser quelques publicités non intrusives</string>
+    <string name="enable_acceptable_ads">Autoriser certaines publicités non-intrusives</string>
     <string name="last_update">Mis à jour :</string>
     <string name="last_update_never">jamais</string>
     <string name="acceptable_ads_category">Publicités Acceptables</string>
     <string name="aa_dialog_title">Prenez le contrôle</string>
-    <string name="aa_dialog_message"><![CDATA[Les publicités gênantes sont toujours bloquées, tandis que les publicités non-intrusives sont affichées par défaut. Vous pouvez modifier ce paramètre à tout moment en appuyant sur l\'option <b>Autoriser quelques publicités non intrusives</b>.]]></string>
+    <string name="aa_dialog_message"><![CDATA[Les publicités gênantes sont toujours bloquées, tandis que les publicités non-intrusives sont affichées par défaut. Vous pouvez modifier ce paramètre à tout moment en appuyant sur l\'option <b>Autoriser certaines publicités non-intrusives</b>.]]></string>
     <string name="aa_dialog_button">D\'accord</string>
     <string name="sbrowser_dialog_title">Vous devez avoir accès à Samsung Internet</string>
     <string name="sbrowser_dialog_message">Avant de pouvoir accéder à Adblock Plus, vous devez installer Samsung Internet 4.0 ou une version ultérieure.</string>
@@ -43,7 +43,7 @@
     <string name="remove_subscription_dialog_message">Suppression de souscription en cours&#8230;</string>
     <string name="add_another_list">Ajouter une autre liste de filtres</string>
     <string name="about">À propos</string>
-    <string name="privacy_policy">Politique de respect de la vie privée</string>
+    <string name="privacy_policy">Politique de confidentialité</string>
     <string name="terms_of_use">Conditions d’utilisation</string>
     <string name="imprint">Impression</string>
     <string name="imprint_text"><![CDATA[<p><b><font color=\"#ffffff\">eyeo GmbH</font></b> <br/>Lichtstraße 25<br/>50825 Cologne<br/>Germany</p> <p>Assistance : <br/><a href=\"https://adblockplus.org/forum/\">Forum Adblock Plus</a> <br/>E-mail:<br/><a href=\"mailto:info@eyeo.com\">info@eyeo.com</a> <br/>Téléphone :<br/>+49 (0)221 / 65028 598 <br/>Fax :<br/>+49 (0)221 / 65028 599</p> <p>Numéro de TVA :<br/>DE279292414 <br/>Tribunal de district de Cologne : <br/>HRB 73508</p> <p><b><font color=\"#ffffff\">Directeurs exécutifs </font></b>: <br/>Till Faida <br/>Felix Dahlke <br/>Steffen Kiedel</p>]]></string>
