@@ -27,7 +27,7 @@
     <string name="last_update_never">jamais</string>
     <string name="acceptable_ads_category">Publicités Acceptables</string>
     <string name="aa_dialog_title">Prenez le contrôle</string>
-    <string name="aa_dialog_message"><![CDATA[Les publicités gênantes sont toujours bloquées, tandis que les publicités non-intrusives sont affichées par défaut. Vous pouvez modifier ce paramètre à tout moment en appuyant sur l\'option <b>Autoriser certaines publicités non-intrusives</b>.]]></string>
+    <string name="aa_dialog_message"><![CDATA[Les publicités agaçantes sont toujours bloquées, tandis que les publicités non-intrusives sont affichées par défaut. Vous pouvez modifier ce paramètre à tout moment en appuyant sur l\'option <b>Autoriser certaines publicités non-intrusives</b>.]]></string>
     <string name="aa_dialog_button">D\'accord</string>
     <string name="sbrowser_dialog_title">Vous devez avoir accès à Samsung Internet</string>
     <string name="sbrowser_dialog_button">Installer maintenant</string>
