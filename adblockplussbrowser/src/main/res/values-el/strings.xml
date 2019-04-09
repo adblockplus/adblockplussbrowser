@@ -44,7 +44,7 @@
     <string name="whitelist_website_dialog_hint">www.someURL.com</string>
     <string name="whitelist_website_invalid_url_error">Άκυρη διεύθυνση (URL)</string>
     <string name="whitelist_remove_dialog_title">Αφαιρέστε την ιστοσελίδα από τη λίστα επιτρεπόμενων</string>
-    <string name="whitelist_remove_dialog_message">Είστε σίγουροι ότι θέλετε να την αφαιρέσετε &lt;b>%1s&lt;/b>?</string>
+    <string name="whitelist_remove_dialog_message">Είστε σίγουροι ότι θέλετε να την αφαιρέσετε &lt;b>%1s&lt;/b>;</string>
     <string name="add_subscription_dialog_message">Προσθήκη εγγραφής&#8230;</string>
     <string name="remove_subscription_dialog_message">Αφαίρεση εγγραφής&#8230;</string>
     <string name="add_another_list">Προσθήκη επιπλέον λίστας φίλτρων</string>
