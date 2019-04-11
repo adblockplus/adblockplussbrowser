@@ -50,8 +50,6 @@ import android.util.Log;
 
 import org.adblockplus.sbrowser.contentblocker.util.SubscriptionUtils;
 
-import static org.adblockplus.sbrowser.contentblocker.engine.Notification.NOTIFICATION_DOWNLOAD_INTERVAL;
-
 /**
  * Simple subscription representation.
  */
@@ -187,18 +185,6 @@ final class Subscription
     if (forced)
     {
       return now - Math.max(lastUpdate, lastTry) > MINIMAL_DOWNLOAD_INTERVAL;
-    }
-
-    if (SubscriptionUtils.isNotificationSubscription(this.getId()))
-    {
-      if (lastTry > lastUpdate)
-      {
-        return now - lastTry > DOWNLOAD_RETRY_INTERVAL;
-      }
-      else
-      {
-        return now - lastUpdate > NOTIFICATION_DOWNLOAD_INTERVAL;
-      }
     }
 
     if (lastTry > lastUpdate)

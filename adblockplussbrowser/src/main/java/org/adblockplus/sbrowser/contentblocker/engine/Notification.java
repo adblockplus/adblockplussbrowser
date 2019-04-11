@@ -46,7 +46,6 @@ public class Notification
   public static final String NOTIFICATION_URL = "https://notification.adblockplus.org/notification.json";
   public static final String KEY_EXTRA_ID = "_extra_id";
   public static final String KEY_EXTRA_URL = "_extra_url";
-  public static final long NOTIFICATION_DOWNLOAD_INTERVAL = DateUtils.DAY_IN_MILLIS;
   private static final String DEFAULT_NOTIFICATION_VERSION = "0";
 
   static void persistNotificationData(final File filtersFile, final String text)
