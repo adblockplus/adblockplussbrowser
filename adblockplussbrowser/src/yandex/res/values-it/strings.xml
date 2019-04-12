@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE resources [
+    <!ENTITY product_name "Crystal">
+]>
+
+<resources>
+    <string name="app_name">&product_name; per Internet Samsung</string>
+    <string name="sbrowser_dialog_message">Prima di poter utilizzare &product_name;, devi installare Internet Samsung 4.0 o superiore.</string>
+    <string name="setup_dialog_title">Abilitare &product_name; in Internet Samsung</string>
+    <string name="setup_dialog_message_sbrowser_4">1. Apri Internet Samsung. \n2. Sfiora <b>Altro</b> e seleziona <b>Impostazioni</b>. \n3. Sfiora <b>Avanzate</b>. \n4. Sfiora <b>Blocca contenuto</b>. \n5. Attiva la funzionalità <b>Blocca contenuto</b>. \n6. Seleziona &product_name; per Internet Samsung.</string>
+    <string name="setup_dialog_message_sbrowser_5">1. Apri Internet Samsung. \n2. Sfiora \u00A0<b>&#8942;</b>\u00A0 e seleziona <b>Estensioni</b>. \n3. Sfiora <b>Blocco dei contenuti</b>. \n4. Seleziona &product_name; per Internet Samsung.</string>
+</resources>

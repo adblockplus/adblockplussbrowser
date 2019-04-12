@@ -55,6 +55,11 @@ android {
             dimension "product"
             applicationId "co.crystalapp.crystal"
         }
+
+        yandex {
+            dimension "product"
+            applicationId "org.adblockplus.adblockplusyandex"
+        }
     }
 
     applicationVariants.all { variant ->

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE resources [
+    <!ENTITY product_name "Adblock Plus">
+    <!ENTITY target_browser "Yandex Browser">
+]>
+
+<resources>
+    <string name="app_name">&product_name; for &target_browser;</string>
+    <!-- TODO: Check browser version that supports ABP for Yandex Browser -->
+    <string name="sbrowser_dialog_message">Before you can use &product_name;, you must install &target_browser; X or above.</string>
+    <string name="setup_dialog_title">Enable &product_name; in &target_browser;</string>
+    <!-- TODO: Check the setup process for Yandex Browser -->
+    <string name="setup_dialog_message_sbrowser_4">1. Open &target_browser;.\n2. Tap <b>More</b> and select <b>Settings</b>.\n3. Tap <b>Advanced</b>.\n4. Tap <b>Block content</b>.\n5. Activate the <b>Block content</b> functionality.\n6. Select &product_name; for &target_browser;.</string>
+    <string name="setup_dialog_message_sbrowser_5">1. Open &target_browser;.\n2. Tap \u00A0<b>&#8942;</b>\u00A0 and select <b>Settings</b>.\n3. Tap <b>Content blocker extensions</b>.\n4. Select &product_name; for &target_browser;.</string>
+    <string name="sbrowser_dialog_title">You need &target_browser;</string>
+    <string name="setup_dialog_button">Configure &target_browser;</string>
+</resources>
