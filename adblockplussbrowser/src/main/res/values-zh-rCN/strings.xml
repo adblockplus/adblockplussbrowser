@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE resources [
+    <!ENTITY product_name "Adblock Plus">
+]>
+
 <resources>
 
-    <string name="app_name">三星浏览器专用 Adblock Plus</string>
+    <string name="app_name">三星浏览器专用 &product_name;</string>
+    <string name="sbrowser_dialog_message">要使用 &product_name;，您必须安装三星浏览器 4.0 或更高版本。</string>
+    <string name="setup_dialog_title">在三星浏览器中启用 &product_name;</string>
+    <string name="setup_dialog_message_sbrowser_4">1. 打开三星浏览器。 \n2. 点击<b>更多</b>，然后选择<b>设置</b>。. \n3. 点击<b>高级</b>。. \n4. 点击<b>屏蔽内容</b>。. \n5. 激活<b>屏蔽内容</b>功能。 \n6. 选择三星浏览器专用 &product_name;。</string>
+    <string name="setup_dialog_message_sbrowser_5">1. 打开三星浏览器。 \n2. 点击\u00A0<b>&#8942;</b>\u00A0 并选择<b>扩展</b>。 \n3. 点击<b>内容拦截器</b>。 \n4. 选择三星浏览器专用 &product_name;。</string>
+
     <string name="automatic_updates">配置自动更新</string>
-    <string name="manage_subscriptions">配置过滤器列表</string>
+    <string name="manage_subscriptions">配置过滤列表</string>
     <string name="manage_subscriptions_summary">更改广告屏蔽语言</string>
     <string name="more_blocking">更多过滤选项</string>
-    <string name="more_blocking_category">其他过滤器列表</string>
+    <string name="more_blocking_category">其他过滤列表</string>
     <string name="more_blocking_summary">禁止跟踪和恶意网站</string>
     <string name="enabled_subscriptions">较常访问以下语言的网站 &#8230;</string>
     <string name="available_subscriptions">其他语言</string>
@@ -20,11 +30,7 @@
     <string name="aa_dialog_message"><![CDATA[总是屏蔽烦人的广告，而默认会显示非侵入式广告。您可以通过点击<b>允许一些非侵入性广告</b>选项随时更改此设置。]]></string>
     <string name="aa_dialog_button">明白了</string>
     <string name="sbrowser_dialog_title">您需要三星浏览器</string>
-    <string name="sbrowser_dialog_message">要使用 Adblock Plus，您必须安装三星浏览器 4.0 或更高版本。</string>
     <string name="sbrowser_dialog_button">现在安装</string>
-    <string name="setup_dialog_title">在三星浏览器中启用 Adblock Plus</string>
-    <string name="setup_dialog_message_sbrowser_4"><![CDATA[1. 打开三星浏览器。<br/>2. 点击<b>更多</b>，然后选择<b>设置</b>。.<br/>3. 点击<b>高级</b>。.<br/>4. 点击<b>屏蔽内容</b>。.<br/>5. 激活<b>屏蔽内容</b>功能。<br/>6. 选择三星浏览器专用 Adblock Plus。]]></string>
-    <string name="setup_dialog_message_sbrowser_5"><![CDATA[1. 打开三星浏览器。<br/>2. 点击&nbsp; <b>&#8942;</b> &nbsp; 并选择<b>扩展</b>。<br/>3. 点击<b>内容拦截器</b>。<br/>4. 选择三星浏览器专用 Adblock Plus。 ]]></string>
     <string name="setup_dialog_button">配置三星浏览器</string>
     <string name="subscription_disable_tracking">禁止跟踪</string>
     <string name="subscription_disable_social_media">禁用社交媒体按钮</string>

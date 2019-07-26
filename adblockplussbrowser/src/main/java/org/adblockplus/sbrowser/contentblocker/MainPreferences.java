@@ -174,8 +174,8 @@ public class MainPreferences extends PreferenceActivity implements
       this.dialog = new AlertDialog.Builder(this)
           .setCancelable(false)
           .setTitle(this.dialogTitleResId)
-          .setMessage(Html.fromHtml(getString(Engine.hasSamsungInternetVersion5OrNewer(MainPreferences.this) ?
-                  R.string.setup_dialog_message_sbrowser_5 : R.string.setup_dialog_message_sbrowser_4)))
+          .setMessage(getText(Engine.hasSamsungInternetVersion5OrNewer(MainPreferences.this) ?
+                  R.string.setup_dialog_message_sbrowser_5 : R.string.setup_dialog_message_sbrowser_4))
           .setNeutralButton(R.string.setup_dialog_button, new OnClickListener()
           {
             @Override

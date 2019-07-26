@@ -1,7 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE resources [
+    <!ENTITY product_name "Adblock Plus">
+]>
+
 <resources>
 
-    <string name="app_name">Adblock Plus για Samsung Internet</string>
+    <string name="app_name">&product_name; για Samsung Internet</string>
+    <string name="sbrowser_dialog_message">Για να μπορέσετε να χρησιμοποιήσετε το &product_name;, πρέπει να εγκαταστήσετε το Samsung Internet 4.0 ή μεταγενέστερη έκδοση.</string>
+    <string name="setup_dialog_title">Ενεργοποίηση του &product_name; στο Samsung Internet</string>
+    <string name="setup_dialog_message_sbrowser_4">1. Ανοίξτε το Samsung Internet.\n2. Επιλέξτε <b>Περισ.</b> και <b>Ρυθμίσεις</b>.\n3. Επιλέξτε <b>Για Προχωρ</b>.\n4. Επιλέξτε <b>Αποκλεισμός περιεχομένου</b>.\n5. Ενεργοποιήστε τη λειτουργική δυνατότητα <b>Αποκλεισμός περιεχομένου</b>.\n6. Επιλέξτε &product_name; για Samsung Internet.</string>
+    <string name="setup_dialog_message_sbrowser_5">1. Ανοίξτε το Samsung Internet. \n2. Επιλέξτε \u00A0<b>&#8942;</b>\u00A0 και <b>Eπεκτάσεις</b>. \n3. Επιλέξτε <b>Εργαλ. αποκλεισμού περιεχομένου</b>. \n4. Επιλέξτε &product_name; για Samsung Internet.</string>
+
     <string name="automatic_updates">Ρύθμιση παραμέτρων αυτόματων ενημερώσεων</string>
     <string name="manage_subscriptions">Ρύθμιση παραμέτρων για τις λίστες των φίλτρων σας</string>
     <string name="manage_subscriptions_summary">Αλλαγή γλωσσών για το λογισμικό φραγής διαφημίσεων </string>
@@ -20,11 +30,7 @@
     <string name="aa_dialog_message"><![CDATA[Οι ενοχλητικές διαφημίσεις φράσσονται πάντα, ενώ οι μη παρεμβατικές διαφημίσεις εμφανίζονται εκ προεπιλογής. Μπορείτε να αλλάξετε αυτή τη ρύθμιση οποιαδήποτε στιγμή με την επιλογή <b>Να επιτρέπονται μερικές μη παρεμβατικές διαφημίσεις</b>.]]></string>
     <string name="aa_dialog_button">Κατάλαβα</string>
     <string name="sbrowser_dialog_title">Χρειάζεστε το Samsung Internet</string>
-    <string name="sbrowser_dialog_message">Για να μπορέσετε να χρησιμοποιήσετε το Adblock Plus, πρέπει να εγκαταστήσετε το Samsung Internet 4.0 ή μεταγενέστερη έκδοση.</string>
     <string name="sbrowser_dialog_button">Εγκατάσταση τώρα</string>
-    <string name="setup_dialog_title">Ενεργοποίηση του Adblock Plus στο Samsung Internet</string>
-    <string name="setup_dialog_message_sbrowser_4"><![CDATA[1. Ανοίξτε το Samsung Internet.<br/>2. Επιλέξτε <b>Περισ.</b> και <b>Ρυθμίσεις</b>.<br/>3. Επιλέξτε <b>Για Προχωρ</b>.<br/>4. Επιλέξτε <b>Αποκλεισμός περιεχομένου</b>.<br/>5. Ενεργοποιήστε τη λειτουργική δυνατότητα <b>Αποκλεισμός περιεχομένου</b>.<br/>6. Επιλέξτε Adblock Plus για Samsung Internet.]]></string>
-    <string name="setup_dialog_message_sbrowser_5"><![CDATA[1. Ανοίξτε το Samsung Internet.<br/>2. Επιλέξτε &nbsp; <b>&#8942;</b> &nbsp; και <b>Eπεκτάσεις</b>.<br/>3. Επιλέξτε <b>Εργαλ. αποκλεισμού περιεχομένου</b>.<br/>4. Επιλέξτε Adblock Plus για Samsung Internet.]]></string>
     <string name="setup_dialog_button">Διαμορφώστε το Samsung Internet</string>
     <string name="subscription_disable_tracking">Απενεργοποίηση παρακολούθησης</string>
     <string name="subscription_disable_social_media">Απενεργοποίηση των κουμπιών για τις πλατφόρμες κοινωνικής δικτύωσης</string>
@@ -38,7 +44,7 @@
     <string name="whitelist_website_dialog_hint">www.someURL.com</string>
     <string name="whitelist_website_invalid_url_error">Άκυρη διεύθυνση (URL)</string>
     <string name="whitelist_remove_dialog_title">Αφαιρέστε την ιστοσελίδα από τη λίστα επιτρεπόμενων</string>
-    <string name="whitelist_remove_dialog_message">Είστε σίγουροι ότι θέλετε να την αφαιρέσετε &lt;b>%1s&lt;/b>?</string>
+    <string name="whitelist_remove_dialog_message">Είστε σίγουροι ότι θέλετε να την αφαιρέσετε &lt;b>%1s&lt;/b>;</string>
     <string name="add_subscription_dialog_message">Προσθήκη εγγραφής&#8230;</string>
     <string name="remove_subscription_dialog_message">Αφαίρεση εγγραφής&#8230;</string>
     <string name="add_another_list">Προσθήκη επιπλέον λίστας φίλτρων</string>

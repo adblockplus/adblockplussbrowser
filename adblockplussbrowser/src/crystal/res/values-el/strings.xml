@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE resources [
+    <!ENTITY product_name "Crystal">
+]>
+
+<resources>
+    <string name="app_name">&product_name; για Samsung Internet</string>
+    <string name="sbrowser_dialog_message">Για να μπορέσετε να χρησιμοποιήσετε το &product_name;, πρέπει να εγκαταστήσετε το Samsung Internet 4.0 ή μεταγενέστερη έκδοση.</string>
+    <string name="setup_dialog_title">Ενεργοποίηση του &product_name; στο Samsung Internet</string>
+    <string name="setup_dialog_message_sbrowser_4">1. Ανοίξτε το Samsung Internet.\n2. Επιλέξτε <b>Περισ.</b> και <b>Ρυθμίσεις</b>.\n3. Επιλέξτε <b>Για Προχωρ</b>.\n4. Επιλέξτε <b>Αποκλεισμός περιεχομένου</b>.\n5. Ενεργοποιήστε τη λειτουργική δυνατότητα <b>Αποκλεισμός περιεχομένου</b>.\n6. Επιλέξτε &product_name; για Samsung Internet.</string>
+    <string name="setup_dialog_message_sbrowser_5">1. Ανοίξτε το Samsung Internet. \n2. Επιλέξτε \u00A0<b>&#8942;</b>\u00A0 και <b>Eπεκτάσεις</b>. \n3. Επιλέξτε <b>Εργαλ. αποκλεισμού περιεχομένου</b>. \n4. Επιλέξτε &product_name; για Samsung Internet.</string>
+</resources>

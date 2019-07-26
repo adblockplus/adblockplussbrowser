@@ -1,7 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE resources [
+    <!ENTITY product_name "Adblock Plus">
+]>
+
 <resources>
 
-    <string name="app_name">Adblock Plus для Интернет Samsung</string>
+    <string name="app_name">&product_name; для Интернет Samsung</string>
+    <string name="sbrowser_dialog_message">Для использования &product_name; вы должны установить Интернет Samsung 4.0 или более позднюю версию.</string>
+    <string name="setup_dialog_title">Включите &product_name; в Интернет Samsung</string>
+    <string name="setup_dialog_message_sbrowser_4">1. Откройте Интернет Samsung. \n2. Нажмите на <b>«Еще»</b> и выберите <b>«Настройки»</b>. \n3. Нажмите на <b>«Дополнительно»</b>. \n4. Выберите <b>«Блокировать содержимое»</b>. \n5. Активируйте функцию <b>«Блокировать содержимое»</b>. \n6. Выберите &product_name; для Интернет Samsung.</string>
+    <string name="setup_dialog_message_sbrowser_5">1. Откройте Интернет Samsung. \n2. Нажмите на \u00A0<b>&#8942;</b>\u00A0 и выберите <b>«Расширения»</b>. \n3. Нажмите на <b>«Блокировщики содержимого»</b>. \n4. Выберите &product_name; для Интернет Samsung.</string>
+
     <string name="automatic_updates">Настроить автоматические обновления</string>
     <string name="manage_subscriptions">Настроить свои списки фильтров</string>
     <string name="manage_subscriptions_summary">Изменить языки блокировки рекламы</string>
@@ -20,11 +30,7 @@
     <string name="aa_dialog_message"><![CDATA[Раздражающая реклама всегда заблокирована, в то время как неинтрузивная реклама по умолчанию отображается. Вы можете изменить эту настройку в любое время, используя функцию <b>«Разрешить некоторую неинтрузивную рекламу»</b>]]>.</string>
     <string name="aa_dialog_button">Есть</string>
     <string name="sbrowser_dialog_title">Вам нужен Интернет Samsung</string>
-    <string name="sbrowser_dialog_message">Для использования Adblock Plus вы должны установить Интернет Samsung 4.0 или более позднюю версию.</string>
     <string name="sbrowser_dialog_button">Установить сейчас</string>
-    <string name="setup_dialog_title">Включите Adblock Plus в Интернет Samsung</string>
-    <string name="setup_dialog_message_sbrowser_4"><![CDATA[1. Откройте Интернет Samsung.<br/>2. Нажмите на <b>«Еще»</b> и выберите <b>«Настройки»</b>.<br/>3. Нажмите на <b>«Дополнительно»</b>.<br/>4. Выберите <b>«Блокировать содержимое»</b>.<br/>5. Активируйте функцию <b>«Блокировать содержимое»</b>.<br/>6. Выберите Adblock Plus для Интернет Samsung.]]></string>
-    <string name="setup_dialog_message_sbrowser_5"><![CDATA[1. Откройте Интернет Samsung.<br/>2. Нажмите на &nbsp; <b>&#8942;</b> &nbsp; и выберите <b>«Расширения»</b>.<br/>3. Нажмите на <b>«Блокировщики содержимого»</b>.<br/>4. Выберите Adblock Plus для Интернет Samsung.]]></string>
     <string name="setup_dialog_button">Настройте Интернет Samsung</string>
     <string name="subscription_disable_tracking">Блокировать отслеживание</string>
     <string name="subscription_disable_social_media">Блокировать кнопки социальных сетей</string>

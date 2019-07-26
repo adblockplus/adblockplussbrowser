@@ -24,14 +24,16 @@ class AuthenticationRequest {
 }
 
 task uploadTranslationsSourceFile() {
-    Properties properties = new Properties()
-    properties.load(new File(rootProject.ext.localPropertiesPath).newDataInputStream())
-    String token = authorize(properties)
-    File uploadFile = new File(rootProject.ext.translationsSourceFilePath)
-    try {
-        upload(properties, token, uploadFile)
-    } catch (groovyx.net.http.HttpException e) {
-        println ' Error performing file upload: ' + e
+    doLast {
+        Properties properties = new Properties()
+        properties.load(new File(rootProject.ext.localPropertiesPath).newDataInputStream())
+        String token = authorize(properties)
+        File uploadFile = new File(rootProject.ext.translationsSourceFilePath)
+        try {
+            upload(properties, token, uploadFile)
+        } catch (groovyx.net.http.HttpException e) {
+            println ' Error performing file upload: ' + e
+        }
     }
 }
 

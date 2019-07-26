@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE resources [
+    <!ENTITY product_name "Crystal">
+]>
+
+<resources>
+    <string name="app_name">Samsung Internet için &product_name;</string>
+    <string name="sbrowser_dialog_message">&product_name;\'u yüklemeden önce Samsun Internet\'in 4.0 veya daha yeni bir sürümünü yüklemeniz gerekir.</string>
+    <string name="setup_dialog_title">Samsung Internet\'e &product_name;\'ı etkinleştir</string>
+    <string name="setup_dialog_message_sbrowser_4">1. Samsung Internet\'i açın. \n2. <b>Dha fzla</b> seçeneğine dokunun ve <b>Ayarlar</b> seçeneğini seçin. \n3. <b>Gelişmiş</b> seçeneğine dokunun. \n4. <b>İçeriği engelle</b> seçeneğine dokunun. \n5. <b>İçeriği engelleme</b> işlevini etkinleştirin. \n6. Samsung Internet için &product_name;\'ı seçin.</string>
+    <string name="setup_dialog_message_sbrowser_5">1. Samsung Internet\'i açın. \n2. \u00A0<b>&#8942;</b>\u00A0 seçeneğine dokunun ve <b>Uzantılar</b> seçeneğini seçin. \n3. <b>İçerik engelleyiciler</b> seçeneğine dokunun. \n4. Samsung Internet için &product_name;\'ı seçin.</string>
+</resources>
