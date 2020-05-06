@@ -17,8 +17,8 @@ android {
         applicationId "org.adblockplus.adblockplussbrowser"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 17
-        versionName '1.2.0'
+        versionCode 18
+        versionName '1.2.1'
         buildConfigField "String", "FLAVOR_REGION_WORLD", '"world"'
         buildConfigField "String", "FLAVOR_REGION_CHINA", '"china"'
         buildConfigField "String", "FLAVOR_PRODUCT_ABP", '"abp"'
