@@ -23,6 +23,8 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
+import org.adblockplus.adblockplussbrowser.BuildConfig;
+
 @SuppressLint("DefaultLocale")
 public class AppInfo
 {
@@ -91,7 +93,7 @@ public class AppInfo
     private static final String YANDEX_BETA_PACKAGE_NAME = "com.yandex.browser.beta";
     private static final String YANDEX_APP_NAME = "yandex";
 
-    private String addonName = "adblockplussbrowser";
+    private String addonName = BuildConfig.ADDON_NAME;
     private String addonVersion = "0";
     private String application = "";
     private String applicationVersion = "0";

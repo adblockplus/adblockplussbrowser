@@ -49,11 +49,13 @@ android {
 
         abp {
             dimension "product"
+            buildConfigField "String", "ADDON_NAME", '"adblockplussbrowser"'
         }
 
         crystal {
             dimension "product"
             applicationId "co.crystalapp.crystal"
+            buildConfigField "String", "ADDON_NAME", '"crystalsbrowser"'
         }
     }
 
