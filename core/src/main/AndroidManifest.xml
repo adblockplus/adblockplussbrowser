@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.adblockplus.core">
+
+    <application>
+        <provider
+            android:name=".provider.FilterListContentProvider"
+            android:authorities="${applicationId}.contentBlocker.contentProvider"
+            android:enabled="true"
+            android:exported="true" />
+    </application>
+
+</manifest>
