@@ -1,4 +1,4 @@
-package org.adblockplus.adblockplussbrowser
+package org.adblockplus.adblockplussbrowser.app
 
 import android.app.Application
 import timber.log.Timber

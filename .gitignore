@@ -2,9 +2,8 @@
 local.properties
 
 # Gradle
-.gradle/
+.gradle
 build/
-*/build/
 
 # IntelliJ / Android Studio
 *.iml
@@ -16,7 +15,7 @@ build/
 # Linux
 *~
 
-#other stuff
+# Other stuff
 /captures
 .externalNativeBuild
 .cxx

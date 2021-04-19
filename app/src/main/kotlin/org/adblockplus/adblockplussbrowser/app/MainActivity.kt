@@ -1,4 +1,4 @@
-package org.adblockplus.adblockplussbrowser
+package org.adblockplus.adblockplussbrowser.app
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
