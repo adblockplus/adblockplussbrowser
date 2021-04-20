@@ -1,4 +1,4 @@
-package org.adblockplus.core.provider
+package org.adblockplus.adblockplussbrowser.core.provider
 
 import android.content.ContentProvider
 import android.content.ContentValues

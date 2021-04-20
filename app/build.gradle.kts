@@ -4,29 +4,9 @@ plugins {
     kotlin("kapt")
 }
 
+applyCommonConfig()
+
 android {
-    compileSdkVersion(Config.COMPILE_SDK)
-    buildToolsVersion(Config.BUILD_TOOLS_VERSION)
-
-    defaultConfig {
-        applicationId = "org.adblockplus.adblockplussbrowser"
-        minSdkVersion(Config.MIN_SDK)
-        targetSdkVersion(Config.TARGET_SDK)
-        versionCode = Config.VERSION_CODE
-        versionName = Config.VERSION_NAME
-
-        testInstrumentationRunner = Config.ANDROID_TEST_INSTRUMENTATION_RUNNER
-    }
-
-    compileOptions {
-        sourceCompatibility(JavaVersion.VERSION_1_8)
-        targetCompatibility(JavaVersion.VERSION_1_8)
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
-    }
-
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
@@ -41,23 +21,26 @@ android {
         }
     }
 
-    flavorDimensions("region", "product")
+    val regionDimension = "region"
+    val productDimension = "product"
+    flavorDimensions(regionDimension, productDimension)
     productFlavors {
         create("world") {
-            dimension = "region"
+            dimension = regionDimension
         }
 
         create("china") {
-            dimension = "region"
+            dimension = regionDimension
             applicationIdSuffix = ".cn"
         }
 
         create("abp") {
-            dimension = "product"
+            dimension = productDimension
+            applicationId = "org.adblockplus.adblockplussbrowser"
         }
 
         create("crystal") {
-            dimension = "product"
+            dimension = productDimension
             applicationId = "co.crystalapp.crystal"
         }
     }
@@ -70,17 +53,12 @@ android {
 dependencies {
     implementation(project(":core"))
 
-    implementation(Deps.KOTLIN.KOTLIN_STDLIB)
-    implementation(Deps.KOTLINX.COROUTINES)
-    implementation(Deps.KOTLINX.COROUTINES_ANDROID)
+    implementation(Deps.MATERIAL)
+    implementation(Deps.TIMBER)
     implementation(Deps.ANDROIDX.APPCOMPAT)
     implementation(Deps.ANDROIDX.CORE)
     implementation(Deps.ANDROIDX.CONSTRAINT_LAYOUT)
-    implementation(Deps.MATERIAL)
-    implementation(Deps.TIMBER)
-
-    testImplementation(Deps.JUNIT)
-
-    androidTestImplementation(Deps.ANDROIDX.TEST.JUNIT)
-    androidTestImplementation(Deps.ANDROIDX.TEST.ESPRESSO.CORE)
+    implementation(Deps.KOTLIN.KOTLIN_STDLIB)
+    implementation(Deps.KOTLINX.COROUTINES)
+    implementation(Deps.KOTLINX.COROUTINES_ANDROID)
 }
