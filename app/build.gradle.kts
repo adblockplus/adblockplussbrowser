@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 applyCommonConfig()
@@ -51,6 +52,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":base"))
+    implementation(project(":settings"))
     implementation(project(":core"))
 
     implementation(Deps.MATERIAL)
@@ -58,7 +61,12 @@ dependencies {
     implementation(Deps.AndroidX.APPCOMPAT)
     implementation(Deps.AndroidX.CORE)
     implementation(Deps.AndroidX.CONSTRAINT_LAYOUT)
+    implementation(Deps.AndroidX.DATASTORE)
+    implementation(Deps.Hilt.ANDROID)
+    kapt(Deps.Hilt.ANDROID_COMPILER)
     implementation(Deps.Kotlin.KOTLIN_STDLIB)
     implementation(Deps.KotlinX.COROUTINES)
     implementation(Deps.KotlinX.COROUTINES_ANDROID)
+    implementation(Deps.Moshi.KOTLIN)
+    implementation(Deps.Protobuf.JAVALITE)
 }

@@ -3,31 +3,37 @@ package org.adblockplus.adblockplussbrowser.settings.data
 import androidx.datastore.core.DataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.settings.data.local.SubscriptionsLoader
 import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
+import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig
+import org.adblockplus.adblockplussbrowser.settings.data.proto.ProtoSettings
+import org.adblockplus.adblockplussbrowser.settings.data.proto.toProtoSubscription
+import org.adblockplus.adblockplussbrowser.settings.data.proto.toProtoUpdateConfig
+import org.adblockplus.adblockplussbrowser.settings.data.proto.toSettings
 import java.io.IOException
 
-class DefaultSettingsRepository(
-    private val dataStore: DataStore<Settings>,
+internal class DefaultSettingsRepository(
+    private val dataStore: DataStore<ProtoSettings>,
     private val subscriptionsLoader: SubscriptionsLoader
 ) : SettingsRepository {
 
     override fun observeSettings(): Flow<Settings> = dataStore.data
+        .map { it.toSettings() }
         .catch { exception ->
             if (exception is IOException) {
-                emit(Settings.getDefaultInstance())
+                emit(ProtoSettings.getDefaultInstance().toSettings())
             } else {
                 throw exception
             }
         }
 
-    override fun observeDefaultSubscriptions(): Flow<Subscription> =
-        subscriptionsLoader.defaultSubscriptions
+    override fun observeDefaultAdsSubscriptions(): Flow<List<Subscription>> =
+        subscriptionsLoader.defaultAdsSubscriptions
 
-    override fun observeDefaultCustomSubscriptions(): Flow<Subscription> {
-        TODO("Not yet implemented")
-    }
+    override fun observeDefaultOtherSubscriptions(): Flow<List<Subscription>> =
+        subscriptionsLoader.defaultOtherSubscriptions
 
     override suspend fun setAdblockEnabled(enabled: Boolean) {
         dataStore.updateData { settings ->
@@ -41,9 +47,9 @@ class DefaultSettingsRepository(
         }
     }
 
-    override suspend fun setUpdateConfig(updateConfig: Settings.UpdateConfig) {
+    override suspend fun setUpdateConfig(updateConfig: UpdateConfig) {
         dataStore.updateData { settings ->
-            settings.toBuilder().setUpdateConfig(updateConfig).build()
+            settings.toBuilder().setUpdateConfig(updateConfig.toProtoUpdateConfig()).build()
         }
     }
 
@@ -59,17 +65,19 @@ class DefaultSettingsRepository(
         }
     }
 
-    override suspend fun setDefaultActiveSubscriptions(subscriptions: List<Settings.ActiveSubscription>) {
+    override suspend fun setActiveAdsSubscriptions(subscriptions: List<Subscription>) {
         dataStore.updateData { settings ->
-            settings.toBuilder().clearDefaultActiveSubscriptions()
-                .addAllDefaultActiveSubscriptions(subscriptions).build()
+            settings.toBuilder().clearActiveAdsSubscriptions()
+                .addAllActiveAdsSubscriptions(subscriptions.map { it.toProtoSubscription() })
+                .build()
         }
     }
 
-    override suspend fun setCustomActiveSubscriptions(subscriptions: List<Settings.ActiveSubscription>) {
+    override suspend fun setActiveOtherSubscriptions(subscriptions: List<Subscription>) {
         dataStore.updateData { settings ->
-            settings.toBuilder().clearCustomActiveSubscriptions()
-                .addAllCustomActiveSubscriptions(subscriptions).build()
+            settings.toBuilder().clearActiveOtherSubscriptions()
+                .addAllActiveOtherSubscriptions(subscriptions.map { it.toProtoSubscription() })
+                .build()
         }
     }
 }

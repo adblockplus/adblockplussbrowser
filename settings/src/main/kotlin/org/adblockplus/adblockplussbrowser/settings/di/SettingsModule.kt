@@ -12,20 +12,20 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import org.adblockplus.adblockplussbrowser.settings.data.DefaultSettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
-import org.adblockplus.adblockplussbrowser.settings.data.datastore.SettingsSerializer
+import org.adblockplus.adblockplussbrowser.settings.data.datastore.ProtoSettingsSerializer
 import org.adblockplus.adblockplussbrowser.settings.data.local.SubscriptionsLoader
-import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
+import org.adblockplus.adblockplussbrowser.settings.data.proto.ProtoSettings
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object SettingsModule {
+internal object SettingsModule {
 
     @Singleton
     @Provides
-    fun provideSettingsDataStore(@ApplicationContext context: Context): DataStore<Settings> =
+    fun provideSettingsDataStore(@ApplicationContext context: Context): DataStore<ProtoSettings> =
         DataStoreFactory.create(
-            SettingsSerializer
+            ProtoSettingsSerializer
         ) {
             context.dataStoreFile("abp_settings.pb")
         }
@@ -41,7 +41,7 @@ object SettingsModule {
     @Singleton
     @Provides
     fun provideSettingsRepository(
-        dataStore: DataStore<Settings>,
+        dataStore: DataStore<ProtoSettings>,
         subscriptionsLoader: SubscriptionsLoader
     ): SettingsRepository =
         DefaultSettingsRepository(dataStore, subscriptionsLoader)
