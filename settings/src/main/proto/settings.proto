@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+option java_package = "org.adblockplus.adblockplussbrowser.settings.data.model";
+option java_multiple_files = true;
+
+message Settings {
+  enum UpdateConfig {
+    WIFI_ONLY = 0;
+    ALWAYS = 1;
+  }
+
+  message ActiveSubscription {
+    string url = 1;
+    string title = 2;
+  }
+
+  bool adblock_enabled = 1;
+  bool acceptable_ads_enabled = 2;
+  UpdateConfig update_config = 3;
+  repeated string allowed_domains = 4;
+  repeated string blocked_domains = 5;
+  repeated ActiveSubscription default_active_subscriptions = 6;
+  repeated ActiveSubscription custom_active_subscriptions = 7;
+}
+

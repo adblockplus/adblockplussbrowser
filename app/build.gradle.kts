@@ -55,10 +55,10 @@ dependencies {
 
     implementation(Deps.MATERIAL)
     implementation(Deps.TIMBER)
-    implementation(Deps.ANDROIDX.APPCOMPAT)
-    implementation(Deps.ANDROIDX.CORE)
-    implementation(Deps.ANDROIDX.CONSTRAINT_LAYOUT)
-    implementation(Deps.KOTLIN.KOTLIN_STDLIB)
-    implementation(Deps.KOTLINX.COROUTINES)
-    implementation(Deps.KOTLINX.COROUTINES_ANDROID)
+    implementation(Deps.AndroidX.APPCOMPAT)
+    implementation(Deps.AndroidX.CORE)
+    implementation(Deps.AndroidX.CONSTRAINT_LAYOUT)
+    implementation(Deps.Kotlin.KOTLIN_STDLIB)
+    implementation(Deps.KotlinX.COROUTINES)
+    implementation(Deps.KotlinX.COROUTINES_ANDROID)
 }

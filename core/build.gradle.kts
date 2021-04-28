@@ -1,17 +1,21 @@
 plugins {
     id("com.android.library")
     kotlin("android")
+    id("kotlin-parcelize")
 }
 
 applyCommonConfig()
 
 dependencies {
+    implementation(project(":base"))
+    implementation(project(":settings"))
+
     implementation(Deps.TIMBER)
     implementation(Deps.OKIO)
-    implementation(Deps.ANDROIDX.WORK.RUNTIME)
-    implementation(Deps.KOTLIN.KOTLIN_STDLIB)
-    implementation(Deps.KOTLINX.COROUTINES)
-    implementation(Deps.KOTLINX.COROUTINES_ANDROID)
-    implementation(Deps.OKHTTP.OKHTTP)
-    implementation(Deps.OKHTTP.LOGGER)
+    implementation(Deps.AndroidX.Work.RUNTIME)
+    implementation(Deps.Kotlin.KOTLIN_STDLIB)
+    implementation(Deps.KotlinX.COROUTINES)
+    implementation(Deps.KotlinX.COROUTINES_ANDROID)
+    implementation(Deps.OkHttp.OKHTTP)
+    implementation(Deps.OkHttp.LOGGER)
 }

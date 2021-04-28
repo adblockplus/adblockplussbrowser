@@ -13,7 +13,7 @@ object Deps {
 
     val TIMBER = "com.jakewharton.timber:timber" version "4.7.1"
 
-    object ANDROIDX : DependencyGroup("androidx") {
+    object AndroidX : DependencyGroup("androidx") {
         val APPCOMPAT = dependency {
             groupName("appcompat:appcompat")
             version("1.2.0")
@@ -29,36 +29,60 @@ object Deps {
             version("2.0.4")
         }
 
-        object TEST : DependencyGroup("androidx.test") {
+        val DATASTORE = dependency {
+            groupName("datastore:datastore")
+            version("1.0.0-beta01")
+        }
+
+        object Test : DependencyGroup("androidx.test") {
             val JUNIT = dependency {
                 groupName("test.ext:junit")
                 version("1.1.2")
             }
 
-            object ESPRESSO : DependencyGroup("androidx.test.espresso", "3.3.0") {
+            object Espresso : DependencyGroup("androidx.test.espresso", "3.3.0") {
                 val CORE = dependency { name("espresso-core") }
             }
         }
 
-        object WORK : DependencyGroup("androidx.work", "2.5.0") {
+        object Work : DependencyGroup("androidx.work", "2.5.0") {
             val RUNTIME = dependency { name("work-runtime-ktx") }
         }
     }
 
-    object KOTLIN : DependencyGroup("org.jetbrains.kotlin", "1.4.32") {
+    object Hilt : DependencyGroup("com.google.dagger", "2.35") {
+        val ANDROID = dependency { name("hilt-android") }
+        val ANDROID_COMPILER = dependency { name("hilt-android-compiler") }
+        val ANDROID_GRADLE_PLUGIN = dependency { name("hilt-android-gradle-plugin") }
+    }
+
+    object Kotlin : DependencyGroup("org.jetbrains.kotlin", "1.4.32") {
         val KOTLIN_PLUGIN = dependency { name("kotlin-gradle-plugin") }
         val KOTLIN_STDLIB = dependency { name("kotlin-stdlib") }
     }
 
-    object KOTLINX : DependencyGroup("org.jetbrains.kotlinx", "1.4.3") {
+    object KotlinX : DependencyGroup("org.jetbrains.kotlinx", "1.4.3") {
         val COROUTINES = dependency { name("kotlinx-coroutines-core") }
         val COROUTINES_ANDROID = dependency { name("kotlinx-coroutines-android") }
     }
 
-    object OKHTTP : DependencyGroup("com.squareup.okhttp3", "4.9.1") {
+    object Moshi: DependencyGroup("com.squareup.moshi", "1.12.0") {
+        val KOTLIN = dependency { name("moshi-kotlin") }
+        val KOTLIN_CODEGEN = dependency { name("moshi-kotlin-codegen") }
+    }
+
+    object OkHttp : DependencyGroup("com.squareup.okhttp3", "4.9.1") {
         val OKHTTP = dependency { name("okhttp") }
         val LOGGER = dependency { name("logging-interceptor") }
+    }
 
+    object Protobuf : DependencyGroup("com.google.protobuf", "3.15.8") {
+        val GRADLE_PLUGIN = dependency {
+            name("protobuf-gradle-plugin")
+            version("0.8.16")
+        }
+        val JAVALITE = dependency { name("protobuf-javalite") }
+        val PROTOC = dependency { name("protoc") }
     }
 }
 
