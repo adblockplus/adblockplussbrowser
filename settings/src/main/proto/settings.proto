@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+option java_package = "org.adblockplus.adblockplussbrowser.settings.data.proto";
+option java_multiple_files = true;
+
+message ProtoSubscription {
+  string url = 1;
+  string title = 2;
+  int64 last_update = 3;
+  repeated string languages = 4;
+}
+
+enum ProtoUpdateConfig {
+  WIFI_ONLY = 0;
+  ALWAYS = 1;
+}
+
+message ProtoSettings {
+  bool adblock_enabled = 1;
+  bool acceptable_ads_enabled = 2;
+  ProtoUpdateConfig update_config = 3;
+  repeated string allowed_domains = 4;
+  repeated string blocked_domains = 5;
+  repeated ProtoSubscription active_ads_subscriptions = 6;
+  repeated ProtoSubscription active_other_subscriptions = 7;
+}
+
