@@ -4,7 +4,7 @@ import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
 import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig
 
-fun ProtoSettings.toSettings(): Settings =
+internal fun ProtoSettings.toSettings(): Settings =
     Settings(
         this.adblockEnabled,
         this.acceptableAdsEnabled,
@@ -15,7 +15,7 @@ fun ProtoSettings.toSettings(): Settings =
         this.activeOtherSubscriptionsList.map { it.toSubscription() }
     )
 
-fun Settings.toProtoSettings(): ProtoSettings =
+internal fun Settings.toProtoSettings(): ProtoSettings =
     ProtoSettings.newBuilder()
         .setAdblockEnabled(this.adblockEnabled)
         .setAcceptableAdsEnabled(this.acceptableAdsEnabled)
@@ -26,27 +26,27 @@ fun Settings.toProtoSettings(): ProtoSettings =
         .addAllActiveOtherSubscriptions(this.activeOtherSubscriptions.map { it.toProtoSubscription() })
         .build()
 
-fun ProtoSubscription.toSubscription(): Subscription =
+internal fun ProtoSubscription.toSubscription(): Subscription =
     Subscription(
         this.url,
         this.title,
         this.languagesList
     )
 
-fun Subscription.toProtoSubscription(): ProtoSubscription =
+internal fun Subscription.toProtoSubscription(): ProtoSubscription =
     ProtoSubscription.newBuilder()
         .setUrl(this.url)
         .setTitle(this.title)
         .addAllLanguages(this.languages)
         .build()
 
-fun ProtoUpdateConfig.toUpdateConfig(): UpdateConfig =
+internal fun ProtoUpdateConfig.toUpdateConfig(): UpdateConfig =
     when (this) {
         ProtoUpdateConfig.ALWAYS -> UpdateConfig.ALWAYS
         else -> UpdateConfig.WIFI_ONLY
     }
 
-fun UpdateConfig.toProtoUpdateConfig(): ProtoUpdateConfig =
+internal fun UpdateConfig.toProtoUpdateConfig(): ProtoUpdateConfig =
     when (this) {
         UpdateConfig.WIFI_ONLY -> ProtoUpdateConfig.WIFI_ONLY
         UpdateConfig.ALWAYS -> ProtoUpdateConfig.ALWAYS
