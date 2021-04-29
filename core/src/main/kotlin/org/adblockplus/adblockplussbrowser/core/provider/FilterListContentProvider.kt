@@ -35,20 +35,38 @@ class FilterListContentProvider : ContentProvider() {
     ): Int = 0
 
     override fun openFile(uri: Uri, mode: String): ParcelFileDescriptor? {
-        Timber.d("Filter list requested: ${uri.toString()} - $mode...")
-        val file = getFilterFile()
-        Timber.d("Returning ${file.absolutePath}")
-        return ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY)
+        return try {
+            Timber.d("Filter list requested: $uri - $mode...")
+            val file = getFilterFile()
+            Timber.d("Returning ${file.absolutePath}")
+            ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            null
+        }
     }
 
     private fun getFilterFile(): File {
-        val file = File(context!!.filesDir, "easylist.txt")
-        if (file.exists()) return file
-
-        val ins = context!!.assets.open("easylist.txt")
-        ins.source().use { a ->
-            file.sink().buffer().use { b -> b.writeAll(a) }
+        val directory = File(context!!.filesDir, "cache")
+        directory.mkdirs()
+        val file = File(directory, "filters.txt")
+        if (file.exists()) {
+            return file
         }
+
+        val temp = File.createTempFile("filters", ".txt", directory)
+
+        var ins = context!!.assets.open("exceptionrules.txt")
+        ins.source().use { a ->
+            temp.sink().buffer().use { b -> b.writeAll(a) }
+        }
+
+        ins = context!!.assets.open("easylist.txt")
+        ins.source().use { a ->
+            temp.sink(append = true).buffer().use { b -> b.writeAll(a) }
+        }
+
+        temp.renameTo(file)
 
         return file
     }
