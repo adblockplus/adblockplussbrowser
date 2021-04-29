@@ -6,7 +6,8 @@ option java_multiple_files = true;
 message ProtoSubscription {
   string url = 1;
   string title = 2;
-  repeated string languages = 3;
+  int64 last_updated = 3;
+  repeated string languages = 4;
 }
 
 enum ProtoUpdateConfig {

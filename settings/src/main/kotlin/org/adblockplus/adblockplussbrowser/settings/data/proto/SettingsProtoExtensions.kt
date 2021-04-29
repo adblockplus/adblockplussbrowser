@@ -30,6 +30,7 @@ internal fun ProtoSubscription.toSubscription(): Subscription =
     Subscription(
         this.url,
         this.title,
+        this.lastUpdated,
         this.languagesList
     )
 
@@ -37,6 +38,7 @@ internal fun Subscription.toProtoSubscription(): ProtoSubscription =
     ProtoSubscription.newBuilder()
         .setUrl(this.url)
         .setTitle(this.title)
+        .setLastUpdated(this.lastUpdated)
         .addAllLanguages(this.languages)
         .build()
 
