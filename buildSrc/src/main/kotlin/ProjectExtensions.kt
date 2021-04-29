@@ -31,7 +31,7 @@ fun Project.applyCommonConfig() {
 
         testImplementation(Deps.JUNIT)
 
-        androidTestImplementation(Deps.ANDROIDX.TEST.JUNIT)
-        androidTestImplementation(Deps.ANDROIDX.TEST.ESPRESSO.CORE)
+        androidTestImplementation(Deps.AndroidX.Test.JUNIT)
+        androidTestImplementation(Deps.AndroidX.Test.Espresso.CORE)
     }
 }
