@@ -7,11 +7,11 @@ import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig
 
 interface SettingsRepository {
 
-    fun observeSettings(): Flow<Settings>
+    val settings: Flow<Settings>
 
-    fun observeDefaultAdsSubscriptions(): Flow<List<Subscription>>
+    val defaultAdsSubscriptions: Flow<List<Subscription>>
 
-    fun observeDefaultOtherSubscriptions(): Flow<List<Subscription>>
+    val defaultOtherSubscriptions: Flow<List<Subscription>>
 
     suspend fun setAdblockEnabled(enabled: Boolean)
 

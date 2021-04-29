@@ -16,10 +16,10 @@ import java.io.IOException
 
 internal class DefaultSettingsRepository(
     private val dataStore: DataStore<ProtoSettings>,
-    private val subscriptionsLoader: SubscriptionsLoader
+    subscriptionsLoader: SubscriptionsLoader
 ) : SettingsRepository {
 
-    override fun observeSettings(): Flow<Settings> = dataStore.data
+    override val settings: Flow<Settings> = dataStore.data
         .map { it.toSettings() }
         .catch { exception ->
             if (exception is IOException) {
@@ -29,10 +29,10 @@ internal class DefaultSettingsRepository(
             }
         }
 
-    override fun observeDefaultAdsSubscriptions(): Flow<List<Subscription>> =
+    override val defaultAdsSubscriptions: Flow<List<Subscription>> =
         subscriptionsLoader.defaultAdsSubscriptions
 
-    override fun observeDefaultOtherSubscriptions(): Flow<List<Subscription>> =
+    override val defaultOtherSubscriptions: Flow<List<Subscription>> =
         subscriptionsLoader.defaultOtherSubscriptions
 
     override suspend fun setAdblockEnabled(enabled: Boolean) {
