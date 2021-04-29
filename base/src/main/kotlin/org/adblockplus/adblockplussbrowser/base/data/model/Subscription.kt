@@ -7,6 +7,6 @@ import kotlinx.parcelize.Parcelize
 data class Subscription(
     val url: String,
     val title: String,
-    val lastUpdated: Long,
+    val lastUpdate: Long,
     val languages: List<String>
 ) : Parcelable

@@ -8,7 +8,6 @@ import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 data class DownloadedSubscription(
     val subscription: Subscription,
     val path: String,
-    val lastUpdate: Long,
     val lastCheck: Long,
     val downloadCount: Long
 ): Parcelable
