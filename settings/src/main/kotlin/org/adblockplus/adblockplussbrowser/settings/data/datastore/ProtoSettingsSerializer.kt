@@ -8,7 +8,10 @@ import java.io.OutputStream
 internal object ProtoSettingsSerializer : Serializer<ProtoSettings> {
 
     override val defaultValue: ProtoSettings
-        get() = ProtoSettings.getDefaultInstance()
+        get() = ProtoSettings.getDefaultInstance().toBuilder().apply {
+            adblockEnabled = true
+            acceptableAdsEnabled = true
+        }.build()
 
     override suspend fun readFrom(input: InputStream): ProtoSettings {
         return ProtoSettings.parseFrom(input)

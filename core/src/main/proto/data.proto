@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option java_package = "org.adblockplus.adblockplussbrowser.core.data.proto";
+option java_multiple_files = true;
+
+message ProtoDownloadedSubscription {
+  string url = 1;
+  string path = 2;
+  int64 last_update = 3;
+  string last_modified = 4;
+  string version = 5;
+  string etag = 6;
+  int32 download_count = 7;
+}
+
+message ProtoCoreData {
+  bool configured = 1;
+  int64 last_update = 2;
+  repeated ProtoDownloadedSubscription downloaded_subscriptions = 3;
+}
+

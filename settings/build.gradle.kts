@@ -19,6 +19,9 @@ dependencies {
     implementation(Deps.Protobuf.JAVALITE)
     implementation(Deps.Hilt.ANDROID)
     kapt(Deps.Hilt.ANDROID_COMPILER)
+    implementation(Deps.AndroidX.Hilt.COMMON)
+    implementation(Deps.AndroidX.Hilt.WORK)
+    kapt(Deps.AndroidX.Hilt.COMPILER)
     implementation(Deps.Moshi.KOTLIN)
     kapt(Deps.Moshi.KOTLIN_CODEGEN)
 }

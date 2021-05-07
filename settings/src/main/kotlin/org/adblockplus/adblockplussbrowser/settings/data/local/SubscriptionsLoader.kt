@@ -3,11 +3,8 @@ package org.adblockplus.adblockplussbrowser.settings.data.local
 import android.content.Context
 import com.squareup.moshi.*
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.settings.R
 
@@ -48,20 +45,22 @@ internal class SubscriptionsLoader(
         )
     }
 
-    private fun checkIfLoadIsNeeded() {
+    private suspend fun checkIfLoadIsNeeded() {
         if (preloadedSubscriptionsFlow.value.isEmpty()) {
-            scope.launch {
-                preloadedSubscriptionsFlow.value = loadPreloadedSubscriptions()
-            }
+            preloadedSubscriptionsFlow.value = loadPreloadedSubscriptions() +
+                    PreloadedSubscription("exceptions", null, "Acceptable Ads",
+                        "https://easylist-downloads.adblockplus.org/exceptionrules.txt",
+                        null)
         }
     }
 
-    private fun loadPreloadedSubscriptions(): List<PreloadedSubscription> {
+    @Suppress("BlockingMethodInNonBlockingContext")
+    private suspend fun loadPreloadedSubscriptions() = withContext(Dispatchers.IO) {
         val type = Types.newParameterizedType(List::class.java, PreloadedSubscription::class.java)
         val adapter = moshi.adapter<List<PreloadedSubscription>>(type)
         val reader = context.resources.openRawResource(R.raw.subscriptions).bufferedReader()
         val data = reader.use { it.readText() }
-        return adapter.fromJson(data) ?: emptyList()
+        adapter.fromJson(data) ?: emptyList()
     }
 }
 

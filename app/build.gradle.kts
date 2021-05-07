@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -8,6 +10,10 @@ plugins {
 applyCommonConfig()
 
 android {
+    defaultConfig {
+        versionCode = Config.VERSION_CODE
+        versionName = Config.VERSION_NAME
+    }
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
@@ -52,6 +58,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":base"))
+    implementation(project(":settings"))
     implementation(project(":core"))
 
     implementation(Deps.MATERIAL)
@@ -60,11 +68,17 @@ dependencies {
     implementation(Deps.AndroidX.CORE)
     implementation(Deps.AndroidX.CONSTRAINT_LAYOUT)
     implementation(Deps.AndroidX.DATASTORE)
+    implementation(Deps.AndroidX.Work.RUNTIME)
     implementation(Deps.Hilt.ANDROID)
     kapt(Deps.Hilt.ANDROID_COMPILER)
+    implementation(Deps.AndroidX.Hilt.COMMON)
+    implementation(Deps.AndroidX.Hilt.WORK)
+    kapt(Deps.AndroidX.Hilt.COMPILER)
     implementation(Deps.Kotlin.KOTLIN_STDLIB)
     implementation(Deps.KotlinX.COROUTINES)
     implementation(Deps.KotlinX.COROUTINES_ANDROID)
     implementation(Deps.Moshi.KOTLIN)
     implementation(Deps.Protobuf.JAVALITE)
+    implementation(Deps.OkHttp.OKHTTP)
+    implementation(Deps.OkHttp.LOGGER)
 }

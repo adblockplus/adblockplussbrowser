@@ -14,7 +14,7 @@ import org.adblockplus.adblockplussbrowser.settings.data.proto.toProtoUpdateConf
 import org.adblockplus.adblockplussbrowser.settings.data.proto.toSettings
 import java.io.IOException
 
-internal class DefaultSettingsRepository(
+internal class DataStoreSettingsRepository(
     private val dataStore: DataStore<ProtoSettings>,
     subscriptionsLoader: SubscriptionsLoader
 ) : SettingsRepository {
