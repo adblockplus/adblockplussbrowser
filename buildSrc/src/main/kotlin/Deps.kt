@@ -48,6 +48,12 @@ object Deps {
         object Work : DependencyGroup("androidx.work", "2.5.0") {
             val RUNTIME = dependency { name("work-runtime-ktx") }
         }
+
+        object Hilt : DependencyGroup("androidx.hilt", "1.0.0-beta01") {
+            val COMPILER = dependency { name("hilt-compiler") }
+            val COMMON = dependency { name("hilt-common") }
+            val WORK = dependency { name("hilt-work") }
+        }
     }
 
     object Hilt : DependencyGroup("com.google.dagger", "2.35") {
@@ -74,6 +80,11 @@ object Deps {
     object OkHttp : DependencyGroup("com.squareup.okhttp3", "4.9.1") {
         val OKHTTP = dependency { name("okhttp") }
         val LOGGER = dependency { name("logging-interceptor") }
+        val COROUTINES = dependency {
+            groupPrefix("ru.gildor.coroutines")
+            name("kotlin-coroutines-okhttp")
+            version("1.0")
+        }
     }
 
     object Protobuf : DependencyGroup("com.google.protobuf", "3.15.8") {

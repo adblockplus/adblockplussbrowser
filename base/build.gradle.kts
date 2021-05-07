@@ -12,4 +12,5 @@ dependencies {
     implementation(Deps.Hilt.ANDROID)
     kapt(Deps.Hilt.ANDROID_COMPILER)
     implementation(Deps.Moshi.KOTLIN)
+    kapt(Deps.Moshi.KOTLIN_CODEGEN)
 }

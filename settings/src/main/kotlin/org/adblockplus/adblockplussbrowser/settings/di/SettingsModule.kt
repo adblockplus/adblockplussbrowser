@@ -10,7 +10,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import org.adblockplus.adblockplussbrowser.settings.data.DefaultSettingsRepository
+import org.adblockplus.adblockplussbrowser.settings.data.DataStoreSettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.datastore.ProtoSettingsSerializer
 import org.adblockplus.adblockplussbrowser.settings.data.local.SubscriptionsLoader
@@ -44,5 +44,5 @@ internal object SettingsModule {
         dataStore: DataStore<ProtoSettings>,
         subscriptionsLoader: SubscriptionsLoader
     ): SettingsRepository =
-        DefaultSettingsRepository(dataStore, subscriptionsLoader)
+        DataStoreSettingsRepository(dataStore, subscriptionsLoader)
 }

@@ -1,6 +1,7 @@
 package org.adblockplus.adblockplussbrowser.settings.data.model
 
 import android.os.Parcelable
+import androidx.work.NetworkType
 import kotlinx.parcelize.Parcelize
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 
