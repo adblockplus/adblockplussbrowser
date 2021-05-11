@@ -14,6 +14,7 @@ android {
         versionCode = Config.VERSION_CODE
         versionName = Config.VERSION_NAME
     }
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
@@ -52,8 +53,8 @@ android {
         }
     }
 
-    viewBinding {
-        android.buildFeatures.viewBinding = true
+    buildFeatures {
+        dataBinding = true
     }
 }
 
@@ -61,6 +62,7 @@ dependencies {
     implementation(project(":base"))
     implementation(project(":settings"))
     implementation(project(":core"))
+    implementation(project(":preferences"))
 
     implementation(Deps.MATERIAL)
     implementation(Deps.TIMBER)
@@ -74,6 +76,7 @@ dependencies {
     implementation(Deps.AndroidX.Hilt.COMMON)
     implementation(Deps.AndroidX.Hilt.WORK)
     kapt(Deps.AndroidX.Hilt.COMPILER)
+    implementation(Deps.AndroidX.Navigation.FRAGMENT)
     implementation(Deps.Kotlin.KOTLIN_STDLIB)
     implementation(Deps.KotlinX.COROUTINES)
     implementation(Deps.KotlinX.COROUTINES_ANDROID)

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/preferences_nav_graph"
+    app:startDestination="@id/main_preferences_fragment">
+
+    <fragment
+        android:id="@+id/main_preferences_fragment"
+        android:name="org.adblockplus.adblockplussbrowser.preferences.ui.MainPreferencesFragment"
+        tools:layout="@layout/fragment_main_preferences" />
+
+</navigation>

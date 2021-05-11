@@ -34,6 +34,22 @@ object Deps {
             version("1.0.0-beta01")
         }
 
+        object Hilt : DependencyGroup("androidx.hilt", "1.0.0-beta01") {
+            val COMPILER = dependency { name("hilt-compiler") }
+            val COMMON = dependency { name("hilt-common") }
+            val WORK = dependency { name("hilt-work") }
+        }
+
+        object Lifecycle: DependencyGroup("androidx.lifecycle", "2.3.1") {
+            val LIVEDATA = dependency { name("lifecycle-livedata-ktx") }
+            val VIEWMODEL = dependency { name("lifecycle-viewmodel-ktx") }
+        }
+
+        object Navigation: DependencyGroup("androidx.navigation", "2.3.5") {
+            val FRAGMENT = dependency { name("navigation-fragment-ktx") }
+            val UI = dependency { name("navigation-ui-ktx") }
+        }
+
         object Test : DependencyGroup("androidx.test") {
             val JUNIT = dependency {
                 groupName("test.ext:junit")
@@ -47,12 +63,6 @@ object Deps {
 
         object Work : DependencyGroup("androidx.work", "2.5.0") {
             val RUNTIME = dependency { name("work-runtime-ktx") }
-        }
-
-        object Hilt : DependencyGroup("androidx.hilt", "1.0.0-beta01") {
-            val COMPILER = dependency { name("hilt-compiler") }
-            val COMMON = dependency { name("hilt-common") }
-            val WORK = dependency { name("hilt-work") }
         }
     }
 
