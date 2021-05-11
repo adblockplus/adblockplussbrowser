@@ -1,20 +1,29 @@
 package org.adblockplus.adblockplussbrowser.preferences.ui
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import android.util.TypedValue
+import dagger.hilt.android.AndroidEntryPoint
+import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.preferences.R
+import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentMainPreferencesBinding
 
-class MainPreferencesFragment: Fragment() {
+@AndroidEntryPoint
+class MainPreferencesFragment :
+    DataBindingFragment<FragmentMainPreferencesBinding>(R.layout.fragment_main_preferences) {
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_main_preferences, container, false)
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        val tv = TypedValue()
+//        requireActivity().theme.resolveAttribute(R.attr.preferenceTheme, tv, true)
+//        var theme = tv.resourceId
+//        if (theme == 0) {
+//            // Fallback to default theme.
+//            theme = R.style.PreferenceThemeOverlay
+//        }
+//        requireActivity().theme.applyStyle(theme, false)
+//    }
+
+    override fun onBindView(binding: FragmentMainPreferencesBinding) {
+
     }
-
 }

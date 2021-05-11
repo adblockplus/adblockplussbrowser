@@ -1,12 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</LinearLayout>
+        <LinearLayout
+            android:id="@+id/main_preferences_primary_subscriptions"
+            style="@style/AbpPreferenceContainerStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    style="@style/AbpPreferenceTitleTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Configure your filter lists but this title should be very long to exceed the max lines to that is set to one" />
+
+                <TextView
+                    style="@style/AbpPreferenceSummaryTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Change ad blocking languages" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_preferences_other_subscriptions"
+            style="@style/AbpPreferenceContainerStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_preferences_primary_subscriptions">
+
+            <TextView
+                style="@style/AbpPreferenceTitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="More blocking options" />
+
+            <TextView
+                style="@style/AbpPreferenceSummaryTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Disable tracking and malware sites" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_preferences_allowlist"
+            style="@style/AbpPreferenceContainerStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_preferences_other_subscriptions">
+
+            <TextView
+                style="@style/AbpPreferenceTitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Allowlisted websites" />
+
+            <TextView
+                style="@style/AbpPreferenceSummaryTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Disable ad blocking for the specified websites" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_preferences_blocklist"
+            style="@style/AbpPreferenceContainerStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_preferences_allowlist">
+
+            <TextView
+                style="@style/AbpPreferenceTitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Blocklisted websites" />
+
+            <TextView
+                style="@style/AbpPreferenceSummaryTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enable ad blocking for the specified websites" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_preferences_automatic_updates"
+            style="@style/AbpPreferenceContainerStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_preferences_blocklist">
+
+            <TextView
+                style="@style/AbpPreferenceTitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Configure automatic updates" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_preferences_acceptable_ads"
+            style="@style/AbpPreferenceContainerStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_preferences_automatic_updates">
+
+            <TextView
+                style="@style/AbpPreferenceTitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Acceptable Ads" />
+
+            <TextView
+                style="@style/AbpPreferenceSummaryTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Allow some nonintrusive advertising" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_preferences_about"
+            style="@style/AbpPreferenceContainerStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_preferences_acceptable_ads">
+
+            <TextView
+                style="@style/AbpPreferenceTitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="About" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

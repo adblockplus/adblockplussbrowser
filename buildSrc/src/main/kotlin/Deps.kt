@@ -34,6 +34,11 @@ object Deps {
             version("1.0.0-beta01")
         }
 
+        val PREFERENCE = dependency {
+            groupName("preference:preference-ktx")
+            version("1.1.1")
+        }
+
         object Hilt : DependencyGroup("androidx.hilt", "1.0.0-beta01") {
             val COMPILER = dependency { name("hilt-compiler") }
             val COMMON = dependency { name("hilt-common") }

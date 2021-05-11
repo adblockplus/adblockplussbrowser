@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Adapted from preferences_material.xml -->
+    <style name="AbpPreferenceContainerStyle">
+        <item name="android:minHeight">?android:attr/listPreferredItemHeightSmall</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingStart">?android:attr/listPreferredItemPaddingStart</item>
+        <item name="android:paddingEnd">?android:attr/listPreferredItemPaddingEnd</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:clipToPadding">false</item>
+        <item name="android:baselineAligned">false</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <!-- Adapted from preferences_material.xml -->
+    <style name="AbpPreferenceTitleTextStyle">
+        <item name="android:singleLine">true</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceListItem</item>
+        <item name="android:ellipsize">marquee</item>
+    </style>
+
+    <!-- Adapted from preferences_material.xml -->
+    <style name="AbpPreferenceSummaryTextStyle" parent="PreferenceSummaryTextStyle">
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:maxLines">10</item>
+    </style>
+</resources>

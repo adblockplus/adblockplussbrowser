@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 plugins {
     id("com.android.library")
     kotlin("android")
@@ -7,6 +9,12 @@ plugins {
 }
 
 applyCommonConfig()
+
+android {
+    buildFeatures {
+        dataBinding = true
+    }
+}
 
 dependencies {
     implementation(Deps.Hilt.ANDROID)
