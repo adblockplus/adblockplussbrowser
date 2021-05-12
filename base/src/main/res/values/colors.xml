@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="abp_black">#000000</color>
+    <color name="abp_white">#FFFFFF</color>
+
+    <!-- https://chir.ag/projects/name-that-color -->
+    <color name="abp_white_lilac">#F0F2FA</color>
+    <color name="abp_blue_ribbon">#0070FF</color>
+    <color name="abp_blue_bayoux">#4B5E75</color>
+    <color name="abp_lynch">#6A7D95</color>
+</resources>

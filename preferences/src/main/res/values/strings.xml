@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="preferences_ad_blocking_section">Ad blocking Options</string>
+    <string name="preferences_ad_blocking_category">Ad blocking Options</string>
     <string name="preferences_primary_subscriptions_title">Language</string>
     <string name="preferences_primary_subscriptions_summary">Block more ads by optimising Adblock Plus for the language(s) you typically browse in</string>
     <string name="preferences_other_subscriptions_title">More blocking options</string>
@@ -12,7 +12,7 @@
     <string name="preferences_automatic_updates_title">Automatic updates</string>
     <string name="preferences_automatic_updates_wifi_only">While on Wi-Fi only</string>
     <string name="preferences_update_subscriptions_title">Update your filter lists</string>
-    <string name="preferences_acceptable_ads_section">Acceptable Ads</string>
+    <string name="preferences_acceptable_ads_category">Acceptable Ads</string>
     <string name="preferences_acceptable_ads_title">Allow some nonintrusive advertising</string>
     <string name="preferences_acceptable_ads_summary">Annoying ads are always blocked, while some nonintrusive ads are displayed by default, so that content creators can publish their content for free</string>
     <string name="preferences_acceptable_ads_action">Yes, I\'ll support content creators</string>

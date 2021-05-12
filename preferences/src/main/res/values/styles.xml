@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Adapted from preferences_material.xml -->
+    <!-- Adapted from preference_material.xml -->
     <style name="AbpPreferenceContainerStyle">
         <item name="android:minHeight">?android:attr/listPreferredItemHeightSmall</item>
         <item name="android:gravity">center_vertical</item>
@@ -15,17 +15,33 @@
         <item name="android:orientation">vertical</item>
     </style>
 
-    <!-- Adapted from preferences_material.xml -->
+    <!-- Adapted from preference_material.xml -->
     <style name="AbpPreferenceTitleTextStyle">
         <item name="android:singleLine">true</item>
         <item name="android:textAppearance">?android:attr/textAppearanceListItem</item>
         <item name="android:ellipsize">marquee</item>
     </style>
 
-    <!-- Adapted from preferences_material.xml -->
+    <!-- Adapted from preference_material.xml -->
     <style name="AbpPreferenceSummaryTextStyle" parent="PreferenceSummaryTextStyle">
         <item name="android:textAlignment">viewStart</item>
         <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="android:maxLines">10</item>
     </style>
+
+    <!-- Adapted from preference_category_material.xml -->
+    <style name="AbpPreferenceCategoryTitleTextStyle" parent="PreferenceCategoryTitleTextStyle">
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:layout_marginStart">?android:attr/listPreferredItemPaddingStart</item>
+        <item name="android:layout_marginEnd">?android:attr/listPreferredItemPaddingEnd</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body2</item>
+    </style>
+
+    <style name="AbpPreferenceDivider">
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:background">@color/abp_lynch</item>
+    </style>
+
+
 </resources>

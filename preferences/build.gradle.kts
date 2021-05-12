@@ -19,6 +19,7 @@ dependencies {
     implementation(project(":base"))
     implementation(project(":settings"))
 
+    implementation(Deps.MATERIAL)
     implementation(Deps.AndroidX.APPCOMPAT)
     implementation(Deps.AndroidX.CONSTRAINT_LAYOUT)
     implementation(Deps.AndroidX.PREFERENCE)
