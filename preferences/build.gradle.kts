@@ -5,6 +5,7 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 applyCommonConfig()
@@ -24,6 +25,7 @@ dependencies {
     implementation(Deps.AndroidX.CONSTRAINT_LAYOUT)
     implementation(Deps.AndroidX.PREFERENCE)
     implementation(Deps.AndroidX.Navigation.FRAGMENT)
+    implementation(Deps.AndroidX.Navigation.UI)
     implementation(Deps.Hilt.ANDROID)
     kapt(Deps.Hilt.ANDROID_COMPILER)
 }

@@ -40,7 +40,7 @@
     <style name="AbpPreferenceDivider">
         <item name="android:layout_marginStart">16dp</item>
         <item name="android:layout_marginEnd">16dp</item>
-        <item name="android:background">@color/abp_lynch</item>
+        <item name="android:background">@color/abp_white_lilac</item>
     </style>
 
 

@@ -52,6 +52,7 @@ object Deps {
 
         object Navigation: DependencyGroup("androidx.navigation", "2.3.5") {
             val FRAGMENT = dependency { name("navigation-fragment-ktx") }
+            val SAFE_ARGS_GRADLE_PLUGIN = dependency { name("navigation-safe-args-gradle-plugin") }
             val UI = dependency { name("navigation-ui-ktx") }
         }
 

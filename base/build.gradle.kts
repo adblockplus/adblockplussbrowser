@@ -18,6 +18,7 @@ android {
 
 dependencies {
     implementation(Deps.MATERIAL)
+    implementation(Deps.AndroidX.Navigation.FRAGMENT)
     implementation(Deps.Hilt.ANDROID)
     kapt(Deps.Hilt.ANDROID_COMPILER)
     implementation(Deps.Moshi.KOTLIN)

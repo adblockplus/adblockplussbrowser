@@ -60,9 +60,9 @@ android {
 
 dependencies {
     implementation(project(":base"))
-    implementation(project(":settings"))
     implementation(project(":core"))
     implementation(project(":preferences"))
+    implementation(project(":settings"))
 
     implementation(Deps.MATERIAL)
     implementation(Deps.TIMBER)
@@ -77,6 +77,7 @@ dependencies {
     implementation(Deps.AndroidX.Hilt.WORK)
     kapt(Deps.AndroidX.Hilt.COMPILER)
     implementation(Deps.AndroidX.Navigation.FRAGMENT)
+    implementation(Deps.AndroidX.Navigation.UI)
     implementation(Deps.Kotlin.KOTLIN_STDLIB)
     implementation(Deps.KotlinX.COROUTINES)
     implementation(Deps.KotlinX.COROUTINES_ANDROID)
