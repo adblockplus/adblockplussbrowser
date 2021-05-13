@@ -12,8 +12,11 @@ import okio.sink
 import okio.source
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.core.AppInfo
+import org.adblockplus.adblockplussbrowser.core.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscription
+import org.adblockplus.adblockplussbrowser.core.data.model.exists
+import org.adblockplus.adblockplussbrowser.core.retryIO
 import ru.gildor.coroutines.okhttp.await
 import timber.log.Timber
 import java.io.File
@@ -25,16 +28,18 @@ internal class OkHttpDownloader(
     private val repository: CoreRepository,
     private val appInfo: AppInfo
 ) : Downloader {
-    override suspend fun download(subscription: Subscription): DownloadedSubscription? = coroutineScope {
+    override suspend fun download(subscription: Subscription): Downloader.Result = coroutineScope {
+        val previousDownload = getDownloadedSubscription(subscription)
         try {
-            val previousDownload = getDownloadedSubscription(subscription)
             val url = createUrl(subscription, previousDownload.version, previousDownload.downloadCount)
             val file = File(previousDownload.path)
             val request = createDownloadRequest(url, file, previousDownload)
 
             Timber.d("Downloading $url - previous subscription: $previousDownload")
 
-            val response = okHttpClient.newCall(request).await()
+            val response = retryIO(description = subscription.title) {
+                okHttpClient.newCall(request).await()
+            }
 
             when (response.code) {
                 200 -> {
@@ -42,26 +47,28 @@ internal class OkHttpDownloader(
                     context.downloadsDir().mkdirs()
                     tempFile.renameTo(file)
 
-                    previousDownload.copy(
+                    Downloader.Result.Success(previousDownload.copy(
                         lastUpdated = System.currentTimeMillis(),
                         lastModified = response.headers["Last-Modified"] ?: "",
                         version = extractVersion(file),
                         etag = response.headers["ETag"] ?: "",
                         downloadCount = previousDownload.downloadCount + 1
-                    )
+                    ))
                 }
                 304 -> {
-                    previousDownload.copy(
+                    Downloader.Result.NotModified(previousDownload.copy(
                         lastUpdated = System.currentTimeMillis()
-                    )
+                    ))
                 }
                 else -> {
-                    null
+                    Timber.e("Error downloading $url, response code: ${response.code}")
+                    Downloader.Result.Failed(if (previousDownload.exists()) previousDownload else null)
                 }
             }
         } catch (ex: Exception) {
             ex.printStackTrace()
-            null
+            Timber.e(ex, "Error downloading ${previousDownload.url}")
+            Downloader.Result.Failed(if (previousDownload.exists()) previousDownload else null)
         }
     }
 

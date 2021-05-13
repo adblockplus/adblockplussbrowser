@@ -10,18 +10,13 @@ import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.single
-import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import okio.buffer
 import okio.sink
 import okio.source
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
-import org.adblockplus.adblockplussbrowser.core.work.UpdateSubscriptionsWorker
-import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
-import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
 import timber.log.Timber
 import java.io.File
 
@@ -30,13 +25,11 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
     @EntryPoint
     @InstallIn(SingletonComponent::class)
     interface FilterListContentProviderEntryPoint {
-        fun getSettingsRepository(): SettingsRepository
         fun getCoreRepository(): CoreRepository
     }
 
     override val coroutineContext = Dispatchers.IO + SupervisorJob()
 
-    lateinit var settingsRepository: SettingsRepository
     lateinit var coreRepository: CoreRepository
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int = 0
@@ -50,41 +43,9 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             requireContext(this),
             FilterListContentProviderEntryPoint::class.java
         )
-        settingsRepository = entryPoint.getSettingsRepository()
         coreRepository = entryPoint.getCoreRepository()
 
-        launch {
-            initAsync()
-
-            settingsRepository.settings.onEach { settings ->
-                Timber.d("Settings: $settings")
-            }.launchIn(this)
-
-            launch {
-                coreRepository.data.onEach { coreData ->
-                    Timber.d("Core data: $coreData")
-                }.launchIn(this)
-            }
-        }
         return true
-    }
-
-    private suspend fun initAsync() = coroutineScope {
-            launch {
-                val settings = settingsRepository.settings.take(1).single()
-
-                setupFilterLists(settings)
-
-                Timber.d("After setup")
-            }
-            Timber.d("After launch")
-        }
-
-    private suspend fun setupFilterLists(settings: Settings) {
-        context?.let {
-            UpdateSubscriptionsWorker.scheduleOneTime(it)
-            UpdateSubscriptionsWorker.schedule(it, settings.updateConfig)
-        }
     }
 
     override fun openFile(uri: Uri, mode: String): ParcelFileDescriptor? {
@@ -102,7 +63,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
     private fun getFilterFile(): File {
         val path = coreRepository.subscriptionsPath
         // We have a current file, return it
-        if (!path.isNullOrEmpty()) {
+        if (!path.isNullOrEmpty() && File(path).exists()) {
             return File(path)
         }
 

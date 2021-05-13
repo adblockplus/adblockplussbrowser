@@ -4,30 +4,31 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.hilt.work.HiltWorker
-import androidx.work.*
+import androidx.work.CoroutineWorker
+import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.flow.take
-import kotlinx.coroutines.withContext
 import okio.buffer
 import okio.sink
 import okio.source
+import org.adblockplus.adblockplussbrowser.core.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscription
 import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
+import org.adblockplus.adblockplussbrowser.core.downloader.hasFailedResult
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
-import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig
+import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
 import timber.log.Timber
 import java.io.File
-import java.util.concurrent.TimeUnit
 
 @HiltWorker
 internal class UpdateSubscriptionsWorker @AssistedInject constructor(
     @Assisted private val appContext: Context,
     @Assisted params: WorkerParameters,
+    private val subscriptionsManager: SubscriptionsManager,
     private val settingsRepository: SettingsRepository,
     private val coreRepository: CoreRepository,
     private val downloader: Downloader,
@@ -37,54 +38,100 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
         try {
             Timber.d("DOWNLOAD JOB")
 
-            val subscriptions = mutableListOf<DownloadedSubscription>()
             val settings = settingsRepository.settings.take(1).single()
             Timber.d("Downloader settings: $settings")
-            settings.activePrimarySubscriptions.forEach { subscription ->
-                val downloadedSubscription = downloader.download(subscription)
-                downloadedSubscription?.let {
-                    Timber.d("Downloaded: $downloadedSubscription")
-                    subscriptions.add(it)
-                }
+
+            val activeSubscriptions = settings.activePrimarySubscriptions +
+                    settings.activeOtherSubscriptions +
+                    aceptableAdsSubscription(settings.acceptableAdsEnabled)
+
+            // check if Work is stopped and return
+            if (isStopped) return@withContext Result.success()
+
+            val results = mutableListOf<Downloader.Result>()
+            activeSubscriptions.forEachIndexed { index, subscription ->
+
+                // check if Work is stopped and return
+                if (isStopped) return@withContext Result.success()
+
+                subscriptionsManager._status.postValue(SubscriptionsManager.Status.Downloading(index + 1))
+                val result = downloader.download(subscription)
+                Timber.d("Subscription: ${subscription.title} -> $result")
+                results.add(result)
             }
 
-            // TODO - decide how to handle failure on individual subscriptions
+            // check if Work is stopped and return
+            if (isStopped) return@withContext Result.success()
 
-            if (subscriptions.isEmpty()) {
+            val subscriptions = results.mapNotNull { it.subscription }
+            writeFiles(subscriptions)
+            coreRepository.updateDownloadedSubscriptions(subscriptions)
+            dispatchUpdate()
+
+            updateSubscriptionsLastUpdated(settings, subscriptions)
+
+            if (results.hasFailedResult()) {
+                Timber.w("Failed subscriptions updates, retrying shortly")
+                subscriptionsManager._status.postValue(SubscriptionsManager.Status.Failed)
                 Result.retry()
             } else {
-                writeFiles(subscriptions)
-                coreRepository.updateDownloadedSubscriptions(subscriptions)
-                dispatchUpdate()
+                Timber.i("Subscriptions downloaded")
+                subscriptionsManager._status.postValue(SubscriptionsManager.Status.Success)
                 Result.success()
             }
         } catch (ex: Exception) {
+            Timber.w(ex, "Failed subscriptions updates, retrying shortly")
             ex.printStackTrace()
             Result.retry()
         }
     }
 
+    private suspend fun aceptableAdsSubscription(enabled: Boolean) =
+        if (enabled) listOf(settingsRepository.getAcceptableAdsSubscription()) else emptyList()
+
+    private suspend fun updateSubscriptionsLastUpdated(
+        settings: Settings,
+        subscriptions: List<DownloadedSubscription>
+    ) {
+        val adSubscriptions = settings.activePrimarySubscriptions.mapNotNull { subscription ->
+            subscriptions.firstOrNull { it.url == subscription.url }?.let { downloaded ->
+                subscription.copy(lastUpdate = downloaded.lastUpdated)
+            }
+        }
+        val otherSubscriptions = settings.activeOtherSubscriptions.mapNotNull { subscription ->
+            subscriptions.firstOrNull { it.url == subscription.url }?.let { downloaded ->
+                subscription.copy(lastUpdate = downloaded.lastUpdated)
+            }
+        }
+
+        settingsRepository.setActivePrimarySubscriptions(adSubscriptions)
+        settingsRepository.setActiveOtherSubscriptions(otherSubscriptions)
+    }
+
     private suspend fun dispatchUpdate() = withContext(Dispatchers.Main) {
+        Timber.i("Dispatching UPDATE Intent to Browser...")
         val intent = Intent()
         intent.action = "com.samsung.android.sbrowser.contentBlocker.ACTION_UPDATE"
         intent.data = Uri.parse("package:" + appContext.packageName)
         appContext.sendBroadcast(intent)
     }
 
-    // TODO - move elsewhere
     private suspend fun writeFiles(subscriptions: List<DownloadedSubscription>) {
         coroutineScope {
-            val dir = getCacheDir(appContext)
+            val dir = appContext.getCacheDownloadDir()
             val temp = File.createTempFile("filter", ".txt", dir)
 
-            subscriptions.forEach { subscription ->
-                val file = File(subscription.path)
-                file.source().use { source ->
-                    temp.sink(append = true).buffer().use { dest -> dest.writeAll(source) }
+            val files = subscriptions.map { File(it.path) }
+            val filters = files.toFiltersSet()
+            Timber.d("filters file: ${temp.name}, rules: ${filters.size}")
+
+            temp.sink().buffer().use { sink ->
+                filters.forEach { filter ->
+                    sink.writeUtf8(filter)
+                    sink.writeUtf8("\n")
                 }
             }
 
-            // TODO - use a repository
             val oldPath = coreRepository.subscriptionsPath
             coreRepository.subscriptionsPath = temp.absolutePath
 
@@ -92,36 +139,29 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
         }
     }
 
-    companion object {
-        private const val KEY_PERIODIC_WORK = "PERIODIC_KEY"
-
-        fun scheduleOneTime(context: Context) {
-            val request = OneTimeWorkRequestBuilder<UpdateSubscriptionsWorker>()
-                .setConstraints(Constraints.Builder().setRequiredNetworkType(UpdateConfig.ALWAYS.toNetworkType()).build())
-                .build()
-            WorkManager.getInstance(context).enqueue(request)
+    private fun List<File>.toFiltersSet(): Set<String> {
+        val filters = mutableSetOf<String>()
+        this.forEach { file ->
+            file.source().use { fileSource ->
+                fileSource.buffer().use { source ->
+                    val set = generateSequence {
+                        source.readUtf8Line()
+                    }.filter {
+                        it.isFilter()
+                    }.toSet()
+                    Timber.d("File: ${file.name} : rule size: ${set.size}")
+                    filters += set
+                }
+            }
         }
+        return filters
+    }
 
-        fun schedule(context: Context, updateConfig: UpdateConfig) {
-            val request = PeriodicWorkRequestBuilder<UpdateSubscriptionsWorker>(5, TimeUnit.MINUTES)
-                .setConstraints(Constraints.Builder().setRequiredNetworkType(updateConfig.toNetworkType()).build())
-                .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 30, TimeUnit.SECONDS)
-                .addTag(KEY_PERIODIC_WORK)
-                .setInitialDelay(1, TimeUnit.MINUTES)
-                .build()
+    private fun String.isFilter(): Boolean = this.isNotEmpty() && this[0] != '[' && this[0] != '!'
 
-            val manager = WorkManager.getInstance(context)
-            manager.cancelAllWorkByTag(KEY_PERIODIC_WORK)
-            manager.enqueue(request)
-        }
-
-        fun getCacheDir(context: Context): File {
-            val directory = File(context.filesDir, "cache")
-            directory.mkdirs()
-            return directory
-        }
-
-        private fun UpdateConfig.toNetworkType(force: Boolean = false): NetworkType =
-            if (this == UpdateConfig.WIFI_ONLY && !force) NetworkType.CONNECTED else NetworkType.NOT_ROAMING
+    private fun Context.getCacheDownloadDir(): File {
+        val directory = File(this.filesDir, "cache")
+        directory.mkdirs()
+        return directory
     }
 }

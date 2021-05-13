@@ -1,6 +1,7 @@
 package org.adblockplus.adblockplussbrowser.core.data
 
 import android.content.SharedPreferences
+import android.os.SystemClock
 import androidx.datastore.core.DataStore
 import kotlinx.coroutines.flow.*
 import org.adblockplus.adblockplussbrowser.core.data.model.CoreData
@@ -36,7 +37,14 @@ internal class DataStoreCoreRepository(
             data.toBuilder()
                 .clearDownloadedSubscriptions()
                 .addAllDownloadedSubscriptions(subscriptions.map { it.toProtoDownloadedSubscription() })
+                .setLastUpdate(System.currentTimeMillis())
                 .build()
+        }
+    }
+
+    override suspend fun updateLastUpdated(lastUpdated: Long) {
+        dataStore.updateData { data ->
+            data.toBuilder().setLastUpdate(lastUpdated).build()
         }
     }
 }

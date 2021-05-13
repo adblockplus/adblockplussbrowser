@@ -14,6 +14,8 @@ internal interface CoreRepository {
 
     suspend fun updateDownloadedSubscriptions(subscriptions: List<DownloadedSubscription>)
 
+    suspend fun updateLastUpdated(lastUpdated: Long)
+
     companion object {
         const val KEY_CURRENT_SUBSCRIPTIONS_FILE = "KEY_CURRENT_SUBSCRIPTIONS_FILE"
     }
