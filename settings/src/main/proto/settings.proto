@@ -7,7 +7,6 @@ message ProtoSubscription {
   string url = 1;
   string title = 2;
   int64 last_update = 3;
-  repeated string languages = 4;
 }
 
 enum ProtoUpdateConfig {

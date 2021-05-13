@@ -76,8 +76,8 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
 
                 //if (settings.initialized) return@launch
 
-                val subscriptions = settingsRepository.defaultAdsSubscriptions.take(1).single() +
-                        settingsRepository.defaultOtherSubscriptions.take(1).single()
+                val subscriptions = settingsRepository.getDefaultPrimarySubscriptions() +
+                        settingsRepository.getDefaultOtherSubscriptions()
 
                 setupFilterLists(settings, subscriptions)
 

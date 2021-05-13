@@ -9,9 +9,13 @@ interface SettingsRepository {
 
     val settings: Flow<Settings>
 
-    val defaultAdsSubscriptions: Flow<List<Subscription>>
+    suspend fun getEasylistSubscription(): Subscription
 
-    val defaultOtherSubscriptions: Flow<List<Subscription>>
+    suspend fun getAcceptableAdsSubscription(): Subscription
+
+    suspend fun getDefaultPrimarySubscriptions(): List<Subscription>
+
+    suspend fun getDefaultOtherSubscriptions(): List<Subscription>
 
     suspend fun setAdblockEnabled(enabled: Boolean)
 

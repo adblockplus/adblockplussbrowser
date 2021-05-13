@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
-import org.adblockplus.adblockplussbrowser.settings.data.local.SubscriptionsLoader
+import org.adblockplus.adblockplussbrowser.settings.data.local.SubscriptionsDataSource
 import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
 import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig
 import org.adblockplus.adblockplussbrowser.settings.data.proto.ProtoSettings
@@ -16,7 +16,7 @@ import java.io.IOException
 
 internal class DataStoreSettingsRepository(
     private val dataStore: DataStore<ProtoSettings>,
-    subscriptionsLoader: SubscriptionsLoader
+    private val subscriptionsDataSource: SubscriptionsDataSource,
 ) : SettingsRepository {
 
     override val settings: Flow<Settings> = dataStore.data
@@ -29,11 +29,17 @@ internal class DataStoreSettingsRepository(
             }
         }
 
-    override val defaultAdsSubscriptions: Flow<List<Subscription>> =
-        subscriptionsLoader.defaultAdsSubscriptions
+    override suspend fun getEasylistSubscription(): Subscription =
+        subscriptionsDataSource.getEasylistSubscription()
 
-    override val defaultOtherSubscriptions: Flow<List<Subscription>> =
-        subscriptionsLoader.defaultOtherSubscriptions
+    override suspend fun getAcceptableAdsSubscription(): Subscription =
+        subscriptionsDataSource.getAcceptableAdsSubscription()
+
+    override suspend fun getDefaultPrimarySubscriptions(): List<Subscription> =
+        subscriptionsDataSource.getDefaultPrimarySubscriptions()
+
+    override suspend fun getDefaultOtherSubscriptions(): List<Subscription> =
+        subscriptionsDataSource.getDefaultOtherSubscriptions()
 
     override suspend fun setAdblockEnabled(enabled: Boolean) {
         dataStore.updateData { settings ->
