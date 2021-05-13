@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,8 +15,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/main_preferences_acceptable_ads" />
 
-
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/main_preferences_acceptable_ads_category"
             style="@style/AbpPreferenceCategoryTitleTextStyle"
             android:layout_width="wrap_content"
@@ -36,19 +34,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/main_preferences_acceptable_ads_category">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 style="@style/AbpPreferenceTitleTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/preferences_acceptable_ads_title" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 style="@style/AbpPreferenceSummaryTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/preferences_acceptable_ads_summary" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/main_preferences_acceptable_ads_button"
                 style="@style/AbpPreferenceSummaryTextStyle"
                 android:layout_width="wrap_content"

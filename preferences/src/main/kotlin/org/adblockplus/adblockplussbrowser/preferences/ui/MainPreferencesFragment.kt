@@ -7,15 +7,14 @@ import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentMainPreferencesBinding
 
 @AndroidEntryPoint
-class MainPreferencesFragment :
+internal class MainPreferencesFragment :
     DataBindingFragment<FragmentMainPreferencesBinding>(R.layout.fragment_main_preferences) {
 
     override fun onBindView(binding: FragmentMainPreferencesBinding) {
 
         binding.mainPreferencesAdBlockingInclude.mainPreferencesPrimarySubscriptions.setOnClickListener {
             val direction = MainPreferencesFragmentDirections
-                .actionMainPreferencesFragmentToPrimarySubscriptionsPreferencesFragment()
-
+                .actionMainPreferencesFragmentToPrimarySubscriptionsFragment()
             findNavController().navigate(direction)
         }
     }

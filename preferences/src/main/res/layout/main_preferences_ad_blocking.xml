@@ -17,7 +17,7 @@
             app:layout_constraintTop_toTopOf="@id/main_preferences_primary_subscriptions" />
 
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/main_preferences_ad_blocking_category"
             style="@style/AbpPreferenceCategoryTitleTextStyle"
             android:layout_width="wrap_content"
@@ -36,13 +36,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/main_preferences_ad_blocking_category">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 style="@style/AbpPreferenceTitleTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/preferences_primary_subscriptions_title" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 style="@style/AbpPreferenceSummaryTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -68,13 +68,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/main_preferenced_divider_1">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 style="@style/AbpPreferenceTitleTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/preferences_other_subscriptions_title" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 style="@style/AbpPreferenceSummaryTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -100,13 +100,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/main_preferenced_divider_2">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 style="@style/AbpPreferenceTitleTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/preferences_allowlist_title" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 style="@style/AbpPreferenceSummaryTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -132,13 +132,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/main_preferenced_divider_3">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 style="@style/AbpPreferenceTitleTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/preferences_blocklist_title" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 style="@style/AbpPreferenceSummaryTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -164,13 +164,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/main_preferenced_divider_4">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 style="@style/AbpPreferenceTitleTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/preferences_automatic_updates_title" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 style="@style/AbpPreferenceSummaryTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -197,17 +197,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/main_preferenced_divider_5">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 style="@style/AbpPreferenceTitleTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/preferences_update_subscriptions_title" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 style="@style/AbpPreferenceSummaryTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Last updated: Today, 13:37" />
+                android:text="Last updated: Today, 13:37"
+                tools:text="Last updated: Today, 13:37" />
 
         </LinearLayout>
 

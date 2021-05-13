@@ -12,15 +12,15 @@
         tools:layout="@layout/fragment_main_preferences">
 
         <action
-            android:id="@+id/action_main_preferences_fragment_to_primary_subscriptions_preferences_fragment"
-            app:destination="@id/primary_subscriptions_preferences_fragment" />
+            android:id="@+id/action_main_preferences_fragment_to_primary_subscriptions_fragment"
+            app:destination="@id/primary_subscriptions_fragment" />
 
     </fragment>
 
     <fragment
-        android:id="@+id/primary_subscriptions_preferences_fragment"
-        android:name="org.adblockplus.adblockplussbrowser.preferences.ui.PrimarySubscriptionsPreferencesFragment"
+        android:id="@+id/primary_subscriptions_fragment"
+        android:name="org.adblockplus.adblockplussbrowser.preferences.ui.PrimarySubscriptionsFragment"
         android:label="@string/preferences_primary_subscriptions_title"
-        tools:layout="@layout/fragment_primary_subscriptions_preferences" />
+        tools:layout="@layout/fragment_primary_subscriptions" />
 
 </navigation>

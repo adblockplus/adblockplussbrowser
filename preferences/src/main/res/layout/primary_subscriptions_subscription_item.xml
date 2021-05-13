@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="org.adblockplus.adblockplussbrowser.preferences.ui.PrimarySubscriptionsItem" />
+
+        <variable
+            name="item"
+            type="PrimarySubscriptionsItem.SubscriptionItem" />
+
+        <variable
+            name="listener"
+            type="org.adblockplus.adblockplussbrowser.base.databinding.OnItemClickListener&lt;PrimarySubscriptionsItem.SubscriptionItem>" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/AbpPreferenceContainerStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> listener.onItemClick(item)}">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/primary_subscriptions_subscription_item_title"
+            style="@style/AbpPreferenceTitleTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{item.subscription.title}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="English" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/primary_subscriptions_subscription_item_summary"
+            style="@style/AbpPreferenceSummaryTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{item.updated}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/primary_subscriptions_subscription_item_title"
+            tools:text="Updated: May 11, 08:15" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="@{item.active}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

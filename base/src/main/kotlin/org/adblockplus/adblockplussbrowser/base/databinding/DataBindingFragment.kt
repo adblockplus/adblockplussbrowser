@@ -9,16 +9,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 
-abstract class DataBindingFragment<T : ViewDataBinding>(@LayoutRes private val layoutResId: Int) :
-    Fragment() {
+abstract class DataBindingFragment<T : ViewDataBinding>(@LayoutRes private val layoutResId: Int) : Fragment() {
 
     protected abstract fun onBindView(binding: T)
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = DataBindingUtil.inflate<T>(inflater, layoutResId, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         onBindView(binding)
