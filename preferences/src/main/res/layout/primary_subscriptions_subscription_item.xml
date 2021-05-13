@@ -5,15 +5,15 @@
 
     <data>
 
-        <import type="org.adblockplus.adblockplussbrowser.preferences.ui.PrimarySubscriptionsItem" />
+        <import type="org.adblockplus.adblockplussbrowser.preferences.ui.PrimarySubscriptionsItem.SubscriptionItem" />
 
         <variable
             name="item"
-            type="PrimarySubscriptionsItem.SubscriptionItem" />
+            type="SubscriptionItem" />
 
         <variable
             name="listener"
-            type="org.adblockplus.adblockplussbrowser.base.databinding.OnItemClickListener&lt;PrimarySubscriptionsItem.SubscriptionItem>" />
+            type="org.adblockplus.adblockplussbrowser.base.databinding.OnItemClickListener&lt;SubscriptionItem>" />
 
     </data>
 

@@ -5,9 +5,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
-import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingViewHolder
-import org.adblockplus.adblockplussbrowser.base.databinding.OnItemClickListener
-import org.adblockplus.adblockplussbrowser.base.databinding.ViewHolderBinder
+import org.adblockplus.adblockplussbrowser.base.databinding.*
 import org.adblockplus.adblockplussbrowser.base.util.exhaustive
 import org.adblockplus.adblockplussbrowser.base.view.layoutInflater
 import org.adblockplus.adblockplussbrowser.preferences.databinding.PrimarySubscriptionsHeaderItemBinding
@@ -46,12 +44,12 @@ internal class PrimarySubscriptionsAdapter(
     override fun onBindViewHolder(holder: PrimarySubscriptionsViewHolder, position: Int) {
         when(holder) {
             is PrimarySubscriptionsViewHolder.HeaderViewHolder -> {
-                holder.bind {
+                holder.binding.bindHolder {
                     item = getItem(position) as PrimarySubscriptionsItem.HeaderItem
                 }
             }
             is PrimarySubscriptionsViewHolder.SubscriptionViewHolder -> {
-                holder.bind {
+                holder.binding.bindHolder {
                     item = getItem(position) as PrimarySubscriptionsItem.SubscriptionItem
                     listener = this@PrimarySubscriptionsAdapter.listener
                 }
@@ -69,11 +67,9 @@ internal class PrimarySubscriptionsAdapter(
 
 internal sealed class PrimarySubscriptionsViewHolder(binding: ViewDataBinding) : DataBindingViewHolder(binding) {
 
-    class HeaderViewHolder(override val binding: PrimarySubscriptionsHeaderItemBinding) :
-        PrimarySubscriptionsViewHolder(binding), ViewHolderBinder<PrimarySubscriptionsHeaderItemBinding>
+    class HeaderViewHolder(override val binding: PrimarySubscriptionsHeaderItemBinding) : PrimarySubscriptionsViewHolder(binding)
 
-    class SubscriptionViewHolder(override val binding: PrimarySubscriptionsSubscriptionItemBinding) :
-        PrimarySubscriptionsViewHolder(binding), ViewHolderBinder<PrimarySubscriptionsSubscriptionItemBinding>
+    class SubscriptionViewHolder(override val binding: PrimarySubscriptionsSubscriptionItemBinding) : PrimarySubscriptionsViewHolder(binding)
 }
 
 internal sealed class PrimarySubscriptionsItem(val id: String) {
