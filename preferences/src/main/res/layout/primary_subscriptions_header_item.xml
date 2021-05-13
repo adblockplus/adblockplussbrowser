@@ -13,21 +13,14 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        style="@style/AbpPreferenceContainerStyle"
+    <com.google.android.material.textview.MaterialTextView
+        style="@style/AbpPreferenceCategoryTitleTextStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textview.MaterialTextView
-            style="@style/AbpPreferenceCategoryTitleTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{item.title}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/primary_subscriptions_active_category" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="wrap_content"
+        android:text="@{item.title}"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/primary_subscriptions_active_category" />
 
 </layout>

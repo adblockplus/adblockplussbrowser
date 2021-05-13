@@ -4,9 +4,10 @@ import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.base.databinding.*
-import org.adblockplus.adblockplussbrowser.base.util.exhaustive
+import org.adblockplus.adblockplussbrowser.base.kotlin.exhaustive
 import org.adblockplus.adblockplussbrowser.base.view.layoutInflater
 import org.adblockplus.adblockplussbrowser.preferences.databinding.PrimarySubscriptionsHeaderItemBinding
 import org.adblockplus.adblockplussbrowser.preferences.databinding.PrimarySubscriptionsSubscriptionItemBinding
@@ -65,11 +66,11 @@ internal class PrimarySubscriptionsAdapter(
     }
 }
 
-internal sealed class PrimarySubscriptionsViewHolder(binding: ViewDataBinding) : DataBindingViewHolder(binding) {
+internal sealed class PrimarySubscriptionsViewHolder(binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    class HeaderViewHolder(override val binding: PrimarySubscriptionsHeaderItemBinding) : PrimarySubscriptionsViewHolder(binding)
+    class HeaderViewHolder(val binding: PrimarySubscriptionsHeaderItemBinding) : PrimarySubscriptionsViewHolder(binding)
 
-    class SubscriptionViewHolder(override val binding: PrimarySubscriptionsSubscriptionItemBinding) : PrimarySubscriptionsViewHolder(binding)
+    class SubscriptionViewHolder(val binding: PrimarySubscriptionsSubscriptionItemBinding) : PrimarySubscriptionsViewHolder(binding)
 }
 
 internal sealed class PrimarySubscriptionsItem(val id: String) {

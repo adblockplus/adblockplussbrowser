@@ -44,8 +44,11 @@
             tools:text="Updated: May 11, 08:15" />
 
         <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/primary_subscriptions_subscription_item_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@null"
+            android:clickable="false"
             android:checked="@{item.active}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/primary_subscriptions_fragment"
-        android:name="org.adblockplus.adblockplussbrowser.preferences.ui.PrimarySubscriptionsFragment"
+        android:name="org.adblockplus.adblockplussbrowser.preferences.ui.primarysubscriptions.PrimarySubscriptionsFragment"
         android:label="@string/preferences_primary_subscriptions_title"
         tools:layout="@layout/fragment_primary_subscriptions" />
 
