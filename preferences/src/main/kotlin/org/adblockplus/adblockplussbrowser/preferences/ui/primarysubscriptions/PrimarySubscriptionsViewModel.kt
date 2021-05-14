@@ -3,8 +3,10 @@ package org.adblockplus.adblockplussbrowser.preferences.ui.primarysubscriptions
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.ui.PrimarySubscriptionsItem
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
@@ -19,12 +21,12 @@ internal class PrimarySubscriptionsViewModel @Inject constructor(
         val result = mutableListOf<PrimarySubscriptionsItem>()
         val activeSubscriptions = mutableListOf<PrimarySubscriptionsItem.SubscriptionItem>()
         val inactiveSubscriptions = mutableListOf<PrimarySubscriptionsItem.SubscriptionItem>()
-        val defaultSubscriptions =  settingsRepository.getDefaultPrimarySubscriptions()
+        val defaultSubscriptions = settingsRepository.getDefaultPrimarySubscriptions()
         settings.activePrimarySubscriptions.forEach { subscription ->
             activeSubscriptions.add(PrimarySubscriptionsItem.SubscriptionItem(subscription, true))
         }
         defaultSubscriptions.forEach { subscription ->
-            if(settings.activePrimarySubscriptions.find { it.url == subscription.url } == null) {
+            if (settings.activePrimarySubscriptions.find { it.url == subscription.url } == null) {
                 inactiveSubscriptions.add(PrimarySubscriptionsItem.SubscriptionItem(subscription, false))
             }
         }
@@ -34,4 +36,14 @@ internal class PrimarySubscriptionsViewModel @Inject constructor(
         result.addAll(inactiveSubscriptions)
         result
     }.asLiveData()
+
+    fun toggleActivePrimarySubscription(primarySubscriptionsItem: PrimarySubscriptionsItem.SubscriptionItem) {
+        viewModelScope.launch {
+            if (primarySubscriptionsItem.active) {
+                settingsRepository.removeActivePrimarySubscription(primarySubscriptionsItem.subscription)
+            } else {
+                settingsRepository.addActivePrimarySubscription(primarySubscriptionsItem.subscription)
+            }
+        }
+    }
 }

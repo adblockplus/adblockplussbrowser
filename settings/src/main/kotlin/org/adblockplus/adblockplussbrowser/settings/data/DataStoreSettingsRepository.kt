@@ -119,8 +119,8 @@ internal class DataStoreSettingsRepository(
             if (settings.activePrimarySubscriptionsList.find { it.url == subscription.url } != null) {
                 val activePrimarySubscriptions =
                     settings.activePrimarySubscriptionsList.filter { it.url != subscription.url }
-                settings.toBuilder().clearBlockedDomains().addAllActivePrimarySubscriptions(activePrimarySubscriptions)
-                    .build()
+                settings.toBuilder().clearActivePrimarySubscriptions()
+                    .addAllActivePrimarySubscriptions(activePrimarySubscriptions).build()
             } else {
                 settings
             }
@@ -150,8 +150,8 @@ internal class DataStoreSettingsRepository(
             if (settings.activeOtherSubscriptionsList.find { it.url == subscription.url } != null) {
                 val activeOtherSubscriptions =
                     settings.activeOtherSubscriptionsList.filter { it.url != subscription.url }
-                settings.toBuilder().clearBlockedDomains().addAllActiveOtherSubscriptions(activeOtherSubscriptions)
-                    .build()
+                settings.toBuilder().clearActiveOtherSubscriptions()
+                    .addAllActiveOtherSubscriptions(activeOtherSubscriptions).build()
             } else {
                 settings
             }

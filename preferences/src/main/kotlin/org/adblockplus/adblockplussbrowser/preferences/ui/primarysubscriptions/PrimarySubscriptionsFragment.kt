@@ -16,7 +16,7 @@ internal class PrimarySubscriptionsFragment :
     override fun onBindView(binding: FragmentPrimarySubscriptionsBinding) {
         binding.viewModel = viewModel
         binding.primarySubscriptionsList.adapter = PrimarySubscriptionsAdapter { subscriptionItem ->
-
+            viewModel.toggleActivePrimarySubscription(subscriptionItem)
         }
     }
 }

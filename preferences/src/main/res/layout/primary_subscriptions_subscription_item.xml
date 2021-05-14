@@ -44,11 +44,12 @@
             app:layout_constraintTop_toBottomOf="@id/primary_subscriptions_subscription_item_title"
             tools:text="Updated: May 11, 08:15" />
 
-        <com.google.android.material.checkbox.MaterialCheckBox
+        <CheckBox
             android:id="@+id/primary_subscriptions_subscription_item_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#F00"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
             android:clickable="false"
             android:checked="@{item.active}"
             app:layout_constraintBottom_toBottomOf="parent"
