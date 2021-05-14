@@ -94,7 +94,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         with(settingsRepository) {
             setAcceptableAdsEnabled(true)
             setAdblockEnabled(true)
-            setActiveAdsSubscriptions(active)
+            setActivePrimarySubscriptions(active)
         }
 
         context?.let {

@@ -38,7 +38,7 @@
             style="@style/AbpPreferenceSummaryTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{item.updated}"
+            android:text="TODO"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/primary_subscriptions_subscription_item_title"
             tools:text="Updated: May 11, 08:15" />

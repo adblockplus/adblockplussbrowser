@@ -20,7 +20,7 @@ message ProtoSettings {
   ProtoUpdateConfig update_config = 3;
   repeated string allowed_domains = 4;
   repeated string blocked_domains = 5;
-  repeated ProtoSubscription active_ads_subscriptions = 6;
+  repeated ProtoSubscription active_primary_subscriptions = 6;
   repeated ProtoSubscription active_other_subscriptions = 7;
 }
 

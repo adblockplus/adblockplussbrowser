@@ -1,6 +1,7 @@
 package org.adblockplus.adblockplussbrowser.preferences.ui
 
 import android.view.ViewGroup
+import androidx.annotation.StringRes
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -75,10 +76,17 @@ internal sealed class PrimarySubscriptionsViewHolder(binding: ViewDataBinding) :
 
 internal sealed class PrimarySubscriptionsItem(val id: String) {
 
-    data class HeaderItem(val title: String) : PrimarySubscriptionsItem(title)
+    data class HeaderItem(@StringRes val titleResId: Int) : PrimarySubscriptionsItem(titleResId.toString())
 
-    data class SubscriptionItem(val subscription: Subscription, val updated: String, val active: Boolean) :
-        PrimarySubscriptionsItem(subscription.title)
+    data class SubscriptionItem(val subscription: Subscription, val active: Boolean) :
+        PrimarySubscriptionsItem(subscription.url)
+
+    enum class SubscriptionLayoutType {
+        SINGLE_ITEM,
+        FIRST_ITEM,
+        CENTER_ITEM,
+        LAST_ITEM
+    }
 }
 
 private enum class PrimarySubscriptionsItemType {

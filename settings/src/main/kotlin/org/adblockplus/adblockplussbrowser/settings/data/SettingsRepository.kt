@@ -27,7 +27,7 @@ interface SettingsRepository {
 
     suspend fun setBlockedDomains(domains: List<String>)
 
-    suspend fun setActiveAdsSubscriptions(subscriptions: List<Subscription>)
+    suspend fun setActivePrimarySubscriptions(subscriptions: List<Subscription>)
 
     suspend fun setActiveOtherSubscriptions(subscriptions: List<Subscription>)
 }

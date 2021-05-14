@@ -25,6 +25,7 @@ dependencies {
     implementation(Deps.AndroidX.CONSTRAINT_LAYOUT)
     implementation(Deps.AndroidX.DATASTORE)
     implementation(Deps.AndroidX.PREFERENCE)
+    implementation(Deps.AndroidX.Lifecycle.LIVEDATA)
     implementation(Deps.AndroidX.Navigation.FRAGMENT)
     implementation(Deps.AndroidX.Navigation.UI)
     implementation(Deps.Hilt.ANDROID)

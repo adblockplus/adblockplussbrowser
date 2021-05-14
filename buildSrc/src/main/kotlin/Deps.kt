@@ -88,11 +88,6 @@ object Deps {
         val COROUTINES_ANDROID = dependency { name("kotlinx-coroutines-android") }
     }
 
-    object Moshi: DependencyGroup("com.squareup.moshi", "1.12.0") {
-        val KOTLIN = dependency { name("moshi-kotlin") }
-        val KOTLIN_CODEGEN = dependency { name("moshi-kotlin-codegen") }
-    }
-
     object OkHttp : DependencyGroup("com.squareup.okhttp3", "4.9.1") {
         val OKHTTP = dependency { name("okhttp") }
         val LOGGER = dependency { name("logging-interceptor") }

@@ -11,7 +11,7 @@ data class Settings(
     val updateConfig: UpdateConfig,
     val allowedDomains: List<String>,
     val blockedDomains: List<String>,
-    val activeAdsSubscriptions: List<Subscription>,
+    val activePrimarySubscriptions: List<Subscription>,
     val activeOtherSubscriptions: List<Subscription>
 ) : Parcelable
 
