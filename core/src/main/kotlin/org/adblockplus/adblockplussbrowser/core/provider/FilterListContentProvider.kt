@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.take
 import okio.buffer
 import okio.sink
 import okio.source
-import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.work.UpdateSubscriptionsWorker
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
@@ -74,29 +73,14 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             launch {
                 val settings = settingsRepository.settings.take(1).single()
 
-                //if (settings.initialized) return@launch
-
-                val subscriptions = settingsRepository.getDefaultPrimarySubscriptions() +
-                        settingsRepository.getDefaultOtherSubscriptions()
-
-                setupFilterLists(settings, subscriptions)
+                setupFilterLists(settings)
 
                 Timber.d("After setup")
             }
             Timber.d("After launch")
         }
 
-    private suspend fun setupFilterLists(settings: Settings, subscriptions: List<Subscription>) {
-        val active = subscriptions.filter { subscription ->
-            subscription.title == "EasyList" || subscription.title == "Acceptable Ads"
-        }
-
-        with(settingsRepository) {
-            setAcceptableAdsEnabled(true)
-            setAdblockEnabled(true)
-            setActivePrimarySubscriptions(active)
-        }
-
+    private suspend fun setupFilterLists(settings: Settings) {
         context?.let {
             UpdateSubscriptionsWorker.scheduleOneTime(it)
             UpdateSubscriptionsWorker.schedule(it, settings.updateConfig)

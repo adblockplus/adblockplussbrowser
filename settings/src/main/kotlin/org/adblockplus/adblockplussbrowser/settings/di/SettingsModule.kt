@@ -27,20 +27,15 @@ internal object SettingsModule {
     fun provideSubscriptionsDataSource(@ApplicationContext context: Context): SubscriptionsDataSource =
         HardcodedSubscriptionsDataSource(context)
 
-//    @Singleton
-//    @Provides
-//    fun provideProtoSettingsSerializer(subscriptionsDataSource: SubscriptionsDataSource): ProtoSettingsSerializer =
-//        ProtoSettingsSerializer(subscriptionsDataSource)
-
     @Singleton
     @Provides
     fun provideSettingsDataStore(
         @ApplicationContext context: Context,
         subscriptionsDataSource: SubscriptionsDataSource,
     ): DataStore<ProtoSettings> {
-        val manager = ProtoSettingsSerializer(subscriptionsDataSource)
-        val corruptionHandler = ReplaceFileCorruptionHandler<ProtoSettings>(manager::provideDefaultValue)
-        return DataStoreFactory.create(manager,corruptionHandler) {
+        val serializer = ProtoSettingsSerializer(subscriptionsDataSource)
+        val corruptionHandler = ReplaceFileCorruptionHandler(serializer::provideDefaultValue)
+        return DataStoreFactory.create(serializer,corruptionHandler) {
             context.dataStoreFile("abp_settings.pb")
         }
     }

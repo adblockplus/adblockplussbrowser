@@ -20,7 +20,6 @@ internal class PrimarySubscriptionsViewModel @Inject constructor(
         val activeSubscriptions = mutableListOf<PrimarySubscriptionsItem.SubscriptionItem>()
         val inactiveSubscriptions = mutableListOf<PrimarySubscriptionsItem.SubscriptionItem>()
         val defaultSubscriptions =  settingsRepository.getDefaultPrimarySubscriptions()
-        android.util.Log.i("ABPTEST", "activePrimarySubscriptions ${settings.activePrimarySubscriptions.size} ${settings.acceptableAdsEnabled}")
         settings.activePrimarySubscriptions.forEach { subscription ->
             activeSubscriptions.add(PrimarySubscriptionsItem.SubscriptionItem(subscription, true))
         }

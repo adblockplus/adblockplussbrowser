@@ -14,27 +14,21 @@ private const val DEFAULT_VALUE_EXCEPTION_MESSAGE = "Workaround exception to pro
 internal class ProtoSettingsSerializer(private val subscriptionsDataSource: SubscriptionsDataSource) :
     Serializer<ProtoSettings> {
 
-    // We rely on readFrom to return our default value
+    // We rely on provideDefaultValue to return the default value within a coroutine scope
+    // We can remove the workaround if the following feature request is incorporated to DataStore in the future:
+    // https://issuetracker.google.com/issues/188096915
     override val defaultValue: ProtoSettings
         get() = throw CorruptionException(DEFAULT_VALUE_EXCEPTION_MESSAGE)
 
     @Suppress("BlockingMethodInNonBlockingContext")
-    override suspend fun readFrom(input: InputStream): ProtoSettings {
-        android.util.Log.i("ABPTEST", "READFROM")
-        return ProtoSettings.parseFrom(input)
-    }
+    override suspend fun readFrom(input: InputStream): ProtoSettings = ProtoSettings.parseFrom(input)
 
     @Suppress("BlockingMethodInNonBlockingContext")
-    override suspend fun writeTo(t: ProtoSettings, output: OutputStream) {
-        android.util.Log.i("ABPTEST", "WRITETO")
-        t.writeTo(output)
-    }
+    override suspend fun writeTo(t: ProtoSettings, output: OutputStream) = t.writeTo(output)
 
     fun provideDefaultValue(exception: CorruptionException): ProtoSettings =
         if (exception.message == DEFAULT_VALUE_EXCEPTION_MESSAGE) {
-            android.util.Log.i("ABPTEST", "CREATING DEFAULT 1")
             runBlocking {
-                android.util.Log.i("ABPTEST", "CREATING DEFAULT 2 ${subscriptionsDataSource.getDefaultActiveSubscription().url}")
                 ProtoSettings.getDefaultInstance().toBuilder().apply {
                     adblockEnabled = true
                     acceptableAdsEnabled = true
@@ -44,7 +38,6 @@ internal class ProtoSettingsSerializer(private val subscriptionsDataSource: Subs
                 }.build()
             }
         } else {
-            android.util.Log.i("ABPTEST", "THROW EXCEPTION")
             throw exception
         }
 }
