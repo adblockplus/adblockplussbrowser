@@ -9,9 +9,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@drawable/preferences_round_bg"
+            android:background="@drawable/preferences_group_bg_single"
             app:layout_constraintBottom_toBottomOf="@id/main_preferences_about"
-            app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/main_preferences_about" />
 
@@ -21,7 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 

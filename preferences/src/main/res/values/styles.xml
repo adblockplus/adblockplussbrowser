@@ -32,9 +32,17 @@
     <!-- Adapted from preference_category_material.xml -->
     <style name="AbpPreferenceCategoryTitleTextStyle" parent="PreferenceCategoryTitleTextStyle">
         <item name="android:textAlignment">viewStart</item>
-        <item name="android:layout_marginStart">?android:attr/listPreferredItemPaddingStart</item>
-        <item name="android:layout_marginEnd">?android:attr/listPreferredItemPaddingEnd</item>
+        <item name="android:paddingStart">?android:attr/listPreferredItemPaddingStart</item>
+        <item name="android:paddingEnd">?android:attr/listPreferredItemPaddingEnd</item>
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body2</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+
+    <style name="AbpPreferenceScreen">
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name='android:clipToPadding'>false</item>
     </style>
 
     <style name="AbpPreferenceDivider">
@@ -42,6 +50,5 @@
         <item name="android:layout_marginEnd">16dp</item>
         <item name="android:background">@color/abp_white_lilac</item>
     </style>
-
 
 </resources>

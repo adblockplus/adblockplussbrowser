@@ -19,4 +19,6 @@
     <string name="preferences_about_title">About</string>
     <string name="primary_subscriptions_active_category">Optimised for browsing in</string>
     <string name="primary_subscriptions_inactive_category">Additional languages</string>
+    <string name="subscription_last_update">Last update: %1$s</string>
+    <string name="subscription_last_update_never">Never</string>
 </resources>

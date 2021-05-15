@@ -10,9 +10,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@drawable/preferences_round_bg"
+            android:background="@drawable/preferences_group_bg_single"
             app:layout_constraintBottom_toBottomOf="@id/main_preferences_update_subscriptions"
-            app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/main_preferences_primary_subscriptions" />
 
@@ -31,8 +30,6 @@
             style="@style/AbpPreferenceContainerStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/main_preferences_ad_blocking_category">
 
@@ -55,7 +52,6 @@
             style="@style/AbpPreferenceDivider"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/main_preferences_primary_subscriptions" />
 
@@ -64,7 +60,6 @@
             style="@style/AbpPreferenceContainerStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/main_preferenced_divider_1">
 
@@ -87,7 +82,6 @@
             style="@style/AbpPreferenceDivider"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/main_preferences_other_subscriptions" />
 
@@ -96,7 +90,6 @@
             style="@style/AbpPreferenceContainerStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/main_preferenced_divider_2">
 
@@ -119,7 +112,6 @@
             style="@style/AbpPreferenceDivider"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/main_preferences_allowlist" />
 
@@ -128,7 +120,6 @@
             style="@style/AbpPreferenceContainerStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/main_preferenced_divider_3">
 
@@ -151,7 +142,6 @@
             style="@style/AbpPreferenceDivider"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/main_preferences_blocklist" />
 
@@ -160,7 +150,6 @@
             style="@style/AbpPreferenceContainerStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/main_preferenced_divider_4">
 
@@ -184,7 +173,6 @@
             style="@style/AbpPreferenceDivider"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/main_preferences_automatic_updates" />
 
@@ -193,7 +181,6 @@
             style="@style/AbpPreferenceContainerStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/main_preferenced_divider_5">
 

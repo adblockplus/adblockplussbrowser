@@ -3,8 +3,6 @@
     <solid android:color="@color/abp_white" />
 
     <corners
-        android:bottomLeftRadius="20dp"
-        android:bottomRightRadius="20dp"
-        android:topLeftRadius="20dp"
-        android:topRightRadius="20dp" />
+        android:bottomLeftRadius="@dimen/preferences_group_bg_corner_radius"
+        android:bottomRightRadius="@dimen/preferences_group_bg_corner_radius" />
 </shape>

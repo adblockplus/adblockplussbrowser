@@ -1,4 +1,4 @@
-package org.adblockplus.adblockplussbrowser.preferences.ui
+package org.adblockplus.adblockplussbrowser.preferences.ui.primarysubscriptions
 
 import android.view.ViewGroup
 import androidx.annotation.StringRes
@@ -12,6 +12,7 @@ import org.adblockplus.adblockplussbrowser.base.kotlin.exhaustive
 import org.adblockplus.adblockplussbrowser.base.view.layoutInflater
 import org.adblockplus.adblockplussbrowser.preferences.databinding.PrimarySubscriptionsHeaderItemBinding
 import org.adblockplus.adblockplussbrowser.preferences.databinding.PrimarySubscriptionsSubscriptionItemBinding
+import org.adblockplus.adblockplussbrowser.preferences.ui.GroupItemLayout
 
 internal class PrimarySubscriptionsAdapter(
     private val listener: OnItemClickListener<PrimarySubscriptionsItem.SubscriptionItem>
@@ -78,15 +79,8 @@ internal sealed class PrimarySubscriptionsItem(val id: String) {
 
     data class HeaderItem(@StringRes val titleResId: Int) : PrimarySubscriptionsItem(titleResId.toString())
 
-    data class SubscriptionItem(val subscription: Subscription, val active: Boolean) :
+    data class SubscriptionItem(val subscription: Subscription, val layout: GroupItemLayout, val active: Boolean) :
         PrimarySubscriptionsItem(subscription.url)
-
-    enum class SubscriptionLayoutType {
-        SINGLE_ITEM,
-        FIRST_ITEM,
-        CENTER_ITEM,
-        LAST_ITEM
-    }
 }
 
 private enum class PrimarySubscriptionsItemType {

@@ -5,7 +5,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentPrimarySubscriptionsBinding
-import org.adblockplus.adblockplussbrowser.preferences.ui.PrimarySubscriptionsAdapter
 
 @AndroidEntryPoint
 internal class PrimarySubscriptionsFragment :
