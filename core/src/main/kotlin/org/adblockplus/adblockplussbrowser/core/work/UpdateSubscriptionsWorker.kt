@@ -99,7 +99,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             val request = OneTimeWorkRequestBuilder<UpdateSubscriptionsWorker>()
                 .setConstraints(Constraints.Builder().setRequiredNetworkType(UpdateConfig.ALWAYS.toNetworkType()).build())
                 .build()
-            WorkManager.getInstance(context).enqueue(request)
+//            WorkManager.getInstance(context).enqueue(request)
         }
 
         fun schedule(context: Context, updateConfig: UpdateConfig) {

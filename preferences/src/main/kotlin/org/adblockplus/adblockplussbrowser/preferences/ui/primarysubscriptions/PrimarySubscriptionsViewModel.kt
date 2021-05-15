@@ -18,7 +18,7 @@ internal class PrimarySubscriptionsViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository
 ) : ViewModel() {
 
-    val primarySubscriptions: LiveData<List<PrimarySubscriptionsItem>> = settingsRepository.settings.map { settings ->
+    val subscriptions: LiveData<List<PrimarySubscriptionsItem>> = settingsRepository.settings.map { settings ->
         val defaultSubscriptions = settingsRepository.getDefaultPrimarySubscriptions()
         val activeSubscriptions = settings.activePrimarySubscriptions
         val inactiveSubscriptions = defaultSubscriptions.filter { subscription ->
@@ -27,12 +27,12 @@ internal class PrimarySubscriptionsViewModel @Inject constructor(
         activeSubscriptions.subscriptionItems(true) + inactiveSubscriptions.subscriptionItems(false)
     }.asLiveData()
 
-    fun toggleActivePrimarySubscription(primarySubscriptionsItem: PrimarySubscriptionsItem.SubscriptionItem) {
+    fun toggleActiveSubscription(subscriptionItem: PrimarySubscriptionsItem.SubscriptionItem) {
         viewModelScope.launch {
-            if (primarySubscriptionsItem.active) {
-                settingsRepository.removeActivePrimarySubscription(primarySubscriptionsItem.subscription)
+            if (subscriptionItem.active) {
+                settingsRepository.removeActivePrimarySubscription(subscriptionItem.subscription)
             } else {
-                settingsRepository.addActivePrimarySubscription(primarySubscriptionsItem.subscription)
+                settingsRepository.addActivePrimarySubscription(subscriptionItem.subscription)
             }
         }
     }

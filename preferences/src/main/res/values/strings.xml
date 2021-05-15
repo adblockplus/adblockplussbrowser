@@ -21,4 +21,6 @@
     <string name="primary_subscriptions_inactive_category">Additional languages</string>
     <string name="subscription_last_update">Last update: %1$s</string>
     <string name="subscription_last_update_never">Never</string>
+    <string name="other_subscriptions_default_category">Built-in filter lists</string>
+    <string name="other_subscriptions_custom_category">Custom filter lists</string>
 </resources>

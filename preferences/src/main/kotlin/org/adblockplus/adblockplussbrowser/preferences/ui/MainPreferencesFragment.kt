@@ -16,5 +16,10 @@ internal class MainPreferencesFragment :
                 .actionMainPreferencesFragmentToPrimarySubscriptionsFragment()
             findNavController().navigate(direction)
         }
+        binding.mainPreferencesAdBlockingInclude.mainPreferencesOtherSubscriptions.setOnClickListener {
+            val direction = MainPreferencesFragmentDirections
+                .actionMainPreferencesFragmentToOtherSubscriptionsFragment()
+            findNavController().navigate(direction)
+        }
     }
 }
