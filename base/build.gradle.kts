@@ -17,5 +17,8 @@ android {
 
 dependencies {
     implementation(Deps.MATERIAL)
+    implementation(Deps.AndroidX.ACTIVITY)
+    implementation(Deps.AndroidX.APPCOMPAT)
+    implementation(Deps.AndroidX.FRAGMENT)
     implementation(Deps.AndroidX.Navigation.FRAGMENT)
 }

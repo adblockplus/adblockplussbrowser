@@ -19,16 +19,10 @@ internal class PrimarySubscriptionsViewModel @Inject constructor(
 ) : ViewModel() {
 
     val primarySubscriptions: LiveData<List<PrimarySubscriptionsItem>> = settingsRepository.settings.map { settings ->
-        val activeSubscriptions = mutableListOf<Subscription>()
-        val inactiveSubscriptions = mutableListOf<Subscription>()
         val defaultSubscriptions = settingsRepository.getDefaultPrimarySubscriptions()
-        settings.activePrimarySubscriptions.forEach { subscription ->
-            activeSubscriptions.add(subscription)
-        }
-        defaultSubscriptions.forEach { subscription ->
-            if (settings.activePrimarySubscriptions.find { it.url == subscription.url } == null) {
-                inactiveSubscriptions.add(subscription)
-            }
+        val activeSubscriptions = settings.activePrimarySubscriptions
+        val inactiveSubscriptions = defaultSubscriptions.filter { subscription ->
+            activeSubscriptions.none { it.url == subscription.url }
         }
         activeSubscriptions.subscriptionItems(true) + inactiveSubscriptions.subscriptionItems(false)
     }.asLiveData()
@@ -63,14 +57,8 @@ internal class PrimarySubscriptionsViewModel @Inject constructor(
 
     private fun List<Subscription>.layoutForIndex(index: Int): GroupItemLayout =
         when (index) {
-            0 -> {
-                GroupItemLayout.FIRST
-            }
-            this.lastIndex -> {
-                GroupItemLayout.LAST
-            }
-            else -> {
-                GroupItemLayout.CENTER
-            }
+            0 -> GroupItemLayout.FIRST
+            this.lastIndex -> GroupItemLayout.LAST
+            else -> GroupItemLayout.CENTER
         }
 }

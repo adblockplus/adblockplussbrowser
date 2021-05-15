@@ -12,6 +12,7 @@ internal class HardcodedSubscriptions {
         url = "https://easylist-downloads.adblockplus.org/exceptionrules.txt"
     }
 
+    // Based on: https://gitlab.com/eyeo/adblockplus/adblockpluscore/-/blob/next/data/subscriptions.json
     val defaultPrimarySubscriptions = listOf(easylist) + subscriptions {
         subscription {
             url = "https://easylist-downloads.adblockplus.org/abpindo.txt"
@@ -115,6 +116,7 @@ internal class HardcodedSubscriptions {
         }
     }
 
+    // Based on: https://gitlab.com/eyeo/adblockplus/abpui/adblockplusui/-/blob/master/data/locales.json
     companion object {
         val LANGUAGE_DESCRIPTION_MAP = mutableMapOf(
             "af" to "Afrikaans",

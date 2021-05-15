@@ -13,6 +13,10 @@ import org.adblockplus.adblockplussbrowser.base.view.layoutInflater
 import org.adblockplus.adblockplussbrowser.preferences.databinding.PrimarySubscriptionsHeaderItemBinding
 import org.adblockplus.adblockplussbrowser.preferences.databinding.PrimarySubscriptionsSubscriptionItemBinding
 import org.adblockplus.adblockplussbrowser.preferences.ui.GroupItemLayout
+import org.adblockplus.adblockplussbrowser.preferences.ui.primarysubscriptions.PrimarySubscriptionsItemType.HEADER_ITEM
+import org.adblockplus.adblockplussbrowser.preferences.ui.primarysubscriptions.PrimarySubscriptionsItemType.SUBSCRIPTION_ITEM
+import org.adblockplus.adblockplussbrowser.preferences.ui.primarysubscriptions.PrimarySubscriptionsViewHolder.HeaderViewHolder
+import org.adblockplus.adblockplussbrowser.preferences.ui.primarysubscriptions.PrimarySubscriptionsViewHolder.SubscriptionViewHolder
 
 internal class PrimarySubscriptionsAdapter(
     private val listener: OnItemClickListener<PrimarySubscriptionsItem.SubscriptionItem>
@@ -20,8 +24,8 @@ internal class PrimarySubscriptionsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PrimarySubscriptionsViewHolder {
         return when (viewType) {
-            PrimarySubscriptionsItemType.HEADER_ITEM.ordinal -> {
-                PrimarySubscriptionsViewHolder.HeaderViewHolder(
+            HEADER_ITEM.ordinal -> {
+                HeaderViewHolder(
                     PrimarySubscriptionsHeaderItemBinding.inflate(
                         parent.layoutInflater,
                         parent,
@@ -29,8 +33,8 @@ internal class PrimarySubscriptionsAdapter(
                     )
                 )
             }
-            PrimarySubscriptionsItemType.SUBSCRIPTION_ITEM.ordinal -> {
-                PrimarySubscriptionsViewHolder.SubscriptionViewHolder(
+            SUBSCRIPTION_ITEM.ordinal -> {
+                SubscriptionViewHolder(
                     PrimarySubscriptionsSubscriptionItemBinding.inflate(
                         parent.layoutInflater,
                         parent,
@@ -45,13 +49,13 @@ internal class PrimarySubscriptionsAdapter(
     }
 
     override fun onBindViewHolder(holder: PrimarySubscriptionsViewHolder, position: Int) {
-        when(holder) {
-            is PrimarySubscriptionsViewHolder.HeaderViewHolder -> {
+        when (holder) {
+            is HeaderViewHolder -> {
                 holder.binding.bindHolder {
                     item = getItem(position) as PrimarySubscriptionsItem.HeaderItem
                 }
             }
-            is PrimarySubscriptionsViewHolder.SubscriptionViewHolder -> {
+            is SubscriptionViewHolder -> {
                 holder.binding.bindHolder {
                     item = getItem(position) as PrimarySubscriptionsItem.SubscriptionItem
                     listener = this@PrimarySubscriptionsAdapter.listener
@@ -62,8 +66,8 @@ internal class PrimarySubscriptionsAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
-            is PrimarySubscriptionsItem.HeaderItem -> PrimarySubscriptionsItemType.HEADER_ITEM.ordinal
-            is PrimarySubscriptionsItem.SubscriptionItem -> PrimarySubscriptionsItemType.SUBSCRIPTION_ITEM.ordinal
+            is PrimarySubscriptionsItem.HeaderItem -> HEADER_ITEM.ordinal
+            is PrimarySubscriptionsItem.SubscriptionItem -> SUBSCRIPTION_ITEM.ordinal
         }
     }
 }
@@ -72,7 +76,8 @@ internal sealed class PrimarySubscriptionsViewHolder(binding: ViewDataBinding) :
 
     class HeaderViewHolder(val binding: PrimarySubscriptionsHeaderItemBinding) : PrimarySubscriptionsViewHolder(binding)
 
-    class SubscriptionViewHolder(val binding: PrimarySubscriptionsSubscriptionItemBinding) : PrimarySubscriptionsViewHolder(binding)
+    class SubscriptionViewHolder(val binding: PrimarySubscriptionsSubscriptionItemBinding) :
+        PrimarySubscriptionsViewHolder(binding)
 }
 
 internal sealed class PrimarySubscriptionsItem(val id: String) {

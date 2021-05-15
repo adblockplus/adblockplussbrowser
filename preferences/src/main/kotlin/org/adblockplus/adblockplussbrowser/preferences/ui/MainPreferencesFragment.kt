@@ -11,7 +11,6 @@ internal class MainPreferencesFragment :
     DataBindingFragment<FragmentMainPreferencesBinding>(R.layout.fragment_main_preferences) {
 
     override fun onBindView(binding: FragmentMainPreferencesBinding) {
-
         binding.mainPreferencesAdBlockingInclude.mainPreferencesPrimarySubscriptions.setOnClickListener {
             val direction = MainPreferencesFragmentDirections
                 .actionMainPreferencesFragmentToPrimarySubscriptionsFragment()

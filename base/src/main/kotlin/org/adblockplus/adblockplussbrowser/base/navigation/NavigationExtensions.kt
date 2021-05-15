@@ -6,6 +6,6 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 
 fun AppCompatActivity.navControllerFromFragmentContainerView(@IdRes viewId: Int): NavController {
-    val navHostFragment = supportFragmentManager.findFragmentById(viewId) as NavHostFragment
+    val navHostFragment = this.supportFragmentManager.findFragmentById(viewId) as NavHostFragment
     return navHostFragment.navController
 }

@@ -14,6 +14,11 @@ object Deps {
     val TIMBER = "com.jakewharton.timber:timber" version "4.7.1"
 
     object AndroidX : DependencyGroup("androidx") {
+        val ACTIVITY = dependency {
+            groupName("activity:activity-ktx")
+            version("1.2.3")
+        }
+
         val APPCOMPAT = dependency {
             groupName("appcompat:appcompat")
             version("1.2.0")
@@ -32,6 +37,11 @@ object Deps {
         val DATASTORE = dependency {
             groupName("datastore:datastore")
             version("1.0.0-beta01")
+        }
+
+        val FRAGMENT = dependency {
+            groupName("fragment:fragment-ktx")
+            version("1.3.3")
         }
 
         val PREFERENCE = dependency {

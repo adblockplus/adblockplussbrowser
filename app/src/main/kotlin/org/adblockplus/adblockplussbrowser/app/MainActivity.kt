@@ -12,7 +12,7 @@ import org.adblockplus.adblockplussbrowser.base.navigation.navControllerFromFrag
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    val navController: NavController
+    private val navController: NavController
         get() = navControllerFromFragmentContainerView(R.id.nav_host_fragment)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,5 +24,5 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean =
-        navController.navigateUp() || super.onSupportNavigateUp();
+        navController.navigateUp() || super.onSupportNavigateUp()
 }
