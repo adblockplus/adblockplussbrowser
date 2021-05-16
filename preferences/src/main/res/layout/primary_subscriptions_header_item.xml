@@ -5,11 +5,9 @@
 
     <data>
 
-        <import type="org.adblockplus.adblockplussbrowser.preferences.ui.primarysubscriptions.PrimarySubscriptionsItem.HeaderItem" />
-
         <variable
             name="item"
-            type="HeaderItem" />
+            type="org.adblockplus.adblockplussbrowser.preferences.ui.primarysubscriptions.PrimarySubscriptionsItem.HeaderItem" />
 
     </data>
 

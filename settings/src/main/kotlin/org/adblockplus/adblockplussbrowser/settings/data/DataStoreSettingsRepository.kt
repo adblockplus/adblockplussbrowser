@@ -106,7 +106,7 @@ internal class DataStoreSettingsRepository(
 
     override suspend fun addActivePrimarySubscription(subscription: Subscription) {
         dataStore.updateData { settings ->
-            if (settings.activePrimarySubscriptionsList.find { it.url == subscription.url } != null) {
+            if (settings.activePrimarySubscriptionsList.any { it.url == subscription.url }) {
                 settings
             } else {
                 settings.toBuilder().addActivePrimarySubscriptions(subscription.toProtoSubscription()).build()
@@ -116,7 +116,7 @@ internal class DataStoreSettingsRepository(
 
     override suspend fun removeActivePrimarySubscription(subscription: Subscription) {
         dataStore.updateData { settings ->
-            if (settings.activePrimarySubscriptionsList.find { it.url == subscription.url } != null) {
+            if (settings.activePrimarySubscriptionsList.any { it.url == subscription.url }) {
                 val activePrimarySubscriptions =
                     settings.activePrimarySubscriptionsList.filter { it.url != subscription.url }
                 settings.toBuilder().clearActivePrimarySubscriptions()
@@ -137,7 +137,7 @@ internal class DataStoreSettingsRepository(
 
     override suspend fun addActiveOtherSubscription(subscription: Subscription) {
         dataStore.updateData { settings ->
-            if (settings.activeOtherSubscriptionsList.find { it.url == subscription.url } != null) {
+            if (settings.activeOtherSubscriptionsList.any { it.url == subscription.url }) {
                 settings
             } else {
                 settings.toBuilder().addActiveOtherSubscriptions(subscription.toProtoSubscription()).build()
@@ -147,7 +147,7 @@ internal class DataStoreSettingsRepository(
 
     override suspend fun removeActiveOtherSubscription(subscription: Subscription) {
         dataStore.updateData { settings ->
-            if (settings.activeOtherSubscriptionsList.find { it.url == subscription.url } != null) {
+            if (settings.activeOtherSubscriptionsList.any { it.url == subscription.url }) {
                 val activeOtherSubscriptions =
                     settings.activeOtherSubscriptionsList.filter { it.url != subscription.url }
                 settings.toBuilder().clearActiveOtherSubscriptions()

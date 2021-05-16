@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.ui.GroupItemLayout
+import org.adblockplus.adblockplussbrowser.preferences.ui.layoutForIndex
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import javax.inject.Inject
 
@@ -43,22 +44,11 @@ internal class PrimarySubscriptionsViewModel @Inject constructor(
             val headerResId =
                 if (active) R.string.primary_subscriptions_active_category else R.string.primary_subscriptions_inactive_category
             result.add(PrimarySubscriptionsItem.HeaderItem(headerResId))
-            if (this.size == 1) {
-                result.add((PrimarySubscriptionsItem.SubscriptionItem(this.first(), GroupItemLayout.SINGLE, active)))
-            } else {
-                this.forEachIndexed { index, subscription ->
-                    val layout = this.layoutForIndex(index)
-                    result.add((PrimarySubscriptionsItem.SubscriptionItem(subscription, layout, active)))
-                }
+            this.forEachIndexed { index, subscription ->
+                val layout = this.layoutForIndex(index)
+                result.add((PrimarySubscriptionsItem.SubscriptionItem(subscription, layout, active)))
             }
         }
         return result
     }
-
-    private fun List<Subscription>.layoutForIndex(index: Int): GroupItemLayout =
-        when (index) {
-            0 -> GroupItemLayout.FIRST
-            this.lastIndex -> GroupItemLayout.LAST
-            else -> GroupItemLayout.CENTER
-        }
 }

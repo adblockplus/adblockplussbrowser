@@ -99,6 +99,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             val request = OneTimeWorkRequestBuilder<UpdateSubscriptionsWorker>()
                 .setConstraints(Constraints.Builder().setRequiredNetworkType(UpdateConfig.ALWAYS.toNetworkType()).build())
                 .build()
+            // TODO: revert
 //            WorkManager.getInstance(context).enqueue(request)
         }
 
@@ -110,9 +111,10 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
                 .setInitialDelay(1, TimeUnit.MINUTES)
                 .build()
 
-            val manager = WorkManager.getInstance(context)
-            manager.cancelAllWorkByTag(KEY_PERIODIC_WORK)
-            manager.enqueue(request)
+            // TODO: revert
+//            val manager = WorkManager.getInstance(context)
+//            manager.cancelAllWorkByTag(KEY_PERIODIC_WORK)
+//            manager.enqueue(request)
         }
 
         fun getCacheDir(context: Context): File {

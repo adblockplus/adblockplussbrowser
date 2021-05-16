@@ -6,6 +6,18 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import org.adblockplus.adblockplussbrowser.base.databinding.bindHolder
+import org.adblockplus.adblockplussbrowser.base.kotlin.exhaustive
+import org.adblockplus.adblockplussbrowser.base.view.layoutInflater
+import org.adblockplus.adblockplussbrowser.preferences.databinding.OtherSubscriptionsCustomItemBinding
+import org.adblockplus.adblockplussbrowser.preferences.databinding.OtherSubscriptionsDefaultItemBinding
+import org.adblockplus.adblockplussbrowser.preferences.databinding.OtherSubscriptionsHeaderItemBinding
+import org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions.OtherSubscriptionsItemType.HEADER_ITEM
+import org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions.OtherSubscriptionsItemType.DEFAULT_ITEM
+import org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions.OtherSubscriptionsItemType.CUSTOM_ITEM
+import org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions.OtherSubscriptionsViewHolder.HeaderViewHolder
+import org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions.OtherSubscriptionsViewHolder.DefaultViewHolder
+import org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions.OtherSubscriptionsViewHolder.CustomViewHolder
 
 internal class OtherSubscriptionsAdapter(
     private val viewModel: OtherSubscriptionsViewModel,
@@ -13,15 +25,74 @@ internal class OtherSubscriptionsAdapter(
 ) : ListAdapter<OtherSubscriptionsItem, OtherSubscriptionsViewHolder>(OtherSubscriptionsItemDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OtherSubscriptionsViewHolder {
-        TODO("Not yet implemented")
+        return when (viewType) {
+            HEADER_ITEM.ordinal -> {
+                HeaderViewHolder(
+                    OtherSubscriptionsHeaderItemBinding.inflate(parent.layoutInflater, parent, false)
+                )
+            }
+            DEFAULT_ITEM.ordinal -> {
+                DefaultViewHolder(
+                    OtherSubscriptionsDefaultItemBinding.inflate(parent.layoutInflater, parent, false)
+                )
+            }
+            CUSTOM_ITEM.ordinal -> {
+                CustomViewHolder(
+                    OtherSubscriptionsCustomItemBinding.inflate(parent.layoutInflater, parent, false)
+                )
+            }
+            else -> {
+                throw IllegalArgumentException("Unexpected viewType: $viewType")
+            }
+        }
     }
 
     override fun onBindViewHolder(holder: OtherSubscriptionsViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        when (holder) {
+            is HeaderViewHolder -> {
+                holder.binding.bindHolder {
+                    item = getItem(position) as OtherSubscriptionsItem.HeaderItem
+                }
+            }
+            is DefaultViewHolder -> {
+                holder.binding.bindHolder {
+                    item = getItem(position) as OtherSubscriptionsItem.DefaultItem
+                    viewModel = this@OtherSubscriptionsAdapter.viewModel
+                    lifecycleOwner = this@OtherSubscriptionsAdapter.lifecycleOwner
+                }
+            }
+            is CustomViewHolder -> {
+                holder.binding.bindHolder {
+                    item = getItem(position) as OtherSubscriptionsItem.CustomItem
+                    viewModel = this@OtherSubscriptionsAdapter.viewModel
+                    lifecycleOwner = this@OtherSubscriptionsAdapter.lifecycleOwner
+                }
+            }
+        }.exhaustive
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return when (getItem(position)) {
+            is OtherSubscriptionsItem.HeaderItem -> HEADER_ITEM.ordinal
+            is OtherSubscriptionsItem.DefaultItem -> DEFAULT_ITEM.ordinal
+            is OtherSubscriptionsItem.CustomItem -> CUSTOM_ITEM.ordinal
+        }
     }
 }
 
 internal sealed class OtherSubscriptionsViewHolder(binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root) {
+
+    class HeaderViewHolder(val binding: OtherSubscriptionsHeaderItemBinding) : OtherSubscriptionsViewHolder(binding)
+
+    class DefaultViewHolder(val binding: OtherSubscriptionsDefaultItemBinding) : OtherSubscriptionsViewHolder(binding)
+
+    class CustomViewHolder(val binding: OtherSubscriptionsCustomItemBinding) : OtherSubscriptionsViewHolder(binding)
+}
+
+private enum class OtherSubscriptionsItemType {
+    HEADER_ITEM,
+    DEFAULT_ITEM,
+    CUSTOM_ITEM
 }
 
 private class OtherSubscriptionsItemDiffCallback : DiffUtil.ItemCallback<OtherSubscriptionsItem>() {

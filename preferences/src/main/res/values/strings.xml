@@ -22,5 +22,7 @@
     <string name="subscription_last_update">Last update: %1$s</string>
     <string name="subscription_last_update_never">Never</string>
     <string name="other_subscriptions_default_category">Built-in filter lists</string>
-    <string name="other_subscriptions_custom_category">Custom filter lists</string>
+    <string name="other_subscriptions_custom_category">Active custom filter lists</string>
+    <string name="other_subscriptions_add_custom_title">Add custom filter list</string>
+    <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
 </resources>

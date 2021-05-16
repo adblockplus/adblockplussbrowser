@@ -25,20 +25,12 @@ internal class PrimarySubscriptionsAdapter(
         return when (viewType) {
             HEADER_ITEM.ordinal -> {
                 HeaderViewHolder(
-                    PrimarySubscriptionsHeaderItemBinding.inflate(
-                        parent.layoutInflater,
-                        parent,
-                        false
-                    )
+                    PrimarySubscriptionsHeaderItemBinding.inflate(parent.layoutInflater, parent, false)
                 )
             }
             SUBSCRIPTION_ITEM.ordinal -> {
                 SubscriptionViewHolder(
-                    PrimarySubscriptionsSubscriptionItemBinding.inflate(
-                        parent.layoutInflater,
-                        parent,
-                        false
-                    )
+                    PrimarySubscriptionsSubscriptionItemBinding.inflate(parent.layoutInflater, parent, false)
                 )
             }
             else -> {

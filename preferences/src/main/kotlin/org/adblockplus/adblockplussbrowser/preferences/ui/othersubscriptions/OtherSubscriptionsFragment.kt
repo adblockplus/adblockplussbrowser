@@ -14,5 +14,10 @@ internal class OtherSubscriptionsFragment :
 
     override fun onBindView(binding: FragmentOtherSubscriptionsBinding) {
         binding.viewModel = viewModel
+        binding.otherSubscriptionsList.adapter = OtherSubscriptionsAdapter(viewModel, viewLifecycleOwner)
+
+        binding.otherSubscriptionsAddButton.setOnClickListener {
+            AddCustomSubscriptionDialogFragment().show(parentFragmentManager, null)
+        }
     }
 }

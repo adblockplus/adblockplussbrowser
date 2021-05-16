@@ -98,6 +98,12 @@ object Deps {
         val COROUTINES_ANDROID = dependency { name("kotlinx-coroutines-android") }
     }
 
+    object MaterialDialogs : DependencyGroup("com.afollestad.material-dialogs", "3.3.0") {
+        val CORE = dependency { name("core") }
+        val INPUT = dependency { name("input") }
+        val LIFECYCLE = dependency { name("lifecycle") }
+    }
+
     object OkHttp : DependencyGroup("com.squareup.okhttp3", "4.9.1") {
         val OKHTTP = dependency { name("okhttp") }
         val LOGGER = dependency { name("logging-interceptor") }
