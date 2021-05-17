@@ -13,6 +13,7 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.adblockplus.adblockplussbrowser.core.AppInfo
+import org.adblockplus.adblockplussbrowser.core.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.core.buildAppInfo
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.data.DataStoreCoreRepository
@@ -20,6 +21,7 @@ import org.adblockplus.adblockplussbrowser.core.data.datastore.ProtoCoreDataSeri
 import org.adblockplus.adblockplussbrowser.core.data.proto.ProtoCoreData
 import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
 import org.adblockplus.adblockplussbrowser.core.downloader.OkHttpDownloader
+import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
@@ -48,10 +50,11 @@ internal object CoreModule {
 
     @Provides
     @Singleton
-    fun provideSubscriptionDownloader(@ApplicationContext context: Context,
-                                      okHttpClient: OkHttpClient,
-                                      appInfo: AppInfo,
-                                      repository: CoreRepository
+    fun provideSubscriptionDownloader(
+        @ApplicationContext context: Context,
+        okHttpClient: OkHttpClient,
+        appInfo: AppInfo,
+        repository: CoreRepository
     ): Downloader =
         OkHttpDownloader(context, okHttpClient, repository, appInfo)
 
@@ -70,11 +73,21 @@ internal object CoreModule {
 
     @Provides
     @Singleton
-    fun provideCoreRepository(dataStore: DataStore<ProtoCoreData>,
-                              @CorePreferences sharedPreferences: SharedPreferences
+    fun provideCoreRepository(
+        dataStore: DataStore<ProtoCoreData>,
+        @CorePreferences sharedPreferences: SharedPreferences
     ): CoreRepository {
         return DataStoreCoreRepository(dataStore, sharedPreferences)
     }
+
+    @Provides
+    @Singleton
+    fun provideSubscriptionsManager(
+        @ApplicationContext context: Context,
+        settingsRepository: SettingsRepository,
+        coreRepository: CoreRepository
+    ): SubscriptionsManager =
+        SubscriptionsManager(context, settingsRepository, coreRepository)
 }
 
 @Qualifier

@@ -2,7 +2,7 @@ package org.adblockplus.adblockplussbrowser.core.data.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import org.adblockplus.adblockplussbrowser.core.data.proto.ProtoDownloadedSubscription
+import java.io.File
 
 @Parcelize
 internal data class DownloadedSubscription(
@@ -14,3 +14,8 @@ internal data class DownloadedSubscription(
     val etag: String = "",
     val downloadCount: Int = 0
 ): Parcelable
+
+private fun DownloadedSubscription.exists(): Boolean = File(path).exists()
+
+internal fun DownloadedSubscription.ifExists(): DownloadedSubscription? =
+    if (this.exists()) this else null
