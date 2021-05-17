@@ -56,9 +56,10 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
         if (this.isNotEmpty()) {
             result.add(OtherSubscriptionsItem.HeaderItem(R.string.other_subscriptions_default_category))
             this.forEachIndexed { index, subscription ->
-                val active = activeSubscriptions.any { it.url == subscription.url }
+                val activeSubscription = activeSubscriptions.find { it.url == subscription.url }
+                val active = activeSubscription != null
                 val layout = this.layoutForIndex(index)
-                result.add(OtherSubscriptionsItem.DefaultItem(subscription, layout, active))
+                result.add(OtherSubscriptionsItem.DefaultItem(activeSubscription?: subscription, layout, active))
             }
         }
         return result

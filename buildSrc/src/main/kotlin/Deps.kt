@@ -68,7 +68,7 @@ object Deps {
 
         object Test : DependencyGroup("androidx.test") {
             val JUNIT = dependency {
-                groupName("test.ext:junit")
+                groupName("ext:junit")
                 version("1.1.2")
             }
 
