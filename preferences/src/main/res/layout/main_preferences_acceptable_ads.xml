@@ -51,7 +51,7 @@
                 android:paddingTop="8dp"
                 android:paddingBottom="4dp"
                 android:text="@string/preferences_acceptable_ads_action"
-                android:textColor="@color/abp_blue_ribbon" />
+                android:textColor="@color/abp_foreground_accent" />
 
         </LinearLayout>
 

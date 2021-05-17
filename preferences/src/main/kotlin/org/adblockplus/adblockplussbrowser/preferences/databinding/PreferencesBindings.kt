@@ -8,7 +8,7 @@ import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.ui.GroupItemLayout
 
 @BindingAdapter("lastUpdate")
-fun bindLastUpdate(textView: TextView, timestamp: Long) {
+internal fun bindLastUpdate(textView: TextView, timestamp: Long) {
     val context = textView.context
     val value = if (timestamp > 0) {
         DateUtils.formatDateTime(context, timestamp, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME)
@@ -19,7 +19,7 @@ fun bindLastUpdate(textView: TextView, timestamp: Long) {
 }
 
 @BindingAdapter("groupItemBackground")
-fun bindGroupItemBackground(view: View, groupItemLayout: GroupItemLayout) {
+internal fun bindGroupItemBackground(view: View, groupItemLayout: GroupItemLayout) {
     val backgroundResId = when (groupItemLayout) {
         GroupItemLayout.SINGLE -> R.drawable.preferences_group_bg_single
         GroupItemLayout.FIRST -> R.drawable.preferences_group_bg_first
@@ -30,7 +30,7 @@ fun bindGroupItemBackground(view: View, groupItemLayout: GroupItemLayout) {
 }
 
 @BindingAdapter("groupItemDividerVisibility")
-fun bindGroupItemDivider(view: View, groupItemLayout: GroupItemLayout) {
+internal fun bindGroupItemDivider(view: View, groupItemLayout: GroupItemLayout) {
     val visibility = when (groupItemLayout) {
         GroupItemLayout.FIRST, GroupItemLayout.CENTER -> View.VISIBLE
         GroupItemLayout.SINGLE, GroupItemLayout.LAST -> View.GONE

@@ -7,11 +7,11 @@
 
         <variable
             name="item"
-            type="org.adblockplus.adblockplussbrowser.preferences.ui.primarysubscriptions.PrimarySubscriptionsItem.SubscriptionItem" />
+            type="org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions.OtherSubscriptionsItem.CustomItem" />
 
         <variable
             name="viewModel"
-            type="org.adblockplus.adblockplussbrowser.preferences.ui.primarysubscriptions.PrimarySubscriptionsViewModel" />
+            type="org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions.OtherSubscriptionsViewModel" />
 
     </data>
 
@@ -24,13 +24,12 @@
             style="@style/AbpPreferenceContainerStyle"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:onClick="@{() -> viewModel.toggleActiveSubscription(item)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/primary_subscriptions_subscription_item_title"
+            android:id="@+id/other_subscriptions_custom_item_title"
             style="@style/AbpPreferenceTitleTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,46 +38,44 @@
             android:singleLine="false"
             android:text="@{item.subscription.title}"
             app:layout_constrainedWidth="true"
-            app:layout_constraintBottom_toTopOf="@id/primary_subscriptions_subscription_item_guideline_bottom"
-            app:layout_constraintEnd_toStartOf="@id/primary_subscriptions_subscription_item_checkbox"
+            app:layout_constraintBottom_toTopOf="@id/other_subscriptions_custom_item_guideline_bottom"
+            app:layout_constraintEnd_toStartOf="@id/other_subscriptions_custom_item_checkbox"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/primary_subscriptions_subscription_item_guideline_start"
-            app:layout_constraintTop_toTopOf="@id/primary_subscriptions_subscription_item_guideline_top"
+            app:layout_constraintStart_toStartOf="@id/other_subscriptions_custom_item_guideline_start"
+            app:layout_constraintTop_toTopOf="@id/other_subscriptions_custom_item_guideline_top"
             app:layout_constraintVertical_bias="0.0"
-            tools:text="English" />
+            tools:text="My Custom Filter" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/primary_subscriptions_subscription_item_summary"
+            android:id="@+id/other_subscriptions_custom_item_summary"
             style="@style/AbpPreferenceSummaryTextStyle"
-            gone="@{!item.active}"
             lastUpdate="@{item.subscription.lastUpdate}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             app:layout_constrainedWidth="true"
-            app:layout_constraintBottom_toTopOf="@id/primary_subscriptions_subscription_item_guideline_bottom"
-            app:layout_constraintEnd_toStartOf="@id/primary_subscriptions_subscription_item_checkbox"
+            app:layout_constraintBottom_toTopOf="@id/other_subscriptions_custom_item_guideline_bottom"
+            app:layout_constraintEnd_toStartOf="@id/other_subscriptions_custom_item_checkbox"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/primary_subscriptions_subscription_item_guideline_start"
-            app:layout_constraintTop_toBottomOf="@id/primary_subscriptions_subscription_item_title"
+            app:layout_constraintStart_toStartOf="@id/other_subscriptions_custom_item_guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/other_subscriptions_custom_item_title"
             app:layout_constraintVertical_bias="0.0"
             tools:text="Last update: May 14, 08:15" />
 
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/primary_subscriptions_subscription_item_checkbox"
+        <ImageView
+            android:id="@+id/other_subscriptions_custom_item_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:checked="@{item.active}"
-            android:clickable="false"
-            android:minWidth="0dp"
-            android:minHeight="0dp"
-            app:layout_constraintBottom_toTopOf="@id/primary_subscriptions_subscription_item_guideline_bottom"
-            app:layout_constraintEnd_toStartOf="@id/primary_subscriptions_subscription_item_guideline_end"
-            app:layout_constraintTop_toBottomOf="@id/primary_subscriptions_subscription_item_guideline_top" />
+            android:background="?android:attr/selectableItemBackground"
+            android:onClick="@{() -> viewModel.removeSubscription(item)}"
+            android:padding="4dp"
+            android:src="@drawable/ic_baseline_delete_24"
+            app:layout_constraintBottom_toTopOf="@id/other_subscriptions_custom_item_guideline_bottom"
+            app:layout_constraintEnd_toStartOf="@id/other_subscriptions_custom_item_guideline_end"
+            app:layout_constraintTop_toBottomOf="@id/other_subscriptions_custom_item_guideline_top" />
 
         <View
-            android:id="@+id/primary_subscriptions_subscription_item_divider"
+            android:id="@+id/other_subscriptions_custom_item_divider"
             style="@style/AbpPreferenceDivider"
             groupItemDividerVisibility="@{item.layout}"
             android:layout_width="match_parent"
@@ -87,28 +84,28 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/primary_subscriptions_subscription_item_guideline_start"
+            android:id="@+id/other_subscriptions_custom_item_guideline_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_begin="16dp" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/primary_subscriptions_subscription_item_guideline_end"
+            android:id="@+id/other_subscriptions_custom_item_guideline_end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_end="16dp" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/primary_subscriptions_subscription_item_guideline_top"
+            android:id="@+id/other_subscriptions_custom_item_guideline_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="16dp" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/primary_subscriptions_subscription_item_guideline_bottom"
+            android:id="@+id/other_subscriptions_custom_item_guideline_bottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

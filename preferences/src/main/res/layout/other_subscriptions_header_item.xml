@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="org.adblockplus.adblockplussbrowser.preferences.ui.primarysubscriptions.PrimarySubscriptionsItem.HeaderItem" />
+            type="org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions.OtherSubscriptionsItem.HeaderItem" />
 
     </data>
 
@@ -19,6 +19,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/primary_subscriptions_active_category" />
+        tools:text="@string/other_subscriptions_default_category" />
 
 </layout>
