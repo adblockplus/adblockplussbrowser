@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="abp_black">#000000</color>
-    <color name="abp_white">#FFFFFF</color>
 
-    <!-- https://chir.ag/projects/name-that-color -->
+    <color name="abp_background">@color/abp_white_lilac</color>
+    <color name="abp_background_secondary">@color/abp_white</color>
+    <color name="abp_background_accent">@color/abp_blue_bayoux</color>
+    <color name="abp_foreground">@color/abp_black</color>
+    <color name="abp_foreground_secondary">@color/abp_blue_bayoux</color>
+    <color name="abp_foreground_accent">@color/abp_blue_ribbon</color>
+
+    <!-- Used the following tool to name the colors:
+    https://chir.ag/projects/name-that-color -->
+
+    <color name="abp_white">#FFFFFF</color>
     <color name="abp_white_lilac">#F0F2FA</color>
-    <color name="abp_blue_ribbon">#0070FF</color>
+
+    <color name="abp_black">#000000</color>
+    <color name="abp_mirage">#181C24</color>
+
+    <color name="abp_regent_gray">#8D98A5</color>
     <color name="abp_blue_bayoux">#4B5E75</color>
-    <color name="abp_lynch">#6A7D95</color>
+
+    <color name="abp_dodger_blue">#2786FF</color>
+    <color name="abp_blue_ribbon">#0070FF</color>
+
 </resources>

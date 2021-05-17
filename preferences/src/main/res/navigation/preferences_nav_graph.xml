@@ -15,6 +15,10 @@
             android:id="@+id/action_main_preferences_fragment_to_primary_subscriptions_fragment"
             app:destination="@id/primary_subscriptions_fragment" />
 
+        <action
+            android:id="@+id/action_main_preferences_fragment_to_other_subscriptions_fragment"
+            app:destination="@id/other_subscriptions_fragment" />
+
     </fragment>
 
     <fragment
@@ -22,5 +26,11 @@
         android:name="org.adblockplus.adblockplussbrowser.preferences.ui.primarysubscriptions.PrimarySubscriptionsFragment"
         android:label="@string/preferences_primary_subscriptions_title"
         tools:layout="@layout/fragment_primary_subscriptions" />
+
+    <fragment
+        android:id="@+id/other_subscriptions_fragment"
+        android:name="org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions.OtherSubscriptionsFragment"
+        android:label="@string/preferences_other_subscriptions_title"
+        tools:layout="@layout/fragment_other_subscriptions" />
 
 </navigation>
