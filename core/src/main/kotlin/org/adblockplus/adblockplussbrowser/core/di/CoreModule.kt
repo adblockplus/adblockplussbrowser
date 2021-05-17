@@ -9,6 +9,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.android.scopes.ActivityScoped
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -21,6 +22,7 @@ import org.adblockplus.adblockplussbrowser.core.data.datastore.ProtoCoreDataSeri
 import org.adblockplus.adblockplussbrowser.core.data.proto.ProtoCoreData
 import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
 import org.adblockplus.adblockplussbrowser.core.downloader.OkHttpDownloader
+import org.adblockplus.adblockplussbrowser.core.interactor.SubscriptionsInteractor
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import javax.inject.Qualifier
 import javax.inject.Singleton
@@ -88,6 +90,12 @@ internal object CoreModule {
         coreRepository: CoreRepository
     ): SubscriptionsManager =
         SubscriptionsManager(context, settingsRepository, coreRepository)
+
+    @Provides
+    fun provideSubscriptionsInteractor(
+        coreRepository: CoreRepository,
+        settingsRepository: SettingsRepository
+    ): SubscriptionsInteractor = SubscriptionsInteractor(coreRepository, settingsRepository)
 }
 
 @Qualifier

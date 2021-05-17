@@ -7,5 +7,6 @@ import kotlinx.parcelize.Parcelize
 data class Subscription(
     val url: String,
     val title: String,
+    // TODO - remove from here after changing Primary subscriptions fragment
     val lastUpdate: Long,
 ) : Parcelable

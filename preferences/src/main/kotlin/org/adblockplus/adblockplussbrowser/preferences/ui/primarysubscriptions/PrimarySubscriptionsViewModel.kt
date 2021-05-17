@@ -51,4 +51,15 @@ internal class PrimarySubscriptionsViewModel @Inject constructor(
         }
         return result
     }
+
+    private fun List<Subscription>.layoutForIndex(index: Int): GroupItemLayout =
+    if(this.size == 1) {
+        GroupItemLayout.SINGLE
+    } else {
+        when (index) {
+            0 -> GroupItemLayout.FIRST
+            this.lastIndex -> GroupItemLayout.LAST
+            else -> GroupItemLayout.CENTER
+        }
+    }
 }

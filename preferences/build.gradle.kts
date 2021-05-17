@@ -19,6 +19,7 @@ android {
 dependencies {
     implementation(project(":base"))
     implementation(project(":settings"))
+    implementation(project(":core"))
 
     implementation(Deps.MATERIAL)
     implementation(Deps.AndroidX.APPCOMPAT)

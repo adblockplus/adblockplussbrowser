@@ -30,14 +30,14 @@ internal fun ProtoSubscription.toSubscription(): Subscription =
     Subscription(
         this.url,
         this.title,
-        this.lastUpdate,
+        // TODO - Remove after updating primary subscriptions fragment.
+        0
     )
 
 internal fun Subscription.toProtoSubscription(): ProtoSubscription =
     ProtoSubscription.newBuilder()
         .setUrl(this.url)
         .setTitle(this.title)
-        .setLastUpdate(this.lastUpdate)
         .build()
 
 internal fun ProtoUpdateConfig.toUpdateConfig(): UpdateConfig =

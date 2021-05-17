@@ -70,8 +70,6 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             coreRepository.updateDownloadedSubscriptions(subscriptions)
             dispatchUpdate()
 
-            updateSubscriptionsLastUpdated(settings, subscriptions)
-
             if (results.hasFailedResult()) {
                 Timber.w("Failed subscriptions updates, retrying shortly")
                 subscriptionsManager._status.postValue(SubscriptionsManager.Status.Failed)
