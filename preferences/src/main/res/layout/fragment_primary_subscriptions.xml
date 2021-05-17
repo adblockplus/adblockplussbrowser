@@ -17,7 +17,6 @@
         primarySubscriptions="@{viewModel.subscriptions}"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/abp_white_lilac"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/primary_subscriptions_subscription_item" />

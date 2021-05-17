@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/abp_white" />
+    <solid android:color="@color/abp_background_secondary" />
 
     <corners
         android:bottomLeftRadius="@dimen/preferences_group_bg_corner_radius"

@@ -37,19 +37,19 @@
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body2</item>
         <item name="android:paddingTop">16dp</item>
         <item name="android:paddingBottom">8dp</item>
+        <item name="android:textColor">@color/abp_foreground_secondary</item>
     </style>
 
     <style name="AbpPreferenceScreen">
         <item name="android:paddingTop">16dp</item>
         <item name="android:paddingBottom">16dp</item>
         <item name="android:clipToPadding">false</item>
-        <item name="android:background">@color/abp_white_lilac</item>
     </style>
 
     <style name="AbpPreferenceDivider">
         <item name="android:layout_marginStart">16dp</item>
         <item name="android:layout_marginEnd">16dp</item>
-        <item name="android:background">@color/abp_white_lilac</item>
+        <item name="android:background">@color/abp_background</item>
     </style>
 
 </resources>
