@@ -11,7 +11,7 @@ internal fun ProtoSettings.toSettings(): Settings =
         this.updateConfig.toUpdateConfig(),
         this.allowedDomainsList,
         this.blockedDomainsList,
-        this.activeAdsSubscriptionsList.map { it.toSubscription() },
+        this.activePrimarySubscriptionsList.map { it.toSubscription() },
         this.activeOtherSubscriptionsList.map { it.toSubscription() }
     )
 
@@ -22,7 +22,7 @@ internal fun Settings.toProtoSettings(): ProtoSettings =
         .setUpdateConfig(this.updateConfig.toProtoUpdateConfig())
         .addAllAllowedDomains(this.allowedDomains)
         .addAllBlockedDomains(this.blockedDomains)
-        .addAllActiveAdsSubscriptions(this.activeAdsSubscriptions.map { it.toProtoSubscription() })
+        .addAllActivePrimarySubscriptions(this.activePrimarySubscriptions.map { it.toProtoSubscription() })
         .addAllActiveOtherSubscriptions(this.activeOtherSubscriptions.map { it.toProtoSubscription() })
         .build()
 
@@ -31,7 +31,6 @@ internal fun ProtoSubscription.toSubscription(): Subscription =
         this.url,
         this.title,
         this.lastUpdate,
-        this.languagesList
     )
 
 internal fun Subscription.toProtoSubscription(): ProtoSubscription =
@@ -39,7 +38,6 @@ internal fun Subscription.toProtoSubscription(): ProtoSubscription =
         .setUrl(this.url)
         .setTitle(this.title)
         .setLastUpdate(this.lastUpdate)
-        .addAllLanguages(this.languages)
         .build()
 
 internal fun ProtoUpdateConfig.toUpdateConfig(): UpdateConfig =

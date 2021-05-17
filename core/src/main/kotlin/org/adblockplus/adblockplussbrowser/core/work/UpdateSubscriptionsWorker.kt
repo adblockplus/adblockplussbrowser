@@ -40,7 +40,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             val subscriptions = mutableListOf<DownloadedSubscription>()
             val settings = settingsRepository.settings.take(1).single()
             Timber.d("Downloader settings: $settings")
-            settings.activeAdsSubscriptions.forEach { subscription ->
+            settings.activePrimarySubscriptions.forEach { subscription ->
                 val downloadedSubscription = downloader.download(subscription)
                 downloadedSubscription?.let {
                     Timber.d("Downloaded: $downloadedSubscription")

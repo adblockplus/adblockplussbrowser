@@ -25,11 +25,8 @@ dependencies {
     implementation(Deps.OkHttp.LOGGER)
     implementation(Deps.OkHttp.COROUTINES)
     implementation(Deps.AndroidX.Work.RUNTIME)
-    implementation(Deps.Moshi.KOTLIN)
     implementation(Deps.AndroidX.DATASTORE)
     implementation(Deps.Protobuf.JAVALITE)
-    implementation(Deps.Moshi.KOTLIN)
-    kapt(Deps.Moshi.KOTLIN_CODEGEN)
 
     implementation(Deps.Hilt.ANDROID)
     kapt(Deps.Hilt.ANDROID_COMPILER)

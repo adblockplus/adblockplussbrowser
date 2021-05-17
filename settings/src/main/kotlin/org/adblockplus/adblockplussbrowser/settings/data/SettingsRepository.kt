@@ -9,9 +9,13 @@ interface SettingsRepository {
 
     val settings: Flow<Settings>
 
-    val defaultAdsSubscriptions: Flow<List<Subscription>>
+    suspend fun getEasylistSubscription(): Subscription
 
-    val defaultOtherSubscriptions: Flow<List<Subscription>>
+    suspend fun getAcceptableAdsSubscription(): Subscription
+
+    suspend fun getDefaultPrimarySubscriptions(): List<Subscription>
+
+    suspend fun getDefaultOtherSubscriptions(): List<Subscription>
 
     suspend fun setAdblockEnabled(enabled: Boolean)
 
@@ -19,11 +23,27 @@ interface SettingsRepository {
 
     suspend fun setUpdateConfig(updateConfig: UpdateConfig)
 
+    suspend fun addAllowedDomain(domain: String)
+
+    suspend fun removeAllowedDomain(domain: String)
+
     suspend fun setAllowedDomains(domains: List<String>)
+
+    suspend fun addBlockedDomain(domain: String)
+
+    suspend fun removeBlockedDomain(domain: String)
 
     suspend fun setBlockedDomains(domains: List<String>)
 
-    suspend fun setActiveAdsSubscriptions(subscriptions: List<Subscription>)
+    suspend fun addActivePrimarySubscription(subscription: Subscription)
+
+    suspend fun removeActivePrimarySubscription(subscription: Subscription)
+
+    suspend fun setActivePrimarySubscriptions(subscriptions: List<Subscription>)
+
+    suspend fun addActiveOtherSubscription(subscription: Subscription)
+
+    suspend fun removeActiveOtherSubscription(subscription: Subscription)
 
     suspend fun setActiveOtherSubscriptions(subscriptions: List<Subscription>)
 }
