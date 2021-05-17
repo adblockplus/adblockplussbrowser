@@ -5,7 +5,7 @@ import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscriptio
 
 internal fun ProtoCoreData.toCoreData(): CoreData =
     CoreData(
-        isInitialized,
+        configured,
         lastUpdate,
         downloadedSubscriptionsList.map { it.toDownloadedSubscription() }
     )

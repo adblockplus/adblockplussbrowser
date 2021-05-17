@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 internal data class CoreData(
-    val initialized: Boolean,
+    val configured: Boolean,
     val lastUpdated: Long,
     val downloadedSubscription: List<DownloadedSubscription>
 ) : Parcelable
