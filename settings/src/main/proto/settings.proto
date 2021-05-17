@@ -7,7 +7,6 @@ message ProtoSubscription {
   string url = 1;
   string title = 2;
   int64 last_update = 3;
-  repeated string languages = 4;
 }
 
 enum ProtoUpdateConfig {
@@ -21,7 +20,7 @@ message ProtoSettings {
   ProtoUpdateConfig update_config = 3;
   repeated string allowed_domains = 4;
   repeated string blocked_domains = 5;
-  repeated ProtoSubscription active_ads_subscriptions = 6;
+  repeated ProtoSubscription active_primary_subscriptions = 6;
   repeated ProtoSubscription active_other_subscriptions = 7;
 }
 

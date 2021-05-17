@@ -3,8 +3,8 @@ package org.adblockplus.adblockplussbrowser.settings.di
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
+import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import androidx.datastore.dataStoreFile
-import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,7 +13,8 @@ import dagger.hilt.components.SingletonComponent
 import org.adblockplus.adblockplussbrowser.settings.data.DataStoreSettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.datastore.ProtoSettingsSerializer
-import org.adblockplus.adblockplussbrowser.settings.data.local.SubscriptionsLoader
+import org.adblockplus.adblockplussbrowser.settings.data.local.HardcodedSubscriptionsDataSource
+import org.adblockplus.adblockplussbrowser.settings.data.local.SubscriptionsDataSource
 import org.adblockplus.adblockplussbrowser.settings.data.proto.ProtoSettings
 import javax.inject.Singleton
 
@@ -23,26 +24,27 @@ internal object SettingsModule {
 
     @Singleton
     @Provides
-    fun provideSettingsDataStore(@ApplicationContext context: Context): DataStore<ProtoSettings> =
-        DataStoreFactory.create(
-            ProtoSettingsSerializer
-        ) {
-            context.dataStoreFile("abp_settings.pb")
-        }
+    fun provideSubscriptionsDataSource(@ApplicationContext context: Context): SubscriptionsDataSource =
+        HardcodedSubscriptionsDataSource(context)
 
     @Singleton
     @Provides
-    fun provideSubscriptionsLoader(
+    fun provideSettingsDataStore(
         @ApplicationContext context: Context,
-        moshi: Moshi
-    ): SubscriptionsLoader =
-        SubscriptionsLoader(context, moshi)
+        subscriptionsDataSource: SubscriptionsDataSource,
+    ): DataStore<ProtoSettings> {
+        val serializer = ProtoSettingsSerializer(subscriptionsDataSource)
+        val corruptionHandler = ReplaceFileCorruptionHandler(serializer::provideDefaultValue)
+        return DataStoreFactory.create(serializer,corruptionHandler) {
+            context.dataStoreFile("abp_settings.pb")
+        }
+    }
 
     @Singleton
     @Provides
     fun provideSettingsRepository(
         dataStore: DataStore<ProtoSettings>,
-        subscriptionsLoader: SubscriptionsLoader
+        subscriptionsDataSource: SubscriptionsDataSource
     ): SettingsRepository =
-        DataStoreSettingsRepository(dataStore, subscriptionsLoader)
+        DataStoreSettingsRepository(dataStore, subscriptionsDataSource)
 }

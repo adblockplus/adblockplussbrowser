@@ -16,13 +16,6 @@ internal class DataStoreCoreRepository(
 ) : CoreRepository {
     override val data: Flow<CoreData> = dataStore.data
         .map { it.toCoreData() }
-        .catch { exception ->
-            if (exception is IOException) {
-                emit(ProtoCoreData.getDefaultInstance().toCoreData())
-            } else {
-                throw exception
-            }
-        }
 
     override var subscriptionsPath: String?
         get() = sharedPrefs.getString(CoreRepository.KEY_CURRENT_SUBSCRIPTIONS_FILE, null)
