@@ -45,7 +45,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
 
             val activeSubscriptions = settings.activePrimarySubscriptions.ensureEasylist(settingsRepository.getEasylistSubscription()) +
                     settings.activeOtherSubscriptions +
-                    aceptableAdsSubscription(settings.acceptableAdsEnabled)
+                    acceptableAdsSubscription(settings.acceptableAdsEnabled)
 
             // check if Work is stopped and return
             if (isStopped) return@withContext Result.success()
@@ -86,7 +86,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
         }
     }
 
-    private suspend fun aceptableAdsSubscription(enabled: Boolean) =
+    private suspend fun acceptableAdsSubscription(enabled: Boolean) =
         if (enabled) listOf(settingsRepository.getAcceptableAdsSubscription()) else emptyList()
 
     private suspend fun updateSubscriptionsLastUpdated(

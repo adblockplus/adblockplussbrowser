@@ -2,6 +2,7 @@ package org.adblockplus.adblockplussbrowser.core.downloader
 
 import android.content.Context
 import kotlinx.coroutines.coroutineScope
+import okhttp3.Headers
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
@@ -47,11 +48,13 @@ internal class OkHttpDownloader(
                     context.downloadsDir().mkdirs()
                     tempFile.renameTo(file)
 
+                    val subscriptionHeaders = extractHeaders(file)
+
                     DownloadResult.Success(previousDownload.copy(
                         lastUpdated = System.currentTimeMillis(),
-                        lastModified = response.headers["Last-Modified"] ?: "",
-                        version = extractVersion(file),
-                        etag = response.headers["ETag"] ?: "",
+                        lastModified = response.headers.lastModified,
+                        version = subscriptionHeaders.version(),
+                        etag = response.headers.eTag,
                         downloadCount = previousDownload.downloadCount + 1
                     ))
                 }
@@ -120,19 +123,13 @@ internal class OkHttpDownloader(
         return file
     }
 
-    // Parse Version from subscription file
-    private fun extractVersion(file: File): String {
-        val version = readHeader(file).asSequence().map { it.trim() }
-            .filter { it.startsWith("!") }
+    private fun extractHeaders(file: File): Map<String, String> {
+        return readHeader(file).asSequence().map { it.trim() }
+            .filter { it.startsWith("!") && it.contains(':') }
             .map { line ->
                 val split = line.split(":", limit = 2)
-                Pair(split[0].trim(), split[1].trim())
-            }
-            .filter { pair -> pair.first.contains("version", true) }
-            .map { pair -> pair.second }
-            .firstOrNull()
-
-        return version ?: "0"
+                Pair(split[0].toUpperCase().trim(), split[1].trim())
+            }.toMap()
     }
 
     private fun readHeader(file: File): List<String> {
@@ -142,6 +139,20 @@ internal class OkHttpDownloader(
                 .toList()
         }
     }
+
+    companion object {
+        private const val HEADER_TITLE = "TITLE"
+        private const val HEADER_VERSION = "VERSION"
+    }
+
+    private fun Map<String, String>.version(default: String = "0"): String =
+        this[HEADER_VERSION] ?: default
+
+    private val Headers.lastModified
+        get() = this["Last-Modified"] ?: ""
+
+    private val Headers.eTag
+        get() = this["ETag"] ?: ""
 }
 
 private fun Int.asDownloadCount(): String = if (this < 4) this.toString() else "4+"

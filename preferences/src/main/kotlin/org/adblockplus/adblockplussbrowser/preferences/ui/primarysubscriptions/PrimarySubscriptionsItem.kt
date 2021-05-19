@@ -8,6 +8,10 @@ internal sealed class PrimarySubscriptionsItem(val id: String) {
 
     data class HeaderItem(@StringRes val titleResId: Int) : PrimarySubscriptionsItem(titleResId.toString())
 
-    data class SubscriptionItem(val subscription: Subscription, val layout: GroupItemLayout, val active: Boolean) :
-        PrimarySubscriptionsItem(subscription.url)
+    data class SubscriptionItem(
+        val subscription: Subscription,
+        val layout: GroupItemLayout,
+        val active: Boolean,
+        val lastUpdate: Long
+        ) : PrimarySubscriptionsItem(subscription.url)
 }
