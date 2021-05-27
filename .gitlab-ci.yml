@@ -1,3 +1,7 @@
+stages:
+  - build
+  - sign_builds
+
 image: gradle:jdk8
 build:
   stage: build
@@ -21,3 +25,33 @@ build:
   artifacts:
     paths:
       - "app/build/outputs/apk/worldAbp/release/app-world-abp-release-unsigned.apk"
+
+
+sign_apks:
+  stage: "sign_builds"
+  variables:
+    GIT_STRATEGY: none
+  tags:
+    - "protected"
+  before_script:
+    - "rm -fr ./*_SIGNED.apk"
+  script:
+    - |
+      for UNSIGNED_FILE in $(find app/build/outputs/apk -name "*.apk")
+        do
+        SIGNED_FILE=$(basename "${UNSIGNED_FILE/.apk/_SIGNED.apk}")
+        echo "Signing ${UNSIGNED_FILE} to ${SIGNED_FILE}"
+        /usr/local/bin/apk_signer < $UNSIGNED_FILE > $SIGNED_FILE
+      done
+    - ls -1 ./*_SIGNED.apk
+  after_script:
+    - rm -fr artifact-archiver/
+    - git clone https://gitlab.com/eyeo/distpartners/artifact-archiver.git && artifact-archiver/bootstrap.sh
+    # Delete everything for the next job, the runner isnt in a container
+    - rm -fr *
+  artifacts:
+    paths:
+      - "./*_SIGNED.apk"
+    expire_in: "1 week"
+  only:
+    - /^release-.*$/
