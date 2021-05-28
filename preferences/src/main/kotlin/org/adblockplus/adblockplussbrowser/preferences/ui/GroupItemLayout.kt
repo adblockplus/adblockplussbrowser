@@ -9,7 +9,7 @@ internal enum class GroupItemLayout {
     LAST
 }
 
-internal fun List<Subscription>.layoutForIndex(index: Int): GroupItemLayout =
+internal fun List<Any>.layoutForIndex(index: Int): GroupItemLayout =
     if(this.size == 1) {
         GroupItemLayout.SINGLE
     } else {

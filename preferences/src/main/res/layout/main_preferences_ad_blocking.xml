@@ -116,42 +116,12 @@
             app:layout_constraintTop_toBottomOf="@id/main_preferences_allowlist" />
 
         <LinearLayout
-            android:id="@+id/main_preferences_blocklist"
-            style="@style/AbpPreferenceContainerStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/main_preferenced_divider_3">
-
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/AbpPreferenceTitleTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/preferences_blocklist_title" />
-
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/AbpPreferenceSummaryTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/preferences_blocklist_summary" />
-
-        </LinearLayout>
-
-        <View
-            android:id="@+id/main_preferenced_divider_4"
-            style="@style/AbpPreferenceDivider"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/main_preferences_blocklist" />
-
-        <LinearLayout
             android:id="@+id/main_preferences_automatic_updates"
             style="@style/AbpPreferenceContainerStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/main_preferenced_divider_4">
+            app:layout_constraintTop_toBottomOf="@id/main_preferenced_divider_3">
 
             <com.google.android.material.textview.MaterialTextView
                 style="@style/AbpPreferenceTitleTextStyle"
@@ -169,7 +139,7 @@
         </LinearLayout>
 
         <View
-            android:id="@+id/main_preferenced_divider_5"
+            android:id="@+id/main_preferenced_divider_4"
             style="@style/AbpPreferenceDivider"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
@@ -182,7 +152,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/main_preferenced_divider_5">
+            app:layout_constraintTop_toBottomOf="@id/main_preferenced_divider_4">
 
             <com.google.android.material.textview.MaterialTextView
                 style="@style/AbpPreferenceTitleTextStyle"
