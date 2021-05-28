@@ -5,7 +5,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import org.adblockplus.adblockplussbrowser.base.databinding.OnItemClickListener
 import org.adblockplus.adblockplussbrowser.base.databinding.bindHolder
 import org.adblockplus.adblockplussbrowser.base.view.layoutInflater
 import org.adblockplus.adblockplussbrowser.preferences.databinding.AllowlistItemBinding
