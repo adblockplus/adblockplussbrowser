@@ -27,6 +27,7 @@ dependencies {
     implementation(Deps.AndroidX.Lifecycle.LIVEDATA)
     implementation(Deps.AndroidX.Lifecycle.VIEWMODEL)
     implementation(Deps.AndroidX.Navigation.FRAGMENT)
+    implementation(Deps.Apache.COMMONS_VALIDATOR)
     implementation(Deps.Hilt.ANDROID)
     kapt(Deps.Hilt.ANDROID_COMPILER)
     implementation(Deps.MaterialDialogs.CORE)

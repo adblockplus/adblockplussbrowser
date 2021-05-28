@@ -19,6 +19,10 @@
             android:id="@+id/action_main_preferences_fragment_to_other_subscriptions_fragment"
             app:destination="@id/other_subscriptions_fragment" />
 
+        <action
+            android:id="@+id/action_main_preferences_fragment_to_allowlist_fragment"
+            app:destination="@id/allowlist_fragment" />
+
     </fragment>
 
     <fragment
@@ -32,5 +36,11 @@
         android:name="org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions.OtherSubscriptionsFragment"
         android:label="@string/preferences_other_subscriptions_title"
         tools:layout="@layout/fragment_other_subscriptions" />
+
+    <fragment
+        android:id="@+id/allowlist_fragment"
+        android:name="org.adblockplus.adblockplussbrowser.preferences.ui.allowlist.AllowlistFragment"
+        android:label="@string/preferences_allowlist_title"
+        tools:layout="@layout/fragment_allowlist" />
 
 </navigation>

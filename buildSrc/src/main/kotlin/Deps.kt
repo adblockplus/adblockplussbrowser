@@ -82,6 +82,10 @@ object Deps {
         }
     }
 
+    object Apache: DependencyGroup() {
+        val COMMONS_VALIDATOR = "commons-validator:commons-validator" version "1.7"
+    }
+
     object Hilt : DependencyGroup("com.google.dagger", "2.35") {
         val ANDROID = dependency { name("hilt-android") }
         val ANDROID_COMPILER = dependency { name("hilt-android-compiler") }
