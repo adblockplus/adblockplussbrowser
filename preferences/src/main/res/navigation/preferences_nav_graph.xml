@@ -23,6 +23,10 @@
             android:id="@+id/action_main_preferences_fragment_to_allowlist_fragment"
             app:destination="@id/allowlist_fragment" />
 
+        <action
+            android:id="@+id/action_main_preferences_fragment_to_acceptable_ads_fragment"
+            app:destination="@id/acceptable_ads_fragment" />
+
     </fragment>
 
     <fragment
@@ -42,5 +46,11 @@
         android:name="org.adblockplus.adblockplussbrowser.preferences.ui.allowlist.AllowlistFragment"
         android:label="@string/preferences_allowlist_title"
         tools:layout="@layout/fragment_allowlist" />
+
+    <fragment
+        android:id="@+id/acceptable_ads_fragment"
+        android:name="org.adblockplus.adblockplussbrowser.preferences.ui.acceptableads.AcceptableAdsFragment"
+        android:label="@string/preferences_acceptable_ads_fragment_title"
+        tools:layout="@layout/fragment_acceptable_ads" />
 
 </navigation>

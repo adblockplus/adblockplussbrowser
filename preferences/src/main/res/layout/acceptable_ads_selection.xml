@@ -1,0 +1,72 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="org.adblockplus.adblockplussbrowser.preferences.ui.acceptableads.AcceptableAdsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/acceptable_ads_description_block">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/preferences_group_bg_single"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RadioGroup
+            android:id="@+id/acceptable_ads_radiogroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/acceptable_ads_enabled"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="@{viewModel.enabled}"
+                android:onClick="@{(v) -> viewModel.enableAcceptableAds()}"
+                android:paddingStart="8dp"
+                tools:text="Yes, I’ll support content creators.\nBy keeping Acceptable Ads enabled, you’re helping content creators publish their content for free." />
+
+            <View
+                android:id="@+id/main_preferenced_divider_1"
+                style="@style/AbpPreferenceDivider"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="16dp" />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/acceptable_ads_disabled"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:checked="@{!viewModel.enabled}"
+                android:onClick="@{(v) -> viewModel.disableAcceptableAds()}"
+                android:paddingStart="8dp"
+                android:text="@string/acceptable_ads_disabled" />
+
+        </RadioGroup>
+
+        <View
+            android:id="@+id/first_space"
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            app:layout_constraintTop_toBottomOf="@id/acceptable_ads_radiogroup" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

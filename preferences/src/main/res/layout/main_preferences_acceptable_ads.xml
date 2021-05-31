@@ -2,9 +2,20 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="org.adblockplus.adblockplussbrowser.preferences.ui.MainPreferencesViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_preferences_acceptable_ads_include"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_preferences_ad_blocking_include">
 
         <View
             android:layout_width="match_parent"
@@ -50,11 +61,10 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="8dp"
                 android:paddingBottom="4dp"
-                android:text="@string/preferences_acceptable_ads_action"
+                android:text="@{viewModel.acceptableAdsEnabled ? @string/preferences_acceptable_ads_action : @string/acceptable_ads_disabled}"
                 android:textColor="@color/abp_foreground_accent" />
 
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>

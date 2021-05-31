@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/preferences_group_bg_single"
+            app:layout_constraintBottom_toBottomOf="@id/first_space"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/aa_acceptable_ads_label" />
+
+        <ImageView
+            android:id="@+id/aa_image_left"
+            android:layout_width="0dp"
+            android:layout_height="190dp"
+            android:src="@drawable/ic_acceptable_ads_illustration"
+            android:layout_marginStart="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/aa_acceptable_ads_label"
+            app:layout_constraintWidth_percent="0.42" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/aa_acceptable_ads_label"
+            style="@style/AbpPreferenceCategoryTitleTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:paddingBottom="0dp"
+            android:text="Acceptable Ads"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/aa_image_right"
+            android:layout_width="0dp"
+            android:layout_height="190dp"
+            android:src="@drawable/ic_intrusive_ads_illustration"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/aa_intrusive_ads_label"
+            app:layout_constraintWidth_percent="0.42" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/aa_intrusive_ads_label"
+            style="@style/AbpPreferenceCategoryTitleTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="0dp"
+            android:text="Intrusive Ads"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/aa_image_right"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/aa_fair_standards_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp"
+            android:drawableStart="@drawable/bullet"
+            android:drawablePadding="8dp"
+            android:text="@string/acceptable_ads_fair_standard"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/aa_image_left" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/aa_fair_standards_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/acceptable_ads_fair_standard_description"
+            app:layout_constraintTop_toBottomOf="@id/aa_fair_standards_label" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/aa_fair_placement_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="4dp"
+            android:drawableStart="@drawable/bullet"
+            android:drawablePadding="8dp"
+            android:text="@string/acceptable_ads_placement"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/aa_fair_standards_description" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/aa_fair_placement_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/acceptable_ads_placement_description"
+            app:layout_constraintTop_toBottomOf="@id/aa_fair_placement_label" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/aa_fair_distinction_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="4dp"
+            android:drawableStart="@drawable/bullet"
+            android:drawablePadding="8dp"
+            android:text="@string/acceptable_ads_distinction"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/aa_fair_placement_description" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/aa_fair_distinction_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/acceptable_ads_distinction_description"
+            app:layout_constraintTop_toBottomOf="@id/aa_fair_distinction_label" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/aa_fair_size_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="4dp"
+            android:drawableStart="@drawable/bullet"
+            android:drawablePadding="8dp"
+            android:text="@string/acceptable_ads_size"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/aa_fair_distinction_description" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/aa_fair_size_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/acceptable_ads_size_description"
+            app:layout_constraintTop_toBottomOf="@id/aa_fair_size_label" />
+
+        <View
+            android:id="@+id/first_space"
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            app:layout_constraintTop_toBottomOf="@id/aa_fair_size_description" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
