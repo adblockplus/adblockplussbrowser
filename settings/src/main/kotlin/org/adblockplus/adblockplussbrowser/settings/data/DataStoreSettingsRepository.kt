@@ -165,4 +165,84 @@ internal class DataStoreSettingsRepository(
                 .build()
         }
     }
+
+    override suspend fun updatePrimarySubscriptionLastUpdate(
+        url: String,
+        lastUpdate: Long
+    ) {
+        dataStore.updateData { settings ->
+            if (settings.activePrimarySubscriptionsList.any { it.url == url }) {
+                val subscriptions = settings.activePrimarySubscriptionsList.map { activeSubscription ->
+                    if (activeSubscription.url == url) {
+                        activeSubscription.toBuilder().setLastUpdate(lastUpdate).build()
+                    } else {
+                        activeSubscription
+                    }
+                }
+                settings.toBuilder()
+                    .clearActivePrimarySubscriptions()
+                    .addAllActivePrimarySubscriptions(subscriptions)
+                    .build()
+            } else {
+                settings
+            }
+        }
+    }
+
+    override suspend fun updateOtherSubscriptionLastUpdate(
+        url: String,
+        lastUpdate: Long
+    ) {
+        dataStore.updateData { settings ->
+            if (settings.activeOtherSubscriptionsList.any { it.url == url }) {
+                val subscriptions = settings.activeOtherSubscriptionsList.map { activeSubscription ->
+                    if (activeSubscription.url == url) {
+                        activeSubscription.toBuilder().setLastUpdate(lastUpdate).build()
+                    } else {
+                        activeSubscription
+                    }
+                }
+                settings.toBuilder()
+                    .clearActivePrimarySubscriptions()
+                    .addAllActivePrimarySubscriptions(subscriptions)
+                    .build()
+            } else {
+                settings
+            }
+        }
+    }
+
+    override suspend fun updatePrimarySubscriptionsLastUpdate(subscriptions: List<Subscription>) {
+        dataStore.updateData { settings ->
+            val list = settings.activePrimarySubscriptionsList.map { protoSubscription ->
+                val subscription = subscriptions.firstOrNull { it.url == protoSubscription.url }
+                if (subscription != null) {
+                    protoSubscription.toBuilder().setLastUpdate(subscription.lastUpdate).build()
+                } else {
+                    protoSubscription
+                }
+            }
+            settings.toBuilder()
+                .clearActivePrimarySubscriptions()
+                .addAllActivePrimarySubscriptions(list)
+                .build()
+        }
+    }
+
+    override suspend fun updateOtherSubscriptionsLastUpdate(subscriptions: List<Subscription>) {
+        dataStore.updateData { settings ->
+            val list = settings.activeOtherSubscriptionsList.map { protoSubscription ->
+                val subscription = subscriptions.firstOrNull { it.url == protoSubscription.url }
+                if (subscription != null) {
+                    protoSubscription.toBuilder().setLastUpdate(subscription.lastUpdate).build()
+                } else {
+                    protoSubscription
+                }
+            }
+            settings.toBuilder()
+                .clearActiveOtherSubscriptions()
+                .addAllActiveOtherSubscriptions(list)
+                .build()
+        }
+    }
 }

@@ -5,6 +5,8 @@ import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscriptio
 
 internal interface Downloader {
     suspend fun download(subscription: Subscription): DownloadResult
+
+    suspend fun validate(subscription: Subscription): Boolean
 }
 
 internal sealed class DownloadResult(val subscription: DownloadedSubscription?) {

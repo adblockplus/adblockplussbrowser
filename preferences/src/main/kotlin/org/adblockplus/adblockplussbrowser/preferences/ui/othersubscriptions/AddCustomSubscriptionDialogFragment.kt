@@ -4,7 +4,7 @@ import android.app.Dialog
 import android.os.Bundle
 import android.util.Patterns
 import androidx.appcompat.app.AppCompatDialogFragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
@@ -16,7 +16,7 @@ import org.adblockplus.adblockplussbrowser.preferences.R
 @AndroidEntryPoint
 internal class AddCustomSubscriptionDialogFragment : AppCompatDialogFragment() {
 
-    private val viewModel: OtherSubscriptionsViewModel by viewModels()
+    private val viewModel: OtherSubscriptionsViewModel by activityViewModels()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         MaterialDialog(requireContext()).show {

@@ -14,13 +14,15 @@ import kotlinx.coroutines.flow.take
 import okio.buffer
 import okio.sink
 import okio.source
+import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
-import org.adblockplus.adblockplussbrowser.core.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscription
 import org.adblockplus.adblockplussbrowser.core.downloader.DownloadResult
 import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
 import org.adblockplus.adblockplussbrowser.core.downloader.hasFailedResult
+import org.adblockplus.adblockplussbrowser.core.extensions.toAllowRule
+import org.adblockplus.adblockplussbrowser.core.extensions.toBlockRule
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
 import timber.log.Timber
@@ -45,7 +47,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
 
             val activeSubscriptions = settings.activePrimarySubscriptions.ensureEasylist(settingsRepository.getEasylistSubscription()) +
                     settings.activeOtherSubscriptions +
-                    aceptableAdsSubscription(settings.acceptableAdsEnabled)
+                    acceptableAdsSubscription(settings.acceptableAdsEnabled)
 
             // check if Work is stopped and return
             if (isStopped) return@withContext Result.success()
@@ -56,7 +58,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
                 // check if Work is stopped and return
                 if (isStopped) return@withContext Result.success()
 
-                subscriptionsManager._status.postValue(SubscriptionsManager.Status.Downloading(index + 1))
+                subscriptionsManager.updateStatus(SubscriptionsManager.Status.Downloading(index + 1))
                 val result = downloader.download(subscription)
                 Timber.d("Subscription: ${subscription.title} -> $result")
                 results.add(result)
@@ -66,7 +68,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             if (isStopped) return@withContext Result.success()
 
             val subscriptions = results.mapNotNull { it.subscription }
-            writeFiles(subscriptions)
+            writeFiles(subscriptions, settings.allowedDomains, settings.blockedDomains)
             coreRepository.updateDownloadedSubscriptions(subscriptions)
             dispatchUpdate()
 
@@ -74,11 +76,11 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
 
             if (results.hasFailedResult()) {
                 Timber.w("Failed subscriptions updates, retrying shortly")
-                subscriptionsManager._status.postValue(SubscriptionsManager.Status.Failed)
+                subscriptionsManager.updateStatus(SubscriptionsManager.Status.Failed)
                 Result.retry()
             } else {
                 Timber.i("Subscriptions downloaded")
-                subscriptionsManager._status.postValue(SubscriptionsManager.Status.Success)
+                subscriptionsManager.updateStatus(SubscriptionsManager.Status.Success)
                 Result.success()
             }
         } catch (ex: Exception) {
@@ -88,14 +90,14 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
         }
     }
 
-    private suspend fun aceptableAdsSubscription(enabled: Boolean) =
+    private suspend fun acceptableAdsSubscription(enabled: Boolean) =
         if (enabled) listOf(settingsRepository.getAcceptableAdsSubscription()) else emptyList()
 
     private suspend fun updateSubscriptionsLastUpdated(
         settings: Settings,
         subscriptions: List<DownloadedSubscription>
     ) {
-        val adSubscriptions = settings.activePrimarySubscriptions.mapNotNull { subscription ->
+        val primarySubscriptions = settings.activePrimarySubscriptions.mapNotNull { subscription ->
             subscriptions.firstOrNull { it.url == subscription.url }?.let { downloaded ->
                 subscription.copy(lastUpdate = downloaded.lastUpdated)
             }
@@ -106,8 +108,8 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             }
         }
 
-        settingsRepository.setActivePrimarySubscriptions(adSubscriptions)
-        settingsRepository.setActiveOtherSubscriptions(otherSubscriptions)
+        settingsRepository.updatePrimarySubscriptionsLastUpdate(primarySubscriptions)
+        settingsRepository.updateOtherSubscriptionsLastUpdate(otherSubscriptions)
     }
 
     private suspend fun dispatchUpdate() = withContext(Dispatchers.Main) {
@@ -118,7 +120,11 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
         appContext.sendBroadcast(intent)
     }
 
-    private suspend fun writeFiles(subscriptions: List<DownloadedSubscription>) {
+    private suspend fun writeFiles(
+        subscriptions: List<DownloadedSubscription>,
+        allowedDomains: List<String>,
+        blockedDomains: List<String>
+    ) {
         coroutineScope {
             val dir = appContext.getCacheDownloadDir()
             val temp = File.createTempFile("filter", ".txt", dir)
@@ -128,6 +134,22 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             Timber.d("filters file: ${temp.name}, rules: ${filters.size}")
 
             temp.sink().buffer().use { sink ->
+                sink.writeUtf8("[Adblock Plus 2.0]\n")
+                sink.writeUtf8("! This file was automatically created.\n")
+                subscriptions.forEach { subscription ->
+                    sink.writeUtf8("! ${subscription.url}\n")
+                }
+
+                allowedDomains.forEach { domain ->
+                    sink.writeUtf8(domain.toAllowRule())
+                    sink.writeUtf8("\n")
+                }
+
+                blockedDomains.forEach { domain ->
+                    sink.writeUtf8(domain.toBlockRule())
+                    sink.writeUtf8("\n")
+                }
+
                 filters.forEach { filter ->
                     sink.writeUtf8(filter)
                     sink.writeUtf8("\n")
@@ -166,17 +188,17 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
         directory.mkdirs()
         return directory
     }
-}
 
-/**
- * If active primary subscriptions are not empty and doesn't contains EasyList main filter list,
- * ensure it is downloaded
- */
-private fun List<Subscription>.ensureEasylist(easylistSubscription: Subscription): List<Subscription> {
-    val easylist = if (this.isNotEmpty() && this.none { it.url == easylistSubscription.url }) {
-        listOf(easylistSubscription)
-    } else {
-        emptyList()
+    /**
+     * If active primary subscriptions are not empty and doesn't contains EasyList main filter list,
+     * ensure it is downloaded
+     */
+    private fun List<Subscription>.ensureEasylist(easylistSubscription: Subscription): List<Subscription> {
+        val easylist = if (this.isNotEmpty() && this.none { it.url == easylistSubscription.url }) {
+            listOf(easylistSubscription)
+        } else {
+            emptyList()
+        }
+        return easylist + this
     }
-    return easylist + this
 }
