@@ -46,4 +46,12 @@ interface SettingsRepository {
     suspend fun removeActiveOtherSubscription(subscription: Subscription)
 
     suspend fun setActiveOtherSubscriptions(subscriptions: List<Subscription>)
+
+    suspend fun updatePrimarySubscriptionLastUpdate(url: String, lastUpdate: Long)
+
+    suspend fun updateOtherSubscriptionLastUpdate(url: String, lastUpdate: Long)
+
+    suspend fun updatePrimarySubscriptionsLastUpdate(subscriptions: List<Subscription>)
+
+    suspend fun updateOtherSubscriptionsLastUpdate(subscriptions: List<Subscription>)
 }

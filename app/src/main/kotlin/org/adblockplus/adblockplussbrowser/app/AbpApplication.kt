@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
-import org.adblockplus.adblockplussbrowser.core.SubscriptionsManager
+import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import timber.log.Timber
 import javax.inject.Inject
 

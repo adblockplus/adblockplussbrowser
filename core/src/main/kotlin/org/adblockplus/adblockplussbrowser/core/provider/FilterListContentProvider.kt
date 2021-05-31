@@ -61,18 +61,19 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
     }
 
     private fun getFilterFile(): File {
-        val path = coreRepository.subscriptionsPath
-        // We have a current file, return it
-        if (!path.isNullOrEmpty() && File(path).exists()) {
-            return File(path)
-        }
-
         val context = requireContext(this)
         val directory = File(context.filesDir, "cache")
         directory.mkdirs()
-        val file = File(directory, DEFAULT_SUBSCRIPTIONS_FILENAME)
-        if (file.exists()) {
-            return file
+        val defaultFile = File(directory, DEFAULT_SUBSCRIPTIONS_FILENAME)
+        val path = coreRepository.subscriptionsPath
+        // We have a current file, return it
+        if (!path.isNullOrEmpty() && File(path).exists()) {
+            defaultFile.delete()
+            return File(path)
+        }
+
+        if (defaultFile.exists()) {
+            return defaultFile
         }
 
         val temp = File.createTempFile("filters", ".txt", directory)
@@ -87,8 +88,8 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             temp.sink(append = true).buffer().use { b -> b.writeAll(a) }
         }
 
-        temp.renameTo(file)
-        return file
+        temp.renameTo(defaultFile)
+        return defaultFile
     }
 
     override fun query(

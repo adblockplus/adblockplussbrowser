@@ -1,7 +1,9 @@
 package org.adblockplus.adblockplussbrowser.core.downloader
 
 import android.content.Context
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withContext
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
@@ -15,6 +17,7 @@ import org.adblockplus.adblockplussbrowser.core.AppInfo
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscription
 import org.adblockplus.adblockplussbrowser.core.data.model.ifExists
+import org.adblockplus.adblockplussbrowser.core.extensions.sanatizeUrl
 import org.adblockplus.adblockplussbrowser.core.retryIO
 import ru.gildor.coroutines.okhttp.await
 import timber.log.Timber
@@ -29,8 +32,8 @@ internal class OkHttpDownloader(
 ) : Downloader {
 
     override suspend fun download(subscription: Subscription): DownloadResult = coroutineScope {
-        val previousDownload = getDownloadedSubscription(subscription)
         try {
+            val previousDownload = getDownloadedSubscription(subscription)
             val url = createUrl(subscription, previousDownload.version, previousDownload.downloadCount)
             val file = File(previousDownload.path)
             val request = createDownloadRequest(url, file, previousDownload)
@@ -67,24 +70,46 @@ internal class OkHttpDownloader(
             }
         } catch (ex: Exception) {
             ex.printStackTrace()
+            val previousDownload = getDownloadedSubscription(subscription)
             Timber.e(ex, "Error downloading ${previousDownload.url}")
             DownloadResult.Failed(previousDownload.ifExists())
         }
     }
 
-    private suspend fun getDownloadedSubscription(subscription: Subscription): DownloadedSubscription {
-        val url = subscription.url.toHttpUrl()
-        val coreData = repository.getDataSync()
-        return coreData.downloadedSubscription.firstOrNull {
-            it.url == subscription.url
-        } ?: DownloadedSubscription(
-            subscription.url,
-            path = context.downloadFile(url.pathSegments.last()).absolutePath
-        )
+    override suspend fun validate(subscription: Subscription): Boolean = withContext(Dispatchers.IO) {
+        try {
+            val url = createUrl(subscription)
+            val request = createHeadRequest(url)
+
+            val response = retryIO(description = subscription.title) {
+                okHttpClient.newCall(request).await()
+            }
+            response.code == 200
+        } catch (ex: Exception) {
+            Timber.d(ex, "Error downloading ${subscription.url}")
+            false
+        }
     }
 
-    private fun createUrl(subscription: Subscription, version: String, downloadCount: Int): HttpUrl {
-        return subscription.url.toHttpUrl().newBuilder().apply {
+    private suspend fun getDownloadedSubscription(subscription: Subscription): DownloadedSubscription {
+        return try {
+            val url = subscription.url.sanatizeUrl().toHttpUrl()
+            val coreData = repository.getDataSync()
+            return coreData.downloadedSubscription.firstOrNull {
+                it.url == subscription.url
+            } ?: DownloadedSubscription(
+                subscription.url,
+                path = context.downloadFile(url.pathSegments.last()).absolutePath
+            )
+        } catch (ex: Exception) {
+            Timber.e(ex, "Error parsing url: ${subscription.url}")
+            DownloadedSubscription(subscription.url)
+        }
+    }
+
+    private fun createUrl(subscription: Subscription, version: String = "0",
+                          downloadCount: Int = 0): HttpUrl {
+        return subscription.url.sanatizeUrl().toHttpUrl().newBuilder().apply {
             addQueryParameter("addonName", appInfo.addonName)
             addQueryParameter("addonVersion", appInfo.addonVersion)
             addQueryParameter("application", appInfo.application)
@@ -111,6 +136,9 @@ internal class OkHttpDownloader(
                 }
             }
         }.build()
+
+    private fun createHeadRequest(url: HttpUrl): Request =
+        Request.Builder().url(url).head().build()
 
     private fun writeTempFile(source: BufferedSource): File {
         val file = File.createTempFile("list", ".txt", context.cacheDir)
