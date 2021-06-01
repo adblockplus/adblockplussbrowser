@@ -14,16 +14,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/aa_acceptable_ads_label" />
 
-        <ImageView
-            android:id="@+id/aa_image_left"
-            android:layout_width="0dp"
-            android:layout_height="190dp"
-            android:src="@drawable/ic_acceptable_ads_illustration"
-            android:layout_marginStart="24dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/aa_acceptable_ads_label"
-            app:layout_constraintWidth_percent="0.42" />
-
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/aa_acceptable_ads_label"
             style="@style/AbpPreferenceCategoryTitleTextStyle"
@@ -36,16 +26,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/aa_image_right"
-            android:layout_width="0dp"
-            android:layout_height="190dp"
-            android:src="@drawable/ic_intrusive_ads_illustration"
-            android:layout_marginEnd="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/aa_intrusive_ads_label"
-            app:layout_constraintWidth_percent="0.42" />
-
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/aa_intrusive_ads_label"
             style="@style/AbpPreferenceCategoryTitleTextStyle"
@@ -56,6 +36,27 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/aa_image_right"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/aa_image_left"
+            android:layout_width="0dp"
+            android:layout_height="160dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_acceptable_ads_illustration"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/aa_acceptable_ads_label"
+            app:layout_constraintWidth_percent="0.42" />
+
+        <ImageView
+            android:id="@+id/aa_image_right"
+            android:layout_width="0dp"
+            android:layout_height="160dp"
+            android:src="@drawable/ic_intrusive_ads_illustration"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/aa_image_left"
+            app:layout_constraintWidth_percent="0.42" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/aa_fair_standards_label"
@@ -83,7 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:drawableStart="@drawable/bullet"
             android:drawablePadding="8dp"
             android:text="@string/acceptable_ads_placement"
@@ -104,7 +105,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:drawableStart="@drawable/bullet"
             android:drawablePadding="8dp"
             android:text="@string/acceptable_ads_distinction"
@@ -125,7 +126,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:drawableStart="@drawable/bullet"
             android:drawablePadding="8dp"
             android:text="@string/acceptable_ads_size"

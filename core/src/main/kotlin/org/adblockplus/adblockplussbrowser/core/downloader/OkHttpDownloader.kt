@@ -152,6 +152,7 @@ internal class OkHttpDownloader(
     private fun extractVersion(file: File): String {
         val version = readHeader(file).asSequence().map { it.trim() }
             .filter { it.startsWith("!") }
+            .filter { it.contains(":") }
             .map { line ->
                 val split = line.split(":", limit = 2)
                 Pair(split[0].trim(), split[1].trim())

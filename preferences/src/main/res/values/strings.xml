@@ -32,7 +32,7 @@
     <string name="allowlist_add_title">Add a domain to the allowlist</string>
     <string name="allowlist_add_hint">example.com</string>
     <string name="acceptable_ads_fair_standard">Fair Standard</string>
-    <string name="acceptable_ads_fair_standard_description">Acceptable Ads are never video, sound and popup ads</string>
+    <string name="acceptable_ads_fair_standard_description">Acceptable Ads are never video, sound or popup ads</string>
     <string name="acceptable_ads_placement">Placement</string>
     <string name="acceptable_ads_placement_description">Does not disrupt the natural reading flow.</string>
     <string name="acceptable_ads_distinction">Distinction</string>

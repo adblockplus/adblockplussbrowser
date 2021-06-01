@@ -40,6 +40,7 @@
                 android:checked="@{viewModel.enabled}"
                 android:onClick="@{(v) -> viewModel.enableAcceptableAds()}"
                 android:paddingStart="8dp"
+                android:gravity="top"
                 tools:text="Yes, I’ll support content creators.\nBy keeping Acceptable Ads enabled, you’re helping content creators publish their content for free." />
 
             <View
@@ -47,7 +48,7 @@
                 style="@style/AbpPreferenceDivider"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:layout_marginTop="16dp" />
+                android:layout_marginTop="8dp" />
 
             <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/acceptable_ads_disabled"
@@ -65,7 +66,7 @@
         <View
             android:id="@+id/first_space"
             android:layout_width="match_parent"
-            android:layout_height="16dp"
+            android:layout_height="8dp"
             app:layout_constraintTop_toBottomOf="@id/acceptable_ads_radiogroup" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
