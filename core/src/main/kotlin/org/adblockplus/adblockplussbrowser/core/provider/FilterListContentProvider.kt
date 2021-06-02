@@ -16,6 +16,7 @@ import kotlinx.coroutines.SupervisorJob
 import okio.buffer
 import okio.sink
 import okio.source
+import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import timber.log.Timber
 import java.io.File
@@ -31,6 +32,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
     override val coroutineContext = Dispatchers.IO + SupervisorJob()
 
     lateinit var coreRepository: CoreRepository
+    lateinit var subscriptionsManager: SubscriptionsManager
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int = 0
 

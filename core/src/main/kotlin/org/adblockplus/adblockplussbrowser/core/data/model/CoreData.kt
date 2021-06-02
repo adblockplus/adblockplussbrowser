@@ -7,5 +7,15 @@ import kotlinx.parcelize.Parcelize
 internal data class CoreData(
     val configured: Boolean,
     val lastUpdated: Long,
+    val lastState: SavedState,
     val downloadedSubscription: List<DownloadedSubscription>
+) : Parcelable
+
+@Parcelize
+internal data class SavedState(
+    val acceptableAdsEnabled: Boolean,
+    val allowedDomains: List<String>,
+    val blockedDomains: List<String>,
+    val primarySubscriptions: List<String>,
+    val otherSubscriptions: List<String>
 ) : Parcelable

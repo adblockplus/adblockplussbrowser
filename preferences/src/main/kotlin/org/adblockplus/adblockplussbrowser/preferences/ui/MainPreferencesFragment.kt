@@ -1,5 +1,6 @@
 package org.adblockplus.adblockplussbrowser.preferences.ui
 
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,6 +35,13 @@ internal class MainPreferencesFragment :
             val direction = MainPreferencesFragmentDirections
                 .actionMainPreferencesFragmentToAcceptableAdsFragment()
             findNavController().navigate(direction)
+        }
+
+        viewModel.updates.observe(this) { wrapper ->
+            wrapper.get()?.let {
+                Toast.makeText(requireContext(), getString(R.string.preferences_updating_message),
+                    Toast.LENGTH_LONG).show()
+            }
         }
     }
 }
