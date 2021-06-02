@@ -22,6 +22,7 @@ import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
 import org.adblockplus.adblockplussbrowser.core.downloader.OkHttpDownloader
 import javax.inject.Qualifier
 import javax.inject.Singleton
+import kotlin.time.ExperimentalTime
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -46,6 +47,7 @@ internal object CoreModule {
             .addInterceptor(loggingInterceptor)
             .build()
 
+    @ExperimentalTime
     @Provides
     @Singleton
     fun provideSubscriptionDownloader(

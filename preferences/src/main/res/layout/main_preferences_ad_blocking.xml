@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="org.adblockplus.adblockplussbrowser.preferences.ui.MainPreferencesViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -48,7 +54,7 @@
         </LinearLayout>
 
         <View
-            android:id="@+id/main_preferenced_divider_1"
+            android:id="@+id/main_preferences_divider_1"
             style="@style/AbpPreferenceDivider"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
@@ -61,7 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/main_preferenced_divider_1">
+            app:layout_constraintTop_toBottomOf="@id/main_preferences_divider_1">
 
             <com.google.android.material.textview.MaterialTextView
                 style="@style/AbpPreferenceTitleTextStyle"
@@ -78,7 +84,7 @@
         </LinearLayout>
 
         <View
-            android:id="@+id/main_preferenced_divider_2"
+            android:id="@+id/main_preferences_divider_2"
             style="@style/AbpPreferenceDivider"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
@@ -91,7 +97,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/main_preferenced_divider_2">
+            app:layout_constraintTop_toBottomOf="@id/main_preferences_divider_2">
 
             <com.google.android.material.textview.MaterialTextView
                 style="@style/AbpPreferenceTitleTextStyle"
@@ -108,7 +114,7 @@
         </LinearLayout>
 
         <View
-            android:id="@+id/main_preferenced_divider_3"
+            android:id="@+id/main_preferences_divider_3"
             style="@style/AbpPreferenceDivider"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
@@ -121,7 +127,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/main_preferenced_divider_3">
+            app:layout_constraintTop_toBottomOf="@id/main_preferences_divider_3">
 
             <com.google.android.material.textview.MaterialTextView
                 style="@style/AbpPreferenceTitleTextStyle"
@@ -139,7 +145,7 @@
         </LinearLayout>
 
         <View
-            android:id="@+id/main_preferenced_divider_4"
+            android:id="@+id/main_preferences_divider_4"
             style="@style/AbpPreferenceDivider"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
@@ -151,8 +157,9 @@
             style="@style/AbpPreferenceContainerStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="@{(v) -> viewModel.updateSubscriptions()}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/main_preferenced_divider_4">
+            app:layout_constraintTop_toBottomOf="@id/main_preferences_divider_4">
 
             <com.google.android.material.textview.MaterialTextView
                 style="@style/AbpPreferenceTitleTextStyle"
@@ -164,8 +171,7 @@
                 style="@style/AbpPreferenceSummaryTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Last updated: Today, 13:37"
-                tools:text="Last updated: Today, 13:37" />
+                android:text="@string/preferences_update_subscriptions_subtitle" />
 
         </LinearLayout>
 

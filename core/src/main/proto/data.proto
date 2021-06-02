@@ -13,9 +13,18 @@ message ProtoDownloadedSubscription {
   int32 download_count = 7;
 }
 
+message ProtoSavedState {
+  bool acceptable_ads_enabled = 1;
+  repeated string allowed_domains = 2;
+  repeated string blocked_domains = 3;
+  repeated string primary_subscriptions = 4;
+  repeated string other_subscriptions = 5;
+}
+
 message ProtoCoreData {
   bool configured = 1;
   int64 last_update = 2;
-  repeated ProtoDownloadedSubscription downloaded_subscriptions = 3;
+  ProtoSavedState lastState = 3;
+  repeated ProtoDownloadedSubscription downloaded_subscriptions = 4;
 }
 

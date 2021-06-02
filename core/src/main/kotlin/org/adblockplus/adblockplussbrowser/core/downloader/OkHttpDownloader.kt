@@ -16,14 +16,17 @@ import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.core.AppInfo
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscription
+import org.adblockplus.adblockplussbrowser.core.data.model.exists
 import org.adblockplus.adblockplussbrowser.core.data.model.ifExists
 import org.adblockplus.adblockplussbrowser.core.extensions.sanatizeUrl
 import org.adblockplus.adblockplussbrowser.core.retryIO
 import ru.gildor.coroutines.okhttp.await
 import timber.log.Timber
 import java.io.File
+import kotlin.time.ExperimentalTime
 
 
+@ExperimentalTime
 internal class OkHttpDownloader(
     private val context: Context,
     private val okHttpClient: OkHttpClient,
@@ -31,12 +34,31 @@ internal class OkHttpDownloader(
     private val appInfo: AppInfo
 ) : Downloader {
 
-    override suspend fun download(subscription: Subscription): DownloadResult = coroutineScope {
+    override suspend fun download(subscription: Subscription,
+                                  newSubscription: Boolean,
+                                  forceDownload: Boolean): DownloadResult = coroutineScope {
         try {
             val previousDownload = getDownloadedSubscription(subscription)
-            val url = createUrl(subscription, previousDownload.version, previousDownload.downloadCount)
-            val file = File(previousDownload.path)
-            val request = createDownloadRequest(url, file, previousDownload)
+
+            /* We check for some conditions here:
+             *  - If we are not forcing the download (periodic or manual updates)
+             *  - If the previous downloaded file is NOT "expired"
+             *      - If we are adding the subscription we use MIN_REFRESH_INTERVAL (5 minutes)
+             *      - Otherwise we use REFRESH_INTERVAL (8 hours)
+             *  - If the previous downloaded file still exists on the filesystem.
+             *
+             *  If all conditions are met we just return the previously downloaded file and don't
+             *  hit the network.
+             */
+            Timber.d("Subscription: ${subscription.url}: $forceDownload, ${previousDownload.isNotExpired(newSubscription)}, ${previousDownload.exists()}")
+            if (!forceDownload && previousDownload.isNotExpired(newSubscription) && previousDownload.exists()) {
+                Timber.d("Returning pre-downloaded subscriptions: $previousDownload")
+                return@coroutineScope DownloadResult.NotModified(previousDownload)
+            }
+
+            val url = createUrl(subscription, previousDownload)
+            val downloadFile = File(previousDownload.path)
+            val request = createDownloadRequest(url, downloadFile, previousDownload)
 
             Timber.d("Downloading $url - previous subscription: $previousDownload")
 
@@ -44,16 +66,16 @@ internal class OkHttpDownloader(
                 okHttpClient.newCall(request).await()
             }
 
-            when (response.code) {
+            val result = when (response.code) {
                 200 -> {
                     val tempFile = writeTempFile(response.body!!.source())
                     context.downloadsDir().mkdirs()
-                    tempFile.renameTo(file)
+                    tempFile.renameTo(downloadFile)
 
                     DownloadResult.Success(previousDownload.copy(
                         lastUpdated = System.currentTimeMillis(),
                         lastModified = response.headers["Last-Modified"] ?: "",
-                        version = extractVersion(file),
+                        version = extractVersion(downloadFile),
                         etag = response.headers["ETag"] ?: "",
                         downloadCount = previousDownload.downloadCount + 1
                     ))
@@ -68,6 +90,8 @@ internal class OkHttpDownloader(
                     DownloadResult.Failed(previousDownload.ifExists())
                 }
             }
+            response.close()
+            result
         } catch (ex: Exception) {
             ex.printStackTrace()
             val previousDownload = getDownloadedSubscription(subscription)
@@ -99,7 +123,7 @@ internal class OkHttpDownloader(
                 it.url == subscription.url
             } ?: DownloadedSubscription(
                 subscription.url,
-                path = context.downloadFile(url.pathSegments.last()).absolutePath
+                path = context.downloadFile(url.toFileName()).absolutePath
             )
         } catch (ex: Exception) {
             Timber.e(ex, "Error parsing url: ${subscription.url}")
@@ -107,8 +131,10 @@ internal class OkHttpDownloader(
         }
     }
 
-    private fun createUrl(subscription: Subscription, version: String = "0",
-                          downloadCount: Int = 0): HttpUrl {
+    private fun createUrl(subscription: Subscription,
+                          previousDownload: DownloadedSubscription =
+                              DownloadedSubscription(subscription.url)
+    ): HttpUrl {
         return subscription.url.sanatizeUrl().toHttpUrl().newBuilder().apply {
             addQueryParameter("addonName", appInfo.addonName)
             addQueryParameter("addonVersion", appInfo.addonVersion)
@@ -116,8 +142,8 @@ internal class OkHttpDownloader(
             addQueryParameter("applicationVersion", appInfo.applicationVersion)
             addQueryParameter("platform", appInfo.platform)
             addQueryParameter("platformVersion", appInfo.platformVersion)
-            addQueryParameter("lastVersion", version)
-            addQueryParameter("downloadCount", downloadCount.asDownloadCount())
+            addQueryParameter("lastVersion", previousDownload.version)
+            addQueryParameter("downloadCount", previousDownload.downloadCount.asDownloadCount())
         }.build()
     }
 
@@ -127,6 +153,7 @@ internal class OkHttpDownloader(
         previousDownload: DownloadedSubscription
     ): Request =
         Request.Builder().url(url).apply {
+            // Don't apply If-Modified-Since and If-None-Match if the file doesn't exists on the filesystem
             if (file.exists()) {
                 if (previousDownload.lastModified.isNotEmpty()) {
                     addHeader("If-Modified-Since", previousDownload.lastModified)
@@ -140,9 +167,9 @@ internal class OkHttpDownloader(
     private fun createHeadRequest(url: HttpUrl): Request =
         Request.Builder().url(url).head().build()
 
-    private fun writeTempFile(source: BufferedSource): File {
+    private fun writeTempFile(input: BufferedSource): File {
         val file = File.createTempFile("list", ".txt", context.cacheDir)
-        source.use { source ->
+        input.use { source ->
             file.sink().buffer().use { dest -> dest.writeAll(source) }
         }
         return file
@@ -170,6 +197,21 @@ internal class OkHttpDownloader(
                 .takeWhile { it.isNotEmpty() && (it[0] == '[' || it[0] == '!') }
                 .toList()
         }
+    }
+
+    private fun HttpUrl.toFileName(): String = "${this.toString().hashCode()}.txt"
+
+    private fun DownloadedSubscription.isNotExpired(newSubscription: Boolean) =
+        !this.isExpired(newSubscription)
+
+    private fun DownloadedSubscription.isExpired(newSubscription: Boolean): Boolean {
+        val elapsed = System.currentTimeMillis() - this.lastUpdated
+        return if (newSubscription) elapsed > MIN_REFRESH_INTERVAL else elapsed > REFRESH_INTERVAL
+    }
+
+    companion object {
+        private const val MIN_REFRESH_INTERVAL = 5 * 60 * 1000 // 5 minutes
+        private const val REFRESH_INTERVAL = 8 * 60 * 60 * 1000 // 8 hours
     }
 }
 

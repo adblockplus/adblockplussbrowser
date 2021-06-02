@@ -15,7 +15,7 @@ internal data class DownloadedSubscription(
     val downloadCount: Int = 0
 ): Parcelable
 
-private fun DownloadedSubscription.exists(): Boolean = File(path).exists()
+internal fun DownloadedSubscription.exists(): Boolean = File(path).exists()
 
 internal fun DownloadedSubscription.ifExists(): DownloadedSubscription? =
     if (this.exists()) this else null

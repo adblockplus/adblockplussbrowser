@@ -9,7 +9,7 @@ interface SubscriptionsManager {
 
     fun initialize()
 
-    fun scheduleOneTime()
+    fun scheduleImmediate(force: Boolean = false)
 
     fun updateStatus(status: Status)
 

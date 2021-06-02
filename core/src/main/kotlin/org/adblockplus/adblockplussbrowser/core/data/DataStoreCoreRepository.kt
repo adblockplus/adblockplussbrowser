@@ -8,9 +8,11 @@ import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.flow.take
 import org.adblockplus.adblockplussbrowser.core.data.model.CoreData
 import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscription
+import org.adblockplus.adblockplussbrowser.core.data.model.SavedState
 import org.adblockplus.adblockplussbrowser.core.data.proto.ProtoCoreData
 import org.adblockplus.adblockplussbrowser.core.data.proto.toCoreData
 import org.adblockplus.adblockplussbrowser.core.data.proto.toProtoDownloadedSubscription
+import org.adblockplus.adblockplussbrowser.core.data.proto.toProtoSavedState
 
 internal class DataStoreCoreRepository(
     private val dataStore: DataStore<ProtoCoreData>,
@@ -27,7 +29,7 @@ internal class DataStoreCoreRepository(
 
     override suspend fun getDataSync(): CoreData = data.take(1).single()
 
-    override suspend fun setInitialized() {
+    override suspend fun setConfigured() {
         dataStore.updateData { data ->
             data.toBuilder().setConfigured(true).build()
         }
@@ -35,9 +37,11 @@ internal class DataStoreCoreRepository(
 
     override suspend fun updateDownloadedSubscriptions(subscriptions: List<DownloadedSubscription>) {
         dataStore.updateData { data ->
+            val set = subscriptions.map { it.toProtoDownloadedSubscription() }.toMutableSet()
+            set.addAll(data.downloadedSubscriptionsList)
             data.toBuilder()
                 .clearDownloadedSubscriptions()
-                .addAllDownloadedSubscriptions(subscriptions.map { it.toProtoDownloadedSubscription() })
+                .addAllDownloadedSubscriptions(set.toList())
                 .setLastUpdate(System.currentTimeMillis())
                 .build()
         }
@@ -46,6 +50,12 @@ internal class DataStoreCoreRepository(
     override suspend fun updateLastUpdated(lastUpdated: Long) {
         dataStore.updateData { data ->
             data.toBuilder().setLastUpdate(lastUpdated).build()
+        }
+    }
+
+    override suspend fun updateSavedState(savedState: SavedState) {
+        dataStore.updateData { data ->
+            data.toBuilder().setLastState(savedState.toProtoSavedState()).build()
         }
     }
 }

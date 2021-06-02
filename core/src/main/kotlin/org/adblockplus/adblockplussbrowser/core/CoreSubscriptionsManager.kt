@@ -30,6 +30,9 @@ import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
 import org.adblockplus.adblockplussbrowser.core.work.UpdateSubscriptionsWorker
+import org.adblockplus.adblockplussbrowser.core.work.UpdateSubscriptionsWorker.Companion.KEY_FORCE_REFRESH
+import org.adblockplus.adblockplussbrowser.core.work.UpdateSubscriptionsWorker.Companion.KEY_ONESHOT_WORK
+import org.adblockplus.adblockplussbrowser.core.work.UpdateSubscriptionsWorker.Companion.KEY_PERIODIC_WORK
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
 import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig
@@ -85,8 +88,8 @@ class CoreSubscriptionsManager(
             val coreData = coreRepository.data.take(1).single()
             if (!coreData.configured) {
                 Timber.d("Initializing CORE: Scheduling updates")
-                scheduleOneTime()
-                coreRepository.setInitialized()
+                scheduleImmediate()
+                coreRepository.setConfigured()
             } else {
                 Timber.d("CORE already initialized")
             }
@@ -95,30 +98,36 @@ class CoreSubscriptionsManager(
 
     private suspend fun listenSettingsChanges() = coroutineScope {
         launch {
-            settingsRepository.settings.debounce(4000).onEach { settings ->
+            settingsRepository.settings.debounce(500).onEach { settings ->
                 Timber.d("Old settings: $currentSettings, new settings: $settings")
 
                 if (currentSettings.changed(settings)) {
                     currentSettings = settings
-                    scheduleOneTime()
+                    scheduleImmediate()
                 }
             }.launchIn(this)
         }
     }
 
-    override fun scheduleOneTime() {
+    override fun scheduleImmediate(force: Boolean) {
         // reschedule periodic downloader
         // Make sure we don't do a periodic update right after a manual one.
         schedule(currentSettings.updateConfig)
 
         val request = OneTimeWorkRequestBuilder<UpdateSubscriptionsWorker>()
-            .setConstraints(Constraints.Builder().setRequiredNetworkType(UpdateConfig.ALWAYS.toNetworkType()).build())
-            .addTag(KEY_ONESHOT_WORK)
+            .setConstraints(Constraints.Builder()
+                .setRequiredNetworkType(UpdateConfig.ALWAYS.toNetworkType()).build()).apply {
+                addTag(KEY_ONESHOT_WORK)
+                if (force) {
+                    addTag(KEY_FORCE_REFRESH)
+                }
+            }
             .build()
 
         val manager = WorkManager.getInstance(appContext)
+
         // REPLACE old enqueued works
-        manager.enqueueUniqueWork(KEY_ONESHOT_WORK, ExistingWorkPolicy.REPLACE, request)
+        manager.enqueueUniqueWork(KEY_ONESHOT_WORK, ExistingWorkPolicy.APPEND_OR_REPLACE, request)
     }
 
     private fun schedule(updateConfig: UpdateConfig) {
@@ -160,10 +169,5 @@ class CoreSubscriptionsManager(
         val otherList = other.map { it.url }
 
         return (list.filterNot { otherList.contains(it) } + otherList.filterNot { list.contains(it) }).isNotEmpty()
-    }
-
-    companion object {
-        private const val KEY_PERIODIC_WORK = "PERIODIC_KEY"
-        private const val KEY_ONESHOT_WORK = "ONESHOT_WORK"
     }
 }
