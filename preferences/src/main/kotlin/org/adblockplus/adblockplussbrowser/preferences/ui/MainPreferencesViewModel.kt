@@ -7,7 +7,7 @@ import androidx.lifecycle.asLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
-import org.adblockplus.adblockplussbrowser.base.ValueWrapper
+import org.adblockplus.adblockplussbrowser.base.data.ValueWrapper
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import javax.inject.Inject
 
