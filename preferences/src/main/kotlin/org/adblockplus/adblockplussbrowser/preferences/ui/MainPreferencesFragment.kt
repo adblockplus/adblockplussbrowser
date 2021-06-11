@@ -36,6 +36,11 @@ internal class MainPreferencesFragment :
                 .actionMainPreferencesFragmentToAcceptableAdsFragment()
             findNavController().navigate(direction)
         }
+        binding.mainPreferencesAboutInclude.mainPreferencesAbout.setOnClickListener {
+            val direction = MainPreferencesFragmentDirections
+                .actionMainPreferencesFragmentToAboutFragment()
+            findNavController().navigate(direction)
+        }
 
         viewModel.updates.observe(this) { wrapper ->
             wrapper.get()?.let {

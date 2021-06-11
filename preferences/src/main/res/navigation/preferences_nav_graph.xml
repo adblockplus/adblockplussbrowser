@@ -27,6 +27,10 @@
             android:id="@+id/action_main_preferences_fragment_to_acceptable_ads_fragment"
             app:destination="@id/acceptable_ads_fragment" />
 
+        <action
+            android:id="@+id/action_main_preferences_fragment_to_about_fragment"
+            app:destination="@id/about_fragment" />
+
     </fragment>
 
     <fragment
@@ -52,5 +56,11 @@
         android:name="org.adblockplus.adblockplussbrowser.preferences.ui.acceptableads.AcceptableAdsFragment"
         android:label="@string/preferences_acceptable_ads_fragment_title"
         tools:layout="@layout/fragment_acceptable_ads" />
+
+    <fragment
+        android:id="@+id/about_fragment"
+        android:name="org.adblockplus.adblockplussbrowser.preferences.ui.about.AboutFragment"
+        android:label="@string/preferences_about_title"
+        tools:layout="@layout/fragment_about" />
 
 </navigation>

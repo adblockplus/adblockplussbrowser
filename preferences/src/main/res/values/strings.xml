@@ -44,4 +44,7 @@
     <string name="acceptable_ads_enabled_line1">Yes, I’ll support content creators.</string>
     <string name="acceptable_ads_enabled_line2">By keeping Acceptable Ads enabled, you’re helping content creators publish their content for free.</string>
     <string name="acceptable_ads_disabled">No, I’d like to disable Acceptable Ads.</string>
+    <string name="about_privacy_policy">Privacy Policy</string>
+    <string name="about_terms_of_use">Terms of Use</string>
+    <string name="about_imprint">Imprint</string>
 </resources>

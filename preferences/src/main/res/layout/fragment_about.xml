@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        style="@style/AbpPreferenceScreen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@drawable/preferences_group_bg_single"
+                app:layout_constraintBottom_toBottomOf="@id/about_imprint"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/about_privacy_policy" />
+
+            <LinearLayout
+                android:id="@+id/about_privacy_policy"
+                style="@style/AbpPreferenceContainerStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/AbpPreferenceTitleTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/about_privacy_policy" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/about_divider_1"
+                style="@style/AbpPreferenceDivider"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/about_privacy_policy" />
+
+            <LinearLayout
+                android:id="@+id/about_terms_of_use"
+                style="@style/AbpPreferenceContainerStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/about_divider_1">
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/AbpPreferenceTitleTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/about_terms_of_use" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/about_divider_2"
+                style="@style/AbpPreferenceDivider"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/about_terms_of_use" />
+
+            <LinearLayout
+                android:id="@+id/about_imprint"
+                style="@style/AbpPreferenceContainerStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/about_divider_2">
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/AbpPreferenceTitleTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/about_imprint" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/about_imprint_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</layout>
