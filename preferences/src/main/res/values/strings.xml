@@ -9,8 +9,11 @@
     <string name="preferences_allowlist_summary">Disable ad blocking on websites of your choosing</string>
     <string name="preferences_blocklist_title">Add websites to blocklist</string>
     <string name="preferences_blocklist_summary">Enable ad blocking on websites of your choosing</string>
+    <string name="preferences_updates_title">Update ad filter lists</string>
+    <string name="preferences_updates_subtitle">Configure when to update the lists used to filter ads</string>
     <string name="preferences_automatic_updates_title">Automatic updates</string>
-    <string name="preferences_automatic_updates_wifi_only">While on Wi-Fi only</string>
+    <string name="preferences_automatic_updates_wifi_only">Wi-Fi only</string>
+    <string name="preferences_automatic_updates_always">Always</string>
     <string name="preferences_update_subscriptions_title">Update now</string>
     <string name="preferences_update_subscriptions_subtitle">Update now all the active ad filtering lists</string>
     <string name="preferences_acceptable_ads_category">Acceptable Ads</string>

@@ -83,7 +83,8 @@ internal class HardcodedSubscriptions {
             languages("lv")
         }
         subscription {
-            url = "https://easylist-downloads.adblockplus.org/liste_ar+liste_fr.txt"
+            // FIXME - using combined list, since only liste_ar+liste_fr.txt is not available
+            url = "https://easylist-downloads.adblockplus.org/liste_ar+liste_fr+easylist.txt"
             languages("ar")
         }
         subscription {
@@ -95,7 +96,8 @@ internal class HardcodedSubscriptions {
             languages("ro")
         }
         subscription {
-            url = "https://easylist-downloads.adblockplus.org/ruadlist.txt"
+            // FIXME - using combined list, since only ruadlist.txt is not available
+            url = "https://easylist-downloads.adblockplus.org/ruadlist+easylist.txt"
             languages("ru", "uk")
         }
     }

@@ -35,15 +35,20 @@ internal class DataStoreCoreRepository(
         }
     }
 
-    override suspend fun updateDownloadedSubscriptions(subscriptions: List<DownloadedSubscription>) {
+    override suspend fun updateDownloadedSubscriptions(
+        subscriptions: List<DownloadedSubscription>,
+        updateTimestamp: Boolean
+    ) {
         dataStore.updateData { data ->
             val set = subscriptions.map { it.toProtoDownloadedSubscription() }.toMutableSet()
             set.addAll(data.downloadedSubscriptionsList)
-            data.toBuilder()
-                .clearDownloadedSubscriptions()
-                .addAllDownloadedSubscriptions(set.toList())
-                .setLastUpdate(System.currentTimeMillis())
-                .build()
+            data.toBuilder().apply {
+                clearDownloadedSubscriptions()
+                addAllDownloadedSubscriptions(set.toList())
+                if (updateTimestamp) {
+                    lastUpdate = System.currentTimeMillis()
+                }
+            }.build()
         }
     }
 

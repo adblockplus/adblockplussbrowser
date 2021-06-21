@@ -13,21 +13,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class MainPreferencesViewModel @Inject constructor(
-    val settingsRepository: SettingsRepository,
-    private val subscriptionsManager: SubscriptionsManager
+    val settingsRepository: SettingsRepository
 ) : ViewModel() {
     val acceptableAdsEnabled = settingsRepository.settings.map { settings ->
         settings.acceptableAdsEnabled
     }.asLiveData()
-
-    private val _updates = MutableLiveData<ValueWrapper<Unit>>()
-    val updates: LiveData<ValueWrapper<Unit>>
-        get() = _updates
-
-
-    fun updateSubscriptions() {
-        subscriptionsManager.scheduleImmediate(force = true)
-        // Post an event...
-        _updates.value = ValueWrapper(Unit)
-    }
 }

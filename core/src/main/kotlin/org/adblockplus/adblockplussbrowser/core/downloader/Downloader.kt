@@ -4,9 +4,12 @@ import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscription
 
 internal interface Downloader {
-    suspend fun download(subscription: Subscription,
-                         newSubscription: Boolean,
-                         forceDownload: Boolean): DownloadResult
+    suspend fun download(
+        subscription: Subscription,
+        forced: Boolean,
+        periodic: Boolean,
+        newSubscription: Boolean,
+    ): DownloadResult
 
     suspend fun validate(subscription: Subscription): Boolean
 }

@@ -9,7 +9,6 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
@@ -19,27 +18,35 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.single
-import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
+import org.adblockplus.adblockplussbrowser.core.extensions.currentData
+import org.adblockplus.adblockplussbrowser.core.extensions.currentSettings
+import org.adblockplus.adblockplussbrowser.core.extensions.periodicWorkRequestBuilder
+import org.adblockplus.adblockplussbrowser.core.extensions.setBackoffCriteria
 import org.adblockplus.adblockplussbrowser.core.work.UpdateSubscriptionsWorker
 import org.adblockplus.adblockplussbrowser.core.work.UpdateSubscriptionsWorker.Companion.KEY_FORCE_REFRESH
 import org.adblockplus.adblockplussbrowser.core.work.UpdateSubscriptionsWorker.Companion.KEY_ONESHOT_WORK
 import org.adblockplus.adblockplussbrowser.core.work.UpdateSubscriptionsWorker.Companion.KEY_PERIODIC_WORK
+import org.adblockplus.adblockplussbrowser.core.extensions.setBackoffTime
+import org.adblockplus.adblockplussbrowser.core.extensions.setInitialDelay
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
 import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig
 import timber.log.Timber
-import java.util.concurrent.TimeUnit
+import kotlin.time.Duration
+import kotlin.time.ExperimentalTime
 
 @Suppress("PropertyName")
+@ExperimentalTime
 class CoreSubscriptionsManager(
     private val appContext: Context
 ) : SubscriptionsManager, CoroutineScope {
@@ -62,6 +69,11 @@ class CoreSubscriptionsManager(
     override val status: LiveData<SubscriptionsManager.Status>
         get() = _status
 
+    override val lastUpdate: Flow<Long>
+        get() = coreRepository.data.map { data ->
+            data.lastUpdated
+        }
+
     private lateinit var currentSettings: Settings
 
     init {
@@ -76,7 +88,7 @@ class CoreSubscriptionsManager(
 
     override fun initialize() {
         launch {
-            currentSettings = settingsRepository.settings.take(1).single()
+            currentSettings = settingsRepository.currentSettings()
             Timber.d("SubscriptionsManager initialization: $currentSettings")
             initialSetup()
             listenSettingsChanges()
@@ -85,10 +97,11 @@ class CoreSubscriptionsManager(
 
     private suspend fun initialSetup() = coroutineScope {
         launch {
-            val coreData = coreRepository.data.take(1).single()
+            val coreData = coreRepository.currentData()
             if (!coreData.configured) {
                 Timber.d("Initializing CORE: Scheduling updates")
-                scheduleImmediate()
+                scheduleImmediate(force = true)
+                schedule(currentSettings.updateConfig)
                 coreRepository.setConfigured()
             } else {
                 Timber.d("CORE already initialized")
@@ -97,45 +110,42 @@ class CoreSubscriptionsManager(
     }
 
     private suspend fun listenSettingsChanges() = coroutineScope {
-        launch {
-            settingsRepository.settings.debounce(500).onEach { settings ->
-                Timber.d("Old settings: $currentSettings, new settings: $settings")
+        settingsRepository.settings.debounce(500).onEach { settings ->
+            Timber.d("Old settings: $currentSettings, new settings: $settings")
 
-                if (currentSettings.changed(settings)) {
-                    currentSettings = settings
-                    scheduleImmediate()
-                }
-            }.launchIn(this)
-        }
+            if (currentSettings.changed(settings)) {
+                scheduleImmediate()
+            }
+            if (currentSettings.changedUpdateConfig(settings)) {
+                schedule(settings.updateConfig)
+            }
+            currentSettings = settings
+        }.launchIn(this)
     }
 
     override fun scheduleImmediate(force: Boolean) {
-        // reschedule periodic downloader
-        // Make sure we don't do a periodic update right after a manual one.
-        schedule(currentSettings.updateConfig)
-
-        val request = OneTimeWorkRequestBuilder<UpdateSubscriptionsWorker>()
-            .setConstraints(Constraints.Builder()
-                .setRequiredNetworkType(UpdateConfig.ALWAYS.toNetworkType()).build()).apply {
+        val request = OneTimeWorkRequestBuilder<UpdateSubscriptionsWorker>().apply {
+                setConstraints(Constraints.Builder()
+                    .setRequiredNetworkType(UpdateConfig.ALWAYS.toNetworkType()).build())
+                setBackoffTime(Duration.minutes(1))
                 addTag(KEY_ONESHOT_WORK)
                 if (force) {
                     addTag(KEY_FORCE_REFRESH)
                 }
-            }
-            .build()
+            }.build()
 
         val manager = WorkManager.getInstance(appContext)
-
         // REPLACE old enqueued works
         manager.enqueueUniqueWork(KEY_ONESHOT_WORK, ExistingWorkPolicy.APPEND_OR_REPLACE, request)
     }
 
     private fun schedule(updateConfig: UpdateConfig) {
-        val request = PeriodicWorkRequestBuilder<UpdateSubscriptionsWorker>(30, TimeUnit.MINUTES)
+        Timber.d("Scheduling periodic worker for: $updateConfig")
+        val request = periodicWorkRequestBuilder<UpdateSubscriptionsWorker>(UPDATE_INTERVAL, FLEX_UPDATE_INTERVAL)
             .setConstraints(Constraints.Builder().setRequiredNetworkType(updateConfig.toNetworkType()).build())
-            .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 30, TimeUnit.SECONDS)
+            .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, Duration.minutes(1))
             .addTag(KEY_PERIODIC_WORK)
-            .setInitialDelay(30, TimeUnit.MINUTES)
+            .setInitialDelay(INITIAL_UPDATE_INTERVAL)
             .build()
 
         val manager = WorkManager.getInstance(appContext)
@@ -151,8 +161,8 @@ class CoreSubscriptionsManager(
         _status.postValue(status)
     }
 
-    private fun UpdateConfig.toNetworkType(force: Boolean = false): NetworkType =
-        if (this == UpdateConfig.WIFI_ONLY && !force) NetworkType.CONNECTED else NetworkType.NOT_ROAMING
+    private fun UpdateConfig.toNetworkType(): NetworkType =
+        if (this == UpdateConfig.WIFI_ONLY) NetworkType.UNMETERED else NetworkType.CONNECTED
 
     private fun Settings.changed(other: Settings): Boolean {
         return this.adblockEnabled != other.adblockEnabled ||
@@ -160,14 +170,22 @@ class CoreSubscriptionsManager(
             this.allowedDomains != other.allowedDomains ||
             this.blockedDomains != other.blockedDomains ||
             this.activePrimarySubscriptions.changed(other.activePrimarySubscriptions) ||
-            this.activeOtherSubscriptions.changed(other.activeOtherSubscriptions) ||
-            this.updateConfig != other.updateConfig
+            this.activeOtherSubscriptions.changed(other.activeOtherSubscriptions)
     }
+
+    private fun Settings.changedUpdateConfig(other: Settings): Boolean =
+        this.updateConfig != other.updateConfig
 
     private fun List<Subscription>.changed(other: List<Subscription>): Boolean {
         val list = this.map { it.url }
         val otherList = other.map { it.url }
 
         return (list.filterNot { otherList.contains(it) } + otherList.filterNot { list.contains(it) }).isNotEmpty()
+    }
+
+    private companion object {
+        private val UPDATE_INTERVAL = Duration.hours(6)
+        private val FLEX_UPDATE_INTERVAL = Duration.minutes(30)
+        private val INITIAL_UPDATE_INTERVAL = Duration.hours(6)
     }
 }

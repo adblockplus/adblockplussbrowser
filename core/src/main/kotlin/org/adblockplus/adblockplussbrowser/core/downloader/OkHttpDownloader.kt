@@ -1,9 +1,9 @@
 package org.adblockplus.adblockplussbrowser.core.downloader
 
 import android.content.Context
-import kotlinx.coroutines.Dispatchers
+import android.net.ConnectivityManager
+import androidx.core.content.ContextCompat
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.withContext
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
@@ -23,6 +23,7 @@ import org.adblockplus.adblockplussbrowser.core.retryIO
 import ru.gildor.coroutines.okhttp.await
 import timber.log.Timber
 import java.io.File
+import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
 
@@ -34,25 +35,20 @@ internal class OkHttpDownloader(
     private val appInfo: AppInfo
 ) : Downloader {
 
-    override suspend fun download(subscription: Subscription,
-                                  newSubscription: Boolean,
-                                  forceDownload: Boolean): DownloadResult = coroutineScope {
+    private val connectivityManager = ContextCompat.getSystemService(context,
+        ConnectivityManager::class.java)
+
+    override suspend fun download(
+        subscription: Subscription,
+        forced: Boolean,
+        periodic: Boolean,
+        newSubscription: Boolean,
+    ): DownloadResult = coroutineScope {
         try {
             val previousDownload = getDownloadedSubscription(subscription)
 
-            /* We check for some conditions here:
-             *  - If we are not forcing the download (periodic or manual updates)
-             *  - If the previous downloaded file is NOT "expired"
-             *      - If we are adding the subscription we use MIN_REFRESH_INTERVAL (5 minutes)
-             *      - Otherwise we use REFRESH_INTERVAL (8 hours)
-             *  - If the previous downloaded file still exists on the filesystem.
-             *
-             *  If all conditions are met we just return the previously downloaded file and don't
-             *  hit the network.
-             */
-            Timber.d("Subscription: ${subscription.url}: $forceDownload, ${previousDownload.isNotExpired(newSubscription)}, ${previousDownload.exists()}")
-            if (!forceDownload && previousDownload.isNotExpired(newSubscription) && previousDownload.exists()) {
-                Timber.d("Returning pre-downloaded subscriptions: $previousDownload")
+            if (canSkipDownload(previousDownload, forced, periodic, newSubscription)) {
+                Timber.d("Returning pre-downloaded subscription: ${previousDownload.url}")
                 return@coroutineScope DownloadResult.NotModified(previousDownload)
             }
 
@@ -61,7 +57,6 @@ internal class OkHttpDownloader(
             val request = createDownloadRequest(url, downloadFile, previousDownload)
 
             Timber.d("Downloading $url - previous subscription: $previousDownload")
-
             val response = retryIO(description = subscription.title) {
                 okHttpClient.newCall(request).await()
             }
@@ -100,7 +95,39 @@ internal class OkHttpDownloader(
         }
     }
 
-    override suspend fun validate(subscription: Subscription): Boolean = withContext(Dispatchers.IO) {
+    private fun canSkipDownload(
+        previousDownload: DownloadedSubscription,
+        forced: Boolean,
+        periodic: Boolean,
+        newSubscription: Boolean
+    ): Boolean {
+        val isMetered = connectivityManager?.isActiveNetworkMetered ?: false
+        val expired = previousDownload.isExpired(newSubscription, isMetered)
+        val exists = previousDownload.exists()
+
+        Timber.d("Url: %s: forced: %b, periodic: %b, new: %b, expired: %b, exists: %b, metered: %b",
+            previousDownload.url, forced, periodic, newSubscription, expired, exists, isMetered)
+        /* We check for some conditions here:
+         *  - NEVER SKIP force refresh updates.
+         *  - If this is a new subscription or a periodic update, DO NOT SkIP if it is not expired,
+         *    AND the file still exists.
+         *  - Otherwise if the file still exists, SKIP the update
+         *
+         *  Subscription expiration logic:
+         *   - New subscriptions expires in MIN_REFRESH_INTERVAL (1 hour)
+         *   - Metered connection in METERED_REFRESH_INTERVAL (3 days)
+         *   - Unmetered connection in UNMETERED_REFRESH_INTERVAL (24 hours)
+         */
+        return if (forced) {
+            false
+        } else if (newSubscription || periodic) {
+            !expired && exists
+        } else {
+            exists
+        }
+    }
+
+    override suspend fun validate(subscription: Subscription): Boolean = coroutineScope {
         try {
             val url = createUrl(subscription)
             val request = createHeadRequest(url)
@@ -201,17 +228,28 @@ internal class OkHttpDownloader(
 
     private fun HttpUrl.toFileName(): String = "${this.toString().hashCode()}.txt"
 
-    private fun DownloadedSubscription.isNotExpired(newSubscription: Boolean) =
-        !this.isExpired(newSubscription)
+    private fun DownloadedSubscription.isNotExpired(newSubscription: Boolean, isMetered: Boolean) =
+        !this.isExpired(newSubscription, isMetered)
 
-    private fun DownloadedSubscription.isExpired(newSubscription: Boolean): Boolean {
-        val elapsed = System.currentTimeMillis() - this.lastUpdated
-        return if (newSubscription) elapsed > MIN_REFRESH_INTERVAL else elapsed > REFRESH_INTERVAL
+    private fun DownloadedSubscription.isExpired(newSubscription: Boolean, isMetered: Boolean): Boolean {
+        val elapsed = Duration.milliseconds(System.currentTimeMillis()) - Duration.milliseconds(this.lastUpdated)
+        Timber.d("Elapsed: $elapsed, newSubscription: $newSubscription, isMetered: $isMetered")
+        Timber.d("Min: $MIN_REFRESH_INTERVAL, Metered: $METERED_REFRESH_INTERVAL, Wifi: $UNMETERED_REFRESH_INTERVAL")
+        val interval = if (newSubscription) {
+            MIN_REFRESH_INTERVAL
+        } else {
+            if (isMetered) METERED_REFRESH_INTERVAL else UNMETERED_REFRESH_INTERVAL
+        }
+
+        Timber.d("Expired: ${elapsed > interval}")
+
+        return elapsed > interval
     }
 
     companion object {
-        private const val MIN_REFRESH_INTERVAL = 5 * 60 * 1000 // 5 minutes
-        private const val REFRESH_INTERVAL = 8 * 60 * 60 * 1000 // 8 hours
+        private val MIN_REFRESH_INTERVAL = Duration.hours(1)
+        private val UNMETERED_REFRESH_INTERVAL: Duration = Duration.hours(24)
+        private val METERED_REFRESH_INTERVAL = Duration.days(3)
     }
 }
 
