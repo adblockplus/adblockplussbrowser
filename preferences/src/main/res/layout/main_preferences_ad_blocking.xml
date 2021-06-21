@@ -122,7 +122,7 @@
             app:layout_constraintTop_toBottomOf="@id/main_preferences_allowlist" />
 
         <LinearLayout
-            android:id="@+id/main_preferences_automatic_updates"
+            android:id="@+id/main_preferences_update_subscriptions"
             style="@style/AbpPreferenceContainerStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -133,45 +133,13 @@
                 style="@style/AbpPreferenceTitleTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/preferences_automatic_updates_title" />
+                android:text="@string/preferences_updates_title" />
 
             <com.google.android.material.textview.MaterialTextView
                 style="@style/AbpPreferenceSummaryTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/preferences_automatic_updates_wifi_only"
-                android:textColor="@color/abp_foreground_accent" />
-
-        </LinearLayout>
-
-        <View
-            android:id="@+id/main_preferences_divider_4"
-            style="@style/AbpPreferenceDivider"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/main_preferences_automatic_updates" />
-
-        <LinearLayout
-            android:id="@+id/main_preferences_update_subscriptions"
-            style="@style/AbpPreferenceContainerStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="@{(v) -> viewModel.updateSubscriptions()}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/main_preferences_divider_4">
-
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/AbpPreferenceTitleTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/preferences_update_subscriptions_title" />
-
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/AbpPreferenceSummaryTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/preferences_update_subscriptions_subtitle" />
+                android:text="@string/preferences_updates_subtitle" />
 
         </LinearLayout>
 

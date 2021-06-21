@@ -1,15 +1,15 @@
 object Deps {
-    val GRADLE_PLUGIN = "com.android.tools.build:gradle" version "4.1.3"
+    val GRADLE_PLUGIN = "com.android.tools.build:gradle" version "4.2.1"
 
     const val GRADLE_VERSIONS_PLUGIN_ID = "com.github.ben-manes.versions"
-    const val GRADLE_VERSIONS_PLUGIN_VERSION = "0.38.0"
+    const val GRADLE_VERSIONS_PLUGIN_VERSION = "0.39.0"
     val GRADLE_VERSIONS_PLUGIN = "com.github.ben-manes:gradle-versions-plugin" version GRADLE_VERSIONS_PLUGIN_VERSION
 
     val JUNIT = "junit:junit" version "4.13.2"
 
     val MATERIAL = "com.google.android.material:material" version "1.3.0"
 
-    val OKIO = "com.squareup.okio:okio" version "3.0.0-alpha.2"
+    val OKIO = "com.squareup.okio:okio" version "3.0.0-alpha.6"
 
     val TIMBER = "com.jakewharton.timber:timber" version "4.7.1"
 
@@ -21,12 +21,12 @@ object Deps {
 
         val APPCOMPAT = dependency {
             groupName("appcompat:appcompat")
-            version("1.2.0")
+            version("1.3.0")
         }
 
         val CORE = dependency {
             groupName("core:core-ktx")
-            version("1.3.2")
+            version("1.5.0")
         }
 
         val CONSTRAINT_LAYOUT = dependency {
@@ -41,7 +41,7 @@ object Deps {
 
         val FRAGMENT = dependency {
             groupName("fragment:fragment-ktx")
-            version("1.3.3")
+            version("1.3.4")
         }
 
         val PREFERENCE = dependency {
@@ -49,7 +49,7 @@ object Deps {
             version("1.1.1")
         }
 
-        object Hilt : DependencyGroup("androidx.hilt", "1.0.0-beta01") {
+        object Hilt : DependencyGroup("androidx.hilt", "1.0.0") {
             val COMPILER = dependency { name("hilt-compiler") }
             val COMMON = dependency { name("hilt-common") }
             val WORK = dependency { name("hilt-work") }
@@ -86,18 +86,18 @@ object Deps {
         val COMMONS_VALIDATOR = "commons-validator:commons-validator" version "1.7"
     }
 
-    object Hilt : DependencyGroup("com.google.dagger", "2.35") {
+    object Hilt : DependencyGroup("com.google.dagger", "2.36") {
         val ANDROID = dependency { name("hilt-android") }
         val ANDROID_COMPILER = dependency { name("hilt-android-compiler") }
         val ANDROID_GRADLE_PLUGIN = dependency { name("hilt-android-gradle-plugin") }
     }
 
-    object Kotlin : DependencyGroup("org.jetbrains.kotlin", "1.4.32") {
+    object Kotlin : DependencyGroup("org.jetbrains.kotlin", "1.5.10") {
         val KOTLIN_PLUGIN = dependency { name("kotlin-gradle-plugin") }
         val KOTLIN_STDLIB = dependency { name("kotlin-stdlib") }
     }
 
-    object KotlinX : DependencyGroup("org.jetbrains.kotlinx", "1.4.3") {
+    object KotlinX : DependencyGroup("org.jetbrains.kotlinx", "1.5.0") {
         val COROUTINES = dependency { name("kotlinx-coroutines-core") }
         val COROUTINES_ANDROID = dependency { name("kotlinx-coroutines-android") }
     }
@@ -117,7 +117,7 @@ object Deps {
         }
     }
 
-    object Protobuf : DependencyGroup("com.google.protobuf", "3.15.8") {
+    object Protobuf : DependencyGroup("com.google.protobuf", "3.17.2") {
         val GRADLE_PLUGIN = dependency {
             name("protobuf-gradle-plugin")
             version("0.8.16")

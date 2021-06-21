@@ -4,7 +4,9 @@ import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
 import kotlinx.coroutines.runBlocking
 import org.adblockplus.adblockplussbrowser.settings.data.local.SubscriptionsDataSource
+import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig
 import org.adblockplus.adblockplussbrowser.settings.data.proto.ProtoSettings
+import org.adblockplus.adblockplussbrowser.settings.data.proto.ProtoUpdateConfig
 import org.adblockplus.adblockplussbrowser.settings.data.proto.toProtoSubscription
 import java.io.InputStream
 import java.io.OutputStream
@@ -35,6 +37,7 @@ internal class ProtoSettingsSerializer(private val subscriptionsDataSource: Subs
                     addActivePrimarySubscriptions(
                         subscriptionsDataSource.getDefaultActiveSubscription().toProtoSubscription()
                     )
+                    updateConfig = ProtoUpdateConfig.ALWAYS
                 }.build()
             }
         } else {

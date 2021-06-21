@@ -18,7 +18,6 @@ import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscription
-import org.adblockplus.adblockplussbrowser.core.data.model.SavedState
 import org.adblockplus.adblockplussbrowser.core.data.proto.toSavedState
 import org.adblockplus.adblockplussbrowser.core.downloader.DownloadResult
 import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
@@ -42,7 +41,6 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         // if it is a periodic check, force update subscriptions
-        val forceDownload = tags.contains(KEY_PERIODIC_WORK) || tags.contains(KEY_FORCE_REFRESH)
         return@withContext try {
             Timber.d("DOWNLOAD JOB")
 
@@ -50,20 +48,26 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             Timber.d("Downloader settings: $settings")
             val savedState = coreRepository.currentSavedState()
             Timber.d("Saved state: $savedState")
-            val diff = settings.diff(savedState)
-            Timber.d("Diff: $diff")
+            val changes = settings.changes(savedState)
+            Timber.d("Diff: $changes")
             Timber.d("Run Attempt: $runAttemptCount")
 
+            // Don't let a failing worker run eternally...
+            if (hasReachedMaxAttempts()) {
+                Timber.d("Max attempts reached...")
+                return@withContext Result.failure()
+            }
+
             // Has settings changes from last update Job???
-            // Always update on PERIODIC checks
-            // If the previous Job failed, don't skip it...
-            if (!forceDownload && !diff.hasChanges() && runAttemptCount == 0) {
+            // Don't skip force refresh, periodic updates or retries (runAttemptCount > 0)
+            if (!changes.hasChanges() && !tags.isForceRefresh() && !tags.isPeriodic() && runAttemptCount == 0) {
                 Timber.d("No changes from last update")
                 return@withContext Result.success()
             }
 
             // Download new subscriptions
-            val results = downloadSubscriptions(settings, savedState, diff, forceDownload)
+            val results = downloadSubscriptions(settings, changes, tags.isForceRefresh(),
+                tags.isPeriodic())
 
             // check if Work is stopped and return
             if (isStopped) return@withContext Result.success()
@@ -72,7 +76,10 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             val filtersFile =
                 writeFiles(subscriptions, settings.allowedDomains, settings.blockedDomains)
 
-            coreRepository.updateDownloadedSubscriptions(subscriptions)
+            // check if Work is stopped and return
+            if (isStopped) return@withContext Result.success()
+            coreRepository.updateDownloadedSubscriptions(subscriptions,
+                tags.isForceRefresh() or tags.isPeriodic())
             coreRepository.updateSavedState(settings.toSavedState())
             dispatchUpdate()
             cleanOldFiles(filtersFile)
@@ -98,13 +105,13 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
     @Suppress("BlockingMethodInNonBlockingContext")
     private suspend fun downloadSubscriptions(
         settings: Settings,
-        savedState: SavedState,
-        diff: List<Changes>,
-        forceDownload: Boolean
+        changes: Changes,
+        forced: Boolean,
+        periodic: Boolean
     ): List<DownloadResult> = coroutineScope {
         // List of newly added subscriptions to Download
-        val newSubscriptions = settings.newSubscriptions(savedState) +
-                acceptableAdsSubscription(diff, settings.acceptableAdsEnabled)
+        val newSubscriptions = changes.newSubscriptions +
+                acceptableAdsSubscription(changes, settings.acceptableAdsEnabled)
 
         // Current active subscriptions
         val activeSubscriptions =
@@ -117,13 +124,12 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
 
         val results = mutableListOf<DownloadResult>()
         activeSubscriptions.forEachIndexed { index, subscription ->
-
             // check if Work is stopped and return
             if (isStopped) throw CancellationException()
 
             val isNewSubscription = newSubscriptions.any { it.url == subscription.url }
             subscriptionsManager.updateStatus(SubscriptionsManager.Status.Downloading(index + 1))
-            val result = downloader.download(subscription, isNewSubscription, forceDownload)
+            val result = downloader.download(subscription, forced, periodic, isNewSubscription)
             Timber.d("Subscription: ${subscription.title} -> $result")
             results.add(result)
         }
@@ -133,7 +139,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
     private suspend fun acceptableAdsSubscription(enabled: Boolean) =
         if (enabled) listOf(settingsRepository.getAcceptableAdsSubscription()) else emptyList()
 
-    private suspend fun acceptableAdsSubscription(changes: List<Changes>, acceptableAdsEnabled: Boolean) =
+    private suspend fun acceptableAdsSubscription(changes: Changes, acceptableAdsEnabled: Boolean) =
         if (changes.acceptableAdsChanged() && acceptableAdsEnabled) {
             listOf(settingsRepository.getAcceptableAdsSubscription())
         } else {
@@ -262,15 +268,21 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
         return easylist + this
     }
 
-    companion object {
-        internal const val KEY_PERIODIC_WORK = "PERIODIC_KEY"
-        internal const val KEY_ONESHOT_WORK = "ONESHOT_WORK"
-        internal const val KEY_FORCE_REFRESH = "FORCE_REFRESH"
-    }
-
     private suspend fun SettingsRepository.currentSettings() =
         this.settings.take(1).single()
 
     private suspend fun CoreRepository.currentSavedState() =
         this.data.take(1).single().lastState
+
+    private fun Set<String>.isPeriodic(): Boolean = this.contains(KEY_PERIODIC_WORK)
+    private fun Set<String>.isForceRefresh(): Boolean = this.contains(KEY_FORCE_REFRESH)
+
+    private fun CoroutineWorker.hasReachedMaxAttempts(): Boolean =
+        runAttemptCount > 4
+
+    companion object {
+        internal const val KEY_PERIODIC_WORK = "PERIODIC_KEY"
+        internal const val KEY_ONESHOT_WORK = "ONESHOT_WORK"
+        internal const val KEY_FORCE_REFRESH = "FORCE_REFRESH"
+    }
 }

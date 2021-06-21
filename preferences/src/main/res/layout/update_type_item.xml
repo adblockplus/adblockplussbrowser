@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/updates_preferences_automatic_updates"
+    style="@style/AbpPreferenceContainerStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="0dp">
+
+    <com.google.android.material.textview.MaterialTextView
+        style="@style/AbpPreferenceTitleTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/preferences_automatic_updates_title" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/updates_preferences_automatic_updates_type"
+        style="@style/AbpPreferenceSummaryTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="@string/preferences_automatic_updates_wifi_only"
+        android:textColor="@color/abp_foreground_accent" />
+</LinearLayout>

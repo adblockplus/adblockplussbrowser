@@ -9,7 +9,9 @@ import dagger.hilt.components.SingletonComponent
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.core.CoreSubscriptionsManager
 import javax.inject.Singleton
+import kotlin.time.ExperimentalTime
 
+@ExperimentalTime
 @InstallIn(SingletonComponent::class)
 @Module
 internal object AppModule {

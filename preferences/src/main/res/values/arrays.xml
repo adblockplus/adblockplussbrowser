@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="updates_preferences_types">
+        <item>@string/preferences_automatic_updates_wifi_only</item>
+        <item>@string/preferences_automatic_updates_always</item>
+    </string-array>
+</resources>

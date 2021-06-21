@@ -13,7 +13,8 @@ internal interface CoreRepository {
 
     suspend fun setConfigured()
 
-    suspend fun updateDownloadedSubscriptions(subscriptions: List<DownloadedSubscription>)
+    suspend fun updateDownloadedSubscriptions(subscriptions: List<DownloadedSubscription>,
+                                              updateTimestamp: Boolean)
 
     suspend fun updateLastUpdated(lastUpdated: Long)
 
