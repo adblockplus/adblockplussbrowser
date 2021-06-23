@@ -1,0 +1,7 @@
+<resources>
+
+    <style name="Theme.Abp.Launcher" parent="Theme.Abp">
+        <item name="android:windowBackground">@drawable/ic_preview_launcher</item>
+    </style>
+
+</resources>

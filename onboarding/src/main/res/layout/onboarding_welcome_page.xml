@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingTop="20dp"
+        android:paddingEnd="20dp">
+
+        <ImageView
+            android:id="@+id/onboarding_welcome_block_ads_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_onboarding_block_ads"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/onboarding_welcome_block_ads_title"
+            style="@style/AbpOnboardingTitleTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/onboarding_welcome_block_ads_title"
+            app:layout_constraintStart_toEndOf="@id/onboarding_welcome_block_ads_image"
+            app:layout_constraintTop_toTopOf="@id/onboarding_welcome_block_ads_image" />
+
+        <TextView
+            android:id="@+id/onboarding_welcome_block_ads_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/onboarding_welcome_block_ads_description"
+            android:textColor="@color/abp_foreground_secondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="@id/onboarding_welcome_block_ads_title"
+            app:layout_constraintTop_toBottomOf="@id/onboarding_welcome_block_ads_title"
+            app:layout_constraintWidth_default="wrap" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/onboarding_welcome_block_ads_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="onboarding_welcome_block_ads_image, onboarding_welcome_block_ads_description" />
+
+        <ImageView
+            android:id="@+id/onboarding_welcome_tracking_protection_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_onboarding_tracking_protection"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/onboarding_welcome_block_ads_barrier" />
+
+        <TextView
+            android:id="@+id/onboarding_welcome_tracking_protection_title"
+            style="@style/AbpOnboardingTitleTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/onboarding_welcome_tracking_protection_title"
+            app:layout_constraintStart_toEndOf="@id/onboarding_welcome_tracking_protection_image"
+            app:layout_constraintTop_toTopOf="@id/onboarding_welcome_tracking_protection_image" />
+
+        <TextView
+            android:id="@+id/onboarding_welcome_tracking_protection_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/onboarding_welcome_tracking_protection_description"
+            android:textColor="@color/abp_foreground_secondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="@id/onboarding_welcome_tracking_protection_title"
+            app:layout_constraintTop_toBottomOf="@id/onboarding_welcome_tracking_protection_title"
+            app:layout_constraintWidth_default="wrap" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/onboarding_welcome_tracking_protection_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="onboarding_welcome_tracking_protection_image, onboarding_welcome_tracking_protection_description" />
+
+        <ImageView
+            android:id="@+id/onboarding_welcome_security_privacy_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_onboarding_security_privacy"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/onboarding_welcome_tracking_protection_barrier" />
+
+        <TextView
+            android:id="@+id/onboarding_welcome_security_privacy_title"
+            style="@style/AbpOnboardingTitleTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/onboarding_welcome_security_privacy_title"
+            app:layout_constraintStart_toEndOf="@id/onboarding_welcome_security_privacy_image"
+            app:layout_constraintTop_toTopOf="@id/onboarding_welcome_security_privacy_image" />
+
+        <TextView
+            android:id="@+id/onboarding_welcome_security_privacy_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/onboarding_welcome_security_privacy_description"
+            android:textColor="@color/abp_foreground_secondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="@id/onboarding_welcome_security_privacy_title"
+            app:layout_constraintTop_toBottomOf="@id/onboarding_welcome_security_privacy_title"
+            app:layout_constraintWidth_default="wrap" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/onboarding_welcome_security_privacy_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="onboarding_welcome_security_privacy_image, onboarding_welcome_security_privacy_description" />
+
+        <ImageView
+            android:id="@+id/onboarding_welcome_language_filters_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_onboarding_language_filters"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/onboarding_welcome_security_privacy_barrier" />
+
+        <TextView
+            android:id="@+id/onboarding_welcome_language_filters_title"
+            style="@style/AbpOnboardingTitleTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/onboarding_welcome_language_filters_title"
+            app:layout_constraintStart_toEndOf="@id/onboarding_welcome_language_filters_image"
+            app:layout_constraintTop_toTopOf="@id/onboarding_welcome_language_filters_image" />
+
+        <TextView
+            android:id="@+id/onboarding_welcome_language_filters_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/onboarding_welcome_language_filters_description"
+            android:textColor="@color/abp_foreground_secondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="@id/onboarding_welcome_language_filters_title"
+            app:layout_constraintTop_toBottomOf="@id/onboarding_welcome_language_filters_title"
+            app:layout_constraintWidth_default="wrap" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

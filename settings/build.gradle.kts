@@ -15,7 +15,7 @@ dependencies {
     implementation(project(":base"))
 
     implementation(Deps.AndroidX.APPCOMPAT)
-    implementation(Deps.AndroidX.DATASTORE)
+    implementation(Deps.AndroidX.DatasStore.DATASTORE)
     implementation(Deps.Protobuf.JAVALITE)
     implementation(Deps.Hilt.ANDROID)
     kapt(Deps.Hilt.ANDROID_COMPILER)

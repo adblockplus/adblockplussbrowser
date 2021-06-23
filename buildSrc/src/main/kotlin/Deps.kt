@@ -7,6 +7,8 @@ object Deps {
 
     val JUNIT = "junit:junit" version "4.13.2"
 
+    val DOTS_INDICATOR = "com.tbuonomo:dotsindicator" version "4.2"
+
     val MATERIAL = "com.google.android.material:material" version "1.3.0"
 
     val OKIO = "com.squareup.okio:okio" version "3.0.0-alpha.6"
@@ -34,11 +36,6 @@ object Deps {
             version("2.0.4")
         }
 
-        val DATASTORE = dependency {
-            groupName("datastore:datastore")
-            version("1.0.0-beta01")
-        }
-
         val FRAGMENT = dependency {
             groupName("fragment:fragment-ktx")
             version("1.3.4")
@@ -47,6 +44,16 @@ object Deps {
         val PREFERENCE = dependency {
             groupName("preference:preference-ktx")
             version("1.1.1")
+        }
+
+        val VIEWPAGER2 = dependency {
+            groupName("viewpager2:viewpager2")
+            version("1.0.0")
+        }
+
+        object DatasStore: DependencyGroup("androidx.datastore", "1.0.0-beta01") {
+            val DATASTORE = dependency { name("datastore") }
+            val PREFERENCES = dependency { name("datastore-preferences") }
         }
 
         object Hilt : DependencyGroup("androidx.hilt", "1.0.0") {

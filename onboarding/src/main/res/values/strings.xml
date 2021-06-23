@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onboarding_welcome_header_title1">Welcome to</string>
+    <string name="onboarding_welcome_header_title2">@string/product_name</string>
+    <string name="onboarding_welcome_header_title3">@string/target_name</string>
+    <string name="onboarding_welcome_block_ads_title">Block annoying ads</string>
+    <string name="onboarding_welcome_block_ads_description">Browse ad-free while supporting content creators through acceptable ads</string>
+    <string name="onboarding_welcome_tracking_protection_title">Tracking protection</string>
+    <string name="onboarding_welcome_tracking_protection_description">Browse safer by preventing websites from tracking you across the web</string>
+    <string name="onboarding_welcome_security_privacy_title">Improved Security &amp; Privacy</string>
+    <string name="onboarding_welcome_security_privacy_description">Browser worry-free with Adblock Plus protecting you in the background</string>
+    <string name="onboarding_welcome_language_filters_title">Language-specific filter lists</string>
+    <string name="onboarding_welcome_language_filters_description">Block more ads by optimising Adblock Plus for the language(s) you typically browse in</string>
+</resources>
