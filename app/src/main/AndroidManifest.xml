@@ -23,15 +23,16 @@
         android:theme="@style/Theme.Abp">
 
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.Abp.NoActionBar">
+            android:name=".ui.LauncherActivity"
+            android:theme="@style/Theme.Abp.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ui.MainActivity" />
 
         <provider
             android:name="androidx.work.impl.WorkManagerInitializer"

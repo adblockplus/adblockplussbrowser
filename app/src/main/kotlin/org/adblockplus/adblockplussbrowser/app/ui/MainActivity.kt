@@ -1,4 +1,4 @@
-package org.adblockplus.adblockplussbrowser.app
+package org.adblockplus.adblockplussbrowser.app.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import dagger.hilt.android.AndroidEntryPoint
+import org.adblockplus.adblockplussbrowser.app.R
 import org.adblockplus.adblockplussbrowser.app.databinding.ActivityMainBinding
 import org.adblockplus.adblockplussbrowser.base.navigation.navControllerFromFragmentContainerView
 

@@ -11,6 +11,7 @@ fun Project.applyCommonConfig() {
             minSdkVersion(Config.MIN_SDK_VERSION)
             targetSdkVersion(Config.TARGET_SDK_VERSION)
             testInstrumentationRunner = Config.ANDROID_TEST_INSTRUMENTATION_RUNNER
+            vectorDrawables.useSupportLibrary = true
         }
 
         compileOptions {

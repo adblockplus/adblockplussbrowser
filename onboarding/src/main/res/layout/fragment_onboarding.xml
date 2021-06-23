@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="org.adblockplus.adblockplussbrowser.onboarding.ui.OnboardingViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/abp_background_secondary">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="16dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toTopOf="@id/onboarding_pager_indicator"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/onboarding_pager"
+                onboardingPages="@{viewModel.pages}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </androidx.core.widget.NestedScrollView>
+
+        <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+            android:id="@+id/onboarding_pager_indicator"
+            indicatorPager2="@{onboardingPager}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:dotsColor="@color/abp_background"
+            app:dotsCornerRadius="1dp"
+            app:dotsSize="3dp"
+            app:dotsSpacing="2dp"
+            app:dotsWidthFactor="3.5"
+            app:layout_constraintBottom_toTopOf="@id/onboarding_circular_indicator"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:selectedDotColor="@color/abp_foreground_accent" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/onboarding_circular_indicator"
+            progressPager2="@{onboardingPager}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            app:indicatorSize="66dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:trackColor="@color/abp_background"
+            app:trackThickness="2dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/onboarding_button"
+            onboardingButtonPager2="@{onboardingPager}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_round_check_24"
+            app:layout_constraintBottom_toBottomOf="@id/onboarding_circular_indicator"
+            app:layout_constraintEnd_toEndOf="@id/onboarding_circular_indicator"
+            app:layout_constraintStart_toStartOf="@id/onboarding_circular_indicator"
+            app:layout_constraintTop_toTopOf="@id/onboarding_circular_indicator" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
