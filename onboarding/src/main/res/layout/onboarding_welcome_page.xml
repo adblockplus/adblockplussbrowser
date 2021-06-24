@@ -20,10 +20,11 @@
         <TextView
             android:id="@+id/onboarding_welcome_block_ads_title"
             style="@style/AbpOnboardingTitleTextStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="@string/onboarding_welcome_block_ads_title"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/onboarding_welcome_block_ads_image"
             app:layout_constraintTop_toTopOf="@id/onboarding_welcome_block_ads_image" />
 
@@ -34,10 +35,8 @@
             android:text="@string/onboarding_welcome_block_ads_description"
             android:textColor="@color/abp_foreground_secondary"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="@id/onboarding_welcome_block_ads_title"
-            app:layout_constraintTop_toBottomOf="@id/onboarding_welcome_block_ads_title"
-            app:layout_constraintWidth_default="wrap" />
+            app:layout_constraintTop_toBottomOf="@id/onboarding_welcome_block_ads_title" />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/onboarding_welcome_block_ads_barrier"
@@ -58,10 +57,11 @@
         <TextView
             android:id="@+id/onboarding_welcome_tracking_protection_title"
             style="@style/AbpOnboardingTitleTextStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="@string/onboarding_welcome_tracking_protection_title"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/onboarding_welcome_tracking_protection_image"
             app:layout_constraintTop_toTopOf="@id/onboarding_welcome_tracking_protection_image" />
 
@@ -72,10 +72,8 @@
             android:text="@string/onboarding_welcome_tracking_protection_description"
             android:textColor="@color/abp_foreground_secondary"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="@id/onboarding_welcome_tracking_protection_title"
-            app:layout_constraintTop_toBottomOf="@id/onboarding_welcome_tracking_protection_title"
-            app:layout_constraintWidth_default="wrap" />
+            app:layout_constraintTop_toBottomOf="@id/onboarding_welcome_tracking_protection_title" />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/onboarding_welcome_tracking_protection_barrier"
@@ -96,10 +94,11 @@
         <TextView
             android:id="@+id/onboarding_welcome_security_privacy_title"
             style="@style/AbpOnboardingTitleTextStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="@string/onboarding_welcome_security_privacy_title"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/onboarding_welcome_security_privacy_image"
             app:layout_constraintTop_toTopOf="@id/onboarding_welcome_security_privacy_image" />
 
@@ -110,10 +109,8 @@
             android:text="@string/onboarding_welcome_security_privacy_description"
             android:textColor="@color/abp_foreground_secondary"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="@id/onboarding_welcome_security_privacy_title"
-            app:layout_constraintTop_toBottomOf="@id/onboarding_welcome_security_privacy_title"
-            app:layout_constraintWidth_default="wrap" />
+            app:layout_constraintTop_toBottomOf="@id/onboarding_welcome_security_privacy_title" />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/onboarding_welcome_security_privacy_barrier"
@@ -134,10 +131,11 @@
         <TextView
             android:id="@+id/onboarding_welcome_language_filters_title"
             style="@style/AbpOnboardingTitleTextStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="@string/onboarding_welcome_language_filters_title"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/onboarding_welcome_language_filters_image"
             app:layout_constraintTop_toTopOf="@id/onboarding_welcome_language_filters_image" />
 
@@ -148,10 +146,8 @@
             android:text="@string/onboarding_welcome_language_filters_description"
             android:textColor="@color/abp_foreground_secondary"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="@id/onboarding_welcome_language_filters_title"
-            app:layout_constraintTop_toBottomOf="@id/onboarding_welcome_language_filters_title"
-            app:layout_constraintWidth_default="wrap" />
+            app:layout_constraintTop_toBottomOf="@id/onboarding_welcome_language_filters_title" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

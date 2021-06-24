@@ -29,4 +29,5 @@ dependencies {
     implementation(Deps.AndroidX.Navigation.UI)
     implementation(Deps.Hilt.ANDROID)
     kapt(Deps.Hilt.ANDROID_COMPILER)
+    implementation(Deps.MaterialDialogs.CORE)
 }

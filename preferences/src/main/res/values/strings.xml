@@ -16,9 +16,9 @@
     <string name="preferences_automatic_updates_always">Always</string>
     <string name="preferences_update_subscriptions_title">Update now</string>
     <string name="preferences_update_subscriptions_subtitle">Update now all the active ad filtering lists</string>
-    <string name="preferences_acceptable_ads_category">Acceptable Ads</string>
+    <string name="preferences_acceptable_ads_category">@string/acceptable_ads</string>
     <string name="preferences_acceptable_ads_title">Allow some nonintrusive advertising</string>
-    <string name="preferences_acceptable_ads_fragment_title">Acceptable Ads</string>
+    <string name="preferences_acceptable_ads_fragment_title">@string/acceptable_ads</string>
     <string name="preferences_acceptable_ads_summary">Annoying ads are always blocked, while some nonintrusive ads are displayed by default, so that content creators can publish their content for free</string>
     <string name="preferences_acceptable_ads_action">Yes, I\'ll support content creators</string>
     <string name="preferences_about_title">About</string>
@@ -36,14 +36,6 @@
     <string name="other_subscriptions_error_add_custom">Error adding custom filter list</string>
     <string name="allowlist_add_title">Add a domain to the allowlist</string>
     <string name="allowlist_add_hint">example.com</string>
-    <string name="acceptable_ads_fair_standard">Fair Standard</string>
-    <string name="acceptable_ads_fair_standard_description">Acceptable Ads are never video, sound or popup ads</string>
-    <string name="acceptable_ads_placement">Placement</string>
-    <string name="acceptable_ads_placement_description">Does not disrupt the natural reading flow.</string>
-    <string name="acceptable_ads_distinction">Distinction</string>
-    <string name="acceptable_ads_distinction_description">Acceptable Ads are always clearly marked as ads.</string>
-    <string name="acceptable_ads_size">Size</string>
-    <string name="acceptable_ads_size_description">Span less than 15% of the screen upon initial load.</string>
     <string name="acceptable_ads_enabled_line1">Yes, I’ll support content creators.</string>
     <string name="acceptable_ads_enabled_line2">By keeping Acceptable Ads enabled, you’re helping content creators publish their content for free.</string>
     <string name="acceptable_ads_disabled">No, I’d like to disable Acceptable Ads.</string>
