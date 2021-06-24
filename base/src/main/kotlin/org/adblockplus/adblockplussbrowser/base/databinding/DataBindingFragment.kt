@@ -11,12 +11,19 @@ import androidx.fragment.app.Fragment
 
 abstract class DataBindingFragment<T : ViewDataBinding>(@LayoutRes private val layoutResId: Int) : Fragment() {
 
+    var binding: T? = null
+
     protected abstract fun onBindView(binding: T)
+
+    private fun doBindingView(binding: T) {
+        this.binding = binding
+        onBindView(binding)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = DataBindingUtil.inflate<T>(inflater, layoutResId, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
-        onBindView(binding)
+        doBindingView(binding)
         return binding.root
     }
 }

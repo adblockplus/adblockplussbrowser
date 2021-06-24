@@ -45,6 +45,8 @@ internal class OnboardingViewModel @Inject constructor(private val preferences: 
         )
 
         pageList.add(PageInfo.AcceptableAds)
+        pageList.add(PageInfo.Enable)
+
         _pages.value = pageList
     }
 }

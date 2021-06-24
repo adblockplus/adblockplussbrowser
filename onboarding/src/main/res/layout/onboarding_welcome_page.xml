@@ -10,7 +10,7 @@
         android:paddingEnd="20dp">
 
         <ImageView
-            android:id="@+id/onboarding_welcome_block_ads_image"
+            android:id="@+id/onboarding_enable_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_onboarding_block_ads"
@@ -18,32 +18,32 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/onboarding_welcome_block_ads_title"
+            android:id="@+id/onboarding_enable_title"
             style="@style/AbpOnboardingTitleTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="@string/onboarding_welcome_block_ads_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/onboarding_welcome_block_ads_image"
-            app:layout_constraintTop_toTopOf="@id/onboarding_welcome_block_ads_image" />
+            app:layout_constraintStart_toEndOf="@id/onboarding_enable_image"
+            app:layout_constraintTop_toTopOf="@id/onboarding_enable_image" />
 
         <TextView
-            android:id="@+id/onboarding_welcome_block_ads_description"
+            android:id="@+id/onboarding_enable_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/onboarding_welcome_block_ads_description"
             android:textColor="@color/abp_foreground_secondary"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/onboarding_welcome_block_ads_title"
-            app:layout_constraintTop_toBottomOf="@id/onboarding_welcome_block_ads_title" />
+            app:layout_constraintStart_toStartOf="@id/onboarding_enable_title"
+            app:layout_constraintTop_toBottomOf="@id/onboarding_enable_title" />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/onboarding_welcome_block_ads_barrier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="onboarding_welcome_block_ads_image, onboarding_welcome_block_ads_description" />
+            app:constraint_referenced_ids="onboarding_enable_image, onboarding_enable_description" />
 
         <ImageView
             android:id="@+id/onboarding_welcome_tracking_protection_image"

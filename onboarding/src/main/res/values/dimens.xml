@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="check_mark_margin">8dp</dimen>
+    <dimen name="fake_fab_width">56dp</dimen>
+    <dimen name="fake_fab_half_width">28dp</dimen>
+</resources>

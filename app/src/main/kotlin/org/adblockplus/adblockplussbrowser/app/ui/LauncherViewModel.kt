@@ -12,10 +12,11 @@ import javax.inject.Inject
 internal class LauncherViewModel @Inject constructor(appPreferences: AppPreferences): ViewModel() {
 
     val direction: LiveData<LauncherDirection> = appPreferences.onboardingCompleted.map { completed ->
-        if (completed) {
+        /*if (completed) {
             LauncherDirection.MAIN
         } else {
             LauncherDirection.ONBOARDING
-        }
+        }*/
+        LauncherDirection.ONBOARDING
     }.asLiveData()
 }

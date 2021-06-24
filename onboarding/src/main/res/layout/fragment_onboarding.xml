@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -11,6 +12,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/abp_background_secondary">
@@ -39,40 +41,77 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
+            app:layout_constrainedWidth="true"
             app:dotsColor="@color/abp_background"
             app:dotsCornerRadius="1dp"
             app:dotsSize="3dp"
             app:dotsSpacing="2dp"
             app:dotsWidthFactor="3.5"
-            app:layout_constraintBottom_toTopOf="@id/onboarding_circular_indicator"
+            app:layout_constraintBottom_toTopOf="@id/onboarding_bottom_container"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:selectedDotColor="@color/abp_foreground_accent" />
 
-        <com.google.android.material.progressindicator.CircularProgressIndicator
-            android:id="@+id/onboarding_circular_indicator"
-            progressPager2="@{onboardingPager}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <FrameLayout
+            android:id="@+id/onboarding_bottom_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_marginBottom="32dp"
-            app:indicatorSize="66dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:trackColor="@color/abp_background"
-            app:trackThickness="2dp" />
+            android:animateLayoutChanges="true">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/onboarding_button"
-            onboardingButtonPager2="@{onboardingPager}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_round_check_24"
-            app:layout_constraintBottom_toBottomOf="@id/onboarding_circular_indicator"
-            app:layout_constraintEnd_toEndOf="@id/onboarding_circular_indicator"
-            app:layout_constraintStart_toStartOf="@id/onboarding_circular_indicator"
-            app:layout_constraintTop_toTopOf="@id/onboarding_circular_indicator" />
+            <LinearLayout
+                android:id="@+id/onboarding_fake_fab"
+                android:layout_width="@dimen/fake_fab_width"
+                android:layout_height="@dimen/fake_fab_width"
+                tools:layout_width="match_parent"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:background="@drawable/round_rect"
+                android:elevation="4dp"
+                android:layout_gravity="center">
 
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/onboarding_fake_fab_text"
+                    style="@style/AbpOnboardingButtonTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="@dimen/fake_fab_half_width"
+                    android:alpha="0"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:text="Open Samsung Internet"
+                    tools:alpha="1"
+                    tools:visibility="visible"/>
+
+                <ImageView
+                    android:id="@+id/onboarding_fake_fab_icon"
+                    android:layout_width="@dimen/fake_fab_width"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="0dp"
+                    android:src="@drawable/ic_round_arrow_forward_24"
+                    android:layout_gravity="center" />
+
+            </LinearLayout>
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/onboarding_circular_indicator"
+                progressPager2="@{onboardingPager}"
+                android:layout_width="66dp"
+                android:layout_height="66dp"
+                android:layout_gravity="center"
+                app:indicatorSize="66dp"
+                app:layout_constraintBottom_toBottomOf="@id/onboarding_fake_fab"
+                app:layout_constraintEnd_toEndOf="@id/onboarding_fake_fab"
+                app:layout_constraintStart_toStartOf="@id/onboarding_fake_fab"
+                app:layout_constraintTop_toTopOf="@id/onboarding_fake_fab"
+                app:trackColor="@color/abp_background"
+                app:trackThickness="2dp" />
+
+        </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
