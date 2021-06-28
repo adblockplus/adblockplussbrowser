@@ -15,6 +15,7 @@ internal class OnboardingPagerAdapter(fragment: Fragment) :
     private fun PageInfo.createFragment(): Fragment =
         when (this) {
             is PageInfo.Default -> DefaultPageFragment.newInstance(this)
+            is PageInfo.AcceptableAds -> AcceptableAdsPageFragment()
         }
 
     private class DiffItemCallback : DiffUtil.ItemCallback<PageInfo>() {

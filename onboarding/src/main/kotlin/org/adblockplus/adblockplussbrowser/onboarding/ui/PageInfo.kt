@@ -11,4 +11,7 @@ internal sealed class PageInfo {
         @StringRes val title3StringRes: Int,
         @LayoutRes val contentLayoutRes: Int
     ) : PageInfo()
+
+    object AcceptableAds: PageInfo()
+
 }

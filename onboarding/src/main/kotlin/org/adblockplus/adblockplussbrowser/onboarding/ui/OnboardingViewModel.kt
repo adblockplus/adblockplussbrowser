@@ -43,23 +43,8 @@ internal class OnboardingViewModel @Inject constructor(private val preferences: 
                 R.layout.onboarding_welcome_page
             )
         )
-        // TODO: These duplicate pages are just to showcase animations/transitions. Remove once we got other pages implemented
-        pageList.add(
-            PageInfo.Default(
-                R.string.onboarding_welcome_header_title1,
-                R.string.onboarding_welcome_header_title2,
-                R.string.onboarding_welcome_header_title3,
-                R.layout.onboarding_welcome_page
-            )
-        )
-        pageList.add(
-            PageInfo.Default(
-                R.string.onboarding_welcome_header_title1,
-                R.string.onboarding_welcome_header_title2,
-                R.string.onboarding_welcome_header_title3,
-                R.layout.onboarding_welcome_page
-            )
-        )
+
+        pageList.add(PageInfo.AcceptableAds)
         _pages.value = pageList
     }
 }
