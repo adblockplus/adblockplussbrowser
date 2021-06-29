@@ -30,6 +30,7 @@ import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
 import org.adblockplus.adblockplussbrowser.core.extensions.currentData
 import org.adblockplus.adblockplussbrowser.core.extensions.currentSettings
+import org.adblockplus.adblockplussbrowser.core.extensions.minutes
 import org.adblockplus.adblockplussbrowser.core.extensions.periodicWorkRequestBuilder
 import org.adblockplus.adblockplussbrowser.core.extensions.setBackoffCriteria
 import org.adblockplus.adblockplussbrowser.core.work.UpdateSubscriptionsWorker
@@ -184,8 +185,8 @@ class CoreSubscriptionsManager(
     }
 
     private companion object {
-        private val UPDATE_INTERVAL = Duration.hours(6)
-        private val FLEX_UPDATE_INTERVAL = Duration.minutes(30)
-        private val INITIAL_UPDATE_INTERVAL = Duration.hours(6)
+        private val UPDATE_INTERVAL = 15.minutes()
+        private val FLEX_UPDATE_INTERVAL = 5.minutes()
+        private val INITIAL_UPDATE_INTERVAL = 5.minutes()
     }
 }

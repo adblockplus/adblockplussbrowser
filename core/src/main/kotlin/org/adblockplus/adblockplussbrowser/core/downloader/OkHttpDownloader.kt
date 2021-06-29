@@ -18,6 +18,7 @@ import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscription
 import org.adblockplus.adblockplussbrowser.core.data.model.exists
 import org.adblockplus.adblockplussbrowser.core.data.model.ifExists
+import org.adblockplus.adblockplussbrowser.core.extensions.minutes
 import org.adblockplus.adblockplussbrowser.core.extensions.sanatizeUrl
 import org.adblockplus.adblockplussbrowser.core.retryIO
 import ru.gildor.coroutines.okhttp.await
@@ -247,9 +248,9 @@ internal class OkHttpDownloader(
     }
 
     companion object {
-        private val MIN_REFRESH_INTERVAL = Duration.hours(1)
-        private val UNMETERED_REFRESH_INTERVAL: Duration = Duration.hours(24)
-        private val METERED_REFRESH_INTERVAL = Duration.days(3)
+        private val MIN_REFRESH_INTERVAL = 5.minutes()
+        private val UNMETERED_REFRESH_INTERVAL = 10.minutes()
+        private val METERED_REFRESH_INTERVAL = 25.minutes()
     }
 }
 

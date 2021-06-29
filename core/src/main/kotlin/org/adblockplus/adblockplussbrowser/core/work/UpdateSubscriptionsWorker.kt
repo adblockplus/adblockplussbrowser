@@ -42,15 +42,14 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         // if it is a periodic check, force update subscriptions
         return@withContext try {
-            Timber.d("DOWNLOAD JOB")
+            Timber.d("DOWNLOAD JOB: $tags, Run Attempt: $runAttemptCount")
 
             val settings = settingsRepository.currentSettings()
-            Timber.d("Downloader settings: $settings")
             val savedState = coreRepository.currentSavedState()
-            Timber.d("Saved state: $savedState")
             val changes = settings.changes(savedState)
+            Timber.d("Current Settings: $settings")
+            Timber.d("Saved State: $savedState")
             Timber.d("Diff: $changes")
-            Timber.d("Run Attempt: $runAttemptCount")
 
             // Don't let a failing worker run eternally...
             if (hasReachedMaxAttempts()) {
