@@ -1,7 +1,5 @@
 package org.adblockplus.adblockplussbrowser.preferences.ui.updates
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -9,7 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
-import org.adblockplus.adblockplussbrowser.base.data.ValueWrapper
+import org.adblockplus.adblockplussbrowser.base.data.model.UpdateStatus
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig
 import javax.inject.Inject
@@ -25,9 +23,14 @@ class UpdateSubscriptionsViewModel @Inject constructor(
         settings.updateConfig.toUpdateConfigType()
     }.asLiveData()
 
-    private val _updates = MutableLiveData<ValueWrapper<Unit>>()
-    val updates: LiveData<ValueWrapper<Unit>>
-        get() = _updates
+    val updates = subscriptionsManager.status.map { status ->
+        when (status) {
+            is SubscriptionsManager.Status.Success -> UpdateStatus.Completed
+            is SubscriptionsManager.Status.Failed -> UpdateStatus.Error
+            is SubscriptionsManager.Status.Progress -> UpdateStatus.Progress(status.progress)
+            is SubscriptionsManager.Status.None -> UpdateStatus.None
+        }
+    }.asLiveData()
 
     val lastUpdate = subscriptionsManager.lastUpdate.asLiveData()
 
@@ -39,8 +42,6 @@ class UpdateSubscriptionsViewModel @Inject constructor(
 
     fun updateSubscriptions() {
         subscriptionsManager.scheduleImmediate(force = true)
-        // Post an event...
-        _updates.value = ValueWrapper(Unit)
     }
 
     enum class UpdateConfigType {

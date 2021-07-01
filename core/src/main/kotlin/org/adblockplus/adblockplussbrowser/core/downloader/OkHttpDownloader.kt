@@ -54,7 +54,7 @@ internal class OkHttpDownloader(
 
             val url = createUrl(subscription, previousDownload)
             val downloadFile = File(previousDownload.path)
-            val request = createDownloadRequest(url, downloadFile, previousDownload)
+            val request = createDownloadRequest(url, downloadFile, previousDownload, forced)
 
             Timber.d("Downloading $url - previous subscription: $previousDownload")
             val response = retryIO(description = subscription.title) {
@@ -177,11 +177,12 @@ internal class OkHttpDownloader(
     private fun createDownloadRequest(
         url: HttpUrl,
         file: File,
-        previousDownload: DownloadedSubscription
+        previousDownload: DownloadedSubscription,
+        forced: Boolean
     ): Request =
         Request.Builder().url(url).apply {
             // Don't apply If-Modified-Since and If-None-Match if the file doesn't exists on the filesystem
-            if (file.exists()) {
+            if (!forced && file.exists()) {
                 if (previousDownload.lastModified.isNotEmpty()) {
                     addHeader("If-Modified-Since", previousDownload.lastModified)
                 }

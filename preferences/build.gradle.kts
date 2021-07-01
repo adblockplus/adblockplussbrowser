@@ -20,6 +20,7 @@ dependencies {
     implementation(project(":base"))
     implementation(project(":settings"))
 
+    implementation(Deps.TIMBER)
     implementation(Deps.MATERIAL)
     implementation(Deps.AndroidX.APPCOMPAT)
     implementation(Deps.AndroidX.CONSTRAINT_LAYOUT)

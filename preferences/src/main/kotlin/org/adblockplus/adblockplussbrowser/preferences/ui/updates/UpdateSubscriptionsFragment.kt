@@ -9,6 +9,7 @@ import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentUpdateSubscriptionsBinding
 import org.adblockplus.adblockplussbrowser.preferences.ui.updates.UpdateSubscriptionsViewModel.UpdateConfigType
+import timber.log.Timber
 
 @AndroidEntryPoint
 class UpdateSubscriptionsFragment : DataBindingFragment<FragmentUpdateSubscriptionsBinding>(R.layout.fragment_update_subscriptions) {
@@ -44,11 +45,8 @@ class UpdateSubscriptionsFragment : DataBindingFragment<FragmentUpdateSubscripti
             binding.updatesPreferencesSpinner.setSelection(configType.toPosition())
         }
 
-        viewModel.updates.observe(this) { wrapper ->
-            wrapper.get()?.let {
-                Toast.makeText(requireContext(), getString(R.string.preferences_updating_message),
-                    Toast.LENGTH_LONG).show()
-            }
+        viewModel.updates.observe(this) { value ->
+            Timber.d("Progress value: $value")
         }
     }
 

@@ -39,6 +39,9 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
     private val downloader: Downloader,
 ) : CoroutineWorker(appContext, params) {
 
+    private var totalSteps: Int = 0
+    private var currentStep: Int = 0
+
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         // if it is a periodic check, force update subscriptions
         return@withContext try {
@@ -65,8 +68,16 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
                 return@withContext Result.success()
             }
 
+            // Current active subscriptions
+            val activeSubscriptions =
+                settings.activePrimarySubscriptions.ensureEasylist(settingsRepository.getEasylistSubscription()) +
+                        settings.activeOtherSubscriptions +
+                        acceptableAdsSubscription(settings.acceptableAdsEnabled)
+            totalSteps = activeSubscriptions.size + 1
+
             // Download new subscriptions
-            val results = downloadSubscriptions(settings, changes, tags.isForceRefresh(),
+            updateStatus(ProgressType.PROGRESS)
+            val results = downloadSubscriptions(settings, activeSubscriptions, changes, tags.isForceRefresh(),
                 tags.isPeriodic())
 
             // check if Work is stopped and return
@@ -84,27 +95,53 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             dispatchUpdate()
             cleanOldFiles(filtersFile)
 
+            updateStatus(ProgressType.PROGRESS)
             updateSubscriptionsLastUpdated(settings, subscriptions)
 
             if (results.hasFailedResult()) {
                 Timber.w("Failed subscriptions updates, retrying shortly")
-                subscriptionsManager.updateStatus(SubscriptionsManager.Status.Failed)
-                Result.retry()
+                delay(500)
+                updateStatus(ProgressType.FAILED)
+                failedResult()
             } else {
                 Timber.i("Subscriptions downloaded")
-                subscriptionsManager.updateStatus(SubscriptionsManager.Status.Success)
+                delay(500)
+                updateStatus(ProgressType.SUCCESS)
                 Result.success()
             }
         } catch (ex: Exception) {
             Timber.w(ex, "Failed subscriptions updates, retrying shortly")
+            delay(500)
+            updateStatus(ProgressType.FAILED)
             ex.printStackTrace()
-            if (ex is CancellationException) Result.success() else Result.retry()
+            if (ex is CancellationException) Result.success() else failedResult()
         }
+    }
+
+    private fun failedResult(): Result=
+        if (tags.isForceRefresh()) Result.failure() else Result.retry()
+
+    private suspend fun updateStatus(type: ProgressType) {
+        val progress = if (tags.isForceRefresh()) {
+            when (type) {
+                ProgressType.PROGRESS -> {
+                    val step = 100 / totalSteps
+                    SubscriptionsManager.Status.Progress(step * currentStep++)
+                }
+                ProgressType.SUCCESS -> SubscriptionsManager.Status.Success
+                ProgressType.FAILED -> SubscriptionsManager.Status.Failed
+            }
+        } else {
+            SubscriptionsManager.Status.None
+        }
+
+        subscriptionsManager.updateStatus(progress)
     }
 
     @Suppress("BlockingMethodInNonBlockingContext")
     private suspend fun downloadSubscriptions(
         settings: Settings,
+        activeSubscriptions: List<Subscription>,
         changes: Changes,
         forced: Boolean,
         periodic: Boolean
@@ -113,23 +150,19 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
         val newSubscriptions = changes.newSubscriptions +
                 acceptableAdsSubscription(changes, settings.acceptableAdsEnabled)
 
-        // Current active subscriptions
-        val activeSubscriptions =
-            settings.activePrimarySubscriptions.ensureEasylist(settingsRepository.getEasylistSubscription()) +
-                    settings.activeOtherSubscriptions +
-                    acceptableAdsSubscription(settings.acceptableAdsEnabled)
-
         // check if Work is stopped and return
         if (isStopped) throw CancellationException()
 
         val results = mutableListOf<DownloadResult>()
-        activeSubscriptions.forEachIndexed { index, subscription ->
+        activeSubscriptions.forEach { subscription ->
             // check if Work is stopped and return
             if (isStopped) throw CancellationException()
 
             val isNewSubscription = newSubscriptions.any { it.url == subscription.url }
-            subscriptionsManager.updateStatus(SubscriptionsManager.Status.Downloading(index + 1))
             val result = downloader.download(subscription, forced, periodic, isNewSubscription)
+            if (result is DownloadResult.Success) {
+                updateStatus(ProgressType.PROGRESS)
+            }
             Timber.d("Subscription: ${subscription.title} -> $result")
             results.add(result)
         }
@@ -279,6 +312,10 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
 
     private fun CoroutineWorker.hasReachedMaxAttempts(): Boolean =
         runAttemptCount > 4
+
+    private enum class ProgressType {
+        PROGRESS, SUCCESS, FAILED
+    }
 
     companion object {
         internal const val KEY_PERIODIC_WORK = "PERIODIC_KEY"
