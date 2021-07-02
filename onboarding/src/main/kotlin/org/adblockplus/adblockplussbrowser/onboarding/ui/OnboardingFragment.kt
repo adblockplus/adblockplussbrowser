@@ -1,5 +1,7 @@
 package org.adblockplus.adblockplussbrowser.onboarding.ui
 
+import android.os.Bundle
+import androidx.activity.addCallback
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
@@ -11,20 +13,22 @@ internal class OnboardingFragment : DataBindingFragment<FragmentOnboardingBindin
 
     val viewModel: OnboardingViewModel by activityViewModels()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            if (!viewModel.previousPage()) {
+                requireActivity().finish()
+            }
+        }
+    }
+
     override fun onBindView(binding: FragmentOnboardingBinding) {
         binding.viewModel = viewModel
 
         binding.onboardingPager.adapter = OnboardingPagerAdapter(this)
 
         binding.onboardingButton.setOnClickListener {
-            val position = binding.onboardingPager.currentItem
-            val pageCount = binding.onboardingPager.adapter!!.itemCount
-            val lastPage = pageCount == 0 || position == pageCount - 1
-            if (lastPage) {
-                viewModel.completeOnboarding()
-            } else {
-                binding.onboardingPager.currentItem = position + 1
-            }
+            viewModel.nextPage()
         }
     }
 }

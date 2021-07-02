@@ -9,9 +9,9 @@
 
         <TextView
             android:id="@+id/onboarding_header_title1"
+            style="@style/AbpOnboardingDescriptionTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/abp_foreground_secondary"
             app:layout_constraintBottom_toTopOf="@id/onboarding_header_title2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/abp_foreground"
-            android:textSize="22sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/onboarding_header_title3"
             app:layout_constraintEnd_toEndOf="parent"
@@ -34,9 +34,9 @@
 
         <TextView
             android:id="@+id/onboarding_header_title3"
+            style="@style/AbpOnboardingDescriptionTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/abp_foreground_secondary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

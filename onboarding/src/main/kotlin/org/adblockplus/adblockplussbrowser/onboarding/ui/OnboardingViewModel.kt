@@ -18,6 +18,10 @@ internal class OnboardingViewModel @Inject constructor(private val preferences: 
     val pages: LiveData<List<PageInfo>>
         get() = _pages
 
+    private val _currentPageIndex = MutableLiveData<Int>()
+    val currentPageIndex: LiveData<Int>
+        get() = _currentPageIndex
+
     private val _finishedEvent = MutableLiveData<ValueWrapper<Unit>>()
     val finishedEvent: LiveData<ValueWrapper<Unit>>
         get() = _finishedEvent
@@ -26,11 +30,26 @@ internal class OnboardingViewModel @Inject constructor(private val preferences: 
         loadPages()
     }
 
-    fun completeOnboarding() {
-        _finishedEvent.value = ValueWrapper(Unit)
-        viewModelScope.launch {
-            preferences.completeOnboarding()
+    fun selectPage(index: Int) {
+        _currentPageIndex.value = index
+    }
+
+    fun nextPage() {
+        val index = currentPageIndex.value ?: 0
+        if (index == _pages.value?.lastIndex) {
+            completeOnboarding()
+        } else {
+            _currentPageIndex.value = index + 1
         }
+    }
+
+    fun previousPage(): Boolean {
+        val index = currentPageIndex.value ?: 0
+        if (index > 0) {
+            _currentPageIndex.value = index - 1
+            return true
+        }
+        return false
     }
 
     private fun loadPages() {
@@ -46,5 +65,12 @@ internal class OnboardingViewModel @Inject constructor(private val preferences: 
 
         pageList.add(PageInfo.AcceptableAds)
         _pages.value = pageList
+    }
+
+    private fun completeOnboarding() {
+        _finishedEvent.value = ValueWrapper(Unit)
+        viewModelScope.launch {
+            preferences.completeOnboarding()
+        }
     }
 }
