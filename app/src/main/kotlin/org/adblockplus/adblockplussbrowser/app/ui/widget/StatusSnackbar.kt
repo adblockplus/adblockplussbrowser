@@ -9,7 +9,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.postDelayed
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
-import androidx.databinding.BindingAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.app.databinding.StatusSnackbarBinding
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
@@ -106,9 +105,4 @@ class StatusSnackbar @JvmOverloads constructor(
         }
         animate().alpha(1f).start()
     }
-}
-
-@BindingAdapter("currentStatus")
-internal fun setCurrentStatus(snackbar: StatusSnackbar, status: UpdateStatus) {
-    snackbar.setStatus(status)
 }
