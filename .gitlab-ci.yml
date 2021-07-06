@@ -31,8 +31,6 @@ sign_apks:
   stage: "sign_builds"
   variables:
     GIT_STRATEGY: none
-  tags:
-    - "protected"
   before_script:
     - "rm -fr ./*_SIGNED.apk"
   script:
