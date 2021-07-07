@@ -32,7 +32,7 @@ sign_apks:
   variables:
     GIT_STRATEGY: none
   tags:
-    - "protected"
+    - "apk_signer_apk-signing-1.uplink.eyeo.it"
   before_script:
     - "rm -fr ./*_SIGNED.apk"
   script:
@@ -53,5 +53,5 @@ sign_apks:
     paths:
       - "./*_SIGNED.apk"
     expire_in: "1 week"
-  only:
-    - /^release-.*$/
+  #only:
+  #  - /^release-.*$/
