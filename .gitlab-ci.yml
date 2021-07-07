@@ -53,5 +53,4 @@ sign_apks:
     paths:
       - "./*_SIGNED.apk"
     expire_in: "1 week"
-  only:
-    - /^release-.*$/
+
