@@ -7,7 +7,7 @@
         android:layout_height="match_parent">
 
         <include
-            android:id="@+id/onboarding_default_page_header_include"
+            android:id="@+id/onboarding_aa_header_include"
             layout="@layout/onboarding_header"
             android:layout_width="0dp"
             android:layout_height="112dp"
@@ -16,128 +16,138 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/onboarding_acceptable_ads_annoying_ads_image"
+            android:id="@+id/onboarding_aa_annoying_ads_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="32dp"
             android:src="@drawable/ic_onboarding_block_ads"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/onboarding_default_page_header_include" />
+            app:layout_constraintStart_toStartOf="@id/onboarding_aa_guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/onboarding_aa_header_include" />
 
         <TextView
-            android:id="@+id/onboarding_acceptable_ads_annoying_ads_title"
+            android:id="@+id/onboarding_aa_annoying_ads_title"
             style="@style/AbpOnboardingTitleTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginStart="12dp"
             android:text="@string/onboarding_acceptable_ads_annoying_ads_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/onboarding_acceptable_ads_annoying_ads_image"
-            app:layout_constraintTop_toTopOf="@id/onboarding_acceptable_ads_annoying_ads_image" />
+            app:layout_constraintEnd_toEndOf="@id/onboarding_aa_guideline_end"
+            app:layout_constraintStart_toEndOf="@id/onboarding_aa_annoying_ads_image"
+            app:layout_constraintTop_toTopOf="@id/onboarding_aa_annoying_ads_image" />
 
         <TextView
-            android:id="@+id/onboarding_acceptable_ads_annoying_ads_description"
+            android:id="@+id/onboarding_aa_annoying_ads_description"
+            style="@style/AbpOnboardingDescriptionTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
+            android:layout_marginTop="4dp"
             android:text="@string/onboarding_acceptable_ads_annoying_ads_description"
-            android:textColor="@color/abp_foreground_secondary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/onboarding_acceptable_ads_annoying_ads_title"
-            app:layout_constraintTop_toBottomOf="@id/onboarding_acceptable_ads_annoying_ads_title" />
+            app:layout_constraintEnd_toEndOf="@id/onboarding_aa_guideline_end"
+            app:layout_constraintStart_toStartOf="@id/onboarding_aa_annoying_ads_title"
+            app:layout_constraintTop_toBottomOf="@id/onboarding_aa_annoying_ads_title" />
 
         <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/onboarding_acceptable_ads_annoying_ads_barrier"
+            android:id="@+id/onboarding_aa_annoying_ads_barrier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="onboarding_acceptable_ads_annoying_ads_image, onboarding_acceptable_ads_annoying_ads_description" />
+            app:constraint_referenced_ids="onboarding_aa_annoying_ads_image, onboarding_aa_annoying_ads_description" />
 
         <ImageView
-            android:id="@+id/onboarding_acceptable_ads_nonintrusive_ads_image"
+            android:id="@+id/onboarding_aa_nonintrusive_ads_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="24dp"
             android:src="@drawable/ic_onboarding_acceptable_ads"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/onboarding_acceptable_ads_annoying_ads_barrier" />
+            app:layout_constraintStart_toStartOf="@id/onboarding_aa_guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/onboarding_aa_annoying_ads_barrier" />
 
         <TextView
-            android:id="@+id/onboarding_acceptable_ads_nonintrusive_ads_title"
+            android:id="@+id/onboarding_aa_nonintrusive_ads_title"
             style="@style/AbpOnboardingTitleTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginStart="12dp"
             android:text="@string/onboarding_acceptable_ads_nonintrusive_ads_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/onboarding_acceptable_ads_nonintrusive_ads_image"
-            app:layout_constraintTop_toTopOf="@id/onboarding_acceptable_ads_nonintrusive_ads_image" />
+            app:layout_constraintEnd_toEndOf="@id/onboarding_aa_guideline_end"
+            app:layout_constraintStart_toEndOf="@id/onboarding_aa_nonintrusive_ads_image"
+            app:layout_constraintTop_toTopOf="@id/onboarding_aa_nonintrusive_ads_image" />
 
         <TextView
-            android:id="@+id/onboarding_acceptable_ads_nonintrusive_ads_description"
+            android:id="@+id/onboarding_aa_nonintrusive_ads_description"
+            style="@style/AbpOnboardingDescriptionTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
+            android:layout_marginTop="4dp"
             android:text="@string/onboarding_acceptable_ads_nonintrusive_ads_description"
-            android:textColor="@color/abp_foreground_secondary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/onboarding_acceptable_ads_nonintrusive_ads_title"
-            app:layout_constraintTop_toBottomOf="@id/onboarding_acceptable_ads_nonintrusive_ads_title" />
+            app:layout_constraintEnd_toEndOf="@id/onboarding_aa_guideline_end"
+            app:layout_constraintStart_toStartOf="@id/onboarding_aa_nonintrusive_ads_title"
+            app:layout_constraintTop_toBottomOf="@id/onboarding_aa_nonintrusive_ads_title" />
 
         <TextView
-            android:id="@+id/onboarding_acceptable_ads_nonintrusive_ads_example"
+            android:id="@+id/onboarding_aa_nonintrusive_ads_example"
+            style="@style/AbpOnboardingDescriptionTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
             android:text="@string/onboarding_acceptable_ads_nonintrusive_ads_example"
             android:textColor="@color/abp_foreground_accent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/onboarding_acceptable_ads_nonintrusive_ads_description"
-            app:layout_constraintTop_toBottomOf="@id/onboarding_acceptable_ads_nonintrusive_ads_description" />
+            app:layout_constraintStart_toStartOf="@id/onboarding_aa_nonintrusive_ads_description"
+            app:layout_constraintTop_toBottomOf="@id/onboarding_aa_nonintrusive_ads_description" />
 
         <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/onboarding_acceptable_ads_nonintrusive_ads_barrier"
+            android:id="@+id/onboarding_aa_nonintrusive_ads_barrier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="onboarding_acceptable_ads_nonintrusive_ads_image, onboarding_acceptable_ads_nonintrusive_ads_example" />
+            app:constraint_referenced_ids="onboarding_aa_nonintrusive_ads_image, onboarding_aa_nonintrusive_ads_example" />
 
         <ImageView
-            android:id="@+id/onboarding_acceptable_ads_disable_image"
+            android:id="@+id/onboarding_aa_disable_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:src="@drawable/ic_onboarding_disable_anytime"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/onboarding_acceptable_ads_nonintrusive_ads_barrier" />
+            app:layout_constraintStart_toStartOf="@id/onboarding_aa_guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/onboarding_aa_nonintrusive_ads_barrier" />
 
         <TextView
-            android:id="@+id/onboarding_acceptable_ads_disable_title"
+            android:id="@+id/onboarding_aa_disable_title"
             style="@style/AbpOnboardingTitleTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginStart="12dp"
             android:text="@string/onboarding_acceptable_ads_disable_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/onboarding_acceptable_ads_disable_image"
-            app:layout_constraintTop_toTopOf="@id/onboarding_acceptable_ads_disable_image" />
+            app:layout_constraintEnd_toEndOf="@id/onboarding_aa_guideline_end"
+            app:layout_constraintStart_toEndOf="@id/onboarding_aa_disable_image"
+            app:layout_constraintTop_toTopOf="@id/onboarding_aa_disable_image" />
 
         <TextView
-            android:id="@+id/onboarding_acceptable_ads_disable_description"
+            android:id="@+id/onboarding_aa_disable_description"
+            style="@style/AbpOnboardingDescriptionTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
+            android:layout_marginTop="4dp"
             android:text="@string/onboarding_acceptable_ads_disable_description"
-            android:textColor="@color/abp_foreground_secondary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/onboarding_acceptable_ads_disable_title"
-            app:layout_constraintTop_toBottomOf="@id/onboarding_acceptable_ads_disable_title" />
+            app:layout_constraintEnd_toEndOf="@id/onboarding_aa_guideline_end"
+            app:layout_constraintStart_toStartOf="@id/onboarding_aa_disable_title"
+            app:layout_constraintTop_toBottomOf="@id/onboarding_aa_disable_title" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/onboarding_aa_guideline_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="24dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/onboarding_aa_guideline_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="24dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
