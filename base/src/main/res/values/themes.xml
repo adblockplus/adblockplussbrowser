@@ -17,6 +17,7 @@
         <item name="android:textColorPrimary">@color/abp_foreground</item>
         <item name="android:textColorSecondary">@color/abp_foreground_secondary</item>
         <item name="colorOnSurface">@color/abp_foreground_secondary</item>
+        <item name="colorBackgroundFloating">@color/abp_background_secondary</item>
     </style>
 
     <style name="Theme.Abp.Toolbar" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">

@@ -7,6 +7,7 @@
     <color name="abp_foreground">@color/abp_black</color>
     <color name="abp_foreground_secondary">@color/abp_blue_bayoux</color>
     <color name="abp_foreground_accent">@color/abp_blue_ribbon</color>
+    <color name="abp_divider">@color/abp_lynch_opacity_15</color>
 
     <!-- Used the following tool to name the colors:
     https://chir.ag/projects/name-that-color -->
@@ -17,8 +18,16 @@
     <color name="abp_black">#000000</color>
     <color name="abp_mirage">#181C24</color>
 
+    <color name="abp_mercury">#E7E7E7</color>
     <color name="abp_regent_gray">#8D98A5</color>
+    <color name="abp_regent_gray_opacity_15">#268D98A5</color>
+
+    <color name="abp_lynch">#6A7D95</color>
+    <color name="abp_lynch_opacity_15">#266A7D95</color>
+    <color name="abp_lynch_opacity_30">#4D6A7D95</color>
+    <color name="abp_lynch_opacity_40">#666A7D95</color>
     <color name="abp_blue_bayoux">#4B5E75</color>
+    <color name="abp_oxford_blue">#3C4857</color>
 
     <color name="abp_dodger_blue">#2786FF</color>
     <color name="abp_blue_ribbon">#0070FF</color>

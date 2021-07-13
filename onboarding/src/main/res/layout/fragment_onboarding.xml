@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            app:dotsColor="@color/abp_background"
+            app:dotsColor="@color/abp_onboarding_dot_indicator_background"
             app:dotsCornerRadius="1dp"
             app:dotsSize="3dp"
             app:dotsSpacing="2dp"
@@ -61,7 +61,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:trackColor="@color/abp_background"
+            app:trackColor="@color/abp_onboarding_circular_indicator_background"
             app:trackThickness="2dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -74,7 +74,8 @@
             app:layout_constraintBottom_toBottomOf="@id/onboarding_circular_indicator"
             app:layout_constraintEnd_toEndOf="@id/onboarding_circular_indicator"
             app:layout_constraintStart_toStartOf="@id/onboarding_circular_indicator"
-            app:layout_constraintTop_toTopOf="@id/onboarding_circular_indicator" />
+            app:layout_constraintTop_toTopOf="@id/onboarding_circular_indicator"
+            app:tint="@color/abp_onboarding_icon_foreground" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

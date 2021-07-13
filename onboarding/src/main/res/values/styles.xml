@@ -7,7 +7,7 @@
     </style>
 
     <style name="AbpOnboardingDescriptionTextStyle">
-        <item name="android:textColor">@color/abp_foreground_secondary</item>
+        <item name="android:textColor">@color/abp_onboarding_foreground_secondary</item>
         <item name="android:textSize">12sp</item>
     </style>
 
