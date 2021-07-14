@@ -8,11 +8,11 @@ class AcceptableAdsPageFragment :
     DataBindingFragment<FragmentOnboardingAcceptableAdsPageBinding>(R.layout.fragment_onboarding_acceptable_ads_page) {
 
     override fun onBindView(binding: FragmentOnboardingAcceptableAdsPageBinding) {
-        val headerInclude = binding.onboardingDefaultPageHeaderInclude
+        val headerInclude = binding.onboardingAaHeaderInclude
         headerInclude.onboardingHeaderTitle1.setText(R.string.onboarding_acceptable_ads_header_title1)
         headerInclude.onboardingHeaderTitle2.setText(R.string.onboarding_acceptable_ads_header_title2)
         headerInclude.onboardingHeaderTitle3.setText(R.string.onboarding_acceptable_ads_header_title3)
-        binding.onboardingAcceptableAdsNonintrusiveAdsExample.setOnClickListener {
+        binding.onboardingAaNonintrusiveAdsExample.setOnClickListener {
             AcceptableAdsDialogFragment().show(parentFragmentManager, null)
         }
     }

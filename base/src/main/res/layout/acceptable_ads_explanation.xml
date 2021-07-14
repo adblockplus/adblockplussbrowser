@@ -32,7 +32,7 @@
             android:id="@+id/aa_explanation_acceptable_ads_image"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:src="@drawable/ic_acceptable_ads_illustration"
             app:layout_constraintDimensionRatio="142:136"
             app:layout_constraintEnd_toStartOf="@id/aa_explanation_intrusive_ads_image"
@@ -44,7 +44,7 @@
             android:id="@+id/aa_explanation_intrusive_ads_image"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:src="@drawable/ic_intrusive_ads_illustration"
             app:layout_constraintDimensionRatio="142:136"
             app:layout_constraintEnd_toEndOf="parent"
@@ -79,6 +79,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/acceptable_ads_fair_standard_description"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@id/aa_explanation_intrusive_ads_image"
             app:layout_constraintStart_toStartOf="@id/aa_explanation_fair_standards_title"
             app:layout_constraintTop_toBottomOf="@id/aa_explanation_fair_standards_title" />
@@ -110,6 +111,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/acceptable_ads_placement_description"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@id/aa_explanation_intrusive_ads_image"
             app:layout_constraintStart_toStartOf="@id/aa_explanation_placement_title"
             app:layout_constraintTop_toBottomOf="@id/aa_explanation_placement_title" />
@@ -141,6 +143,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/acceptable_ads_distinction_description"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@id/aa_explanation_intrusive_ads_image"
             app:layout_constraintStart_toStartOf="@id/aa_explanation_distinction_title"
             app:layout_constraintTop_toBottomOf="@id/aa_explanation_distinction_title" />
@@ -172,6 +175,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/acceptable_ads_size_description"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@id/aa_explanation_intrusive_ads_image"
             app:layout_constraintStart_toStartOf="@id/aa_explanation_size_title"
             app:layout_constraintTop_toBottomOf="@id/aa_explanation_size_title" />

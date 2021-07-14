@@ -5,14 +5,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="20dp"
-        android:paddingTop="20dp"
-        android:paddingEnd="20dp">
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp">
 
         <ImageView
             android:id="@+id/onboarding_welcome_block_ads_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
             android:src="@drawable/ic_onboarding_block_ads"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -22,7 +22,7 @@
             style="@style/AbpOnboardingTitleTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="12dp"
             android:text="@string/onboarding_welcome_block_ads_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/onboarding_welcome_block_ads_image"
@@ -30,10 +30,11 @@
 
         <TextView
             android:id="@+id/onboarding_welcome_block_ads_description"
+            style="@style/AbpOnboardingDescriptionTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:text="@string/onboarding_welcome_block_ads_description"
-            android:textColor="@color/abp_foreground_secondary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/onboarding_welcome_block_ads_title"
             app:layout_constraintTop_toBottomOf="@id/onboarding_welcome_block_ads_title" />
@@ -49,7 +50,7 @@
             android:id="@+id/onboarding_welcome_tracking_protection_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="24dp"
             android:src="@drawable/ic_onboarding_tracking_protection"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/onboarding_welcome_block_ads_barrier" />
@@ -59,7 +60,7 @@
             style="@style/AbpOnboardingTitleTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="12dp"
             android:text="@string/onboarding_welcome_tracking_protection_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/onboarding_welcome_tracking_protection_image"
@@ -67,10 +68,11 @@
 
         <TextView
             android:id="@+id/onboarding_welcome_tracking_protection_description"
+            style="@style/AbpOnboardingDescriptionTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:text="@string/onboarding_welcome_tracking_protection_description"
-            android:textColor="@color/abp_foreground_secondary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/onboarding_welcome_tracking_protection_title"
             app:layout_constraintTop_toBottomOf="@id/onboarding_welcome_tracking_protection_title" />
@@ -86,7 +88,7 @@
             android:id="@+id/onboarding_welcome_security_privacy_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="24dp"
             android:src="@drawable/ic_onboarding_security_privacy"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/onboarding_welcome_tracking_protection_barrier" />
@@ -96,7 +98,7 @@
             style="@style/AbpOnboardingTitleTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="12dp"
             android:text="@string/onboarding_welcome_security_privacy_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/onboarding_welcome_security_privacy_image"
@@ -104,8 +106,10 @@
 
         <TextView
             android:id="@+id/onboarding_welcome_security_privacy_description"
+            style="@style/AbpOnboardingDescriptionTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:text="@string/onboarding_welcome_security_privacy_description"
             android:textColor="@color/abp_foreground_secondary"
             app:layout_constraintEnd_toEndOf="parent"
@@ -123,7 +127,7 @@
             android:id="@+id/onboarding_welcome_language_filters_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="24dp"
             android:src="@drawable/ic_onboarding_language_filters"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/onboarding_welcome_security_privacy_barrier" />
@@ -133,7 +137,7 @@
             style="@style/AbpOnboardingTitleTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="12dp"
             android:text="@string/onboarding_welcome_language_filters_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/onboarding_welcome_language_filters_image"
@@ -141,10 +145,11 @@
 
         <TextView
             android:id="@+id/onboarding_welcome_language_filters_description"
+            style="@style/AbpOnboardingDescriptionTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:text="@string/onboarding_welcome_language_filters_description"
-            android:textColor="@color/abp_foreground_secondary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/onboarding_welcome_language_filters_title"
             app:layout_constraintTop_toBottomOf="@id/onboarding_welcome_language_filters_title" />

@@ -20,7 +20,7 @@ build:
     - set +o pipefail
     - yes | android-sdk-linux/tools/bin/sdkmanager --licenses >/dev/null
     - set -o pipefail
-  script: 
+  script:
     - ./gradlew --build-cache assembleWorldAbpRelease
   artifacts:
     paths:
@@ -31,6 +31,8 @@ sign_apks:
   stage: "sign_builds"
   variables:
     GIT_STRATEGY: none
+  tags:
+    - "apk_signer_apk-signing-1.uplink.eyeo.it"
   before_script:
     - "rm -fr ./*_SIGNED.apk"
   script:
@@ -51,4 +53,5 @@ sign_apks:
     paths:
       - "./*_SIGNED.apk"
     expire_in: "1 week"
-
+  #only:
+  #  - /^release-.*$/

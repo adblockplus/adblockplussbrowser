@@ -11,6 +11,6 @@ class AcceptableAdsDialogFragment : AppCompatDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         MaterialDialog(requireContext()).show {
-            customView(viewRes = R.layout.acceptable_ads_explanation)
+            customView(viewRes = R.layout.acceptable_ads_explanation, scrollable = true)
         }
 }

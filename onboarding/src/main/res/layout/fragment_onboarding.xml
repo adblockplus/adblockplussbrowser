@@ -27,6 +27,8 @@
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/onboarding_pager"
+                currentItem="@{viewModel.currentPageIndex}"
+                onPageScrollSelected="@{viewModel.selectPage}"
                 onboardingPages="@{viewModel.pages}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
@@ -68,6 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_round_check_24"
+            app:elevation="0dp"
             app:layout_constraintBottom_toBottomOf="@id/onboarding_circular_indicator"
             app:layout_constraintEnd_toEndOf="@id/onboarding_circular_indicator"
             app:layout_constraintStart_toStartOf="@id/onboarding_circular_indicator"
