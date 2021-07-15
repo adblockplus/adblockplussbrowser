@@ -7,6 +7,7 @@
     <string name="preferences_other_subscriptions_summary">Remove tracking, social media buttons or add custom filter lists</string>
     <string name="preferences_allowlist_title">Add websites to allowlist</string>
     <string name="preferences_allowlist_summary">Disable ad blocking on websites of your choosing</string>
+    <string name="preferences_allowlist_header">Allowlisted domains</string>
     <string name="preferences_blocklist_title">Add websites to blocklist</string>
     <string name="preferences_blocklist_summary">Enable ad blocking on websites of your choosing</string>
     <string name="preferences_updates_title">Update ad filter lists</string>
@@ -38,6 +39,8 @@
     <string name="other_subscriptions_error_add_custom">Error adding custom filter list</string>
     <string name="allowlist_add_title">Add a domain to the allowlist</string>
     <string name="allowlist_add_hint">example.com</string>
+    <string name="allowlist_delete_dialog_title">Confirm deletion</string>
+    <string name="allowlist_delete_dialog_message">Are you sure you want to remove %s from the allow list?</string>
     <string name="acceptable_ads_enabled_line1">Yes, I’ll support content creators.</string>
     <string name="acceptable_ads_enabled_line2">By keeping Acceptable Ads enabled, you’re helping content creators publish their content for free.</string>
     <string name="acceptable_ads_disabled">No, I’d like to disable Acceptable Ads.</string>

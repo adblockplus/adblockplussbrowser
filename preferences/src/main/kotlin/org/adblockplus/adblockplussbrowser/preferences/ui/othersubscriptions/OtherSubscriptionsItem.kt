@@ -5,7 +5,7 @@ import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.preferences.ui.GroupItemLayout
 import java.io.Serializable
 
-sealed class OtherSubscriptionsItem(val id: String) {
+internal sealed class OtherSubscriptionsItem(val id: String) {
 
     data class HeaderItem(@StringRes val titleResId: Int) : OtherSubscriptionsItem(titleResId.toString())
 

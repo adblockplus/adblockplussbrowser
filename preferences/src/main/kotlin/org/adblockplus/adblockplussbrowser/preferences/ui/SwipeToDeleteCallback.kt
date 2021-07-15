@@ -1,7 +1,7 @@
 package org.adblockplus.adblockplussbrowser.preferences.ui
 
 import android.graphics.*
-import androidx.core.content.ContextCompat
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import org.adblockplus.adblockplussbrowser.preferences.R
@@ -22,13 +22,13 @@ abstract class SwipeToDeleteCallback : ItemTouchHelper.SimpleCallback(0, ItemTou
         val isCanceled = dX == 0f && !isCurrentlyActive
 
         if (isCanceled) {
-            clearCanvas(canvas, itemView.right + dX, itemView.top.toFloat(), itemView.right.toFloat(),
+            canvas.clear(itemView.right + dX, itemView.top.toFloat(), itemView.right.toFloat(),
                 itemView.bottom.toFloat())
             super.onChildDraw(canvas, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
             return
         }
 
-        val deleteIcon = ContextCompat.getDrawable(recyclerView.context, R.drawable.ic_baseline_delete_24)
+        val deleteIcon = AppCompatResources.getDrawable(recyclerView.context, R.drawable.ic_baseline_delete_24)
         val iconWidth = deleteIcon!!.intrinsicWidth
         val iconHeight = deleteIcon.intrinsicHeight
         val iconMargin = (itemHeight - iconHeight) / 2
@@ -46,8 +46,8 @@ abstract class SwipeToDeleteCallback : ItemTouchHelper.SimpleCallback(0, ItemTou
         super.onChildDraw(canvas, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
     }
 
-    private fun clearCanvas(canvas: Canvas?, left: Float, top: Float, right: Float, bottom: Float) {
+    private fun Canvas.clear(left: Float, top: Float, right: Float, bottom: Float) {
         val clearPaint = Paint().apply { xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR) }
-        canvas?.drawRect(left, top, right, bottom, clearPaint)
+        this.drawRect(left, top, right, bottom, clearPaint)
     }
 }

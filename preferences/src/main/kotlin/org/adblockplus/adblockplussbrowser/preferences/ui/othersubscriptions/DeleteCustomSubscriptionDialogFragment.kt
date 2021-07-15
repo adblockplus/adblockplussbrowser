@@ -9,7 +9,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.preferences.R
 
 @AndroidEntryPoint
-class DeleteCustomSubscriptionDialogFragment : AppCompatDialogFragment() {
+internal class DeleteCustomSubscriptionDialogFragment : AppCompatDialogFragment() {
 
     private val viewModel: OtherSubscriptionsViewModel by activityViewModels()
     private lateinit var item: OtherSubscriptionsItem.CustomItem
