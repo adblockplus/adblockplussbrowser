@@ -20,11 +20,13 @@ internal class AllowlistAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.bindHolder {
-            item = getItem(position) as AllowlistItem
+            item = getItem(position)
             viewModel = this@AllowlistAdapter.viewModel
             lifecycleOwner = this@AllowlistAdapter.lifecycleOwner
         }
     }
+
+    public override fun getItem(position: Int): AllowlistItem = super.getItem(position)
 
     internal class ViewHolder(val binding: AllowlistItemBinding) : RecyclerView.ViewHolder(binding.root)
 }
