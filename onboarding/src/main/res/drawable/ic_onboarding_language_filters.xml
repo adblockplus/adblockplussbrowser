@@ -8,7 +8,7 @@
       android:pathData="m13,24 l12,6 -12,6 -12,-6z"
       android:strokeLineJoin="round"
       android:fillColor="#00000000"
-      android:strokeColor="@color/abp_background"
+      android:strokeColor="@color/abp_onboarding_icon_background"
       android:fillType="evenOdd"
       android:strokeLineCap="round"/>
   <path
@@ -16,7 +16,7 @@
       android:pathData="m37,24 l12,6 -12,6 -12,-6z"
       android:strokeLineJoin="round"
       android:fillColor="#00000000"
-      android:strokeColor="@color/abp_background"
+      android:strokeColor="@color/abp_onboarding_icon_background"
       android:fillType="evenOdd"
       android:strokeLineCap="round"/>
   <path
@@ -24,7 +24,7 @@
       android:pathData="m25,6 l12,6 -12,6 -12,-6z"
       android:strokeLineJoin="round"
       android:fillColor="#00000000"
-      android:strokeColor="@color/abp_background"
+      android:strokeColor="@color/abp_onboarding_icon_background"
       android:fillType="evenOdd"
       android:strokeLineCap="round"/>
   <path
@@ -32,7 +32,7 @@
       android:pathData="m37,12 l12,6 -12,6 -12,-6z"
       android:strokeLineJoin="round"
       android:fillColor="#00000000"
-      android:strokeColor="@color/abp_background"
+      android:strokeColor="@color/abp_onboarding_icon_background"
       android:fillType="evenOdd"
       android:strokeLineCap="round"/>
   <path
@@ -41,6 +41,6 @@
       android:fillType="evenOdd"/>
   <path
       android:pathData="m31,20v5.4286c0,1.1046 -0.8954,2 -2,2h-3.1429l-3.4286,2.5714v-2.5714h-1.4286c-1.1046,0 -2,-0.8954 -2,-2v-5.4286c0,-1.1046 0.8954,-2 2,-2h8c1.1046,0 2,0.8954 2,2zM28,20.1429v-0.8571h-0.8571v0.8571h-1.2857v0.8571h2.1241c-0.022,0.2609 -0.0632,0.5196 -0.1248,0.7746 -0.0911,0.3761 -0.2261,0.7404 -0.3986,1.0859 -0.0541,-0.0643 -0.1061,-0.1302 -0.1575,-0.1961 -0.2309,-0.3005 -0.4339,-0.6214 -0.6096,-0.9568 -0.0075,-0.0155 -0.0161,-0.0311 -0.0241,-0.0466l-0.7618,0.3921 0.0252,0.0493 0.0268,0.0514c0.2829,0.5288 0.6257,1.0302 1.0323,1.4721 -0.0852,0.1157 -0.1746,0.2282 -0.2684,0.3364 -0.1805,0.2089 -0.3766,0.4034 -0.5866,0.5823 -0.0916,0.0777 -0.1859,0.1511 -0.2823,0.2234 -0.0568,0.0407 -0.0568,0.0407 -0.1141,0.0814 -0.0584,0.0396 -0.0584,0.0396 -0.1173,0.0788l0.4736,0.7146c0.3021,-0.2004 0.5871,-0.4248 0.8502,-0.6745 0.2448,-0.2325 0.4698,-0.4843 0.6739,-0.7527 0.2148,0.1704 0.4441,0.3214 0.6889,0.4452 0.1323,0.0664 0.2684,0.1227 0.4082,0.172l0.2839,-0.8089c-0.09,-0.0316 -0.1779,-0.0664 -0.2636,-0.1077 -0.232,-0.1114 -0.4468,-0.2566 -0.645,-0.4211 0.2507,-0.4462 0.4452,-0.9241 0.5748,-1.4207 0.0916,-0.353 0.1489,-0.712 0.1752,-1.0746h0.4452v-0.8571zM22.4286,20.5714h-0.5652l-1.837,4.2857h0.9327l0.3675,-0.8571h2.2039l0.3675,0.8571h0.9327l-1.837,-4.2857zM21.6941,23.1429h1.4689l-0.7345,-1.7143z"
-      android:fillColor="@color/abp_background_secondary"
+      android:fillColor="@color/abp_onboarding_icon_foreground"
       android:fillType="nonZero"/>
 </vector>

@@ -9,7 +9,7 @@
       android:strokeAlpha="0.99"
       android:strokeLineJoin="round"
       android:fillColor="#00000000"
-      android:strokeColor="@color/abp_background"
+      android:strokeColor="@color/abp_onboarding_icon_background"
       android:fillType="evenOdd"
       android:fillAlpha="0.99"
       android:strokeLineCap="round"/>
@@ -19,7 +19,7 @@
       android:strokeAlpha="0.99"
       android:strokeLineJoin="round"
       android:fillColor="#00000000"
-      android:strokeColor="@color/abp_background"
+      android:strokeColor="@color/abp_onboarding_icon_background"
       android:fillType="evenOdd"
       android:fillAlpha="0.99"
       android:strokeLineCap="round"/>
@@ -29,7 +29,7 @@
       android:strokeAlpha="0.99"
       android:strokeLineJoin="round"
       android:fillColor="#00000000"
-      android:strokeColor="@color/abp_background"
+      android:strokeColor="@color/abp_onboarding_icon_background"
       android:fillType="evenOdd"
       android:fillAlpha="0.99"
       android:strokeLineCap="round"/>
@@ -39,7 +39,7 @@
       android:strokeAlpha="0.99"
       android:strokeLineJoin="round"
       android:fillColor="#00000000"
-      android:strokeColor="@color/abp_background"
+      android:strokeColor="@color/abp_onboarding_icon_background"
       android:fillType="evenOdd"
       android:fillAlpha="0.99"
       android:strokeLineCap="round"/>
@@ -49,26 +49,26 @@
       android:strokeAlpha="0.99"
       android:strokeLineJoin="round"
       android:fillColor="#00000000"
-      android:strokeColor="@color/abp_background"
+      android:strokeColor="@color/abp_onboarding_icon_background"
       android:fillType="evenOdd"
       android:fillAlpha="0.99"
       android:strokeLineCap="round"/>
   <path
       android:pathData="m22.8284,35.3075c1.3186,0.9245 3.0875,0.9232 4.4046,-0.0035 6.4856,-4.5697 8.9063,-10.5874 9.7402,-17.5767 0.206,-1.706 -0.7921,-3.3314 -2.4219,-3.9438 -6.4196,-2.3932 -12.7929,-2.3717 -19.1234,0.0272 -1.5934,0.607 -2.5791,2.1871 -2.4089,3.8615 0.7042,6.9999 3.251,13.033 9.8094,17.6354z"
       android:strokeAlpha="0.99"
-      android:fillColor="@color/abp_foreground_accent"
+      android:fillColor="@color/abp_onboarding_icon_foreground_accent"
       android:fillType="evenOdd"
       android:fillAlpha="0.99"/>
   <path
       android:pathData="m28.3333,23.2857c0,-1.1633 -0.6703,-2.1789 -1.6667,-2.7225v-1.7237c1.9421,0.6472 3.3333,2.3935 3.3333,4.4461 0,2.6037 -2.2385,4.7143 -5,4.7143s-5,-2.1106 -5,-4.7143c0,-2.0527 1.3912,-3.799 3.3333,-4.4461v1.7237c-0.9964,0.5436 -1.6667,1.5591 -1.6667,2.7225 0,1.736 1.4921,3.1429 3.3333,3.1429s3.3333,-1.4069 3.3333,-3.1429z"
       android:strokeAlpha="0.99"
-      android:fillColor="@color/abp_background_secondary"
+      android:fillColor="@color/abp_onboarding_icon_foreground"
       android:fillType="evenOdd"
       android:fillAlpha="0.99"/>
   <path
       android:pathData="m24.1667,21.7143v-3.9286c0,-0.4341 0.3729,-0.7857 0.8333,-0.7857s0.8333,0.3516 0.8333,0.7857v3.9286c0,0.4341 -0.3729,0.7857 -0.8333,0.7857s-0.8333,-0.3516 -0.8333,-0.7857z"
       android:strokeAlpha="0.99"
-      android:fillColor="@color/abp_background_secondary"
+      android:fillColor="@color/abp_onboarding_icon_foreground"
       android:fillType="evenOdd"
       android:fillAlpha="0.99"/>
 </vector>
