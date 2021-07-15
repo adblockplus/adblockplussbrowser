@@ -74,6 +74,14 @@ internal class OtherSubscriptionsAdapter(
             is OtherSubscriptionsItem.CustomItem -> CUSTOM_ITEM.ordinal
         }
     }
+
+    fun getCustomItem(position: Int): OtherSubscriptionsItem.CustomItem {
+        val item = getItem(position)
+        if (item is OtherSubscriptionsItem.CustomItem) {
+            return item
+        }
+        throw IllegalArgumentException("Unexpected item type at position $position")
+    }
 }
 
 internal sealed class OtherSubscriptionsViewHolder(binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root) {
