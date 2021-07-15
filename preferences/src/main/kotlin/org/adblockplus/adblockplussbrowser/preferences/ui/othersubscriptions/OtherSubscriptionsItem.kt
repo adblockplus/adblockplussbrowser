@@ -3,8 +3,9 @@ package org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions
 import androidx.annotation.StringRes
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.preferences.ui.GroupItemLayout
+import java.io.Serializable
 
-internal sealed class OtherSubscriptionsItem(val id: String) {
+sealed class OtherSubscriptionsItem(val id: String) {
 
     data class HeaderItem(@StringRes val titleResId: Int) : OtherSubscriptionsItem(titleResId.toString())
 
@@ -12,5 +13,5 @@ internal sealed class OtherSubscriptionsItem(val id: String) {
         OtherSubscriptionsItem(subscription.url)
 
     data class CustomItem(val subscription: Subscription, val layout: GroupItemLayout) :
-        OtherSubscriptionsItem(subscription.url)
+        OtherSubscriptionsItem(subscription.url), Serializable
 }

@@ -105,10 +105,6 @@ internal class HardcodedSubscriptions {
     // TODO: Decide which title we want for the following and if we want to localize them:
     val defaultOtherSubscriptions = subscriptions {
         subscription {
-            title = "ABP Anti-Circumvention Filter List"
-            url = "https://easylist-downloads.adblockplus.org/abp-filters-anti-cv.txt"
-        }
-        subscription {
             title = "Block additional tracking"
             url = "https://easylist-downloads.adblockplus.org/easyprivacy.txt"
         }

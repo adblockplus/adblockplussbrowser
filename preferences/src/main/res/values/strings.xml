@@ -4,7 +4,7 @@
     <string name="preferences_primary_subscriptions_title">Language</string>
     <string name="preferences_primary_subscriptions_summary">Block more ads by optimising Adblock Plus for the language(s) you typically browse in</string>
     <string name="preferences_other_subscriptions_title">More blocking options</string>
-    <string name="preferences_other_subscriptions_summary">Disable tracking and social media buttons</string>
+    <string name="preferences_other_subscriptions_summary">Remove tracking, social media buttons or add custom filter lists</string>
     <string name="preferences_allowlist_title">Add websites to allowlist</string>
     <string name="preferences_allowlist_summary">Disable ad blocking on websites of your choosing</string>
     <string name="preferences_blocklist_title">Add websites to blocklist</string>
@@ -31,6 +31,8 @@
     <string name="other_subscriptions_custom_category">Active custom filter lists</string>
     <string name="other_subscriptions_add_custom_title">Add custom filter list</string>
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
+    <string name="other_subscriptions_remove_custom_title">Confirm deletion</string>
+    <string name="other_subscriptions_remove_custom_message">Are you sure you want to delete the custom filter list from %s ?</string>
     <string name="other_subscriptions_dialog_title">Adding custom filter list</string>
     <string name="other_subscriptions_dialog_message">This might take a few seconds.</string>
     <string name="other_subscriptions_error_add_custom">Error adding custom filter list</string>

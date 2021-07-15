@@ -1,6 +1,5 @@
 package org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions
 
-import android.telephony.SubscriptionManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -34,6 +33,13 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow<UiState>(UiState.Done)
     val uiState = _uiState.asLiveData()
+
+    val nonRemovableItemCount: Int
+        get() {
+        val defaultOtherListCount = subscriptions.value!!.count { it is OtherSubscriptionsItem.DefaultItem }
+        val headerCount = subscriptions.value!!.count { it is OtherSubscriptionsItem.HeaderItem }
+        return defaultOtherListCount + headerCount
+    }
 
     fun toggleActiveSubscription(defaultItem: OtherSubscriptionsItem.DefaultItem) {
         viewModelScope.launch {

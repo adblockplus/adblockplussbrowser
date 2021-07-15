@@ -2,7 +2,7 @@ package org.adblockplus.adblockplussbrowser.preferences.ui
 
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 
-internal enum class GroupItemLayout {
+enum class GroupItemLayout {
     SINGLE,
     FIRST,
     CENTER,
