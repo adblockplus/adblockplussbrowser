@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Adapted from mtrl_layout_snackbar_include.xml -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal">
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/snackbar_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:layout_marginStart="8dp"
+            android:visibility="gone"
+            app:indicatorSize="16dp"
+            app:trackColor="@color/abp_background"
+            app:trackThickness="1dp" />
+
+        <TextView
+            android:id="@+id/snackbar_text"
+            style="?attr/snackbarTextViewStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:layout_weight="1"
+            android:drawablePadding="8dp" />
+
+        <Button
+            android:id="@+id/snackbar_action"
+            style="?attr/snackbarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:minWidth="48dp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</layout>

@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.Window
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.databinding.DataBindingUtil
@@ -20,6 +21,8 @@ import org.adblockplus.adblockplussbrowser.base.navigation.navControllerFromFrag
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    private val viewModel: MainViewModel by viewModels()
+
     private val navController: NavController
         get() = navControllerFromFragmentContainerView(R.id.nav_host_fragment)
 
@@ -27,6 +30,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding =
             DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
         setSupportActionBar(binding.toolbar)
         setupActionBarWithNavController(navController)
 

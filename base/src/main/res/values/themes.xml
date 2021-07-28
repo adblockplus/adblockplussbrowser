@@ -18,11 +18,33 @@
         <item name="android:textColorSecondary">@color/abp_foreground_secondary</item>
         <item name="colorOnSurface">@color/abp_foreground_secondary</item>
         <item name="colorBackgroundFloating">@color/abp_background_secondary</item>
+        <!-- Snackbar -->
+        <item name="snackbarStyle">@style/Widget.Abp.Snackbar</item>
+        <item name="snackbarTextViewStyle">@style/Widget.Abp.SnackbarTextView</item>
+        <item name="snackbarButtonStyle">@style/Widget.Abp.SnackbarButton</item>
     </style>
 
     <style name="Theme.Abp.Toolbar" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
         <item name="android:background">@color/abp_background</item>
         <item name="colorOnPrimary">@color/abp_foreground</item>
+    </style>
+
+    <style name="ThemeOverlay.Abp.Snackbar" parent="">
+        <item name="colorPrimary">@color/abp_foreground_accent</item>
+        <item name="colorOnSurface">@color/abp_background_secondary</item>
+    </style>
+
+    <style name="Widget.Abp.Snackbar" parent="Widget.MaterialComponents.Snackbar">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.Abp.Snackbar</item>
+        <item name="actionTextColorAlpha">1</item>
+    </style>
+
+    <style name="Widget.Abp.SnackbarTextView" parent="Widget.MaterialComponents.Snackbar.TextView">
+        <item name="android:textColor">@color/abp_foreground_secondary</item>
+    </style>
+
+    <style name="Widget.Abp.SnackbarButton" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
+        <item name="android:textColor">@color/abp_foreground_accent</item>
     </style>
 
 </resources>
