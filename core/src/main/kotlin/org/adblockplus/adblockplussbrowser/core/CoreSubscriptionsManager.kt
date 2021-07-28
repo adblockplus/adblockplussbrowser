@@ -1,8 +1,6 @@
 package org.adblockplus.adblockplussbrowser.core
 
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.work.BackoffPolicy
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -19,6 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
@@ -26,18 +25,19 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
+import org.adblockplus.adblockplussbrowser.base.data.model.SubscriptionUpdateStatus
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
 import org.adblockplus.adblockplussbrowser.core.extensions.currentData
 import org.adblockplus.adblockplussbrowser.core.extensions.currentSettings
 import org.adblockplus.adblockplussbrowser.core.extensions.periodicWorkRequestBuilder
 import org.adblockplus.adblockplussbrowser.core.extensions.setBackoffCriteria
+import org.adblockplus.adblockplussbrowser.core.extensions.setBackoffTime
+import org.adblockplus.adblockplussbrowser.core.extensions.setInitialDelay
 import org.adblockplus.adblockplussbrowser.core.work.UpdateSubscriptionsWorker
 import org.adblockplus.adblockplussbrowser.core.work.UpdateSubscriptionsWorker.Companion.KEY_FORCE_REFRESH
 import org.adblockplus.adblockplussbrowser.core.work.UpdateSubscriptionsWorker.Companion.KEY_ONESHOT_WORK
 import org.adblockplus.adblockplussbrowser.core.work.UpdateSubscriptionsWorker.Companion.KEY_PERIODIC_WORK
-import org.adblockplus.adblockplussbrowser.core.extensions.setBackoffTime
-import org.adblockplus.adblockplussbrowser.core.extensions.setInitialDelay
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
 import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig
@@ -65,14 +65,14 @@ class CoreSubscriptionsManager(
 
     override val coroutineContext = Dispatchers.Default + SupervisorJob()
 
-    private val _status = MutableLiveData<SubscriptionsManager.Status>()
-    override val status: LiveData<SubscriptionsManager.Status>
-        get() = _status
-
     override val lastUpdate: Flow<Long>
         get() = coreRepository.data.map { data ->
             data.lastUpdated
         }
+
+    private val _status: MutableStateFlow<SubscriptionUpdateStatus> = MutableStateFlow(SubscriptionUpdateStatus.None)
+    override val status: Flow<SubscriptionUpdateStatus>
+        get() = _status
 
     private lateinit var currentSettings: Settings
 
@@ -126,7 +126,7 @@ class CoreSubscriptionsManager(
     override fun scheduleImmediate(force: Boolean) {
         val request = OneTimeWorkRequestBuilder<UpdateSubscriptionsWorker>().apply {
                 setConstraints(Constraints.Builder()
-                    .setRequiredNetworkType(UpdateConfig.ALWAYS.toNetworkType()).build())
+                    .setRequiredNetworkType(NetworkType.NOT_REQUIRED).build())
                 setBackoffTime(Duration.minutes(1))
                 addTag(KEY_ONESHOT_WORK)
                 if (force) {
@@ -157,8 +157,8 @@ class CoreSubscriptionsManager(
         return downloader.validate(subscription)
     }
 
-    override fun updateStatus(status: SubscriptionsManager.Status) {
-        _status.postValue(status)
+    override suspend fun updateStatus(status: SubscriptionUpdateStatus) {
+        _status.value = status
     }
 
     private fun UpdateConfig.toNetworkType(): NetworkType =
