@@ -2,6 +2,7 @@
 
 plugins {
     id("com.android.application")
+    id("com.google.android.gms.oss-licenses-plugin")
     kotlin("android")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
@@ -89,4 +90,5 @@ dependencies {
     implementation(Deps.Protobuf.JAVALITE)
     implementation(Deps.OkHttp.OKHTTP)
     implementation(Deps.OkHttp.LOGGER)
+    implementation(Deps.Gms.OSS_LICENSES)
 }

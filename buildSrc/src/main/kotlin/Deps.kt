@@ -15,6 +15,18 @@ object Deps {
 
     val TIMBER = "com.jakewharton.timber:timber" version "4.7.1"
 
+    object Gms: DependencyGroup("com.google.android") {
+        val OSS_LICENSES_PLUGIN = dependency {
+            groupName("gms:oss-licenses-plugin")
+            version("0.10.4")
+        }
+
+        val OSS_LICENSES = dependency {
+            groupName("gms:play-services-oss-licenses")
+            version("17.0.0")
+        }
+    }
+
     object AndroidX : DependencyGroup("androidx") {
         val ACTIVITY = dependency {
             groupName("activity:activity-ktx")

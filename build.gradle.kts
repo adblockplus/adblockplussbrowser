@@ -12,6 +12,7 @@ buildscript {
         classpath(Deps.Hilt.ANDROID_GRADLE_PLUGIN)
         classpath(Deps.Kotlin.KOTLIN_PLUGIN)
         classpath(Deps.Protobuf.GRADLE_PLUGIN)
+        classpath(Deps.Gms.OSS_LICENSES_PLUGIN)
     }
 }
 
