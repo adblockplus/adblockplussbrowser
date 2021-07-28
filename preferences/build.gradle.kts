@@ -19,7 +19,6 @@ android {
 dependencies {
     implementation(project(":base"))
     implementation(project(":settings"))
-
     implementation(Deps.MATERIAL)
     implementation(Deps.AndroidX.APPCOMPAT)
     implementation(Deps.AndroidX.CONSTRAINT_LAYOUT)
@@ -33,4 +32,5 @@ dependencies {
     kapt(Deps.Hilt.ANDROID_COMPILER)
     implementation(Deps.MaterialDialogs.CORE)
     implementation(Deps.MaterialDialogs.INPUT)
+    implementation(Deps.Gms.OSS_LICENSES)
 }

@@ -18,7 +18,32 @@
                 android:background="@drawable/preferences_group_bg_single"
                 app:layout_constraintBottom_toBottomOf="@id/about_imprint"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/about_version" />
+                app:layout_constraintTop_toTopOf="@id/open_source_licenses" />
+
+            <LinearLayout
+                android:id="@+id/open_source_licenses"
+                style="@style/AbpPreferenceContainerStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/AbpPreferenceTitleTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/open_source_licenses" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/about_divider_1"
+                style="@style/AbpPreferenceDivider"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/open_source_licenses" />
 
             <LinearLayout
                 android:id="@+id/about_version"
@@ -27,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/about_divider_1">
 
                 <com.google.android.material.textview.MaterialTextView
                     style="@style/AbpPreferenceTitleTextStyle"
@@ -45,7 +70,7 @@
             </LinearLayout>
 
             <View
-                android:id="@+id/about_divider_1"
+                android:id="@+id/about_divider_2"
                 style="@style/AbpPreferenceDivider"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
@@ -59,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/about_divider_1">
+                app:layout_constraintTop_toBottomOf="@id/about_divider_2">
 
                 <com.google.android.material.textview.MaterialTextView
                     style="@style/AbpPreferenceTitleTextStyle"
@@ -70,7 +95,7 @@
             </LinearLayout>
 
             <View
-                android:id="@+id/about_divider_2"
+                android:id="@+id/about_divider_3"
                 style="@style/AbpPreferenceDivider"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
@@ -84,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/about_divider_2">
+                app:layout_constraintTop_toBottomOf="@id/about_divider_3">
 
                 <com.google.android.material.textview.MaterialTextView
                     style="@style/AbpPreferenceTitleTextStyle"
@@ -95,7 +120,7 @@
             </LinearLayout>
 
             <View
-                android:id="@+id/about_divider_3"
+                android:id="@+id/about_divider_4"
                 style="@style/AbpPreferenceDivider"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
@@ -109,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/about_divider_3">
+                app:layout_constraintTop_toBottomOf="@id/about_divider_4">
 
                 <com.google.android.material.textview.MaterialTextView
                     style="@style/AbpPreferenceTitleTextStyle"

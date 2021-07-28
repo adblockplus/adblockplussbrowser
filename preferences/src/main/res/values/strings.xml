@@ -47,5 +47,6 @@
     <string name="about_privacy_policy">Privacy Policy</string>
     <string name="about_terms_of_use">Terms of Use</string>
     <string name="about_imprint">Imprint</string>
+    <string name="open_source_licenses">Open Source Licenses</string>
     <string name="version">Version</string>
 </resources>

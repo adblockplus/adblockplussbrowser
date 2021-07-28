@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.text.method.LinkMovementMethod
 import androidx.core.text.HtmlCompat
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.preferences.R
@@ -20,6 +21,12 @@ internal class AboutFragment : DataBindingFragment<FragmentAboutBinding>(R.layou
         }
 
     override fun onBindView(binding: FragmentAboutBinding) {
+
+        binding.openSourceLicenses.setOnClickListener {
+            OssLicensesMenuActivity.setActivityTitle(getString(R.string.open_source_licenses))
+            startActivity(Intent(activity, OssLicensesMenuActivity::class.java))
+        }
+
         binding.versionNumber.text = context?.versionName
 
         binding.aboutPrivacyPolicy.setOnClickListener {
