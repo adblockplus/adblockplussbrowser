@@ -34,8 +34,11 @@ class MainActivity : AppCompatActivity() {
         binding.viewModel = viewModel
         setSupportActionBar(binding.toolbar)
         setupActionBarWithNavController(navController)
+    }
 
-        if (!hasSamsungInternetVersion5OrNewer() || !hasSamsungInternetBeta()) {
+    override fun onResume() {
+        super.onResume()
+        if (!hasSamsungInternetVersion5OrNewer() && !hasSamsungInternetBeta()) {
             showInstallSamsungInternetDialog()
         }
     }
