@@ -18,6 +18,7 @@ android {
 dependencies {
     implementation(project(":base"))
 
+    implementation(Deps.TIMBER)
     implementation(Deps.DOTS_INDICATOR)
     implementation(Deps.MATERIAL)
     implementation(Deps.AndroidX.APPCOMPAT)

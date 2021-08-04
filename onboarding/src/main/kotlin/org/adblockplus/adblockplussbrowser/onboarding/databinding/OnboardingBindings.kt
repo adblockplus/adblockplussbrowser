@@ -1,11 +1,14 @@
 package org.adblockplus.adblockplussbrowser.onboarding.databinding
 
+import android.view.View
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ProgressBar
 import androidx.annotation.IdRes
 import androidx.databinding.BindingAdapter
 import androidx.databinding.adapters.ListenerUtil
 import androidx.viewpager2.widget.ViewPager2
+import androidx.viewpager2.widget.ViewPager2.SCROLL_STATE_DRAGGING
 import com.tbuonomo.viewpagerdotsindicator.BaseDotsIndicator
 import org.adblockplus.adblockplussbrowser.onboarding.R
 import org.adblockplus.adblockplussbrowser.onboarding.ui.OnboardingPagerAdapter
@@ -43,6 +46,11 @@ internal fun bindProgressPager2(progressBar: ProgressBar, viewPager2: ViewPager2
             val positionMaxValue = viewPager2.adapter!!.itemCount - 1
             val progress = ceil((positionValue * progressBar.max) / positionMaxValue).toInt()
             progressBar.progress = progress
+            if (position == positionMaxValue) {
+                progressBar.visibility = View.INVISIBLE
+            } else {
+                progressBar.visibility = View.VISIBLE
+            }
         }
     }
     viewPager2.updateOnPageChangeCallback(listener, R.id.progressPager2Listener)
@@ -54,8 +62,18 @@ internal fun bindOnboardingButtonPager2(button: ImageButton, viewPager2: ViewPag
         override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
             if (positionOffsetPixels == 0) {
                 val lastPage = position == viewPager2.adapter!!.itemCount - 1
-                val drawableRes = if (lastPage) R.drawable.ic_round_check_24 else R.drawable.ic_round_arrow_forward_24
-                button.setImageResource(drawableRes)
+                if (lastPage) {
+                    button.visibility = View.INVISIBLE
+                } else {
+                    button.visibility = View.VISIBLE
+                }
+            }
+        }
+
+        override fun onPageScrollStateChanged(state: Int) {
+            super.onPageScrollStateChanged(state)
+            if (state == SCROLL_STATE_DRAGGING) {
+                button.visibility = View.VISIBLE
             }
         }
     }
@@ -74,6 +92,34 @@ internal fun bindOnboardingPages(viewPager2: ViewPager2, pageList: List<PageInfo
     // Once we update the items, we also want to set the currentItem
     // This is to keep the correct item selected in the case of a configuration change
     viewPager2.currentItem = currentItem
+}
+
+@BindingAdapter("onboardingOpenSamsungButton")
+internal fun bindOnboardingOpenSamsungButton(button: Button, viewPager2: ViewPager2) {
+    val listener = object : ViewPager2.OnPageChangeCallback() {
+        override fun onPageScrolled(
+            position: Int,
+            positionOffset: Float,
+            positionOffsetPixels: Int
+        ) {
+            if (positionOffsetPixels == 0) {
+                val lastPage = position == viewPager2.adapter!!.itemCount - 1
+                if (lastPage) {
+                    button.visibility = View.VISIBLE
+                } else {
+                    button.visibility = View.INVISIBLE
+                }
+            }
+        }
+
+        override fun onPageScrollStateChanged(state: Int) {
+            super.onPageScrollStateChanged(state)
+            if (state == SCROLL_STATE_DRAGGING) {
+                button.visibility = View.INVISIBLE
+            }
+        }
+    }
+    viewPager2.updateOnPageChangeCallback(listener, R.id.onboardingButtonOpenSamsungListener)
 }
 
 private fun ViewPager2.updateOnPageChangeCallback(newListener: ViewPager2.OnPageChangeCallback, @IdRes idRes: Int) {

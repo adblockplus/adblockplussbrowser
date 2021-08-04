@@ -14,4 +14,6 @@ internal sealed class PageInfo {
 
     object AcceptableAds: PageInfo()
 
+    object Enable : PageInfo()
+
 }
