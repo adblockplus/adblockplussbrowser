@@ -10,6 +10,7 @@ import dagger.hilt.components.SingletonComponent
 import org.adblockplus.adblockplussbrowser.app.data.prefs.AppPreferences
 import org.adblockplus.adblockplussbrowser.app.data.prefs.DataStoreAppPreferences
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
+import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.core.CoreSubscriptionsManager
 import org.adblockplus.adblockplussbrowser.onboarding.data.prefs.OnboardingPreferences
 import javax.inject.Singleton
@@ -31,7 +32,13 @@ internal object AppModule {
 
     @Singleton
     @Provides
-    fun provideOnboardingPreferences(appPreferences: AppPreferences): OnboardingPreferences = appPreferences
+    fun provideOnboardingPreferences(appPreferences: AppPreferences): OnboardingPreferences =
+        appPreferences
+
+    @Singleton
+    @Provides
+    fun provideActivationPreferences(appPreferences: AppPreferences): ActivationPreferences =
+        appPreferences
 
     @Singleton
     @Provides

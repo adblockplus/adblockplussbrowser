@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="onboarding_margin">20dp</dimen>
+    <dimen name="onboarding_guides_margin">24dp</dimen>
+    <dimen name="onboarding_content_top_margin">32dp</dimen>
+    <dimen name="onboarding_items_margin_start">12dp</dimen>
+    <dimen name="onboarding_item_description_margin_top">4dp</dimen>
+</resources>

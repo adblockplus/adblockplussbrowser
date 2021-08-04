@@ -19,7 +19,7 @@
             android:id="@+id/onboarding_aa_annoying_ads_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="@dimen/onboarding_content_top_margin"
             android:src="@drawable/ic_onboarding_block_ads"
             app:layout_constraintStart_toStartOf="@id/onboarding_aa_guideline_start"
             app:layout_constraintTop_toBottomOf="@id/onboarding_aa_header_include" />
@@ -29,7 +29,7 @@
             style="@style/AbpOnboardingTitleTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="@dimen/onboarding_items_margin_start"
             android:text="@string/onboarding_acceptable_ads_annoying_ads_title"
             app:layout_constraintEnd_toEndOf="@id/onboarding_aa_guideline_end"
             app:layout_constraintStart_toEndOf="@id/onboarding_aa_annoying_ads_image"
@@ -40,7 +40,7 @@
             style="@style/AbpOnboardingDescriptionTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/onboarding_item_description_margin_top"
             android:text="@string/onboarding_acceptable_ads_annoying_ads_description"
             app:layout_constraintEnd_toEndOf="@id/onboarding_aa_guideline_end"
             app:layout_constraintStart_toStartOf="@id/onboarding_aa_annoying_ads_title"
@@ -67,7 +67,7 @@
             style="@style/AbpOnboardingTitleTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="@dimen/onboarding_items_margin_start"
             android:text="@string/onboarding_acceptable_ads_nonintrusive_ads_title"
             app:layout_constraintEnd_toEndOf="@id/onboarding_aa_guideline_end"
             app:layout_constraintStart_toEndOf="@id/onboarding_aa_nonintrusive_ads_image"
@@ -78,7 +78,7 @@
             style="@style/AbpOnboardingDescriptionTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/onboarding_item_description_margin_top"
             android:text="@string/onboarding_acceptable_ads_nonintrusive_ads_description"
             app:layout_constraintEnd_toEndOf="@id/onboarding_aa_guideline_end"
             app:layout_constraintStart_toStartOf="@id/onboarding_aa_nonintrusive_ads_title"
@@ -89,8 +89,8 @@
             style="@style/AbpOnboardingDescriptionTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
+            android:paddingTop="@dimen/onboarding_item_description_margin_top"
+            android:paddingBottom="@dimen/onboarding_item_description_margin_top"
             android:text="@string/onboarding_acceptable_ads_nonintrusive_ads_example"
             android:textColor="@color/abp_foreground_accent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -108,7 +108,7 @@
             android:id="@+id/onboarding_aa_disable_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/onboarding_margin"
             android:src="@drawable/ic_onboarding_disable_anytime"
             app:layout_constraintStart_toStartOf="@id/onboarding_aa_guideline_start"
             app:layout_constraintTop_toBottomOf="@id/onboarding_aa_nonintrusive_ads_barrier" />
@@ -118,7 +118,7 @@
             style="@style/AbpOnboardingTitleTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="@dimen/onboarding_items_margin_start"
             android:text="@string/onboarding_acceptable_ads_disable_title"
             app:layout_constraintEnd_toEndOf="@id/onboarding_aa_guideline_end"
             app:layout_constraintStart_toEndOf="@id/onboarding_aa_disable_image"
@@ -129,7 +129,7 @@
             style="@style/AbpOnboardingDescriptionTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/onboarding_item_description_margin_top"
             android:text="@string/onboarding_acceptable_ads_disable_description"
             app:layout_constraintEnd_toEndOf="@id/onboarding_aa_guideline_end"
             app:layout_constraintStart_toStartOf="@id/onboarding_aa_disable_title"
@@ -140,14 +140,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="24dp" />
+            app:layout_constraintGuide_begin="@dimen/onboarding_guides_margin" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/onboarding_aa_guideline_end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_end="24dp" />
+            app:layout_constraintGuide_end="@dimen/onboarding_guides_margin" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

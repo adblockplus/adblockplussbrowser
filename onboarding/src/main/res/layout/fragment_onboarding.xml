@@ -69,13 +69,35 @@
             onboardingButtonPager2="@{onboardingPager}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_round_check_24"
+            android:src="@drawable/ic_round_arrow_forward_24"
             app:elevation="0dp"
             app:layout_constraintBottom_toBottomOf="@id/onboarding_circular_indicator"
             app:layout_constraintEnd_toEndOf="@id/onboarding_circular_indicator"
             app:layout_constraintStart_toStartOf="@id/onboarding_circular_indicator"
             app:layout_constraintTop_toTopOf="@id/onboarding_circular_indicator"
             app:tint="@color/abp_onboarding_icon_foreground" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/open_si_button"
+            onboardingOpenSamsungButton="@{onboardingPager}"
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:layout_marginBottom="32dp"
+            android:layout_marginStart="@dimen/onboarding_margin"
+            android:layout_marginEnd="@dimen/onboarding_margin"
+            android:fontFamily="sans-serif"
+            android:text="@string/open_samsung_internet"
+            android:textAlignment="viewStart"
+            android:textAllCaps="false"
+            android:textColor="@color/abp_white"
+            android:visibility="invisible"
+            app:cornerRadius="32dp"
+            app:icon="@drawable/ic_round_arrow_forward_24"
+            app:iconGravity="end"
+            app:iconTint="@color/abp_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -12,7 +12,9 @@ import org.adblockplus.adblockplussbrowser.onboarding.data.prefs.OnboardingPrefe
 import javax.inject.Inject
 
 @HiltViewModel
-internal class OnboardingViewModel @Inject constructor(private val preferences: OnboardingPreferences) : ViewModel() {
+internal class OnboardingViewModel @Inject constructor(
+    private val preferences: OnboardingPreferences,
+) : ViewModel() {
 
     private val _pages = MutableLiveData<List<PageInfo>>()
     val pages: LiveData<List<PageInfo>>
@@ -36,11 +38,7 @@ internal class OnboardingViewModel @Inject constructor(private val preferences: 
 
     fun nextPage() {
         val index = currentPageIndex.value ?: 0
-        if (index == _pages.value?.lastIndex) {
-            completeOnboarding()
-        } else {
-            _currentPageIndex.value = index + 1
-        }
+        _currentPageIndex.value = index + 1
     }
 
     fun previousPage(): Boolean {
@@ -64,13 +62,16 @@ internal class OnboardingViewModel @Inject constructor(private val preferences: 
         )
 
         pageList.add(PageInfo.AcceptableAds)
+        pageList.add(PageInfo.Enable)
+
         _pages.value = pageList
     }
 
-    private fun completeOnboarding() {
+    fun completeOnboarding() {
         _finishedEvent.value = ValueWrapper(Unit)
         viewModelScope.launch {
             preferences.completeOnboarding()
         }
     }
+
 }

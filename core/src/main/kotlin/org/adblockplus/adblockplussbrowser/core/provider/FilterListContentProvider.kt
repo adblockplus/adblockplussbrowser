@@ -13,10 +13,11 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import okio.buffer
 import okio.sink
 import okio.source
-import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
+import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import timber.log.Timber
 import java.io.File
@@ -27,12 +28,13 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
     @InstallIn(SingletonComponent::class)
     interface FilterListContentProviderEntryPoint {
         fun getCoreRepository(): CoreRepository
+        fun getActivationPreferences(): ActivationPreferences
     }
 
     override val coroutineContext = Dispatchers.IO + SupervisorJob()
 
     lateinit var coreRepository: CoreRepository
-    lateinit var subscriptionsManager: SubscriptionsManager
+    lateinit var activationPreferences: ActivationPreferences
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int = 0
 
@@ -46,11 +48,16 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             FilterListContentProviderEntryPoint::class.java
         )
         coreRepository = entryPoint.getCoreRepository()
+        activationPreferences = entryPoint.getActivationPreferences()
 
         return true
     }
 
     override fun openFile(uri: Uri, mode: String): ParcelFileDescriptor? {
+        // Set as Activated... If Samsung Internet is asking for the Filters, it is enabled
+        launch {
+            activationPreferences.activate()
+        }
         return try {
             Timber.d("Filter list requested: $uri - $mode...")
             val file = getFilterFile()

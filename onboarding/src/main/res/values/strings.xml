@@ -22,4 +22,10 @@
     <string name="onboarding_acceptable_ads_nonintrusive_ads_example">Show me an example</string>
     <string name="onboarding_acceptable_ads_disable_title">Disable anytime</string>
     <string name="onboarding_acceptable_ads_disable_description">You can change this setting by tapping the \"Allow some nonintrusive advertising\" option</string>
+
+    <string name="onboarding_enable_header_title1">Here\'s how to</string>
+    <string name="onboarding_enable_header_title2">Enable Adblock Plus</string>
+    <string name="onboarding_enable_one_step_title">One more step and you\'re done</string>
+    <string name="onboarding_enable_one_step_description">Enable Adblock Plus in Samsung Internet\'s Adblocker Settings</string>
+    <string name="open_samsung_internet">Open Samsung Internet</string>
 </resources>

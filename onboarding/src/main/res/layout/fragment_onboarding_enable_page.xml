@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/onboarding_default_page_header_include"
+            layout="@layout/onboarding_header"
+            android:layout_width="0dp"
+            android:layout_height="112dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/onboarding_enable_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/onboarding_content_top_margin"
+            android:src="@drawable/ic_onboarding_block_ads"
+            app:layout_constraintStart_toStartOf="@id/onboarding_enable_guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/onboarding_default_page_header_include" />
+
+        <TextView
+            android:id="@+id/onboarding_enable_title"
+            style="@style/AbpOnboardingTitleTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/onboarding_items_margin_start"
+            android:text="@string/onboarding_enable_one_step_title"
+            app:layout_constraintEnd_toEndOf="@id/onboarding_enable_guideline_end"
+            app:layout_constraintStart_toEndOf="@id/onboarding_enable_image"
+            app:layout_constraintTop_toTopOf="@id/onboarding_enable_image" />
+
+        <TextView
+            android:id="@+id/onboarding_enable_description"
+            style="@style/AbpOnboardingDescriptionTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/onboarding_item_description_margin_top"
+            android:text="@string/onboarding_enable_one_step_description"
+            app:layout_constraintEnd_toEndOf="@id/onboarding_enable_guideline_end"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/onboarding_enable_title"
+            app:layout_constraintTop_toBottomOf="@id/onboarding_enable_title" />
+
+        <TextureView
+            android:id="@+id/video_view"
+            android:layout_width="0dp"
+            android:layout_height="180dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="@id/onboarding_enable_guideline_end"
+            app:layout_constraintStart_toStartOf="@id/onboarding_enable_guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/onboarding_enable_description" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/onboarding_enable_guideline_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/onboarding_guides_margin" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/onboarding_enable_guideline_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/onboarding_guides_margin" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

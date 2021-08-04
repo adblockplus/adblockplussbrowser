@@ -3,4 +3,5 @@
     <item name="onPageSelectedListener" type="id" />
     <item name="progressPager2Listener" type="id" />
     <item name="onboardingButtonPager2Listener" type="id" />
+    <item name="onboardingButtonOpenSamsungListener" type="id" />
 </resources>
