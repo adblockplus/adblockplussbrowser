@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/onboarding_content_top_margin"
-            android:src="@drawable/ic_onboarding_block_ads"
+            android:src="@drawable/ic_icon_onboarding_onemorestep"
             app:layout_constraintStart_toStartOf="@id/onboarding_enable_guideline_start"
             app:layout_constraintTop_toBottomOf="@id/onboarding_default_page_header_include" />
 
@@ -50,7 +50,7 @@
         <TextureView
             android:id="@+id/video_view"
             android:layout_width="0dp"
-            android:layout_height="180dp"
+            android:layout_height="0dp"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="@id/onboarding_enable_guideline_end"
             app:layout_constraintStart_toStartOf="@id/onboarding_enable_guideline_start"
