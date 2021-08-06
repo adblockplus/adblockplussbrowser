@@ -1,18 +1,19 @@
 package org.adblockplus.adblockplussbrowser.app.ui
 
-import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.view.Window
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.customview.getCustomView
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.app.R
 import org.adblockplus.adblockplussbrowser.app.databinding.ActivityMainBinding
@@ -72,31 +73,29 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showInstallSamsungInternetDialog() {
-        val dialog = Dialog(this)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false)
-        dialog.setContentView(R.layout.dialog_install_si)
-        val installSamsungInternetButton =
-            dialog.findViewById<View>(R.id.install_si_button)
-        installSamsungInternetButton.setOnClickListener {
-            try {
-                startActivity(
-                    Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("market://details?id=${SBROWSER_APP_ID}")
+        MaterialDialog(this).show {
+            cancelable(false)
+            customView(viewRes = R.layout.dialog_install_si, scrollable = true)
+            val installButton = getCustomView().findViewById<View>(R.id.install_si_button)
+            installButton.setOnClickListener {
+                try {
+                    startActivity(
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("market://details?id=${SBROWSER_APP_ID}")
+                        )
                     )
-                )
-            } catch (t: Throwable) {
-                startActivity(
-                    Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("https://play.google.com/store/apps/details?id=${SBROWSER_APP_ID}")
+                } catch (t: Throwable) {
+                    startActivity(
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("https://play.google.com/store/apps/details?id=${SBROWSER_APP_ID}")
+                        )
                     )
-                )
+                }
+                this.dismiss()
             }
-            dialog.dismiss()
         }
-        dialog.show()
     }
 
     companion object {

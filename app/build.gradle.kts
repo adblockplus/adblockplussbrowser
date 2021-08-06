@@ -87,6 +87,7 @@ dependencies {
     implementation(Deps.Kotlin.KOTLIN_STDLIB)
     implementation(Deps.KotlinX.COROUTINES)
     implementation(Deps.KotlinX.COROUTINES_ANDROID)
+    implementation(Deps.MaterialDialogs.CORE)
     implementation(Deps.Protobuf.JAVALITE)
     implementation(Deps.OkHttp.OKHTTP)
     implementation(Deps.OkHttp.LOGGER)
