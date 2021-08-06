@@ -6,6 +6,7 @@ import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.media.LocalMediaPlayer
 import org.adblockplus.adblockplussbrowser.onboarding.R
 import org.adblockplus.adblockplussbrowser.onboarding.databinding.FragmentOnboardingEnablePageBinding
+import kotlin.math.roundToInt
 
 internal class EnablePageFragment :
     DataBindingFragment<FragmentOnboardingEnablePageBinding>(R.layout.fragment_onboarding_enable_page) {
@@ -17,7 +18,12 @@ internal class EnablePageFragment :
         headerInclude.onboardingHeaderTitle1.setText(R.string.onboarding_enable_header_title1)
         headerInclude.onboardingHeaderTitle2.setText(R.string.onboarding_enable_header_title2)
         headerInclude.onboardingHeaderTitle3.setText(R.string.onboarding_welcome_header_title3)
-        mediaPlayer.create(binding.videoView)
+        val guidesWidth = 2 * resources.getDimension(R.dimen.onboarding_guides_margin)
+        val availableWidth = resources.displayMetrics.widthPixels - guidesWidth
+        val videoView = binding.videoView
+        videoView.layoutParams.width = (availableWidth).roundToInt()
+        videoView.layoutParams.height = (availableWidth / 2).roundToInt()
+        mediaPlayer.create(videoView)
     }
 
     override fun onStart() {
