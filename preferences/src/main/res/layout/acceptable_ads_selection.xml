@@ -40,7 +40,7 @@
                 android:onClick="@{(v) -> viewModel.enableAcceptableAds()}"
                 android:paddingStart="8dp"
                 android:gravity="top"
-                tools:text="Yes, I’ll support content creators.\nBy keeping Acceptable Ads enabled, you’re helping content creators publish their content for free." />
+                tools:text="Yes, I\'ll support content creators.\nBy keeping Acceptable Ads enabled, you\'re helping content creators publish their content for free." />
 
             <View
                 android:id="@+id/main_preferenced_divider_1"
