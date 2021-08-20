@@ -12,6 +12,7 @@ plugins {
 applyCommonConfig()
 
 dependencies {
+    implementation(project(":analytics"))
     implementation(project(":base"))
     implementation(project(":settings"))
 
@@ -25,7 +26,7 @@ dependencies {
     implementation(Deps.OkHttp.LOGGER)
     implementation(Deps.OkHttp.COROUTINES)
     implementation(Deps.AndroidX.Work.RUNTIME)
-    implementation(Deps.AndroidX.DatasStore.DATASTORE)
+    implementation(Deps.AndroidX.DataStore.DATASTORE)
     implementation(Deps.Protobuf.JAVALITE)
 
     implementation(Deps.Hilt.ANDROID)

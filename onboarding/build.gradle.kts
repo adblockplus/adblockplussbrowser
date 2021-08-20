@@ -16,6 +16,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":analytics"))
     implementation(project(":base"))
 
     implementation(Deps.TIMBER)

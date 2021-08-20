@@ -38,6 +38,7 @@ internal class ProtoSettingsSerializer(private val subscriptionsDataSource: Subs
                         subscriptionsDataSource.getDefaultActiveSubscription().toProtoSubscription()
                     )
                     updateConfig = ProtoUpdateConfig.ALWAYS
+                    analyticsEnabled = true
                 }.build()
             }
         } else {

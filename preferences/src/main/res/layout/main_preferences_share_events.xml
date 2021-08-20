@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="org.adblockplus.adblockplussbrowser.preferences.ui.MainPreferencesViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_preferences_share_events_include"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_preferences_ad_blocking_include">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/preferences_group_bg_single"
+            app:layout_constraintBottom_toBottomOf="@id/share_events_checkbox"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/main_preferences_share_events_category" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/main_preferences_share_events_header"
+            style="@style/AbpPreferenceCategoryTitleTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/share_events_header"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/main_preferences_share_events_category"
+            style="@style/AbpPreferenceContainerStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_preferences_share_events_header">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/share_events_title"
+                style="@style/AbpPreferenceTitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/share_events_title" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/share_events_description"
+                style="@style/AbpPreferenceSummaryTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/share_events_description" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/main_preferences_divider"
+            style="@style/AbpPreferenceDivider"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_preferences_share_events_category" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/share_events_checkbox_description"
+            style="@style/AbpPreferenceTitleTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Yes, I\'ll share some anonymised data."
+            android:textSize="12dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_preferences_divider" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/share_events_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="@{viewModel.shareEvents}"
+            android:onCheckedChanged="@{() -> viewModel.toggleAnalytics()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_preferences_divider" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

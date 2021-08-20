@@ -9,6 +9,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.preferences.R
@@ -21,6 +23,9 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository,
     private val subscriptionManager: SubscriptionsManager
 ) : ViewModel() {
+
+    @Inject
+    lateinit var analyticsProvider: AnalyticsProvider
 
     val subscriptions: LiveData<List<OtherSubscriptionsItem>> = settingsRepository.settings.map { settings ->
         val defaultSubscriptions = settingsRepository.getDefaultOtherSubscriptions()
@@ -45,8 +50,22 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
         viewModelScope.launch {
             if (defaultItem.active) {
                 settingsRepository.removeActiveOtherSubscription(defaultItem.subscription)
+                if (defaultItem.subscription.title ==
+                    settingsRepository.getAdditionalTrackingSubscription().title) {
+                    analyticsProvider.logEvent(AnalyticsEvent.DISABLE_TRACKING_OFF)
+                } else if (defaultItem.subscription.title ==
+                    settingsRepository.getSocialMediaTrackingSubscription().title) {
+                    analyticsProvider.logEvent(AnalyticsEvent.SOCIAL_MEDIA_BUTTONS_OFF)
+                }
             } else {
                 settingsRepository.addActiveOtherSubscription(defaultItem.subscription)
+                if (defaultItem.subscription.title ==
+                    settingsRepository.getAdditionalTrackingSubscription().title) {
+                    analyticsProvider.logEvent(AnalyticsEvent.DISABLE_TRACKING_ON)
+                } else if (defaultItem.subscription.title ==
+                    settingsRepository.getSocialMediaTrackingSubscription().title) {
+                    analyticsProvider.logEvent(AnalyticsEvent.SOCIAL_MEDIA_BUTTONS_ON)
+                }
             }
         }
     }
@@ -62,6 +81,7 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
             } else {
                 settingsRepository.addActiveOtherSubscription(subscription)
                 _uiState.value = UiState.Done
+                analyticsProvider.logEvent(AnalyticsEvent.CUSTOM_FILTER_LIST_ADDED)
             }
         }
     }
@@ -69,6 +89,7 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
     fun removeSubscription(customItem: OtherSubscriptionsItem.CustomItem) {
         viewModelScope.launch {
             settingsRepository.removeActiveOtherSubscription(customItem.subscription)
+            analyticsProvider.logEvent(AnalyticsEvent.CUSTOM_FILTER_LIST_REMOVED)
         }
     }
 
@@ -97,4 +118,5 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
         }
         return result
     }
+
 }

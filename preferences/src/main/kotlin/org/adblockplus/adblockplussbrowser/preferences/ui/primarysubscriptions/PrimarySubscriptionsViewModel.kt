@@ -7,9 +7,10 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.preferences.R
-import org.adblockplus.adblockplussbrowser.preferences.ui.GroupItemLayout
 import org.adblockplus.adblockplussbrowser.preferences.ui.layoutForIndex
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import javax.inject.Inject
@@ -19,21 +20,29 @@ internal class PrimarySubscriptionsViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository
 ) : ViewModel() {
 
-    val subscriptions: LiveData<List<PrimarySubscriptionsItem>> = settingsRepository.settings.map { settings ->
-        val defaultSubscriptions = settingsRepository.getDefaultPrimarySubscriptions()
-        val activeSubscriptions = settings.activePrimarySubscriptions
-        val inactiveSubscriptions = defaultSubscriptions.filter { subscription ->
-            activeSubscriptions.none { it.url == subscription.url }
-        }
-        activeSubscriptions.subscriptionItems(true) + inactiveSubscriptions.subscriptionItems(false)
-    }.asLiveData()
+    @Inject
+    lateinit var analyticsProvider: AnalyticsProvider
+
+    val subscriptions: LiveData<List<PrimarySubscriptionsItem>> =
+        settingsRepository.settings.map { settings ->
+            val defaultSubscriptions = settingsRepository.getDefaultPrimarySubscriptions()
+            val activeSubscriptions = settings.activePrimarySubscriptions
+            val inactiveSubscriptions = defaultSubscriptions.filter { subscription ->
+                activeSubscriptions.none { it.url == subscription.url }
+            }
+            activeSubscriptions.subscriptionItems(true) + inactiveSubscriptions.subscriptionItems(
+                false
+            )
+        }.asLiveData()
 
     fun toggleActiveSubscription(subscriptionItem: PrimarySubscriptionsItem.SubscriptionItem) {
         viewModelScope.launch {
             if (subscriptionItem.active) {
                 settingsRepository.removeActivePrimarySubscription(subscriptionItem.subscription)
+                analyticsProvider.logEvent(AnalyticsEvent.LANGUAGE_LIST_REMOVED)
             } else {
                 settingsRepository.addActivePrimarySubscription(subscriptionItem.subscription)
+                analyticsProvider.logEvent(AnalyticsEvent.LANGUAGE_LIST_ADDED)
             }
         }
     }
@@ -46,7 +55,13 @@ internal class PrimarySubscriptionsViewModel @Inject constructor(
             result.add(PrimarySubscriptionsItem.HeaderItem(headerResId))
             this.forEachIndexed { index, subscription ->
                 val layout = this.layoutForIndex(index)
-                result.add((PrimarySubscriptionsItem.SubscriptionItem(subscription, layout, active)))
+                result.add(
+                    (PrimarySubscriptionsItem.SubscriptionItem(
+                        subscription,
+                        layout,
+                        active
+                    ))
+                )
             }
         }
         return result

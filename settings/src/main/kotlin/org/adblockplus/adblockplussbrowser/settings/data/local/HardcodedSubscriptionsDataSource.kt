@@ -30,4 +30,10 @@ internal class HardcodedSubscriptionsDataSource(private val context: Context) : 
 
     override suspend fun getDefaultOtherSubscriptions(): List<Subscription> =
         hardcodedSubscriptions.defaultOtherSubscriptions.map { it.toSubscription() }
+
+    override suspend fun getAdditionalTrackingSubscription(): Subscription =
+        hardcodedSubscriptions.additionalTracking.toSubscription()
+
+    override suspend fun getSocialMediaTrackingSubscription(): Subscription =
+        hardcodedSubscriptions.socialMediaTracking.toSubscription()
 }

@@ -103,16 +103,16 @@ internal class HardcodedSubscriptions {
     }
 
     // TODO: Decide which title we want for the following and if we want to localize them:
-    val defaultOtherSubscriptions = subscriptions {
-        subscription {
-            title = "Block additional tracking"
-            url = "https://easylist-downloads.adblockplus.org/easyprivacy.txt"
-        }
-        subscription {
-            title = "Block social media icons tracking"
-            url = "https://easylist-downloads.adblockplus.org/fanboy-social.txt"
-        }
+    val additionalTracking = subscription {
+        title = "Block additional tracking"
+        url = "https://easylist-downloads.adblockplus.org/easyprivacy.txt"
     }
+
+    val socialMediaTracking = subscription {
+        title = "Block social media icons tracking"
+        url = "https://easylist-downloads.adblockplus.org/fanboy-social.txt"
+    }
+    val defaultOtherSubscriptions = listOf(additionalTracking, socialMediaTracking)
 
     // Based on: https://gitlab.com/eyeo/adblockplus/abpui/adblockplusui/-/blob/master/data/locales.json
     companion object {

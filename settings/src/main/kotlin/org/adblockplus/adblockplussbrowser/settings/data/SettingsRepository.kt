@@ -54,4 +54,11 @@ interface SettingsRepository {
     suspend fun updatePrimarySubscriptionsLastUpdate(subscriptions: List<Subscription>)
 
     suspend fun updateOtherSubscriptionsLastUpdate(subscriptions: List<Subscription>)
+
+    suspend fun setAnalyticsEnabled(enabled: Boolean)
+
+    suspend fun getAdditionalTrackingSubscription(): Subscription
+
+    suspend fun getSocialMediaTrackingSubscription(): Subscription
+
 }

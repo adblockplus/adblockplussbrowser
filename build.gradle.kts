@@ -13,6 +13,8 @@ buildscript {
         classpath(Deps.Kotlin.KOTLIN_PLUGIN)
         classpath(Deps.Protobuf.GRADLE_PLUGIN)
         classpath(Deps.Gms.OSS_LICENSES_PLUGIN)
+        classpath(Deps.Firebase.GOOGLE_SERVICES)
+        classpath(Deps.Firebase.CRASHLYTICS_GRADLE)
     }
 }
 
