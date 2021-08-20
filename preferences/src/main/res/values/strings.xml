@@ -46,6 +46,7 @@
     <string name="open_source_licenses">Open Source Licenses</string>
     <string name="version">Version</string>
     <string name="share_events_header">Help improve Adblock Plus</string>
-    <string name="share_events_title">Share anonymised data</string>
-    <string name="share_events_description">Receiving some anonymised data helps us improve Adblock Plus, thus creating a better browsing experience for you.</string>
+    <string name="share_events_title">Share anonymized data</string>
+    <string name="share_events_description">Anonymized data helps us improve Adblock Plus, thus creating a better browsing experience for you.</string>
+    <string name="share_events_consent">Yes, I\'ll share some anonymized data.</string>
 </resources>

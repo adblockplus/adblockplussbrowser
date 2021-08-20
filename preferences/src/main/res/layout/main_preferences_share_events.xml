@@ -63,7 +63,6 @@
             style="@style/AbpPreferenceDivider"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:layout_marginTop="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/main_preferences_share_events_category" />
 
@@ -74,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="Yes, I\'ll share some anonymised data."
+            android:text="@string/share_events_consent"
             android:textSize="12dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
