@@ -27,6 +27,32 @@ object Deps {
         }
     }
 
+    object Firebase: DependencyGroup("com.google") {
+        val BOM = dependency {
+            groupName("firebase:firebase-bom")
+            version("28.3.0")
+        }
+
+        val ANALYTICS = dependency {
+            groupName("firebase:firebase-analytics-ktx")
+        }
+
+        val CRASHLYTICS_GRADLE = dependency {
+            groupName("firebase:firebase-crashlytics-gradle")
+            version("2.7.1")
+        }
+
+        val CRASHLYTICS = dependency {
+            groupName("firebase:firebase-crashlytics-ktx")
+            version("18.2.1")
+        }
+
+        val GOOGLE_SERVICES = dependency {
+            groupName("gms:google-services")
+            version("4.3.8")
+        }
+    }
+
     object AndroidX : DependencyGroup("androidx") {
         val ACTIVITY = dependency {
             groupName("activity:activity-ktx")
@@ -63,7 +89,7 @@ object Deps {
             version("1.0.0")
         }
 
-        object DatasStore: DependencyGroup("androidx.datastore", "1.0.0-beta01") {
+        object DataStore: DependencyGroup("androidx.datastore", "1.0.0-beta01") {
             val DATASTORE = dependency { name("datastore") }
             val PREFERENCES = dependency { name("datastore-preferences") }
         }
@@ -111,7 +137,7 @@ object Deps {
         val ANDROID_GRADLE_PLUGIN = dependency { name("hilt-android-gradle-plugin") }
     }
 
-    object Kotlin : DependencyGroup("org.jetbrains.kotlin", "1.5.10") {
+    object Kotlin : DependencyGroup("org.jetbrains.kotlin", "1.5.21") {
         val KOTLIN_PLUGIN = dependency { name("kotlin-gradle-plugin") }
         val KOTLIN_STDLIB = dependency { name("kotlin-stdlib") }
     }

@@ -20,7 +20,8 @@ build:
     - set +o pipefail
     - yes | android-sdk-linux/tools/bin/sdkmanager --licenses >/dev/null
     - set -o pipefail
-  script: 
+    - cat "$GOOGLE_SERVICES" > "$(pwd)/app/google-services.json"
+  script:
     - ./gradlew --build-cache assembleWorldAbpRelease
   artifacts:
     paths:

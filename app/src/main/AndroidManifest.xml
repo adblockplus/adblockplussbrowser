@@ -22,6 +22,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Abp">
 
+        <meta-data android:name="firebase_analytics_collection_enabled" android:value="true" />
+        <meta-data android:name="firebase_crashlytics_collection_enabled" android:value="true" />
+
         <activity
             android:name=".ui.LauncherActivity"
             android:theme="@style/Theme.Abp.Launcher">

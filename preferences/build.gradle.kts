@@ -17,6 +17,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":analytics"))
     implementation(project(":base"))
     implementation(project(":settings"))
 

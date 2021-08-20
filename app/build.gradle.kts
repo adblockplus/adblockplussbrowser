@@ -6,6 +6,8 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 applyCommonConfig()
@@ -60,6 +62,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":analytics"))
     implementation(project(":base"))
     implementation(project(":core"))
     implementation(project(":onboarding"))
@@ -72,8 +75,8 @@ dependencies {
     implementation(Deps.AndroidX.APPCOMPAT)
     implementation(Deps.AndroidX.CORE)
     implementation(Deps.AndroidX.CONSTRAINT_LAYOUT)
-    implementation(Deps.AndroidX.DatasStore.DATASTORE)
-    implementation(Deps.AndroidX.DatasStore.PREFERENCES)
+    implementation(Deps.AndroidX.DataStore.DATASTORE)
+    implementation(Deps.AndroidX.DataStore.PREFERENCES)
     implementation(Deps.AndroidX.Lifecycle.LIVEDATA)
     implementation(Deps.AndroidX.Lifecycle.VIEWMODEL)
     implementation(Deps.AndroidX.Navigation.FRAGMENT)

@@ -12,19 +12,9 @@ internal fun ProtoSettings.toSettings(): Settings =
         this.allowedDomainsList,
         this.blockedDomainsList,
         this.activePrimarySubscriptionsList.map { it.toSubscription() },
-        this.activeOtherSubscriptionsList.map { it.toSubscription() }
+        this.activeOtherSubscriptionsList.map { it.toSubscription() },
+        this.analyticsEnabled
     )
-
-internal fun Settings.toProtoSettings(): ProtoSettings =
-    ProtoSettings.newBuilder()
-        .setAdblockEnabled(this.adblockEnabled)
-        .setAcceptableAdsEnabled(this.acceptableAdsEnabled)
-        .setUpdateConfig(this.updateConfig.toProtoUpdateConfig())
-        .addAllAllowedDomains(this.allowedDomains)
-        .addAllBlockedDomains(this.blockedDomains)
-        .addAllActivePrimarySubscriptions(this.activePrimarySubscriptions.map { it.toProtoSubscription() })
-        .addAllActiveOtherSubscriptions(this.activeOtherSubscriptions.map { it.toProtoSubscription() })
-        .build()
 
 internal fun ProtoSubscription.toSubscription(): Subscription =
     Subscription(

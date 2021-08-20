@@ -245,4 +245,18 @@ internal class DataStoreSettingsRepository(
                 .build()
         }
     }
+
+    override suspend fun setAnalyticsEnabled(enabled: Boolean) {
+        dataStore.updateData { settings ->
+            settings.toBuilder().setAnalyticsEnabled(enabled).build()
+        }
+    }
+
+    override suspend fun getAdditionalTrackingSubscription(): Subscription =
+        subscriptionsDataSource.getAdditionalTrackingSubscription()
+
+    override suspend fun getSocialMediaTrackingSubscription(): Subscription =
+        subscriptionsDataSource.getSocialMediaTrackingSubscription()
+
 }
+

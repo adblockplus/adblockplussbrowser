@@ -22,5 +22,6 @@ message ProtoSettings {
   repeated string blocked_domains = 5;
   repeated ProtoSubscription active_primary_subscriptions = 6;
   repeated ProtoSubscription active_other_subscriptions = 7;
+  bool analytics_enabled = 8;
 }
 

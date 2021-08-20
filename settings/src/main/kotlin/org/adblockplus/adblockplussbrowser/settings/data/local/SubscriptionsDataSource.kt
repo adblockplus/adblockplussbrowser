@@ -13,4 +13,8 @@ internal interface SubscriptionsDataSource {
     suspend fun getDefaultPrimarySubscriptions(): List<Subscription>
 
     suspend fun getDefaultOtherSubscriptions(): List<Subscription>
+
+    suspend fun getAdditionalTrackingSubscription(): Subscription
+
+    suspend fun getSocialMediaTrackingSubscription(): Subscription
 }

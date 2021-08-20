@@ -7,6 +7,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsManager
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
+import org.adblockplus.adblockplussbrowser.analytics.FirebaseAnalyticsProvider
 import org.adblockplus.adblockplussbrowser.app.data.prefs.AppPreferences
 import org.adblockplus.adblockplussbrowser.app.data.prefs.DataStoreAppPreferences
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
@@ -44,4 +47,9 @@ internal object AppModule {
     @Provides
     fun provideSubscriptionsManager(@ApplicationContext context: Context): SubscriptionsManager =
         CoreSubscriptionsManager(context)
+
+    @Singleton
+    @Provides
+    fun provideAnalytics(@ApplicationContext context: Context): AnalyticsProvider =
+        AnalyticsManager(listOf((FirebaseAnalyticsProvider(context))))
 }

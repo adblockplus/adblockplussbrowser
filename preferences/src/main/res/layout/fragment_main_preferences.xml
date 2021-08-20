@@ -37,13 +37,23 @@
                 app:viewModel="@{viewModel}"/>
 
             <include
+                android:id="@+id/main_preferences_share_events_include"
+                layout="@layout/main_preferences_share_events"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/main_preferences_acceptable_ads_include"
+                app:viewModel="@{viewModel}"/>
+
+            <include
                 android:id="@+id/main_preferences_about_include"
                 layout="@layout/main_preferences_about"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/main_preferences_acceptable_ads_include" />
+                app:layout_constraintTop_toBottomOf="@id/main_preferences_share_events_include" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

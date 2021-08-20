@@ -7,6 +7,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.base.data.model.SubscriptionUpdateStatus
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
@@ -18,6 +20,9 @@ class UpdateSubscriptionsViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository,
     private val subscriptionsManager: SubscriptionsManager
 ) : ViewModel() {
+
+    @Inject
+    lateinit var analyticsProvider: AnalyticsProvider
 
     // Spinner Adapter positions
     val updateType = settingsRepository.settings.map { settings ->
@@ -31,11 +36,16 @@ class UpdateSubscriptionsViewModel @Inject constructor(
     fun setUpdateConfigType(configType: UpdateConfigType) {
         viewModelScope.launch {
             settingsRepository.setUpdateConfig(configType.toUpdateConfig())
+            if (configType == UpdateConfigType.UPDATE_WIFI_ONLY)
+                analyticsProvider.logEvent(AnalyticsEvent.AUTOMATIC_UPDATES_WIFI)
+            else if (configType == UpdateConfigType.UPDATE_ALWAYS)
+                analyticsProvider.logEvent(AnalyticsEvent.AUTOMATIC_UPDATES_ALWAYS)
         }
     }
 
     fun updateSubscriptions() {
         subscriptionsManager.scheduleImmediate(force = true)
+        analyticsProvider.logEvent(AnalyticsEvent.MANUAL_UPDATE)
     }
 
     enum class UpdateConfigType {

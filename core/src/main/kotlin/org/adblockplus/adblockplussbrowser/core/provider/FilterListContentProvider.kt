@@ -17,12 +17,19 @@ import kotlinx.coroutines.launch
 import okio.buffer
 import okio.sink
 import okio.source
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import timber.log.Timber
 import java.io.File
+import javax.inject.Inject
+
 
 internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
+
+    @Inject
+    lateinit var analyticsProvider: AnalyticsProvider
 
     @EntryPoint
     @InstallIn(SingletonComponent::class)
@@ -62,6 +69,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             Timber.d("Filter list requested: $uri - $mode...")
             val file = getFilterFile()
             Timber.d("Returning ${file.absolutePath}")
+            analyticsProvider.logEvent(AnalyticsEvent.FILTER_LIST_REQUESTED)
             ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY)
         } catch (ex: Exception) {
             ex.printStackTrace()
