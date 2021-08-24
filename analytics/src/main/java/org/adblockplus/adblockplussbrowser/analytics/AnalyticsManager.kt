@@ -9,11 +9,11 @@ class AnalyticsManager(private val providers: List<AnalyticsProvider>) : Analyti
     }
 
     override fun enable() {
-        logEvent(AnalyticsEvent.SHARE_EVENTS_ON)
-
         for (provider in providers) {
             provider.enable()
         }
+
+        logEvent(AnalyticsEvent.SHARE_EVENTS_ON)
     }
 
     override fun disable() {
