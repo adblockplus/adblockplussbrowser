@@ -14,6 +14,8 @@ import timber.log.Timber
 class UpdateSubscriptionsFragment : DataBindingFragment<FragmentUpdateSubscriptionsBinding>(R.layout.fragment_update_subscriptions) {
     private val viewModel: UpdateSubscriptionsViewModel by viewModels()
 
+    private var isFirstSelection = true
+
     override fun onBindView(binding: FragmentUpdateSubscriptionsBinding) {
         binding.viewModel = viewModel
 
@@ -31,7 +33,10 @@ class UpdateSubscriptionsFragment : DataBindingFragment<FragmentUpdateSubscripti
             ) {
                 adapter.selectedPosition = position
                 adapter.notifyDataSetChanged()
-                viewModel.setUpdateConfigType(position.toUpdateConfigType())
+                if (!isFirstSelection) {
+                    viewModel.setUpdateConfigType(position.toUpdateConfigType())
+                }
+                isFirstSelection = false
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
