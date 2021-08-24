@@ -23,12 +23,10 @@ import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import timber.log.Timber
 import java.io.File
-import javax.inject.Inject
 
 
 internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
 
-    @Inject
     lateinit var analyticsProvider: AnalyticsProvider
 
     @EntryPoint
@@ -36,6 +34,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
     interface FilterListContentProviderEntryPoint {
         fun getCoreRepository(): CoreRepository
         fun getActivationPreferences(): ActivationPreferences
+        fun getAnalyticsProvider(): AnalyticsProvider
     }
 
     override val coroutineContext = Dispatchers.IO + SupervisorJob()
@@ -56,6 +55,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         )
         coreRepository = entryPoint.getCoreRepository()
         activationPreferences = entryPoint.getActivationPreferences()
+        analyticsProvider = entryPoint.getAnalyticsProvider()
 
         return true
     }
