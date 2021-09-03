@@ -1,7 +1,10 @@
 package org.adblockplus.adblockplussbrowser.app.di
 
 import android.content.Context
-import androidx.datastore.preferences.preferencesDataStore
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStoreFile
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,14 +27,17 @@ import kotlin.time.ExperimentalTime
 @Module
 internal object AppModule {
 
-    private val Context.dataStore by preferencesDataStore(
-        name = DataStoreAppPreferences.PREFS_NAME
-    )
+    @Singleton
+    @Provides
+    fun providePreferencesDataStore(@ApplicationContext context: Context): DataStore<Preferences> =
+        PreferenceDataStoreFactory.create {
+            context.preferencesDataStoreFile(DataStoreAppPreferences.PREFS_NAME)
+        }
 
     @Singleton
     @Provides
-    fun provideAppPreferences(@ApplicationContext context: Context): AppPreferences =
-        DataStoreAppPreferences(context.dataStore)
+    fun provideAppPreferences(dataStore: DataStore<Preferences>): AppPreferences =
+        DataStoreAppPreferences(dataStore)
 
     @Singleton
     @Provides

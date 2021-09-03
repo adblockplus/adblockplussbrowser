@@ -3,7 +3,6 @@ package org.adblockplus.adblockplussbrowser.settings.di
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
-import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import androidx.datastore.dataStoreFile
 import dagger.Module
 import dagger.Provides
@@ -12,6 +11,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import org.adblockplus.adblockplussbrowser.settings.data.DataStoreSettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
+import org.adblockplus.adblockplussbrowser.settings.data.datastore.ProtoSettingsMigration
 import org.adblockplus.adblockplussbrowser.settings.data.datastore.ProtoSettingsSerializer
 import org.adblockplus.adblockplussbrowser.settings.data.local.HardcodedSubscriptionsDataSource
 import org.adblockplus.adblockplussbrowser.settings.data.local.SubscriptionsDataSource
@@ -31,11 +31,11 @@ internal object SettingsModule {
     @Provides
     fun provideSettingsDataStore(
         @ApplicationContext context: Context,
-        subscriptionsDataSource: SubscriptionsDataSource,
+        subscriptionsDataSource: SubscriptionsDataSource
     ): DataStore<ProtoSettings> {
-        val serializer = ProtoSettingsSerializer(subscriptionsDataSource)
-        val corruptionHandler = ReplaceFileCorruptionHandler(serializer::provideDefaultValue)
-        return DataStoreFactory.create(serializer,corruptionHandler) {
+        val serializer = ProtoSettingsSerializer()
+        val migrations = listOf(ProtoSettingsMigration(context, subscriptionsDataSource))
+        return DataStoreFactory.create(serializer = serializer, migrations = migrations) {
             context.dataStoreFile("abp_settings.pb")
         }
     }
