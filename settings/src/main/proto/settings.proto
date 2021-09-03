@@ -15,13 +15,14 @@ enum ProtoUpdateConfig {
 }
 
 message ProtoSettings {
-  bool adblock_enabled = 1;
-  bool acceptable_ads_enabled = 2;
-  ProtoUpdateConfig update_config = 3;
-  repeated string allowed_domains = 4;
-  repeated string blocked_domains = 5;
-  repeated ProtoSubscription active_primary_subscriptions = 6;
-  repeated ProtoSubscription active_other_subscriptions = 7;
-  bool analytics_enabled = 8;
+  bool saved = 1;
+  bool adblock_enabled = 2;
+  bool acceptable_ads_enabled = 3;
+  ProtoUpdateConfig update_config = 4;
+  repeated string allowed_domains = 5;
+  repeated string blocked_domains = 6;
+  repeated ProtoSubscription active_primary_subscriptions = 7;
+  repeated ProtoSubscription active_other_subscriptions = 8;
+  bool analytics_enabled = 9;
 }
 
