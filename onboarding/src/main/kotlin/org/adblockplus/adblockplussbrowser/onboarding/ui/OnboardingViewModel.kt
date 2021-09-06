@@ -55,8 +55,8 @@ internal class OnboardingViewModel @Inject constructor(
         pageList.add(
             PageInfo.Default(
                 R.string.onboarding_welcome_header_title1,
-                R.string.onboarding_welcome_header_title2,
-                R.string.onboarding_welcome_header_title3,
+                R.string.product_name,
+                R.string.target_name,
                 R.layout.onboarding_welcome_page
             )
         )

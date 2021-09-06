@@ -21,4 +21,30 @@
     <string name="acceptable_ads_size_title">Size</string>
     <string name="acceptable_ads_size_description">Span less than 15% of the screen upon initial load</string>
 
+    <!-- onboarding -->
+    <string name="onboarding_welcome_header_title1">Welcome to</string>
+    <string name="onboarding_welcome_block_ads_title">Block annoying ads</string>
+    <string name="onboarding_welcome_block_ads_description">Browse ad-free while supporting content creators through Acceptable Ads</string>
+    <string name="onboarding_welcome_tracking_protection_title">Tracking protection</string>
+    <string name="onboarding_welcome_tracking_protection_description">Browse safer by preventing websites from tracking you across the web</string>
+    <string name="onboarding_welcome_security_privacy_title">Improved security &amp; privacy</string>
+    <string name="onboarding_welcome_security_privacy_description">Browse worry-free with Adblock Plus protecting you in the background</string>
+    <string name="onboarding_welcome_language_filters_title">Language-specific filter lists</string>
+    <string name="onboarding_welcome_language_filters_description">Block more ads by optimizing Adblock Plus for the languages you typically browse in</string>
+    <string name="onboarding_acceptable_ads_header_title1">Participate in</string>
+    <string name="onboarding_acceptable_ads_header_title3">and support content creators</string>
+    <string name="onboarding_acceptable_ads_annoying_ads_title">Annoying ads are always blocked</string>
+    <string name="onboarding_acceptable_ads_annoying_ads_description">Annoying ads, distracting you from the content you love will always be blocked</string>
+    <string name="onboarding_acceptable_ads_nonintrusive_ads_title">A small number of nonintrusive ads are displayed by default</string>
+    <string name="onboarding_acceptable_ads_nonintrusive_ads_description">Ads that don\'t interfere with your browsing experience will appear, so that creators can continue publishing their content</string>
+    <string name="onboarding_acceptable_ads_nonintrusive_ads_example">Show me an example</string>
+    <string name="onboarding_acceptable_ads_disable_title">Disable anytime</string>
+    <string name="onboarding_acceptable_ads_disable_description">You can change this setting by tapping the \"Allow some nonintrusive advertising\" option</string>
+
+    <string name="onboarding_enable_header_title1">Here\'s how to</string>
+    <string name="onboarding_enable_header_title2">Enable Adblock Plus</string>
+    <string name="onboarding_enable_one_step_title">One more step and you\'re done</string>
+    <string name="onboarding_enable_one_step_description">Enable Adblock Plus in Samsung Internet\'s Adblocker Settings</string>
+    <string name="open_samsung_internet">Open Samsung Internet</string>
+
 </resources>
