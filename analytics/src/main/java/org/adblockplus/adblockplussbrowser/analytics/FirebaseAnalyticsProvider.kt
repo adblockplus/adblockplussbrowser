@@ -7,7 +7,7 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 class FirebaseAnalyticsProvider(appContext: Context) : AnalyticsProvider {
 
-    private var firebaseAnalytics = FirebaseAnalytics.getInstance(appContext)
+    private val firebaseAnalytics = FirebaseAnalytics.getInstance(appContext)
 
     override fun logEvent(analyticsEvent: AnalyticsEvent) {
         val bundle = Bundle()
