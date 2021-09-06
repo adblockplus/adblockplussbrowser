@@ -7,5 +7,18 @@
     <string name="update_status_progress_message">Fetching filter lists updates…</string>
     <string name="update_status_error_message">Error updating: Please try again</string>
     <string name="update_status_retry">Retry</string>
+    <!-- base-->
+    <string name="product_name">Adblock Plus</string>
+    <string name="target_name">for Samsung Internet</string>
+    <string name="acceptable_ads">Acceptable Ads</string>
+    <string name="intrusive_ads">Intrusive ads</string>
+    <string name="acceptable_ads_fair_standard_title">Fair standard</string>
+    <string name="acceptable_ads_fair_standard_description">Acceptable Ads are never video, sound or popup ads</string>
+    <string name="acceptable_ads_placement_title">Placement</string>
+    <string name="acceptable_ads_placement_description">Do not disrupt the natural reading flow</string>
+    <string name="acceptable_ads_distinction_title">Distinction</string>
+    <string name="acceptable_ads_distinction_description">Acceptable Ads are always clearly marked as ads</string>
+    <string name="acceptable_ads_size_title">Size</string>
+    <string name="acceptable_ads_size_description">Span less than 15% of the screen upon initial load</string>
 
 </resources>

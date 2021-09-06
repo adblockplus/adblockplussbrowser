@@ -16,6 +16,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":content"))
+
     implementation(Deps.MATERIAL)
     implementation(Deps.AndroidX.ACTIVITY)
     implementation(Deps.AndroidX.APPCOMPAT)
