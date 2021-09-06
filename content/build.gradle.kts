@@ -5,6 +5,3 @@ plugins {
 }
 
 applyCommonConfig()
-
-dependencies {
-}
