@@ -64,6 +64,7 @@ android {
 dependencies {
     implementation(project(":analytics"))
     implementation(project(":base"))
+    implementation(project(":content"))
     implementation(project(":core"))
     implementation(project(":onboarding"))
     implementation(project(":preferences"))

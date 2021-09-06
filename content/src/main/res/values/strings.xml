@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Adblock Plus for Samsung Internet</string>
+    <string name="samsung_internet_required_title">You need Samsung Internet</string>
+    <string name="samsung_internet_required_description">Before you can use Adblock Plus, you must install Samsung Internet 5.0 or above</string>
+    <string name="download_samsung_internet">Download Samsung Internet</string>
+    <string name="update_status_progress_message">Fetching filter lists updates…</string>
+    <string name="update_status_error_message">Error updating: Please try again</string>
+    <string name="update_status_retry">Retry</string>
+</resources>
