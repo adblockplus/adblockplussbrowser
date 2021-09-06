@@ -63,7 +63,7 @@
     <fragment
         android:id="@+id/acceptable_ads_fragment"
         android:name="org.adblockplus.adblockplussbrowser.preferences.ui.acceptableads.AcceptableAdsFragment"
-        android:label="@string/preferences_acceptable_ads_fragment_title"
+        android:label="@string/acceptable_ads"
         tools:layout="@layout/fragment_acceptable_ads" />
 
     <fragment
