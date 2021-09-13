@@ -61,7 +61,7 @@ When doing a periodic update, each active _Subscription_ is checked for expirati
 - on **unmetered** connections (Wifi) if the last successful download occurred more than 24 hours ago or the file doesn't exist on the filesystem, it is considered **expired**;
 - on **metered** connections (3g/4g/5g) if the last successful download occurred more than 3 days ago or the file doesn't exist on the filesystem, it is considered **expired**;
 - if the _Subscription_ is expired a new version is downloaded (respecting `If-Modified-Since` and `If-None-Match` headers);
-If the _Subscription_ is not expired and the file still exists, we use the current file.
+- if the _Subscription_ is not expired and the file still exists then the current file is used.
 
 #### Configurations changes
 When the user adds or removes a _Subscription_, adds/removes domains to the allow/block lists, or changes the Acceptable Ads setting, a new `UpdateSubscriptionsWorker` is fired to run immediately.
