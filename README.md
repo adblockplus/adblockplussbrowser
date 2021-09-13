@@ -1,8 +1,8 @@
 Adblock Plus for Samsung Internet
 =================================
 
-Adblock Plus for Samsung Internet is an application that works as a provider of Adblock Plus filters list for [Samsung Internet Browser][5]. The application is built by following [ad blockers development guide][6] from Samsung.
-The application uses full filter lists, not minified.
+Adblock Plus for Samsung Internet is an application that works as a provider of Adblock Plus filters list for [Samsung Internet Browser][5]. It is built by following [ad blockers development guide][6] from Samsung.
+The application uses full filter lists, not minified. It requires Android [Android 5.0][9] and up.
 
 Building with Gradle
 --------------------
@@ -106,3 +106,4 @@ Every time a new commit is pushed to any branch CI is building release version o
 [6]: https://developer.samsung.com/internet/android/adblockers-guide.html
 [7]: https://developer.android.com/topic/libraries/architecture/images/final-architecture.png
 [8]: https://developer.android.com/topic/libraries/architecture/viewmodel
+[9]: https://www.android.com/versions/lollipop-5-0/
