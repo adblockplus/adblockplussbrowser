@@ -16,7 +16,7 @@ Building with Gradle
 #### Building
 
 - In the root dir, create a `local.properties` file and set the `sdk.dir=/your/path/here`
-- Add your [google-services.json][4] file to app/ directory 
+- Add your [google-services.json][4] file to `app/` directory
 - From the root dir, run `./gradlew yourBuildVariant`. This will generate an .apk file in the `adblockplussbrowser/app/build/outputs/apk/yourBuildVariant/debug` directory.
 
 Importing into Android Studio
