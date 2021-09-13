@@ -1,7 +1,7 @@
 Adblock Plus for Samsung Internet
 =================================
 
-Adblock Plus for Samsung Internet is an application that works as a provider of Adblock Plus filters list for [Samsung Internet Browser][5]. It is built by following [ad blockers development guide][6] from Samsung. 
+Adblock Plus for Samsung Internet is an application that works as a provider of Adblock Plus filters list for [Samsung Internet Browser][5]. It is built by following [ad blockers development guide][6] from Samsung.
 It requires [Android 5.0][9] and up.
 
 Building with Gradle
@@ -73,7 +73,7 @@ Configuration changes are debounced by 500ms, so if the user quickly changes mor
 When the Automatic update configuration is changed, a new worker is scheduled to run every "at least" 6 hours interval. The System can delay the worker based on System constraints.
 If the Automatic update setting is configured to **Wi-Fi Only**, the worker will run after the 6 hours interval only if the device has an unmetered connection available. If the configuration is set to **Always**, the worker will run on any working network connection.
 
-### No configuration changed since the last update
+### No configuration has changed since the last update
 The update is skipped if all of the following criteria are met:
 - there are no changes on Active Subscriptions, allow/block lists, and Acceptable Ads Status;
 - it is not a periodic or manual update.
