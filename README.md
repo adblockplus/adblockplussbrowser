@@ -69,7 +69,7 @@ Configuration changes are debounced by 500ms, so if the user quickly changes mor
 
 #### Automatic update config changed
 When the Automatic update configuration is changed, a new worker is scheduled to run every "at least" 6 hours interval. The System can delay the worker based on System constraints.
-If the Automatic update setting is configured to **Wi-Fi Only**, the worker will run after the 6 hours interval and the device have an unmetered connection available. If the configuration is set to **Always**, the worker requires any working network connection.
+If the Automatic update setting is configured to **Wi-Fi Only**, the worker will run after the 6 hours interval only if the device has an unmetered connection available. If the configuration is set to **Always**, the worker will run on any working network connection.
 
 ### No configuration changed since the last update
 If there are no changes on Active Subscriptions, allow/block lists, and Acceptable Ads Status, and it is not a periodic or manual update, we skip the update altogether.
