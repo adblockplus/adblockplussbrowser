@@ -58,7 +58,7 @@ When the user is using the _Update now_ feature, **all** the _Subscriptions_ are
 The `UpdateSubscriptionsWorker` is scheduled to run at "no less than 6 hours" intervals. The system can delay the worker based on Connectivity criteria, battery status, etc.
 
 When doing a periodic update, each active _Subscription_ is checked for expiration based on the current connection type:
-On **unmetered** connections (Wifi) if the last successful download occurred more than 24 hours ago or the file doesn't exist on the filesystem, it is considered **expired**
+- on **unmetered** connections (Wifi) if the last successful download occurred more than 24 hours ago or the file doesn't exist on the filesystem, it is considered **expired**;
 On **metered** connections (3g/4g/5g) if the last successful download occurred more than 3 days ago or the file doesn't exist on the filesystem, it is considered **expired**
 If the _Subscription_ is expired a new version is downloaded (respecting `If-Modified-Since` and `If-None-
 Match` headers)
