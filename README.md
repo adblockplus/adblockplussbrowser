@@ -81,7 +81,7 @@ If the only change is on the allow/block lists we simply check if the filters fi
 
 ### Adding/Removing Subscriptions, changing Acceptable Ads setting
 When a new _Subscription_ is added, that file is reused instead of downloading it again if the filter list file already exists and the file was downloaded less than 1 hour ago. If the last successful download was completed more than 1 hour ago then the _Subscription_ is downloaded again (respecting `If-Modified-Since` and `If-None-Match` headers).
-Other active _Subscriptions_ are checked only for the existence of the filter list file. The same applies to Acceptable Ads, which are treated as any other _Subscription_ internally.
+Other active _Subscriptions_ are checked only for the existence of the filter list file. The same applies to _Acceptable Ads Subscription_, which is treated like any other _Subscription_ internally.
 
 ### Failures
 If a subscription fails to download, a previously downloaded version will be used if available, otherwise, the Filters list file will be created without this subscription.
