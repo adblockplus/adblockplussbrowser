@@ -40,7 +40,7 @@ Application Architecture
 Adblock Plus for Samsung Internet has been built following Clean Architecture Principle, [Repository Pattern][7], [MVVM Architecture][8] in the presentation layer as well as jetpack components.
 
 #### The app is comprised of the following modules:
-- app module contains the `Application` class, the launcher `Activity`, and the main `Activity` with the application navigation graph.
+- app module contains the `Application` class, the launcher `Activity`, and the main `Activity` with the application navigation graph;
 - analytics module contains functionality of sharing anonymized user tracking
 - base module contains utility and helper classes/functions, base models, and interfaces that are available to all other modules. This is a self-contained module that shouldn't depend on any other.
 - onboarding module contains all the Onboarding UI code.
