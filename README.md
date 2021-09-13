@@ -68,7 +68,7 @@ When the user adds or removes a _Subscription_, adds/removes domains to the allo
 Configuration changes are debounced by 500ms, so if the user quickly changes more than one setting, they will be combined in just one Worker. Otherwise, a new worker will be enqueued for each setting change.
 
 #### Automatic update config changed
-When the Automatic update configuration is changed, a new worker is scheduled to run every "at least" 6 hours interval. (the system can delay the worker based on System constraints).
+When the Automatic update configuration is changed, a new worker is scheduled to run every "at least" 6 hours interval. The System can delay the worker based on System constraints.
 If the Automatic update setting is configured to **Wi-Fi Only**, the worker will run after the 6 hours interval and the device have an unmetered connection available. If the configuration is set to **Always**, the worker requires any working network connection.
 
 ### No configuration changed since the last update
