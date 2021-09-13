@@ -84,7 +84,7 @@ When a new _Subscription_ is added, that file is reused instead of downloading i
 Other active _Subscriptions_ are checked only for the existence of the filter list file. The same applies to _Acceptable Ads Subscription_, which is treated like any other _Subscription_ internally.
 
 ### Failures
-If a subscription fails to download, a previously downloaded version will be used if available, otherwise, the Filters list file will be created without this subscription.
+If a subscription fails to download, a previously downloaded version will be used if available. Otherwise, the resulting Filters list file will be created without this subscription.
 When a worker fails to update a subscription it is marked on a `Retry` state and will be retried 4 times with an exponential backoff strategy.
 
 Testing
