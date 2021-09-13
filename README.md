@@ -46,7 +46,7 @@ Adblock Plus for Samsung Internet has been built following Clean Architecture Pr
 - onboarding module contains all the Onboarding UI code;
 - preferences module contains all the UI code for user preferences. It communicates with the settings module, where the Model lives, and with the core via the `SubscriptionsManager` interface (from the base module);
 - settings module contains the Model for the user preferences, the repository, and data sources for user preferences and configurations;
-- core module is responsible for listening to settings changes and download/update the filters list accordingly. It is also responsible for schedule and manage automatic updates and provide a unified filters list file to the Samsung Internet browser. This update mechanism is described below.
+- core module listens to changes in settings and is responsible for download/update of the filters lists accordingly. It is also responsible for schedule and manages automatic updates and provides a unified filters list file to the Samsung Internet browser. This update mechanism is described below.
 
 Subscriptions Updates
 ---------------------
