@@ -41,7 +41,7 @@ Adblock Plus for Samsung Internet has been built following Clean Architecture Pr
 
 #### The app is comprised of the following modules:
 - app module contains the `Application` class, the launcher `Activity`, and the main `Activity` with the application navigation graph;
-- analytics module contains functionality of sharing anonymized user tracking
+- analytics module contains the functionality of sharing anonymized user tracking;
 - base module contains utility and helper classes/functions, base models, and interfaces that are available to all other modules. This is a self-contained module that shouldn't depend on any other.
 - onboarding module contains all the Onboarding UI code.
 - preferences module contains all the UI code for user preferences. It communicates with the settings module, where the Model lives, and with the core via the `SubscriptionsManager` interface (from base module).
