@@ -65,7 +65,7 @@ When doing a periodic update, each active _Subscription_ is checked for expirati
 
 #### Configurations changes
 When the user adds or removes a _Subscription_, adds/removes domains to the allow/block lists, or changes the Acceptable Ads setting, a new `UpdateSubscriptionsWorker` is fired to run immediately.
-Configuration changes are debounced by 500ms, so if the user quickly changes more than one setting, they will be combined in just one Worker, otherwise, a new worker will be enqueued for each setting change.
+Configuration changes are debounced by 500ms, so if the user quickly changes more than one setting, they will be combined in just one Worker. Otherwise, a new worker will be enqueued for each setting change.
 
 #### Automatic update config changed
 When the Automatic update configuration is changed, a new worker is scheduled to run every "at least" 6 hours interval. (the system can delay the worker based on System constraints).
