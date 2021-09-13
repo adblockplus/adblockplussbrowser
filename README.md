@@ -52,7 +52,7 @@ Subscriptions Updates
 ---------------------
 
 #### Manual Update/Force Refresh (Update now)
-When the user is using the _Update now_ feature, **all** _Subscriptions_ are downloaded, even if the user had a fresh version of it.
+When the user is using the _Update now_ feature, **all** the _Subscriptions_ are downloaded, even if the user had a fresh version of any of them.
 
 #### Periodic Updates (Automatic updates)
 The `UpdateSubscriptionsWorker` is scheduled to run at "no less than 6 hours" intervals. The system can delay the worker based on Connectivity criteria, battery status, etc.
