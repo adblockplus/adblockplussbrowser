@@ -72,7 +72,9 @@ When the Automatic update configuration is changed, a new worker is scheduled to
 If the Automatic update setting is configured to **Wi-Fi Only**, the worker will run after the 6 hours interval only if the device has an unmetered connection available. If the configuration is set to **Always**, the worker will run on any working network connection.
 
 ### No configuration changed since the last update
-If there are no changes on Active Subscriptions, allow/block lists, and Acceptable Ads Status, and it is not a periodic or manual update, we skip the update altogether.
+The update is skipped if all of the following criteria are met:
+- there are no changes on Active Subscriptions, allow/block lists, and Acceptable Ads Status;
+- it is not a periodic or manual update.
 
 ### Adding/Removing domains from the allowlist
 If the only change is on the allow/block lists, we simply check if the filters file for every active subscription is still present on the filesystem. If a file is missing we download the subscription again, if the file still exists it is used, no matter how long ago it was last fetched.
