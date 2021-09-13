@@ -60,7 +60,7 @@ The `UpdateSubscriptionsWorker` is scheduled to run at "no less than 6 hours" in
 When doing a periodic update, each active _Subscription_ is checked for expiration based on the current connection type:
 - on **unmetered** connections (Wifi) if the last successful download occurred more than 24 hours ago or the file doesn't exist on the filesystem, it is considered **expired**;
 - on **metered** connections (3g/4g/5g) if the last successful download occurred more than 3 days ago or the file doesn't exist on the filesystem, it is considered **expired**;
-If the _Subscription_ is expired a new version is downloaded (respecting `If-Modified-Since` and `If-None-
+- if the _Subscription_ is expired a new version is downloaded (respecting `If-Modified-Since` and `If-None-Match` headers);
 Match` headers)
 If the _Subscription_ is not expired and the file still exists, we use the current file.
 
