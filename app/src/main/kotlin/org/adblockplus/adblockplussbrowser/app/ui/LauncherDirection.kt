@@ -12,9 +12,12 @@ internal enum class LauncherDirection(val targetActivity: Class<out Activity>, v
     MAIN(MainActivity::class.java)
 }
 
-internal fun Activity.navigate(direction: LauncherDirection) {
+internal fun Activity.navigate(direction: LauncherDirection, showLastStepOnboardingStep: Boolean = false) {
     val intent = Intent(this, direction.targetActivity)
     direction.extras?.let { intent.putExtras(it) }
+    if (showLastStepOnboardingStep) {
+        intent.putExtra(OnboardingActivity.SHOW_LAST_ONBOARDING_STEP, showLastStepOnboardingStep)
+    }
     this.startActivity(intent)
     this.finish()
 }
