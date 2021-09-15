@@ -25,4 +25,3 @@ message ProtoSettings {
   repeated ProtoSubscription active_other_subscriptions = 8;
   bool analytics_enabled = 9;
 }
-

@@ -103,7 +103,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkSetupStatus() {
         // Fixme implement getting below flag from Settings
-        val contentBlockerNotActivated = true
+        val contentBlockerNotActivated = false
         if (contentBlockerNotActivated) {
             navigate(LauncherDirection.ONBOARDING, true)
         }

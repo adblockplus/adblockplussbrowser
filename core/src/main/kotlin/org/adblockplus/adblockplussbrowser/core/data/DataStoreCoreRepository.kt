@@ -63,4 +63,10 @@ internal class DataStoreCoreRepository(
             data.toBuilder().setLastState(savedState.toProtoSavedState()).build()
         }
     }
+
+    override suspend fun updateLastFilterListRequest(lastFilterListRequest: Long) {
+        dataStore.updateData { data ->
+            data.toBuilder().setLastFilterListRequest(lastFilterListRequest).build()
+        }
+    }
 }

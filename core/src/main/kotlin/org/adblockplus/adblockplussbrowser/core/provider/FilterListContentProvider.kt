@@ -64,12 +64,13 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         // Set as Activated... If Samsung Internet is asking for the Filters, it is enabled
         launch {
             activationPreferences.activate()
+            coreRepository.updateLastFilterListRequest(System.currentTimeMillis())
         }
         return try {
-            Timber.d("Filter list requested: $uri - $mode...")
+            Timber.i("Filter list requested: $uri - $mode...")
+            analyticsProvider.logEvent(AnalyticsEvent.FILTER_LIST_REQUESTED)
             val file = getFilterFile()
             Timber.d("Returning ${file.absolutePath}")
-            analyticsProvider.logEvent(AnalyticsEvent.FILTER_LIST_REQUESTED)
             ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY)
         } catch (ex: Exception) {
             ex.printStackTrace()

@@ -20,6 +20,8 @@ internal interface CoreRepository {
 
     suspend fun updateSavedState(savedState: SavedState)
 
+    suspend fun updateLastFilterListRequest(lastFilterListRequest: Long)
+
     companion object {
         const val KEY_CURRENT_SUBSCRIPTIONS_FILE = "KEY_CURRENT_SUBSCRIPTIONS_FILE"
     }
