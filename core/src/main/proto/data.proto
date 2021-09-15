@@ -28,3 +28,4 @@ message ProtoCoreData {
   repeated ProtoDownloadedSubscription downloaded_subscriptions = 4;
   int64 last_filter_list_request = 5;
 }
+
