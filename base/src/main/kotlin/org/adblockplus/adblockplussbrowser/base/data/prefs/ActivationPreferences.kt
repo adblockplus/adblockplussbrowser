@@ -6,4 +6,6 @@ interface ActivationPreferences {
     val activated: Flow<Boolean>
 
     suspend fun activate()
+
+    suspend fun updateLastFilterRequest(lastFilterListRequest: Long)
 }

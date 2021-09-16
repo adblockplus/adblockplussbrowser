@@ -64,7 +64,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         // Set as Activated... If Samsung Internet is asking for the Filters, it is enabled
         launch {
             activationPreferences.activate()
-            coreRepository.updateLastFilterListRequest(System.currentTimeMillis())
+            activationPreferences.updateLastFilterRequest(System.currentTimeMillis())
         }
         return try {
             Timber.i("Filter list requested: $uri - $mode...")

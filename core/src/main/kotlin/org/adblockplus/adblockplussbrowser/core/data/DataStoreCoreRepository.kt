@@ -64,9 +64,4 @@ internal class DataStoreCoreRepository(
         }
     }
 
-    override suspend fun updateLastFilterListRequest(lastFilterListRequest: Long) {
-        dataStore.updateData { data ->
-            data.toBuilder().setLastFilterListRequest(lastFilterListRequest).build()
-        }
-    }
 }

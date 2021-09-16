@@ -4,6 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.longPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -16,6 +17,7 @@ internal class DataStoreAppPreferences(private val dataStore: DataStore<Preferen
     private object Keys {
         val ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
         val ACTIVATED = booleanPreferencesKey("activated")
+        val LAST_FILTER_REQUEST = longPreferencesKey("last_filter_request")
     }
 
     override val onboardingCompleted: Flow<Boolean> =
@@ -35,4 +37,11 @@ internal class DataStoreAppPreferences(private val dataStore: DataStore<Preferen
             preferences[Keys.ACTIVATED] = true
         }
     }
+
+    override suspend fun updateLastFilterRequest(lastFilterListRequest: Long) {
+        dataStore.edit { preferences ->
+            preferences[Keys.LAST_FILTER_REQUEST] = lastFilterListRequest
+        }
+    }
+
 }
