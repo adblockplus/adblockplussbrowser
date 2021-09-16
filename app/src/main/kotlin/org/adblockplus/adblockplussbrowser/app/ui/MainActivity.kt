@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         const val SBROWSER_APP_ID = "com.sec.android.app.sbrowser"
         private const val SBROWSER_APP_ID_BETA = "com.sec.android.app.sbrowser.beta"
-        private const val OLDEST_SAMSUNG_INTERNET_5_VERSIONCODE = 500000000
+        private const val OLDEST_SAMSUNG_INTERNET_5_VERSIONCODE = 400000000
         private const val NO_FLAG = 0
     }
 }
