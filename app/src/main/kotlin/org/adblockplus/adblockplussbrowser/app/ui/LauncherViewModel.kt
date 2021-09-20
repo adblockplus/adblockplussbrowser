@@ -1,21 +1,44 @@
 package org.adblockplus.adblockplussbrowser.app.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import org.adblockplus.adblockplussbrowser.app.data.prefs.AppPreferences
 import javax.inject.Inject
 
 @HiltViewModel
-internal class LauncherViewModel @Inject constructor(appPreferences: AppPreferences): ViewModel() {
+internal class LauncherViewModel @Inject constructor(appPreferences: AppPreferences) : ViewModel() {
+    val activationStatus: LiveData<Boolean> = appPreferences.activated.asLiveData()
+    private val onBoardingCompletedFlow = appPreferences.onboardingCompleted
+    private val lastFilterRequestFlow = appPreferences.lastFilterListRequest
 
-    val direction: LiveData<LauncherDirection> = appPreferences.onboardingCompleted.map { completed ->
-        if (completed) {
-            LauncherDirection.MAIN
-        } else {
-            LauncherDirection.ONBOARDING
+    val navDir = MutableLiveData<LauncherDirection>()
+
+    fun postDirection() {
+        viewModelScope.launch {
+            onBoardingCompletedFlow.zip(lastFilterRequestFlow) { onBoardingCompleted, lastFilterResultTime ->
+                var direction = LauncherDirection.MAIN
+                if (!onBoardingCompleted) {
+                    direction = LauncherDirection.ONBOARDING
+                } else if (onBoardingCompleted && lastFilterResultTime == 0L) {
+                    direction = LauncherDirection.ONBOARDING_LAST_STEP
+                } else if (onBoardingCompleted &&
+                    System.currentTimeMillis() - lastFilterResultTime > FILTER_REQUEST_EXPIRE
+                ) {
+                    direction = LauncherDirection.ONBOARDING_LAST_STEP
+                }
+                return@zip direction
+            }.flowOn(Dispatchers.Default)
+                .collect {
+                    navDir.postValue(it)
+                }
         }
-    }.asLiveData()
+    }
+
+    companion object {
+        // Fixme Testing value, change from 30 seconds to 30 days
+        const val FILTER_REQUEST_EXPIRE = 3_0_000
+    }
 }

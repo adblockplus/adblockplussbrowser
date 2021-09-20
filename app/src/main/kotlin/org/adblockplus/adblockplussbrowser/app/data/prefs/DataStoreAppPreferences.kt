@@ -8,7 +8,8 @@ import androidx.datastore.preferences.core.longPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-internal class DataStoreAppPreferences(private val dataStore: DataStore<Preferences>) : AppPreferences {
+internal class DataStoreAppPreferences(private val dataStore: DataStore<Preferences>) :
+    AppPreferences {
 
     companion object {
         const val PREFS_NAME = "abp_app_prefs"
@@ -36,6 +37,10 @@ internal class DataStoreAppPreferences(private val dataStore: DataStore<Preferen
         dataStore.edit { preferences ->
             preferences[Keys.ACTIVATED] = true
         }
+    }
+
+    override val lastFilterListRequest: Flow<Long> = dataStore.data.map { preferences ->
+        preferences[Keys.LAST_FILTER_REQUEST] ?: 0
     }
 
     override suspend fun updateLastFilterRequest(lastFilterListRequest: Long) {

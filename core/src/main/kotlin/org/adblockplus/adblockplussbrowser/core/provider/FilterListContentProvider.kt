@@ -73,7 +73,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             Timber.d("Returning ${file.absolutePath}")
             ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY)
         } catch (ex: Exception) {
-            ex.printStackTrace()
+            Timber.e(ex)
             null
         }
     }
