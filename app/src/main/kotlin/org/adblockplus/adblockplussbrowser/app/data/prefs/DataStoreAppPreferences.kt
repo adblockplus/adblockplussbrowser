@@ -17,7 +17,6 @@ internal class DataStoreAppPreferences(private val dataStore: DataStore<Preferen
 
     private object Keys {
         val ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
-        val ACTIVATED = booleanPreferencesKey("activated")
         val LAST_FILTER_REQUEST = longPreferencesKey("last_filter_request")
     }
 
@@ -27,15 +26,6 @@ internal class DataStoreAppPreferences(private val dataStore: DataStore<Preferen
     override suspend fun completeOnboarding() {
         dataStore.edit { preferences ->
             preferences[Keys.ONBOARDING_COMPLETED] = true
-        }
-    }
-
-    override val activated: Flow<Boolean> =
-        dataStore.data.map { it[Keys.ACTIVATED] ?: false }
-
-    override suspend fun activate() {
-        dataStore.edit { preferences ->
-            preferences[Keys.ACTIVATED] = true
         }
     }
 

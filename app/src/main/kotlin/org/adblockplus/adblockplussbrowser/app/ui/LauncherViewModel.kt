@@ -10,7 +10,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class LauncherViewModel @Inject constructor(appPreferences: AppPreferences) : ViewModel() {
-    val activationStatus: LiveData<Boolean> = appPreferences.activated.asLiveData()
     private val onBoardingCompletedFlow = appPreferences.onboardingCompleted
     private val lastFilterRequestFlow = appPreferences.lastFilterListRequest
 
@@ -30,7 +29,7 @@ internal class LauncherViewModel @Inject constructor(appPreferences: AppPreferen
                     direction = LauncherDirection.ONBOARDING_LAST_STEP
                 }
                 return@zip direction
-            }.flowOn(Dispatchers.Default)
+            }.flowOn(Dispatchers.IO)
                 .collect {
                     navDir.postValue(it)
                 }
@@ -39,6 +38,6 @@ internal class LauncherViewModel @Inject constructor(appPreferences: AppPreferen
 
     companion object {
         // Fixme Testing value, change from 30 seconds to 30 days
-        const val FILTER_REQUEST_EXPIRE = 3_0_000
+        const val FILTER_REQUEST_EXPIRE = 30_000
     }
 }

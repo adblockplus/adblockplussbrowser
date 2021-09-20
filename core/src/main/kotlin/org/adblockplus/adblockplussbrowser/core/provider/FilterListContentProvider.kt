@@ -63,7 +63,6 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
     override fun openFile(uri: Uri, mode: String): ParcelFileDescriptor? {
         // Set as Activated... If Samsung Internet is asking for the Filters, it is enabled
         launch {
-            activationPreferences.activate()
             activationPreferences.updateLastFilterRequest(System.currentTimeMillis())
         }
         return try {
