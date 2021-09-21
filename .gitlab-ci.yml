@@ -38,12 +38,13 @@ sign_apks:
   before_script:
     - "rm -fr ./*_SIGNED.apk"
   script:
+    - cd app/build/outputs/apk
     - |
       for UNSIGNED_FILE in $(find app/build/outputs/apk -name "*-unsigned.apk")
         do
         SIGNED_FILE=$(basename "${UNSIGNED_FILE/-unsigned.apk/_SIGNED.apk}")
         echo "Signing ${UNSIGNED_FILE} to ${SIGNED_FILE}"
-        /usr/local/bin/app/build/outputs/apk/worldAbp/release/apk_signer < $UNSIGNED_FILE > $SIGNED_FILE
+        /usr/local/bin/apk_signer < $UNSIGNED_FILE > $SIGNED_FILE
       done
     - ls -1 ./*_SIGNED.apk
     - pwd
