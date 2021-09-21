@@ -46,10 +46,7 @@ sign_apks:
         /usr/local/bin/apk_signer < $UNSIGNED_FILE > $SIGNED_FILE
       done
     - ls -1 ./*_SIGNED.apk
-    - ls -a
     - mv ./*_SIGNED.apk app/build/outputs/apk/worldAbp/release/
-    - pwd
-    - find . -iname "*.apk"
   artifacts:
     paths:
       - "app/build/outputs/apk/worldAbp/release/app-world-abp-release_SIGNED.apk"
