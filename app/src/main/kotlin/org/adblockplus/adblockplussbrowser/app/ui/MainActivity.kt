@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         if (!hasSamsungInternetVersion5OrNewer() && !hasSamsungInternetBeta()) {
             showInstallSamsungInternetDialog()
         } else {
-            checkSetupStatus()
+            checkAdblockActivation()
         }
     }
 
@@ -101,12 +101,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkSetupStatus() {
-        // Fixme implement getting below flag from Settings
-        val contentBlockerNotActivated = false
+    private fun checkAdblockActivation() {
+        viewModel.fetchAdblockActivationStatus()
 
-        if (contentBlockerNotActivated) {
-            navigate(LauncherDirection.ONBOARDING, true)
+        viewModel.isAdblockActivated.observe(this) {
+            if (!it) {
+                navigate(LauncherDirection.ONBOARDING_LAST_STEP)
+            }
         }
     }
 

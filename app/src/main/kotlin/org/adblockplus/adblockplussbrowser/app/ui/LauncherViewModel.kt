@@ -13,25 +13,25 @@ internal class LauncherViewModel @Inject constructor(appPreferences: AppPreferen
     private val onBoardingCompletedFlow = appPreferences.onboardingCompleted
     private val lastFilterRequestFlow = appPreferences.lastFilterListRequest
 
-    val navDir = MutableLiveData<LauncherDirection>()
+    val navigationDirection = MutableLiveData<LauncherDirection>()
 
-    fun postDirection() {
+    fun fetchDirection() {
         viewModelScope.launch {
-            onBoardingCompletedFlow.zip(lastFilterRequestFlow) { onBoardingCompleted, lastFilterResultTime ->
+            onBoardingCompletedFlow.zip(lastFilterRequestFlow) { onBoardingCompleted, lastFilterRequiest ->
                 var direction = LauncherDirection.MAIN
                 if (!onBoardingCompleted) {
                     direction = LauncherDirection.ONBOARDING
-                } else if (onBoardingCompleted && lastFilterResultTime == 0L) {
+                } else if (onBoardingCompleted && lastFilterRequiest == 0L) {
                     direction = LauncherDirection.ONBOARDING_LAST_STEP
                 } else if (onBoardingCompleted &&
-                    System.currentTimeMillis() - lastFilterResultTime > FILTER_REQUEST_EXPIRE
+                    System.currentTimeMillis() - lastFilterRequiest > FILTER_REQUEST_EXPIRE
                 ) {
                     direction = LauncherDirection.ONBOARDING_LAST_STEP
                 }
                 return@zip direction
             }.flowOn(Dispatchers.IO)
                 .collect {
-                    navDir.postValue(it)
+                    navigationDirection.postValue(it)
                 }
         }
     }
