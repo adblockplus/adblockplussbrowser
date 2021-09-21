@@ -38,7 +38,6 @@ sign_apks:
   before_script:
     - "rm -fr ./*_SIGNED.apk"
   script:
-    - cd app/build/outputs/apk
     - |
       for UNSIGNED_FILE in $(find app/build/outputs/apk -name "*-unsigned.apk")
         do
@@ -47,6 +46,8 @@ sign_apks:
         /usr/local/bin/apk_signer < $UNSIGNED_FILE > $SIGNED_FILE
       done
     - ls -1 ./*_SIGNED.apk
+    - ls -a
+    - mv ./*_SIGNED.apk app/build/outputs/apk/worldAbp/release/
     - pwd
     - find . -iname "*.apk"
   artifacts:
