@@ -65,12 +65,11 @@ sign_apks:
     GIT_AUTOMATION_REPO: "https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/eyeo/distpartners/abp_si_automation"
     GIT_AUTOMATION_BRANCH: "master"
     # demo app debug apk
-    TEST_APK_PATH: "app/build/outputs/apk/worldAbp/release/app-world-abp-release_SIGNED.apk"
-    TEST_APK_NAME: "app-world-abp-release_SIGNED.apk"
   before_script:
     - test -z ${SAUCE_USERNAME} && echo "echo SAUCE_USERNAME not set. Unable to run tests." && exit 1
     - test -z ${SAUCE_ACCESS_KEY} && echo "echo SAUCE_ACCESS_KEY not set. Unable to run tests." && exit 1
-    - curl -u "${SAUCE_USERNAME}:${SAUCE_ACCESS_KEY}" --location --request POST 'https://api.eu-central-1.saucelabs.com/v1/storage/upload' --form 'payload=@"${TEST_APK_PATH}"' --form 'name="${TEST_APK_NAME}"'
+    - curl -u "${SAUCE_USERNAME}:${SAUCE_ACCESS_KEY}" --location --request POST 'https://api.eu-central-1.saucelabs.com/v1/storage/upload'
+      --form 'payload=@"app/build/outputs/apk/worldAbp/release/app-world-abp-release_SIGNED.apk"' --form 'name="app-world-abp-release_SIGNED.apk"'
     # we are not using submodules, because automation is not a part of repository functionality
   script:
     # its rather a standalone set of scripts
