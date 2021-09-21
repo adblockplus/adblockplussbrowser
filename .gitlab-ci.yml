@@ -47,6 +47,7 @@ sign_apks:
       done
     - ls -1 ./*_SIGNED.apk
     - pwd
+    - find . -iname "*.apk"
   artifacts:
     paths:
       - "app/build/outputs/apk/worldAbp/release/app-world-abp-release_SIGNED.apk"
