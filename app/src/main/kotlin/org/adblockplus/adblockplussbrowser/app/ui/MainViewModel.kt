@@ -9,6 +9,7 @@ import kotlinx.coroutines.launch
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.app.data.prefs.AppPreferences
+import org.adblockplus.adblockplussbrowser.app.ui.LauncherViewModel.Companion.isFilterRequestExpired
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.base.data.model.SubscriptionUpdateStatus
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
@@ -47,8 +48,7 @@ internal class MainViewModel @Inject constructor(
     fun fetchAdblockActivationStatus() {
         viewModelScope.launch {
             appPreferences.lastFilterListRequest.map {
-                it != 0L &&
-                        (System.currentTimeMillis() - it < LauncherViewModel.FILTER_REQUEST_EXPIRE)
+                it != 0L && !isFilterRequestExpired(it)
             }.collect {
                 isAdblockActivated.postValue(it)
             }

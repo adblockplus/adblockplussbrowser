@@ -6,6 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.adblockplus.adblockplussbrowser.app.data.prefs.AppPreferences
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,8 +24,7 @@ internal class LauncherViewModel @Inject constructor(appPreferences: AppPreferen
                     direction = LauncherDirection.ONBOARDING
                 } else if (onBoardingCompleted && lastFilterRequiest == 0L) {
                     direction = LauncherDirection.ONBOARDING_LAST_STEP
-                } else if (onBoardingCompleted &&
-                    System.currentTimeMillis() - lastFilterRequiest > FILTER_REQUEST_EXPIRE
+                } else if (onBoardingCompleted && isFilterRequestExpired(lastFilterRequiest)
                 ) {
                     direction = LauncherDirection.ONBOARDING_LAST_STEP
                 }
@@ -37,7 +37,11 @@ internal class LauncherViewModel @Inject constructor(appPreferences: AppPreferen
     }
 
     companion object {
-        // Fixme Testing value, change from 30 seconds to 30 days
-        const val FILTER_REQUEST_EXPIRE = 30_000
+        private const val FILTER_REQUEST_DAYS_TO_EXPIRE = 30L
+        fun isFilterRequestExpired(lastFilterRequest: Long) =
+            System.currentTimeMillis() - lastFilterRequest > TimeUnit.MILLISECONDS.convert(
+                FILTER_REQUEST_DAYS_TO_EXPIRE,
+                TimeUnit.DAYS
+            )
     }
 }
