@@ -13,6 +13,11 @@ internal class DataStoreAppPreferences(private val dataStore: DataStore<Preferen
 
     companion object {
         const val PREFS_NAME = "abp_app_prefs"
+
+        // 30 days to expire filter request 30*24*60*60*1000 = 2592000000
+        private const val FILTER_REQUEST_EXPIRE_TIME_SPAN = 2592_000_000
+        fun isFilterRequestExpired(lastFilterRequest: Long) =
+            System.currentTimeMillis() - lastFilterRequest > FILTER_REQUEST_EXPIRE_TIME_SPAN
     }
 
     private object Keys {

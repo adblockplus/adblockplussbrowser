@@ -6,6 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.adblockplus.adblockplussbrowser.app.data.prefs.AppPreferences
+import org.adblockplus.adblockplussbrowser.app.data.prefs.DataStoreAppPreferences.Companion.isFilterRequestExpired
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,12 +34,5 @@ internal class LauncherViewModel @Inject constructor(appPreferences: AppPreferen
                 }
         }
         return navigationDirection
-    }
-
-    companion object {
-        // 30 days to expire filter request 30*24*60*60*1000 = 2592000000
-        private const val FILTER_REQUEST_EXPIRE_TIME_SPAN = 2592_000_000
-        fun isFilterRequestExpired(lastFilterRequest: Long) =
-            System.currentTimeMillis() - lastFilterRequest > FILTER_REQUEST_EXPIRE_TIME_SPAN
     }
 }
