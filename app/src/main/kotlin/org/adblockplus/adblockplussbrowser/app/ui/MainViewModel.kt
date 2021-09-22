@@ -43,9 +43,8 @@ internal class MainViewModel @Inject constructor(
         }
     }
 
-    val isAdblockActivated = MutableLiveData<Boolean>()
-
-    fun fetchAdblockActivationStatus() {
+    fun fetchAdblockActivationStatus(): MutableLiveData<Boolean> {
+        val isAdblockActivated = MutableLiveData<Boolean>()
         viewModelScope.launch {
             appPreferences.lastFilterListRequest.map {
                 it != 0L && !isFilterRequestExpired(it)
@@ -53,5 +52,6 @@ internal class MainViewModel @Inject constructor(
                 isAdblockActivated.postValue(it)
             }
         }
+        return isAdblockActivated
     }
 }

@@ -6,7 +6,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.adblockplus.adblockplussbrowser.app.data.prefs.AppPreferences
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltViewModel
@@ -14,9 +13,8 @@ internal class LauncherViewModel @Inject constructor(appPreferences: AppPreferen
     private val onBoardingCompletedFlow = appPreferences.onboardingCompleted
     private val lastFilterRequestFlow = appPreferences.lastFilterListRequest
 
-    val navigationDirection = MutableLiveData<LauncherDirection>()
-
-    fun fetchDirection() {
+    fun fetchDirection(): MutableLiveData<LauncherDirection> {
+        val navigationDirection = MutableLiveData<LauncherDirection>()
         viewModelScope.launch {
             onBoardingCompletedFlow.zip(lastFilterRequestFlow) { onBoardingCompleted, lastFilterRequiest ->
                 var direction = LauncherDirection.MAIN
@@ -34,14 +32,13 @@ internal class LauncherViewModel @Inject constructor(appPreferences: AppPreferen
                     navigationDirection.postValue(it)
                 }
         }
+        return navigationDirection
     }
 
     companion object {
-        private const val FILTER_REQUEST_DAYS_TO_EXPIRE = 30L
+        // 30 days to expire filter request 30*24*60*60*1000 = 2592000000
+        private const val FILTER_REQUEST_EXPIRE_TIME_SPAN = 2592_000_000
         fun isFilterRequestExpired(lastFilterRequest: Long) =
-            System.currentTimeMillis() - lastFilterRequest > TimeUnit.MILLISECONDS.convert(
-                FILTER_REQUEST_DAYS_TO_EXPIRE,
-                TimeUnit.DAYS
-            )
+            System.currentTimeMillis() - lastFilterRequest > FILTER_REQUEST_EXPIRE_TIME_SPAN
     }
 }

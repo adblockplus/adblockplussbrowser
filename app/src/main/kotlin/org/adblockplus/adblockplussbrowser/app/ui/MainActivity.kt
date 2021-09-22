@@ -102,9 +102,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkAdblockActivation() {
-        viewModel.fetchAdblockActivationStatus()
-
-        viewModel.isAdblockActivated.observe(this) {
+        viewModel.fetchAdblockActivationStatus().observe(this) {
             if (!it) {
                 navigate(LauncherDirection.ONBOARDING_LAST_STEP)
             }
