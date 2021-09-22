@@ -47,7 +47,8 @@ internal class MainViewModel @Inject constructor(
     fun fetchAdblockActivationStatus() {
         viewModelScope.launch {
             appPreferences.lastFilterListRequest.map {
-                System.currentTimeMillis() - it < LauncherViewModel.FILTER_REQUEST_EXPIRE
+                it != 0L &&
+                        (System.currentTimeMillis() - it < LauncherViewModel.FILTER_REQUEST_EXPIRE)
             }.collect {
                 isAdblockActivated.postValue(it)
             }
