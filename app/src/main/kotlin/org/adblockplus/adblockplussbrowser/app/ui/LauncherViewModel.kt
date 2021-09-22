@@ -6,7 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.adblockplus.adblockplussbrowser.app.data.prefs.AppPreferences
-import org.adblockplus.adblockplussbrowser.app.data.prefs.DataStoreAppPreferences.Companion.isFilterRequestExpired
+import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences.Companion.isFilterRequestExpired
 import javax.inject.Inject
 
 @HiltViewModel
