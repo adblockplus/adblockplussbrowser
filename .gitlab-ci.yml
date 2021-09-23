@@ -27,7 +27,8 @@ build:
   artifacts:
     paths:
       - "app/build/outputs/apk/worldAbp/release/app-world-abp-release-unsigned.apk"
-
+  rules:
+    - when: always
 
 sign_apks:
   stage: "sign_builds"
@@ -51,8 +52,8 @@ sign_apks:
     paths:
       - "app/build/outputs/apk/worldAbp/release/app-world-abp-release_SIGNED.apk"
     expire_in: "1 week"
-  #only:
-  #  - /^release-.*$/
+  rules:
+    - when: always
 
   # automated regression tests template using Appium
 .template_automation:
