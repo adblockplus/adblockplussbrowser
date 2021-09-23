@@ -128,5 +128,6 @@ regression_autojob:
     PLATFORM_VERSIONS: "10"
     GRADLE_TASK: "regression"
   rules:
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop"'
-    - if: '$FORCE_REGRESSION == "true"'
+    - when: always
+#    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop"'
+#    - if: '$FORCE_REGRESSION == "true"'
