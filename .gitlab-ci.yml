@@ -1,6 +1,7 @@
 stages:
   - build
   - sign_builds
+  - device_tests
 
 image: gradle:jdk8
 build:
@@ -26,7 +27,8 @@ build:
   artifacts:
     paths:
       - "app/build/outputs/apk/worldAbp/release/app-world-abp-release-unsigned.apk"
-
+  rules:
+    - when: always
 
 sign_apks:
   stage: "sign_builds"
@@ -45,14 +47,86 @@ sign_apks:
         /usr/local/bin/apk_signer < $UNSIGNED_FILE > $SIGNED_FILE
       done
     - ls -1 ./*_SIGNED.apk
-  after_script:
-    - rm -fr artifact-archiver/
-    - git clone https://gitlab.com/eyeo/distpartners/artifact-archiver.git && artifact-archiver/bootstrap.sh
-    # Delete everything for the next job, the runner isnt in a container
-    - rm -fr *
+    - mv ./*_SIGNED.apk app/build/outputs/apk/worldAbp/release/
   artifacts:
     paths:
-      - "./*_SIGNED.apk"
+      - "app/build/outputs/apk/worldAbp/release/app-world-abp-release_SIGNED.apk"
     expire_in: "1 week"
-  #only:
-  #  - /^release-.*$/
+  rules:
+    - when: always
+
+  # automated regression tests template using Appium
+.template_automation:
+  stage: device_tests
+  interruptible: true
+  retry: 1
+  variables:
+    GIT_STRATEGY: "none"
+    # overridable automation repo; url uses CI_JOB_TOKEN for temporary authorization
+    GIT_AUTOMATION_REPO: "https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/eyeo/distpartners/abp_si_automation"
+    GIT_AUTOMATION_BRANCH: "main"
+    # demo app debug apk
+  before_script:
+    - test -z ${SAUCE_USERNAME} && echo "echo SAUCE_USERNAME not set. Unable to run tests." && exit 1
+    - test -z ${SAUCE_ACCESS_KEY} && echo "echo SAUCE_ACCESS_KEY not set. Unable to run tests." && exit 1
+    - curl -u "${SAUCE_USERNAME}:${SAUCE_ACCESS_KEY}" --location --request POST 'https://api.eu-central-1.saucelabs.com/v1/storage/upload'
+      --form 'payload=@"app/build/outputs/apk/worldAbp/release/app-world-abp-release_SIGNED.apk"' --form 'name="app-world-abp-release_SIGNED.apk"'
+    # we are not using submodules, because automation is not a part of repository functionality
+  script:
+    # its rather a standalone set of scripts
+    - git clone $GIT_AUTOMATION_REPO automation
+    - cd automation
+    - git checkout ${GIT_AUTOMATION_BRANCH:-main}
+    # Launch an instance of gradle for each bunch of tags we want to test
+    - set +e
+    - pids=""
+    - |
+      for PLATFORM_VERSION in $PLATFORM_VERSIONS
+        do export PLATFORM_VERSION
+        echo Starting job for version ${PLATFORM_VERSION}
+        (./gradlew ${GRADLE_TASK} &> platform_version-${PLATFORM_VERSION}.log ; echo $? > result_${PLATFORM_VERSION}) &
+        pids="$pids $!"
+      done
+    - wait $pids
+    # Check for any failures and re-run them
+    - |
+      for PLATFORM_VERSION in $PLATFORM_VERSIONS
+        do if [ -s target/rerun${PLATFORM_VERSION}.txt ] ; then
+          echo "Rerunning failed test cases for platform version ${PLATFORM_VERSION}"
+          mv target/rerun${PLATFORM_VERSION}.txt target/rerun.txt
+          ./gradlew rerunFailed
+          echo $? > result_${PLATFORM_VERSION}
+          rm -f target/rerun.txt
+        fi
+      done
+    # check the exit codes of all processes were 0
+    - |
+      for PLATFORM_VERSION in $PLATFORM_VERSIONS
+        do test $(cat result_${PLATFORM_VERSION}) = 0
+      done
+  after_script:
+    - cd automation
+    - |
+      for PLATFORM_VERSION in $PLATFORM_VERSIONS
+        do
+        echo "**********************************"
+        echo "Logs for tests with platform version ${PLATFORM_VERSION}"
+        echo "**********************************"
+        cat platform_version-${PLATFORM_VERSION}.log
+      done
+  artifacts:
+    when: always
+    expire_in: 6 months
+    reports:
+      junit: "automation/target/cucumber-reports/*.xml"
+    paths:
+      - "automation/platform_version-*.log"
+      - "automation/result_*"
+
+regression_autojob:
+  extends: .template_automation
+  variables:
+    PLATFORM_VERSIONS: "10"
+    GRADLE_TASK: "regression"
+  only:
+    - merge_requests
