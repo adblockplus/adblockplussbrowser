@@ -1,4 +1,4 @@
-package org.adblockplus.adblockplussbrowser.app.data.prefs
+package org.adblockplus.adblockplussbrowser.base.data.prefs
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -8,7 +8,7 @@ import androidx.datastore.preferences.core.longPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-internal class DataStoreAppPreferences(private val dataStore: DataStore<Preferences>) :
+class DataStoreAppPreferences(private val dataStore: DataStore<Preferences>) :
     AppPreferences {
 
     companion object {
