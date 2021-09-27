@@ -35,7 +35,7 @@ internal class OkHttpUserCounter(
 
             val lastVersionFormat = SimpleDateFormat("yyyyMMddHHmm")
             if (lastVersion != 0L && wasSentToday(lastVersion, lastVersionFormat)) {
-                Timber.d("User count request skipped because it has been alredy sent today")
+                Timber.d("User count request skipped because it has been already sent today")
                 return@coroutineScope CountUserResult.Success()
             }
 
@@ -47,7 +47,7 @@ internal class OkHttpUserCounter(
 
             val result = when (response.code) {
                 200 -> {
-                    var timestamp = ""
+                    var timestamp: String
                     lastVersionFormat.timeZone = TimeZone.getTimeZone("GMT")
                     try {
                         // Expected date format: "Thu, 23 Sep 2021 17:31:01 GMT"
@@ -55,8 +55,8 @@ internal class OkHttpUserCounter(
                         timestamp = lastVersionFormat.format(parser.parse(response.headers["Date"]))
                     } catch (ex: ParseException) {
                         Timber.e("Parsing 'Date' from header failed, using client GMT time")
-                        timestamp = lastVersionFormat.format(Calendar.getInstance().getTime())
-                        ex.printStackTrace()
+                        Timber.e(ex)
+                        timestamp = lastVersionFormat.format(Calendar.getInstance().time)
                     }
                     repository.updateLastVersion(timestamp.toLong())
                     Timber.d("User count response date: %s (%s)", response.headers["Date"],
@@ -80,9 +80,8 @@ internal class OkHttpUserCounter(
         val dayFormat = SimpleDateFormat("yyyyMMdd")
         val lastVersionDayString = dayFormat.format(lastVersionFormat.parse(lastVersion.toString()))
         dayFormat.timeZone = TimeZone.getTimeZone("GMT")
-        val todayString = dayFormat.format(Calendar.getInstance().getTime())
+        val todayString = dayFormat.format(Calendar.getInstance().time)
         Timber.d("wasSentToday compares `%s` to `%s`", lastVersionDayString, todayString)
-
         return lastVersionDayString.equals(todayString)
     }
 
