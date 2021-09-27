@@ -209,7 +209,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
         intent.data = Uri.parse("package:" + appContext.packageName)
         val isAAEnabled = coreRepository.currentSavedState().acceptableAdsEnabled
         Timber.i("Is AA enabled: $isAAEnabled")
-        intent.putExtra("IS_AA_ENABLED", isAAEnabled)
+        intent.putExtra("com.samsung.android.sbrowser.contentBlocker.IS_AA_ENABLED", isAAEnabled)
         appContext.sendBroadcast(intent)
     }
 
