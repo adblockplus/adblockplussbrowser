@@ -2,15 +2,12 @@ package org.adblockplus.adblockplussbrowser.core.work
 
 import android.content.Context
 import androidx.hilt.work.HiltWorker
-import androidx.lifecycle.MutableLiveData
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.base.data.prefs.AppPreferences
 import org.adblockplus.adblockplussbrowser.core.extensions.currentSettings
