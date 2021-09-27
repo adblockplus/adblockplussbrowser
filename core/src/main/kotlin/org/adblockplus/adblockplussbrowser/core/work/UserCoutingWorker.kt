@@ -50,11 +50,11 @@ internal class UserCountingWorker @AssistedInject constructor(
         }
     }
 
-    private fun CoroutineWorker.hasReachedMaxAttempts(): Boolean =
-        runAttemptCount > 4
+    private fun CoroutineWorker.hasReachedMaxAttempts() = runAttemptCount > RUN_ATTEMPT_MAX_COUNT
 
     companion object {
         private const val DELAY_DEFAULT = 500L
+        private const val RUN_ATTEMPT_MAX_COUNT = 4
 
         internal const val USER_COUNT_KEY_PERIODIC_WORK = "USER_COUNT_PERIODIC_KEY"
     }
