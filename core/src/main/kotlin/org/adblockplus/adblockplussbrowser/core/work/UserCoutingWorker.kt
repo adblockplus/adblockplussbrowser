@@ -2,11 +2,17 @@ package org.adblockplus.adblockplussbrowser.core.work
 
 import android.content.Context
 import androidx.hilt.work.HiltWorker
+import androidx.lifecycle.MutableLiveData
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
+import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
+import org.adblockplus.adblockplussbrowser.base.data.prefs.AppPreferences
 import org.adblockplus.adblockplussbrowser.core.extensions.currentSettings
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
@@ -18,11 +24,19 @@ internal class UserCountingWorker @AssistedInject constructor(
     @Assisted params: WorkerParameters,
     private val settingsRepository: SettingsRepository,
     private val userCounter: UserCounter,
+    private val preferences: AppPreferences
 ) : CoroutineWorker(appContext, params) {
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         return@withContext try {
             Timber.d("USER COUNTING JOB, run Attempt: %d", runAttemptCount)
+
+            val lastFilterRequest = runBlocking { preferences.lastFilterListRequest.first() }
+            if (lastFilterRequest != 0L && !ActivationPreferences.isFilterRequestExpired(lastFilterRequest)) {
+                Timber.i("ABP SI is activated")
+            } else {
+                Timber.i("ABP SI is no longer activated")
+            }
 
             // Don't let a failing worker run eternally...
             if (hasReachedMaxAttempts()) {

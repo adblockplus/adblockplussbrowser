@@ -8,7 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.adblockplus.adblockplussbrowser.base.data.ValueWrapper
 import org.adblockplus.adblockplussbrowser.onboarding.R
-import org.adblockplus.adblockplussbrowser.onboarding.data.prefs.OnboardingPreferences
+import org.adblockplus.adblockplussbrowser.base.data.prefs.OnboardingPreferences
 import javax.inject.Inject
 
 @HiltViewModel
