@@ -26,5 +26,6 @@ message ProtoCoreData {
   int64 last_update = 2;
   ProtoSavedState lastState = 3;
   repeated ProtoDownloadedSubscription downloaded_subscriptions = 4;
+  int64 last_version = 5;
 }
 

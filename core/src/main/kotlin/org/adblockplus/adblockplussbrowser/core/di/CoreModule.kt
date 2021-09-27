@@ -20,6 +20,8 @@ import org.adblockplus.adblockplussbrowser.core.data.datastore.ProtoCoreDataSeri
 import org.adblockplus.adblockplussbrowser.core.data.proto.ProtoCoreData
 import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
 import org.adblockplus.adblockplussbrowser.core.downloader.OkHttpDownloader
+import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
+import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
 import javax.inject.Qualifier
 import javax.inject.Singleton
 import kotlin.time.ExperimentalTime
@@ -57,6 +59,16 @@ internal object CoreModule {
         repository: CoreRepository
     ): Downloader =
         OkHttpDownloader(context, okHttpClient, repository, appInfo)
+
+    @ExperimentalTime
+    @Provides
+    @Singleton
+    fun provideUserCounter(
+        okHttpClient: OkHttpClient,
+        appInfo: AppInfo,
+        repository: CoreRepository
+    ): UserCounter =
+        OkHttpUserCounter(okHttpClient, repository, appInfo)
 
     @Provides
     @CorePreferences

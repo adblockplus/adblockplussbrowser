@@ -37,7 +37,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
     private val subscriptionsManager: SubscriptionsManager,
     private val settingsRepository: SettingsRepository,
     private val coreRepository: CoreRepository,
-    private val downloader: Downloader,
+    private val downloader: Downloader
 ) : CoroutineWorker(appContext, params) {
 
     private var totalSteps: Int = 0
@@ -311,8 +311,8 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
     private suspend fun CoreRepository.currentSavedState() =
         this.data.take(1).single().lastState
 
-    private fun Set<String>.isPeriodic(): Boolean = this.contains(KEY_PERIODIC_WORK)
-    private fun Set<String>.isForceRefresh(): Boolean = this.contains(KEY_FORCE_REFRESH)
+    private fun Set<String>.isPeriodic(): Boolean = this.contains(UPDATE_KEY_PERIODIC_WORK)
+    private fun Set<String>.isForceRefresh(): Boolean = this.contains(UPDATE_KEY_FORCE_REFRESH)
 
     private fun CoroutineWorker.hasReachedMaxAttempts(): Boolean =
         runAttemptCount > 4
@@ -324,8 +324,8 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
     companion object {
         private const val DELAY_DEFAULT = 500L
 
-        internal const val KEY_PERIODIC_WORK = "PERIODIC_KEY"
-        internal const val KEY_ONESHOT_WORK = "ONESHOT_WORK"
-        internal const val KEY_FORCE_REFRESH = "FORCE_REFRESH"
+        internal const val UPDATE_KEY_PERIODIC_WORK = "UPDATE_PERIODIC_KEY"
+        internal const val UPDATE_KEY_ONESHOT_WORK = "UPDATE_ONESHOT_WORK"
+        internal const val UPDATE_KEY_FORCE_REFRESH = "UPDATE_FORCE_REFRESH"
     }
 }

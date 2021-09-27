@@ -58,6 +58,12 @@ internal class DataStoreCoreRepository(
         }
     }
 
+    override suspend fun updateLastVersion(lastVersion: Long) {
+        dataStore.updateData { data ->
+            data.toBuilder().setLastVersion(lastVersion).build()
+        }
+    }
+
     override suspend fun updateSavedState(savedState: SavedState) {
         dataStore.updateData { data ->
             data.toBuilder().setLastState(savedState.toProtoSavedState()).build()

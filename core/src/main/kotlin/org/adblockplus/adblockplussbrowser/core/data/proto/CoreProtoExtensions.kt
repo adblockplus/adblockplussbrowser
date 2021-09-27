@@ -10,7 +10,8 @@ internal fun ProtoCoreData.toCoreData(): CoreData =
         configured,
         lastUpdate,
         lastState.toSavedState(),
-        downloadedSubscriptionsList.map { it.toDownloadedSubscription() }
+        downloadedSubscriptionsList.map { it.toDownloadedSubscription() },
+        lastVersion
     )
 
 internal fun ProtoDownloadedSubscription.toDownloadedSubscription(): DownloadedSubscription =
