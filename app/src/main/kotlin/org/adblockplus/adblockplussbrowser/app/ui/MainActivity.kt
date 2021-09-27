@@ -42,6 +42,8 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         if (!hasSamsungInternetVersion5OrNewer() && !hasSamsungInternetBeta()) {
             showInstallSamsungInternetDialog()
+        } else {
+            checkAdblockActivation()
         }
     }
 
@@ -56,7 +58,7 @@ class MainActivity : AppCompatActivity() {
      */
     private fun hasSamsungInternetVersion5OrNewer(): Boolean {
         return try {
-            val packageInfo = packageManager.getPackageInfo(SBROWSER_APP_ID, NO_FLAG)
+            val packageInfo = packageManager.getPackageInfo(SBROWSER_APP_ID, 0)
             PackageInfoCompat.getLongVersionCode(packageInfo) >= OLDEST_SAMSUNG_INTERNET_5_VERSIONCODE
         } catch (e: PackageManager.NameNotFoundException) {
             false
@@ -66,7 +68,7 @@ class MainActivity : AppCompatActivity() {
     private fun hasSamsungInternetBeta(): Boolean {
         var result = true
         try {
-            packageManager.getPackageInfo(SBROWSER_APP_ID_BETA, NO_FLAG)
+            packageManager.getPackageInfo(SBROWSER_APP_ID_BETA, 0)
         } catch (e: PackageManager.NameNotFoundException) {
             result = false
         }
@@ -99,10 +101,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun checkAdblockActivation() {
+        viewModel.fetchAdblockActivationStatus().observe(this) {
+            if (!it) {
+                navigate(LauncherDirection.ONBOARDING_LAST_STEP)
+            }
+        }
+    }
+
     companion object {
         const val SBROWSER_APP_ID = "com.sec.android.app.sbrowser"
         private const val SBROWSER_APP_ID_BETA = "com.sec.android.app.sbrowser.beta"
         private const val OLDEST_SAMSUNG_INTERNET_5_VERSIONCODE = 400000000
-        private const val NO_FLAG = 0
     }
 }

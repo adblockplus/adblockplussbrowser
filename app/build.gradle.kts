@@ -40,11 +40,6 @@ android {
             dimension = regionDimension
         }
 
-        create("china") {
-            dimension = regionDimension
-            applicationIdSuffix = ".cn"
-        }
-
         create("abp") {
             dimension = productDimension
             applicationId = "org.adblockplus.adblockplussbrowser"
