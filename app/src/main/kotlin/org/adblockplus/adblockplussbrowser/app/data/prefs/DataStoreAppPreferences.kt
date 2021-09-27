@@ -4,10 +4,12 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.longPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-internal class DataStoreAppPreferences(private val dataStore: DataStore<Preferences>) : AppPreferences {
+internal class DataStoreAppPreferences(private val dataStore: DataStore<Preferences>) :
+    AppPreferences {
 
     companion object {
         const val PREFS_NAME = "abp_app_prefs"
@@ -15,7 +17,7 @@ internal class DataStoreAppPreferences(private val dataStore: DataStore<Preferen
 
     private object Keys {
         val ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
-        val ACTIVATED = booleanPreferencesKey("activated")
+        val LAST_FILTER_REQUEST = longPreferencesKey("last_filter_request")
     }
 
     override val onboardingCompleted: Flow<Boolean> =
@@ -27,12 +29,14 @@ internal class DataStoreAppPreferences(private val dataStore: DataStore<Preferen
         }
     }
 
-    override val activated: Flow<Boolean> =
-        dataStore.data.map { it[Keys.ACTIVATED] ?: false }
+    override val lastFilterListRequest: Flow<Long> = dataStore.data.map { preferences ->
+        preferences[Keys.LAST_FILTER_REQUEST] ?: 0
+    }
 
-    override suspend fun activate() {
+    override suspend fun updateLastFilterRequest(lastFilterListRequest: Long) {
         dataStore.edit { preferences ->
-            preferences[Keys.ACTIVATED] = true
+            preferences[Keys.LAST_FILTER_REQUEST] = lastFilterListRequest
         }
     }
+
 }

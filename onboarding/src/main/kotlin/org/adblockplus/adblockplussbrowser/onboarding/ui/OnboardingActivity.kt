@@ -18,6 +18,10 @@ class OnboardingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         DataBindingUtil.setContentView<ActivityOnboardingBinding>(this, R.layout.activity_onboarding)
 
+        if (intent.getBooleanExtra(SHOW_LAST_ONBOARDING_STEP, false)) {
+            viewModel.selectPage(LAST_ONBOARDING_STEP_INDEX)
+        }
+
         viewModel.finishedEvent.observe(this) { wrapper ->
             wrapper.get()?.let {
                 val targetActivity = intent.getSerializableExtra(TARGET_ACTIVITY_PARAM) as Class<*>
@@ -30,5 +34,7 @@ class OnboardingActivity : AppCompatActivity() {
 
     companion object {
         const val TARGET_ACTIVITY_PARAM = "target_activity"
+        const val SHOW_LAST_ONBOARDING_STEP = "show_last_onboarding_step"
+        const val LAST_ONBOARDING_STEP_INDEX = 2
     }
 }

@@ -63,4 +63,5 @@ internal class DataStoreCoreRepository(
             data.toBuilder().setLastState(savedState.toProtoSavedState()).build()
         }
     }
+
 }

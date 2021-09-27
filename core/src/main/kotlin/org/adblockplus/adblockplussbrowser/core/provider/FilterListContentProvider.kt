@@ -63,16 +63,16 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
     override fun openFile(uri: Uri, mode: String): ParcelFileDescriptor? {
         // Set as Activated... If Samsung Internet is asking for the Filters, it is enabled
         launch {
-            activationPreferences.activate()
+            activationPreferences.updateLastFilterRequest(System.currentTimeMillis())
         }
         return try {
-            Timber.d("Filter list requested: $uri - $mode...")
+            Timber.i("Filter list requested: $uri - $mode...")
+            analyticsProvider.logEvent(AnalyticsEvent.FILTER_LIST_REQUESTED)
             val file = getFilterFile()
             Timber.d("Returning ${file.absolutePath}")
-            analyticsProvider.logEvent(AnalyticsEvent.FILTER_LIST_REQUESTED)
             ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY)
         } catch (ex: Exception) {
-            ex.printStackTrace()
+            Timber.e(ex)
             null
         }
     }

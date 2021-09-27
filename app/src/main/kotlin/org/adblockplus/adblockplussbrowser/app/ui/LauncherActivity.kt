@@ -13,8 +13,8 @@ class LauncherActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.direction.observe(this) { direction ->
-            navigate(direction)
+        viewModel.fetchDirection().observe(this) {
+            navigate(it)
         }
     }
 }
