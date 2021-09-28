@@ -16,6 +16,7 @@ import timber.log.Timber
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 import java.util.TimeZone
 import kotlin.time.ExperimentalTime
 
@@ -34,7 +35,7 @@ internal class OkHttpUserCounter(
             val lastVersion = repository.currentData().lastVersion
             Timber.d("User count lastVersion saved `%d`", lastVersion)
 
-            val lastVersionFormat = SimpleDateFormat("yyyyMMddHHmm")
+            val lastVersionFormat = SimpleDateFormat("yyyyMMddHHmm", Locale.ENGLISH)
             if (lastVersion != 0L && wasSentToday(lastVersion, lastVersionFormat)) {
                 Timber.d("User count request skipped because it has been already sent today")
                 return@coroutineScope CountUserResult.Success()
@@ -52,7 +53,7 @@ internal class OkHttpUserCounter(
                     lastVersionFormat.timeZone = TimeZone.getTimeZone("GMT")
                     try {
                         // Expected date format: "Thu, 23 Sep 2021 17:31:01 GMT"
-                        val parser = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z")
+                        val parser = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.ENGLISH)
                         timestamp = lastVersionFormat.format(parser.parse(response.headers["Date"]))
                     } catch (ex: ParseException) {
                         Timber.e("Parsing 'Date' from header failed, using client GMT time")
@@ -78,7 +79,7 @@ internal class OkHttpUserCounter(
     }
 
     private fun wasSentToday(lastVersion: Long, lastVersionFormat: SimpleDateFormat): Boolean {
-        val dayFormat = SimpleDateFormat("yyyyMMdd")
+        val dayFormat = SimpleDateFormat("yyyyMMdd", Locale.ENGLISH)
         val lastVersionDayString = dayFormat.format(lastVersionFormat.parse(lastVersion.toString()))
         dayFormat.timeZone = TimeZone.getTimeZone("GMT")
         val todayString = dayFormat.format(Calendar.getInstance().time)
