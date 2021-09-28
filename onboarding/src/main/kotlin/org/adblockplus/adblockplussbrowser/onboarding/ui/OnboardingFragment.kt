@@ -1,6 +1,5 @@
 package org.adblockplus.adblockplussbrowser.onboarding.ui
 
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.addCallback
@@ -37,16 +36,19 @@ internal class OnboardingFragment : DataBindingFragment<FragmentOnboardingBindin
         binding.openSiButton.setOnClickListener {
             viewModel.completeOnboarding()
             try {
+                val intentLauncher = context?.packageManager?.getLaunchIntentForPackage(SBROWSER_APP_ID)
+                startActivity(intentLauncher)
                 val intent = Intent(ACTION_OPEN_SETTINGS)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
-            } catch (ex: ActivityNotFoundException) {
-                Timber.i("Samsung Internet is not installed")
+            } catch (e: Exception) {
+                Timber.e(e)
             }
         }
     }
 
     companion object {
+        const val SBROWSER_APP_ID = "com.sec.android.app.sbrowser"
         private const val ACTION_OPEN_SETTINGS =
             "com.samsung.android.sbrowser.contentBlocker.ACTION_SETTING"
     }
