@@ -57,7 +57,7 @@ internal class OnboardingFragment : DataBindingFragment<FragmentOnboardingBindin
 
     companion object {
         private const val SBROWSER_APP_ID = "com.sec.android.app.sbrowser"
-        private const val START_SETTINGS_DELAY = 500L
+        private const val START_SETTINGS_DELAY = 100L
         private const val ACTION_OPEN_SETTINGS =
             "com.samsung.android.sbrowser.contentBlocker.ACTION_SETTING"
     }
