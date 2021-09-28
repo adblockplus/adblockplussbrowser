@@ -6,6 +6,11 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.ParcelFileDescriptor
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.work.Constraints
+import androidx.work.ExistingWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
@@ -21,10 +26,17 @@ import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
+import org.adblockplus.adblockplussbrowser.core.extensions.currentData
+import org.adblockplus.adblockplussbrowser.core.extensions.setBackoffTime
+import org.adblockplus.adblockplussbrowser.core.work.UserCountingWorker
+import org.adblockplus.adblockplussbrowser.core.work.UserCountingWorker.Companion.USER_COUNT_KEY_ONESHOT_WORK
 import timber.log.Timber
 import java.io.File
+import kotlin.time.Duration
+import kotlin.time.ExperimentalTime
 
 
+@ExperimentalTime
 internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
 
     lateinit var analyticsProvider: AnalyticsProvider
@@ -64,6 +76,27 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         // Set as Activated... If Samsung Internet is asking for the Filters, it is enabled
         launch {
             activationPreferences.updateLastFilterRequest(System.currentTimeMillis())
+            val lastVersion = coreRepository.currentData().lastVersion
+            if (lastVersion == 0L) {
+                Timber.d("Scheduling one time user counting")
+                val request = OneTimeWorkRequestBuilder<UserCountingWorker>().apply {
+                    setConstraints(
+                        Constraints.Builder()
+                            .setRequiredNetworkType(NetworkType.NOT_REQUIRED).build()
+                    )
+                    setBackoffTime(Duration.minutes(1))
+                    addTag(USER_COUNT_KEY_ONESHOT_WORK)
+                }.build()
+
+                val manager =
+                    WorkManager.getInstance(requireContext(this@FilterListContentProvider))
+                // REPLACE old enqueued works
+                manager.enqueueUniqueWork(
+                    USER_COUNT_KEY_ONESHOT_WORK,
+                    ExistingWorkPolicy.APPEND_OR_REPLACE,
+                    request
+                )
+            }
         }
         return try {
             Timber.i("Filter list requested: $uri - $mode...")

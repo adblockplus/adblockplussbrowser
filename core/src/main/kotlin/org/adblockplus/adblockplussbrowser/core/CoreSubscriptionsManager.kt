@@ -164,7 +164,6 @@ class CoreSubscriptionsManager(
         val userCount = periodicWorkRequestBuilder<UserCountingWorker>(USER_COUNT_INTERVAL, FLEX_USER_COUNT_INTERVAL)
             .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, Duration.minutes(1))
             .addTag(USER_COUNT_KEY_PERIODIC_WORK)
-            .setInitialDelay(INITIAL_USER_COUNT_DELAY)
             .build()
 
         // REPLACE old enqueued works
@@ -209,6 +208,5 @@ class CoreSubscriptionsManager(
         private val INITIAL_UPDATE_DELAY = Duration.hours(6)
         private val USER_COUNT_INTERVAL = UPDATE_INTERVAL
         private val FLEX_USER_COUNT_INTERVAL = FLEX_UPDATE_INTERVAL
-        private val INITIAL_USER_COUNT_DELAY = Duration.minutes(5)
     }
 }
