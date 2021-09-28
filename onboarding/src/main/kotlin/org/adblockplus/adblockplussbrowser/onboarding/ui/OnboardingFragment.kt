@@ -39,10 +39,9 @@ internal class OnboardingFragment : DataBindingFragment<FragmentOnboardingBindin
         binding.openSiButton.setOnClickListener {
             viewModel.completeOnboarding()
             try {
-                val sBrowserIntentLauncher = context?.packageManager?.getLaunchIntentForPackage(SBROWSER_APP_ID)
-                if (sBrowserIntentLauncher != null) {
+                context?.packageManager?.getLaunchIntentForPackage(SBROWSER_APP_ID).let {
                     // Samsung browser need to be in the background in order to succeed with ACTION_OPEN_SETTINGS
-                    startActivity(sBrowserIntentLauncher)
+                    startActivity(it)
                     Handler(Looper.getMainLooper()).postDelayed({
                         val intent = Intent(ACTION_OPEN_SETTINGS)
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
