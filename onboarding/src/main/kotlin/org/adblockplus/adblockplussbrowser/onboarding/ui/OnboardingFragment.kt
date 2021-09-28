@@ -1,5 +1,6 @@
 package org.adblockplus.adblockplussbrowser.onboarding.ui
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.addCallback
@@ -37,11 +38,13 @@ internal class OnboardingFragment : DataBindingFragment<FragmentOnboardingBindin
             viewModel.completeOnboarding()
             try {
                 val intentLauncher = context?.packageManager?.getLaunchIntentForPackage(SBROWSER_APP_ID)
-                startActivity(intentLauncher)
-                val intent = Intent(ACTION_OPEN_SETTINGS)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-            } catch (e: Exception) {
+                if (intentLauncher != null) {
+                    startActivity(intentLauncher)
+                    val intent = Intent(ACTION_OPEN_SETTINGS)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
+                }
+            } catch (e: ActivityNotFoundException) {
                 Timber.e(e)
             }
         }
