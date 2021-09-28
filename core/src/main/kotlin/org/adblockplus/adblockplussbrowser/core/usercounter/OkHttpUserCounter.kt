@@ -71,7 +71,7 @@ internal class OkHttpUserCounter(
             result
         } catch (ex: Exception) {
             Timber.e("User count request failed")
-            ex.printStackTrace()
+            Timber.e(ex)
             CountUserResult.Failed()
         }
     }
