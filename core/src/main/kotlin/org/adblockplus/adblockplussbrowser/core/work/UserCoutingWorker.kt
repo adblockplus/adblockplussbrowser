@@ -32,7 +32,8 @@ internal class UserCountingWorker @AssistedInject constructor(
             if (lastFilterRequest != 0L && !ActivationPreferences.isFilterRequestExpired(lastFilterRequest)) {
                 Timber.i("ABP SI is activated")
             } else {
-                Timber.i("ABP SI is no longer activated")
+                Timber.i("ABP SI is not activated, skipping user counting")
+                return@withContext Result.success()
             }
 
             // Don't let a failing worker run eternally...
@@ -57,6 +58,7 @@ internal class UserCountingWorker @AssistedInject constructor(
             }
         } catch (ex: Exception) {
             Timber.e("USER COUNTING JOB failed")
+            Timber.e(ex)
             Result.failure()
         }
     }
