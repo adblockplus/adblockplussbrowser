@@ -6,7 +6,10 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.*
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.flow.first
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.base.data.prefs.AppPreferences
@@ -70,5 +73,6 @@ internal class UserCountingWorker @AssistedInject constructor(
         private const val RUN_ATTEMPT_MAX_COUNT = 4
 
         internal const val USER_COUNT_KEY_PERIODIC_WORK = "USER_COUNT_PERIODIC_KEY"
+        internal const val USER_COUNT_KEY_ONESHOT_WORK = "USER_COUNT_KEY_ONESHOT_WORK"
     }
 }
