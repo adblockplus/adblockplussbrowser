@@ -40,7 +40,7 @@ internal class OnboardingFragment : DataBindingFragment<FragmentOnboardingBindin
             viewModel.completeOnboarding()
             try {
                 context?.packageManager?.getLaunchIntentForPackage(SBROWSER_APP_ID).let {
-                    // Samsung browser need to be in the background in order to succeed with ACTION_OPEN_SETTINGS
+                    // Samsung browser needs to be in the background in order to succeed with ACTION_OPEN_SETTINGS
                     startActivity(it)
                     Handler(Looper.getMainLooper()).postDelayed({
                         val intent = Intent(ACTION_OPEN_SETTINGS)
