@@ -49,16 +49,15 @@ internal class OkHttpUserCounter(
 
             val result = when (response.code) {
                 200 -> {
-                    var timestamp: String
                     lastVersionFormat.timeZone = TimeZone.getTimeZone("GMT")
-                    try {
+                    val timestamp = try {
                         // Expected date format: "Thu, 23 Sep 2021 17:31:01 GMT"
                         val parser = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.ENGLISH)
-                        timestamp = lastVersionFormat.format(parser.parse(response.headers["Date"]))
+                        lastVersionFormat.format(parser.parse(response.headers["Date"]))
                     } catch (ex: ParseException) {
                         Timber.e("Parsing 'Date' from header failed, using client GMT time")
                         Timber.e(ex)
-                        timestamp = lastVersionFormat.format(Calendar.getInstance().time)
+                        lastVersionFormat.format(Calendar.getInstance().time)
                     }
                     repository.updateLastVersion(timestamp.toLong())
                     Timber.d("User count response date: %s (%s)", response.headers["Date"],
