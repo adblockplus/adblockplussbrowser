@@ -39,8 +39,6 @@ import org.adblockplus.adblockplussbrowser.core.work.UpdateSubscriptionsWorker
 import org.adblockplus.adblockplussbrowser.core.work.UpdateSubscriptionsWorker.Companion.UPDATE_KEY_FORCE_REFRESH
 import org.adblockplus.adblockplussbrowser.core.work.UpdateSubscriptionsWorker.Companion.UPDATE_KEY_ONESHOT_WORK
 import org.adblockplus.adblockplussbrowser.core.work.UpdateSubscriptionsWorker.Companion.UPDATE_KEY_PERIODIC_WORK
-import org.adblockplus.adblockplussbrowser.core.work.UserCountingWorker.Companion.USER_COUNT_KEY_PERIODIC_WORK
-import org.adblockplus.adblockplussbrowser.core.work.UserCountingWorker
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
 import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig
@@ -146,7 +144,7 @@ class CoreSubscriptionsManager(
     }
 
     private fun schedule(updateConfig: UpdateConfig) {
-        Timber.d("Scheduling periodic workers for: $updateConfig")
+        Timber.d("Scheduling periodic worker for: $updateConfig")
         val requestSubs = periodicWorkRequestBuilder<UpdateSubscriptionsWorker>(UPDATE_INTERVAL, FLEX_UPDATE_INTERVAL)
             .setConstraints(Constraints.Builder().setRequiredNetworkType(updateConfig.toNetworkType()).build())
             .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, Duration.minutes(1))
@@ -159,17 +157,6 @@ class CoreSubscriptionsManager(
         manager.enqueueUniquePeriodicWork(UPDATE_KEY_PERIODIC_WORK,
             ExistingPeriodicWorkPolicy.REPLACE, requestSubs)
         Timber.d("Scheduled %s", UPDATE_KEY_PERIODIC_WORK)
-
-        Timber.d("Scheduling user counting")
-        val userCount = periodicWorkRequestBuilder<UserCountingWorker>(USER_COUNT_INTERVAL, FLEX_USER_COUNT_INTERVAL)
-            .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, Duration.minutes(1))
-            .addTag(USER_COUNT_KEY_PERIODIC_WORK)
-            .build()
-
-        // REPLACE old enqueued works
-        manager.enqueueUniquePeriodicWork(USER_COUNT_KEY_PERIODIC_WORK,
-            ExistingPeriodicWorkPolicy.REPLACE, userCount)
-        Timber.d("Scheduled %s", USER_COUNT_KEY_PERIODIC_WORK)
     }
 
     override suspend fun validateSubscription(subscription: Subscription): Boolean {
@@ -206,7 +193,5 @@ class CoreSubscriptionsManager(
         private val UPDATE_INTERVAL = Duration.hours(6)
         private val FLEX_UPDATE_INTERVAL = Duration.minutes(30)
         private val INITIAL_UPDATE_DELAY = Duration.hours(6)
-        private val USER_COUNT_INTERVAL = UPDATE_INTERVAL
-        private val FLEX_USER_COUNT_INTERVAL = FLEX_UPDATE_INTERVAL
     }
 }
