@@ -15,3 +15,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Stability improvements and bug fixes
 - Mechanism to migrate all data from version 1.2.1 to 2.0.1
 - Analytics module for sharing anonymized user tracking
+
+### Known issues
+- DPC-534 - "Open Samsung Internet" button on the "Enable Adblock Plus" screen is not working when Samsung Internet is not in the background
