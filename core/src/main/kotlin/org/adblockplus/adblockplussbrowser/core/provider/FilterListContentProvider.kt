@@ -6,19 +6,15 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.ParcelFileDescriptor
 import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.work.Constraints
-import androidx.work.ExistingWorkPolicy
-import androidx.work.NetworkType
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.SupervisorJob
 import okio.buffer
 import okio.sink
 import okio.source
@@ -26,13 +22,11 @@ import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
-import org.adblockplus.adblockplussbrowser.core.extensions.currentData
-import org.adblockplus.adblockplussbrowser.core.extensions.setBackoffTime
-import org.adblockplus.adblockplussbrowser.core.work.UserCountingWorker
-import org.adblockplus.adblockplussbrowser.core.work.UserCountingWorker.Companion.USER_COUNT_KEY_ONESHOT_WORK
+import org.adblockplus.adblockplussbrowser.core.extensions.currentSettings
+import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
+import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import timber.log.Timber
 import java.io.File
-import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
 
@@ -47,12 +41,16 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         fun getCoreRepository(): CoreRepository
         fun getActivationPreferences(): ActivationPreferences
         fun getAnalyticsProvider(): AnalyticsProvider
+        fun getSettingsRepository(): SettingsRepository
+        fun getUserCounter(): UserCounter
     }
 
     override val coroutineContext = Dispatchers.IO + SupervisorJob()
 
     lateinit var coreRepository: CoreRepository
     lateinit var activationPreferences: ActivationPreferences
+    lateinit var settingsRepository: SettingsRepository
+    lateinit var userCounter: UserCounter
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int = 0
 
@@ -68,6 +66,8 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         coreRepository = entryPoint.getCoreRepository()
         activationPreferences = entryPoint.getActivationPreferences()
         analyticsProvider = entryPoint.getAnalyticsProvider()
+        settingsRepository = entryPoint.getSettingsRepository()
+        userCounter = entryPoint.getUserCounter()
 
         return true
     }
@@ -76,26 +76,28 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         // Set as Activated... If Samsung Internet is asking for the Filters, it is enabled
         launch {
             activationPreferences.updateLastFilterRequest(System.currentTimeMillis())
-            val lastVersion = coreRepository.currentData().lastVersion
-            if (lastVersion == 0L) {
-                Timber.d("Scheduling one time user counting")
-                val request = OneTimeWorkRequestBuilder<UserCountingWorker>().apply {
-                    setConstraints(
-                        Constraints.Builder()
-                            .setRequiredNetworkType(NetworkType.NOT_REQUIRED).build()
-                    )
-                    setBackoffTime(Duration.minutes(1))
-                    addTag(USER_COUNT_KEY_ONESHOT_WORK)
-                }.build()
-
-                val manager =
-                    WorkManager.getInstance(requireContext(this@FilterListContentProvider))
-                // REPLACE old enqueued works
-                manager.enqueueUniqueWork(
-                    USER_COUNT_KEY_ONESHOT_WORK,
-                    ExistingWorkPolicy.APPEND_OR_REPLACE,
-                    request
-                )
+            launch {
+                val acceptableAdsEnabled = settingsRepository.currentSettings().acceptableAdsEnabled
+                val acceptableAdsSubscription = settingsRepository.getAcceptableAdsSubscription()
+                val initialBackOffDelay = 1000L
+                val backOffFactor = 4
+                val maxHeadRetries = 4
+                var currentBackOffDelay = initialBackOffDelay
+                repeat(maxHeadRetries) {
+                    val result = userCounter.count(acceptableAdsSubscription, acceptableAdsEnabled)
+                    if (result.isSuccessful()) {
+                        Timber.i("User counted")
+                        return@launch
+                    } else {
+                        if (it < maxHeadRetries - 1) {
+                            Timber.i("User counting failed, retrying with delay of %d ms",
+                                currentBackOffDelay
+                            )
+                            delay(currentBackOffDelay) //backoff
+                            currentBackOffDelay = (currentBackOffDelay * backOffFactor)
+                        }
+                    }
+                }
             }
         }
         return try {
