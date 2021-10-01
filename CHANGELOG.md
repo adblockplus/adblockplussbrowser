@@ -8,12 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed/Added
 - Fully rebuilt user interface
-- Dark and Light modes
-- Onboarding module for guiding the user through the installation process
-- Portrait and Landscape modes
+- Added dark and light modes support
+- Added onboarding module for guiding the user through the installation process
+- Added portrait and landscape modes
 - Improved start up performance
 - Stability improvements and bug fixes
-- Mechanism to migrate all data from version 1.2.1 to 2.0.1
+- Added mechanism to migrate all data from version 1.2.1 to 2.0.1
 - Analytics module for sharing anonymized user behavior
 
 ### Known issues
