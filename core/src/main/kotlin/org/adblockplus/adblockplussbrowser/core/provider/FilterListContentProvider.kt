@@ -22,9 +22,8 @@ import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
-import org.adblockplus.adblockplussbrowser.core.extensions.currentSettings
+import org.adblockplus.adblockplussbrowser.core.usercounter.CountUserResult
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
-import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import timber.log.Timber
 import java.io.File
 import kotlin.time.ExperimentalTime
@@ -41,7 +40,6 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         fun getCoreRepository(): CoreRepository
         fun getActivationPreferences(): ActivationPreferences
         fun getAnalyticsProvider(): AnalyticsProvider
-        fun getSettingsRepository(): SettingsRepository
         fun getUserCounter(): UserCounter
     }
 
@@ -49,7 +47,6 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
 
     lateinit var coreRepository: CoreRepository
     lateinit var activationPreferences: ActivationPreferences
-    lateinit var settingsRepository: SettingsRepository
     lateinit var userCounter: UserCounter
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int = 0
@@ -66,7 +63,6 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         coreRepository = entryPoint.getCoreRepository()
         activationPreferences = entryPoint.getActivationPreferences()
         analyticsProvider = entryPoint.getAnalyticsProvider()
-        settingsRepository = entryPoint.getSettingsRepository()
         userCounter = entryPoint.getUserCounter()
 
         return true
@@ -77,16 +73,17 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         launch {
             activationPreferences.updateLastFilterRequest(System.currentTimeMillis())
             launch {
-                val acceptableAdsEnabled = settingsRepository.currentSettings().acceptableAdsEnabled
-                val acceptableAdsSubscription = settingsRepository.getAcceptableAdsSubscription()
                 val initialBackOffDelay = 1000L
                 val backOffFactor = 4
                 val maxHeadRetries = 4
                 var currentBackOffDelay = initialBackOffDelay
                 repeat(maxHeadRetries) {
-                    val result = userCounter.count(acceptableAdsSubscription, acceptableAdsEnabled)
-                    if (result.isSuccessful()) {
+                    val result = userCounter.count()
+                    if (result is CountUserResult.Success) {
                         Timber.i("User counted")
+                        return@launch
+                    } else if (result is CountUserResult.Skipped) {
+                        Timber.i("User counting already done today")
                         return@launch
                     } else {
                         if (it < maxHeadRetries - 1) {
