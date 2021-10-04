@@ -22,7 +22,9 @@ import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
+import org.adblockplus.adblockplussbrowser.core.extensions.currentData
 import org.adblockplus.adblockplussbrowser.core.usercounter.CountUserResult
+import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
 import timber.log.Timber
 import java.io.File
@@ -73,6 +75,11 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         launch {
             activationPreferences.updateLastFilterRequest(System.currentTimeMillis())
             launch {
+                val lastVersion = coreRepository.currentData().lastVersion
+                if (OkHttpUserCounter.wasUserCountedToday(lastVersion)) {
+                    Timber.i("User counting already done today")
+                    return@launch
+                }
                 val initialBackOffDelay = 1000L
                 val backOffFactor = 4
                 val maxHeadRetries = 4
@@ -82,14 +89,10 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
                     if (result is CountUserResult.Success) {
                         Timber.i("User counted")
                         return@launch
-                    } else if (result is CountUserResult.Skipped) {
-                        Timber.i("User counting already done today")
-                        return@launch
                     } else {
                         if (it < maxHeadRetries - 1) {
-                            Timber.i("User counting failed, retrying with delay of %d ms",
-                                currentBackOffDelay
-                            )
+                            Timber.e("User counting failed, retrying with delay of %d ms",
+                                currentBackOffDelay)
                             delay(currentBackOffDelay) //backoff
                             currentBackOffDelay = (currentBackOffDelay * backOffFactor)
                         }
