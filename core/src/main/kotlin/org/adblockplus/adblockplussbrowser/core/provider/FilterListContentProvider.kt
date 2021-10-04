@@ -98,6 +98,8 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
                         }
                     }
                 }
+                // If we reached here we haven't hit return@launch from repeat above, let's log that
+                analyticsProvider.logEvent(AnalyticsEvent.HEAD_REQUEST_FAILED)
             }
         }
         return try {

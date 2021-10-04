@@ -31,10 +31,9 @@ internal class OkHttpUserCounter(
     private val okHttpClient: OkHttpClient,
     private val repository: CoreRepository,
     private val settings: SettingsRepository,
-    private val appInfo: AppInfo
+    private val appInfo: AppInfo,
+    private val analyticsProvider: AnalyticsProvider
 ) : UserCounter {
-
-    lateinit var analyticsProvider: AnalyticsProvider
 
     override suspend fun count() : CountUserResult = coroutineScope {
         try {
@@ -58,7 +57,7 @@ internal class OkHttpUserCounter(
                         lastVersionFormat.format(serverDateParser.parse(response.headers["Date"]))
                     } catch (ex: ParseException) {
                         Timber.e(ex)
-                        analyticsProvider.logEvent(AnalyticsEvent.HEAD_REQUEST_DATA_PARSING_FAILED)
+                        analyticsProvider.logEvent(AnalyticsEvent.HEAD_RESPONSE_DATA_PARSING_FAILED)
                         if (BuildConfig.DEBUG) {
                             throw ex
                         } else {
