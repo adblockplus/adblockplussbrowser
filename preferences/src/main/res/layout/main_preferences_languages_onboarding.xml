@@ -7,6 +7,7 @@
         <variable
             name="viewModel"
             type="org.adblockplus.adblockplussbrowser.preferences.ui.MainPreferencesViewModel" />
+        <import type="android.view.View"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:visibility="@{viewModel.languagesOnboardingCompleted ? View.GONE : View.VISIBLE }"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/main_preferences_ad_blocking_include">
 

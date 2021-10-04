@@ -17,6 +17,10 @@ internal class MainPreferencesViewModel @Inject constructor(
     @Inject
     lateinit var analyticsProvider: AnalyticsProvider
 
+    val languagesOnboardingCompleted = settingsRepository.settings.map { settings ->
+        settings.languagesOnboardingCompleted
+    }.asLiveData()
+
     val acceptableAdsEnabled = settingsRepository.settings.map { settings ->
         settings.acceptableAdsEnabled
     }.asLiveData()
@@ -37,6 +41,12 @@ internal class MainPreferencesViewModel @Inject constructor(
                     settingsRepository.setAnalyticsEnabled(true)
                 }
             }
+        }
+    }
+
+    fun markLanguagesOnboardingComplete() {
+        viewModelScope.launch {
+            settingsRepository.markLanguagesOnboardingCompleted();
         }
     }
 }

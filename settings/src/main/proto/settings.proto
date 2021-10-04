@@ -24,5 +24,6 @@ message ProtoSettings {
   repeated ProtoSubscription active_primary_subscriptions = 7;
   repeated ProtoSubscription active_other_subscriptions = 8;
   bool analytics_enabled = 9;
+  bool languages_onboarding_completed = 10;
 }
 

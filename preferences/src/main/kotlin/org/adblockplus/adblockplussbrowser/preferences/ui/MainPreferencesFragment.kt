@@ -35,6 +35,15 @@ internal class MainPreferencesFragment :
                 .actionMainPreferencesFragmentToUpdateSubscriptionsFragment()
             findNavController().navigate(direction)
         }
+        binding.mainPreferencesLanguagesOnboardingInclude.mainPreferencesLanguagesOnboardingOptionAdd.setOnClickListener {
+            viewModel.markLanguagesOnboardingComplete()
+            val direction = MainPreferencesFragmentDirections
+                .actionMainPreferencesFragmentToPrimarySubscriptionsFragment()
+            findNavController().navigate(direction)
+        }
+        binding.mainPreferencesLanguagesOnboardingInclude.mainPreferencesLanguagesOnboardingOptionSkip.setOnClickListener {
+            viewModel.markLanguagesOnboardingComplete()
+        }
         binding.mainPreferencesAcceptableAdsInclude.mainPreferencesAcceptableAds.setOnClickListener {
             val direction = MainPreferencesFragmentDirections
                 .actionMainPreferencesFragmentToAcceptableAdsFragment()
