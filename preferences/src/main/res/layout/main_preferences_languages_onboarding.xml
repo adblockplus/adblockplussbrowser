@@ -70,19 +70,17 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/main_preferences_languages_onboarding_option_add"
-                style="@style/AbpPreferenceSummaryTextStyle"
+                style="@style/AbpPreferenceSummaryTextStyle.Accent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/abp_foreground_accent"
                 android:text="@string/languages_onboarding_option_add" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/main_preferences_languages_onboarding_option_skip"
-                style="@style/AbpPreferenceSummaryTextStyle"
+                style="@style/AbpPreferenceSummaryTextStyle.Accent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:textColor="@color/abp_foreground_accent"
                 android:text="@string/languages_onboarding_option_skip" />
 
         </LinearLayout>
