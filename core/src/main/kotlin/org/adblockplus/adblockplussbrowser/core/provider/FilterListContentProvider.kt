@@ -80,21 +80,18 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
                     Timber.i("User counting already done today")
                     return@launch
                 }
-                val initialBackOffDelay = 1000L
-                val backOffFactor = 4
-                val maxHeadRetries = 4
-                var currentBackOffDelay = initialBackOffDelay
-                repeat(maxHeadRetries) {
+                var currentBackOffDelay = INITIAL_BACKOFF_DELAY
+                repeat(MAX_USER_COUNT_RETRIES) {
                     val result = userCounter.count()
                     if (result is CountUserResult.Success) {
                         Timber.i("User counted")
                         return@launch
                     } else {
-                        if (it < maxHeadRetries - 1) {
+                        if (it < MAX_USER_COUNT_RETRIES - 1) {
                             Timber.e("User counting failed, retrying with delay of %d ms",
                                 currentBackOffDelay)
                             delay(currentBackOffDelay) //backoff
-                            currentBackOffDelay = (currentBackOffDelay * backOffFactor)
+                            currentBackOffDelay = (currentBackOffDelay * BACKOFF_FACTOR)
                         }
                     }
                 }
@@ -158,5 +155,8 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
 
     companion object {
         const val DEFAULT_SUBSCRIPTIONS_FILENAME = "default_subscriptions.txt"
+        const val INITIAL_BACKOFF_DELAY = 1000L
+        const val BACKOFF_FACTOR = 4
+        const val MAX_USER_COUNT_RETRIES = 4
     }
 }
