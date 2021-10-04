@@ -1,10 +1,12 @@
-package org.adblockplus.adblockplussbrowser.core.usercounter;
+package org.adblockplus.adblockplussbrowser.core.usercounter
 
 import kotlinx.coroutines.coroutineScope
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.core.AppInfo
 import org.adblockplus.adblockplussbrowser.core.BuildConfig
@@ -29,7 +31,8 @@ internal class OkHttpUserCounter(
     private val okHttpClient: OkHttpClient,
     private val repository: CoreRepository,
     private val settings: SettingsRepository,
-    private val appInfo: AppInfo
+    private val appInfo: AppInfo,
+    private val analyticsProvider: AnalyticsProvider
 ) : UserCounter {
 
     override suspend fun count() : CountUserResult = coroutineScope {
@@ -54,6 +57,7 @@ internal class OkHttpUserCounter(
                         lastVersionFormat.format(serverDateParser.parse(response.headers["Date"]))
                     } catch (ex: ParseException) {
                         Timber.e(ex)
+                        analyticsProvider.logEvent(AnalyticsEvent.HEAD_RESPONSE_DATA_PARSING_FAILED)
                         if (BuildConfig.DEBUG) {
                             throw ex
                         } else {

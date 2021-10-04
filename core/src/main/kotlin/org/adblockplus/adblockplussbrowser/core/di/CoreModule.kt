@@ -12,6 +12,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.core.AppInfo
 import org.adblockplus.adblockplussbrowser.core.buildAppInfo
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
@@ -68,9 +69,10 @@ internal object CoreModule {
         okHttpClient: OkHttpClient,
         appInfo: AppInfo,
         repository: CoreRepository,
-        settings: SettingsRepository
+        settings: SettingsRepository,
+        analyticsProvider: AnalyticsProvider
     ): UserCounter =
-        OkHttpUserCounter(okHttpClient, repository, settings, appInfo)
+        OkHttpUserCounter(okHttpClient, repository, settings, appInfo, analyticsProvider)
 
     @Provides
     @CorePreferences
