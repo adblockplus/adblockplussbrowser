@@ -1,6 +1,5 @@
 package org.adblockplus.adblockplussbrowser.onboarding.ui
 
-import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -14,7 +13,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.onboarding.R
 import org.adblockplus.adblockplussbrowser.onboarding.databinding.FragmentOnboardingBinding
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
@@ -42,17 +40,18 @@ internal class OnboardingFragment : DataBindingFragment<FragmentOnboardingBindin
 
         binding.openSiButton.setOnClickListener {
             viewModel.completeOnboarding()
-            try {
-                context?.packageManager?.getLaunchIntentForPackage(SBROWSER_APP_ID).let {
-                    // Samsung browser needs to be in the background in order to succeed with ACTION_OPEN_SETTINGS
-                    startActivity(it)
-                    val openSISettingsRequest = OneTimeWorkRequest.Builder(OpenSISettingsWorker::class.java)
-                        .setInitialDelay(START_SETTINGS_DELAY, TimeUnit.MILLISECONDS)
-                        .build()
-                    WorkManager.getInstance(requireContext()).enqueue(openSISettingsRequest)
-                }
-            } catch (e: ActivityNotFoundException) {
-                Timber.e(e)
+            var samsungInternetIntentLauncher = context?.packageManager?.getLaunchIntentForPackage(SBROWSER_APP_ID)
+            if (samsungInternetIntentLauncher == null) {
+                samsungInternetIntentLauncher = context?.packageManager?.getLaunchIntentForPackage(SBROWSER_APP_ID_BETA)
+            }
+
+            samsungInternetIntentLauncher?.let {
+                // Samsung browser needs to be in the background in order to succeed with ACTION_OPEN_SETTINGS
+                startActivity(it)
+                val openSISettingsRequest = OneTimeWorkRequest.Builder(OpenSISettingsWorker::class.java)
+                    .setInitialDelay(START_SETTINGS_DELAY, TimeUnit.MILLISECONDS)
+                    .build()
+                WorkManager.getInstance(requireContext()).enqueue(openSISettingsRequest)
             }
         }
     }
@@ -68,6 +67,7 @@ internal class OnboardingFragment : DataBindingFragment<FragmentOnboardingBindin
 
     companion object {
         private const val SBROWSER_APP_ID = "com.sec.android.app.sbrowser"
+        private const val SBROWSER_APP_ID_BETA = "com.sec.android.app.sbrowser.beta"
         private const val START_SETTINGS_DELAY = 500L
         private const val ACTION_OPEN_SETTINGS =
             "com.samsung.android.sbrowser.contentBlocker.ACTION_SETTING"
