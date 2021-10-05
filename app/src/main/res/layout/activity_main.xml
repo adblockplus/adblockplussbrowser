@@ -24,6 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:theme="@style/Theme.Abp.Toolbar"
+                app:subtitle="@string/app_subtitle"
                 app:subtitleTextAppearance="@style/Theme.Abp.SubTitleTextStyle" />
 
         </com.google.android.material.appbar.AppBarLayout>
