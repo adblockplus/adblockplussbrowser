@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         binding.viewModel = viewModel
         viewModel.sendAudienceAAEvent()
         setSupportActionBar(binding.toolbar)
+        binding.toolbar.subtitle = resources.getString(R.string.app_subtitle)
         setupActionBarWithNavController(navController)
     }
 

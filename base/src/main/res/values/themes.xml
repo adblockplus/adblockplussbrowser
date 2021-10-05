@@ -29,6 +29,10 @@
         <item name="colorOnPrimary">@color/abp_foreground</item>
     </style>
 
+    <style name="Theme.Abp.SubTitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Subtitle">
+        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
+    </style>
+
     <style name="ThemeOverlay.Abp.Snackbar" parent="">
         <item name="colorPrimary">@color/abp_foreground_accent</item>
         <item name="colorOnSurface">@color/abp_background_secondary</item>
