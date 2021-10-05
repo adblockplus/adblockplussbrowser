@@ -10,6 +10,9 @@ import androidx.work.WorkManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import dagger.hilt.android.AndroidEntryPoint
+import org.adblockplus.adblockplussbrowser.base.SamsungInternetConstants.Companion.ACTION_OPEN_SETTINGS
+import org.adblockplus.adblockplussbrowser.base.SamsungInternetConstants.Companion.SBROWSER_APP_ID
+import org.adblockplus.adblockplussbrowser.base.SamsungInternetConstants.Companion.SBROWSER_APP_ID_BETA
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.onboarding.R
 import org.adblockplus.adblockplussbrowser.onboarding.databinding.FragmentOnboardingBinding
@@ -40,9 +43,9 @@ internal class OnboardingFragment : DataBindingFragment<FragmentOnboardingBindin
 
         binding.openSiButton.setOnClickListener {
             viewModel.completeOnboarding()
-            var samsungInternetIntentLauncher = context?.packageManager?.getLaunchIntentForPackage(SBROWSER_APP_ID)
+            var samsungInternetIntentLauncher = getLauncher(SBROWSER_APP_ID)
             if (samsungInternetIntentLauncher == null) {
-                samsungInternetIntentLauncher = context?.packageManager?.getLaunchIntentForPackage(SBROWSER_APP_ID_BETA)
+                samsungInternetIntentLauncher = getLauncher(SBROWSER_APP_ID_BETA)
             }
 
             samsungInternetIntentLauncher?.let {
@@ -56,6 +59,10 @@ internal class OnboardingFragment : DataBindingFragment<FragmentOnboardingBindin
         }
     }
 
+    private fun getLauncher(id: String) : Intent? {
+        return context?.packageManager?.getLaunchIntentForPackage(id)
+    }
+
     class OpenSISettingsWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
         override fun doWork(): Result {
             val intent = Intent(ACTION_OPEN_SETTINGS)
@@ -66,10 +73,6 @@ internal class OnboardingFragment : DataBindingFragment<FragmentOnboardingBindin
     }
 
     companion object {
-        private const val SBROWSER_APP_ID = "com.sec.android.app.sbrowser"
-        private const val SBROWSER_APP_ID_BETA = "com.sec.android.app.sbrowser.beta"
         private const val START_SETTINGS_DELAY = 500L
-        private const val ACTION_OPEN_SETTINGS =
-            "com.samsung.android.sbrowser.contentBlocker.ACTION_SETTING"
     }
 }
