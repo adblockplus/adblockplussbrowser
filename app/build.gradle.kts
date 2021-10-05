@@ -14,7 +14,7 @@ applyCommonConfig()
 
 android {
     defaultConfig {
-        versionCode = Config.VERSION_CODE
+        versionCode = versionCode()
         versionName = Config.VERSION_NAME
     }
 

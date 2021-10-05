@@ -1,5 +1,4 @@
 object Config {
-    const val VERSION_CODE = 19
     const val VERSION_NAME = "2.0.0"
 
     const val COMPILE_SDK_VERSION = 30
