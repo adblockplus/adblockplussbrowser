@@ -46,7 +46,7 @@ internal class MainPreferencesViewModel @Inject constructor(
 
     fun markLanguagesOnboardingComplete() {
         viewModelScope.launch {
-            settingsRepository.markLanguagesOnboardingCompleted();
+            settingsRepository.markLanguagesOnboardingCompleted()
         }
     }
 }
