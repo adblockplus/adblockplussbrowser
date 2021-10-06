@@ -10,9 +10,10 @@ import androidx.work.WorkManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import dagger.hilt.android.AndroidEntryPoint
-import org.adblockplus.adblockplussbrowser.base.SamsungInternetConstants.Companion.ACTION_OPEN_SETTINGS
-import org.adblockplus.adblockplussbrowser.base.SamsungInternetConstants.Companion.SBROWSER_APP_ID
-import org.adblockplus.adblockplussbrowser.base.SamsungInternetConstants.Companion.SBROWSER_APP_ID_BETA
+import org.adblockplus.adblockplussbrowser.base.constants.samsung.SamsungInternetConstants.Companion.SBROWSER_ACTION_OPEN_SETTINGS
+import org.adblockplus.adblockplussbrowser.base.constants.samsung.SamsungInternetConstants.Companion.SBROWSER_APP_ID
+import org.adblockplus.adblockplussbrowser.base.constants.samsung.SamsungInternetConstants.Companion.SBROWSER_APP_ID_BETA
+import org.adblockplus.adblockplussbrowser.base.constants.samsung.SamsungInternetConstants.Companion.SBROWSER_START_SETTINGS_DELAY
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.onboarding.R
 import org.adblockplus.adblockplussbrowser.onboarding.databinding.FragmentOnboardingBinding
@@ -49,10 +50,12 @@ internal class OnboardingFragment : DataBindingFragment<FragmentOnboardingBindin
             }
 
             samsungInternetIntentLauncher?.let {
-                // Samsung browser needs to be in the background in order to succeed with ACTION_OPEN_SETTINGS
+                // SI has a defect in intent ACTION_OPEN_SETTINGS processing,
+                // which is not working if SI receives ACTION_OPEN_SETTINGS in the destroyed state.
+                // As a workaround SI is stared before ACTION_OPEN_SETTINGS is sent.
                 startActivity(it)
                 val openSISettingsRequest = OneTimeWorkRequest.Builder(OpenSISettingsWorker::class.java)
-                    .setInitialDelay(START_SETTINGS_DELAY, TimeUnit.MILLISECONDS)
+                    .setInitialDelay(SBROWSER_START_SETTINGS_DELAY, TimeUnit.MILLISECONDS)
                     .build()
                 WorkManager.getInstance(requireContext()).enqueue(openSISettingsRequest)
             }
@@ -65,14 +68,10 @@ internal class OnboardingFragment : DataBindingFragment<FragmentOnboardingBindin
 
     class OpenSISettingsWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
         override fun doWork(): Result {
-            val intent = Intent(ACTION_OPEN_SETTINGS)
+            val intent = Intent(SBROWSER_ACTION_OPEN_SETTINGS)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             applicationContext.startActivity(intent)
             return Result.success()
         }
-    }
-
-    companion object {
-        private const val START_SETTINGS_DELAY = 500L
     }
 }
