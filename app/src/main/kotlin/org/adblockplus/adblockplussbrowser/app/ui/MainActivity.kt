@@ -17,6 +17,9 @@ import com.afollestad.materialdialogs.customview.getCustomView
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.app.R
 import org.adblockplus.adblockplussbrowser.app.databinding.ActivityMainBinding
+import org.adblockplus.adblockplussbrowser.base.SamsungInternetConstants.Companion.SBROWSER_APP_ID
+import org.adblockplus.adblockplussbrowser.base.SamsungInternetConstants.Companion.OLDEST_SAMSUNG_INTERNET_5_VERSIONCODE
+import org.adblockplus.adblockplussbrowser.base.SamsungInternetConstants.Companion.SBROWSER_APP_ID_BETA
 import org.adblockplus.adblockplussbrowser.base.navigation.navControllerFromFragmentContainerView
 
 @AndroidEntryPoint
@@ -109,9 +112,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    companion object {
-        const val SBROWSER_APP_ID = "com.sec.android.app.sbrowser"
-        private const val SBROWSER_APP_ID_BETA = "com.sec.android.app.sbrowser.beta"
-        private const val OLDEST_SAMSUNG_INTERNET_5_VERSIONCODE = 400000000
-    }
 }
