@@ -1,6 +1,7 @@
 package org.adblockplus.adblockplussbrowser.core.usercounter
 
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.runBlocking
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
@@ -85,6 +86,24 @@ internal class OkHttpUserCounter(
         }
     }
 
+    override fun wasUserCountedToday(): Boolean {
+        var lastVersion: Long
+        runBlocking {
+            lastVersion = repository.currentData().lastVersion
+        }
+        if (lastVersion == 0L) {
+            return false
+        }
+        val yearMonthDayFormat = SimpleDateFormat("yyyyMMdd", Locale.ENGLISH)
+        val lastVersionDayString = yearMonthDayFormat.format(
+            lastVersionFormat.parse(lastVersion.toString()))
+        yearMonthDayFormat.timeZone = serverTimeZone
+        val yearMonthDayString = yearMonthDayFormat.format(Calendar.getInstance().time)
+        Timber.d("wasUserCountedToday compares `%s` to `%s`", lastVersionDayString,
+            yearMonthDayString)
+        return lastVersionDayString.equals(yearMonthDayString)
+    }
+
     private fun createUrl(subscription: Subscription,
                           acceptableAdsEnabled: Boolean,
                           lastVersion: Long
@@ -106,19 +125,5 @@ internal class OkHttpUserCounter(
         private val serverDateParser = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z",
             Locale.ENGLISH)
         private val serverTimeZone = TimeZone.getTimeZone("GMT")
-
-        fun wasUserCountedToday(lastVersion: Long): Boolean {
-            if (lastVersion == 0L) {
-                return false
-            }
-            val yearMonthDayFormat = SimpleDateFormat("yyyyMMdd", Locale.ENGLISH)
-            val lastVersionDayString = yearMonthDayFormat.format(
-                lastVersionFormat.parse(lastVersion.toString()))
-            yearMonthDayFormat.timeZone = serverTimeZone
-            val yearMonthDayString = yearMonthDayFormat.format(Calendar.getInstance().time)
-            Timber.d("wasUserCountedToday compares `%s` to `%s`", lastVersionDayString,
-                yearMonthDayString)
-            return lastVersionDayString.equals(yearMonthDayString)
-        }
     }
 }

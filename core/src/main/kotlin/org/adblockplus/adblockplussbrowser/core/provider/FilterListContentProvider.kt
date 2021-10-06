@@ -22,9 +22,7 @@ import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
-import org.adblockplus.adblockplussbrowser.core.extensions.currentData
 import org.adblockplus.adblockplussbrowser.core.usercounter.CountUserResult
-import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
 import timber.log.Timber
 import java.io.File
@@ -75,8 +73,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         launch {
             activationPreferences.updateLastFilterRequest(System.currentTimeMillis())
             launch {
-                val lastVersion = coreRepository.currentData().lastVersion
-                if (OkHttpUserCounter.wasUserCountedToday(lastVersion)) {
+                if (userCounter.wasUserCountedToday()) {
                     Timber.i("User counting already done today")
                     return@launch
                 }
