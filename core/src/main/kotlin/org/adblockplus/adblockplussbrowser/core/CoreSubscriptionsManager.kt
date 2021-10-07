@@ -141,6 +141,9 @@ class CoreSubscriptionsManager(
 
     private fun schedule(updateConfig: UpdateConfig) {
         Timber.d("Scheduling periodic worker for: $updateConfig")
+        // This method is not really using new APIs, the linter can not figure out setBackoffCriteria(...)
+        // and setInitialDelay(...) to be 2 extension methods instead of the generic androidx ones.
+        @Suppress("NewApi")
         val request = periodicWorkRequestBuilder<UpdateSubscriptionsWorker>(UPDATE_INTERVAL, FLEX_UPDATE_INTERVAL)
             .setConstraints(Constraints.Builder().setRequiredNetworkType(updateConfig.toNetworkType()).build())
             .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, Duration.minutes(1))

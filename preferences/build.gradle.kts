@@ -16,6 +16,12 @@ android {
     }
 }
 
+configurations {
+    all {
+        exclude(module = "commons-logging")
+    }
+}
+
 dependencies {
     implementation(project(":analytics"))
     implementation(project(":base"))
