@@ -9,7 +9,7 @@ internal data class CoreData(
     val lastUpdated: Long,
     val lastState: SavedState,
     val downloadedSubscription: List<DownloadedSubscription>,
-    val lastVersion: Long
+    val lastUserCountingResponse: Long
 ) : Parcelable
 
 @Parcelize

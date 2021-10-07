@@ -18,7 +18,7 @@ internal interface CoreRepository {
 
     suspend fun updateLastUpdated(lastUpdated: Long)
 
-    suspend fun updateLastVersion(lastUpdated: Long)
+    suspend fun updateLastUserCountingResponse(lastUserCountingResponse: Long)
 
     suspend fun updateSavedState(savedState: SavedState)
 

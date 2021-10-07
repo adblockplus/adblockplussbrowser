@@ -11,7 +11,7 @@ internal fun ProtoCoreData.toCoreData(): CoreData =
         lastUpdate,
         lastState.toSavedState(),
         downloadedSubscriptionsList.map { it.toDownloadedSubscription() },
-        lastVersion
+        lastUserCountingResponse
     )
 
 internal fun ProtoDownloadedSubscription.toDownloadedSubscription(): DownloadedSubscription =

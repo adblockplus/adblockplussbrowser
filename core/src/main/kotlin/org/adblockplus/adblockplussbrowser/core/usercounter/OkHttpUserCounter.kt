@@ -38,12 +38,13 @@ internal class OkHttpUserCounter(
 
     override suspend fun count() : CountUserResult = coroutineScope {
         try {
-            val savedLastVersion = repository.currentData().lastVersion
-            Timber.d("User count lastVersion saved `%d`", savedLastVersion)
+            val savedLastUserCountingResponse = repository.currentData().lastUserCountingResponse
+            Timber.d("User count lastUserCountingResponse saved is `%d`",
+                savedLastUserCountingResponse)
             val acceptableAdsEnabled = settings.currentSettings().acceptableAdsEnabled
             val acceptableAdsSubscription = settings.getAcceptableAdsSubscription()
             val url = createUrl(acceptableAdsSubscription, acceptableAdsEnabled,
-                savedLastVersion)
+                savedLastUserCountingResponse)
             val request = Request.Builder().url(url).head().build()
             val response = retryIO(description = "User counting HEAD request") {
                 okHttpClient.newCall(request).await()
@@ -52,10 +53,11 @@ internal class OkHttpUserCounter(
             val result = when (response.code) {
                 200 -> {
                     Timber.d("User count response date: %s", response.headers["Date"])
-                    lastVersionFormat.timeZone = serverTimeZone
+                    lastUserCountingResponseFormat.timeZone = serverTimeZone
                     val newLastVersion = try {
                         // Expected date format in "Date" header: "Thu, 23 Sep 2021 17:31:01 GMT"
-                        lastVersionFormat.format(serverDateParser.parse(response.headers["Date"]))
+                        lastUserCountingResponseFormat.format(
+                            serverDateParser.parse(response.headers["Date"]))
                     } catch (ex: ParseException) {
                         Timber.e(ex)
                         analyticsProvider.logEvent(AnalyticsEvent.HEAD_RESPONSE_DATA_PARSING_FAILED)
@@ -63,11 +65,12 @@ internal class OkHttpUserCounter(
                             throw ex
                         } else {
                             Timber.e("Parsing 'Date' from header failed, using client GMT time")
-                            lastVersionFormat.format(Calendar.getInstance().time)
+                            lastUserCountingResponseFormat.format(Calendar.getInstance().time)
                         }
                     }
-                    Timber.d("User count saves new lastVersion `%s`", newLastVersion)
-                    repository.updateLastVersion(newLastVersion.toLong())
+                    Timber.d("User count saves new lastUserCountingResponse `%s`",
+                        newLastVersion)
+                    repository.updateLastUserCountingResponse(newLastVersion.toLong())
                     CountUserResult.Success()
                 }
                 else -> {
@@ -87,26 +90,27 @@ internal class OkHttpUserCounter(
     }
 
     override fun wasUserCountedToday(): Boolean {
-        var lastVersion: Long
+        var lastUserCountingResponse: Long
         runBlocking {
-            lastVersion = repository.currentData().lastVersion
+            lastUserCountingResponse = repository.currentData().lastUserCountingResponse
         }
-        if (lastVersion == 0L) {
+        if (lastUserCountingResponse == 0L) {
             return false
         }
         val yearMonthDayFormat = SimpleDateFormat("yyyyMMdd", Locale.ENGLISH)
-        val lastVersionDayString = yearMonthDayFormat.format(
-            lastVersionFormat.parse(lastVersion.toString()))
+        val lastUserCountingResponseDayString = yearMonthDayFormat.format(
+            lastUserCountingResponseFormat.parse(lastUserCountingResponse.toString()))
         yearMonthDayFormat.timeZone = serverTimeZone
         val yearMonthDayString = yearMonthDayFormat.format(Calendar.getInstance().time)
-        Timber.d("wasUserCountedToday compares `%s` to `%s`", lastVersionDayString,
+        Timber.d("wasUserCountedToday compares days `%s` to `%s`",
+            lastUserCountingResponseDayString,
             yearMonthDayString)
-        return lastVersionDayString.equals(yearMonthDayString)
+        return lastUserCountingResponseDayString.equals(yearMonthDayString)
     }
 
     private fun createUrl(subscription: Subscription,
                           acceptableAdsEnabled: Boolean,
-                          lastVersion: Long
+                          savedLastUserCountingResponse: Long
     ): HttpUrl {
         return subscription.url.sanatizeUrl().toHttpUrl().newBuilder().apply {
             addQueryParameter("addonName", appInfo.addonName)
@@ -116,12 +120,13 @@ internal class OkHttpUserCounter(
             addQueryParameter("platform", appInfo.platform)
             addQueryParameter("platformVersion", appInfo.platformVersion)
             addQueryParameter("disabled", (!acceptableAdsEnabled).toString())
-            addQueryParameter("lastVersion", lastVersion.toString())
+            addQueryParameter("lastVersion", savedLastUserCountingResponse.toString())
         }.build()
     }
 
     companion object {
-        private val lastVersionFormat = SimpleDateFormat("yyyyMMddHHmm", Locale.ENGLISH)
+        private val lastUserCountingResponseFormat = SimpleDateFormat("yyyyMMddHHmm",
+            Locale.ENGLISH)
         private val serverDateParser = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z",
             Locale.ENGLISH)
         private val serverTimeZone = TimeZone.getTimeZone("GMT")

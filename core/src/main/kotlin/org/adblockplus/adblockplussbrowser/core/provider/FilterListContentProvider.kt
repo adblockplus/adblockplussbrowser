@@ -68,32 +68,37 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         return true
     }
 
+    private suspend fun triggerUserCountingRequest(userCounter: UserCounter) {
+        if (userCounter.wasUserCountedToday()) {
+            Timber.i("User counting already done today")
+            return
+        }
+        var currentBackOffDelay = INITIAL_BACKOFF_DELAY
+        repeat(MAX_USER_COUNT_RETRIES) {
+            val result = userCounter.count()
+            if (result is CountUserResult.Success) {
+                Timber.i("User counted")
+                return
+            } else {
+                if (it < MAX_USER_COUNT_RETRIES - 1) {
+                    Timber.e("User counting failed, retrying with delay of %d ms",
+                        currentBackOffDelay)
+                    delay(currentBackOffDelay) //backoff
+                    currentBackOffDelay = (currentBackOffDelay * BACKOFF_FACTOR)
+                }
+            }
+        }
+        // If we reached here we haven't hit return@launch from repeat above, let's log that
+        Timber.i("User counting failed, reporting this event to analytics")
+        analyticsProvider.logEvent(AnalyticsEvent.HEAD_REQUEST_FAILED)
+    }
+
     override fun openFile(uri: Uri, mode: String): ParcelFileDescriptor? {
         // Set as Activated... If Samsung Internet is asking for the Filters, it is enabled
         launch {
             activationPreferences.updateLastFilterRequest(System.currentTimeMillis())
             launch {
-                if (userCounter.wasUserCountedToday()) {
-                    Timber.i("User counting already done today")
-                    return@launch
-                }
-                var currentBackOffDelay = INITIAL_BACKOFF_DELAY
-                repeat(MAX_USER_COUNT_RETRIES) {
-                    val result = userCounter.count()
-                    if (result is CountUserResult.Success) {
-                        Timber.i("User counted")
-                        return@launch
-                    } else {
-                        if (it < MAX_USER_COUNT_RETRIES - 1) {
-                            Timber.e("User counting failed, retrying with delay of %d ms",
-                                currentBackOffDelay)
-                            delay(currentBackOffDelay) //backoff
-                            currentBackOffDelay = (currentBackOffDelay * BACKOFF_FACTOR)
-                        }
-                    }
-                }
-                // If we reached here we haven't hit return@launch from repeat above, let's log that
-                analyticsProvider.logEvent(AnalyticsEvent.HEAD_REQUEST_FAILED)
+                triggerUserCountingRequest(userCounter)
             }
         }
         return try {
@@ -152,8 +157,8 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
 
     companion object {
         const val DEFAULT_SUBSCRIPTIONS_FILENAME = "default_subscriptions.txt"
-        const val INITIAL_BACKOFF_DELAY = 1000L
+        const val INITIAL_BACKOFF_DELAY = 5000L
         const val BACKOFF_FACTOR = 4
-        const val MAX_USER_COUNT_RETRIES = 4
+        const val MAX_USER_COUNT_RETRIES = 5
     }
 }
