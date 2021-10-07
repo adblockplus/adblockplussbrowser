@@ -18,4 +18,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Known issues
 - "Open Samsung Internet" button on the "Enable Adblock Plus" sometimes causes Samsung Internet to show an empty ad blockers list
-- "Enable Adblock Plus" is shown even if existing user has enabled it in previous ABP4SI version.
+- - "Enable Adblock Plus" is shown even if an existing user has enabled it in the previous ABP4SI version.
