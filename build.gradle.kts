@@ -19,12 +19,24 @@ buildscript {
 
 plugins {
     id(Deps.GRADLE_VERSIONS_PLUGIN_ID).version(Deps.GRADLE_VERSIONS_PLUGIN_VERSION)
+    id(Deps.DETEKT_PLUGIN_ID).version(Deps.DETEKT_PLUGIN_VERSION)
 }
 
 allprojects {
     repositories {
         google()
         mavenCentral()
+    }
+}
+
+detekt {
+    source = files(projectDir)
+    parallel = true
+    baseline = file("${projectDir}/detekt-baseline.xml")
+
+    reports {
+        html.enabled = true
+        xml.enabled = true
     }
 }
 
