@@ -6,8 +6,12 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
-    id("com.google.gms.google-services")
+    id("com.google.gms.google-services") apply false
     id("com.google.firebase.crashlytics")
+}
+
+if (!hasProperty("DISABLE_GOOGLE_SERVICES")) {
+    project.apply<com.google.gms.googleservices.GoogleServicesPlugin>()
 }
 
 applyCommonConfig()
@@ -90,4 +94,14 @@ dependencies {
     implementation(Deps.OkHttp.OKHTTP)
     implementation(Deps.OkHttp.LOGGER)
     implementation(Deps.Gms.OSS_LICENSES)
+}
+
+// Install commit pre-hook
+tasks.register<Copy>("installPreCommitHook") {
+    from(rootProject.file("scripts/pre-commit"))
+    into(rootProject.file(".git/hooks"))
+}
+
+tasks.named("preBuild") {
+    dependsOn("installPreCommitHook")
 }

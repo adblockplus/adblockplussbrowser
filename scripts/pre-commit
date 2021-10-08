@@ -1,0 +1,13 @@
+#!/bin/bash
+
+git stash -q --keep-index
+
+# As we do not have a configuration for Crystal we need to disable the Google
+# Services plugin while running the check task
+./gradlew -PDISABLE_GOOGLE_SERVICES check
+
+RESULT=$?
+
+git stash pop -q
+
+exit $RESULT
