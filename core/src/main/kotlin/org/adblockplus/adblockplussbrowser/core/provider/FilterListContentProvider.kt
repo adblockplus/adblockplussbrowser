@@ -69,10 +69,6 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
     }
 
     private suspend fun triggerUserCountingRequest(userCounter: UserCounter) {
-        if (userCounter.wasUserCountedToday()) {
-            Timber.i("User counting already done today")
-            return
-        }
         var currentBackOffDelay = INITIAL_BACKOFF_DELAY
         repeat(MAX_USER_COUNT_RETRIES) {
             val result = userCounter.count()

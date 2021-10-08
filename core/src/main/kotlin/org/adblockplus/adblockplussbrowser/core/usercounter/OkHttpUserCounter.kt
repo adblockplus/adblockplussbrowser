@@ -1,7 +1,6 @@
 package org.adblockplus.adblockplussbrowser.core.usercounter
 
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.runBlocking
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
@@ -87,25 +86,6 @@ internal class OkHttpUserCounter(
             }
             CountUserResult.Failed()
         }
-    }
-
-    override fun wasUserCountedToday(): Boolean {
-        var lastUserCountingResponse: Long
-        runBlocking {
-            lastUserCountingResponse = repository.currentData().lastUserCountingResponse
-        }
-        if (lastUserCountingResponse == 0L) {
-            return false
-        }
-        val yearMonthDayFormat = SimpleDateFormat("yyyyMMdd", Locale.ENGLISH)
-        val lastUserCountingResponseDayString = yearMonthDayFormat.format(
-            lastUserCountingResponseFormat.parse(lastUserCountingResponse.toString()))
-        yearMonthDayFormat.timeZone = serverTimeZone
-        val yearMonthDayString = yearMonthDayFormat.format(Calendar.getInstance().time)
-        Timber.d("wasUserCountedToday compares days `%s` to `%s`",
-            lastUserCountingResponseDayString,
-            yearMonthDayString)
-        return lastUserCountingResponseDayString.equals(yearMonthDayString)
     }
 
     private fun createUrl(subscription: Subscription,
