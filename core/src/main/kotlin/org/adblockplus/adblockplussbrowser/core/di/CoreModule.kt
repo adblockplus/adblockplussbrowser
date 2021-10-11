@@ -12,6 +12,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.core.AppInfo
 import org.adblockplus.adblockplussbrowser.core.buildAppInfo
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
@@ -20,6 +21,9 @@ import org.adblockplus.adblockplussbrowser.core.data.datastore.ProtoCoreDataSeri
 import org.adblockplus.adblockplussbrowser.core.data.proto.ProtoCoreData
 import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
 import org.adblockplus.adblockplussbrowser.core.downloader.OkHttpDownloader
+import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
+import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
+import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import javax.inject.Qualifier
 import javax.inject.Singleton
 import kotlin.time.ExperimentalTime
@@ -57,6 +61,18 @@ internal object CoreModule {
         repository: CoreRepository
     ): Downloader =
         OkHttpDownloader(context, okHttpClient, repository, appInfo)
+
+    @ExperimentalTime
+    @Provides
+    @Singleton
+    fun provideUserCounter(
+        okHttpClient: OkHttpClient,
+        appInfo: AppInfo,
+        repository: CoreRepository,
+        settings: SettingsRepository,
+        analyticsProvider: AnalyticsProvider
+    ): UserCounter =
+        OkHttpUserCounter(okHttpClient, repository, settings, appInfo, analyticsProvider)
 
     @Provides
     @CorePreferences

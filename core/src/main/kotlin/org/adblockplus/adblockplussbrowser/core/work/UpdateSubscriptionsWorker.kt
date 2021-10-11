@@ -8,9 +8,13 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.withContext
 import okio.buffer
 import okio.sink
 import okio.source
@@ -30,6 +34,7 @@ import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
 import timber.log.Timber
 import java.io.File
 
+
 @HiltWorker
 internal class UpdateSubscriptionsWorker @AssistedInject constructor(
     @Assisted private val appContext: Context,
@@ -37,7 +42,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
     private val subscriptionsManager: SubscriptionsManager,
     private val settingsRepository: SettingsRepository,
     private val coreRepository: CoreRepository,
-    private val downloader: Downloader,
+    private val downloader: Downloader
 ) : CoroutineWorker(appContext, params) {
 
     private var totalSteps: Int = 0
@@ -314,11 +319,10 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
     private suspend fun CoreRepository.currentSavedState() =
         this.data.take(1).single().lastState
 
-    private fun Set<String>.isPeriodic(): Boolean = this.contains(KEY_PERIODIC_WORK)
-    private fun Set<String>.isForceRefresh(): Boolean = this.contains(KEY_FORCE_REFRESH)
+    private fun Set<String>.isPeriodic(): Boolean = this.contains(UPDATE_KEY_PERIODIC_WORK)
+    private fun Set<String>.isForceRefresh(): Boolean = this.contains(UPDATE_KEY_FORCE_REFRESH)
 
-    private fun CoroutineWorker.hasReachedMaxAttempts(): Boolean =
-        runAttemptCount > 4
+    private fun CoroutineWorker.hasReachedMaxAttempts() = runAttemptCount > RUN_ATTEMPT_MAX_COUNT
 
     private enum class ProgressType {
         PROGRESS, SUCCESS, FAILED
@@ -326,9 +330,10 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
 
     companion object {
         private const val DELAY_DEFAULT = 500L
+        private const val RUN_ATTEMPT_MAX_COUNT = 4
 
-        internal const val KEY_PERIODIC_WORK = "PERIODIC_KEY"
-        internal const val KEY_ONESHOT_WORK = "ONESHOT_WORK"
-        internal const val KEY_FORCE_REFRESH = "FORCE_REFRESH"
+        internal const val UPDATE_KEY_PERIODIC_WORK = "UPDATE_PERIODIC_KEY"
+        internal const val UPDATE_KEY_ONESHOT_WORK = "UPDATE_ONESHOT_WORK"
+        internal const val UPDATE_KEY_FORCE_REFRESH = "UPDATE_FORCE_REFRESH"
     }
 }

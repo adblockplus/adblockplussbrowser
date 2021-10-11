@@ -11,9 +11,10 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.SupervisorJob
 import okio.buffer
 import okio.sink
 import okio.source
@@ -21,10 +22,14 @@ import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
+import org.adblockplus.adblockplussbrowser.core.usercounter.CountUserResult
+import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
 import timber.log.Timber
 import java.io.File
+import kotlin.time.ExperimentalTime
 
 
+@ExperimentalTime
 internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
 
     lateinit var analyticsProvider: AnalyticsProvider
@@ -35,12 +40,14 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         fun getCoreRepository(): CoreRepository
         fun getActivationPreferences(): ActivationPreferences
         fun getAnalyticsProvider(): AnalyticsProvider
+        fun getUserCounter(): UserCounter
     }
 
     override val coroutineContext = Dispatchers.IO + SupervisorJob()
 
     lateinit var coreRepository: CoreRepository
     lateinit var activationPreferences: ActivationPreferences
+    lateinit var userCounter: UserCounter
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int = 0
 
@@ -56,14 +63,37 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         coreRepository = entryPoint.getCoreRepository()
         activationPreferences = entryPoint.getActivationPreferences()
         analyticsProvider = entryPoint.getAnalyticsProvider()
+        userCounter = entryPoint.getUserCounter()
 
         return true
+    }
+
+    private suspend fun triggerUserCountingRequest(userCounter: UserCounter) {
+        var currentBackOffDelay = INITIAL_BACKOFF_DELAY
+        repeat(MAX_USER_COUNT_RETRIES) {
+            val result = userCounter.count()
+            if (result is CountUserResult.Success) {
+                Timber.i("User counted")
+                return
+            } else {
+                if (it < MAX_USER_COUNT_RETRIES - 1) {
+                    Timber.e("User counting failed, retrying with delay of %d ms",
+                        currentBackOffDelay)
+                    delay(currentBackOffDelay) //backoff
+                    currentBackOffDelay = (currentBackOffDelay * BACKOFF_FACTOR)
+                }
+            }
+        }
+        // If we reached here we haven't hit return@launch from repeat above, let's log that
+        Timber.i("User counting failed, reporting this event to analytics")
+        analyticsProvider.logEvent(AnalyticsEvent.HEAD_REQUEST_FAILED)
     }
 
     override fun openFile(uri: Uri, mode: String): ParcelFileDescriptor? {
         // Set as Activated... If Samsung Internet is asking for the Filters, it is enabled
         launch {
             activationPreferences.updateLastFilterRequest(System.currentTimeMillis())
+            triggerUserCountingRequest(userCounter)
         }
         return try {
             Timber.i("Filter list requested: $uri - $mode...")
@@ -121,5 +151,8 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
 
     companion object {
         const val DEFAULT_SUBSCRIPTIONS_FILENAME = "default_subscriptions.txt"
+        const val INITIAL_BACKOFF_DELAY = 5000L
+        const val BACKOFF_FACTOR = 4
+        const val MAX_USER_COUNT_RETRIES = 5
     }
 }

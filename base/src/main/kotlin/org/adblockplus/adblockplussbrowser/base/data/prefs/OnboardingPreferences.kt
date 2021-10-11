@@ -1,4 +1,4 @@
-package org.adblockplus.adblockplussbrowser.onboarding.data.prefs
+package org.adblockplus.adblockplussbrowser.base.data.prefs
 
 import kotlinx.coroutines.flow.Flow
 

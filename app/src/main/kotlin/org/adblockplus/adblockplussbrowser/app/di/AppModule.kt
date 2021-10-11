@@ -13,12 +13,12 @@ import dagger.hilt.components.SingletonComponent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsManager
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.analytics.FirebaseAnalyticsProvider
-import org.adblockplus.adblockplussbrowser.app.data.prefs.AppPreferences
-import org.adblockplus.adblockplussbrowser.app.data.prefs.DataStoreAppPreferences
+import org.adblockplus.adblockplussbrowser.base.data.prefs.AppPreferences
+import org.adblockplus.adblockplussbrowser.base.data.prefs.DataStoreAppPreferences
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.core.CoreSubscriptionsManager
-import org.adblockplus.adblockplussbrowser.onboarding.data.prefs.OnboardingPreferences
+import org.adblockplus.adblockplussbrowser.base.data.prefs.OnboardingPreferences
 import javax.inject.Singleton
 import kotlin.time.ExperimentalTime
 
