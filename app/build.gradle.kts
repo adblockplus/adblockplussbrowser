@@ -80,7 +80,7 @@ android {
 
     signingConfigs {
         named("debug") {
-            storeFile(rootProject.file("debug.keystore"))
+            storeFile = rootProject.file("debug.keystore")
         }
     }
 }
