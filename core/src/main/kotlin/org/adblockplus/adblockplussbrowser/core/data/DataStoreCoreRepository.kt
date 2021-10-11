@@ -58,6 +58,12 @@ internal class DataStoreCoreRepository(
         }
     }
 
+    override suspend fun updateLastUserCountingResponse(lastUserCountingResponse: Long) {
+        dataStore.updateData { data ->
+            data.toBuilder().setLastUserCountingResponse(lastUserCountingResponse).build()
+        }
+    }
+
     override suspend fun updateSavedState(savedState: SavedState) {
         dataStore.updateData { data ->
             data.toBuilder().setLastState(savedState.toProtoSavedState()).build()

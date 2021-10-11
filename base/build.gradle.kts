@@ -21,4 +21,6 @@ dependencies {
     implementation(Deps.AndroidX.APPCOMPAT)
     implementation(Deps.AndroidX.FRAGMENT)
     implementation(Deps.AndroidX.Navigation.FRAGMENT)
+    implementation(Deps.AndroidX.DataStore.DATASTORE)
+    implementation(Deps.AndroidX.DataStore.PREFERENCES)
 }

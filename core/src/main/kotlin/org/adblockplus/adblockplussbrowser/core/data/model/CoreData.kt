@@ -8,7 +8,8 @@ internal data class CoreData(
     val configured: Boolean,
     val lastUpdated: Long,
     val lastState: SavedState,
-    val downloadedSubscription: List<DownloadedSubscription>
+    val downloadedSubscription: List<DownloadedSubscription>,
+    val lastUserCountingResponse: Long
 ) : Parcelable
 
 @Parcelize

@@ -127,6 +127,15 @@ enum class AnalyticsEvent(val eventName: String) {
     /**
      * A filter list has been requested.
      */
-    FILTER_LIST_REQUESTED("filter_list_requested")
+    FILTER_LIST_REQUESTED("filter_list_requested"),
 
+    /**
+     * Parsing Head response data failed.
+     */
+    HEAD_RESPONSE_DATA_PARSING_FAILED("parsing_head_response_data_failed"),
+
+    /**
+     * Sending Head request failed.
+     */
+    HEAD_REQUEST_FAILED("sending_head_request_failed")
 }
