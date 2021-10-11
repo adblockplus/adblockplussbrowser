@@ -1,4 +1,7 @@
 object Deps {
+    const val DETEKT_PLUGIN_ID = "io.gitlab.arturbosch.detekt"
+    const val DETEKT_PLUGIN_VERSION = "1.18.1"
+
     val GRADLE_PLUGIN = "com.android.tools.build:gradle" version "4.2.1"
 
     const val GRADLE_VERSIONS_PLUGIN_ID = "com.github.ben-manes.versions"

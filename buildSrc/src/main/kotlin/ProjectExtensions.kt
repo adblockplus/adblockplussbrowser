@@ -47,6 +47,7 @@ fun Project.applyCommonConfig() {
  * calculating the versionCode was in place) and the ABP4SI_DAY_VERSION value. This is the new
  * versionCode.
  */
+@Suppress("MagicNumber")
 fun versionCode(): Int {
     // Let's fix how may versions we can publish per day: by using 3 bits, we can do 8 releases per day
     val dayVersion = System.getenv("ABP4SI_DAY_VERSION").let {
@@ -56,9 +57,17 @@ fun versionCode(): Int {
             0
         }
     }
-    val offset = 20 // Next version when automatic calculation started
-    val startDate = 1_633_384_800_000L // 2021-10-05 as milliseconds since Unix Epoch
-    val oneDayInMillis = 86_400_000L
-    val days = ((System.currentTimeMillis() - startDate) / oneDayInMillis).toInt() // Days since 2021-10-05
-    return offset + (days shl 3) + dayVersion
+    // Days since 2021-10-05
+    val days = ((System.currentTimeMillis() - Constants.DAY_0) / Constants.ONE_DAY_IN_MS).toInt()
+    return Constants.VERSION_OFFSET + (days shl 3) + dayVersion
+}
+
+internal object Constants {
+    // Next version when automatic calculation started
+    const val VERSION_OFFSET = 20
+
+    // 2021-10-05 as milliseconds since Unix Epoch, the day from which we started counting versions
+    const val DAY_0 = 1_633_384_800_000L
+
+    const val ONE_DAY_IN_MS = 86_400_000L
 }
