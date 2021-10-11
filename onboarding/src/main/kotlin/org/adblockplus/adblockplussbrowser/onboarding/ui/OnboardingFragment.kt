@@ -10,10 +10,10 @@ import androidx.work.WorkManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import dagger.hilt.android.AndroidEntryPoint
-import org.adblockplus.adblockplussbrowser.base.constants.samsung.SamsungInternetConstants.Companion.SBROWSER_ACTION_OPEN_SETTINGS
-import org.adblockplus.adblockplussbrowser.base.constants.samsung.SamsungInternetConstants.Companion.SBROWSER_APP_ID
-import org.adblockplus.adblockplussbrowser.base.constants.samsung.SamsungInternetConstants.Companion.SBROWSER_APP_ID_BETA
-import org.adblockplus.adblockplussbrowser.base.constants.samsung.SamsungInternetConstants.Companion.SBROWSER_START_SETTINGS_DELAY
+import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.Companion.SBROWSER_ACTION_OPEN_SETTINGS
+import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.Companion.SBROWSER_APP_ID
+import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.Companion.SBROWSER_APP_ID_BETA
+import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.Companion.SBROWSER_START_SETTINGS_DELAY
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.onboarding.R
 import org.adblockplus.adblockplussbrowser.onboarding.databinding.FragmentOnboardingBinding

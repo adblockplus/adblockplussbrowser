@@ -1,4 +1,4 @@
-package org.adblockplus.adblockplussbrowser.base.constants.samsung
+package org.adblockplus.adblockplussbrowser.base.samsung.constants
 
 class SamsungInternetConstants {
     companion object {

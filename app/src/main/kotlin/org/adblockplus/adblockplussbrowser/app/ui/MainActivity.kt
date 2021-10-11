@@ -17,9 +17,9 @@ import com.afollestad.materialdialogs.customview.getCustomView
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.app.R
 import org.adblockplus.adblockplussbrowser.app.databinding.ActivityMainBinding
-import org.adblockplus.adblockplussbrowser.base.constants.samsung.SamsungInternetConstants.Companion.SBROWSER_APP_ID
-import org.adblockplus.adblockplussbrowser.base.constants.samsung.SamsungInternetConstants.Companion.SBROWSER_OLDEST_SAMSUNG_INTERNET_4_VERSIONCODE
-import org.adblockplus.adblockplussbrowser.base.constants.samsung.SamsungInternetConstants.Companion.SBROWSER_APP_ID_BETA
+import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.Companion.SBROWSER_APP_ID
+import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.Companion.SBROWSER_OLDEST_SAMSUNG_INTERNET_4_VERSIONCODE
+import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.Companion.SBROWSER_APP_ID_BETA
 import org.adblockplus.adblockplussbrowser.base.navigation.navControllerFromFragmentContainerView
 
 @AndroidEntryPoint
