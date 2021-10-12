@@ -17,10 +17,10 @@ import com.afollestad.materialdialogs.customview.getCustomView
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.app.R
 import org.adblockplus.adblockplussbrowser.app.databinding.ActivityMainBinding
-import org.adblockplus.adblockplussbrowser.base.SamsungInternetConstants.Companion.SBROWSER_APP_ID
-import org.adblockplus.adblockplussbrowser.base.SamsungInternetConstants.Companion.OLDEST_SAMSUNG_INTERNET_5_VERSIONCODE
-import org.adblockplus.adblockplussbrowser.base.SamsungInternetConstants.Companion.SBROWSER_APP_ID_BETA
 import org.adblockplus.adblockplussbrowser.base.navigation.navControllerFromFragmentContainerView
+import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.SBROWSER_APP_ID
+import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.SBROWSER_APP_ID_BETA
+import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.SBROWSER_OLDEST_SAMSUNG_INTERNET_4_VERSIONCODE
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
     private fun hasSamsungInternetVersion5OrNewer(): Boolean {
         return try {
             val packageInfo = packageManager.getPackageInfo(SBROWSER_APP_ID, 0)
-            PackageInfoCompat.getLongVersionCode(packageInfo) >= OLDEST_SAMSUNG_INTERNET_5_VERSIONCODE
+            PackageInfoCompat.getLongVersionCode(packageInfo) >= SBROWSER_OLDEST_SAMSUNG_INTERNET_4_VERSIONCODE
         } catch (e: PackageManager.NameNotFoundException) {
             false
         }
