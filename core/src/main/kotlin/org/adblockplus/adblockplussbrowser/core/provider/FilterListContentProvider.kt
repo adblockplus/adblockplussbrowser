@@ -24,7 +24,6 @@ import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.usercounter.CountUserResult
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
-import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import timber.log.Timber
 import java.io.File
 import kotlin.time.ExperimentalTime
@@ -49,7 +48,6 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
     lateinit var coreRepository: CoreRepository
     lateinit var activationPreferences: ActivationPreferences
     lateinit var userCounter: UserCounter
-    lateinit var settingsRepository: SettingsRepository
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int = 0
 
@@ -79,10 +77,8 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
                 return
             } else {
                 if (it < MAX_USER_COUNT_RETRIES - 1) {
-                    Timber.e(
-                        "User counting failed, retrying with delay of %d ms",
-                        currentBackOffDelay
-                    )
+                    Timber.e("User counting failed, retrying with delay of %d ms",
+                        currentBackOffDelay)
                     delay(currentBackOffDelay) //backoff
                     currentBackOffDelay = (currentBackOffDelay * BACKOFF_FACTOR)
                 }
