@@ -37,8 +37,19 @@ build:
     paths:
       - "app/build/outputs/apk/worldAbp/debug/app-world-abp-debug.apk"
       - "app/build/outputs/apk/worldAbp/release/app-world-abp-release-unsigned.apk"
-  rules:
-    - when: always
+
+nightly:
+  variables:
+    DELAY: '5'
+  extends: .template_build
+  script:
+    - echo "Nigtly run -- testing delay with variable"
+  #artifacts:
+  #  paths:
+  #    - "app/build/outputs/apk/worldAbp/debug/app-world-abp-debug.apk"
+  #    - "app/build/outputs/apk/worldAbp/release/app-world-abp-release-unsigned.apk"
+  when: delayed
+  start_in: $DELAY
 
 sign_apks:
   stage: "sign_builds"
