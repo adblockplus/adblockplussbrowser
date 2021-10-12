@@ -13,4 +13,5 @@ dependencies {
     kapt(Deps.Hilt.ANDROID_COMPILER)
     implementation(platform(Deps.Firebase.BOM))
     implementation(Deps.Firebase.ANALYTICS)
+    implementation(Deps.TIMBER)
 }

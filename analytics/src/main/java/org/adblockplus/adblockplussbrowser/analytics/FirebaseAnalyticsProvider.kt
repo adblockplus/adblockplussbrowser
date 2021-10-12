@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import timber.log.Timber
 
 class FirebaseAnalyticsProvider(appContext: Context) : AnalyticsProvider {
 
@@ -11,7 +12,9 @@ class FirebaseAnalyticsProvider(appContext: Context) : AnalyticsProvider {
 
     override fun logEvent(analyticsEvent: AnalyticsEvent) {
         val bundle = Bundle()
-        firebaseAnalytics.logEvent(analyticsEvent.eventName, bundle)
+        val logEvent = analyticsEvent.eventName
+        Timber.i(logEvent)
+        firebaseAnalytics.logEvent(logEvent, bundle)
     }
 
     override fun enable() {
