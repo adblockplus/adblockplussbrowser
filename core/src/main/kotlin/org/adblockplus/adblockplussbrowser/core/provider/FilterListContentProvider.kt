@@ -11,19 +11,22 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import okio.buffer
 import okio.sink
 import okio.source
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
+import org.adblockplus.adblockplussbrowser.core.extensions.currentSettings
 import org.adblockplus.adblockplussbrowser.core.usercounter.CountUserResult
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
+import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import timber.log.Timber
 import java.io.File
 import kotlin.time.ExperimentalTime
@@ -41,6 +44,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         fun getActivationPreferences(): ActivationPreferences
         fun getAnalyticsProvider(): AnalyticsProvider
         fun getUserCounter(): UserCounter
+        fun getSettingsRepository(): SettingsRepository
     }
 
     override val coroutineContext = Dispatchers.IO + SupervisorJob()
@@ -48,6 +52,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
     lateinit var coreRepository: CoreRepository
     lateinit var activationPreferences: ActivationPreferences
     lateinit var userCounter: UserCounter
+    lateinit var settingsRepository: SettingsRepository
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int = 0
 
@@ -64,6 +69,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         activationPreferences = entryPoint.getActivationPreferences()
         analyticsProvider = entryPoint.getAnalyticsProvider()
         userCounter = entryPoint.getUserCounter()
+        settingsRepository = entryPoint.getSettingsRepository()
 
         return true
     }
@@ -77,8 +83,10 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
                 return
             } else {
                 if (it < MAX_USER_COUNT_RETRIES - 1) {
-                    Timber.e("User counting failed, retrying with delay of %d ms",
-                        currentBackOffDelay)
+                    Timber.e(
+                        "User counting failed, retrying with delay of %d ms",
+                        currentBackOffDelay
+                    )
                     delay(currentBackOffDelay) //backoff
                     currentBackOffDelay = (currentBackOffDelay * BACKOFF_FACTOR)
                 }
@@ -94,6 +102,8 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         launch {
             activationPreferences.updateLastFilterRequest(System.currentTimeMillis())
             triggerUserCountingRequest(userCounter)
+            val acceptableAdsStatus = settingsRepository.currentSettings().acceptableAdsEnabled
+            analyticsProvider.setUserProperty(AnalyticsUserProperty.AA_STATUS, acceptableAdsStatus.toString())
         }
         return try {
             Timber.i("Filter list requested: $uri - $mode...")
