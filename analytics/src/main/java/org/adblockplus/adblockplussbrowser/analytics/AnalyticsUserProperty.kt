@@ -2,8 +2,7 @@ package org.adblockplus.adblockplussbrowser.analytics
 
 enum class AnalyticsUserProperty(val propertyName: String) {
     /**
-     * This user property is used to create an audience based on AA status. On every filter list request
-     * current status of AA is reported.
+     * User property used for an audience based on AA status.
      */
-    AA_STATUS("aa_status")
+    IS_AA_ENABLED("is_aa_enabled")
 }

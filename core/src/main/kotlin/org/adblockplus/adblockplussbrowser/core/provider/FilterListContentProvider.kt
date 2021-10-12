@@ -20,10 +20,8 @@ import okio.sink
 import okio.source
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
-import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
-import org.adblockplus.adblockplussbrowser.core.extensions.currentSettings
 import org.adblockplus.adblockplussbrowser.core.usercounter.CountUserResult
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
@@ -44,7 +42,6 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         fun getActivationPreferences(): ActivationPreferences
         fun getAnalyticsProvider(): AnalyticsProvider
         fun getUserCounter(): UserCounter
-        fun getSettingsRepository(): SettingsRepository
     }
 
     override val coroutineContext = Dispatchers.IO + SupervisorJob()
@@ -69,7 +66,6 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         activationPreferences = entryPoint.getActivationPreferences()
         analyticsProvider = entryPoint.getAnalyticsProvider()
         userCounter = entryPoint.getUserCounter()
-        settingsRepository = entryPoint.getSettingsRepository()
 
         return true
     }
@@ -102,8 +98,6 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         launch {
             activationPreferences.updateLastFilterRequest(System.currentTimeMillis())
             triggerUserCountingRequest(userCounter)
-            val acceptableAdsStatus = settingsRepository.currentSettings().acceptableAdsEnabled
-            analyticsProvider.setUserProperty(AnalyticsUserProperty.AA_STATUS, acceptableAdsStatus.toString())
         }
         return try {
             Timber.i("Filter list requested: $uri - $mode...")
