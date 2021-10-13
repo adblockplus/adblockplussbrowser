@@ -18,6 +18,7 @@ import org.adblockplus.adblockplussbrowser.core.retryIO
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import ru.gildor.coroutines.okhttp.await
 import timber.log.Timber
+import java.net.HttpURLConnection.HTTP_OK
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -121,6 +122,5 @@ internal class OkHttpUserCounter(
             Locale.ENGLISH)
         private val serverTimeZone = TimeZone.getTimeZone("GMT")
         private const val MAX_USER_COUNTING_COUNT = 4
-        private const val HTTP_OK = 200
     }
 }
