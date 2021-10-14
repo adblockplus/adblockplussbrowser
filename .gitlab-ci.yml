@@ -45,7 +45,7 @@ variables:
     paths:
       - $HOME/.android
 
-build:
+build:debug:
   extends: .template_build
   stage: build
   script:
@@ -184,6 +184,8 @@ sign_apks:
 
 regression_autojob:
   extends: .template_automation
+  needs:
+    - build:debug # we can run this on debug apk
   variables:
     PLATFORM_VERSIONS: "10"
     GRADLE_TASK: "regression"
