@@ -66,7 +66,10 @@ nightly:
   extends: .template_build
   stage: build:internal
   only:
-    - dev
+    variables:
+      - FORCE_NIGHTLY
+    refs:
+      - dev
   script:
     # we build both debug & release because we'd like to catch build errors for production
     # and have a release signed apk for publishing it to internal track later (WIP)
@@ -89,7 +92,10 @@ nightly:
 sign_apks:
   stage: sign_builds
   only:
-    - dev
+    variables:
+      - FORCE_NIGHTLY
+    refs:
+      - dev
   variables:
     GIT_STRATEGY: none
   tags:
@@ -185,5 +191,8 @@ regression_autojob:
     PLATFORM_VERSIONS: "10"
     GRADLE_TASK: "regression"
   only:
-    - merge_requests
-    - dev
+    refs:
+      - merge_requests
+      - dev
+    variables:
+      - FORCE_NIGHTLY
