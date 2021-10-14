@@ -67,7 +67,7 @@ nightly:
   stage: build:internal
   only:
     variables:
-      - FORCE_NIGHTLY
+      - $FORCE_NIGHTLY == "true"
     refs:
       - dev
   script:
@@ -93,7 +93,7 @@ sign_apks:
   stage: sign_builds
   only:
     variables:
-      - FORCE_NIGHTLY
+      - $FORCE_NIGHTLY == "true"
     refs:
       - dev
   variables:
@@ -195,4 +195,4 @@ regression_autojob:
       - merge_requests
       - dev
     variables:
-      - FORCE_NIGHTLY
+      - $FORCE_NIGHTLY == "true"
