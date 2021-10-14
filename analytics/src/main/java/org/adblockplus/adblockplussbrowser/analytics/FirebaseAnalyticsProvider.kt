@@ -17,6 +17,10 @@ class FirebaseAnalyticsProvider(appContext: Context) : AnalyticsProvider {
         firebaseAnalytics.logEvent(logEvent, bundle)
     }
 
+    override fun logException(throwable: Throwable) {
+        FirebaseCrashlytics.getInstance().recordException(throwable)
+    }
+
     override fun enable() {
         FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
         firebaseAnalytics.setAnalyticsCollectionEnabled(true)
