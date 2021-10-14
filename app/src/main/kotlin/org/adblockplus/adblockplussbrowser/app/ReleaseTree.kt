@@ -12,9 +12,14 @@ class ReleaseTree : Timber.Tree() {
     @Inject
     lateinit var analyticsProvider: AnalyticsProvider
 
-    override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+    override fun log(priority: Int, tag: String?, message: String, throwable: Throwable?) {
         if (priority == ERROR || priority == WARN) {
-            analyticsProvider.logException(t ?: return)
+            throwable?.let {
+                analyticsProvider.logException(throwable)
+            }
+            message?.let {
+                analyticsProvider.logWarning(message)
+            }
         }
     }
 }
