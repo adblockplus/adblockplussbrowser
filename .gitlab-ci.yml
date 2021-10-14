@@ -9,8 +9,7 @@
 # (/^release-\d+\.\d+\.\d+(-rc[0-9])?$/) regex can be used for filtering
 
 stages:
-  - build:debug
-  - build:internal
+  - build
   - sign_builds
   - device_tests
 
@@ -48,7 +47,7 @@ variables:
 
 build:
   extends: .template_build
-  stage: build:debug
+  stage: build
   script:
     - ./gradlew --build-cache assembleWorldAbpDebug
   artifacts:
@@ -64,7 +63,7 @@ build:
 # the branch has changed. Therefore we just delay a run for 8 hours (a working day)
 nightly:
   extends: .template_build
-  stage: build:internal
+  stage: build
   only:
     refs:
       - dev
@@ -91,8 +90,6 @@ nightly:
 sign_apks:
   stage: sign_builds
   only:
-    variables:
-      - $FORCE_NIGHTLY == "true"
     refs:
       - dev
       - web
