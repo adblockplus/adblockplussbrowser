@@ -7,7 +7,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 
-class ReleaseTree : @org.jetbrains.annotations.NotNull Timber.Tree() {
+class ReleaseTree : Timber.Tree() {
 
     @Inject
     lateinit var analyticsProvider: AnalyticsProvider
