@@ -66,10 +66,9 @@ nightly:
   extends: .template_build
   stage: build:internal
   only:
-    variables:
-      - $FORCE_NIGHTLY == "true"
     refs:
       - dev
+      - web
   script:
     # we build both debug & release because we'd like to catch build errors for production
     # and have a release signed apk for publishing it to internal track later (WIP)
@@ -96,6 +95,7 @@ sign_apks:
       - $FORCE_NIGHTLY == "true"
     refs:
       - dev
+      - web
   variables:
     GIT_STRATEGY: none
   tags:
@@ -194,5 +194,4 @@ regression_autojob:
     refs:
       - merge_requests
       - dev
-    variables:
-      - $FORCE_NIGHTLY == "true"
+      - web
