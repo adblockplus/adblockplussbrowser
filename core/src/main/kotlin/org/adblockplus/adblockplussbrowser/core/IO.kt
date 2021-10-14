@@ -2,7 +2,6 @@ package org.adblockplus.adblockplussbrowser.core
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
@@ -26,8 +25,7 @@ suspend fun <T> retryIO(
             if (currentTry > 0) Timber.d("Retrying $description")
             return@withContext block()
         } catch (e: Exception) {
-            Timber.d(e, "failed call(${currentTry + 1}): $description")
-            e.printStackTrace()
+            Timber.e(e, "failed call(${currentTry + 1}): $description")
         }
 
         if (!coroutineContext.isActive) throw Exception("Job canceled when trying to execute retryIO")

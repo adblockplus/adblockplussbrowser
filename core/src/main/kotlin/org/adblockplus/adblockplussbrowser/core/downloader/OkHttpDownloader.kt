@@ -139,7 +139,7 @@ internal class OkHttpDownloader(
             }
             response.code == 200
         } catch (ex: Exception) {
-            Timber.d(ex, "Error downloading ${subscription.url}")
+            Timber.e(ex, "Error downloading ${subscription.url}")
             false
         }
     }
