@@ -258,5 +258,11 @@ internal class DataStoreSettingsRepository(
     override suspend fun getSocialMediaTrackingSubscription(): Subscription =
         subscriptionsDataSource.getSocialMediaTrackingSubscription()
 
+    override suspend fun markLanguagesOnboardingCompleted() {
+        dataStore.updateData { settings ->
+            settings.toBuilder().setLanguagesOnboardingCompleted(true).build()
+        }
+    }
+
 }
 

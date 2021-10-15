@@ -61,4 +61,6 @@ interface SettingsRepository {
 
     suspend fun getSocialMediaTrackingSubscription(): Subscription
 
+    suspend fun markLanguagesOnboardingCompleted()
+
 }

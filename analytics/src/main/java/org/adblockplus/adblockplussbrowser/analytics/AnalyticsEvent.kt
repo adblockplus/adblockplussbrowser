@@ -137,5 +137,15 @@ enum class AnalyticsEvent(val eventName: String) {
     /**
      * Sending Head request failed.
      */
-    HEAD_REQUEST_FAILED("sending_head_request_failed")
+    HEAD_REQUEST_FAILED("sending_head_request_failed"),
+
+    /**
+     * Languages card is dismissed with going to Add Languages
+     */
+    LANGUAGES_CARD_ADD("languages_card_add_additional_language"),
+
+    /**
+     * Languages card is dismissed without going to Add Languages
+     */
+    LANGUAGES_CARD_NO("languages_card_no_thanks")
 }

@@ -13,7 +13,8 @@ internal fun ProtoSettings.toSettings(): Settings =
         this.blockedDomainsList,
         this.activePrimarySubscriptionsList.map { it.toSubscription() },
         this.activeOtherSubscriptionsList.map { it.toSubscription() },
-        this.analyticsEnabled
+        this.analyticsEnabled,
+        this.languagesOnboardingCompleted
     )
 
 internal fun ProtoSubscription.toSubscription(): Subscription =
