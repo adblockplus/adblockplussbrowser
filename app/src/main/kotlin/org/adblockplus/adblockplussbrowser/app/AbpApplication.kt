@@ -32,5 +32,8 @@ class AbpApplication : Application(), Configuration.Provider {
         } else {
             Timber.plant(ReleaseTree())
         }
+        Timber.e(Throwable("example e throw"), "example e message")
+        Timber.w(Throwable("example w throw"), "example w message")
+        Timber.w("example w message without throwable")
     }
 }
