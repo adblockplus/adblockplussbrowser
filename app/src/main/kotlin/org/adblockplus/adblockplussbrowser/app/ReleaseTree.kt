@@ -15,10 +15,10 @@ class ReleaseTree : Timber.Tree() {
     override fun log(priority: Int, tag: String?, message: String, throwable: Throwable?) {
         if (priority == ERROR || priority == WARN) {
             throwable?.let {
-                analyticsProvider.logException(throwable)
+                analyticsProvider.logException(it)
             }
             message?.let {
-                analyticsProvider.logWarning(message)
+                analyticsProvider.logWarning(it)
             }
         }
     }
