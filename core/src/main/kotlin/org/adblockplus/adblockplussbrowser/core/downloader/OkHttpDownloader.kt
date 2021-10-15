@@ -23,6 +23,8 @@ import org.adblockplus.adblockplussbrowser.core.retryIO
 import ru.gildor.coroutines.okhttp.await
 import timber.log.Timber
 import java.io.File
+import java.net.HttpURLConnection.HTTP_NOT_MODIFIED
+import java.net.HttpURLConnection.HTTP_OK
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
@@ -62,7 +64,7 @@ internal class OkHttpDownloader(
             }
 
             val result = when (response.code) {
-                200 -> {
+                HTTP_OK -> {
                     val tempFile = writeTempFile(response.body!!.source())
                     context.downloadsDir().mkdirs()
                     tempFile.renameTo(downloadFile)
@@ -75,7 +77,7 @@ internal class OkHttpDownloader(
                         downloadCount = previousDownload.downloadCount + 1
                     ))
                 }
-                304 -> {
+                HTTP_NOT_MODIFIED -> {
                     DownloadResult.NotModified(previousDownload.copy(
                         lastUpdated = System.currentTimeMillis()
                     ))

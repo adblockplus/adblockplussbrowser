@@ -18,6 +18,7 @@ import org.adblockplus.adblockplussbrowser.core.retryIO
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import ru.gildor.coroutines.okhttp.await
 import timber.log.Timber
+import java.net.HttpURLConnection.HTTP_OK
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -35,6 +36,7 @@ internal class OkHttpUserCounter(
     private val analyticsProvider: AnalyticsProvider
 ) : UserCounter {
 
+    @Suppress("TooGenericExceptionCaught")
     override suspend fun count() : CountUserResult = coroutineScope {
         try {
             val savedLastUserCountingResponse = repository.currentData().lastUserCountingResponse
@@ -42,15 +44,16 @@ internal class OkHttpUserCounter(
                 savedLastUserCountingResponse)
             val acceptableAdsEnabled = settings.currentSettings().acceptableAdsEnabled
             val acceptableAdsSubscription = settings.getAcceptableAdsSubscription()
+            val currentUserCountingCount = repository.currentData().userCountingCount
             val url = createUrl(acceptableAdsSubscription, acceptableAdsEnabled,
-                savedLastUserCountingResponse)
+                savedLastUserCountingResponse, currentUserCountingCount)
             val request = Request.Builder().url(url).head().build()
             val response = retryIO(description = "User counting HEAD request") {
                 okHttpClient.newCall(request).await()
             }
 
             val result = when (response.code) {
-                200 -> {
+                HTTP_OK -> {
                     Timber.d("User count response date: %s", response.headers["Date"])
                     lastUserCountingResponseFormat.timeZone = serverTimeZone
                     val newLastVersion = try {
@@ -70,6 +73,9 @@ internal class OkHttpUserCounter(
                     Timber.d("User count saves new lastUserCountingResponse `%s`",
                         newLastVersion)
                     repository.updateLastUserCountingResponse(newLastVersion.toLong())
+                    // No point to update the value otherwise as we send max as "4+"
+                    if (currentUserCountingCount < MAX_USER_COUNTING_COUNT)
+                        repository.updateUserCountingCount(currentUserCountingCount + 1)
                     CountUserResult.Success()
                 }
                 else -> {
@@ -88,9 +94,13 @@ internal class OkHttpUserCounter(
         }
     }
 
+    private fun Int.asDownloadCount(): String =
+        if (this < MAX_USER_COUNTING_COUNT) this.toString() else "4+"
+
     private fun createUrl(subscription: Subscription,
                           acceptableAdsEnabled: Boolean,
-                          savedLastUserCountingResponse: Long
+                          savedLastUserCountingResponse: Long,
+                          currentUserCountingCount: Int
     ): HttpUrl {
         return subscription.url.sanatizeUrl().toHttpUrl().newBuilder().apply {
             addQueryParameter("addonName", appInfo.addonName)
@@ -101,6 +111,7 @@ internal class OkHttpUserCounter(
             addQueryParameter("platformVersion", appInfo.platformVersion)
             addQueryParameter("disabled", (!acceptableAdsEnabled).toString())
             addQueryParameter("lastVersion", savedLastUserCountingResponse.toString())
+            addQueryParameter("downloadCount", currentUserCountingCount.asDownloadCount())
         }.build()
     }
 
@@ -110,5 +121,6 @@ internal class OkHttpUserCounter(
         private val serverDateParser = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z",
             Locale.ENGLISH)
         private val serverTimeZone = TimeZone.getTimeZone("GMT")
+        private const val MAX_USER_COUNTING_COUNT = 4
     }
 }

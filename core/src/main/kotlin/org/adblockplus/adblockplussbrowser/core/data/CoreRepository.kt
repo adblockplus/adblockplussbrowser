@@ -20,6 +20,8 @@ internal interface CoreRepository {
 
     suspend fun updateLastUserCountingResponse(lastUserCountingResponse: Long)
 
+    suspend fun updateUserCountingCount(userCountingCount: Int)
+
     suspend fun updateSavedState(savedState: SavedState)
 
     companion object {

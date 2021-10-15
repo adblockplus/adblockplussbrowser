@@ -64,6 +64,12 @@ internal class DataStoreCoreRepository(
         }
     }
 
+    override suspend fun updateUserCountingCount(userCountingCount: Int) {
+        dataStore.updateData { data ->
+            data.toBuilder().setUserCountingCount(userCountingCount).build()
+        }
+    }
+
     override suspend fun updateSavedState(savedState: SavedState) {
         dataStore.updateData { data ->
             data.toBuilder().setLastState(savedState.toProtoSavedState()).build()

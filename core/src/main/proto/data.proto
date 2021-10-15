@@ -27,5 +27,6 @@ message ProtoCoreData {
   ProtoSavedState lastState = 3;
   repeated ProtoDownloadedSubscription downloaded_subscriptions = 4;
   int64 last_user_counting_response = 5;
+  int32 user_counting_count = 6;
 }
 
