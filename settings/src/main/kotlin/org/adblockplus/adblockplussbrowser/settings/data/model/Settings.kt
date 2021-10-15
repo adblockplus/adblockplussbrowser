@@ -13,7 +13,8 @@ data class Settings(
     val blockedDomains: List<String>,
     val activePrimarySubscriptions: List<Subscription>,
     val activeOtherSubscriptions: List<Subscription>,
-    val analyticsEnabled: Boolean
+    val analyticsEnabled: Boolean,
+    val languagesOnboardingCompleted: Boolean
 ) : Parcelable
 
 enum class UpdateConfig {

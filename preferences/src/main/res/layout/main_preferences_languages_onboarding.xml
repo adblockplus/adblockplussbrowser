@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="org.adblockplus.adblockplussbrowser.preferences.ui.MainPreferencesViewModel" />
+        <import type="android.view.View"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_preferences_languages_onboarding_include"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:visibility="@{viewModel.languagesOnboardingCompleted ? View.GONE : View.VISIBLE }"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_preferences_ad_blocking_include">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/preferences_group_bg_single"
+            app:layout_constraintBottom_toBottomOf="@id/main_preferences_languages_onboarding_options"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/main_preferences_languages_onboarding_option_category" />
+
+        <LinearLayout
+            android:id="@+id/main_preferences_languages_onboarding_option_category"
+            style="@style/AbpPreferenceContainerStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/languages_onboarding_title"
+                style="@style/AbpPreferenceTitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/languages_onboarding_title" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/languages_onboarding_description"
+                style="@style/AbpPreferenceSummaryTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/languages_onboarding_description" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/main_preferences_languages_onboarding_divider"
+            style="@style/AbpPreferenceDivider"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_preferences_languages_onboarding_option_category" />
+
+        <LinearLayout
+            android:id="@+id/main_preferences_languages_onboarding_options"
+            style="@style/AbpPreferenceContainerStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_preferences_languages_onboarding_divider">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/main_preferences_languages_onboarding_option_add"
+                style="@style/AbpPreferenceSummaryTextStyle.Accent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/languages_onboarding_option_add" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/main_preferences_languages_onboarding_option_skip"
+                style="@style/AbpPreferenceSummaryTextStyle.Accent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/languages_onboarding_option_skip" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
