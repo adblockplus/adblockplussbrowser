@@ -6,6 +6,7 @@ import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import timber.log.Timber
+import java.lang.RuntimeException
 import javax.inject.Inject
 
 @HiltAndroidApp
@@ -32,8 +33,15 @@ class AbpApplication : Application(), Configuration.Provider {
         } else {
             Timber.plant(ReleaseTree())
         }
-        Timber.e(Throwable("example e throw"), "example e message")
-        Timber.w(Throwable("example w throw"), "example w message")
-        Timber.w("example w message without throwable")
+
+        try {
+            Timber.i("test")
+            throw RuntimeException("example e throw")
+        } catch (e: Exception) {
+            Timber.e(e, "example e message")
+            Timber.w(e, "example w message")
+            Timber.w("example w message without throwable")
+        }
+
     }
 }
