@@ -44,11 +44,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        Timber.i("test i")
-        Timber.d("test d")
-        Timber.v("test v")
-        Timber.w("test w")
-        Timber.w("test e")
         if (!hasSamsungInternetVersion5OrNewer() && !hasSamsungInternetBeta()) {
             showInstallSamsungInternetDialog()
         } else {
