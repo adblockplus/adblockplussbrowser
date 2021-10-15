@@ -21,11 +21,9 @@ import android.util.Log.ERROR
 import android.util.Log.WARN
 import timber.log.Timber
 
-class ReleaseTree : Timber.Tree() {
+class ReleaseTree : Timber.DebugTree() {
 
-    override fun log(priority: Int, tag: String?, message: String, throwable: Throwable?) {
-        if (priority == ERROR || priority == WARN) {
-            super.log(priority, tag, message, throwable)
-        }
+    override fun isLoggable(tag: String?, priority: Int): Boolean {
+        return priority == ERROR || priority == WARN
     }
 }
