@@ -8,18 +8,6 @@ class AnalyticsManager(private val providers: List<AnalyticsProvider>) : Analyti
         }
     }
 
-    override fun logException(throwable: Throwable) {
-        for (provider in providers) {
-            provider.logException(throwable)
-        }
-    }
-
-    override fun logWarning(warning: String) {
-        for (provider in providers) {
-            provider.logWarning(warning)
-        }
-    }
-
     override fun enable() {
         for (provider in providers) {
             provider.enable()

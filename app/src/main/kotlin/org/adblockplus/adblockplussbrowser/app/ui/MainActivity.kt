@@ -21,6 +21,7 @@ import org.adblockplus.adblockplussbrowser.base.navigation.navControllerFromFrag
 import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.SBROWSER_APP_ID
 import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.SBROWSER_APP_ID_BETA
 import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.SBROWSER_OLDEST_SAMSUNG_INTERNET_4_VERSIONCODE
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -43,6 +44,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        Timber.i("test i")
+        Timber.d("test d")
+        Timber.v("test v")
+        Timber.w("test w")
+        Timber.w("test e")
         if (!hasSamsungInternetVersion5OrNewer() && !hasSamsungInternetBeta()) {
             showInstallSamsungInternetDialog()
         } else {
