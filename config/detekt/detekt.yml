@@ -1,0 +1,6 @@
+comments:
+  active: true
+  excludes: ['**/build/**']
+  AbsentOrWrongFileLicense:
+    active: true
+    
