@@ -21,7 +21,6 @@ import org.adblockplus.adblockplussbrowser.base.navigation.navControllerFromFrag
 import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.SBROWSER_APP_ID
 import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.SBROWSER_APP_ID_BETA
 import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.SBROWSER_OLDEST_SAMSUNG_INTERNET_4_VERSIONCODE
-import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
