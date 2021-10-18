@@ -13,10 +13,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
-import org.adblockplus.adblockplussbrowser.base.data.prefs.AppPreferences
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.base.data.model.SubscriptionUpdateStatus
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences.Companion.isFilterRequestExpired
+import org.adblockplus.adblockplussbrowser.base.data.prefs.AppPreferences
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import javax.inject.Inject
 
@@ -41,6 +42,7 @@ internal class MainViewModel @Inject constructor(
             val acceptableAdsEnabled = settingsRepository.settings.map { settings ->
                 settings.acceptableAdsEnabled
             }.first()
+            analyticsProvider.setUserProperty(AnalyticsUserProperty.IS_AA_ENABLED, acceptableAdsEnabled.toString())
             if (acceptableAdsEnabled)
                 analyticsProvider.logEvent(AnalyticsEvent.AUDIENCE_AA_ENABLED)
             else
