@@ -25,6 +25,12 @@ class AnalyticsManager(private val providers: List<AnalyticsProvider>) : Analyti
         }
     }
 
+    override fun setUserProperty(analyticsProperty: AnalyticsUserProperty, analyticsPropertyValue: String) {
+        for (provider in providers) {
+            provider.setUserProperty(analyticsProperty, analyticsPropertyValue)
+        }
+    }
+
     override fun enable() {
         for (provider in providers) {
             provider.enable()

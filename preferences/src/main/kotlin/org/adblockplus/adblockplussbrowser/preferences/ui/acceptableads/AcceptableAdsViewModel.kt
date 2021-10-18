@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import timber.log.Timber
 import javax.inject.Inject
@@ -44,6 +45,7 @@ internal class AcceptableAdsViewModel @Inject constructor(
 
     fun enableAcceptableAds() {
         viewModelScope.launch {
+            analyticsProvider.setUserProperty(AnalyticsUserProperty.IS_AA_ENABLED, true.toString())
             settingsRepository.setAcceptableAdsEnabled(true)
             analyticsProvider.logEvent(AnalyticsEvent.AA_ON)
         }
@@ -51,6 +53,7 @@ internal class AcceptableAdsViewModel @Inject constructor(
 
     fun disableAcceptableAds() {
         viewModelScope.launch {
+            analyticsProvider.setUserProperty(AnalyticsUserProperty.IS_AA_ENABLED, false.toString())
             settingsRepository.setAcceptableAdsEnabled(false)
             analyticsProvider.logEvent(AnalyticsEvent.AA_OFF)
         }

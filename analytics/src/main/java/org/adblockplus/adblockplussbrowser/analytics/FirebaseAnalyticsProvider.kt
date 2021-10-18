@@ -34,6 +34,11 @@ class FirebaseAnalyticsProvider(appContext: Context) : AnalyticsProvider {
         firebaseAnalytics.logEvent(logEvent, bundle)
     }
 
+    override fun setUserProperty(analyticsProperty: AnalyticsUserProperty, analyticsPropertyValue: String) {
+        Timber.i("set user property $analyticsProperty to $analyticsPropertyValue")
+        firebaseAnalytics.setUserProperty(analyticsProperty.propertyName, analyticsPropertyValue)
+    }
+
     override fun enable() {
         FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
         firebaseAnalytics.setAnalyticsCollectionEnabled(true)
