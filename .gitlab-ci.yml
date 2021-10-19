@@ -8,11 +8,6 @@
 # but we may consider additional round of testing against release tag in the future
 # (/^release-\d+\.\d+\.\d+(-rc[0-9])?$/) regex can be used for filtering
 
-stages:
-  - build
-  - sign_builds
-  - device_tests
-
 image: gradle:jdk8
 
 variables:
@@ -45,7 +40,7 @@ variables:
     paths:
       - $HOME/.android
 
-build:debug:
+build_debug:
   extends: .template_build
   stage: build
   script:
@@ -184,8 +179,7 @@ sign_apks:
 
 regression_autojob:
   extends: .template_automation
-  needs:
-    - build:debug # we can run this on debug apk
+  needs: [ "build_debug" ] # we can run this on debug apk
   variables:
     PLATFORM_VERSIONS: "10"
     GRADLE_TASK: "regression"
