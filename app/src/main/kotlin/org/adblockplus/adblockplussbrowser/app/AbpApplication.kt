@@ -44,6 +44,10 @@ class AbpApplication : Application(), Configuration.Provider {
 
         subscriptionsManager.initialize()
 
-        Timber.plant(Timber.DebugTree())
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        } else {
+            Timber.plant(ReleaseTree())
+        }
     }
 }
