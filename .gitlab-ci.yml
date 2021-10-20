@@ -5,6 +5,13 @@ stages:
 
 image: gradle:jdk8
 
+variables:
+  # only `worldAbp` flavor is considered for now
+  APK_OUTPUT_PATH: "app/build/outputs/apk/worldAbp"
+  APK_DEBUG_PATH: "$APK_OUTPUT_PATH/debug/app-world-abp-debug.apk"
+  APK_RELEASE_UNSIGNED_PATH: "$APK_OUTPUT_PATH/release/app-world-abp-release-unsigned.apk"
+  APK_RELEASE_SIGNED_PATH: "$APK_OUTPUT_PATH/release/app-world-abp-release-signed.apk"
+
 # we would need a template for other type of builds
 .template_build:
   stage: build
@@ -35,8 +42,8 @@ build:
     - ./gradlew --build-cache assembleWorldAbp # build both debug and release
   artifacts:
     paths:
-      - "app/build/outputs/apk/worldAbp/debug/app-world-abp-debug.apk"
-      - "app/build/outputs/apk/worldAbp/release/app-world-abp-release-unsigned.apk"
+      - $APK_DEBUG_PATH
+      - $APK_RELEASE_UNSIGNED_PATH
   rules:
     - when: always
 
@@ -60,7 +67,7 @@ sign_apks:
     - mv ./*_SIGNED.apk app/build/outputs/apk/worldAbp/release/
   artifacts:
     paths:
-      - "app/build/outputs/apk/worldAbp/release/app-world-abp-release_SIGNED.apk"
+      - $APK_RELEASE_SIGNED_PATH
     expire_in: "1 week"
   rules:
     - when: always
@@ -135,8 +142,10 @@ sign_apks:
 
 regression_autojob:
   extends: .template_automation
+  needs:
+    - build # we can run this on debug apk
   variables:
     PLATFORM_VERSIONS: "10"
     GRADLE_TASK: "regression"
-  only:
-    - merge_requests
+  rules:
+    - when: always
