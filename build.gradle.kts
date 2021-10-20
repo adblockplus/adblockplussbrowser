@@ -31,7 +31,6 @@ buildscript {
         classpath(Deps.Gms.OSS_LICENSES_PLUGIN)
         classpath(Deps.Firebase.GOOGLE_SERVICES)
         classpath(Deps.Firebase.CRASHLYTICS_GRADLE)
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31")
     }
 }
 
