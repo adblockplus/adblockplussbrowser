@@ -10,7 +10,7 @@ variables:
   APK_OUTPUT_PATH: "app/build/outputs/apk/worldAbp"
   APK_DEBUG_PATH: "$APK_OUTPUT_PATH/debug/app-world-abp-debug.apk"
   APK_RELEASE_UNSIGNED_PATH: "$APK_OUTPUT_PATH/release/app-world-abp-release-unsigned.apk"
-  APK_RELEASE_SIGNED_PATH: "$APK_OUTPUT_PATH/release/app-world-abp-release-signed.apk"
+  APK_RELEASE_SIGNED_PATH: "$APK_OUTPUT_PATH/release/"
 
 # we would need a template for other type of builds
 .template_build:
