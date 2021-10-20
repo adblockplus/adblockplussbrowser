@@ -35,6 +35,7 @@ android {
 dependencies {
     implementation(project(":analytics"))
     implementation(project(":base"))
+    implementation(project(":i18n"))
 
     implementation(Deps.TIMBER)
     implementation(Deps.DOTS_INDICATOR)

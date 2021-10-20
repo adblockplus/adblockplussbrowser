@@ -15,5 +15,5 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-include(":app", ":analytics", ":base", ":core", ":onboarding", ":preferences", ":settings")
+include(":app", ":analytics", ":base", ":core", ":i18n", ":onboarding", ":preferences", ":settings")
 rootProject.name = "Adblock Plus for Samsung Internet"
