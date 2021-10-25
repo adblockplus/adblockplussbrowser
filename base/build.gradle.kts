@@ -33,6 +33,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":i18n"))
+
     implementation(Deps.MATERIAL)
     implementation(Deps.AndroidX.ACTIVITY)
     implementation(Deps.AndroidX.APPCOMPAT)

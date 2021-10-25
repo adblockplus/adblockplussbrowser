@@ -30,7 +30,7 @@
             style="@style/AbpPreferenceCategoryTitleTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/preferences_acceptable_ads_category"
+            android:text="@string/acceptable_ads"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

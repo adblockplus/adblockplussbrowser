@@ -42,6 +42,7 @@ configurations {
 dependencies {
     implementation(project(":analytics"))
     implementation(project(":base"))
+    implementation(project(":i18n"))
     implementation(project(":settings"))
 
     implementation(Deps.MATERIAL)
