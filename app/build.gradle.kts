@@ -81,6 +81,7 @@ dependencies {
     implementation(project(":analytics"))
     implementation(project(":base"))
     implementation(project(":core"))
+    implementation(project(":i18n"))
     implementation(project(":onboarding"))
     implementation(project(":preferences"))
     implementation(project(":settings"))
