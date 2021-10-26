@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+ This file is part of Adblock Plus <https://adblockplus.org/>,
+ Copyright (C) 2006-present eyeo GmbH
+
+ Adblock Plus is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License version 3 as
+ published by the Free Software Foundation.
+
+ Adblock Plus is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
 <resources>
     <string name="about_imprint_text" translatable="false"><![CDATA[<br/><p><b><strong>eyeo GmbH</strong></b><br/>Lichtstraße 25<br/>50825 Cologne<br/>Germany</p><p>Support: <a href=\"https://adblockplus.org/forum/\">Adblock Plus Forum</a><br/>Email: <a href=\"mailto:info@eyeo.com\">info@eyeo.com</a><br/>Telephone: +49 (0)221 / 65028 598<br/>Fax: +49 (0)221 / 65028 599</p><p>VAT-ID: DE279292414<br/>District Court Cologne: HRB 73508</p><p><b><strong>Managing Directors</strong></b>:<br/>Till Faida<br/>Jutta Horstmann</p>]]></string>
     <string name="url_privacy_policy" translatable="false">https://adblockplus.org/privacy</string>
