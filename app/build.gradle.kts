@@ -115,11 +115,11 @@ dependencies {
 }
 
 // Install commit pre-hook
-tasks.register<Copy>("installPreCommitHook") {
-    from(rootProject.file("scripts/pre-commit"))
+tasks.register<Copy>("installPrePushHook") {
+    from(rootProject.file("scripts/pre-push"))
     into(rootProject.file(".git/hooks"))
 }
 
 tasks.named("preBuild") {
-    dependsOn("installPreCommitHook")
+    dependsOn("installPrePushHook")
 }
