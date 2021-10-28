@@ -36,10 +36,6 @@ private const val DEFAULT_ADDON_NAME = "adblockplussbrowser"
 private const val SBROWSER_PACKAGE_NAME = "com.sec.android.app.sbrowser"
 private const val SBROWSER_BETA_PACKAGE_NAME = "com.sec.android.app.sbrowser.beta"
 private const val SBROWSER_APP_NAME = "sbrowser"
-private const val YANDEX_PACKAGE_NAME = "com.yandex.browser"
-private const val YANDEX_ALPHA_PACKAGE_NAME = "com.yandex.browser.alpha"
-private const val YANDEX_BETA_PACKAGE_NAME = "com.yandex.browser.beta"
-private const val YANDEX_APP_NAME = "yandex"
 
 internal fun Context.buildAppInfo(): AppInfo {
     return AppInfo(
@@ -54,11 +50,6 @@ private fun applicationForInstalledBrowser(context: Context): String {
     if (context.isPackageInstalled(SBROWSER_PACKAGE_NAME) || context.isPackageInstalled(
             SBROWSER_BETA_PACKAGE_NAME)) {
         application += SBROWSER_APP_NAME
-    }
-    if (context.isPackageInstalled(YANDEX_PACKAGE_NAME)
-        || context.isPackageInstalled(YANDEX_ALPHA_PACKAGE_NAME)
-        || context.isPackageInstalled(YANDEX_BETA_PACKAGE_NAME)) {
-        application += YANDEX_APP_NAME
     }
 
     return application
