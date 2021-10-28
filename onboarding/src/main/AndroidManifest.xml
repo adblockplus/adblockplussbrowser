@@ -19,7 +19,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.adblockplus.adblockplussbrowser.onboarding">
 
-    <application>
+    <application android:supportsRtl="true">
 
         <activity android:name=".ui.OnboardingActivity" />
 
