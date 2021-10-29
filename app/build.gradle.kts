@@ -46,6 +46,11 @@ android {
         create("abp") {
             dimension = productDimension
             applicationId = "org.adblockplus.adblockplussbrowser"
+            copy {
+                from("google-services/abp/")
+                include("*.json")
+                into(".")
+            }
         }
 
         create("adblock") {
@@ -56,6 +61,21 @@ android {
         create("crystal") {
             dimension = productDimension
             applicationId = "co.crystalapp.crystal"
+            copy {
+                from("google-services/crystal/")
+                include("*.json")
+                into(".")
+            }
+        }
+
+        create("adblock") {
+            dimension = productDimension
+            applicationId = "com.betafish.adblocksbrowser"
+            copy {
+                from("google-services/adblock/")
+                include("*.json")
+                into(".")
+            }
         }
     }
 
