@@ -8,6 +8,7 @@ image: gradle:jdk8
 variables:
   # only `worldAbp` flavor is considered for now
   APK_OUTPUT_PATH: "app/build/outputs/apk/worldAbp"
+  MAPPING_OUTPUT_PATH: "app/build/outputs/mapping/worldAbpRelease"
   APK_DEBUG_PATH: "$APK_OUTPUT_PATH/debug/app-world-abp-debug.apk"
   APK_RELEASE_UNSIGNED_PATH: "$APK_OUTPUT_PATH/release/app-world-abp-release-unsigned.apk"
   APK_RELEASE_SIGNED_PATH: "$APK_OUTPUT_PATH/release/"
@@ -44,6 +45,7 @@ build:
     paths:
       - $APK_DEBUG_PATH
       - $APK_RELEASE_UNSIGNED_PATH
+      - $MAPPING_OUTPUT_PATH
   rules:
     - when: always
 
