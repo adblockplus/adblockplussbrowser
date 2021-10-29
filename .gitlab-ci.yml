@@ -31,7 +31,9 @@ variables:
     - set +o pipefail
     - yes | android-sdk-linux/tools/bin/sdkmanager --licenses >/dev/null
     - set -o pipefail
-    - cat "$GOOGLE_SERVICES" > "$(pwd)/app/google-services.json"
+    - cat "$GOOGLE_SERVICES_ABP" > "$(pwd)/app/google-services/abp/google-services-abp.json"
+    - cat "$GOOGLE_SERVICES_ADBLOCK" > "$(pwd)/app/google-services/adblock/google-services-abp.json"
+    - cat "$GOOGLE_SERVICES_CRYSTAL" > "$(pwd)/app/google-services/crystal/google-services-abp.json"
   cache:
     key: debug-keystore
     paths:
