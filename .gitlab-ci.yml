@@ -31,8 +31,12 @@ variables:
     - set +o pipefail
     - yes | android-sdk-linux/tools/bin/sdkmanager --licenses >/dev/null
     - set -o pipefail
+    - mkdir "$(pwd)/app/google-services"
+    - mkdir "app/google-services/abp"
     - cat "$GOOGLE_SERVICES_ABP" > "$(pwd)/app/google-services/abp/google-services-abp.json"
+    - mkdir "app/google-services/adblock"
     - cat "$GOOGLE_SERVICES_ADBLOCK" > "$(pwd)/app/google-services/adblock/google-services-abp.json"
+    - mkdir "app/google-services/crystal"
     - cat "$GOOGLE_SERVICES_CRYSTAL" > "$(pwd)/app/google-services/crystal/google-services-abp.json"
   cache:
     key: debug-keystore
