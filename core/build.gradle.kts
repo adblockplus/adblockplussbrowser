@@ -51,6 +51,11 @@ dependencies {
     implementation(Deps.AndroidX.Hilt.COMMON)
     implementation(Deps.AndroidX.Hilt.WORK)
     kapt(Deps.AndroidX.Hilt.COMPILER)
+
+    testImplementation(Deps.JUNIT)
+    testImplementation(Deps.OkHttp.MOCKWEBSERVER)
+    testImplementation(Deps.Mockito.Core)
+    testImplementation(Deps.Mockito.Kotlin)
 }
 
 protobuf {

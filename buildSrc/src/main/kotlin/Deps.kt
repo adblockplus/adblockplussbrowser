@@ -175,6 +175,7 @@ object Deps {
     object OkHttp : DependencyGroup("com.squareup.okhttp3", "4.9.1") {
         val OKHTTP = dependency { name("okhttp") }
         val LOGGER = dependency { name("logging-interceptor") }
+        val MOCKWEBSERVER = dependency { name("mockwebserver") }
         val COROUTINES = dependency {
             groupPrefix("ru.gildor.coroutines")
             name("kotlin-coroutines-okhttp")
@@ -189,6 +190,11 @@ object Deps {
         }
         val JAVALITE = dependency { name("protobuf-javalite") }
         val PROTOC = dependency { name("protoc") }
+    }
+
+    object Mockito : DependencyGroup("org.mockito", "4.0.0") {
+        val Core = dependency { name("mockito-core") }
+        val Kotlin = dependency { groupName("kotlin:mockito-kotlin") }
     }
 }
 
