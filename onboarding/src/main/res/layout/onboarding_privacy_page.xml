@@ -22,14 +22,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp">
+        android:paddingStart="@dimen/onboarding_guides_margin"
+        android:paddingEnd="@dimen/onboarding_guides_margin">
 
         <ImageView
             android:id="@+id/onboarding_privacy_block_ads_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="@dimen/onboarding_content_top_margin"
             android:src="@drawable/ic_onboarding_privacy"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -39,7 +39,7 @@
             style="@style/AbpOnboardingTitleTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="@dimen/onboarding_items_margin_start"
             android:text="@string/onboarding_privacy_block_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/onboarding_privacy_block_ads_image"
@@ -50,7 +50,7 @@
             style="@style/AbpOnboardingDescriptionTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/onboarding_item_description_margin_top"
             android:text="@string/onboarding_privacy_block_description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/onboarding_privacy_block_ads_title"
@@ -61,7 +61,7 @@
             android:linksClickable="true"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/onboarding_item_description_margin_top"
             android:text="@string/onboarding_privacy_block_link_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/onboarding_welcome_block_ads_description"
