@@ -55,7 +55,7 @@
     <string name="onboarding_privacy_header_title2">The privacy policy</string>
     <string name="onboarding_privacy_header_title3">by opening the link below</string>
     <string name="onboarding_privacy_block_title">You can help us make the web better</string>
-    <string name="onboarding_privacy_block_description">Please, read our privacy policy by following the link. There is a short human-friendly brief of what we collect at the beginning</string>
+    <string name="onboarding_privacy_block_description">Please read our privacy policy by following the link. There is a short, human-friendly briefing on what we collect at the beginning</string>
     <string name="onboarding_privacy_block_link_text"><a href="https://adblockplus.org/privacy">Privacy policy</a></string>
 
     <string name="onboarding_acceptable_ads_header_title1">Participate in</string>
