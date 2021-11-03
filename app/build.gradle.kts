@@ -27,31 +27,12 @@ plugins {
     id("com.google.firebase.crashlytics")
 }
 
-if (!hasProperty("DISABLE_GOOGLE_SERVICES")) {
-    project.apply<com.google.gms.googleservices.GoogleServicesPlugin>()
-}
-
 applyCommonConfig()
 
 android {
     defaultConfig {
         versionCode = versionCode()
         versionName = Config.VERSION_NAME
-    }
-
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = true
-            isShrinkResources = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-
-        getByName("debug") {
-            isMinifyEnabled = false
-        }
     }
 
     val regionDimension = "region"

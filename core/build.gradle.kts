@@ -26,18 +26,6 @@ plugins {
     id("dagger.hilt.android.plugin")
 }
 
-android {
-    buildTypes {
-        getByName("debug") {
-            isMinifyEnabled = false
-        }
-        getByName("release") {
-            isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
-        }
-    }
-}
-
 applyCommonConfig()
 
 dependencies {

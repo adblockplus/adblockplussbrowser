@@ -20,6 +20,10 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
 
 fun Project.applyCommonConfig() {
+    // Enable or disable shrinking resource dynamically depending if this is a app or a library
+    // (libraries do not support resources shrinking)
+    val shrinkResources = this.plugins.hasPlugin("com.android.application")
+
     android {
         compileSdkVersion(Config.COMPILE_SDK_VERSION)
         buildToolsVersion(Config.BUILD_TOOLS_VERSION)
@@ -43,7 +47,23 @@ fun Project.applyCommonConfig() {
         sourceSets.all {
             java.srcDir("src/$name/kotlin")
         }
+
+        buildTypes {
+            getByName("release") {
+                isMinifyEnabled = true
+                isShrinkResources = shrinkResources
+                proguardFiles(
+                    getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro"
+                )
+            }
+
+            getByName("debug") {
+                isMinifyEnabled = false
+            }
+        }
     }
+
     dependencies {
         implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
