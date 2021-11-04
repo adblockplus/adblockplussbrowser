@@ -74,6 +74,34 @@ fun Project.applyCommonConfig() {
     }
 }
 
+fun Project.createFlavorsConfig() {
+    android {
+        val productDimension = "product"
+        val regionDimension = "region"
+
+        flavorDimensions(regionDimension, productDimension)
+        productFlavors {
+            create("world") {
+                dimension = regionDimension
+            }
+
+            create("abp") {
+                dimension = productDimension
+            }
+
+            create("adblock") {
+                dimension = productDimension
+            }
+
+            create("crystal") {
+                dimension = productDimension
+            }
+
+        }
+
+    }
+}
+
 /**
  * Calculate the versionCode based on time with the ability to tweak it via the APB4SI_DAY_VERSION
  * environment variable. The latter can vary between 0 and 7 (included) making it possible to
