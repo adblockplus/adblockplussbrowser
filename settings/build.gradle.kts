@@ -38,6 +38,32 @@ dependencies {
     kapt(Deps.Hilt.ANDROID_COMPILER)
 }
 
+android {
+    val productDimension = "product"
+    val regionDimension = "region"
+
+    flavorDimensions(regionDimension, productDimension)
+    productFlavors {
+        create("world") {
+            dimension = regionDimension
+        }
+
+        create("abp") {
+            dimension = productDimension
+        }
+
+        create("adblock") {
+            dimension = productDimension
+        }
+
+        create("crystal") {
+            dimension = productDimension
+        }
+
+    }
+
+}
+
 protobuf {
     protoc {
         artifact = Deps.Protobuf.PROTOC

@@ -32,6 +32,32 @@ android {
     }
 }
 
+android {
+    val productDimension = "product"
+    val regionDimension = "region"
+
+    flavorDimensions(regionDimension, productDimension)
+    productFlavors {
+        create("world") {
+            dimension = regionDimension
+        }
+
+        create("abp") {
+            dimension = productDimension
+        }
+
+        create("adblock") {
+            dimension = productDimension
+        }
+
+        create("crystal") {
+            dimension = productDimension
+        }
+
+    }
+
+}
+
 dependencies {
     implementation(project(":analytics"))
     implementation(project(":base"))
