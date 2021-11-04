@@ -97,7 +97,11 @@ class DownloaderTest {
         assertEquals(0, mockWebServer.requestCount)
         runBlocking {
             var downloadResult = downloader.download(
-                Subscription(fakeCoreRepository.AA_URL, "", 0L),false, true, true)
+                Subscription(fakeCoreRepository.AA_URL, "", 0L),
+                forced = false,
+                periodic = true,
+                newSubscription = true
+            )
             assertTrue(downloadResult is DownloadResult.Success)
             assertEquals(version, downloadResult.subscription?.version)
             assertEquals(etag, downloadResult.subscription?.etag)
@@ -106,7 +110,11 @@ class DownloaderTest {
             // We cannot test more that download status because saving subscription from
             // a previous download is done by the caller - UpdateSubscriptionsWorker.
             downloadResult = downloader.download(
-                Subscription(fakeCoreRepository.AA_URL, "", 0L),false, true, true)
+                Subscription(fakeCoreRepository.AA_URL, "", 0L),
+                forced = false,
+                periodic = true,
+                newSubscription = true
+            )
             assertTrue(downloadResult is DownloadResult.NotModified)
         }
         assertEquals(2, mockWebServer.requestCount)
@@ -130,7 +138,11 @@ class DownloaderTest {
         assertEquals(0, mockWebServer.requestCount)
         runBlocking {
             val downloadResult = downloader.download(
-                Subscription(fakeCoreRepository.AA_URL, "", 0L),false, true, true)
+                Subscription(fakeCoreRepository.AA_URL, "", 0L),
+                forced = false,
+                periodic = true,
+                newSubscription = true
+            )
             assertTrue(downloadResult is DownloadResult.Failed)
             assertNull(downloadResult.subscription)
         }

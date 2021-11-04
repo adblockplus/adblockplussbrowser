@@ -33,30 +33,26 @@ import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig
 
 class Fakes {
 
-    internal class FakeCoreRepository : CoreRepository {
+    internal class FakeCoreRepository(serverUrl: String) : CoreRepository {
 
-        val INITIAL_TIMESTAMP = -1L
-        val INITIAL_COUNT = -1
+        companion object {
+            const val INITIAL_TIMESTAMP = -1L
+            const val INITIAL_COUNT = -1
+        }
         var lastUserCountingResponse = INITIAL_TIMESTAMP
         var userCountingCount = INITIAL_COUNT
 
-        val AA_URL : String
-        val EASYLIST_URL : String
+        @Suppress("PropertyName")
+        val AA_URL: String = "$serverUrl/easylist.txt"
 
-        private val serverUrl : String
-        private val coreData : CoreData
-        constructor(serverUrl : String) {
-            this.serverUrl = serverUrl
-            AA_URL = "$serverUrl/easylist.txt"
-            EASYLIST_URL = "$serverUrl/exceptionrules.txt"
-            coreData = CoreData(
-                true,
-                0L,
-                SavedState(true, listOf(""), listOf(""), listOf(""), listOf("")),
-                listOf(),
-                0L,
-                0);
-        }
+        private val coreData: CoreData = CoreData(
+            true,
+            0L,
+            SavedState(true, listOf(""), listOf(""), listOf(""), listOf("")),
+            listOf(),
+            0L,
+            0
+        )
 
         override val data: Flow<CoreData>
             get() = flow {
@@ -66,11 +62,10 @@ class Fakes {
         override var subscriptionsPath: String?
             get() = ""
             @Suppress("UNUSED_PARAMETER")
-            set(value) {}
+            set(value) {
+            }
 
-        override suspend fun getDataSync(): CoreData {
-            return coreData
-        }
+        override suspend fun getDataSync(): CoreData = coreData
 
         override suspend fun setConfigured() {}
 
@@ -78,7 +73,6 @@ class Fakes {
             subscriptions: List<DownloadedSubscription>,
             updateTimestamp: Boolean
         ) {
-            updateTimestamp
         }
 
         override suspend fun updateLastUpdated(lastUpdated: Long) {}
@@ -91,50 +85,42 @@ class Fakes {
             this.userCountingCount = userCountingCount
         }
 
-        override suspend fun updateSavedState(savedState: SavedState) {
-            savedState
-        }
+        override suspend fun updateSavedState(savedState: SavedState) {}
+
     }
 
-    class FakeSettingsRepository : SettingsRepository {
-
-        private val serverUrl : String
-        constructor(serverUrl : String) {
-            this.serverUrl = serverUrl
-        }
+    class FakeSettingsRepository(private val serverUrl: String) : SettingsRepository {
 
         override val settings: Flow<Settings>
             get() = flow {
                 emit(
-                    Settings(true,
-                    true,
-                    UpdateConfig.ALWAYS,
-                    listOf(""),
-                    listOf(""),
-                    listOf(
-                        Subscription("$serverUrl/easylist.txt", "", 0L),
-                        Subscription("$serverUrl/exceptionrules.txt", "", 0L)
-                    ),
-                    listOf(Subscription("", "", 0L)),
-                    true,
-                    true)
+                    Settings(
+                        adblockEnabled = true,
+                        acceptableAdsEnabled = true,
+                        updateConfig = UpdateConfig.ALWAYS,
+                        allowedDomains = listOf(""),
+                        blockedDomains = listOf(""),
+                        activePrimarySubscriptions = listOf(
+                            Subscription("$serverUrl/easylist.txt", "", 0L),
+                            Subscription("$serverUrl/exceptionrules.txt", "", 0L)
+                        ),
+                        activeOtherSubscriptions = listOf(Subscription("", "", 0L)),
+                        analyticsEnabled = true,
+                        languagesOnboardingCompleted = true
+                    )
                 )
             }
 
-        override suspend fun getEasylistSubscription(): Subscription {
-            return Subscription("$serverUrl/easylist.txt", "", 0L)
-        }
+        override suspend fun getEasylistSubscription(): Subscription =
+            Subscription("$serverUrl/easylist.txt", "", 0L)
 
-        override suspend fun getAcceptableAdsSubscription(): Subscription {
-            return Subscription("$serverUrl/exceptionrules.txt", "", 0L)
-        }
+        override suspend fun getAcceptableAdsSubscription(): Subscription =
+            Subscription("$serverUrl/exceptionrules.txt", "", 0L)
 
-        override suspend fun getDefaultPrimarySubscriptions(): List<Subscription> {
-            return listOf(
-                Subscription("$serverUrl/easylist.txt", "", 0L),
-                Subscription("$serverUrl/exceptionrules.txt", "", 0L)
-            )
-        }
+        override suspend fun getDefaultPrimarySubscriptions(): List<Subscription> = listOf(
+            Subscription("$serverUrl/easylist.txt", "", 0L),
+            Subscription("$serverUrl/exceptionrules.txt", "", 0L)
+        )
 
         override suspend fun getDefaultOtherSubscriptions(): List<Subscription> {
             TODO("Not yet implemented")
@@ -193,7 +179,7 @@ class Fakes {
 
     class FakeAnalyticsProvider : AnalyticsProvider {
 
-        var analyticsEvent : AnalyticsEvent? = null
+        var analyticsEvent: AnalyticsEvent? = null
 
         override fun logEvent(analyticsEvent: AnalyticsEvent) {
             this.analyticsEvent = analyticsEvent
@@ -202,7 +188,8 @@ class Fakes {
         override fun setUserProperty(
             analyticsProperty: AnalyticsUserProperty,
             analyticsPropertyValue: String
-        ) {}
+        ) {
+        }
 
         override fun enable() {}
 

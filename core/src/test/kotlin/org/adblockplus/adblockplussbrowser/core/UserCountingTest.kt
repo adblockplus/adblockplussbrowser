@@ -88,9 +88,10 @@ class UserCountingTest {
             assertTrue(userCounter.count() is CountUserResult.Failed)
         }
         assertEquals(1, mockWebServer.requestCount)
-        assertEquals(fakeCoreRepository.INITIAL_TIMESTAMP,
+        assertEquals(
+            Fakes.FakeCoreRepository.INITIAL_TIMESTAMP,
             fakeCoreRepository.lastUserCountingResponse)
-        assertEquals(fakeCoreRepository.INITIAL_COUNT, fakeCoreRepository.userCountingCount)
+        assertEquals(Fakes.FakeCoreRepository.INITIAL_COUNT, fakeCoreRepository.userCountingCount)
         assertNull(analyticsProvider.analyticsEvent)
     }
 
@@ -114,9 +115,10 @@ class UserCountingTest {
         }
         assertEquals(1, mockWebServer.requestCount)
         if (BuildConfig.DEBUG) {
-            assertEquals(fakeCoreRepository.INITIAL_TIMESTAMP,
+            assertEquals(
+                Fakes.FakeCoreRepository.INITIAL_TIMESTAMP,
                 fakeCoreRepository.lastUserCountingResponse)
-            assertEquals(fakeCoreRepository.INITIAL_COUNT, fakeCoreRepository.userCountingCount)
+            assertEquals(Fakes.FakeCoreRepository.INITIAL_COUNT, fakeCoreRepository.userCountingCount)
         } else {
             assert(fakeCoreRepository.userCountingCount == 1)
         }
