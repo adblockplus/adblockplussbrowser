@@ -47,7 +47,7 @@ class HyperlinkTextView(context: Context, attrs: AttributeSet?) :
     override fun onFinishInflate() {
         /*
         A grain of heuristics here:
-        TextView supports some html tags from the box, but not all of them. It looks like it uses
+        TextView supports some html tags out of the box, but not all of them. It looks like it uses
         [HtmlCompat.FROM_HTML_MODE_COMPACT] by default. So we need to call [HtmlCompat.fromHtml]
         when not-supported tags are detected, eg: when text contains <p> or <br>
 
