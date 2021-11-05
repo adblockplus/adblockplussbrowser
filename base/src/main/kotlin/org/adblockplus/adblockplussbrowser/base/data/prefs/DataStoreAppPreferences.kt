@@ -23,7 +23,9 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.longPreferencesKey
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
 
 class DataStoreAppPreferences(private val dataStore: DataStore<Preferences>) :
     AppPreferences {
@@ -35,6 +37,20 @@ class DataStoreAppPreferences(private val dataStore: DataStore<Preferences>) :
     private object Keys {
         val ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
         val LAST_FILTER_REQUEST = longPreferencesKey("last_filter_request")
+        val REFERRER_CHECKED = booleanPreferencesKey("referrer_checked")
+    }
+
+    override val referrerAlreadyChecked: Boolean =
+        runBlocking {
+            dataStore.data.map { it[Keys.REFERRER_CHECKED] ?: false }.firstOrNull() == true
+        }
+
+    override fun referrerChecked() {
+        runBlocking {
+            dataStore.edit { preferences ->
+                preferences[Keys.REFERRER_CHECKED] = true
+            }
+        }
     }
 
     override val onboardingCompleted: Flow<Boolean> =
@@ -55,5 +71,4 @@ class DataStoreAppPreferences(private val dataStore: DataStore<Preferences>) :
             preferences[Keys.LAST_FILTER_REQUEST] = lastFilterListRequest
         }
     }
-
 }
