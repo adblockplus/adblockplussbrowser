@@ -17,21 +17,41 @@
 
 package org.adblockplus.adblockplussbrowser.app.ui
 
+import android.app.Application
+import android.os.RemoteException
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.android.installreferrer.api.InstallReferrerClient
+import com.android.installreferrer.api.InstallReferrerStateListener
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
-import org.adblockplus.adblockplussbrowser.base.data.prefs.AppPreferences
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences.Companion.isFilterRequestExpired
+import org.adblockplus.adblockplussbrowser.base.data.prefs.AppPreferences
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-internal class LauncherViewModel @Inject constructor(appPreferences: AppPreferences) : ViewModel() {
+internal class LauncherViewModel @Inject constructor(
+    appPreferences: AppPreferences,
+    application: Application
+) : AndroidViewModel(application) {
+
+    val context
+        get() = getApplication<Application>()
+
+    @Inject
+    lateinit var appPreferences: AppPreferences
+
+    @Inject
+    lateinit var analyticsProvider: AnalyticsProvider
+
     private val onBoardingCompletedFlow = appPreferences.onboardingCompleted
     private val lastFilterRequestFlow = appPreferences.lastFilterListRequest
 
@@ -54,5 +74,45 @@ internal class LauncherViewModel @Inject constructor(appPreferences: AppPreferen
                 }
         }
         return navigationDirection
+    }
+
+    fun checkInstallReferrer() {
+        if (appPreferences.referrerAlreadyChecked) {
+            Timber.d("InstallReferrer already checked")
+            return
+        }
+        // All InstallReferrerClient API needs to be called on UiThread
+        val referrerClient = InstallReferrerClient.newBuilder(context).build()
+        referrerClient.startConnection(object : InstallReferrerStateListener {
+            override fun onInstallReferrerSetupFinished(responseCode: Int) {
+                when (responseCode) {
+                    InstallReferrerClient.InstallReferrerResponse.OK -> {
+                        try {
+                            val response = referrerClient.installReferrer
+                            analyticsProvider.setUserProperty(
+                                AnalyticsUserProperty.INSTALL_REFERRER, response.installReferrer
+                            )
+                            appPreferences.referrerChecked()
+                            referrerClient.endConnection()
+                        } catch (ex: RemoteException) {
+                            Timber.e(ex, "Error processing InstallReferrerResponse")
+                        }
+                    }
+                    InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED,
+                    InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE,
+                    InstallReferrerClient.InstallReferrerResponse.DEVELOPER_ERROR -> {
+                        // Call referrerChecked() to not repeat on those failures.
+                        // Excluded here is `SERVICE_DISCONNECTED` because on
+                        // onInstallReferrerServiceDisconnected() we should retry.
+                        appPreferences.referrerChecked()
+                        Timber.w("checkInstallReferrer() gets %d", responseCode)
+                    }
+                }
+            }
+
+            override fun onInstallReferrerServiceDisconnected() {
+                checkInstallReferrer()
+            }
+        })
     }
 }
