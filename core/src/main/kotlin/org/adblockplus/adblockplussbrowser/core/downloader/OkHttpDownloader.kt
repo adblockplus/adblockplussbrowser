@@ -107,7 +107,6 @@ internal class OkHttpDownloader(
             response.close()
             result
         } catch (ex: Exception) {
-            ex.printStackTrace()
             val previousDownload = getDownloadedSubscription(subscription)
             Timber.e(ex, "Error downloading ${previousDownload.url}")
             DownloadResult.Failed(previousDownload.ifExists())

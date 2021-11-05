@@ -21,5 +21,10 @@ enum class AnalyticsUserProperty(val propertyName: String) {
     /**
      * User property used for an audience based on AA status.
      */
-    IS_AA_ENABLED("is_aa_enabled")
+    IS_AA_ENABLED("is_aa_enabled"),
+
+    /**
+     * User property used for tracking install referrer.
+     */
+    INSTALL_REFERRER("install_referrer")
 }

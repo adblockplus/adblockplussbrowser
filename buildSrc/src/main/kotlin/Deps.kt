@@ -190,6 +190,10 @@ object Deps {
         val JAVALITE = dependency { name("protobuf-javalite") }
         val PROTOC = dependency { name("protoc") }
     }
+
+    object Android: DependencyGroup("com.android", "1.1") {
+        val INSTALLREFERRER = dependency { groupName("installreferrer:installreferrer") }
+    }
 }
 
 abstract class DependencyGroup(

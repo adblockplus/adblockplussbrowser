@@ -112,6 +112,7 @@ dependencies {
     implementation(Deps.OkHttp.OKHTTP)
     implementation(Deps.OkHttp.LOGGER)
     implementation(Deps.Gms.OSS_LICENSES)
+    implementation(Deps.Android.INSTALLREFERRER)
 }
 
 // Install commit pre-hook
