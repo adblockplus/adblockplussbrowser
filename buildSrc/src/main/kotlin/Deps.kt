@@ -157,7 +157,7 @@ object Deps {
         val ANDROID_GRADLE_PLUGIN = dependency { name("hilt-android-gradle-plugin") }
     }
 
-    object Kotlin : DependencyGroup("org.jetbrains.kotlin", "1.5.21") {
+    object Kotlin : DependencyGroup("org.jetbrains.kotlin", "1.5.31") {
         val KOTLIN_PLUGIN = dependency { name("kotlin-gradle-plugin") }
         val KOTLIN_STDLIB = dependency { name("kotlin-stdlib") }
     }
