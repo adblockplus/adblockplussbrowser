@@ -34,7 +34,7 @@ variables:
     - mkdir "app/src/worldAbp/debug"
     - cat "$GOOGLE_SERVICES_ABP_DEBUG" > "$(pwd)/app/src/worldAbp/debug/google-services.json"
     - mkdir "app/src/worldAbp/release"
-    - cat "$GOOGLE_SERVICES_ABP" > "$(pwd)/app/app/src/worldAbp/release/google-services.json"
+    - cat "$GOOGLE_SERVICES_ABP" > "$(pwd)/app/src/worldAbp/release/google-services.json"
   cache:
     key: debug-keystore
     paths:
