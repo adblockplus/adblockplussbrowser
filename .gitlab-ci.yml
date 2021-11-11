@@ -30,8 +30,7 @@ variables:
     - set +o pipefail
     - yes | android-sdk-linux/tools/bin/sdkmanager --licenses >/dev/null
     - set -o pipefail
-    - mkdir "app/src/worldAbp"
-    - mkdir "app/src/worldAbp/debug"
+    - mkdir --parents "app/src/worldAbp/debug"
     - cat "$GOOGLE_SERVICES_ABP_DEBUG" > "$(pwd)/app/src/worldAbp/debug/google-services.json"
     - mkdir "app/src/worldAbp/release"
     - cat "$GOOGLE_SERVICES_ABP" > "$(pwd)/app/src/worldAbp/release/google-services.json"
