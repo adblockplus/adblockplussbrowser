@@ -77,14 +77,6 @@ internal class OnboardingViewModel @Inject constructor(
                 R.layout.onboarding_welcome_page
             )
         )
-        pageList.add(
-            PageInfo.Default(
-                R.string.onboarding_privacy_header_title1,
-                R.string.onboarding_privacy_header_title2,
-                R.string.onboarding_privacy_header_title3,
-                R.layout.onboarding_privacy_page
-            )
-        )
 
         pageList.add(PageInfo.AcceptableAds)
         pageList.add(PageInfo.Enable)
