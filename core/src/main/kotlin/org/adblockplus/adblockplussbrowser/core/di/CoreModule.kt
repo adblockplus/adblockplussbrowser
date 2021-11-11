@@ -60,7 +60,7 @@ internal object CoreModule {
     fun provideOkHttpClientLogger() =
         HttpLoggingInterceptor().apply {
             if (BuildConfig.DEBUG) {
-                level = HttpLoggingInterceptor.Level.HEADERS
+                level = HttpLoggingInterceptor.Level.HEADERS // The default is Level.NONE
             }
         }
 
