@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "999999999999",
+    "project_id": "fake-project-id",
+    "storage_bucket": "fake-project-id.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "9:999999999999:android:ffffffffffffffffffffff",
+        "android_client_info": {
+          "package_name": "org.adblockplus.adblockplussbrowser"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "999999999999-99z99999zzz99zzzzz9zzzzz9zz999zz.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "999999999999-99z99999zzz99zzzzz9zzzzz9zz999zz.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "9:999999999999:android:ffffffffffffffffffffff",
+        "android_client_info": {
+          "package_name": "co.crystalapp.crystal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "999999999999-99z99999zzz99zzzzz9zzzzz9zz999zz.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "999999999999-99z99999zzz99zzzzz9zzzzz9zz999zz.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

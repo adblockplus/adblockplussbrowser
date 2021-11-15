@@ -5,6 +5,9 @@
 # For more details, see
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
+# Necessary because of https://github.com/protocolbuffers/protobuf/issues/6463
+-keep class * extends com.google.protobuf.GeneratedMessageLite { *; }
+
 # If your project uses WebView with JS, uncomment the following
 # and specify the fully qualified class name to the JavaScript interface
 # class:
