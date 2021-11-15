@@ -32,9 +32,9 @@ variables:
     - yes | android-sdk-linux/tools/bin/sdkmanager --licenses >/dev/null
     - set -o pipefail
     - mkdir -p "app/src/worldAbp/debug"
-    - cat "$GOOGLE_SERVICES_ABP_DEBUG" > "$(pwd)/app/src/worldAbp/google-services.json"
+    - cat "$GOOGLE_SERVICES_ABP_DEBUG" > "$(pwd)/app/src/worldAbp/debug/google-services.json"
     - mkdir "app/src/worldAbp/release"
-    - cat "$GOOGLE_SERVICES_ABP_RELEASE" > "$(pwd)/app/src/worldAbp/google-services.json"
+    - cat "$GOOGLE_SERVICES_ABP_RELEASE" > "$(pwd)/app/src/worldAbp/release/google-services.json"
     - mkdir -p "app/src/worldAdblock/debug"
     - cat "$GOOGLE_SERVICES_ADBLOCK_DEBUG" > "$(pwd)/app/src/worldAdblock/debug/google-services.json"
     - mkdir "app/src/worldAdblock/release"
