@@ -31,6 +31,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.core.AppInfo
+import org.adblockplus.adblockplussbrowser.core.BuildConfig
 import org.adblockplus.adblockplussbrowser.core.buildAppInfo
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.data.DataStoreCoreRepository
@@ -58,7 +59,9 @@ internal object CoreModule {
     @Singleton
     fun provideOkHttpClientLogger() =
         HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.HEADERS
+            if (BuildConfig.DEBUG) {
+                level = HttpLoggingInterceptor.Level.HEADERS // The default is Level.NONE
+            }
         }
 
     @Provides
