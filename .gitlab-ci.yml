@@ -51,7 +51,7 @@ variables:
 build:
   extends: .template_build
   script:
-    - ./gradlew --build-cache assembleAbp # build both debug and release
+    - ./gradlew --build-cache assembleWorldAbp # build both debug and release
   artifacts:
     paths:
       - $APK_DEBUG_PATH
