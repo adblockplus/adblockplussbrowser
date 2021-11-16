@@ -33,5 +33,7 @@ class LauncherActivity : AppCompatActivity() {
         viewModel.fetchDirection().observe(this) {
             navigate(it)
         }
+
+        viewModel.checkInstallReferrer()
     }
 }
