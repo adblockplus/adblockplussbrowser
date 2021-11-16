@@ -17,6 +17,7 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,27 +33,35 @@ internal class MainPreferencesFragment :
 
     override fun onBindView(binding: FragmentMainPreferencesBinding) {
         binding.viewModel = viewModel
+        val supportActionBar = (activity as AppCompatActivity).supportActionBar
+        supportActionBar?.subtitle = getString(R.string.app_subtitle)
+
         binding.mainPreferencesAdBlockingInclude.mainPreferencesPrimarySubscriptions.setOnClickListener {
+            supportActionBar?.subtitle = null
             val direction = MainPreferencesFragmentDirections
                 .actionMainPreferencesFragmentToPrimarySubscriptionsFragment()
             findNavController().navigate(direction)
         }
         binding.mainPreferencesAdBlockingInclude.mainPreferencesOtherSubscriptions.setOnClickListener {
+            supportActionBar?.subtitle = null
             val direction = MainPreferencesFragmentDirections
                 .actionMainPreferencesFragmentToOtherSubscriptionsFragment()
             findNavController().navigate(direction)
         }
         binding.mainPreferencesAdBlockingInclude.mainPreferencesAllowlist.setOnClickListener {
+            supportActionBar?.subtitle = null
             val direction = MainPreferencesFragmentDirections
                 .actionMainPreferencesFragmentToAllowlistFragment()
             findNavController().navigate(direction)
         }
         binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.setOnClickListener {
+            supportActionBar?.subtitle = null
             val direction = MainPreferencesFragmentDirections
                 .actionMainPreferencesFragmentToUpdateSubscriptionsFragment()
             findNavController().navigate(direction)
         }
         binding.mainPreferencesLanguagesOnboardingInclude.mainPreferencesLanguagesOnboardingOptionAdd.setOnClickListener {
+            supportActionBar?.subtitle = null
             viewModel.markLanguagesOnboardingComplete(true)
             val direction = MainPreferencesFragmentDirections
                 .actionMainPreferencesFragmentToPrimarySubscriptionsFragment()
@@ -62,11 +71,13 @@ internal class MainPreferencesFragment :
             viewModel.markLanguagesOnboardingComplete(false)
         }
         binding.mainPreferencesAcceptableAdsInclude.mainPreferencesAcceptableAds.setOnClickListener {
+            supportActionBar?.subtitle = null
             val direction = MainPreferencesFragmentDirections
                 .actionMainPreferencesFragmentToAcceptableAdsFragment()
             findNavController().navigate(direction)
         }
         binding.mainPreferencesAboutInclude.mainPreferencesAbout.setOnClickListener {
+            supportActionBar?.subtitle = null
             val direction = MainPreferencesFragmentDirections
                 .actionMainPreferencesFragmentToAboutFragment()
             findNavController().navigate(direction)
