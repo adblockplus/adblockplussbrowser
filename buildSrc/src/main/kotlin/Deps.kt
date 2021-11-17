@@ -175,6 +175,7 @@ object Deps {
     object OkHttp : DependencyGroup("com.squareup.okhttp3", "4.9.1") {
         val OKHTTP = dependency { name("okhttp") }
         val LOGGER = dependency { name("logging-interceptor") }
+        val MOCK_WEB_SERVER = dependency { name("mockwebserver") }
         val COROUTINES = dependency {
             groupPrefix("ru.gildor.coroutines")
             name("kotlin-coroutines-okhttp")
@@ -193,6 +194,11 @@ object Deps {
 
     object Android: DependencyGroup("com.android", "1.1") {
         val INSTALL_REFERRER = dependency { groupName("installreferrer:installreferrer") }
+    }
+
+    object Mockito : DependencyGroup("org.mockito", "4.0.0") {
+        val Core = dependency { name("mockito-core") }
+        val Kotlin = dependency { groupName("kotlin:mockito-kotlin") }
     }
 }
 
