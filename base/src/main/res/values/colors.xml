@@ -23,7 +23,7 @@
     <color name="abp_background_accent">@color/abp_blue_bayoux</color>
     <color name="abp_foreground">@color/abp_black</color>
     <color name="abp_foreground_secondary">@color/abp_blue_bayoux</color>
-    <color name="abp_foreground_accent">@color/abp_blue_ribbon</color>
+    <color name="foreground_accent">@color/ribbon</color>
     <color name="abp_divider">@color/abp_lynch_opacity_15</color>
 
     <!-- Used the following tool to name the colors:
@@ -47,6 +47,6 @@
     <color name="abp_oxford_blue">#3C4857</color>
 
     <color name="abp_dodger_blue">#2786FF</color>
-    <color name="abp_blue_ribbon">#0070FF</color>
+    <color name="ribbon">#0070FF</color>
 
 </resources>

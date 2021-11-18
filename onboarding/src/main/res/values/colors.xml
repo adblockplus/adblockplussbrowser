@@ -21,7 +21,7 @@
     <color name="abp_onboarding_foreground_secondary">@color/abp_lynch</color>
     <color name="abp_onboarding_icon_background">@color/abp_mercury</color>
     <color name="abp_onboarding_icon_foreground">@color/abp_white</color>
-    <color name="abp_onboarding_icon_foreground_accent">@color/abp_blue_ribbon</color>
+    <color name="abp_onboarding_icon_foreground_accent">@color/ribbon</color>
     <color name="abp_onboarding_dot_indicator_background">@color/abp_lynch_opacity_40</color>
     <color name="abp_onboarding_circular_indicator_background">@color/abp_lynch_opacity_30</color>
 

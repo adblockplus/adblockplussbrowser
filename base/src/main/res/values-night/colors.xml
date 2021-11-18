@@ -23,7 +23,7 @@
     <color name="abp_background_accent">@color/abp_mirage</color>
     <color name="abp_foreground">@color/abp_white</color>
     <color name="abp_foreground_secondary">@color/abp_regent_gray</color>
-    <color name="abp_foreground_accent">@color/abp_dodger_blue</color>
+    <color name="foreground_accent">@color/abp_dodger_blue</color>
     <color name="abp_divider">@color/abp_regent_gray_opacity_15</color>
 
 </resources>

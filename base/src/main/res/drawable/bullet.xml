@@ -19,7 +19,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval">
 
-    <solid android:color="@color/abp_foreground_accent" />
+    <solid android:color="@color/foreground_accent" />
 
     <size
         android:width="5dp"
