@@ -28,6 +28,8 @@ plugins {
 
 applyCommonConfig()
 
+createFlavorsConfig()
+
 dependencies {
     implementation(project(":analytics"))
     implementation(project(":base"))

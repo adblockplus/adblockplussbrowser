@@ -22,3 +22,5 @@ plugins {
 }
 
 applyCommonConfig()
+
+createFlavorsConfig()

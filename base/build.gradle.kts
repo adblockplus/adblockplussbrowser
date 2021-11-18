@@ -32,6 +32,8 @@ android {
     }
 }
 
+createFlavorsConfig()
+
 dependencies {
     implementation(project(":i18n"))
 

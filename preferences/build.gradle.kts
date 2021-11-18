@@ -33,6 +33,8 @@ android {
     }
 }
 
+createFlavorsConfig()
+
 configurations {
     all {
         exclude(module = "commons-logging")
