@@ -53,11 +53,6 @@ android {
             }
         }
 
-        create("adblock") {
-            dimension = productDimension
-            applicationId = "com.betafish.adblocksbrowser"
-        }
-
         create("crystal") {
             dimension = productDimension
             applicationId = "co.crystalapp.crystal"
