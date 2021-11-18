@@ -53,7 +53,7 @@
   <path
       android:pathData="M22.8284,35.3075C24.147,36.2321 25.9159,36.2307 27.233,35.304C33.7186,30.7343 36.1393,24.7166 36.9732,17.7273C37.1792,16.0213 36.1811,14.3959 34.5513,13.7835C28.1318,11.3903 21.7584,11.4118 15.4279,13.8107C13.8346,14.4177 12.8488,15.9978 13.019,17.6722C13.7233,24.672 16.27,30.7051 22.8284,35.3075Z"
       android:strokeWidth="1"
-      android:fillColor="#0070FF"
+      android:fillColor="@color/abp_onboarding_icon_foreground_accent"
       android:fillType="evenOdd"
       android:strokeColor="#00000000"/>
   <path
