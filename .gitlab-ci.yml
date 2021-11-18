@@ -6,12 +6,8 @@ stages:
 image: gradle:jdk8
 
 variables:
-  # only `worldAbp` flavor is considered for now
-  APK_OUTPUT_PATH: "app/build/outputs/apk/worldAbp"
-  MAPPING_OUTPUT_PATH: "app/build/outputs/mapping/worldAbpRelease"
-  APK_DEBUG_PATH: "$APK_OUTPUT_PATH/debug/app-world-abp-debug.apk"
-  APK_RELEASE_UNSIGNED_PATH: "$APK_OUTPUT_PATH/release/app-world-abp-release-unsigned.apk"
-  APK_RELEASE_SIGNED_PATH: "$APK_OUTPUT_PATH/release/"
+  APK_OUTPUT_PATH: "app/build/outputs/apk"
+  MAPPING_OUTPUT_PATH: "app/build/outputs/mapping"
 
 # we would need a template for other type of builds
 .template_build:
@@ -51,11 +47,11 @@ variables:
 build:
   extends: .template_build
   script:
-    - ./gradlew --build-cache assembleWorldAbp # build both debug and release
+    - ./gradlew --build-cache assemble # build both debug and release for all flavors
   artifacts:
     paths:
-      - $APK_DEBUG_PATH
-      - $APK_RELEASE_UNSIGNED_PATH
+      # saving all flavors with apks and `output-metadata.json`
+      - $APK_OUTPUT_PATH
       - $MAPPING_OUTPUT_PATH
   rules:
     - when: always
@@ -80,7 +76,9 @@ sign_apks:
     - mv ./*_SIGNED.apk app/build/outputs/apk/worldAbp/release/
   artifacts:
     paths:
-      - $APK_RELEASE_SIGNED_PATH
+      - "$APK_OUTPUT_PATH/worldAbp/release/"  
+      - "$APK_OUTPUT_PATH/worldAdblock/release/"
+      - "$APK_OUTPUT_PATH/worldCrystal/release/"
     expire_in: "1 week"
   rules:
     - when: always
