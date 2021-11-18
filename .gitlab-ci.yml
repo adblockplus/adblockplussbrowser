@@ -31,7 +31,18 @@ variables:
     - set +o pipefail
     - yes | android-sdk-linux/tools/bin/sdkmanager --licenses >/dev/null
     - set -o pipefail
-    - cat "$GOOGLE_SERVICES" > "$(pwd)/app/google-services.json"
+    - mkdir -p "app/src/worldAbp/debug"
+    - cat "$GOOGLE_SERVICES_ABP_DEBUG" > "$(pwd)/app/src/worldAbp/debug/google-services.json"
+    - mkdir "app/src/worldAbp/release"
+    - cat "$GOOGLE_SERVICES_ABP_RELEASE" > "$(pwd)/app/src/worldAbp/release/google-services.json"
+    - mkdir -p "app/src/worldAdblock/debug"
+    - cat "$GOOGLE_SERVICES_ADBLOCK_DEBUG" > "$(pwd)/app/src/worldAdblock/debug/google-services.json"
+    - mkdir "app/src/worldAdblock/release"
+    - cat "$GOOGLE_SERVICES_ADBLOCK_RELEASE" > "$(pwd)/app/src/worldAdblock/release/google-services.json"
+    - mkdir -p "app/src/worldCrystal/debug"
+    - cat "$GOOGLE_SERVICES_CRYSTAL_DEBUG" > "$(pwd)/app/src/worldCrystal/debug/google-services.json"
+    - mkdir "app/src/worldCrystal/release"
+    - cat "$GOOGLE_SERVICES_CRYSTAL_RELEASE" > "$(pwd)/app/src/worldCrystal/release/google-services.json"
   cache:
     key: debug-keystore
     paths:

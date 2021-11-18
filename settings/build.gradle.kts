@@ -38,6 +38,8 @@ dependencies {
     kapt(Deps.Hilt.ANDROID_COMPILER)
 }
 
+createFlavorsConfig()
+
 protobuf {
     protoc {
         artifact = Deps.Protobuf.PROTOC

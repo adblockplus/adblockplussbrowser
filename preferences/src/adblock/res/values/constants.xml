@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ This file is part of Adblock Plus <https://adblockplus.org/>,
+ Copyright (C) 2006-present eyeo GmbH
+
+ Adblock Plus is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License version 3 as
+ published by the Free Software Foundation.
+
+ Adblock Plus is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <string name="about_imprint_text" translatable="false"><![CDATA[<br/><p><b><strong>Adblock, Inc.</strong></b><br/>12333 Sowden Road Suite B PO Box #99623<br/>Houston, Texas 77080-2059<br/>USA</p><p>Support: <a href=\"https://help.getadblock.com/support/home\">AdBlock Help</a><br/>Email: <a href=\"mailto:help@getadblock.com\">help@getadblock.com</a>]]></string>
+    <string name="url_privacy_policy" translatable="false">https://getadblock.com/privacy/</string>
+    <string name="url_terms_of_use" translatable="false">https://getadblock.com/terms/</string>
+</resources>
