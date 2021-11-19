@@ -31,6 +31,7 @@ import okio.sink
 import okio.source
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.core.AppInfo
+import org.adblockplus.adblockplussbrowser.core.CoreSubscriptionsManager
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscription
 import org.adblockplus.adblockplussbrowser.core.data.model.exists
@@ -180,16 +181,17 @@ internal class OkHttpDownloader(
                           previousDownload: DownloadedSubscription =
                               DownloadedSubscription(subscription.url)
     ): HttpUrl {
-        return subscription.url.sanatizeUrl().toHttpUrl().newBuilder().apply {
-            addQueryParameter("addonName", appInfo.addonName)
-            addQueryParameter("addonVersion", appInfo.addonVersion)
-            addQueryParameter("application", appInfo.application)
-            addQueryParameter("applicationVersion", appInfo.applicationVersion)
-            addQueryParameter("platform", appInfo.platform)
-            addQueryParameter("platformVersion", appInfo.platformVersion)
-            addQueryParameter("lastVersion", previousDownload.version)
-            addQueryParameter("downloadCount", previousDownload.downloadCount.asDownloadCount())
-        }.build()
+        return CoreSubscriptionsManager.randomizeUrl(subscription.url).sanatizeUrl().toHttpUrl()
+            .newBuilder().apply {
+                addQueryParameter("addonName", appInfo.addonName)
+                addQueryParameter("addonVersion", appInfo.addonVersion)
+                addQueryParameter("application", appInfo.application)
+                addQueryParameter("applicationVersion", appInfo.applicationVersion)
+                addQueryParameter("platform", appInfo.platform)
+                addQueryParameter("platformVersion", appInfo.platformVersion)
+                addQueryParameter("lastVersion", previousDownload.version)
+                addQueryParameter("downloadCount", previousDownload.downloadCount.asDownloadCount())
+            }.build()
     }
 
     private fun createDownloadRequest(

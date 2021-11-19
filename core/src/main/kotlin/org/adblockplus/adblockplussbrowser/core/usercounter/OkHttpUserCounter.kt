@@ -27,6 +27,7 @@ import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.core.AppInfo
 import org.adblockplus.adblockplussbrowser.core.BuildConfig
+import org.adblockplus.adblockplussbrowser.core.CoreSubscriptionsManager
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.extensions.currentData
 import org.adblockplus.adblockplussbrowser.core.extensions.currentSettings
@@ -119,17 +120,18 @@ internal class OkHttpUserCounter(
                           savedLastUserCountingResponse: Long,
                           currentUserCountingCount: Int
     ): HttpUrl {
-        return subscription.url.sanatizeUrl().toHttpUrl().newBuilder().apply {
-            addQueryParameter("addonName", appInfo.addonName)
-            addQueryParameter("addonVersion", appInfo.addonVersion)
-            addQueryParameter("application", appInfo.application)
-            addQueryParameter("applicationVersion", appInfo.applicationVersion)
-            addQueryParameter("platform", appInfo.platform)
-            addQueryParameter("platformVersion", appInfo.platformVersion)
-            addQueryParameter("disabled", (!acceptableAdsEnabled).toString())
-            addQueryParameter("lastVersion", savedLastUserCountingResponse.toString())
-            addQueryParameter("downloadCount", currentUserCountingCount.asDownloadCount())
-        }.build()
+        return CoreSubscriptionsManager.randomizeUrl(subscription.url).sanatizeUrl().toHttpUrl()
+            .newBuilder().apply {
+                addQueryParameter("addonName", appInfo.addonName)
+                addQueryParameter("addonVersion", appInfo.addonVersion)
+                addQueryParameter("application", appInfo.application)
+                addQueryParameter("applicationVersion", appInfo.applicationVersion)
+                addQueryParameter("platform", appInfo.platform)
+                addQueryParameter("platformVersion", appInfo.platformVersion)
+                addQueryParameter("disabled", (!acceptableAdsEnabled).toString())
+                addQueryParameter("lastVersion", savedLastUserCountingResponse.toString())
+                addQueryParameter("downloadCount", currentUserCountingCount.asDownloadCount())
+            }.build()
     }
 
     companion object {

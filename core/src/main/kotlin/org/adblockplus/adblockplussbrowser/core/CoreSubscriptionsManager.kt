@@ -209,9 +209,17 @@ class CoreSubscriptionsManager(
         return (list.filterNot { otherList.contains(it) } + otherList.filterNot { list.contains(it) }).isNotEmpty()
     }
 
-    private companion object {
+    companion object {
         private val UPDATE_INTERVAL = Duration.hours(6)
         private val FLEX_UPDATE_INTERVAL = Duration.minutes(30)
         private val INITIAL_UPDATE_DELAY = Duration.hours(6)
+
+        fun randomizeUrl(baseUrl: String) : String {
+            if (!baseUrl.contains("filter-list-downloads.eyeo.com")) {
+                return baseUrl
+            }
+            val replacement = "samsung-internet-" + (0..9).random() + ".filter-list-downloads"
+            return baseUrl.replace("filter-list-downloads", replacement)
+        }
     }
 }

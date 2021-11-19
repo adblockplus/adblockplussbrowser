@@ -20,101 +20,101 @@ package org.adblockplus.adblockplussbrowser.settings.data.local
 internal class HardcodedSubscriptions {
 
     val easylist = subscription {
-        url = "https://easylist-downloads.adblockplus.org/easylist.txt"
+        url = "https://filter-list-downloads.eyeo.com/easylist.txt"
         languages("en")
     }
 
     val acceptableAds = subscription {
         title = "Acceptable Ads"
-        url = "https://easylist-downloads.adblockplus.org/exceptionrules.txt"
+        url = "https://filter-list-downloads.eyeo.com/exceptionrules.txt"
     }
 
     // Based on: https://gitlab.com/eyeo/adblockplus/adblockpluscore/-/blob/next/data/subscriptions.json
     val defaultPrimarySubscriptions = listOf(easylist) + subscriptions {
         subscription {
-            url = "https://easylist-downloads.adblockplus.org/abpindo.txt"
+            url = "https://filter-list-downloads.eyeo.com/abpindo.txt"
             languages("id", "ms")
         }
         subscription {
-            url = "https://easylist-downloads.adblockplus.org/abpvn.txt"
+            url = "https://filter-list-downloads.eyeo.com/abpvn.txt"
             languages("vi")
         }
         subscription {
-            url = "https://easylist-downloads.adblockplus.org/bulgarian_list.txt"
+            url = "https://filter-list-downloads.eyeo.com/bulgarian_list.txt"
             languages("bg")
         }
         subscription {
-            url = "https://easylist-downloads.adblockplus.org/dandelion_sprouts_nordic_filters.txt"
+            url = "https://filter-list-downloads.eyeo.com/dandelion_sprouts_nordic_filters.txt"
             languages("no", "nb", "nn", "da", "is", "fo", "kl")
         }
         subscription {
-            url = "https://easylist-downloads.adblockplus.org/easylistchina.txt"
+            url = "https://filter-list-downloads.eyeo.com/easylistchina.txt"
             languages("zh")
         }
         subscription {
-            url = "https://easylist-downloads.adblockplus.org/easylistczechslovak.txt"
+            url = "https://filter-list-downloads.eyeo.com/easylistczechslovak.txt"
             languages("cs", "sk")
         }
         subscription {
-            url = "https://easylist-downloads.adblockplus.org/easylistdutch.txt"
+            url = "https://filter-list-downloads.eyeo.com/easylistdutch.txt"
             languages("nl")
         }
         subscription {
-            url = "https://easylist-downloads.adblockplus.org/easylistgermany.txt"
+            url = "https://filter-list-downloads.eyeo.com/easylistgermany.txt"
             languages("de")
         }
         subscription {
-            url = "https://easylist-downloads.adblockplus.org/israellist.txt"
+            url = "https://filter-list-downloads.eyeo.com/israellist.txt"
             languages("he")
         }
         subscription {
-            url = "https://easylist-downloads.adblockplus.org/easylistitaly.txt"
+            url = "https://filter-list-downloads.eyeo.com/easylistitaly.txt"
             languages("it")
         }
         subscription {
-            url = "https://easylist-downloads.adblockplus.org/easylistlithuania.txt"
+            url = "https://filter-list-downloads.eyeo.com/easylistlithuania.txt"
             languages("lt")
         }
         subscription {
-            url = "https://easylist-downloads.adblockplus.org/easylistpolish.txt"
+            url = "https://filter-list-downloads.eyeo.com/easylistpolish.txt"
             languages("pl")
         }
         subscription {
-            url = "https://easylist-downloads.adblockplus.org/easylistportuguese.txt"
+            url = "https://filter-list-downloads.eyeo.com/easylistportuguese.txt"
             languages("pt")
         }
         subscription {
-            url = "https://easylist-downloads.adblockplus.org/easylistspanish.txt"
+            url = "https://filter-list-downloads.eyeo.com/easylistspanish.txt"
             languages("es")
         }
         subscription {
-            url = "https://easylist-downloads.adblockplus.org/indianlist.txt"
+            url = "https://filter-list-downloads.eyeo.com/indianlist.txt"
             languages("bn", "gu", "hi", "pa", "as", "mr", "ml", "te", "kn", "or", "ne", "si")
         }
         subscription {
-            url = "https://easylist-downloads.adblockplus.org/koreanlist.txt"
+            url = "https://filter-list-downloads.eyeo.com/koreanlist.txt"
             languages("ko")
         }
         subscription {
-            url = "https://easylist-downloads.adblockplus.org/latvianlist.txt"
+            url = "https://filter-list-downloads.eyeo.com/latvianlist.txt"
             languages("lv")
         }
         subscription {
             // FIXME - using combined list, since only liste_ar+liste_fr.txt is not available
-            url = "https://easylist-downloads.adblockplus.org/liste_ar+liste_fr+easylist.txt"
+            url = "https://filter-list-downloads.eyeo.com/liste_ar+liste_fr+easylist.txt"
             languages("ar")
         }
         subscription {
-            url = "https://easylist-downloads.adblockplus.org/liste_fr.txt"
+            url = "https://filter-list-downloads.eyeo.com/liste_fr.txt"
             languages("fr")
         }
         subscription {
-            url = "https://easylist-downloads.adblockplus.org/rolist.txt"
+            url = "https://filter-list-downloads.eyeo.com/rolist.txt"
             languages("ro")
         }
         subscription {
             // FIXME - using combined list, since only ruadlist.txt is not available
-            url = "https://easylist-downloads.adblockplus.org/ruadlist+easylist.txt"
+            url = "https://filter-list-downloads.eyeo.com/ruadlist+easylist.txt"
             languages("ru", "uk")
         }
     }
@@ -122,12 +122,12 @@ internal class HardcodedSubscriptions {
     // TODO: Decide which title we want for the following and if we want to localize them:
     val additionalTracking = subscription {
         title = "Block additional tracking"
-        url = "https://easylist-downloads.adblockplus.org/easyprivacy.txt"
+        url = "https://filter-list-downloads.eyeo.com/easyprivacy.txt"
     }
 
     val socialMediaTracking = subscription {
         title = "Block social media icons tracking"
-        url = "https://easylist-downloads.adblockplus.org/fanboy-social.txt"
+        url = "https://filter-list-downloads.eyeo.com/fanboy-social.txt"
     }
     val defaultOtherSubscriptions = listOf(additionalTracking, socialMediaTracking)
 

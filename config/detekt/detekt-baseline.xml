@@ -18,24 +18,24 @@
     <ID>MatchingDeclarationName:DiffUtil.kt$Changes</ID>
     <ID>MaxLineLength:AcceptableAdsFragment.kt$AcceptableAdsFragment$internal</ID>
     <ID>MaxLineLength:PrimarySubscriptionsViewModel.kt$PrimarySubscriptionsViewModel$if (active) R.string.primary_subscriptions_active_category else R.string.primary_subscriptions_inactive_category</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/abpindo+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/abpindo.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/abpvn+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/abpvn.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/bulgarian_list+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/bulgarian_list.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/easylistchina.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/easylistczechslovak+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/easylistczechslovak.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/easylistdutch+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/easylistdutch.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/easylistgermany+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/easylistgermany.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/easylistitaly+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/easylistitaly.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/easylistlithuania+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/easylistlithuania.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/easylistpolish+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/easylistpolish.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/easylistportuguese+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/easylistportuguese.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/easylistspanish+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/easylistspanish.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/indianlist+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/indianlist.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/israellist+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/israellist.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/koreanlist+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/koreanlist.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/latvianlist+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/latvianlist.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/liste_fr+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/liste_fr.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/rolist+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/rolist.txt"</ID>
+    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://filter-list-downloads.eyeo.com/abpindo+easylist.txt" -&gt; "https://filter-list-downloads.eyeo.com/abpindo.txt"</ID>
+    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://filter-list-downloads.eyeo.com/abpvn+easylist.txt" -&gt; "https://filter-list-downloads.eyeo.com/abpvn.txt"</ID>
+    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://filter-list-downloads.eyeo.com/bulgarian_list+easylist.txt" -&gt; "https://filter-list-downloads.eyeo.com/bulgarian_list.txt"</ID>
+    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://filter-list-downloads.eyeo.com/easylistchina+easylist.txt" -&gt; "https://filter-list-downloads.eyeo.com/easylistchina.txt"</ID>
+    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://filter-list-downloads.eyeo.com/easylistczechslovak+easylist.txt" -&gt; "https://filter-list-downloads.eyeo.com/easylistczechslovak.txt"</ID>
+    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://filter-list-downloads.eyeo.com/easylistdutch+easylist.txt" -&gt; "https://filter-list-downloads.eyeo.com/easylistdutch.txt"</ID>
+    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://filter-list-downloads.eyeo.com/easylistgermany+easylist.txt" -&gt; "https://filter-list-downloads.eyeo.com/easylistgermany.txt"</ID>
+    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://filter-list-downloads.eyeo.com/easylistitaly+easylist.txt" -&gt; "https://filter-list-downloads.eyeo.com/easylistitaly.txt"</ID>
+    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://filter-list-downloads.eyeo.com/easylistlithuania+easylist.txt" -&gt; "https://filter-list-downloads.eyeo.com/easylistlithuania.txt"</ID>
+    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://filter-list-downloads.eyeo.com/easylistpolish+easylist.txt" -&gt; "https://filter-list-downloads.eyeo.com/easylistpolish.txt"</ID>
+    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://filter-list-downloads.eyeo.com/easylistportuguese+easylist.txt" -&gt; "https://filter-list-downloads.eyeo.com/easylistportuguese.txt"</ID>
+    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://filter-list-downloads.eyeo.com/easylistspanish+easylist.txt" -&gt; "https://filter-list-downloads.eyeo.com/easylistspanish.txt"</ID>
+    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://filter-list-downloads.eyeo.com/indianlist+easylist.txt" -&gt; "https://filter-list-downloads.eyeo.com/indianlist.txt"</ID>
+    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://filter-list-downloads.eyeo.com/israellist+easylist.txt" -&gt; "https://filter-list-downloads.eyeo.com/israellist.txt"</ID>
+    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://filter-list-downloads.eyeo.com/koreanlist+easylist.txt" -&gt; "https://filter-list-downloads.eyeo.com/koreanlist.txt"</ID>
+    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://filter-list-downloads.eyeo.com/latvianlist+easylist.txt" -&gt; "https://filter-list-downloads.eyeo.com/latvianlist.txt"</ID>
+    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://filter-list-downloads.eyeo.com/liste_fr+easylist.txt" -&gt; "https://filter-list-downloads.eyeo.com/liste_fr.txt"</ID>
+    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://filter-list-downloads.eyeo.com/rolist+easylist.txt" -&gt; "https://filter-list-downloads.eyeo.com/rolist.txt"</ID>
     <ID>MaxLineLength:UpdateSubscriptionsFragment.kt$UpdateSubscriptionsFragment$class</ID>
     <ID>MemberNameEqualsClassName:Deps.kt$Deps.AndroidX.DataStore$val DATASTORE = dependency { name("datastore") }</ID>
     <ID>MemberNameEqualsClassName:Deps.kt$Deps.OkHttp$val OKHTTP = dependency { name("okhttp") }</ID>
