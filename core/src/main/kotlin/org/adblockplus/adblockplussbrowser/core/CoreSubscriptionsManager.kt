@@ -214,10 +214,18 @@ class CoreSubscriptionsManager(
         private val FLEX_UPDATE_INTERVAL = Duration.minutes(30)
         private val INITIAL_UPDATE_DELAY = Duration.hours(6)
 
-        fun randomizeUrl(baseUrl: String) : String {
-            if (!baseUrl.contains("filter-list-downloads.eyeo.com")) {
+        fun updateUrl(baseUrl: String) : String {
+            // Make baseUrl mutable
+            var baseUrl = baseUrl
+            if (baseUrl.contains("easylist-downloads.adblockplus.org")) {
+                baseUrl = baseUrl.replace("easylist-downloads.adblockplus.org",
+                    "filter-list-downloads.eyeo.com")
+            }
+            if (!baseUrl.contains("filter-list-downloads.eyeo.com") ||
+                baseUrl.contains("samsung-internet-")) {
                 return baseUrl
             }
+
             val replacement = "samsung-internet-" + (0..9).random() + ".filter-list-downloads"
             return baseUrl.replace("filter-list-downloads", replacement)
         }

@@ -181,7 +181,7 @@ internal class OkHttpDownloader(
                           previousDownload: DownloadedSubscription =
                               DownloadedSubscription(subscription.url)
     ): HttpUrl {
-        return CoreSubscriptionsManager.randomizeUrl(subscription.url).sanatizeUrl().toHttpUrl()
+        return CoreSubscriptionsManager.updateUrl(subscription.url).sanatizeUrl().toHttpUrl()
             .newBuilder().apply {
                 addQueryParameter("addonName", appInfo.addonName)
                 addQueryParameter("addonVersion", appInfo.addonVersion)
