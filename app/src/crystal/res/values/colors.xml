@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="crystal_icon_gradient_start">#6becff</color>
+    <color name="crystal_icon_gradient_end">#138bbf</color>
+</resources>
