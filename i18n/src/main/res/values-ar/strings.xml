@@ -1,0 +1,131 @@
+<!--
+ This file is part of Adblock Plus <https://adblockplus.org/>,
+ Copyright (C) 2006-present eyeo GmbH
+
+ Adblock Plus is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License version 3 as
+ published by the Free Software Foundation.
+
+ Adblock Plus is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<resources>
+    <!-- app-->
+    <string name="app_name">Adblock Plus لـ Samsung Internet</string>
+    <string name="app_subtitle">لـ Samsung Internet</string>
+    <string name="samsung_internet_required_title">Samsung Internet مطلوب</string>
+    <string name="samsung_internet_required_description">Adblock Plus هو تطبيق يقوم في عمله على استخدام المتصفح Samsung Internet وذلك لتصفية الإعلانات أثناء استخدامك المتصفح. ولكي يعمل Adblock Plus بفعالية، يجب أن يكون الإصدار 4.0 أو إصدار أحدث للمتصفح Samsung Internet مُثبَّتًا على جهازك.\nويمكنك الحصول على المتصفح Samsung Internet بالنقر فوق الزر أدناه.</string>
+    <string name="download_samsung_internet">تنزيل Samsung Internet</string>
+    <string name="update_status_progress_message">جارٍ إحضار تحديثات قوائم عوامل التصفية...</string>
+    <string name="update_status_error_message">خطأ أثناء التحديث: يُرجى إعادة المحاولة</string>
+    <string name="update_status_retry">إعادة المحاولة</string>
+
+    <!-- base-->
+    <string name="product_name">Adblock Plus</string>
+    <string name="target_name">لـ Samsung Internet</string>
+    <string name="acceptable_ads">الإعلانات المقبولة</string>
+    <string name="intrusive_ads">الإعلانات التطفلية</string>
+    <string name="acceptable_ads_fair_standard_title">المعيار المقبول</string>
+    <string name="acceptable_ads_fair_standard_description">الإعلانات المعروضة ضمن "الإعلانات المقبولة" لا تكون أبدًا إعلانات فيديو أو صوتية أو منبثقة</string>
+    <string name="acceptable_ads_placement_title">تعيين الموضع</string>
+    <string name="acceptable_ads_placement_description">عدم التشويش على التدفق الطبيعي للقراءة</string>
+    <string name="acceptable_ads_distinction_title">التمييز</string>
+    <string name="acceptable_ads_distinction_description">الإعلانات المعروضة ضمن "الإعلانات المقبولة" يتم دائمًا تمييزها بوضوح على أنها إعلانات</string>
+    <string name="acceptable_ads_size_title">الحجم</string>
+    <string name="acceptable_ads_size_description">يكون نطاقها أقل من 15% من الشاشة عند التحميل المبدئي</string>
+
+    <!-- onboarding -->
+    <string name="onboarding_welcome_header_title1">مرحبًا بك في</string>
+    <string name="onboarding_welcome_block_ads_title">حجب الإعلانات المزعجة</string>
+    <string name="onboarding_welcome_block_ads_description">تصفَّح بدون إعلانات، وفي الوقت ذاته، ادعم منشئي المحتوى من خلال "الإعلانات المقبولة"</string>
+    <string name="onboarding_welcome_tracking_protection_title">الحماية من التعقب</string>
+    <string name="onboarding_welcome_tracking_protection_description">تصفَّح على نحوٍ أكثر أمانًا بمنع مواقع الويب من تعقبك عبر الويب</string>
+    <string name="onboarding_welcome_security_privacy_title">تحسين الأمان والخصوصية</string>
+    <string name="onboarding_welcome_security_privacy_description">تصفَّح بدون قلق مع Adblock Plus الذي يحميك في الخلفية</string>
+    <string name="onboarding_welcome_language_filters_title">قوائم عوامل تصفية بلغة محددة</string>
+    <string name="onboarding_welcome_language_filters_description">احجب مزيدًا من الإعلانات عن طريق تحسين Adblock Plus للغات التي تتصفح بها عادةً</string>
+
+    <string name="onboarding_privacy_header_title1">يُرجى قراءة</string>
+    <string name="onboarding_privacy_header_title2">سياسة الخصوصية</string>
+    <string name="onboarding_privacy_header_title3">عن طريق فتح الرابط التالي</string>
+    <string name="onboarding_privacy_block_title">يمكنك مساعدتنا في تحسين الويب</string>
+    <string name="onboarding_privacy_block_description">يُرجى قراءة سياسة الخصوصية المعمول بها لدينا عن طريق تتبُّع الرابط. ويوجد موجز قصير مألوف للمستخدم بشأن الأشياء التي نجمعها وذلك في البداية</string>
+    <string name="onboarding_privacy_block_link_text"><a href="https://adblockplus.org/privacy">سياسة الخصوصية</a></string>
+
+    <string name="onboarding_acceptable_ads_header_title1">يمكنك المساهمة</string>
+    <string name="onboarding_acceptable_ads_header_title3">ودعم منشئي المحتوى</string>
+    <string name="onboarding_acceptable_ads_annoying_ads_title">الإعلانات المزعجة يتم حجبها دائمًا</string>
+    <string name="onboarding_acceptable_ads_annoying_ads_description">سيتم دائمًا حجب الإعلانات المزعجة التي تشتت انتباهك عن المحتوى الذي تحبه</string>
+    <string name="onboarding_acceptable_ads_nonintrusive_ads_title">عدد صغير من الإعلانات غير التطفلية يتم عرضه افتراضيًا</string>
+    <string name="onboarding_acceptable_ads_nonintrusive_ads_description">سيتم عرض الإعلانات التي لا تتعارض مع تجربة التصفح، وذلك لكي يتمكن منشئو المحتوى من مواصلة نشر محتواهم</string>
+    <string name="onboarding_acceptable_ads_nonintrusive_ads_example">اعرض لي مثالاً</string>
+    <string name="onboarding_acceptable_ads_disable_title">التعطيل في أي وقت</string>
+    <string name="onboarding_acceptable_ads_disable_description">يمكنك تغيير هذا الإعداد بالنقر فوق الخيار \"السماح ببعض الإعلانات غير التطفلية\"</string>
+
+    <string name="onboarding_enable_header_title1">إليك كيفية</string>
+    <string name="onboarding_enable_header_title2">تمكين Adblock Plus</string>
+    <string name="onboarding_enable_one_step_title">خطوة أخيرة أمامك على الانتهاء</string>
+    <string name="onboarding_enable_one_step_description">قم بتمكين Adblock Plus في إعدادات حاجب الإعلانات بالمتصفح Samsung Internet</string>
+
+    <string name="open_samsung_internet">فتح Samsung Internet</string>
+    <!-- /onboarding -->
+
+    <!-- preferences -->
+    <string name="preferences_ad_blocking_category">خيارات حجب الإعلانات</string>
+    <string name="preferences_primary_subscriptions_title">اللغة</string>
+    <string name="preferences_primary_subscriptions_summary">احجب مزيدًا من الإعلانات عن طريق تحسين Adblock Plus للغة (اللغات) التي تتصفح بها عادةً</string>
+    <string name="preferences_other_subscriptions_title">المزيد من خيارات الحجب</string>
+    <string name="preferences_other_subscriptions_summary">يمكنك إزالة التعقب أو أزرار وسائل التواصل الاجتماعي أو قوائم عوامل تصفية مخصصة</string>
+    <string name="preferences_allowlist_title">إضافة مواقع ويب إلى القائمة المسموح بها</string>
+    <string name="preferences_allowlist_summary">يمكنك تعطيل حجب الإعلانات على مواقع ويب تختارها</string>
+    <string name="preferences_allowlist_header">مواقع الويب المسموح بها</string>
+    <string name="preferences_updates_title">تحديث قوائم عوامل تصفية الإعلانات</string>
+    <string name="preferences_updates_subtitle">يمكنك تكوين موعد تحديث القوائم المستخدمة لتصفية الإعلانات</string>
+    <string name="preferences_automatic_updates_title">تحديثات تلقائية</string>
+    <string name="preferences_automatic_updates_wifi_only">واي فاي فقط</string>
+    <string name="preferences_automatic_updates_always">دائمًا</string>
+    <string name="preferences_update_subscriptions_title">تحديث الآن</string>
+    <string name="preferences_acceptable_ads_title">السماح ببعض الإعلانات غير التطفلية</string>
+    <string name="preferences_acceptable_ads_summary">الإعلانات المزعجة يتم حجبها دائمًا، في حين أنّ بعض الإعلانات غير التطفلية يتم عرضها بشكل افتراضي، بحيث يمكن لمنشئي المحتوى نشر محتواهم مجانًا</string>
+    <string name="preferences_acceptable_ads_action">نعم، سأدعم منشئي المحتوى</string>
+    <string name="preferences_about_title">معلومات</string>
+    <string name="primary_subscriptions_active_category">تم إدخال تحسينات عليه للتصفح بـ</string>
+    <string name="primary_subscriptions_inactive_category">لغات إضافية</string>
+    <string name="subscription_last_update">تاريخ آخر تحديث: %s</string>
+    <string name="subscription_last_update_never">أبدًا</string>
+    <string name="other_subscriptions_default_category">قوائم عوامل تصفية مُضمَّنة</string>
+    <string name="other_subscriptions_custom_category">قوائم عوامل تصفية مخصصة نشطة</string>
+    <string name="other_subscriptions_add_custom_title">إضافة قائمة عوامل تصفية مخصصة</string>
+    <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
+    <string name="other_subscriptions_remove_custom_title">تأكيد الحذف</string>
+    <string name="other_subscriptions_remove_custom_message">هل تريد بالتأكيد حذف قائمة عوامل التصفية المخصصة من %s؟</string>
+    <string name="other_subscriptions_dialog_title">إضافة قائمة عوامل تصفية مخصصة</string>
+    <string name="other_subscriptions_dialog_message">قد يستغرق هذا بضع ثوانٍ</string>
+    <string name="other_subscriptions_error_add_custom">حدث خطأ أثناء إضافة قائمة عوامل التصفية المخصصة</string>
+    <string name="allowlist_add_title">إضافة موقع ويب إلى القائمة المسموح بها</string>
+    <string name="allowlist_add_hint">example.com</string>
+    <string name="allowlist_delete_dialog_title">تأكيد الحذف</string>
+    <string name="allowlist_delete_dialog_message">هل تريد بالتأكيد إزالة %s من القائمة المسموح بها؟</string>
+    <string name="acceptable_ads_enabled_line1">نعم، سأدعم منشئي المحتوى</string>
+    <string name="acceptable_ads_enabled_line2">عن طريق تمكين "الإعلانات المقبولة"، فإنك تساعد منشئي المحتوى على نشر محتواهم مجانًا</string>
+    <string name="acceptable_ads_disabled">لا، أود تعطيل "الإعلانات المقبولة"</string>
+    <string name="about_privacy_policy">سياسة الخصوصية</string>
+    <string name="about_terms_of_use">شروط الاستخدام</string>
+    <string name="about_imprint">الدمغة</string>
+    <string name="open_source_licenses">التراخيص مفتوحة المصدر</string>
+    <string name="version">الإصدار</string>
+    <string name="share_events_header">المساعدة في تحسين Adblock Plus</string>
+    <string name="share_events_title">مشاركة بيانات مجهولة المصدر</string>
+    <string name="share_events_description">تساعدنا البيانات مجهولة المصدر على تحسين Adblock Plus؛ وهو ما يوفر لك تجربة تصفح أفضل.</string>
+    <string name="share_events_consent">نعم، سأشارك بعض البيانات مجهولة المصدر.</string>
+    <string name="languages_onboarding_title">هل تريد التصفح بلغات متعددة؟</string>
+    <string name="languages_onboarding_description">احجب مزيدًا من الإعلانات عن طريق تحسين Adblock Plus للغة (اللغات) التي تتصفح بها عادةً.</string>
+    <string name="languages_onboarding_option_add">أضف لغة إضافية لحجب الإعلانات.</string>
+    <string name="languages_onboarding_option_skip">لا، شكرًا، لا أتصفح سوى بلغة واحدة.</string>
+
+</resources>

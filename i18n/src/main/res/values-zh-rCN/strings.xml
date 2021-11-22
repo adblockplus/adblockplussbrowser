@@ -1,0 +1,131 @@
+<!--
+ This file is part of Adblock Plus <https://adblockplus.org/>,
+ Copyright (C) 2006-present eyeo GmbH
+
+ Adblock Plus is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License version 3 as
+ published by the Free Software Foundation.
+
+ Adblock Plus is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<resources>
+    <!-- app-->
+    <string name="app_name">三星浏览器专用 Adblock Plus</string>
+    <string name="app_subtitle">三星浏览器专用</string>
+    <string name="samsung_internet_required_title">需要三星浏览器</string>
+    <string name="samsung_internet_required_description">Adblock Plus 是一款在您使用三星浏览器时，在该浏览器上层运行的筛选广告的应用程序。如要有效使用 Adblock Plus，您需要在设备上安装三星浏览器 4.0 或更高版本。\n您可以按一下以下按钮获取三星浏览器。</string>
+    <string name="download_samsung_internet">下载三星浏览器</string>
+    <string name="update_status_progress_message">正在提取筛选清单更新…</string>
+    <string name="update_status_error_message">更新出错：请重试</string>
+    <string name="update_status_retry">重试</string>
+
+    <!-- base-->
+    <string name="product_name">三星浏览器专用</string>
+    <string name="target_name">Adblock Plus</string>
+    <string name="acceptable_ads">可接受广告</string>
+    <string name="intrusive_ads">侵入性广告</string>
+    <string name="acceptable_ads_fair_standard_title">公平标准</string>
+    <string name="acceptable_ads_fair_standard_description">随可接受广告显示的广告永远不会是视频、声音或弹出广告</string>
+    <string name="acceptable_ads_placement_title">放置</string>
+    <string name="acceptable_ads_placement_description">不干扰正常的阅读流</string>
+    <string name="acceptable_ads_distinction_title">区分</string>
+    <string name="acceptable_ads_distinction_description">随可接受广告显示的广告始终明确标示为广告</string>
+    <string name="acceptable_ads_size_title">大小</string>
+    <string name="acceptable_ads_size_description">初始启动时占据不到 15% 的屏幕空间</string>
+
+    <!-- onboarding -->
+    <string name="onboarding_welcome_header_title1">欢迎</string>
+    <string name="onboarding_welcome_block_ads_title">拦截恼人的广告</string>
+    <string name="onboarding_welcome_block_ads_description">享受无恼人广告的浏览体验，同时通过可接受广告支持内容创作者</string>
+    <string name="onboarding_welcome_tracking_protection_title">跟踪保护</string>
+    <string name="onboarding_welcome_tracking_protection_description">针对您通常浏览的语言优化 Adblock Plus，从而拦截更多广告</string>
+    <string name="onboarding_welcome_security_privacy_title">改进的安全和隐私</string>
+    <string name="onboarding_welcome_security_privacy_description">有 Adblock Plus 在后台保护您，您可以放心无虞地浏览网页</string>
+    <string name="onboarding_welcome_language_filters_title">语言特定的筛选清单</string>
+    <string name="onboarding_welcome_language_filters_description">针对您通常浏览的语言优化 Adblock Plus，从而阻止更多广告</string>
+
+    <string name="onboarding_privacy_header_title1">请阅读</string>
+    <string name="onboarding_privacy_header_title2">隐私政策</string>
+    <string name="onboarding_privacy_header_title3">，为此请打开以下链接</string>
+    <string name="onboarding_privacy_block_title">您可以帮助我们打造更好的网络空间</string>
+    <string name="onboarding_privacy_block_description">请点击链接阅读我们的隐私政策。在开头部分以简洁易懂的方式介绍了我们收集的内容</string>
+    <string name="onboarding_privacy_block_link_text"><a href="https://adblockplus.org/privacy">隐私政策</a></string>
+
+    <string name="onboarding_acceptable_ads_header_title1">参与</string>
+    <string name="onboarding_acceptable_ads_header_title3">并支持内容创作者</string>
+    <string name="onboarding_acceptable_ads_annoying_ads_title">始终拦截恼人的广告</string>
+    <string name="onboarding_acceptable_ads_annoying_ads_description">恼人的广告在您浏览喜爱的内容时分散您的注意力，因此始终会被拦截</string>
+    <string name="onboarding_acceptable_ads_nonintrusive_ads_title">广告拦截选项</string>
+    <string name="onboarding_acceptable_ads_nonintrusive_ads_description">不干扰您的浏览体验的广告将会显示，以便创作者可以继续发布内容</string>
+    <string name="onboarding_acceptable_ads_nonintrusive_ads_example">向我显示示例</string>
+    <string name="onboarding_acceptable_ads_disable_title">随时禁用</string>
+    <string name="onboarding_acceptable_ads_disable_description">您可以按一下\"允许一些非侵入性广告\"选项更改此设置</string>
+
+    <string name="onboarding_enable_header_title1">方法如下</string>
+    <string name="onboarding_enable_header_title2">启用 Adblock Plus</string>
+    <string name="onboarding_enable_one_step_title">还需一个步骤就完成了</string>
+    <string name="onboarding_enable_one_step_description">在三星浏览器的广告拦截程序设置中启用 Adblock Plus</string>
+
+    <string name="open_samsung_internet">打开三星浏览器</string>
+    <!-- /onboarding -->
+
+    <!-- preferences -->
+    <string name="preferences_ad_blocking_category">广告阻止选项</string>
+    <string name="preferences_primary_subscriptions_title">语言</string>
+    <string name="preferences_primary_subscriptions_summary">针对您通常浏览的语言优化 Adblock Plus 以拦截更多广告</string>
+    <string name="preferences_other_subscriptions_title">更多过滤选项</string>
+    <string name="preferences_other_subscriptions_summary">移除跟踪、社交媒体按钮或添加自定义筛选清单</string>
+    <string name="preferences_allowlist_title">添加网站至允许列表</string>
+    <string name="preferences_allowlist_summary">在您选择的网站上禁用广告拦截</string>
+    <string name="preferences_allowlist_header">已添加至允许列表的网站</string>
+    <string name="preferences_updates_title">更新广告筛选清单</string>
+    <string name="preferences_updates_subtitle">设置何时更新用于筛选广告的清单</string>
+    <string name="preferences_automatic_updates_title">自动更新</string>
+    <string name="preferences_automatic_updates_wifi_only">仅 Wi-Fi</string>
+    <string name="preferences_automatic_updates_always">总是</string>
+    <string name="preferences_update_subscriptions_title">立即更新</string>
+    <string name="preferences_acceptable_ads_title">允许一些非侵入式广告</string>
+    <string name="preferences_acceptable_ads_summary">恼人的广告将始终拦截，一些非侵入性的广告将默认显示，这样内容创作者就能够免费发布内容</string>
+    <string name="preferences_acceptable_ads_action">是，我愿意支持内容创作者</string>
+    <string name="preferences_about_title">关于</string>
+    <string name="primary_subscriptions_active_category">已针对</string>
+    <string name="primary_subscriptions_inactive_category">更多语言的浏览优化</string>
+    <string name="subscription_last_update">上次更新：%s</string>
+    <string name="subscription_last_update_never">从不</string>
+    <string name="other_subscriptions_default_category">内置筛选清单</string>
+    <string name="other_subscriptions_custom_category">活动的自定义筛选清单</string>
+    <string name="other_subscriptions_add_custom_title">添加自定义筛选清单</string>
+    <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
+    <string name="other_subscriptions_remove_custom_title">确认删除</string>
+    <string name="other_subscriptions_remove_custom_message">是否确定要删除来自 %s 的自定义筛选清单？</string>
+    <string name="other_subscriptions_dialog_title">添加自定义筛选清单</string>
+    <string name="other_subscriptions_dialog_message">这可能需要几秒钟时间</string>
+    <string name="other_subscriptions_error_add_custom">添加自定义筛选清单时出错</string>
+    <string name="allowlist_add_title">添加网站至允许列表</string>
+    <string name="allowlist_add_hint">example.com</string>
+    <string name="allowlist_delete_dialog_title">确认删除</string>
+    <string name="allowlist_delete_dialog_message">是否确定要从允许列表中删除 %s？</string>
+    <string name="acceptable_ads_enabled_line1">是，我愿意支持内容创作者</string>
+    <string name="acceptable_ads_enabled_line2">通过保持启用可接受广告，您可以帮助内容创作者免费发布其内容</string>
+    <string name="acceptable_ads_disabled">否，我想禁用可接受广告</string>
+    <string name="about_privacy_policy">隐私政策</string>
+    <string name="about_terms_of_use">使用条款</string>
+    <string name="about_imprint">版本说明</string>
+    <string name="open_source_licenses">开源许可证</string>
+    <string name="version">版本</string>
+    <string name="share_events_header">帮助改进 Adblock Plus</string>
+    <string name="share_events_title">共享匿名数据</string>
+    <string name="share_events_description">匿名数据帮助我们改进 Adblock Plus，从而为您打造更好的浏览体验。</string>
+    <string name="share_events_consent">是，我愿意共享某些匿名数据。</string>
+    <string name="languages_onboarding_title">浏览多种语言的内容？</string>
+    <string name="languages_onboarding_description">针对您通常浏览的语言优化 Adblock Plus，以拦截更多广告。</string>
+    <string name="languages_onboarding_option_add">添加其他拦截广告的语言。</string>
+    <string name="languages_onboarding_option_skip">不了，谢谢，我只浏览一种语言的内容。</string>
+
+</resources>

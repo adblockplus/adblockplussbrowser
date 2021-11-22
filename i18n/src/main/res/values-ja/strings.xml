@@ -1,0 +1,131 @@
+<!--
+ This file is part of Adblock Plus <https://adblockplus.org/>,
+ Copyright (C) 2006-present eyeo GmbH
+
+ Adblock Plus is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License version 3 as
+ published by the Free Software Foundation.
+
+ Adblock Plus is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<resources>
+    <!-- app-->
+    <string name="app_name">Samsung Internet 用 Adblock Plus</string>
+    <string name="app_subtitle">Samsung Internet 用</string>
+    <string name="samsung_internet_required_title">Samsung Internet が必要です</string>
+    <string name="samsung_internet_required_description">Adblock Plus は、Samsung Internet で動作するアプリです。Adblock Plus を有効にするには、お使いのデバイスに Samsung Internet 4.0 以降がインストールされている必要があります。\nSamsung Internet ブラウザを入手するには、下のボタンをタップしてください。</string>
+    <string name="download_samsung_internet">Samsung Internet をダウンロード</string>
+    <string name="update_status_progress_message">フィルターリストの更新を取得中…</string>
+    <string name="update_status_error_message">更新エラー：もう一度お試しください</string>
+    <string name="update_status_retry">再試行</string>
+
+    <!-- base-->
+    <string name="product_name">Adblock Plus</string>
+    <string name="target_name">Samsung Internet 用</string>
+    <string name="acceptable_ads">控えめな広告</string>
+    <string name="intrusive_ads">侵入型広告</string>
+    <string name="acceptable_ads_fair_standard_title">公正な基準</string>
+    <string name="acceptable_ads_fair_standard_description">控えめな広告の設定で表示される広告には、動画、音声、ポップアップ広告は含まれません</string>
+    <string name="acceptable_ads_placement_title">プレースメント</string>
+    <string name="acceptable_ads_placement_description">自然な閲覧の流れを邪魔しません</string>
+    <string name="acceptable_ads_distinction_title">違い</string>
+    <string name="acceptable_ads_distinction_description">控えめな広告の設定で表示される広告は、広告であることが分かるよう、常に明確に印が付けられます</string>
+    <string name="acceptable_ads_size_title">サイズ</string>
+    <string name="acceptable_ads_size_description">初期読み込み時の画面占有率は15%未満です</string>
+
+    <!-- onboarding -->
+    <string name="onboarding_welcome_header_title1">ようこそ</string>
+    <string name="onboarding_welcome_block_ads_title">迷惑広告をブロックする</string>
+    <string name="onboarding_welcome_block_ads_description">控えめな広告でコンテンツクリエーターを支援しつつ、広告のないブラウザ体験を提供</string>
+    <string name="onboarding_welcome_tracking_protection_title">ラッキング保護</string>
+    <string name="onboarding_welcome_tracking_protection_description">ウェブサイトによるユーザーの動きのトラッキングを防止し、より安全なブラウザ体験を提供</string>
+    <string name="onboarding_welcome_security_privacy_title">セキュリティとプライバシーの向上</string>
+    <string name="onboarding_welcome_security_privacy_description">Adblock Plus がバックグラウンドで保護を提供するため、安心してブラウザ体験ができます</string>
+    <string name="onboarding_welcome_language_filters_title">言語特定フィルターリスト</string>
+    <string name="onboarding_welcome_language_filters_description">通常閲覧する言語に合わせて Adblock Plus を最適化することで、より多くの広告をブロックできます</string>
+
+    <string name="onboarding_privacy_header_title1">下記のリンクから</string>
+    <string name="onboarding_privacy_header_title2">プライバシー方針</string>
+    <string name="onboarding_privacy_header_title3">をご覧ください</string>
+    <string name="onboarding_privacy_block_title">ウェブ体験をより良くするためにご協力ください</string>
+    <string name="onboarding_privacy_block_description">リンクをクリックして、当社のプライバシー方針をお読みください。最初の部分に当社が収集する情報に関する短く読みやすい説明があります</string>
+    <string name="onboarding_privacy_block_link_text"><a href="https://adblockplus.org/privacy">プライバシー方針</a></string>
+
+    <string name="onboarding_acceptable_ads_header_title1">コンテンツクリエーターに</string>
+    <string name="onboarding_acceptable_ads_header_title3">協力し、サポートしましょう</string>
+    <string name="onboarding_acceptable_ads_annoying_ads_title">迷惑広告は常にブロックされます</string>
+    <string name="onboarding_acceptable_ads_annoying_ads_description">お気に入りのコンテンツから目を逸らす迷惑広告は常にブロックされます</string>
+    <string name="onboarding_acceptable_ads_nonintrusive_ads_title">デフォルトでは少量の非侵入型の広告は表示されます</string>
+    <string name="onboarding_acceptable_ads_nonintrusive_ads_description">ブラウザ体験に干渉しない広告は表示されるため、クリエーターはコンテンツの公開を続けることができます。</string>
+    <string name="onboarding_acceptable_ads_nonintrusive_ads_example">例を表示する</string>
+    <string name="onboarding_acceptable_ads_disable_title">いつでも無効にできます</string>
+    <string name="onboarding_acceptable_ads_disable_description">\"一部の非侵入型の広告を許可する\"オプションをタップすることで、この設定を変更することができます</string>
+
+    <string name="onboarding_enable_header_title1">その方法は次の通りです</string>
+    <string name="onboarding_enable_header_title2">Adblock Plus を有効にする</string>
+    <string name="onboarding_enable_one_step_title">あと１つのステップで完了です</string>
+    <string name="onboarding_enable_one_step_description">Samsung Internet の Adblocker 設定で Adblock Plus を有効にする </string>
+
+    <string name="open_samsung_internet">Samsung Internet を開く</string>
+    <!-- /onboarding -->
+
+    <!-- preferences -->
+    <string name="preferences_ad_blocking_category">広告ブロックオプション</string>
+    <string name="preferences_primary_subscriptions_title">言語</string>
+    <string name="preferences_primary_subscriptions_summary">通常閲覧する言語に合わせて Adblock Plus を最適化することで、より多くの広告をブロックできます</string>
+    <string name="preferences_other_subscriptions_title">その他のブロックオプション</string>
+    <string name="preferences_other_subscriptions_summary">追跡やソーシャルメディアボタンを削除するか、カスタムフィルターリストを追加する</string>
+    <string name="preferences_allowlist_title">ウェブサイトを許可リストに追加する</string>
+    <string name="preferences_allowlist_summary">選択されたウェブサイトでの広告ブロックを無効にする</string>
+    <string name="preferences_allowlist_header">許可リスト上のウェブサイト</string>
+    <string name="preferences_updates_title">広告フィルターを更新する</string>
+    <string name="preferences_updates_subtitle">広告をフィルタリングするリストの更新時を設定する</string>
+    <string name="preferences_automatic_updates_title">自動更新</string>
+    <string name="preferences_automatic_updates_wifi_only">Wi-Fi のみ</string>
+    <string name="preferences_automatic_updates_always">常時</string>
+    <string name="preferences_update_subscriptions_title">今すぐ更新</string>
+    <string name="preferences_acceptable_ads_title">一部の非侵入型の広告を許可する</string>
+    <string name="preferences_acceptable_ads_summary">迷惑広告は常にブロックされますが、デフォルトでは一部の非侵入型の広告は表示されることで、コンテンツクリエーターはコンテンツを無料で公開できるようになります</string>
+    <string name="preferences_acceptable_ads_action">はい。コンテンツクリエーターをサポートします</string>
+    <string name="preferences_about_title">Adblock Plus について</string>
+    <string name="primary_subscriptions_active_category">次の言語でのブラウザ体験に最適化</string>
+    <string name="primary_subscriptions_inactive_category">その他の言語</string>
+    <string name="subscription_last_update">最終更新：%s</string>
+    <string name="subscription_last_update_never">なし</string>
+    <string name="other_subscriptions_default_category">内蔵フィルターリスト</string>
+    <string name="other_subscriptions_custom_category">有効カスタムフィルターリスト</string>
+    <string name="other_subscriptions_add_custom_title">カスタムフィルターリストを追加</string>
+    <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
+    <string name="other_subscriptions_remove_custom_title">削除の確認</string>
+    <string name="other_subscriptions_remove_custom_message">%sからカスタムフィルターを削除しますか？</string>
+    <string name="other_subscriptions_dialog_title">カスタムフィルターリストを追加</string>
+    <string name="other_subscriptions_dialog_message">数秒かかる場合があります</string>
+    <string name="other_subscriptions_error_add_custom">カスタムフィルターリスト追加エラー</string>
+    <string name="allowlist_add_title">ウェブサイトを許可リストに追加する</string>
+    <string name="allowlist_add_hint">example.com</string>
+    <string name="allowlist_delete_dialog_title">削除を確認</string>
+    <string name="allowlist_delete_dialog_message">許可リストから%sを削除しますか？</string>
+    <string name="acceptable_ads_enabled_line1">はい。コンテンツクリエーターをサポートします</string>
+    <string name="acceptable_ads_enabled_line2">引き続き控えめな広告を有効にすることで、コンテンツクリエーターがコンテンツを無料で公開する支援をすることができます</string>
+    <string name="acceptable_ads_disabled">いいえ。控えめな広告を無効にします</string>
+    <string name="about_privacy_policy">プライバシー方針</string>
+    <string name="about_terms_of_use">ご利用条件</string>
+    <string name="about_imprint">商標</string>
+    <string name="open_source_licenses">オープンソースライセンス</string>
+    <string name="version">バージョン</string>
+    <string name="share_events_header">Adblock Plus の改善にご協力ください</string>
+    <string name="share_events_title">匿名化データを共有する</string>
+    <string name="share_events_description">匿名化データを共有してくださいますと、当社では Adblock Plus の改善に活用させてただき、皆様の良いブラウザ体験に貢献します。</string>
+    <string name="share_events_consent">はい</string>
+    <string name="languages_onboarding_title">複数の言語でウェブを閲覧しますか？</string>
+    <string name="languages_onboarding_description">通常閲覧する言語に合わせて Adblock Plus を最適化することで、より多くの広告をブロックできます。</string>
+    <string name="languages_onboarding_option_add">広告ブロック言語を追加する。</string>
+    <string name="languages_onboarding_option_skip">いいえ。１つの言語だけで閲覧します。</string>
+
+</resources>

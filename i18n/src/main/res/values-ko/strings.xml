@@ -1,0 +1,131 @@
+<!--
+ This file is part of Adblock Plus <https://adblockplus.org/>,
+ Copyright (C) 2006-present eyeo GmbH
+
+ Adblock Plus is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License version 3 as
+ published by the Free Software Foundation.
+
+ Adblock Plus is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<resources>
+    <!-- app-->
+    <string name="app_name">Samsung Internet용 Adblock Plus</string>
+    <string name="app_subtitle"> Samsung Internet용</string>
+    <string name="samsung_internet_required_title"> Samsung Internet 필요</string>
+    <string name="samsung_internet_required_description">Adblock Plus는 브라우저를 사용하는 동안 광고를 필터하기 위해 Samsung Internet 위에 실행되는 앱입니다. Adblock Plus를 효과적으로 사용하기 위해, 기기에 Samsung Internet 4.0 이상을 설치해야 합니다.\n아래 버튼을 탭해서 Samsung Internet 브라우저를 받을 수 있습니다.</string>
+    <string name="download_samsung_internet"> Samsung Internet 다운로드</string>
+    <string name="update_status_progress_message">필터 목록 업데이트를 불러오는 중입니다...</string>
+    <string name="update_status_error_message">업데이트 에러: 다시 시도해 주십시오</string>
+    <string name="update_status_retry">재시도</string>
+
+    <!-- base-->
+    <string name="product_name">Adblock Plus</string>
+    <string name="target_name"> Samsung Internet용</string>
+    <string name="acceptable_ads">허용되는 광고</string>
+    <string name="intrusive_ads">침입적 광고</string>
+    <string name="acceptable_ads_fair_standard_title">공정한 표준</string>
+    <string name="acceptable_ads_fair_standard_description">허용되는 광고로 표시되는 광고는 절대로 동영상, 사운드, 팝업 광고가 아닙니다</string>
+    <string name="acceptable_ads_placement_title">배치</string>
+    <string name="acceptable_ads_placement_description">자연스러운 읽기 흐름을 방해하지 않습니다</string>
+    <string name="acceptable_ads_distinction_title">구분</string>
+    <string name="acceptable_ads_distinction_description">허용되는 광고로 표시되는 광고는 항상 분명하게 광고로 표시됩니다</string>
+    <string name="acceptable_ads_size_title">사이즈</string>
+    <string name="acceptable_ads_size_description">초기 로딩 시 화면의 15% 미만을 차지합니다</string>
+
+    <!-- onboarding -->
+    <string name="onboarding_welcome_header_title1">성가신 광고 차단에</string>
+    <string name="onboarding_welcome_block_ads_title">오신 것을 환영합니다</string>
+    <string name="onboarding_welcome_block_ads_description">허용되는 광고를 통해 콘텐츠 크리에이터를 지원하면서 동시에 광고 없이 탐색하세요</string>
+    <string name="onboarding_welcome_tracking_protection_title">추적 보호</string>
+    <string name="onboarding_welcome_tracking_protection_description">웹사이트가 웹 전반에서 추적하지 못하도록 차단해 더 안전한 인터넷을 이용하세요</string>
+    <string name="onboarding_welcome_security_privacy_title">보안 및 프라이버시 향상</string>
+    <string name="onboarding_welcome_security_privacy_description">백그라운드에서 보호하는 Adblock Plus로 걱정 없는 인터넷을 즐기세요</string>
+    <string name="onboarding_welcome_language_filters_title">언어별 필터 목록</string>
+    <string name="onboarding_welcome_language_filters_description">일반적으로 탐색에 사용하는 언어에 맞춰 Adblock Plus를 최적화하고 더 많은 광고를 차단하세요</string>
+
+    <string name="onboarding_privacy_header_title1">다음 링크를 열어</string>
+    <string name="onboarding_privacy_header_title2">개인정보 보호 정책을</string>
+    <string name="onboarding_privacy_header_title3">읽어주십시오</string>
+    <string name="onboarding_privacy_block_title">저희가 더 나은 웹을 만들 수 있도록 도움을 주실 수 있습니다</string>
+    <string name="onboarding_privacy_block_description">다음 링크를 열어 당사의 개인정보 보호 정책을 읽어주십시오. 첫 부분에 저희가 수집하는 것에 대한 짧고 읽기 쉬운 소개가 있습니다.</string>
+    <string name="onboarding_privacy_block_link_text"><a href="https://adblockplus.org/privacy">개인정보 보호 정책</a></string>
+
+    <string name="onboarding_acceptable_ads_header_title1">참여하고</string>
+    <string name="onboarding_acceptable_ads_header_title3">콘텐츠 크리에이터 지원하기</string>
+    <string name="onboarding_acceptable_ads_annoying_ads_title">거슬리는 광고는 항상 차단됩니다</string>
+    <string name="onboarding_acceptable_ads_annoying_ads_description">좋아하는 콘텐츠를 산만하게 만드는 거슬리는 광고는 항상 차단될 것입니다</string>
+    <string name="onboarding_acceptable_ads_nonintrusive_ads_title">기본 설정으로 소수의 비침입적 광고가 표시됩니다</string>
+    <string name="onboarding_acceptable_ads_nonintrusive_ads_description">브라우징 환경을 방해하지 않는 광고는 표시되며 크리에이터가 계속해서 콘텐츠를 발행하도록 지원할 수 있습니다</string>
+    <string name="onboarding_acceptable_ads_nonintrusive_ads_example">예시 보기</string>
+    <string name="onboarding_acceptable_ads_disable_title">언제든 비활성화할 수 있습니다</string>
+    <string name="onboarding_acceptable_ads_disable_description">\"일부 비침입적 광고 허용\" 옵션을 탭해 이 설정을 변경할 수 있습니다</string>
+
+    <string name="onboarding_enable_header_title1">방법 안내</string>
+    <string name="onboarding_enable_header_title2">Adblock Plus 활성화</string>
+    <string name="onboarding_enable_one_step_title">마지막 단계만 남았습니다</string>
+    <string name="onboarding_enable_one_step_description"> Samsung Internet의 광고 차단기 설정에서 Adblock Plus 활성화</string>
+
+    <string name="open_samsung_internet">Samsung Internet 열기</string>
+    <!-- /onboarding -->
+
+    <!-- preferences -->
+    <string name="preferences_ad_blocking_category">광고 차단 옵션</string>
+    <string name="preferences_primary_subscriptions_title">언어</string>
+    <string name="preferences_primary_subscriptions_summary">일반적으로 탐색에 사용하는 언어에 맞춰 Adblock Plus를 최적화하고 더 많은 광고를 차단하세요</string>
+    <string name="preferences_other_subscriptions_title">추가 차단 옵션</string>
+    <string name="preferences_other_subscriptions_summary">추적이나 소셜 미디어 버튼 제거 또는 맞춤 필터 목록 추가</string>
+    <string name="preferences_allowlist_title">허용 목록에 웹사이트 추가</string>
+    <string name="preferences_allowlist_summary">선택한 웹사이트의 광고 차단 비활성화</string>
+    <string name="preferences_allowlist_header">허용 목록에 추가된 웹사이트</string>
+    <string name="preferences_updates_title">광고 필터 목록 업데이트</string>
+    <string name="preferences_updates_subtitle">광고 필터에 사용되는 목록 업데이트 시기 설정</string>
+    <string name="preferences_automatic_updates_title">자동 업데이트</string>
+    <string name="preferences_automatic_updates_wifi_only">Wi-Fi 연결 시</string>
+    <string name="preferences_automatic_updates_always">항상</string>
+    <string name="preferences_update_subscriptions_title">지금 업데이트</string>
+    <string name="preferences_acceptable_ads_title">일부 비침입적 광고 허용</string>
+    <string name="preferences_acceptable_ads_summary">거슬리는 광고는 항상 차단되지만, 일부 비침입적 광고는 기본 설정으로 표시되어 콘텐츠 크리에이터가 무료로 콘텐츠를 발행할 수 있도록 합니다</string>
+    <string name="preferences_acceptable_ads_action">예, 콘텐츠 크리에이터를 지원하겠습니다</string>
+    <string name="preferences_about_title">관련 정보</string>
+    <string name="primary_subscriptions_active_category">다음 언어로 브라우징 최적화</string>
+    <string name="primary_subscriptions_inactive_category">추가 언어</string>
+    <string name="subscription_last_update">최종 업데이트: %s</string>
+    <string name="subscription_last_update_never">전혀 없음</string>
+    <string name="other_subscriptions_default_category">기본 필터 목록</string>
+    <string name="other_subscriptions_custom_category">활성 맞춤 필터 목록</string>
+    <string name="other_subscriptions_add_custom_title">맞춤 필터 목록 추가</string>
+    <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
+    <string name="other_subscriptions_remove_custom_title">삭제 확인</string>
+    <string name="other_subscriptions_remove_custom_message">%s에서 맞춤 필터를 삭제하시겠습니까?</string>
+    <string name="other_subscriptions_dialog_title">맞춤 필터 목록 추가하기</string>
+    <string name="other_subscriptions_dialog_message">몇 초 정도 소요될 수 있습니다</string>
+    <string name="other_subscriptions_error_add_custom">맞춤 필터 목록 추가 오류</string>
+    <string name="allowlist_add_title">허용 목록에 웹사이트 추가</string>
+    <string name="allowlist_add_hint">example.com</string>
+    <string name="allowlist_delete_dialog_title">삭제 확인</string>
+    <string name="allowlist_delete_dialog_message">허용 목록에서 %s을(를) 삭제하시겠습니까?</string>
+    <string name="acceptable_ads_enabled_line1">예, 콘텐츠 크리에이터를 지원하겠습니다</string>
+    <string name="acceptable_ads_enabled_line2">허용되는 광고를 활성화 상태로 유지하면, 콘텐츠 크리에이터가 무료로 콘텐츠를 발행하도록 도움을 줍니다</string>
+    <string name="acceptable_ads_disabled">아니요, 허용되는 광고를 비활성화 하겠습니다</string>
+    <string name="about_privacy_policy">개인정보 보호 정책</string>
+    <string name="about_terms_of_use">이용 약관</string>
+    <string name="about_imprint">발행자</string>
+    <string name="open_source_licenses">오픈 소스 라이선스</string>
+    <string name="version">버전</string>
+    <string name="share_events_header">Adblock Plus 개선을 도와주세요</string>
+    <string name="share_events_title">익명화된 데이터 공유</string>
+    <string name="share_events_description">Adblock Plus 개선을 지원할 익명화된 데이터를 수집하여 더 나은 브라우징 환경을 만들고 있습니다.</string>
+    <string name="share_events_consent">예, 익명화된 데이터 일부를 공유하겠습니다.</string>
+    <string name="languages_onboarding_title">다양한 언어로 브라우징하십니까?</string>
+    <string name="languages_onboarding_description">일반적으로 탐색에 사용하는 언어에 맞춰 Adblock Plus를 최적화하고 더 많은 광고를 차단하세요.</string>
+    <string name="languages_onboarding_option_add">광고 차단 언어를 추가합니다.</string>
+    <string name="languages_onboarding_option_skip">아니요, 한 가지 언어만 이용합니다.</string>
+
+</resources>
