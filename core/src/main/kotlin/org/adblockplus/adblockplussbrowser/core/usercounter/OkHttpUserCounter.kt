@@ -119,7 +119,7 @@ internal class OkHttpUserCounter(
                           savedLastUserCountingResponse: Long,
                           currentUserCountingCount: Int
     ): HttpUrl {
-        return subscription.url.sanatizeUrl().toHttpUrl().newBuilder().apply {
+        return subscription.randomizedUrl.sanatizeUrl().toHttpUrl().newBuilder().apply {
             addQueryParameter("addonName", appInfo.addonName)
             addQueryParameter("addonVersion", appInfo.addonVersion)
             addQueryParameter("application", appInfo.application)
