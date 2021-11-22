@@ -70,7 +70,7 @@
     <string name="onboarding_enable_header_title1">Adblock Plus</string>
     <string name="onboarding_enable_header_title2">Nasıl Etkinleştirilir</string>
     <string name="onboarding_enable_one_step_title">Yalnızca bir adım daha kaldı</string>
-    <string name="onboarding_enable_one_step_description">Samsung Internet\'in Adblocker Ayarlarında Adblock Plus'ı Etkinleştirin</string>
+    <string name="onboarding_enable_one_step_description">Samsung Internet\'in Adblocker Ayarlarında Adblock Plus\'ı Etkinleştirin</string>
 
     <string name="open_samsung_internet">Samsung Internet\'i açın</string>
     <!-- /onboarding -->

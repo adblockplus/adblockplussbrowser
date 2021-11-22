@@ -107,7 +107,7 @@
     <string name="other_subscriptions_dialog_title">Ajouter une liste de filtres personnalisée</string>
     <string name="other_subscriptions_dialog_message">Cela peut prendre quelques secondes</string>
     <string name="other_subscriptions_error_add_custom">Erreur lors de l\'ajout de la liste de filtres personnalisée</string>
-    <string name="allowlist_add_title">Ajouter un site Web à la liste d'autorisation</string>
+    <string name="allowlist_add_title">Ajouter un site Web à la liste d\'autorisation</string>
     <string name="allowlist_add_hint">example.com</string>
     <string name="allowlist_delete_dialog_title">Confirmer la suppression</string>
     <string name="allowlist_delete_dialog_message">Êtes-vous sûr de vouloir supprimer %s de la liste d\'autorisation ?</string>
@@ -122,7 +122,7 @@
     <string name="share_events_header">Aidez-nous à améliorer Adblock Plus</string>
     <string name="share_events_title">Partager des données anonymisées</string>
     <string name="share_events_description">Les données anonymisées nous aident à améliorer Adblock Plus, créant ainsi une meilleure expérience de navigation pour vous.</string>
-    <string name="share_events_consent">Oui, j'accepte de partager des données anonymisées.</string>
+    <string name="share_events_consent">Oui, j\'accepte de partager des données anonymisées.</string>
     <string name="languages_onboarding_title">Vous naviguez dans plusieurs langues ?</string>
     <string name="languages_onboarding_description">Bloquez plus de publicités en optimisant Adblock Plus pour les langues dans lesquelles vous naviguez généralement.</string>
     <string name="languages_onboarding_option_add">Ajouter une langue de blocage des publicités supplémentaire.</string>
