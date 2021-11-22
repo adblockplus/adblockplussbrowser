@@ -62,6 +62,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "9:999999999999:android:ffffffffffffffffffffff",
+        "android_client_info": {
+          "package_name": "com.betafish.adblocksbrowser"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "999999999999-99z99999zzz99zzzzz9zzzzz9zz999zz.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "999999999999-99z99999zzz99zzzzz9zzzzz9zz999zz.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
