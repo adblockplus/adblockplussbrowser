@@ -14,6 +14,7 @@
  You should have received a copy of the GNU General Public License
  along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
   -->
+
 <resources>
     <!-- app-->
     <string name="app_name">Adblock Plus pour Samsung Internet</string>
@@ -22,7 +23,7 @@
     <string name="samsung_internet_required_description">Adblock Plus est une application qui fonctionne en complément de Samsung Internet pour filtrer les publicités pendant que vous utilisez ce navigateur. Pour qu\'Adblock Plus soit efficace, vous devez installer Samsung Internet 4.0 ou une version ultérieure sur votre appareil.\nVous pouvez obtenir le navigateur Samsung Internet en appuyant sur le bouton ci-dessous.</string>
     <string name="download_samsung_internet">Télécharger Samsung Internet</string>
     <string name="update_status_progress_message">Récupération des mises à jour des listes de filtres…</string>
-    <string name="update_status_error_message">Erreur de mise à jour : veuillez réessayer</string>
+    <string name="update_status_error_message">Erreur de mise à jour : veuillez réessayer</string>
     <string name="update_status_retry">Réessayer</string>
 
     <!-- base-->
@@ -30,10 +31,10 @@
     <string name="target_name">pour Samsung Internet</string>
     <string name="acceptable_ads">Publicité Acceptable</string>
     <string name="intrusive_ads">Publicités intrusives</string>
-    <string name="acceptable_ads_fair_standard_title">Norme juste</string>
+    <string name="acceptable_ads_fair_standard_title">Un standard équitable</string>
     <string name="acceptable_ads_fair_standard_description">Les publicités diffusées avec Publicité Acceptable ne sont jamais des publicités vidéo, sonores ou des pop-ups</string>
     <string name="acceptable_ads_placement_title">Placement</string>
-    <string name="acceptable_ads_placement_description">Ne gênent pas la lecture </string>
+    <string name="acceptable_ads_placement_description">Ne gênent pas la lecture</string>
     <string name="acceptable_ads_distinction_title">Distinction</string>
     <string name="acceptable_ads_distinction_description">Les publicités diffusées avec Publicité Acceptable sont toujours clairement identifiées comme des publicités</string>
     <string name="acceptable_ads_size_title">Format</string>
@@ -58,9 +59,9 @@
     <string name="onboarding_privacy_block_link_text"><a href="https://adblockplus.org/privacy">Politique de confidentialité</a></string>
 
     <string name="onboarding_acceptable_ads_header_title1">Participez au programme</string>
-    <string name="onboarding_acceptable_ads_header_title3">et soutez les créateurs de contenu</string>
+    <string name="onboarding_acceptable_ads_header_title3">et soutenez les créateurs de contenu</string>
     <string name="onboarding_acceptable_ads_annoying_ads_title">Les publicités gênantes sont toujours bloquées</string>
-    <string name="onboarding_acceptable_ads_annoying_ads_description">Les publicités gênantes qui vous empêchent de lire le contenu qui vous intéresse seront toujours bloquées</string>
+    <string name="onboarding_acceptable_ads_annoying_ads_description">Les publicités gênantes, qui vous empêchent de lire le contenu qui vous intéresse seront toujours bloquées</string>
     <string name="onboarding_acceptable_ads_nonintrusive_ads_title">Un petit nombre de publicités non intrusives sont affichées par défaut</string>
     <string name="onboarding_acceptable_ads_nonintrusive_ads_description">Des publicités qui n\'interfèrent pas avec votre expérience de navigation apparaîtront, afin que les créateurs puissent continuer à publier leur contenu</string>
     <string name="onboarding_acceptable_ads_nonintrusive_ads_example">Montrez-moi un exemple</string>
@@ -70,7 +71,7 @@
     <string name="onboarding_enable_header_title1">Voici comment</string>
     <string name="onboarding_enable_header_title2">Activer Adblock Plus</string>
     <string name="onboarding_enable_one_step_title">Un pas de plus et vous aurez terminé</string>
-    <string name="onboarding_enable_one_step_description">Activer Adblock Plus dans la rubrique «Bloqueurs de publicité» des paramètres de Samsung Internet</string>
+    <string name="onboarding_enable_one_step_description">Activer Adblock Plus dans la rubrique \"Bloqueurs de publicité\" des paramètres de Samsung Internet</string>
 
     <string name="open_samsung_internet">Ouvrir Samsung Internet</string>
     <!-- /onboarding -->
