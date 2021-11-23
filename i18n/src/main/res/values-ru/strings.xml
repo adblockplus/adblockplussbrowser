@@ -61,7 +61,7 @@
     <string name="onboarding_acceptable_ads_header_title3">и поддержите разработчиков контента</string>
     <string name="onboarding_acceptable_ads_annoying_ads_title">Постоянная блокировка назойливой рекламы</string>
     <string name="onboarding_acceptable_ads_annoying_ads_description">Назойливая реклама, мешающая просмотру любимого контента, всегда будет блокироваться</string>
-    <string name="onboarding_acceptable_ads_nonintrusive_ads_title">По умолчанию отображается небольшое количество ненавязчивой рекламы</string>
+    <string name="onboarding_acceptable_ads_nonintrusive_ads_title">Вы можете изменить эту настройку, используя функцию «Разрешить некоторую ненавязчивую  рекламу» .</string>
     <string name="onboarding_acceptable_ads_nonintrusive_ads_description">Будет отображаться реклама, не мешающая работе в браузере, что позволит разработчикам продолжить публиковать свой контент</string>
     <string name="onboarding_acceptable_ads_nonintrusive_ads_example">Посмотреть пример</string>
     <string name="onboarding_acceptable_ads_disable_title">Отключить можно в любое время</string>
@@ -112,8 +112,8 @@
     <string name="allowlist_delete_dialog_title">Подтвердить удаление</string>
     <string name="allowlist_delete_dialog_message">Вы уверены, что хотите удалить %s из списка разрешенных сайтов?</string>
     <string name="acceptable_ads_enabled_line1">Да, я поддержу разработчиков контента</string>
-    <string name="acceptable_ads_enabled_line2">Активировав опцию Допустимая реклама, вы помогаете разработчикам публиковать бесплатный контент</string>
-    <string name="acceptable_ads_disabled">Нет, я хочу отключить опцию Допустимая реклама</string>
+    <string name="acceptable_ads_enabled_line2">Активировав опцию «Допустимая реклама», вы помогаете разработчикам публиковать бесплатный контент</string>
+    <string name="acceptable_ads_disabled">Нет, я хочу отключить опцию «Допустимая реклама»</string>
     <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
     <string name="about_privacy_policy"><a href="https://adblockplus.org/privacy">Политика конфиденциальности</a></string>
     <string name="about_terms_of_use"><a href="https://adblockplus.org/terms">Условия использования</a></string>
