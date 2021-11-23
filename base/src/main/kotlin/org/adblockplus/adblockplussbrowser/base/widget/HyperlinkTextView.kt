@@ -21,15 +21,20 @@ import android.text.method.LinkMovementMethod
 import android.text.method.MovementMethod
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.text.HtmlCompat
 
-/*
- A child of a TextView that allows to open links from string resources in a form:
- <a https://example.com>Example</a>
- By default, TextView only understands links in an explicit form, eg
- <a href=https://example.com>https://example.com</a>, this seem to be a security measure
+/**
+ * <h4>A child of a TextView that allows to open links from string resources in a form:
+ * `<a https://example.com>Example</a>`</h4>
+ *
+ * By default, TextView only understands links in an explicit form, eg
+ * `<a href=https://example.com>https://example.com</a>`, this seem to be a security measure
+ *
+ * ATTENTION: when you'd like to use <p> or <br> tags, enclose your HTML into `<![CDATA[ .. ]]>`
+ * <br/>For example `<string><![CDATA[ <p>Paragraph</p><br/>Other <b>text</b> ]]></string>`
  */
 class HyperlinkTextView(context: Context, attrs: AttributeSet?) :
-    // class has reduced number of constructor because it supposed to be used only from XML
+// class has reduced number of constructor because it supposed to be used only from XML
     AppCompatTextView(context, attrs) {
     /**
      * Set default movement method to [LinkMovementMethod]
@@ -37,5 +42,34 @@ class HyperlinkTextView(context: Context, attrs: AttributeSet?) :
      */
     override fun getDefaultMovementMethod(): MovementMethod {
         return LinkMovementMethod.getInstance()
+    }
+
+    override fun onFinishInflate() {
+        /*
+        A grain of heuristics here:
+        TextView supports some html tags out of the box, but not all of them. It looks like it uses
+        [HtmlCompat.FROM_HTML_MODE_COMPACT] by default. So we need to call [HtmlCompat.fromHtml]
+        when not-supported tags are detected, eg: when text contains <p> or <br>
+
+        There is also no way of detecting if xml from resources contains <![CDATA[ .. ]] thus
+        tags detecting is implemented
+         */
+        if (doesContainExtendedHtml(text.toString()))
+            text = HtmlCompat.fromHtml(text.toString(), HtmlCompat.FROM_HTML_MODE_LEGACY)
+        super.onFinishInflate()
+    }
+
+    companion object {
+        // now only has <p> and <br> tags, more could be added
+        // not full tag is used because of variations: <p> or <p/>
+        private val HTML_EXTENDED_TAGS = Regex("(<p|<br).")
+
+        /**
+         * Checks whether the string contains html tags, that TextView does support
+         * when inflating from <string> tag and that require [HtmlCompat.fromHtml] to be called
+         * @param text a string to be tested
+         * @return true if the string contains extended html
+         */
+        fun doesContainExtendedHtml(text: String) = text.contains(HTML_EXTENDED_TAGS)
     }
 }
