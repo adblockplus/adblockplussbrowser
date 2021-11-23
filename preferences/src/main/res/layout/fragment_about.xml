@@ -103,7 +103,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/about_divider_2">
 
-                <com.google.android.material.textview.MaterialTextView
+                <org.adblockplus.adblockplussbrowser.base.widget.HyperlinkTextView
                     style="@style/AbpPreferenceTitleTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -128,7 +128,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/about_divider_3">
 
-                <com.google.android.material.textview.MaterialTextView
+                <org.adblockplus.adblockplussbrowser.base.widget.HyperlinkTextView
                     style="@style/AbpPreferenceTitleTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -159,8 +159,9 @@
                     android:layout_height="wrap_content"
                     android:text="@string/about_imprint" />
 
-                <com.google.android.material.textview.MaterialTextView
+                <org.adblockplus.adblockplussbrowser.base.widget.HyperlinkTextView
                     android:id="@+id/about_imprint_text"
+                    android:text="@string/about_imprint_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 

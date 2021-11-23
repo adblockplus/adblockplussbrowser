@@ -17,7 +17,24 @@
   -->
 
 <resources>
-    <string name="about_imprint_text" translatable="false"><![CDATA[<br/><p><b><strong>eyeo GmbH</strong></b><br/>Lichtstraße 25<br/>50825 Cologne<br/>Germany</p><p>Support: <a href=\"https://adblockplus.org/forum/\">Adblock Plus Forum</a><br/>Email: <a href=\"mailto:info@eyeo.com\">info@eyeo.com</a><br/>Telephone: +49 (0)221 / 65028 598<br/>Fax: +49 (0)221 / 65028 599</p><p>VAT-ID: DE279292414<br/>District Court Cologne: HRB 73508</p><p><b><strong>Managing Directors</strong></b>:<br/>Till Faida<br/>Jutta Horstmann</p>]]></string>
-    <string name="url_privacy_policy" translatable="false">https://adblockplus.org/privacy</string>
-    <string name="url_terms_of_use" translatable="false">https://adblockplus.org/terms</string>
+    <string name="about_imprint_text" ><![CDATA[<br/>
+        <p><strong>eyeo GmbH</strong>
+            <br>Lichtstraße 25</br>
+            <br>50825 Cologne</br>
+            <br>Germany</br>
+        </p>
+        <p>Support: <a href="https://adblockplus.org/forum/">Adblock Plus Forum</a>
+            <br>Email: <a href="mailto:info@eyeo.com">info@eyeo.com</a></br>
+            <br>Telephone: +49 (0)221 / 65028 598</br>
+            <br>Fax: +49 (0)221 / 65028 599</br>
+        </p>
+        <p>
+            <br>VAT-ID: DE279292414</br>
+            <br>District Court Cologne: HRB 73508</br>
+        </p>
+        <p>
+            <b><strong>Managing Directors</strong></b>:
+            <br/>Till Faida
+            <br/>Jutta Horstmann
+        </p>]]></string>
 </resources>
