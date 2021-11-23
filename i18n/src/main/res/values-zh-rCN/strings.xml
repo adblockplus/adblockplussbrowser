@@ -115,8 +115,9 @@
     <string name="acceptable_ads_enabled_line1">是，我愿意支持内容创作者</string>
     <string name="acceptable_ads_enabled_line2">通过保持启用可接受广告，您可以帮助内容创作者免费发布其内容</string>
     <string name="acceptable_ads_disabled">否，我想禁用可接受广告</string>
-    <string name="about_privacy_policy">隐私政策</string>
-    <string name="about_terms_of_use">使用条款</string>
+    <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
+    <string name="about_privacy_policy"><a href="https://adblockplus.org/privacy">隐私政策</a></string>
+    <string name="about_terms_of_use"><a href="https://adblockplus.org/terms">使用条款</a></string>
     <string name="about_imprint">版本说明</string>
     <string name="open_source_licenses">开源许可证</string>
     <string name="version">版本</string>

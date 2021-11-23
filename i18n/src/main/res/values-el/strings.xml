@@ -14,6 +14,7 @@
  You should have received a copy of the GNU General Public License
  along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
   -->
+
 <resources>
     <!-- app-->
     <string name="app_name">Adblock Plus για Samsung Internet</string>
@@ -114,8 +115,9 @@
     <string name="acceptable_ads_enabled_line1">Ναι, θα υποστηρίζω τους δημιουργούς περιεχομένου</string>
     <string name="acceptable_ads_enabled_line2">Διατηρώντας τις Αποδεκτές Διαφημίσεις ενεργοποιημένες βοηθάτε τους δημιουργούς περιεχομένου να δημοσιεύουν το περιεχόμενό τους δωρεάν</string>
     <string name="acceptable_ads_disabled">Όχι, θα ήθελα να απενεργοποιήσω τις Αποδεκτές Διαφημίσεις</string>
-    <string name="about_privacy_policy">Πολιτική Απορρήτου</string>
-    <string name="about_terms_of_use">Όροι Χρήσης</string>
+    <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
+    <string name="about_privacy_policy"><a href="https://adblockplus.org/privacy">Πολιτική Απορρήτου</a></string>
+    <string name="about_terms_of_use"><a href="https://adblockplus.org/terms">Όροι Χρήσης</a></string>
     <string name="about_imprint">Εταιρικές Πληροφορίες</string>
     <string name="open_source_licenses">Άδειες Ανοιχτού Κώδικα</string>
     <string name="version">Εκδοχή</string>

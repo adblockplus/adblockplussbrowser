@@ -114,8 +114,9 @@
     <string name="acceptable_ads_enabled_line1">예, 콘텐츠 크리에이터를 지원하겠습니다</string>
     <string name="acceptable_ads_enabled_line2">허용되는 광고를 활성화 상태로 유지하면, 콘텐츠 크리에이터가 무료로 콘텐츠를 발행하도록 도움을 줍니다</string>
     <string name="acceptable_ads_disabled">아니요, 허용되는 광고를 비활성화 하겠습니다</string>
-    <string name="about_privacy_policy">개인정보 보호 정책</string>
-    <string name="about_terms_of_use">이용 약관</string>
+    <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
+    <string name="about_privacy_policy"><a href="https://adblockplus.org/privacy">개인정보 보호 정책</a></string>
+    <string name="about_terms_of_use"><a href="https://adblockplus.org/terms">이용 약관</a></string>
     <string name="about_imprint">발행자</string>
     <string name="open_source_licenses">오픈 소스 라이선스</string>
     <string name="version">버전</string>

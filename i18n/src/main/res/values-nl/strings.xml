@@ -115,8 +115,9 @@
     <string name="acceptable_ads_enabled_line1">Ja, ik ondersteun de makers van inhoud</string>
     <string name="acceptable_ads_enabled_line2">Door Acceptabele advertenties ingeschakeld te houden, helpt u de makers van inhoud om hun inhoud gratis te publiceren</string>
     <string name="acceptable_ads_disabled">Nee, ik wil Acceptabele advertenties uitschakelen</string>
-    <string name="about_privacy_policy">Privacybeleid</string>
-    <string name="about_terms_of_use">Gebruiksvoorwaarden</string>
+    <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
+    <string name="about_privacy_policy"><a href="https://adblockplus.org/privacy">Privacybeleid</a></string>
+    <string name="about_terms_of_use"><a href="https://adblockplus.org/terms">Gebruiksvoorwaarden</a></string>
     <string name="about_imprint">Impressum</string>
     <string name="open_source_licenses">Open source licenties</string>
     <string name="version">Versie</string>

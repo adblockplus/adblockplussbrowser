@@ -114,8 +114,9 @@
     <string name="acceptable_ads_enabled_line1">はい。コンテンツクリエーターをサポートします</string>
     <string name="acceptable_ads_enabled_line2">引き続き控えめな広告を有効にすることで、コンテンツクリエーターがコンテンツを無料で公開する支援をすることができます</string>
     <string name="acceptable_ads_disabled">いいえ。控えめな広告を無効にします</string>
-    <string name="about_privacy_policy">プライバシー方針</string>
-    <string name="about_terms_of_use">ご利用条件</string>
+    <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
+    <string name="about_privacy_policy"><a href="https://adblockplus.org/privacy">プライバシー方針</a></string>
+    <string name="about_terms_of_use"><a href="https://adblockplus.org/terms">ご利用条件</a></string>
     <string name="about_imprint">商標</string>
     <string name="open_source_licenses">オープンソースライセンス</string>
     <string name="version">バージョン</string>

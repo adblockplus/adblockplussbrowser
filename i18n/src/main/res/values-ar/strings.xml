@@ -115,8 +115,9 @@
     <string name="acceptable_ads_enabled_line1">نعم، سأدعم صناع المحتوى</string>
     <string name="acceptable_ads_enabled_line2">عن طريق تفعيل \"الإعلانات المقبولة\"، فإنك تساعد صناع المحتوى على نشر محتواهم مجانًا</string>
     <string name="acceptable_ads_disabled">لا، أود تعطيل \"الإعلانات المقبولة\"</string>
-    <string name="about_privacy_policy">سياسة الخصوصية</string>
-    <string name="about_terms_of_use">شروط الاستخدام</string>
+    <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
+    <string name="about_privacy_policy"><a href="https://adblockplus.org/privacy">سياسة الخصوصية</a></string>
+    <string name="about_terms_of_use"><a href="https://adblockplus.org/terms">شروط الاستخدام</a></string>
     <string name="about_imprint">الدمغة</string>
     <string name="open_source_licenses">التراخيص مفتوحة المصدر</string>
     <string name="version">الإصدار</string>

@@ -114,8 +114,9 @@
     <string name="acceptable_ads_enabled_line1">Sim, eu apoiarei criadores de conteúdo</string>
     <string name="acceptable_ads_enabled_line2">Ao manter Anúncios Aceitáveis ativado, você ajuda criadores de conteúdo a publicarem gratuitamente seus conteúdos</string>
     <string name="acceptable_ads_disabled">Não, eu gostaria de desativar Anúncios Aceitáveis</string>
-    <string name="about_privacy_policy">Política de privacidade</string>
-    <string name="about_terms_of_use">Termos de uso</string>
+    <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
+    <string name="about_privacy_policy"><a href="https://adblockplus.org/privacy">Política de privacidade</a></string>
+    <string name="about_terms_of_use"><a href="https://adblockplus.org/terms">Termos de uso</a></string>
     <string name="about_imprint">Imprimir</string>
     <string name="open_source_licenses">Licenças de código aberto</string>
     <string name="version">Versão</string>

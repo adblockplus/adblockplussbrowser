@@ -114,8 +114,9 @@
     <string name="acceptable_ads_enabled_line1">Да, я поддержу разработчиков контента</string>
     <string name="acceptable_ads_enabled_line2">Активировав опцию Допустимая реклама, вы помогаете разработчикам публиковать бесплатный контент</string>
     <string name="acceptable_ads_disabled">Нет, я хочу отключить опцию Допустимая реклама</string>
-    <string name="about_privacy_policy">Политика конфиденциальности</string>
-    <string name="about_terms_of_use">Условия использования</string>
+    <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
+    <string name="about_privacy_policy"><a href="https://adblockplus.org/privacy">Политика конфиденциальности</a></string>
+    <string name="about_terms_of_use"><a href="https://adblockplus.org/terms">Условия использования</a></string>
     <string name="about_imprint">Правовая информация</string>
     <string name="open_source_licenses">Лицензии на ПО c открытым исходным кодом</string>
     <string name="version">Версия</string>
