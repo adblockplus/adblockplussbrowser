@@ -14,12 +14,13 @@
  You should have received a copy of the GNU General Public License
  along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
   -->
+
 <resources>
     <!-- app-->
     <string name="app_name">Adblock Plus per Samsung Internet</string>
     <string name="app_subtitle">per Samsung Internet</string>
     <string name="samsung_internet_required_title">Richiede Samsung Internet</string>
-    <string name="samsung_internet_required_description">Adblock Plus è un\ \'app che funziona con Samsung Internet e filtra gli annunci mentre utilizzi il browser. Affinché Adblock Plus sia efficace, devi avere sul tuo dispositivo Samsung Internet versione 4.0 o superiore.\nSfiora il pulsante qui sotto per scaricare il browser Samsung Internet.</string>
+    <string name="samsung_internet_required_description">Adblock Plus è un\'app che funziona con Samsung Internet e filtra gli annunci mentre utilizzi il browser. Affinché Adblock Plus sia efficace, devi avere sul tuo dispositivo Samsung Internet versione 4.0 o superiore.\nSfiora il pulsante qui sotto per scaricare il browser Samsung Internet.</string>
     <string name="download_samsung_internet">Scarica Samsung Internet</string>
     <string name="update_status_progress_message">Aggiornamento filtri in corso…</string>
     <string name="update_status_error_message">Errore durante l\'aggiornamento: Riprova</string>
@@ -84,7 +85,7 @@
     <string name="preferences_allowlist_title">Aggiungi siti web ai siti consentiti</string>
     <string name="preferences_allowlist_summary">Disattiva l\'ad blocking sui siti web di tua scelta</string>
     <string name="preferences_allowlist_header">Siti inseriti tra i siti consentiti</string>
-    <string name="preferences_updates_title">Aggiorna gli elenchi filtri annunci</string>
+    <string name="preferences_updates_title">Aggiorna i filtri</string>
     <string name="preferences_updates_subtitle">Configura quando effettuare l\'aggiornamento dei filtri</string>
     <string name="preferences_automatic_updates_title">Aggiornamenti automatici</string>
     <string name="preferences_automatic_updates_wifi_only">Solo con Wi-Fi</string>
