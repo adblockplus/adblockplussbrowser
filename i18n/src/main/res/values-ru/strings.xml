@@ -35,7 +35,7 @@
     <string name="acceptable_ads_placement_title">Размещение</string>
     <string name="acceptable_ads_placement_description">Не мешает нормальному чтению текста</string>
     <string name="acceptable_ads_distinction_title">Выделение</string>
-    <string name="acceptable_ads_distinction_description">Допустимая реклама всегда будет четко обозначена как реклама</string>
+    <string name="acceptable_ads_distinction_description">Допустимая реклама всегда четко обозначена как реклама</string>
     <string name="acceptable_ads_size_title">Размер</string>
     <string name="acceptable_ads_size_description">Занимает не более 15% площади экрана при начальной загрузке</string>
 
