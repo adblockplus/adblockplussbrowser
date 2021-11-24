@@ -1,0 +1,133 @@
+<!--
+ This file is part of Adblock Plus <https://adblockplus.org/>,
+ Copyright (C) 2006-present eyeo GmbH
+
+ Adblock Plus is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License version 3 as
+ published by the Free Software Foundation.
+
+ Adblock Plus is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <!-- app-->
+    <string name="app_name">Samsung Internet için Adblock Plus</string>
+    <string name="app_subtitle">Samsung Internet için</string>
+    <string name="samsung_internet_required_title">Samsung Internet gerekli</string>
+    <string name="samsung_internet_required_description">Adblock Plus, siz tarayıcıyı kullanırken reklamları filtrelemek için Samsung Internet üzerinde çalışan bir uygulamadır. Adblock Plus\'ın etkili olması için cihazınızda Samsung Internet 4.0 veya üzeri bir sürümün kurulu olması gerekir.\nAşağıdaki düğmeye tıklayarak Samsung Internet tarayıcısını edinebilirsiniz.</string>
+    <string name="download_samsung_internet">Samsung Internet\'i indir</string>
+    <string name="update_status_progress_message">Filtre listeleri güncellemeleri getiriliyor...</string>
+    <string name="update_status_error_message">Güncelleme hatası: Lütfen tekrar deneyin</string>
+    <string name="update_status_retry">Tekrar dene</string>
+
+    <!-- base-->
+    <string name="product_name">Adblock Plus</string>
+    <string name="target_name">Samsung Internet için</string>
+    <string name="acceptable_ads">Kabul edilebilir reklamlar</string>
+    <string name="intrusive_ads">Zorla giren reklamlar</string>
+    <string name="acceptable_ads_fair_standard_title">Adil standart</string>
+    <string name="acceptable_ads_fair_standard_description">Kabul Edilebilir Reklamlarla gösterilen reklamlar hiçbir zaman görüntülü, sesli ya da açılır reklamlar değildir</string>
+    <string name="acceptable_ads_placement_title">Yerleştirme</string>
+    <string name="acceptable_ads_placement_description">Doğal okuma akışını bozmaz</string>
+    <string name="acceptable_ads_distinction_title">Ayrım</string>
+    <string name="acceptable_ads_distinction_description">Kabul Edilebilir Reklamlarla gösterilen reklamlar her zaman açık bir şekilde reklam olarak işaretlenir</string>
+    <string name="acceptable_ads_size_title">Boyut</string>
+    <string name="acceptable_ads_size_description">İlk yüklemede ekranın %15\'inden azını kaplar</string>
+
+    <!-- onboarding -->
+    <string name="onboarding_welcome_header_title1">Hoş geldiniz</string>
+    <string name="onboarding_welcome_block_ads_title">Rahatsız edici reklamları engelle</string>
+    <string name="onboarding_welcome_block_ads_description">Kabul Edilebilir Reklamlar sayesinde içerik oluşturucuları desteklerken reklamsız bir gezinme deneyimi yaşayın </string>
+    <string name="onboarding_welcome_tracking_protection_title">İzleme koruması</string>
+    <string name="onboarding_welcome_tracking_protection_description">Web sitelerinin sizi web üzerinde izlemesini engelleyerek daha güvenli bir gezinme deneyimi yaşayın</string>
+    <string name="onboarding_welcome_security_privacy_title">İyileştirilmiş güvenlik &amp; gizlilik</string>
+    <string name="onboarding_welcome_security_privacy_description">Sizi arka planda koruyan Adblock Plus ile endişesiz bir gezinme deneyimi yaşayın</string>
+    <string name="onboarding_welcome_language_filters_title">Dile özel filtre listeleri</string>
+    <string name="onboarding_welcome_language_filters_description">Adblock Plus\'ı en çok kullandığınız diller için optimize ederek daha fazla reklamı engelleyin</string>
+
+    <string name="onboarding_privacy_header_title1">Lütfen okuyun</string>
+    <string name="onboarding_privacy_header_title2">Gizlilik politikası</string>
+    <string name="onboarding_privacy_header_title3">Aşağıdaki bağlantıya tıklayın</string>
+    <string name="onboarding_privacy_block_title">Web\'i daha iyi bir hale getirmemize yardımcı olabilirsiniz</string>
+    <string name="onboarding_privacy_block_description">Lütfen aşağıdaki bağlantıdan gizlilik politikamızı okuyun. Başlangıçta neler topladığımız hakkında kısa, insan dostu bir bilgilendirme bulacaksınız</string>
+    <string name="onboarding_privacy_block_link_text"><a href="https://adblockplus.org/privacy">Gizlilik politikası</a></string>
+
+    <string name="onboarding_acceptable_ads_header_title1">Katılın</string>
+    <string name="onboarding_acceptable_ads_header_title3">ve içerik oluşturucuları destekleyin</string>
+    <string name="onboarding_acceptable_ads_annoying_ads_title">Rahatsız edici reklamlar daima engellenir</string>
+    <string name="onboarding_acceptable_ads_annoying_ads_description">Sizi sevdiğiniz içerikten uzaklaştıran rahatsız edici reklamlar daima engellenecektir</string>
+    <string name="onboarding_acceptable_ads_nonintrusive_ads_title">Az sayıda rahatsız edici olmayan reklam varsayılan olarak görüntülenir</string>
+    <string name="onboarding_acceptable_ads_nonintrusive_ads_description">Gezinme deneyiminize engel olmayan reklamlar gösterilecek; bu sayede içerik oluşturucular içeriklerini yayınlamaya devam edebilecektir</string>
+    <string name="onboarding_acceptable_ads_nonintrusive_ads_example">Bana bir örnek göster</string>
+    <string name="onboarding_acceptable_ads_disable_title">İstediğiniz zaman devre dışı bırakın</string>
+    <string name="onboarding_acceptable_ads_disable_description">Bu ayarı istediğiniz zaman \"Rahatsız etmeyen bazı reklamlara izin ver\" seçeneğine dokunarak değiştirebilirsiniz</string>
+
+    <string name="onboarding_enable_header_title1">Adblock Plus</string>
+    <string name="onboarding_enable_header_title2">Nasıl Etkinleştirilir</string>
+    <string name="onboarding_enable_one_step_title">Yalnızca bir adım daha kaldı</string>
+    <string name="onboarding_enable_one_step_description">Samsung Internet\'in Adblocker Ayarlarında Adblock Plus\'ı Etkinleştirin</string>
+
+    <string name="open_samsung_internet">Samsung Internet\'i açın</string>
+    <!-- /onboarding -->
+
+    <!-- preferences -->
+    <string name="preferences_ad_blocking_category">Reklam engelleme seçenekleri</string>
+    <string name="preferences_primary_subscriptions_title">Dil</string>
+    <string name="preferences_primary_subscriptions_summary">Adblock Plus\'ı en çok kullandığınız dil(ler) için optimize ederek daha fazla reklamı engelleyin</string>
+    <string name="preferences_other_subscriptions_title">Daha fazla engelleme seçeneği</string>
+    <string name="preferences_other_subscriptions_summary">İzlemeyi, sosyal medya düğmelerini kaldırın veya özel filtre listeleri ekleyin </string>
+    <string name="preferences_allowlist_title">İzin verilenler listesine web sitesi ekleyin</string>
+    <string name="preferences_allowlist_summary">Kendi seçtiğiniz web sitelerinde reklam engelleme özelliğini devre dışı bırakın</string>
+    <string name="preferences_allowlist_header">İzin verilenler listesindeki web siteleri</string>
+    <string name="preferences_updates_title">Reklam filtre listelerini güncelleyin</string>
+    <string name="preferences_updates_subtitle">Reklamları filtrelemek için kullanılan listelerin ne zaman güncelleneceğini ayarlayın</string>
+    <string name="preferences_automatic_updates_title">Otomatik güncellemeler</string>
+    <string name="preferences_automatic_updates_wifi_only">Sadece Wi-Fi</string>
+    <string name="preferences_automatic_updates_always">Her zaman</string>
+    <string name="preferences_update_subscriptions_title">Şimdi güncelle</string>
+    <string name="preferences_acceptable_ads_title">Rahatsız etmeyen bazı reklamlara izin ver</string>
+    <string name="preferences_acceptable_ads_summary">Rahatsız edici reklamlar her zaman engellenirken bazı rahatsız etmeyen reklamlar varsayılan olarak görüntülenir; bu sayede içerik oluşturucular içeriklerini ücretsiz olarak yayınlayabilirler</string>
+    <string name="preferences_acceptable_ads_action">Evet, içerik oluşturucuları destekleyeceğim</string>
+    <string name="preferences_about_title">Hakkında</string>
+    <string name="primary_subscriptions_active_category">Şu dilde gezinmek için optimize edilmiştir:</string>
+    <string name="primary_subscriptions_inactive_category">Diğer diller</string>
+    <string name="subscription_last_update">Son güncelleme: %s</string>
+    <string name="subscription_last_update_never">Hiçbir zaman</string>
+    <string name="other_subscriptions_default_category">Yerleşik filtre listeleri</string>
+    <string name="other_subscriptions_custom_category">Aktif özel filtre listeleri</string>
+    <string name="other_subscriptions_add_custom_title">Özel filtre listesi ekle</string>
+    <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
+    <string name="other_subscriptions_remove_custom_title">Silme işlemini onayla</string>
+    <string name="other_subscriptions_remove_custom_message">Özel filtre listesini %s konumundan silmek istediğinizden emin misiniz?</string>
+    <string name="other_subscriptions_dialog_title">Özel filtre listesi ekleniyor</string>
+    <string name="other_subscriptions_dialog_message">Bu işlem birkaç saniye sürebilir</string>
+    <string name="other_subscriptions_error_add_custom">Özel filtre listesi eklenirken hata oluştu</string>
+    <string name="allowlist_add_title">İzin verilenler listesine bir web sitesi ekle</string>
+    <string name="allowlist_add_hint">example.com</string>
+    <string name="allowlist_delete_dialog_title">Silme işlemini onayla</string>
+    <string name="allowlist_delete_dialog_message">%s web sitesini izin verilenler listesinden kaldırmak istediğinizden emin misiniz?</string>
+    <string name="acceptable_ads_enabled_line1">Evet, içerik oluşturucuları destekleyeceğim</string>
+    <string name="acceptable_ads_enabled_line2">Kabul Edilebilir Reklamları etkin durumda tutarak içerik oluşturucuların içeriklerini ücretsiz olarak yayınlamasına yardımcı oluyorsunuz</string>
+    <string name="acceptable_ads_disabled">Hayır, Kabul Edilebilir Reklamları devre dışı bırakmak istiyorum</string>
+    <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
+    <string name="about_privacy_policy"><a href="https://adblockplus.org/privacy">Gizlilik Politikası</a></string>
+    <string name="about_terms_of_use"><a href="https://adblockplus.org/terms">Kullanım Şartları</a></string>
+    <string name="about_imprint">Damga</string>
+    <string name="open_source_licenses">Açık Kaynak İzinleri</string>
+    <string name="version">Sürüm</string>
+    <string name="share_events_header">Adblock Plus\'ı iyileştirmemize yardımcı olun</string>
+    <string name="share_events_title">Anonimleştirilmiş verileri paylaş</string>
+    <string name="share_events_description">Anonimleştirilmiş veriler Adblock Plus\'ı iyileştirmemize yardımcı olurken sizin için de daha iyi bir gezinme deneyimi sağlar.</string>
+    <string name="share_events_consent">Evet, bazı anonimleştirilmiş verileri paylaşacağım.</string>
+    <string name="languages_onboarding_title">İnternette birden çok dilde mi geziniyorsunuz?</string>
+    <string name="languages_onboarding_description">Adblock Plus\'ı en çok kullandığınız dil(ler) için optimize ederek daha fazla reklamı engelleyin.</string>
+    <string name="languages_onboarding_option_add">Bir reklam engelleme dili daha ekleyin.</string>
+    <string name="languages_onboarding_option_skip">Hayır teşekkürler, yalnızca bir dilde geziniyorum.</string>
+
+</resources>

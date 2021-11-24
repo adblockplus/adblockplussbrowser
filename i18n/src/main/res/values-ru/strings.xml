@@ -1,0 +1,132 @@
+<!--
+ This file is part of Adblock Plus <https://adblockplus.org/>,
+ Copyright (C) 2006-present eyeo GmbH
+
+ Adblock Plus is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License version 3 as
+ published by the Free Software Foundation.
+
+ Adblock Plus is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<resources>
+    <!-- app-->
+    <string name="app_name">Adblock Plus для Samsung Internet</string>
+    <string name="app_subtitle">для Samsung Internet</string>
+    <string name="samsung_internet_required_title">Требуется Samsung Internet</string>
+    <string name="samsung_internet_required_description">Adblock Plus – это расширение для Samsung Internet для блокировки рекламы при использовании браузера. Чтобы пользоваться приложением Adblock Plus, установите на ваше устройство Samsung Internet версии 4.0 или выше.\nНажмите на кнопку ниже, чтобы скачать браузер Samsung Internet.</string>
+    <string name="download_samsung_internet">Скачать Samsung Internet</string>
+    <string name="update_status_progress_message">Обновление списков фильтров…</string>
+    <string name="update_status_error_message">Ошибка обновления: попробуйте снова</string>
+    <string name="update_status_retry">Повторить попытку</string>
+
+    <!-- base-->
+    <string name="product_name">Adblock Plus</string>
+    <string name="target_name">для Samsung Internet</string>
+    <string name="acceptable_ads">Допустимая реклама</string>
+    <string name="intrusive_ads">Назойливая реклама</string>
+    <string name="acceptable_ads_fair_standard_title">Справедливый критерий</string>
+    <string name="acceptable_ads_fair_standard_description">Допустимая реклама никогда не включает в себя видеорекламу, звуковую и всплывающую рекламу</string>
+    <string name="acceptable_ads_placement_title">Размещение</string>
+    <string name="acceptable_ads_placement_description">Не мешает нормальному чтению текста</string>
+    <string name="acceptable_ads_distinction_title">Выделение</string>
+    <string name="acceptable_ads_distinction_description">Допустимая реклама всегда четко обозначена как реклама</string>
+    <string name="acceptable_ads_size_title">Размер</string>
+    <string name="acceptable_ads_size_description">Занимает не более 15% площади экрана при начальной загрузке</string>
+
+    <!-- onboarding -->
+    <string name="onboarding_welcome_header_title1">Добро пожаловать в</string>
+    <string name="onboarding_welcome_block_ads_title">Блокировка назойливой рекламы</string>
+    <string name="onboarding_welcome_block_ads_description">Используйте браузер без рекламы и поддерживайте разработчиков контента с помощью инициативы Допустимая реклама</string>
+    <string name="onboarding_welcome_tracking_protection_title">Защита от слежения</string>
+    <string name="onboarding_welcome_tracking_protection_description">Защитите себя от слежения со стороны сайтов во время работы в сети</string>
+    <string name="onboarding_welcome_security_privacy_title">Улучшенная безопасность и конфиденциальность</string>
+    <string name="onboarding_welcome_security_privacy_description">Почувствуйте себя в безопасности благодаря защите Adblock Plus</string>
+    <string name="onboarding_welcome_language_filters_title">Списки фильтров для конкретных языков</string>
+    <string name="onboarding_welcome_language_filters_description">Блокируйте больше рекламы, настроив Adblock Plus под используемые вами в браузере языки</string>
+
+    <string name="onboarding_privacy_header_title1">Ознакомьтесь с</string>
+    <string name="onboarding_privacy_header_title2">Политикой конфиденциальности</string>
+    <string name="onboarding_privacy_header_title3">по ссылке ниже</string>
+    <string name="onboarding_privacy_block_title">Помогите нам сделать работу в сети лучше</string>
+    <string name="onboarding_privacy_block_description">Ознакомьтесь с нашей политикой конфиденциальности, перейдя по ссылке ниже. Для удобства в самом начале приведен краткий обзор собираемых нами данных</string>
+    <string name="onboarding_privacy_block_link_text"><a href="https://adblockplus.org/privacy">Политика конфиденциальности</a></string>
+
+    <string name="onboarding_acceptable_ads_header_title1">Присоединитесь к</string>
+    <string name="onboarding_acceptable_ads_header_title3">и поддержите разработчиков контента</string>
+    <string name="onboarding_acceptable_ads_annoying_ads_title">Постоянная блокировка назойливой рекламы</string>
+    <string name="onboarding_acceptable_ads_annoying_ads_description">Назойливая реклама, мешающая просмотру любимого контента, всегда будет блокироваться</string>
+    <string name="onboarding_acceptable_ads_nonintrusive_ads_title">Вы можете изменить эту настройку, используя функцию «Разрешить некоторую ненавязчивую  рекламу» .</string>
+    <string name="onboarding_acceptable_ads_nonintrusive_ads_description">Будет отображаться реклама, не мешающая работе в браузере, что позволит разработчикам продолжить публиковать свой контент</string>
+    <string name="onboarding_acceptable_ads_nonintrusive_ads_example">Посмотреть пример</string>
+    <string name="onboarding_acceptable_ads_disable_title">Отключить можно в любое время</string>
+    <string name="onboarding_acceptable_ads_disable_description">Вы можете изменить эту настройку, используя функцию \"Разрешить некоторую ненавязчивую рекламу\" </string>
+
+    <string name="onboarding_enable_header_title1">Как</string>
+    <string name="onboarding_enable_header_title2">Активировать Adblock Plus</string>
+    <string name="onboarding_enable_one_step_title">Еще один шаг – и готово</string>
+    <string name="onboarding_enable_one_step_description">Активируйте Adblock Plus в настройках блокиратора рекламы Samsung Internet</string>
+
+    <string name="open_samsung_internet">Открыть Samsung Internet</string>
+    <!-- /onboarding -->
+
+    <!-- preferences -->
+    <string name="preferences_ad_blocking_category">Опции блокировки рекламы</string>
+    <string name="preferences_primary_subscriptions_title">Язык</string>
+    <string name="preferences_primary_subscriptions_summary">Блокируйте больше рекламы, настроив Adblock Plus под используемые вами в браузере языки</string>
+    <string name="preferences_other_subscriptions_title">Дополнительные настройки блокировки</string>
+    <string name="preferences_other_subscriptions_summary">Предотвратите слежение со стороны сайтов, отключите кнопки социальных сетей или добавьте пользовательские списки фильтров</string>
+    <string name="preferences_allowlist_title">Добавить сайты в список разрешенных сайтов</string>
+    <string name="preferences_allowlist_summary">Отключите блокировку рекламы на определенных сайтах по вашему выбору</string>
+    <string name="preferences_allowlist_header">Список разрешенных сайтов</string>
+    <string name="preferences_updates_title">Обновление списков фильтров рекламы</string>
+    <string name="preferences_updates_subtitle">Настройте время обновления списков для отфильтровывания рекламы</string>
+    <string name="preferences_automatic_updates_title">Автоматические обновления</string>
+    <string name="preferences_automatic_updates_wifi_only">Только Wi-Fi</string>
+    <string name="preferences_automatic_updates_always">Всегда</string>
+    <string name="preferences_update_subscriptions_title">Обновить сейчас</string>
+    <string name="preferences_acceptable_ads_title">Разрешить некоторую ненавязчивую рекламу</string>
+    <string name="preferences_acceptable_ads_summary">Навязчивая реклама будет блокироваться всегда; по умолчанию будет отображаться некоторая ненавязчивая реклама, что позволит разработчикам публиковать бесплатный контент</string>
+    <string name="preferences_acceptable_ads_action">Да, я поддержу разработчиков контента</string>
+    <string name="preferences_about_title">О нас</string>
+    <string name="primary_subscriptions_active_category">Адаптировано для работы со следующими языками</string>
+    <string name="primary_subscriptions_inactive_category">Дополнительные языки</string>
+    <string name="subscription_last_update">Последнее обновление: %s</string>
+    <string name="subscription_last_update_never">Никогда</string>
+    <string name="other_subscriptions_default_category">Встроенные списки фильтров</string>
+    <string name="other_subscriptions_custom_category">Активные пользовательские списки фильтров</string>
+    <string name="other_subscriptions_add_custom_title">Добавить пользовательский список фильтров</string>
+    <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
+    <string name="other_subscriptions_remove_custom_title">Подтвердить удаление</string>
+    <string name="other_subscriptions_remove_custom_message">Вы уверены, что хотите удалить пользовательский список фильтров из %s?</string>
+    <string name="other_subscriptions_dialog_title">Добавление пользовательского списка фильтров</string>
+    <string name="other_subscriptions_dialog_message">Это может занять несколько секунд</string>
+    <string name="other_subscriptions_error_add_custom">Ошибка при добавлении пользовательского списка фильтров</string>
+    <string name="allowlist_add_title">Добавить сайт в список разрешенных сайтов</string>
+    <string name="allowlist_add_hint">example.com</string>
+    <string name="allowlist_delete_dialog_title">Подтвердить удаление</string>
+    <string name="allowlist_delete_dialog_message">Вы уверены, что хотите удалить %s из списка разрешенных сайтов?</string>
+    <string name="acceptable_ads_enabled_line1">Да, я поддержу разработчиков контента</string>
+    <string name="acceptable_ads_enabled_line2">Активировав опцию «Допустимая реклама», вы помогаете разработчикам публиковать бесплатный контент</string>
+    <string name="acceptable_ads_disabled">Нет, я хочу отключить опцию «Допустимая реклама»</string>
+    <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
+    <string name="about_privacy_policy"><a href="https://adblockplus.org/privacy">Политика конфиденциальности</a></string>
+    <string name="about_terms_of_use"><a href="https://adblockplus.org/terms">Условия использования</a></string>
+    <string name="about_imprint">Правовая информация</string>
+    <string name="open_source_licenses">Лицензии на ПО c открытым исходным кодом</string>
+    <string name="version">Версия</string>
+    <string name="share_events_header">Помогите улучшить Adblock Plus</string>
+    <string name="share_events_title">Поделиться обезличенными данными</string>
+    <string name="share_events_description">Обезличенные данные помогут улучшить Adblock Plus, и работать в браузере станет еще приятнее.</string>
+    <string name="share_events_consent">Да, я готов(а) поделиться обезличенными данными.</string>
+    <string name="languages_onboarding_title">Пользуетесь разными языками при работе в браузере?</string>
+    <string name="languages_onboarding_description">Блокируйте больше рекламы, адаптировав Adblock Plus под используемые вами в браузере языки.</string>
+    <string name="languages_onboarding_option_add">Добавить дополнительный язык для блокировки рекламы.</string>
+    <string name="languages_onboarding_option_skip">Нет, спасибо, я использую только один язык.</string>
+
+</resources>

@@ -1,0 +1,133 @@
+<!--
+ This file is part of Adblock Plus <https://adblockplus.org/>,
+ Copyright (C) 2006-present eyeo GmbH
+
+ Adblock Plus is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License version 3 as
+ published by the Free Software Foundation.
+
+ Adblock Plus is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <!-- app-->
+    <string name="app_name">Adblock Plus για Samsung Internet</string>
+    <string name="app_subtitle">για Samsung Internet</string>
+    <string name="samsung_internet_required_title">Απαραίτητο το Samsung Internet</string>
+    <string name="samsung_internet_required_description">Το Adblock Plus είναι μια εφαρμογή που τρέχει πάνω από το Samsung Internet για να φιλτράρει τις διαφημίσεις ενώ χρησιμοποιείτε αυτό το πρόγραμμα περιήγησης. Για να είναι αποτελεσματικό το Adblock Plus, χρειάζεστε να υπάρχει εγκατεστημένο στη συσκευή σας το Samsung Internet 4.0 ή μεταγενέστερη έκδοση.\nΜπορείτε να αποκτήσετε το πρόγραμμα περιήγησης Samsung Internet πατώντας το παρακάτω κουμπί.</string>
+    <string name="download_samsung_internet">Κατεβάστε το Samsung Internet</string>
+    <string name="update_status_progress_message">Λήψη ενημερώσεων λιστών φίλτρων…</string>
+    <string name="update_status_error_message">Σφάλμα κατά την ενημέρωση: Προσπαθήστε ξανά</string>
+    <string name="update_status_retry">Ξαναπροσπαθήστε</string>
+
+    <!-- base-->
+    <string name="product_name">Adblock Plus</string>
+    <string name="target_name">για Samsung Internet</string>
+    <string name="acceptable_ads">Αποδεκτές Διαφημίσεις</string>
+    <string name="intrusive_ads">Παρεμβατικές διαφημίσεις</string>
+    <string name="acceptable_ads_fair_standard_title">Δίκαιο πρότυπο</string>
+    <string name="acceptable_ads_fair_standard_description">Οι διαφημίσεις που εμφανίζονται ως Αποδεκτές Διαφημίσεις δεν είναι ποτέ διαφημίσεις βίντεο, ήχου ή αναδυόμενων παραθύρων</string>
+    <string name="acceptable_ads_placement_title">Τοποθέτηση</string>
+    <string name="acceptable_ads_placement_description">Μην διακόπτετε τη φυσική ροή ανάγνωσης</string>
+    <string name="acceptable_ads_distinction_title">Διάκριση</string>
+    <string name="acceptable_ads_distinction_description">Οι διαφημίσεις που εμφανίζονται ως Αποδεκτές Διαφημίσεις επισημαίνονται πάντα με σαφή τρόπο ως διαφημίσεις</string>
+    <string name="acceptable_ads_size_title">Μέγεθος</string>
+    <string name="acceptable_ads_size_description">Εκτείνεται λιγότερο του 15% της οθόνης κατά την αρχική φόρτωση</string>
+
+    <!-- onboarding -->
+    <string name="onboarding_welcome_header_title1">Καλώς ήρθατε</string>
+    <string name="onboarding_welcome_block_ads_title">Αποκλεισμός ενοχλητικών διαφημίσεων</string>
+    <string name="onboarding_welcome_block_ads_description">Περιηγηθείτε χωρίς διαφημίσεις ενώ υποστηρίζετε τους δημιουργούς περιεχομένου μέσω των Αποδεκτών Διαφημίσεων</string>
+    <string name="onboarding_welcome_tracking_protection_title">Προστασία παρακολούθησης</string>
+    <string name="onboarding_welcome_tracking_protection_description">Περιηγηθείτε με περισσότερη ασφάλεια μην επιτρέποντας στους ιστότοπους να σας παρακολουθούν στο διαδίκτυο</string>
+    <string name="onboarding_welcome_security_privacy_title">Βελτιωμένη ασφάλεια και απόρρητο</string>
+    <string name="onboarding_welcome_security_privacy_description">Περιηγηθείτε χωρίς δεύτερες σκέψεις με το Adblock Plus το οποίο σας προστατεύει</string>
+    <string name="onboarding_welcome_language_filters_title">Λίστες φίλτρων για συγκεκριμένες γλώσσες</string>
+    <string name="onboarding_welcome_language_filters_description">Αποκλείστε περισσότερες διαφημίσεις βελτιστοποιώντας το Adblock Plus για τις γλώσσες στις οποίες συνήθως περιηγείστε</string>
+
+    <string name="onboarding_privacy_header_title1">Διαβάστε</string>
+    <string name="onboarding_privacy_header_title2">την πολιτική απορρήτου</string>
+    <string name="onboarding_privacy_header_title3">ανοίγοντας τον παρακάτω σύνδεσμο</string>
+    <string name="onboarding_privacy_block_title">Μπορείτε να μας βοηθήσετε να κάνουμε το διαδίκτυο καλύτερο</string>
+    <string name="onboarding_privacy_block_description">Διαβάστε την πολιτική απορρήτου μας ακολουθώντας τον σύνδεσμο. Υπάρχει στην αρχή μια σύντομη, φιλική προς τον αναγνώστη ενημέρωση σχετικά με το υλικό το οποίο συλλέγουμε</string>
+    <string name="onboarding_privacy_block_link_text"><a href="https://adblockplus.org/privacy">Πολιτική απορρήτου</a></string>
+
+    <string name="onboarding_acceptable_ads_header_title1">Συνδράμετε</string>
+    <string name="onboarding_acceptable_ads_header_title3">και υποστηρίξτε τους δημιουργούς περιεχομένου</string>
+    <string name="onboarding_acceptable_ads_annoying_ads_title">Οι ενοχλητικές διαφημίσεις είναι πάντα αποκλεισμένες</string>
+    <string name="onboarding_acceptable_ads_annoying_ads_description">Οι ενοχλητικές διαφημίσεις που σας αποσπούν την προσοχή από το περιεχόμενο που αγαπάτε θα είναι πάντα αποκλεισμένες</string>
+    <string name="onboarding_acceptable_ads_nonintrusive_ads_title">Ένας μικρός αριθμός μη παρεμβατικών διαφημίσεων εμφανίζεται από προεπιλογή</string>
+    <string name="onboarding_acceptable_ads_nonintrusive_ads_description">Θα εμφανιστούν διαφημίσεις που δεν παρεμβαίνουν στην εμπειρία περιήγησής σας, έτσι ώστε οι δημιουργοί να μπορούν να συνεχίσουν να δημοσιεύουν το περιεχόμενό τους</string>
+    <string name="onboarding_acceptable_ads_nonintrusive_ads_example">Δείτε ένα παράδειγμα</string>
+    <string name="onboarding_acceptable_ads_disable_title">Η απενεργοποίηση είναι δυνατή ανά πάσα στιγμή</string>
+    <string name="onboarding_acceptable_ads_disable_description">Μπορείτε να αλλάξετε αυτήν τη ρύθμιση πατώντας την επιλογή \"Επιτρέψτε μη παρεμβατική διαφήμιση\"</string>
+
+    <string name="onboarding_enable_header_title1">Δείτε πώς να</string>
+    <string name="onboarding_enable_header_title2">ενεργοποιήσετε το Adblock Plus</string>
+    <string name="onboarding_enable_one_step_title">Ένα ακόμη βήμα και ολοκληρώσατε τη διαδικασία</string>
+    <string name="onboarding_enable_one_step_description">Ενεργοποιήστε το Adblock Plus στις Ρυθμίσεις Adblocker του Samsung Internet</string>
+
+    <string name="open_samsung_internet">Ανοίξτε το Samsung Internet</string>
+    <!-- /onboarding -->
+
+    <!-- preferences -->
+    <string name="preferences_ad_blocking_category">Επιλογές αποκλεισμού διαφημίσεων</string>
+    <string name="preferences_primary_subscriptions_title">Γλώσσα</string>
+    <string name="preferences_primary_subscriptions_summary">Αποκλείστε περισσότερες διαφημίσεις βελτιστοποιώντας το Adblock Plus για τη/τις γλώσσα/ες στην/στις οποία/ες συνήθως περιηγείστε</string>
+    <string name="preferences_other_subscriptions_title">Περισσότερες επιλογές αποκλεισμού</string>
+    <string name="preferences_other_subscriptions_summary">Κατάργηση παρακολούθησης, επιλογών μέσων κοινωνικής δικτύωσης ή προσθήκη προσαρμοσμένων λιστών φίλτρων</string>
+    <string name="preferences_allowlist_title">Προσθέστε ιστότοπους στη λίστα επιτρεπόμενων</string>
+    <string name="preferences_allowlist_summary">Απενεργοποιήστε τον αποκλεισμό διαφημίσεων σε ιστότοπους της επιλογής σας</string>
+    <string name="preferences_allowlist_header">Επιτρεπόμενοι ιστότοποι</string>
+    <string name="preferences_updates_title">Ενημέρωση λιστών φίλτρων διαφημίσεων</string>
+    <string name="preferences_updates_subtitle">Διαμορφώστε πότε θα ενημερώνονται οι λίστες που χρησιμοποιούνται για το φιλτράρισμα των διαφημίσεων</string>
+    <string name="preferences_automatic_updates_title">Αυτόματες ενημερώσεις</string>
+    <string name="preferences_automatic_updates_wifi_only">Μόνο Wi-Fi</string>
+    <string name="preferences_automatic_updates_always">Πάντα</string>
+    <string name="preferences_update_subscriptions_title">Ενημέρωση τώρα</string>
+    <string name="preferences_acceptable_ads_title">Να επιτρέπονται μερικές μη παρεμβατικές διαφημίσεις</string>
+    <string name="preferences_acceptable_ads_summary">Οι ενοχλητικές διαφημίσεις αποκλείονται πάντα, ενώ ορισμένες μη παρεμβατικές διαφημίσεις εμφανίζονται από προεπιλογή, έτσι ώστε οι δημιουργοί περιεχομένου να μπορούν να δημοσιεύουν το περιεχόμενό τους δωρεάν</string>
+    <string name="preferences_acceptable_ads_action">Ναι, θα υποστηρίζω τους δημιουργούς περιεχομένου</string>
+    <string name="preferences_about_title">Σχετικά με</string>
+    <string name="primary_subscriptions_active_category">Βελτιστοποιημένο για περιήγηση</string>
+    <string name="primary_subscriptions_inactive_category">Πρόσθετες γλώσσες</string>
+    <string name="subscription_last_update">Τελευταία ενημέρωση: %s</string>
+    <string name="subscription_last_update_never">Ποτέ</string>
+    <string name="other_subscriptions_default_category">Ενσωματωμένες λίστες φίλτρων</string>
+    <string name="other_subscriptions_custom_category">Ενεργές λίστες προσαρμοσμένων φίλτρων</string>
+    <string name="other_subscriptions_add_custom_title">Προσθήκη λίστας προσαρμοσμένων φίλτρων</string>
+    <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
+    <string name="other_subscriptions_remove_custom_title">Επιβεβαιώστε τη διαγραφή</string>
+    <string name="other_subscriptions_remove_custom_message">Είστε βέβαιοι ότι θέλετε να διαγράψετε τη λίστα προσαρμοσμένων φίλτρων από %s;</string>
+    <string name="other_subscriptions_dialog_title">Προσθήκη λίστας προσαρμοσμένων φίλτρων</string>
+    <string name="other_subscriptions_dialog_message">Αυτό μπορεί να διαρκέσει μερικά δευτερόλεπτα</string>
+    <string name="other_subscriptions_error_add_custom">Σφάλμα κατά την προσθήκη λίστας προσαρμοσμένων φίλτρων</string>
+    <string name="allowlist_add_title">Προσθέστε έναν ιστότοπο στη λίστα επιτρεπόμενων</string>
+    <string name="allowlist_add_hint">example.com</string>
+    <string name="allowlist_delete_dialog_title">Επιβεβαιώστε τη διαγραφή</string>
+    <string name="allowlist_delete_dialog_message">Είστε βέβαιοι ότι θέλετε να καταργήσετε %s από τη λίστα επιτρεπόμενων;</string>
+    <string name="acceptable_ads_enabled_line1">Ναι, θα υποστηρίζω τους δημιουργούς περιεχομένου</string>
+    <string name="acceptable_ads_enabled_line2">Διατηρώντας τις Αποδεκτές Διαφημίσεις ενεργοποιημένες βοηθάτε τους δημιουργούς περιεχομένου να δημοσιεύουν το περιεχόμενό τους δωρεάν</string>
+    <string name="acceptable_ads_disabled">Όχι, θα ήθελα να απενεργοποιήσω τις Αποδεκτές Διαφημίσεις</string>
+    <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
+    <string name="about_privacy_policy"><a href="https://adblockplus.org/privacy">Πολιτική Απορρήτου</a></string>
+    <string name="about_terms_of_use"><a href="https://adblockplus.org/terms">Όροι Χρήσης</a></string>
+    <string name="about_imprint">Εταιρικές Πληροφορίες</string>
+    <string name="open_source_licenses">Άδειες Ανοιχτού Κώδικα</string>
+    <string name="version">Εκδοχή</string>
+    <string name="share_events_header">Βοηθήστε στη βελτίωση του Adblock Plus</string>
+    <string name="share_events_title">Μοιραστείτε ανώνυμα δεδομένα</string>
+    <string name="share_events_description">Τα ανώνυμα δεδομένα μας βοηθούν να βελτιώνουμε το Adblock Plus, δημιουργώντας έτσι μια καλύτερη εμπειρία περιήγησης για εσάς.</string>
+    <string name="share_events_consent">Ναι, θα κοινοποιήσω κάποια ανώνυμα δεδομένα.</string>
+    <string name="languages_onboarding_title">Περιήγηση σε πολλές γλώσσες;</string>
+    <string name="languages_onboarding_description">Αποκλείστε περισσότερες διαφημίσεις βελτιστοποιώντας το Adblock Plus για τη/τις γλώσσα/ες στην/στις οποία/ες συνήθως περιηγείστε</string>
+    <string name="languages_onboarding_option_add">Προσθέστε μια επιπλέον γλώσσα αποκλεισμού διαφημίσεων.</string>
+    <string name="languages_onboarding_option_skip">Όχι, ευχαριστώ, κάνω περιήγηση μόνο σε μία γλώσσα.</string>
+
+</resources>
