@@ -21,7 +21,7 @@
     <string name="samsung_internet_required_title">Требуется Samsung Internet</string>
     <string name="samsung_internet_required_description">Adblock Plus – это расширение для Samsung Internet для блокировки рекламы при использовании браузера. Чтобы пользоваться приложением Adblock Plus, установите на ваше устройство Samsung Internet версии 4.0 или выше.\nНажмите на кнопку ниже, чтобы скачать браузер Samsung Internet.</string>
     <string name="download_samsung_internet">Скачать Samsung Internet</string>
-    <string name="update_status_progress_message">Обновление списков фильтров...</string>
+    <string name="update_status_progress_message">Обновление списков фильтров…</string>
     <string name="update_status_error_message">Ошибка обновления: попробуйте снова</string>
     <string name="update_status_retry">Повторить попытку</string>
 
