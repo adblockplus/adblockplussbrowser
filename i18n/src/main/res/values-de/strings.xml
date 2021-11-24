@@ -1,0 +1,133 @@
+<!--
+ This file is part of Adblock Plus <https://adblockplus.org/>,
+ Copyright (C) 2006-present eyeo GmbH
+
+ Adblock Plus is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License version 3 as
+ published by the Free Software Foundation.
+
+ Adblock Plus is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <!-- app-->
+    <string name="app_name">Adblock Plus für Samsung Internet</string>
+    <string name="app_subtitle">für Samsung Internet</string>
+    <string name="samsung_internet_required_title">Samsung Internet erforderlich</string>
+    <string name="samsung_internet_required_description">Adblock Plus ist eine App, die über Samsung Internet ausgeführt wird, um bei der Nutzung des Browsers die Werbung zu filtern. Samsung Internet 4.0 oder eine höhere Version muss auf deinem Gerät installiert werden, damit Adblock Plus einwandfrei funktionieren kann.\nDer Samsung Internet-Browser kann abgerufen werden, indem du auf die nachfolgende Schaltfläche klickst.</string>
+    <string name="download_samsung_internet">Samsung Internet herunterladen</string>
+    <string name="update_status_progress_message">Aktualisierungen der Filterliste werden abgerufen …</string>
+    <string name="update_status_error_message">Fehler bei der Aktualisierung: Bitte versuche es erneut</string>
+    <string name="update_status_retry">Erneut versuchen</string>
+
+    <!-- base-->
+    <string name="product_name">Adblock Plus</string>
+    <string name="target_name">für Samsung Internet</string>
+    <string name="acceptable_ads">Acceptable Ads</string>
+    <string name="intrusive_ads">Aufdringliche Werbung</string>
+    <string name="acceptable_ads_fair_standard_title">Faire Standards</string>
+    <string name="acceptable_ads_fair_standard_description">Bei Werbung, die mithilfe von Acceptable Ads gezeigt wird, handelt es sich niemals um Video-, Ton-, oder Pop-up-Werbung</string>
+    <string name="acceptable_ads_placement_title">Platzierung</string>
+    <string name="acceptable_ads_placement_description">Unterbricht nicht den natürlichen Lesefluss</string>
+    <string name="acceptable_ads_distinction_title">Unterscheidung</string>
+    <string name="acceptable_ads_distinction_description">Von Acceptable Ads dargestellte Werbung, wird immer als Werbung gekennzeichnet</string>
+    <string name="acceptable_ads_size_title">Größe</string>
+    <string name="acceptable_ads_size_description">Sie nimmt weniger als 15 % des Bildschirms ein als zuvor</string>
+
+    <!-- onboarding -->
+    <string name="onboarding_welcome_header_title1">Willkommen bei</string>
+    <string name="onboarding_welcome_block_ads_title">Aufdringliche Werbung blockieren</string>
+    <string name="onboarding_welcome_block_ads_description">Browse ohne Werbung und unterstütze dabei Content-Ersteller durch Acceptable Ads</string>
+    <string name="onboarding_welcome_tracking_protection_title">Tracking-Schutz</string>
+    <string name="onboarding_welcome_tracking_protection_description">Browse sicherer, indem du die Websites daran hinderst, dich im gesamten Internet zu verfolgen</string>
+    <string name="onboarding_welcome_security_privacy_title">Verbesserte Sicherheit und verbesserter Datenschutz</string>
+    <string name="onboarding_welcome_security_privacy_description">Browse sorgenfrei mit Adblock Plus, das dich im Hintergrund beschützt</string>
+    <string name="onboarding_welcome_language_filters_title">Sprachspezifische Filterlisten</string>
+    <string name="onboarding_welcome_language_filters_description">Blockiere mehr Werbung bei Adblock Plus durch die Auswahl deiner Sprach-Präferenzen</string>
+
+    <string name="onboarding_privacy_header_title1">Bitte lies</string>
+    <string name="onboarding_privacy_header_title2">die Datenschutzerklärung,</string>
+    <string name="onboarding_privacy_header_title3">indem du auf den nachfolgenden Link klickst</string>
+    <string name="onboarding_privacy_block_title">Du kannst uns dabei, helfen, das Internet besser zu machen</string>
+    <string name="onboarding_privacy_block_description">Bitte lies unsere Datenschutzerklärung, indem du auf den Link klickst. Am Anfang findest du einen kurzen, humanen Hinweis darüber, welche Daten wir erheben</string>
+    <string name="onboarding_privacy_block_link_text"><a href="https://adblockplus.org/privacy">Datenschutzerklärung</a></string>
+
+    <string name="onboarding_acceptable_ads_header_title1">Nimm teil</string>
+    <string name="onboarding_acceptable_ads_header_title3">und unterstütze Content-Ersteller </string>
+    <string name="onboarding_acceptable_ads_annoying_ads_title">Aufdringliche Werbung wird immer blockiert</string>
+    <string name="onboarding_acceptable_ads_annoying_ads_description">Aufdringliche Werbungen, die dich vom Inhalt ablenken, werden immer blockiert</string>
+    <string name="onboarding_acceptable_ads_nonintrusive_ads_title">Standardmäßig werden ein paar unaufdringliche Werbungen angezeigt</string>
+    <string name="onboarding_acceptable_ads_nonintrusive_ads_description">Es erscheint Werbung, die dein Browsing-Erlebnis nicht stört. Content-Ersteller können ihre Inhalte weiterhin veröffentlichen.</string>
+    <string name="onboarding_acceptable_ads_nonintrusive_ads_example">Zeige mir ein Beispiel</string>
+    <string name="onboarding_acceptable_ads_disable_title">Jederzeit deaktivieren</string>
+    <string name="onboarding_acceptable_ads_disable_description">Diese Einstellung kann geändert werden, indem du auf die Option \"Einige nicht aufdringliche Werbungen zulassen\" klickst</string>
+
+    <string name="onboarding_enable_header_title1">So geht\'s</string>
+    <string name="onboarding_enable_header_title2">Adblock Plus aktivieren</string>
+    <string name="onboarding_enable_one_step_title">Nur noch ein Schritt, dann bist du fertig</string>
+    <string name="onboarding_enable_one_step_description">Adblock Plus in den Adblocker-Einstellungen von Samsung Internet aktivieren</string>
+
+    <string name="open_samsung_internet">Samsung Internet öffnen</string>
+    <!-- /onboarding -->
+
+    <!-- preferences -->
+    <string name="preferences_ad_blocking_category">Optionen zur Werbeblockierung</string>
+    <string name="preferences_primary_subscriptions_title">Sprache</string>
+    <string name="preferences_primary_subscriptions_summary">Blockiere mehr Werbung durch Optimierung von Adblock Plus für die Sprache(n), die du normalerweise zum Browsen nutzt</string>
+    <string name="preferences_other_subscriptions_title">Weitere Blockieroptionen</string>
+    <string name="preferences_other_subscriptions_summary">Tracking, Social-Media-Schaltflächen entfernen oder benutzerdefinierte Filterlisten hinzufügen</string>
+    <string name="preferences_allowlist_title">Websites der Allowlist hinzufügen</string>
+    <string name="preferences_allowlist_summary">Die Werbeblockierung auf Websites deiner Wahl deaktivieren</string>
+    <string name="preferences_allowlist_header">Auf die Allowlist gesetzte Websites</string>
+    <string name="preferences_updates_title">Werbung-Filterlisten aktualisieren</string>
+    <string name="preferences_updates_subtitle">Update-Zeitpunkt der zum Filtern von Werbungen verwendeten Listen konfigurieren</string>
+    <string name="preferences_automatic_updates_title">Automatische Aktualisierungen</string>
+    <string name="preferences_automatic_updates_wifi_only">Nur WLAN</string>
+    <string name="preferences_automatic_updates_always">Immer</string>
+    <string name="preferences_update_subscriptions_title">Jetzt aktualisieren</string>
+    <string name="preferences_acceptable_ads_title">Einige nicht aufdringliche Werbung zulassen</string>
+    <string name="preferences_acceptable_ads_summary">Aufdringliche Werbung wird immer blockiert. Gleichzeitig werden standardmäßig einige nicht aufdringliche Werbungen angezeigt, damit die Content-Ersteller ihre Inhalte kostenlos veröffentlichen können</string>
+    <string name="preferences_acceptable_ads_action">Ja, ich unterstütze die Content-Ersteller</string>
+    <string name="preferences_about_title">Über</string>
+    <string name="primary_subscriptions_active_category">Zum Browsen optimiert in:</string>
+    <string name="primary_subscriptions_inactive_category">Zusätzliche Sprachen</string>
+    <string name="subscription_last_update">Zuletzt aktualisiert: %s</string>
+    <string name="subscription_last_update_never">Nie</string>
+    <string name="other_subscriptions_default_category">Integrierte Filterlisten</string>
+    <string name="other_subscriptions_custom_category">Aktive, benutzerdefinierte Filterlisten</string>
+    <string name="other_subscriptions_add_custom_title">Benutzerdefinierte Filterlisten hinzufügen</string>
+    <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
+    <string name="other_subscriptions_remove_custom_title">Löschung bestätigen</string>
+    <string name="other_subscriptions_remove_custom_message">Bist du sicher, dass du die benutzerdefinierte Filterliste aus %s löschen möchtest?</string>
+    <string name="other_subscriptions_dialog_title">Benutzerdefinierte Liste wird hinzugefügt</string>
+    <string name="other_subscriptions_dialog_message">Das kann ein paar Sekunden dauern</string>
+    <string name="other_subscriptions_error_add_custom">Fehler beim Hinzufügen der benutzerdefinierten Filterliste</string>
+    <string name="allowlist_add_title">Eine Website der Allowlist hinzufügen</string>
+    <string name="allowlist_add_hint">example.com</string>
+    <string name="allowlist_delete_dialog_title">Löschung bestätigen</string>
+    <string name="allowlist_delete_dialog_message">Bist du sicher, dass du %s aus der Allowlist entfernen möchtest?</string>
+    <string name="acceptable_ads_enabled_line1">Ja, ich werde die Content-Ersteller unterstützen</string>
+    <string name="acceptable_ads_enabled_line2">Du hilfst den Content-Erstellern bei der Veröffentlichung ihrer Inhalte, indem Acceptable Ads weiterhin aktiviert bleibt</string>
+    <string name="acceptable_ads_disabled">Nein, ich möchte Acceptable Ads deaktivieren</string>
+    <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
+    <string name="about_privacy_policy"><a href="https://adblockplus.org/privacy">Datenschutzerklärung</a></string>
+    <string name="about_terms_of_use"><a href="https://adblockplus.org/terms">Nutzungsbedingungen</a></string>
+    <string name="about_imprint">Impressum</string>
+    <string name="open_source_licenses">Open Source-Lizenzen</string>
+    <string name="version">Version</string>
+    <string name="share_events_header">Leiste deinen Beitrag zur Verbesserung von Adblock Plus</string>
+    <string name="share_events_title">Anonymisierte Daten teilen</string>
+    <string name="share_events_description">Anonymisierte Daten helfen uns dabei, Adblock Plus zu verbessern. Damit können wir ein besseres Browsing-Erlebnis für dich gewährleisten.</string>
+    <string name="share_events_consent">Ja, ich teile einige anonymisierte Daten.</string>
+    <string name="languages_onboarding_title">In mehreren Sprachen browsen?</string>
+    <string name="languages_onboarding_description">Blockiere mehr Werbung durch Optimierung von Adblock Plus für die Sprache(n), die du normalerweise zum Browsen nutzt.</string>
+    <string name="languages_onboarding_option_add">Füge eine zusätzliche Werbeblockierungssprache hinzu.</string>
+    <string name="languages_onboarding_option_skip">Nein danke, ich browse nur in einer Sprache.</string>
+
+</resources>
