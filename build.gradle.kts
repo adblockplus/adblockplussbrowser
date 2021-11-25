@@ -47,7 +47,13 @@ allprojects {
 }
 
 detekt {
-    source = files(projectDir)
+    source = files(
+        "${projectDir}/analytics",
+        "${projectDir}/app",
+        "${projectDir}/base",
+        "${projectDir}/core",
+        "${projectDir}/i18n",
+        "${projectDir}/onboarding")
     parallel = true
     config = files("${projectDir}/config/detekt/detekt.yml")
     baseline = file("${projectDir}/config/detekt/detekt-baseline.xml")
