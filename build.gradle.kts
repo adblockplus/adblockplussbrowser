@@ -47,7 +47,10 @@ allprojects {
 }
 
 detekt {
-    source = files(projectDir)
+    source = files(fileTree(".") {
+        // On CI, we set GRADLE_USER_HOME to .gradle, this makes detekt fail
+        exclude(".gradle")
+    })
     parallel = true
     config = files("${projectDir}/config/detekt/detekt.yml")
     baseline = file("${projectDir}/config/detekt/detekt-baseline.xml")
