@@ -1,4 +1,5 @@
 stages:
+  - checks
   - build
   - sign_builds
   - device_tests
@@ -44,6 +45,32 @@ variables:
     paths:
       - $HOME/.android
 
+checks:lint:
+  extends: .template_build
+  stage: checks
+  needs: []
+  script:
+    - ./gradlew lint
+  rules:
+    - when: always
+  artifacts:
+    paths:
+      - ./*/build/reports/lint-results.*
+    when: on_failure
+
+checks:detekt:
+  extends: .template_build
+  stage: checks
+  needs: []
+  script:
+    - ./gradlew detekt
+  rules:
+    - when: always
+  artifacts:
+    paths:
+      - build/reports/detekt/detekt.*
+    when: always
+
 build:
   extends: .template_build
   script:
@@ -54,7 +81,7 @@ build:
       - $APK_OUTPUT_PATH
       - $MAPPING_OUTPUT_PATH
   rules:
-    - when: always
+    - when: on_success
 
 sign_apks:
   stage: "sign_builds"
@@ -81,7 +108,7 @@ sign_apks:
       - "$APK_OUTPUT_PATH/worldCrystal/release/"
     expire_in: "1 week"
   rules:
-    - when: always
+    - when: on_success
 
   # automated regression tests template using Appium
 .template_automation:
@@ -159,4 +186,4 @@ regression_autojob:
     PLATFORM_VERSIONS: "10"
     GRADLE_TASK: "regression"
   rules:
-    - when: always
+    - when: on_success
