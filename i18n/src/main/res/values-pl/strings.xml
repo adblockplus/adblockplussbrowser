@@ -51,13 +51,6 @@
     <string name="onboarding_welcome_language_filters_title">Listy filtrów specyficzne dla języka</string>
     <string name="onboarding_welcome_language_filters_description">Blokuj więcej reklam, optymalizując Adblock Plus pod kątem języków, w których zwykle przeglądasz strony</string>
 
-    <string name="onboarding_privacy_header_title1">Prosimy o przeczytanie</string>
-    <string name="onboarding_privacy_header_title2">Zasad ochrony prywatności</string>
-    <string name="onboarding_privacy_header_title3">poprzez otwarcie poniższego linku</string>
-    <string name="onboarding_privacy_block_title">Możesz nam pomóc uczynić Internet lepszym miejscem</string>
-    <string name="onboarding_privacy_block_description">Zapoznaj się z naszymi zasadami ochrony prywatności, klikając w link. Na początku znajduje się krótkie, przyjazne dla czytelnika streszczenie tego, jakie dane zbieramy</string>
-    <string name="onboarding_privacy_block_link_text"><a href="https://adblockplus.org/privacy">Zasady ochrony prywatności</a></string>
-
     <string name="onboarding_acceptable_ads_header_title1">Bierz udział</string>
     <string name="onboarding_acceptable_ads_header_title3">i wspieraj twórców treści</string>
     <string name="onboarding_acceptable_ads_annoying_ads_title">Irytujące reklamy są zawsze blokowane</string>

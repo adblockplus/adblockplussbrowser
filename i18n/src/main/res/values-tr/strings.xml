@@ -51,13 +51,6 @@
     <string name="onboarding_welcome_language_filters_title">Dile özel filtre listeleri</string>
     <string name="onboarding_welcome_language_filters_description">Adblock Plus\'ı en çok kullandığınız diller için optimize ederek daha fazla reklamı engelleyin</string>
 
-    <string name="onboarding_privacy_header_title1">Lütfen okuyun</string>
-    <string name="onboarding_privacy_header_title2">Gizlilik politikası</string>
-    <string name="onboarding_privacy_header_title3">Aşağıdaki bağlantıya tıklayın</string>
-    <string name="onboarding_privacy_block_title">Web\'i daha iyi bir hale getirmemize yardımcı olabilirsiniz</string>
-    <string name="onboarding_privacy_block_description">Lütfen aşağıdaki bağlantıdan gizlilik politikamızı okuyun. Başlangıçta neler topladığımız hakkında kısa, insan dostu bir bilgilendirme bulacaksınız</string>
-    <string name="onboarding_privacy_block_link_text"><a href="https://adblockplus.org/privacy">Gizlilik politikası</a></string>
-
     <string name="onboarding_acceptable_ads_header_title1">Katılın</string>
     <string name="onboarding_acceptable_ads_header_title3">ve içerik oluşturucuları destekleyin</string>
     <string name="onboarding_acceptable_ads_annoying_ads_title">Rahatsız edici reklamlar daima engellenir</string>

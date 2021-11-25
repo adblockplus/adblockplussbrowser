@@ -51,13 +51,6 @@
     <string name="onboarding_welcome_language_filters_title">Nyelvspecifikus szűrőlisták</string>
     <string name="onboarding_welcome_language_filters_description">Blokkoljon további hirdetéseket az Adblock Plus optimalizálásával a leggyakoribb böngészési nyelveken</string>
 
-    <string name="onboarding_privacy_header_title1">Kérjük, olvassa el</string>
-    <string name="onboarding_privacy_header_title2">az Adatvédelmi nyilatkozatot</string>
-    <string name="onboarding_privacy_header_title3">az alábbi hivatkozásra kattintva</string>
-    <string name="onboarding_privacy_block_title">Segíthet nekünk javítani a böngészést</string>
-    <string name="onboarding_privacy_block_description">Kérjük, olvassa el az adatvédelmi nyilatkozatot a következő hivatkozásra kattintva. Az elején egy rövid, közérthető összefoglaló található arról, hogy milyen adatokat gyűjtünk</string>
-    <string name="onboarding_privacy_block_link_text"><a href="https://adblockplus.org/privacy">Adatvédelmi nyilatkozat</a></string>
-
     <string name="onboarding_acceptable_ads_header_title1">Vegyen részt</string>
     <string name="onboarding_acceptable_ads_header_title3">és támogassa a tartalomkészítőket</string>
     <string name="onboarding_acceptable_ads_annoying_ads_title">A bosszantó reklámokat blokkolja</string>

@@ -51,13 +51,6 @@
     <string name="onboarding_welcome_language_filters_title">قوائم التصفية بلغة محددة</string>
     <string name="onboarding_welcome_language_filters_description">احجب مزيدًا من الإعلانات عن طريق إختيار اللغات التي تتصفح بها عادةً</string>
 
-    <string name="onboarding_privacy_header_title1">يُرجى القراءة</string>
-    <string name="onboarding_privacy_header_title2">سياسة الخصوصية</string>
-    <string name="onboarding_privacy_header_title3">عن طريق فتح الرابط التالي</string>
-    <string name="onboarding_privacy_block_title">يمكنك مساعدتنا في تحسين الإنترنت</string>
-    <string name="onboarding_privacy_block_description">يُرجى قراءة سياسة الخصوصية المعمول بها لدينا عن طريق تتبُّع الرابط. و يوجد هناك موجز قصير و بسيط للمستخدم بشأن المعلومات التي نجمعها</string>
-    <string name="onboarding_privacy_block_link_text"><a href="https://adblockplus.org/privacy">سياسة الخصوصية</a></string>
-
     <string name="onboarding_acceptable_ads_header_title1">يمكنك تفعيل</string>
     <string name="onboarding_acceptable_ads_header_title3">ودعم صناع المحتوى</string>
     <string name="onboarding_acceptable_ads_annoying_ads_title">الإعلانات المزعجة يتم حجبها دائمًا</string>

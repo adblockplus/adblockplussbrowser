@@ -50,13 +50,6 @@
     <string name="onboarding_welcome_language_filters_title">Списки фильтров для конкретных языков</string>
     <string name="onboarding_welcome_language_filters_description">Блокируйте больше рекламы, настроив Adblock Plus под используемые вами в браузере языки</string>
 
-    <string name="onboarding_privacy_header_title1">Ознакомьтесь с</string>
-    <string name="onboarding_privacy_header_title2">Политикой конфиденциальности</string>
-    <string name="onboarding_privacy_header_title3">по ссылке ниже</string>
-    <string name="onboarding_privacy_block_title">Помогите нам сделать работу в сети лучше</string>
-    <string name="onboarding_privacy_block_description">Ознакомьтесь с нашей политикой конфиденциальности, перейдя по ссылке ниже. Для удобства в самом начале приведен краткий обзор собираемых нами данных</string>
-    <string name="onboarding_privacy_block_link_text"><a href="https://adblockplus.org/privacy">Политика конфиденциальности</a></string>
-
     <string name="onboarding_acceptable_ads_header_title1">Присоединитесь к</string>
     <string name="onboarding_acceptable_ads_header_title3">и поддержите разработчиков контента</string>
     <string name="onboarding_acceptable_ads_annoying_ads_title">Постоянная блокировка назойливой рекламы</string>

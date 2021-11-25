@@ -51,13 +51,6 @@
     <string name="onboarding_welcome_language_filters_title">言語特定フィルターリスト</string>
     <string name="onboarding_welcome_language_filters_description">通常閲覧する言語に合わせて Adblock Plus を最適化することで、より多くの広告をブロックできます</string>
 
-    <string name="onboarding_privacy_header_title1">下記のリンクから</string>
-    <string name="onboarding_privacy_header_title2">プライバシー方針</string>
-    <string name="onboarding_privacy_header_title3">をご覧ください</string>
-    <string name="onboarding_privacy_block_title">ウェブ体験をより良くするためにご協力ください</string>
-    <string name="onboarding_privacy_block_description">リンクをクリックして、当社のプライバシー方針をお読みください。最初の部分に当社が収集する情報に関する短く読みやすい説明があります</string>
-    <string name="onboarding_privacy_block_link_text"><a href="https://adblockplus.org/privacy">プライバシー方針</a></string>
-
     <string name="onboarding_acceptable_ads_header_title1">コンテンツクリエーターに</string>
     <string name="onboarding_acceptable_ads_header_title3">協力し、サポートしましょう</string>
     <string name="onboarding_acceptable_ads_annoying_ads_title">迷惑広告は常にブロックされます</string>

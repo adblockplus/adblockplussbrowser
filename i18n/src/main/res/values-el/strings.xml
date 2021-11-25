@@ -51,13 +51,6 @@
     <string name="onboarding_welcome_language_filters_title">Λίστες φίλτρων για συγκεκριμένες γλώσσες</string>
     <string name="onboarding_welcome_language_filters_description">Αποκλείστε περισσότερες διαφημίσεις βελτιστοποιώντας το Adblock Plus για τις γλώσσες στις οποίες συνήθως περιηγείστε</string>
 
-    <string name="onboarding_privacy_header_title1">Διαβάστε</string>
-    <string name="onboarding_privacy_header_title2">την πολιτική απορρήτου</string>
-    <string name="onboarding_privacy_header_title3">ανοίγοντας τον παρακάτω σύνδεσμο</string>
-    <string name="onboarding_privacy_block_title">Μπορείτε να μας βοηθήσετε να κάνουμε το διαδίκτυο καλύτερο</string>
-    <string name="onboarding_privacy_block_description">Διαβάστε την πολιτική απορρήτου μας ακολουθώντας τον σύνδεσμο. Υπάρχει στην αρχή μια σύντομη, φιλική προς τον αναγνώστη ενημέρωση σχετικά με το υλικό το οποίο συλλέγουμε</string>
-    <string name="onboarding_privacy_block_link_text"><a href="https://adblockplus.org/privacy">Πολιτική απορρήτου</a></string>
-
     <string name="onboarding_acceptable_ads_header_title1">Συνδράμετε</string>
     <string name="onboarding_acceptable_ads_header_title3">και υποστηρίξτε τους δημιουργούς περιεχομένου</string>
     <string name="onboarding_acceptable_ads_annoying_ads_title">Οι ενοχλητικές διαφημίσεις είναι πάντα αποκλεισμένες</string>

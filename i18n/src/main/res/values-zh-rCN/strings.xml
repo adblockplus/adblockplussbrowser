@@ -51,13 +51,6 @@
     <string name="onboarding_welcome_language_filters_title">语言特定的筛选清单</string>
     <string name="onboarding_welcome_language_filters_description">针对您通常浏览的语言优化 Adblock Plus，从而阻止更多广告</string>
 
-    <string name="onboarding_privacy_header_title1">请阅读</string>
-    <string name="onboarding_privacy_header_title2">隐私政策</string>
-    <string name="onboarding_privacy_header_title3">，为此请打开以下链接</string>
-    <string name="onboarding_privacy_block_title">您可以帮助我们打造更好的网络空间</string>
-    <string name="onboarding_privacy_block_description">请点击链接阅读我们的隐私政策。在开头部分以简洁易懂的方式介绍了我们收集的内容</string>
-    <string name="onboarding_privacy_block_link_text"><a href="https://adblockplus.org/privacy">隐私政策</a></string>
-
     <string name="onboarding_acceptable_ads_header_title1">参与</string>
     <string name="onboarding_acceptable_ads_header_title3">并支持内容创作者</string>
     <string name="onboarding_acceptable_ads_annoying_ads_title">始终拦截恼人的广告</string>

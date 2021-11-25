@@ -51,13 +51,6 @@
     <string name="onboarding_welcome_language_filters_title">Taalspecifieke filterlijsten</string>
     <string name="onboarding_welcome_language_filters_description">Blokkeer meer advertenties door Adblock Plus te optimaliseren voor de talen waarin u normaal gesproken surft</string>
 
-    <string name="onboarding_privacy_header_title1">Lees</string>
-    <string name="onboarding_privacy_header_title2">Het privacybeleid</string>
-    <string name="onboarding_privacy_header_title3">door de onderstaande link te openen</string>
-    <string name="onboarding_privacy_block_title">U kunt ons helpen het internet te verbeteren</string>
-    <string name="onboarding_privacy_block_description">Lees ons privacybeleid door de link te volgen. Er is een korte, mensvriendelijke briefing over wat we aan het begin verzamelen</string>
-    <string name="onboarding_privacy_block_link_text"><a href="https://adblockplus.org/privacy">Privacybeleid</a></string>
-
     <string name="onboarding_acceptable_ads_header_title1">Neem deel</string>
     <string name="onboarding_acceptable_ads_header_title3">en ondersteun de makers van inhoud</string>
     <string name="onboarding_acceptable_ads_annoying_ads_title">Vervelende advertenties worden altijd geblokkeerd</string>
