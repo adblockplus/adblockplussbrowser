@@ -13,7 +13,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Translations to 15 languages
 - Process the UTM links coming from Google Play Store
 - Card about browsing in multiple languages on the settings screen
-- `detect`: stats code analyzer
 
 ### Removed
 - Redundant log output
