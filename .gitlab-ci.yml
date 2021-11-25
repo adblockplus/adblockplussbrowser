@@ -159,4 +159,16 @@ regression_autojob:
     PLATFORM_VERSIONS: "10"
     GRADLE_TASK: "regression"
   rules:
-    - when: always
+    - if: '$FORCE_REGRESSION == "true"'
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"'
+
+multiple_api:
+  extends: .template_automation
+  needs:
+    - build # we can run this on debug apk
+  variables:
+    PLATFORM_VERSIONS: "7 8 9 11"
+    GRADLE_TASK: "multiAPI"
+  rules:
+    - if: '$FORCE_REGRESSION == "true"'
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"'
