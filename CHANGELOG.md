@@ -6,13 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.0.0] - 2021-11-25
 ### Changed
-- About page links look like links: underlined and the color adjusted
+- Links on the "About page" are better formatted
 - Reduced the app size
 
 ### Added
-- Tranlsations to 15 languages
+- Translations to 15 languages
 - Process the UTM links coming from Google Play Store
-- Card about browsing in multiple languages on settings screen
+- Card about browsing in multiple languages on the settings screen
 - `detect`: stats code analyzer
 
 ### Removed
