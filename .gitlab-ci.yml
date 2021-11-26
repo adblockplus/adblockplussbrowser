@@ -162,7 +162,7 @@ regression_autojob:
     - if: '$FORCE_REGRESSION == "true"'
     - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"'
 
-multiple_api:
+smoke_tests:
   extends: .template_automation
   needs:
     - build # we can run this on debug apk
