@@ -7,18 +7,27 @@ stages:
 
 image: spacifici/android-sdk:latest
 
-cache:
+cache: &global_cache
   key:
     files:
       - buildSrc/src/main/kotlin/Deps.kt
   paths:
     - $HOME/.android/
     - .gradle/
+  policy: pull
+
+.template:environment:
+  before_script:
+    - export GRADLE_USER_HOME=`pwd`/.gradle
+    - export GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.console=plain"
+  cache:
+    <<: *global_cache
+    policy: pull-push
 
 dependencies:
   stage: dependencies
+  extends: .template:environment
   script:
-    - export GRADLE_USER_HOME=`pwd`/.gradle
     - mkdir -p ${GRADLE_USER_HOME}
     - find ${GRADLE_USER_HOME}/ -maxdepth 1
     - find $HOME/.android/ -maxdepth 1
