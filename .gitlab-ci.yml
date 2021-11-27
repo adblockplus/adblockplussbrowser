@@ -1,6 +1,6 @@
 stages:
   - dependencies
-#  - checks
+  - checks
 #  - build
 #  - sign_builds
 #  - device_tests
@@ -20,9 +20,6 @@ cache: &global_cache
   before_script:
     - export GRADLE_USER_HOME=`pwd`/.gradle
     - export GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.console=plain"
-  cache:
-    <<: *global_cache
-    policy: pull-push
 
 dependencies:
   stage: dependencies
@@ -32,6 +29,9 @@ dependencies:
     - find ${GRADLE_USER_HOME}/ -maxdepth 1
     - find $HOME/.android/ -maxdepth 1
     - ./gradlew dependencies
+  cache:
+    <<: *global_cache
+    policy: pull-push
 
 # variables:
 #   APK_OUTPUT_PATH: "app/build/outputs/apk"
@@ -71,33 +71,27 @@ dependencies:
 #     key: debug-keystore
 #     paths:
 #       - $HOME/.android
-# 
-# checks:lint:
-#   extends: .template_build
-#   stage: checks
-#   needs: []
-#   script:
-#     - ./gradlew lint
-#   rules:
-#     - when: always
-#   artifacts:
-#     paths:
-#       - ./*/build/reports/lint-results.*
-#     when: on_failure
-# 
-# checks:detekt:
-#   extends: .template_build
-#   stage: checks
-#   needs: []
-#   script:
-#     - ./gradlew detekt
-#   rules:
-#     - when: always
-#   artifacts:
-#     paths:
-#       - build/reports/detekt/detekt.*
-#     when: always
-# 
+
+checks:lint:
+  extends: .template:environment
+  stage: checks
+  script:
+    - ./gradlew lint
+  artifacts:
+    paths:
+      - ./*/build/reports/lint-results.*
+    when: on_failure
+
+checks:detekt:
+  extends: .template:environment
+  stage: checks
+  script:
+    - ./gradlew detekt
+  artifacts:
+    paths:
+      - build/reports/detekt/detekt.*
+    when: always
+
 # build:
 #   extends: .template_build
 #   script:
