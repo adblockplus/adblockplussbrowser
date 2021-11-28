@@ -12,7 +12,7 @@ cache: &global_cache
     files:
       - buildSrc/src/main/kotlin/Deps.kt
   paths:
-    - $HOME/.android/
+    - .android-sdk/
     - .gradle/
   policy: pull
 
@@ -20,6 +20,8 @@ cache: &global_cache
   before_script:
     - export GRADLE_USER_HOME=`pwd`/.gradle
     - export GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.console=plain"
+    - '[ -d .android-sdk ] || cp -a /opt/android-sdk ./.android-sdk'
+    - export ANDROID_SDK_ROOT=`pwd`/.android-sdk
 
 dependencies:
   stage: dependencies
@@ -27,8 +29,8 @@ dependencies:
   script:
     - mkdir -p ${GRADLE_USER_HOME}
     - find ${GRADLE_USER_HOME}/ -maxdepth 1
-    - find $HOME/.android/ -maxdepth 1
-    - ./gradlew dependencies
+    - find ${ANDROID_SDK_ROOT}/ -maxdepth 1
+    - ./gradlew tasks dependencies
   cache:
     <<: *global_cache
     policy: pull-push
