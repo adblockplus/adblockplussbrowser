@@ -61,7 +61,6 @@ build:
   extends: .template:environment
   stage: build
   script:
-    - cp -v debug.keystore $HOME/.android/debug.keystore
     - mkdir -p "app/src/worldAbp/debug"
     - cat "$GOOGLE_SERVICES_ABP_DEBUG" > "$(pwd)/app/src/worldAbp/debug/google-services.json"
     - mkdir "app/src/worldAbp/release"
