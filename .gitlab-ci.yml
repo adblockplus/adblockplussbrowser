@@ -2,7 +2,7 @@ stages:
   - dependencies
   - checks
   - build
-#  - sign_builds
+  - sign_builds
 #  - device_tests
 
 image: spacifici/android-sdk:latest
@@ -82,33 +82,34 @@ build:
   rules:
     - when: on_success
 
-# sign_apks:
-#   stage: "sign_builds"
-#   variables:
-#     GIT_STRATEGY: none
-#   tags:
-#     - "apk_signer_apk-signing-1.uplink.eyeo.it"
-#   before_script:
-#     - "rm -fr ./*_SIGNED.apk"
-#   script:
-#     - |
-#       for UNSIGNED_FILE in $(find app/build/outputs/apk -name "*-unsigned.apk")
-#         do
-#         SIGNED_FILE=$(basename "${UNSIGNED_FILE/-unsigned.apk/_SIGNED.apk}")
-#         echo "Signing ${UNSIGNED_FILE} to ${SIGNED_FILE}"
-#         /usr/local/bin/apk_signer < $UNSIGNED_FILE > $SIGNED_FILE
-#       done
-#     - ls -1 ./*_SIGNED.apk
-#     - mv ./*_SIGNED.apk app/build/outputs/apk/worldAbp/release/
-#   artifacts:
-#     paths:
-#       - "$APK_OUTPUT_PATH/worldAbp/release/"  
-#       - "$APK_OUTPUT_PATH/worldAdblock/release/"
-#       - "$APK_OUTPUT_PATH/worldCrystal/release/"
-#     expire_in: "1 week"
-#   rules:
-#     - when: on_success
-# 
+sign_apks:
+  stage: "sign_builds"
+  variables:
+    GIT_STRATEGY: none
+  cache: []
+  tags:
+    - "apk_signer_apk-signing-1.uplink.eyeo.it"
+  before_script:
+    - "rm -fr ./*_SIGNED.apk"
+  script:
+    - |
+      for UNSIGNED_FILE in $(find app/build/outputs/apk -name "*-unsigned.apk")
+        do
+        SIGNED_FILE=$(basename "${UNSIGNED_FILE/-unsigned.apk/_SIGNED.apk}")
+        echo "Signing ${UNSIGNED_FILE} to ${SIGNED_FILE}"
+        /usr/local/bin/apk_signer < $UNSIGNED_FILE > $SIGNED_FILE
+      done
+    - ls -1 ./*_SIGNED.apk
+    - mv ./*_SIGNED.apk app/build/outputs/apk/worldAbp/release/
+  artifacts:
+    paths:
+      - "$APK_OUTPUT_PATH/worldAbp/release/"  
+      - "$APK_OUTPUT_PATH/worldAdblock/release/"
+      - "$APK_OUTPUT_PATH/worldCrystal/release/"
+    expire_in: "1 week"
+  rules:
+    - when: on_success
+
 #   # automated regression tests template using Appium
 # .template_automation:
 #   stage: device_tests
