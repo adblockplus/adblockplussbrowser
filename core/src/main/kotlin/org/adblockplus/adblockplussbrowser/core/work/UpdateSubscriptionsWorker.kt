@@ -127,6 +127,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
 
             if (results.hasFailedResult()) {
                 Timber.w("Failed subscriptions updates, retrying shortly")
+                filtersFile.delete()
                 delay(DELAY_DEFAULT)
                 updateStatus(ProgressType.FAILED)
                 failedResult()
