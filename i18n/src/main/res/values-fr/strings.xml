@@ -61,7 +61,7 @@
     <string name="onboarding_acceptable_ads_header_title1">Participez au programme</string>
     <string name="onboarding_acceptable_ads_header_title3">et soutenez les créateurs de contenu</string>
     <string name="onboarding_acceptable_ads_annoying_ads_title">Les publicités gênantes sont toujours bloquées</string>
-    <string name="onboarding_acceptable_ads_annoying_ads_description">Les publicités gênantes, qui vous empêchent de lire le contenu qui vous intéresse seront toujours bloquées</string>
+    <string name="onboarding_acceptable_ads_annoying_ads_description">Les publicités gênantes qui vous empêchent de lire le contenu qui vous intéresse seront toujours bloquées</string>
     <string name="onboarding_acceptable_ads_nonintrusive_ads_title">Un petit nombre de publicités non intrusives sont affichées par défaut</string>
     <string name="onboarding_acceptable_ads_nonintrusive_ads_description">Des publicités qui n\'interfèrent pas avec votre expérience de navigation apparaîtront, afin que les créateurs puissent continuer à publier leur contenu</string>
     <string name="onboarding_acceptable_ads_nonintrusive_ads_example">Montrez-moi un exemple</string>
