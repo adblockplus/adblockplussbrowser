@@ -2,7 +2,7 @@ stages:
   - checks
   - build
   - sign_builds
-  - device_tests
+  - automated_tests
 
 image: gradle:jdk8
 
@@ -112,7 +112,7 @@ sign_apks:
 
   # automated regression tests template using Appium
 .template_automation:
-  stage: device_tests
+  stage: automated_tests
   interruptible: true
   retry: 1
   variables:
@@ -188,6 +188,7 @@ regression_autojob:
   rules:
     - if: '$FORCE_REGRESSION == "true"'
     - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"'
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
 
 smoke_tests:
   extends: .template_automation
@@ -199,3 +200,4 @@ smoke_tests:
   rules:
     - if: '$FORCE_REGRESSION == "true"'
     - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"'
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
