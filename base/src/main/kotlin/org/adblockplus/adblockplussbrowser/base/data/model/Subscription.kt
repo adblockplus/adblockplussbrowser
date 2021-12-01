@@ -34,6 +34,6 @@ data class Subscription(
         get() {
             return url.replace(
                 "easylist-downloads.adblockplus.org",
-                "samsung-internet-${(0..9).random()}.filter-list-downloads.eyeo.com")
+                "${(0..9).random()}.samsung-internet.filter-list-downloads.eyeo.com")
         }
 }
