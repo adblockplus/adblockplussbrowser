@@ -63,7 +63,7 @@ internal class OtherSubscriptionsFragment :
 
         viewModel.uiState.observe(this) { uiState ->
             when (uiState) {
-                UiState.Done -> progressDialog?.hide()
+                UiState.Done -> progressDialog?.dismiss()
                 UiState.Error -> Toast.makeText(requireContext(),
                     getString(R.string.other_subscriptions_error_add_custom), Toast.LENGTH_LONG).show()
                 UiState.Loading -> {
