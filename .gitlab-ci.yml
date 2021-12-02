@@ -1,33 +1,66 @@
 stages:
+  - dependencies
   - checks
   - build
   - sign_builds
   - automated_tests
 
-image: gradle:jdk8
+image: spacifici/android-sdk:latest
 
 variables:
   APK_OUTPUT_PATH: "app/build/outputs/apk"
   MAPPING_OUTPUT_PATH: "app/build/outputs/mapping"
 
-# we would need a template for other type of builds
-.template_build:
-  stage: build
-  variables:
-    GRADLE_OPTS: "-Dorg.gradle.daemon=false"
-    ANDROID_SDK_TOOLS: "4333796"
+cache: &global_cache
+  key:
+    files:
+      - buildSrc/src/main/kotlin/Deps.kt
+  paths:
+    - .android-sdk/
+    - .gradle/
+  policy: pull
 
+.template:environment:
   before_script:
     - export GRADLE_USER_HOME=`pwd`/.gradle
-    - apt-get --quiet update --yes
-    - apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
-    - wget --quiet --output-document=android-sdk.zip https://dl.google.com/android/repository/sdk-tools-linux-${ANDROID_SDK_TOOLS}.zip
-    - unzip -q -d android-sdk-linux android-sdk.zip && rm android-sdk.zip
-    - export ANDROID_HOME=$PWD/android-sdk-linux
-    # temporarily disable checking for EPIPE error and use yes to accept all licenses
-    - set +o pipefail
-    - yes | android-sdk-linux/tools/bin/sdkmanager --licenses >/dev/null
-    - set -o pipefail
+    - export GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.console=plain"
+    - '[ -d .android-sdk ] || cp -a /opt/android-sdk ./.android-sdk'
+    - export ANDROID_SDK_ROOT=`pwd`/.android-sdk
+
+dependencies:
+  stage: dependencies
+  extends: .template:environment
+  script:
+    - mkdir -p ${GRADLE_USER_HOME}
+    - ./gradlew tasks dependencies
+  cache:
+    <<: *global_cache
+    policy: pull-push
+
+checks:lint:
+  extends: .template:environment
+  stage: checks
+  script:
+    - ./gradlew lint
+  artifacts:
+    paths:
+      - ./*/build/reports/lint-results.*
+    when: on_failure
+
+checks:detekt:
+  extends: .template:environment
+  stage: checks
+  script:
+    - ./gradlew detekt
+  artifacts:
+    paths:
+      - build/reports/detekt/detekt.*
+    when: always
+
+build:
+  extends: .template:environment
+  stage: build
+  script:
     - mkdir -p "app/src/worldAbp/debug"
     - cat "$GOOGLE_SERVICES_ABP_DEBUG" > "$(pwd)/app/src/worldAbp/debug/google-services.json"
     - mkdir "app/src/worldAbp/release"
@@ -40,41 +73,7 @@ variables:
     - cat "$GOOGLE_SERVICES_CRYSTAL_DEBUG" > "$(pwd)/app/src/worldCrystal/debug/google-services.json"
     - mkdir "app/src/worldCrystal/release"
     - cat "$GOOGLE_SERVICES_CRYSTAL_RELEASE" > "$(pwd)/app/src/worldCrystal/release/google-services.json"
-  cache:
-    key: debug-keystore
-    paths:
-      - $HOME/.android
-
-checks:lint:
-  extends: .template_build
-  stage: checks
-  needs: []
-  script:
-    - ./gradlew lint
-  rules:
-    - when: always
-  artifacts:
-    paths:
-      - ./*/build/reports/lint-results.*
-    when: on_failure
-
-checks:detekt:
-  extends: .template_build
-  stage: checks
-  needs: []
-  script:
-    - ./gradlew detekt
-  rules:
-    - when: always
-  artifacts:
-    paths:
-      - build/reports/detekt/detekt.*
-    when: always
-
-build:
-  extends: .template_build
-  script:
-    - ./gradlew --build-cache assemble # build both debug and release for all flavors
+    - ./gradlew assemble # build both debug and release for all flavors
   artifacts:
     paths:
       # saving all flavors with apks and `output-metadata.json`
@@ -87,6 +86,7 @@ sign_apks:
   stage: "sign_builds"
   variables:
     GIT_STRATEGY: none
+  cache: []
   tags:
     - "apk_signer_apk-signing-1.uplink.eyeo.it"
   before_script:
@@ -110,7 +110,7 @@ sign_apks:
   rules:
     - when: on_success
 
-  # automated regression tests template using Appium
+# automated regression tests template using Appium
 .template_automation:
   stage: automated_tests
   interruptible: true
