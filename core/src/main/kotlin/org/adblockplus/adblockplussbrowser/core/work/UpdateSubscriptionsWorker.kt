@@ -254,12 +254,6 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
                 sink.writeUtf8("! ${subscription.url}\n")
             }
 
-            allowedDomains.forEach { domain ->
-                sink.writeUtf8(domain.toAllowRule())
-                sink.writeUtf8("\n")
-                customRules++
-            }
-
             blockedDomains.forEach { domain ->
                 sink.writeUtf8(domain.toBlockRule())
                 sink.writeUtf8("\n")
@@ -269,6 +263,12 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             filtersSet.forEach { filter ->
                 sink.writeUtf8(filter)
                 sink.writeUtf8("\n")
+            }
+
+            allowedDomains.forEach { domain ->
+                sink.writeUtf8(domain.toAllowRule())
+                sink.writeUtf8("\n")
+                customRules++
             }
         }
 
