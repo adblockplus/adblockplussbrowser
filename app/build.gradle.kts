@@ -77,6 +77,12 @@ android {
     buildFeatures {
         dataBinding = true
     }
+
+    signingConfigs {
+        named("debug") {
+            storeFile(rootProject.file("debug.keystore"))
+        }
+    }
 }
 
 dependencies {
