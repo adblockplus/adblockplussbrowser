@@ -36,6 +36,12 @@ dependencies:
   cache:
     <<: *global_cache
     policy: pull-push
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "merge_request_event"'
+      changes:
+        - buildSrc/src/main/kotlin/Deps.kt
+        - gradle/wrapper/gradle-wrapper.properties
+    - if: '$GENERATE_DEPENDENCIES_CACHE == "true"'
 
 checks:lint:
   extends: .template:environment
@@ -111,7 +117,7 @@ sign_apks:
     - when: on_success
 
 # automated regression tests template using Appium
-.template_automation:
+.template:automation:
   stage: automated_tests
   interruptible: true
   retry: 1
@@ -179,7 +185,7 @@ sign_apks:
       - "automation/result_*"
 
 regression_autojob:
-  extends: .template_automation
+  extends: .template:automation
   needs:
     - build # we can run this on debug apk
   variables:
@@ -191,7 +197,7 @@ regression_autojob:
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
 
 smoke_tests:
-  extends: .template_automation
+  extends: .template:automation
   needs:
     - build # we can run this on debug apk
   variables:
