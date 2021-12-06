@@ -4,6 +4,25 @@ All notable changes to Adblock Plus for Samsung Internet will be documented in t
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2021-11-25
+### Changed
+- Links on the "About page" are better formatted
+- Reduced the app size
+
+### Added
+- Translations to 15 languages
+- Process the UTM links coming from Google Play Store
+- Card about browsing in multiple languages on the settings screen
+
+### Removed
+- Redundant log output
+- Privacy screen on onboarding
+- Improved privacy: not collecting Advertising ID and Android ID for Google Analytics anymore
+
+### Fixed
+- Code cleanup
+- Small bugfixes and improvements
+
 ## [2.0.0-rc1] - 2021-10-01 - This release contains all current commits from https://gitlab.com/eyeo/distpartners/adblockplussbrowser/-/tree/dev
 
 ### Changed/Added
