@@ -45,7 +45,7 @@
     <string name="onboarding_welcome_block_ads_title">حجب الإعلانات المزعجة</string>
     <string name="onboarding_welcome_block_ads_description">تصفَّح بدون إعلانات، وفي الوقت ذاته، ادعم صناع المحتوى من خلال "الإعلانات المقبولة"</string>
     <string name="onboarding_welcome_tracking_protection_title">الحماية من التعقب</string>
-    <string name="onboarding_welcome_tracking_protection_description">تصفَّح على نحوٍ أكثر أمانًا بمنع المواقع من تعقبك عبر الإنترنت </string>
+    <string name="onboarding_welcome_tracking_protection_description">تصفَّح على نحوٍ أكثر أمانًا بمنع المواقع من تعقبك عبر الإنترنت</string>
     <string name="onboarding_welcome_security_privacy_title">تحسين الأمان والخصوصية</string>
     <string name="onboarding_welcome_security_privacy_description">تصفَّح بدون قلق مع Adblock Plus الذي يحميك في الخلفية</string>
     <string name="onboarding_welcome_language_filters_title">قوائم التصفية بلغة محددة</string>
@@ -66,7 +66,7 @@
     <string name="onboarding_acceptable_ads_nonintrusive_ads_description">سيتم عرض الإعلانات التي لا تتعارض مع تجربة التصفح، وذلك لكي يتمكن صناع المحتوى من مواصلة نشر محتواهم</string>
     <string name="onboarding_acceptable_ads_nonintrusive_ads_example">اعرض لي مثالاً</string>
     <string name="onboarding_acceptable_ads_disable_title">التعطيل في أي وقت</string>
-    <string name="onboarding_acceptable_ads_disable_description">يمكنك تغيير هذا الإختيار بالنقر فوق الخيار\\n السماح ببعض الإعلانات غير التطفلية</string>
+    <string name="onboarding_acceptable_ads_disable_description">يمكنك تغيير هذا الإختيار بالنقر فوق الخيار السماح \"ببعض الإعلانات غير\" التطفلية</string>
 
     <string name="onboarding_enable_header_title1">إليك كيفية</string>
     <string name="onboarding_enable_header_title2">تمكين Adblock Plus</string>
@@ -101,13 +101,13 @@
     <string name="subscription_last_update_never">أبدًا</string>
     <string name="other_subscriptions_default_category">قوائم تصفية مُضمَّنة</string>
     <string name="other_subscriptions_custom_category">قوائم تصفية مخصصة مفعلة</string>
-    <string name="other_subscriptions_add_custom_title">إضافة قائمة تصفية مخصصة</string>
+    <string name="other_subscriptions_add_custom_title">إضافة قائمة عوامل تصفية مخصصة</string>
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
     <string name="other_subscriptions_remove_custom_title">تأكيد الحذف</string>
     <string name="other_subscriptions_remove_custom_message">هل تريد بالتأكيد حذف قائمة التصفية المخصصة من %s؟</string>
-    <string name="other_subscriptions_dialog_title">إضافة قائمة تصفية مخصصة</string>
+    <string name="other_subscriptions_dialog_title">إضافة قائمة عوامل تصفية مخصصة</string>
     <string name="other_subscriptions_dialog_message">قد يستغرق هذا بضع ثوانٍ</string>
-    <string name="other_subscriptions_error_add_custom">حدث خطأ أثناء إضافة قائمة التصفية المخصصة</string>
+    <string name="other_subscriptions_error_add_custom">حدث خطأ أثناء إضافة قائمة عوامل التصفية المخصصة</string>
     <string name="allowlist_add_title">إضافة موقع إلى القائمة المسموح بها</string>
     <string name="allowlist_add_hint">example.com</string>
     <string name="allowlist_delete_dialog_title">تأكيد الحذف</string>

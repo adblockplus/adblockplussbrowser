@@ -27,8 +27,8 @@
     <string name="update_status_retry">重试</string>
 
     <!-- base-->
-    <string name="product_name">三星浏览器专用</string>
-    <string name="target_name">Adblock Plus</string>
+    <string name="product_name">Adblock Plus</string>
+    <string name="target_name">三星浏览器专用</string>
     <string name="acceptable_ads">可接受广告</string>
     <string name="intrusive_ads">侵入性广告</string>
     <string name="acceptable_ads_fair_standard_title">公平标准</string>
