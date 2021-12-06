@@ -28,7 +28,6 @@
 
     <!-- base-->
     <string name="product_name">Adblock Plus</string>
-    <string name="target_name">per Samsung Internet</string>
     <string name="acceptable_ads">Annunci Accettabili</string>
     <string name="intrusive_ads">Annunci invasivi</string>
     <string name="acceptable_ads_fair_standard_title">Standard equo</string>
@@ -96,16 +95,14 @@
     <string name="other_subscriptions_custom_category">Elenchi filtri personalizzati attivi</string>
     <string name="other_subscriptions_add_custom_title">Aggiungi elenco filtri personalizzati</string>
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
-    <string name="other_subscriptions_remove_custom_title">Conferma eliminazione</string>
+    <string name="delete_dialog_title">Conferma eliminazione</string>
     <string name="other_subscriptions_remove_custom_message">Vuoi eliminare l\'elenco filtri personalizzati da %s?</string>
     <string name="other_subscriptions_dialog_title">Aggiunta elenco filtri personalizzati in corso</string>
     <string name="other_subscriptions_dialog_message">L\'operazione potrebbe richiedere alcuni secondi</string>
     <string name="other_subscriptions_error_add_custom">Errore durante l\'aggiunta elenco filtri personalizzati</string>
     <string name="allowlist_add_title">Aggiungi un sito web ai siti consentiti</string>
     <string name="allowlist_add_hint">example.com</string>
-    <string name="allowlist_delete_dialog_title">Conferma eliminazione</string>
     <string name="allowlist_delete_dialog_message">Vuoi rimuovere %s dai siti consentiti?</string>
-    <string name="acceptable_ads_enabled_line1">Sì, desidero supportare i creatori di contenuti</string>
     <string name="acceptable_ads_enabled_line2">Mantenendo attivi gli Annunci Accettabili, aiuti i creatori a pubblicare i loro contenuti gratuitamente</string>
     <string name="acceptable_ads_disabled">No, desidero disattivare gli Annunci Accettabili</string>
     <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
@@ -119,7 +116,6 @@
     <string name="share_events_description">I dati anonimi ci aiutano a migliorare Adblock Plus offrendoti una migliore esperienza di navigazione.</string>
     <string name="share_events_consent">Sì, desidero condividere alcuni dati anonimi.</string>
     <string name="languages_onboarding_title">Navighi in più lingue?</string>
-    <string name="languages_onboarding_description">Blocca un numero maggiore di annunci ottimizzando Adblock Plus per la/le lingua/e in cui normalmente navighi.</string>
     <string name="languages_onboarding_option_add">Aggiungi un\'altra lingua per l\'ad blocking.</string>
     <string name="languages_onboarding_option_skip">No, grazie, navigo solo in una lingua.</string>
 

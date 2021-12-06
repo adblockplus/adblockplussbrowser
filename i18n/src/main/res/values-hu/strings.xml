@@ -22,13 +22,12 @@
     <string name="samsung_internet_required_title">Samsung Internet szükséges</string>
     <string name="samsung_internet_required_description">Az Adblock Plus egy olyan alkalmazás, amely a Samsung Internet böngészőn futtatva szűri a böngészés közben megjelenő reklámokat. Az Adblock Plus hatékony működéséhez Samsung Internet 4.0, vagy újabb változatot szükséges telepítenie eszközére.\nA Samsung Internet böngészőt az alábbi gombra koppintva tekintheti meg.</string>
     <string name="download_samsung_internet">Samsung Internet letöltése</string>
-    <string name="update_status_progress_message">Szűrőlista frissítések betöltése folyamatban van...</string>
+    <string name="update_status_progress_message">Szűrőlista frissítések betöltése folyamatban van…</string>
     <string name="update_status_error_message">Hiba a frissítés során: Próbálja meg újból</string>
     <string name="update_status_retry">Újra</string>
 
     <!-- base-->
     <string name="product_name">Adblock Plus</string>
-    <string name="target_name">Samsung Internet böngészőhöz</string>
     <string name="acceptable_ads">Elfogadható hirdetések</string>
     <string name="intrusive_ads">Zavaró hirdetések</string>
     <string name="acceptable_ads_fair_standard_title">Méltányos megjelenítés</string>
@@ -96,16 +95,14 @@
     <string name="other_subscriptions_custom_category">Aktív egyéni szűrőlisták</string>
     <string name="other_subscriptions_add_custom_title">Egyéni szűrőlista hozzáadása</string>
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
-    <string name="other_subscriptions_remove_custom_title">Törlés megerősítése</string>
+    <string name="delete_dialog_title">Törlés megerősítése</string>
     <string name="other_subscriptions_remove_custom_message">Biztosan törölni kívánja a(z) %s egyéni szűrőlistát?</string>
     <string name="other_subscriptions_dialog_title">Egyéni szűrőlista hozzáadása</string>
     <string name="other_subscriptions_dialog_message">Ez egy néhány másodpercet igénybe vehet</string>
     <string name="other_subscriptions_error_add_custom">Hiba az egyéni szűrőlista hozzáadásakor</string>
     <string name="allowlist_add_title">Weboldal hozzáadása az engedélyezőlistához</string>
     <string name="allowlist_add_hint">example.com</string>
-    <string name="allowlist_delete_dialog_title">Törlés megerősítése</string>
     <string name="allowlist_delete_dialog_message">Biztos benne, hogy eltávolítja %s elemet az engedélyezőlistáról?</string>
-    <string name="acceptable_ads_enabled_line1">Igen, támogatom a tartalomkészítőket</string>
     <string name="acceptable_ads_enabled_line2">Az elfogadható hirdetések engedélyezésével segítséget nyújt a tartalomkészítőknek a tartalmaik ingyenesen közléséhez</string>
     <string name="acceptable_ads_disabled">Nem, ki szeretném kapcsolni az Elfogadható hirdetéseket</string>
     <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
@@ -119,7 +116,6 @@
     <string name="share_events_description">Az anonimizált adatok segítségével javíthatjuk az Adblock Plus alkalmazást, hogy még jobb böngészési élményt nyújthasson.</string>
     <string name="share_events_consent">Igen, megosztom az anonimizált adatokat.</string>
     <string name="languages_onboarding_title">Több nyelven is böngészik?</string>
-    <string name="languages_onboarding_description">Blokkoljon további reklámokat az Adblock Plus optimalizálásával a leggyakoribb böngészési nyelveken.</string>
     <string name="languages_onboarding_option_add">További blokkolási nyelv hozzáadása.</string>
     <string name="languages_onboarding_option_skip">Nem, köszönöm, csak egy nyelven böngészek.</string>
 

@@ -64,7 +64,7 @@
                 style="@style/AbpPreferenceSummaryTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/languages_onboarding_description" />
+                android:text="@string/preferences_primary_subscriptions_summary" />
 
         </LinearLayout>
 

@@ -22,13 +22,12 @@
     <string name="samsung_internet_required_title">مطلوب تطبيق Samsung Internet</string>
     <string name="samsung_internet_required_description">Adblock Plus هو تطبيق  يستخدم المتصفح Samsung Internet لتصفية الإعلانات أثناء استخدامك المتصفح. ولكي يعمل Adblock Plus بفعالية، يجب أن يكون الإصدار 4.0 أو إصدار أحدث للمتصفح Samsung Internet مُثبَّتًا على جهازك.\nويمكنك الحصول على المتصفح Samsung Internet بالنقر فوق الزر أدناه.</string>
     <string name="download_samsung_internet">تحميل Samsung Internet</string>
-    <string name="update_status_progress_message">جارٍ تحديثات قوائم التصفية...</string>
+    <string name="update_status_progress_message">جارٍ تحديثات قوائم التصفية…</string>
     <string name="update_status_error_message">خطأ أثناء التحديث: يُرجى إعادة المحاولة</string>
     <string name="update_status_retry">إعادة المحاولة</string>
 
     <!-- base-->
     <string name="product_name">Adblock Plus</string>
-    <string name="target_name">لـ Samsung Internet</string>
     <string name="acceptable_ads">الإعلانات المقبولة</string>
     <string name="intrusive_ads">الإعلانات التطفلية</string>
     <string name="acceptable_ads_fair_standard_title">المعيار المقبول</string>
@@ -96,16 +95,14 @@
     <string name="other_subscriptions_custom_category">قوائم تصفية مخصصة مفعلة</string>
     <string name="other_subscriptions_add_custom_title">إضافة قائمة عوامل تصفية مخصصة</string>
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
-    <string name="other_subscriptions_remove_custom_title">تأكيد الحذف</string>
+    <string name="delete_dialog_title">تأكيد الحذف</string>
     <string name="other_subscriptions_remove_custom_message">هل تريد بالتأكيد حذف قائمة التصفية المخصصة من %s؟</string>
     <string name="other_subscriptions_dialog_title">إضافة قائمة عوامل تصفية مخصصة</string>
     <string name="other_subscriptions_dialog_message">قد يستغرق هذا بضع ثوانٍ</string>
     <string name="other_subscriptions_error_add_custom">حدث خطأ أثناء إضافة قائمة عوامل التصفية المخصصة</string>
     <string name="allowlist_add_title">إضافة موقع إلى القائمة المسموح بها</string>
     <string name="allowlist_add_hint">example.com</string>
-    <string name="allowlist_delete_dialog_title">تأكيد الحذف</string>
     <string name="allowlist_delete_dialog_message">هل تريد بالتأكيد الإزالة من القائمة المسموح بها؟</string>
-    <string name="acceptable_ads_enabled_line1">نعم، سأدعم صناع المحتوى</string>
     <string name="acceptable_ads_enabled_line2">عن طريق تفعيل \"الإعلانات المقبولة\"، فإنك تساعد صناع المحتوى على نشر محتواهم مجانًا</string>
     <string name="acceptable_ads_disabled">لا، أود تعطيل \"الإعلانات المقبولة\"</string>
     <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
@@ -119,7 +116,6 @@
     <string name="share_events_description">تساعدنا البيانات مجهولة المصدر على تحسين Adblock Plus؛ وهو ما يوفر لك تجربة تصفح أفضل.</string>
     <string name="share_events_consent">نعم، سأشارك بعض البيانات مجهولة المصدر.</string>
     <string name="languages_onboarding_title">هل تريد التصفح بلغات متعددة؟</string>
-    <string name="languages_onboarding_description">احجب مزيدًا من الإعلانات عن طريق إختيار اللغة (اللغات) التي تتصفح بها عادةً.</string>
     <string name="languages_onboarding_option_add">أضف لغة إضافية لحجب الإعلانات.</string>
     <string name="languages_onboarding_option_skip">لا، شكرًا، لا أتصفح سوى بلغة واحدة.</string>
 

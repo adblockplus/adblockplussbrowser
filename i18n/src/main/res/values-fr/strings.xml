@@ -28,7 +28,6 @@
 
     <!-- base-->
     <string name="product_name">Adblock Plus</string>
-    <string name="target_name">pour Samsung Internet</string>
     <string name="acceptable_ads">Publicité Acceptable</string>
     <string name="intrusive_ads">Publicités intrusives</string>
     <string name="acceptable_ads_fair_standard_title">Un standard équitable</string>
@@ -96,16 +95,14 @@
     <string name="other_subscriptions_custom_category">Listes de filtres personnalisées actives</string>
     <string name="other_subscriptions_add_custom_title">Ajouter une liste de filtres personnalisée</string>
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
-    <string name="other_subscriptions_remove_custom_title">Confirmer la suppression</string>
+    <string name="delete_dialog_title">Confirmer la suppression</string>
     <string name="other_subscriptions_remove_custom_message">Êtes-vous sûr de vouloir supprimer la liste de filtres personnalisée de %s ?</string>
     <string name="other_subscriptions_dialog_title">Ajouter une liste de filtres personnalisée</string>
     <string name="other_subscriptions_dialog_message">Cela peut prendre quelques secondes</string>
     <string name="other_subscriptions_error_add_custom">Erreur lors de l\'ajout de la liste de filtres personnalisée</string>
     <string name="allowlist_add_title">Ajouter un site Web à la liste d\'autorisation</string>
     <string name="allowlist_add_hint">example.com</string>
-    <string name="allowlist_delete_dialog_title">Confirmer la suppression</string>
     <string name="allowlist_delete_dialog_message">Êtes-vous sûr de vouloir supprimer %s de la liste d\'autorisation ?</string>
-    <string name="acceptable_ads_enabled_line1">Oui, je soutiens les créateurs de contenu</string>
     <string name="acceptable_ads_enabled_line2">En maintenant Publicité Acceptable activée, vous aidez les créateurs de contenu à publier leur contenu gratuitement</string>
     <string name="acceptable_ads_disabled">Non, j\'aimerais désactiver Publicité Acceptable</string>
     <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
@@ -119,7 +116,6 @@
     <string name="share_events_description">Les données anonymisées nous aident à améliorer Adblock Plus, créant ainsi une meilleure expérience de navigation pour vous.</string>
     <string name="share_events_consent">Oui, j\'accepte de partager des données anonymisées.</string>
     <string name="languages_onboarding_title">Vous naviguez dans plusieurs langues ?</string>
-    <string name="languages_onboarding_description">Bloquez plus de publicités en optimisant Adblock Plus pour les langues dans lesquelles vous naviguez généralement.</string>
     <string name="languages_onboarding_option_add">Ajouter une langue de blocage des publicités supplémentaire.</string>
     <string name="languages_onboarding_option_skip">Non merci, je ne navigue que dans une seule langue.</string>
 
