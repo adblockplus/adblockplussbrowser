@@ -41,6 +41,7 @@ dependencies:
       changes:
         - buildSrc/src/main/kotlin/Deps.kt
         - gradle/wrapper/gradle-wrapper.properties
+        - buildSrc/build.gradle.kts
     - if: '$GENERATE_DEPENDENCIES_CACHE == "true"'
 
 checks:lint:
