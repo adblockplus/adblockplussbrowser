@@ -28,10 +28,12 @@ import org.adblockplus.adblockplussbrowser.settings.data.proto.ProtoSettings
 import org.adblockplus.adblockplussbrowser.settings.data.proto.ProtoSubscription
 import org.adblockplus.adblockplussbrowser.settings.data.proto.ProtoUpdateConfig
 import org.adblockplus.adblockplussbrowser.settings.data.proto.toProtoSubscription
+import timber.log.Timber
 import java.io.BufferedInputStream
 import java.io.DataInputStream
 import java.io.File
 import java.io.FileInputStream
+import java.io.IOException
 import java.util.zip.GZIPInputStream
 
 internal class ProtoSettingsMigration(
@@ -127,16 +129,21 @@ internal class ProtoSettingsMigration(
     }
 
     private fun retrieveUrlIfActive(file: File): String? {
-        DataInputStream(BufferedInputStream(GZIPInputStream(FileInputStream(file)))).use { stream ->
-            val url = stream.readUTF()
-            val numEntries = stream.readInt()
-            for (i in 0 until numEntries) {
-                val key = stream.readUTF()
-                val value = stream.readUTF()
-                if (key == "_enabled") {
-                    return if (value == "true") url else null
+        try {
+            DataInputStream(BufferedInputStream(GZIPInputStream(FileInputStream(file)))).use { stream ->
+                val url = stream.readUTF()
+                val numEntries = stream.readInt()
+                for (i in 0 until numEntries) {
+                    val key = stream.readUTF()
+                    val value = stream.readUTF()
+                    if (key == "_enabled") {
+                        return if (value == "true") url else null
+                    }
                 }
             }
+        } catch (exception: IOException) {
+            Timber.e(exception)
+            return null
         }
         return null
     }
