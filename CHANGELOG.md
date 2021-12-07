@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed unused resources
 
 ### Fixed
-- Crash in data migration from old app
+- Crash in data migration from the old app
 
 ## [2.0.0] - 2021-11-25
 ### Changed
