@@ -95,7 +95,6 @@
     <string name="other_subscriptions_custom_category">活动的自定义筛选清单</string>
     <string name="other_subscriptions_add_custom_title">添加自定义筛选清单</string>
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
-    <string name="delete_dialog_title">确认删除</string>
     <string name="other_subscriptions_remove_custom_message">是否确定要删除来自 %s 的自定义筛选清单？</string>
     <string name="other_subscriptions_dialog_title">添加自定义筛选清单</string>
     <string name="other_subscriptions_dialog_message">这可能需要几秒钟时间</string>

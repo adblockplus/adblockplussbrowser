@@ -1,0 +1,36 @@
+<!--
+ This file is part of Adblock Plus <https://adblockplus.org/>,
+ Copyright (C) 2006-present eyeo GmbH
+
+ Adblock Plus is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License version 3 as
+ published by the Free Software Foundation.
+
+ Adblock Plus is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <!-- app-->
+    <string name="app_name">Adblock για Samsung Internet</string>
+
+    <!-- base-->
+    <string name="product_name">Adblock</string>
+
+    <!-- onboarding -->
+    <string name="onboarding_welcome_security_privacy_description">Περιηγηθείτε χωρίς δεύτερες σκέψεις με το Adblock το οποίο σας προστατεύει</string>
+    <string name="onboarding_welcome_language_filters_description">Αποκλείστε περισσότερες διαφημίσεις βελτιστοποιώντας το Adblock για τις γλώσσες στις οποίες συνήθως περιηγείστε</string>
+    <string name="onboarding_enable_header_title2">ενεργοποιήσετε το Adblock</string>
+    <string name="onboarding_enable_one_step_description">Ενεργοποιήστε το Adblock στις Ρυθμίσεις Adblocker του Samsung Internet</string>
+
+    <!-- preferences -->
+    <string name="preferences_primary_subscriptions_summary">Αποκλείστε περισσότερες διαφημίσεις βελτιστοποιώντας το Adblock για τη/τις γλώσσα/ες στην/στις οποία/ες συνήθως περιηγείστε</string>
+    <string name="share_events_header">Βοηθήστε στη βελτίωση του Adblock</string>
+    <string name="share_events_description">Τα ανώνυμα δεδομένα μας βοηθούν να βελτιώνουμε το Adblock, δημιουργώντας έτσι μια καλύτερη εμπειρία περιήγησης για εσάς.</string>
+
+</resources>

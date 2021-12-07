@@ -1,0 +1,36 @@
+<!--
+ This file is part of Adblock Plus <https://adblockplus.org/>,
+ Copyright (C) 2006-present eyeo GmbH
+
+ Adblock Plus is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License version 3 as
+ published by the Free Software Foundation.
+
+ Adblock Plus is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <!-- app-->
+    <string name="app_name">Samsung Internet용 Adblock</string>
+
+    <!-- base-->
+    <string name="product_name">Adblock</string>
+
+    <!-- onboarding -->
+    <string name="onboarding_welcome_security_privacy_description">백그라운드에서 보호하는 Adblock로 걱정 없는 인터넷을 즐기세요</string>
+    <string name="onboarding_welcome_language_filters_description">일반적으로 탐색에 사용하는 언어에 맞춰 Adblock를 최적화하고 더 많은 광고를 차단하세요</string>
+    <string name="onboarding_enable_header_title2">Adblock 활성화</string>
+    <string name="onboarding_enable_one_step_description"> Samsung Internet의 광고 차단기 설정에서 Adblock 활성화</string>
+
+    <!-- preferences -->
+    <string name="preferences_primary_subscriptions_summary">일반적으로 탐색에 사용하는 언어에 맞춰 Adblock를 최적화하고 더 많은 광고를 차단하세요</string>
+    <string name="share_events_header">Adblock 개선을 도와주세요</string>
+    <string name="share_events_description">Adblock 개선을 지원할 익명화된 데이터를 수집하여 더 나은 브라우징 환경을 만들고 있습니다.</string>
+
+</resources>

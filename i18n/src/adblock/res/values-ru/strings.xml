@@ -1,0 +1,35 @@
+<!--
+ This file is part of Adblock Plus <https://adblockplus.org/>,
+ Copyright (C) 2006-present eyeo GmbH
+
+ Adblock Plus is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License version 3 as
+ published by the Free Software Foundation.
+
+ Adblock Plus is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<resources>
+    <!-- app-->
+    <string name="app_name">Adblock для Samsung Internet</string>
+
+    <!-- base-->
+    <string name="product_name">Adblock</string>
+
+    <!-- onboarding -->
+    <string name="onboarding_welcome_security_privacy_description">Почувствуйте себя в безопасности благодаря защите Adblock</string>
+    <string name="onboarding_welcome_language_filters_description">Блокируйте больше рекламы, настроив Adblock под используемые вами в браузере языки</string>
+    <string name="onboarding_enable_header_title2">Активировать Adblock</string>
+    <string name="onboarding_enable_one_step_description">Активируйте Adblock в настройках блокиратора рекламы Samsung Internet</string>
+
+    <!-- preferences -->
+    <string name="preferences_primary_subscriptions_summary">Блокируйте больше рекламы, настроив Adblock под используемые вами в браузере языки</string>
+    <string name="share_events_header">Помогите улучшить Adblock</string>
+    <string name="share_events_description">Обезличенные данные помогут улучшить Adblock, и работать в браузере станет еще приятнее.</string>
+
+</resources>
