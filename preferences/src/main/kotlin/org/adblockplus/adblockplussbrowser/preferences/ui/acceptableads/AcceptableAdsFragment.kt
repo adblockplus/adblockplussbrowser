@@ -35,7 +35,7 @@ internal class AcceptableAdsFragment : DataBindingFragment<FragmentAcceptableAds
         binding.viewModel = viewModel
         val textAppearance = TextAppearanceSpan(requireActivity(), R.style.TextAppearance_AppCompat_Small)
         val formatted = SpannableStringBuilder()
-            .bold { append(getString(R.string.acceptable_ads_enabled_line1)) }
+            .bold { append(getString(R.string.preferences_acceptable_ads_action)) }
             .append("\n")
             .inSpans(textAppearance) {
                 append(getString(R.string.acceptable_ads_enabled_line2))

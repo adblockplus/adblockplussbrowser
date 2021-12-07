@@ -27,7 +27,6 @@
 
     <!-- base-->
     <string name="product_name">Adblock Plus</string>
-    <string name="target_name">для Samsung Internet</string>
     <string name="acceptable_ads">Допустимая реклама</string>
     <string name="intrusive_ads">Назойливая реклама</string>
     <string name="acceptable_ads_fair_standard_title">Справедливый критерий</string>
@@ -49,13 +48,6 @@
     <string name="onboarding_welcome_security_privacy_description">Почувствуйте себя в безопасности благодаря защите Adblock Plus</string>
     <string name="onboarding_welcome_language_filters_title">Списки фильтров для конкретных языков</string>
     <string name="onboarding_welcome_language_filters_description">Блокируйте больше рекламы, настроив Adblock Plus под используемые вами в браузере языки</string>
-
-    <string name="onboarding_privacy_header_title1">Ознакомьтесь с</string>
-    <string name="onboarding_privacy_header_title2">Политикой конфиденциальности</string>
-    <string name="onboarding_privacy_header_title3">по ссылке ниже</string>
-    <string name="onboarding_privacy_block_title">Помогите нам сделать работу в сети лучше</string>
-    <string name="onboarding_privacy_block_description">Ознакомьтесь с нашей политикой конфиденциальности, перейдя по ссылке ниже. Для удобства в самом начале приведен краткий обзор собираемых нами данных</string>
-    <string name="onboarding_privacy_block_link_text"><a href="https://adblockplus.org/privacy">Политика конфиденциальности</a></string>
 
     <string name="onboarding_acceptable_ads_header_title1">Присоединитесь к</string>
     <string name="onboarding_acceptable_ads_header_title3">и поддержите разработчиков контента</string>
@@ -102,16 +94,14 @@
     <string name="other_subscriptions_custom_category">Активные пользовательские списки фильтров</string>
     <string name="other_subscriptions_add_custom_title">Добавить пользовательский список фильтров</string>
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
-    <string name="other_subscriptions_remove_custom_title">Подтвердить удаление</string>
+    <string name="delete_dialog_title">Подтвердить удаление</string>
     <string name="other_subscriptions_remove_custom_message">Вы уверены, что хотите удалить пользовательский список фильтров из %s?</string>
     <string name="other_subscriptions_dialog_title">Добавление пользовательского списка фильтров</string>
     <string name="other_subscriptions_dialog_message">Это может занять несколько секунд</string>
     <string name="other_subscriptions_error_add_custom">Ошибка при добавлении пользовательского списка фильтров</string>
     <string name="allowlist_add_title">Добавить сайт в список разрешенных сайтов</string>
     <string name="allowlist_add_hint">example.com</string>
-    <string name="allowlist_delete_dialog_title">Подтвердить удаление</string>
     <string name="allowlist_delete_dialog_message">Вы уверены, что хотите удалить %s из списка разрешенных сайтов?</string>
-    <string name="acceptable_ads_enabled_line1">Да, я поддержу разработчиков контента</string>
     <string name="acceptable_ads_enabled_line2">Активировав опцию «Допустимая реклама», вы помогаете разработчикам публиковать бесплатный контент</string>
     <string name="acceptable_ads_disabled">Нет, я хочу отключить опцию «Допустимая реклама»</string>
     <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
@@ -125,7 +115,6 @@
     <string name="share_events_description">Обезличенные данные помогут улучшить Adblock Plus, и работать в браузере станет еще приятнее.</string>
     <string name="share_events_consent">Да, я готов(а) поделиться обезличенными данными.</string>
     <string name="languages_onboarding_title">Пользуетесь разными языками при работе в браузере?</string>
-    <string name="languages_onboarding_description">Блокируйте больше рекламы, адаптировав Adblock Plus под используемые вами в браузере языки.</string>
     <string name="languages_onboarding_option_add">Добавить дополнительный язык для блокировки рекламы.</string>
     <string name="languages_onboarding_option_skip">Нет, спасибо, я использую только один язык.</string>
 

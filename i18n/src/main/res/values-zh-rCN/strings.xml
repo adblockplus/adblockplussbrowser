@@ -28,7 +28,6 @@
 
     <!-- base-->
     <string name="product_name">Adblock Plus</string>
-    <string name="target_name">三星浏览器专用</string>
     <string name="acceptable_ads">可接受广告</string>
     <string name="intrusive_ads">侵入性广告</string>
     <string name="acceptable_ads_fair_standard_title">公平标准</string>
@@ -50,13 +49,6 @@
     <string name="onboarding_welcome_security_privacy_description">有 Adblock Plus 在后台保护您，您可以放心无虞地浏览网页</string>
     <string name="onboarding_welcome_language_filters_title">语言特定的筛选清单</string>
     <string name="onboarding_welcome_language_filters_description">针对您通常浏览的语言优化 Adblock Plus，从而阻止更多广告</string>
-
-    <string name="onboarding_privacy_header_title1">请阅读</string>
-    <string name="onboarding_privacy_header_title2">隐私政策</string>
-    <string name="onboarding_privacy_header_title3">，为此请打开以下链接</string>
-    <string name="onboarding_privacy_block_title">您可以帮助我们打造更好的网络空间</string>
-    <string name="onboarding_privacy_block_description">请点击链接阅读我们的隐私政策。在开头部分以简洁易懂的方式介绍了我们收集的内容</string>
-    <string name="onboarding_privacy_block_link_text"><a href="https://adblockplus.org/privacy">隐私政策</a></string>
 
     <string name="onboarding_acceptable_ads_header_title1">参与</string>
     <string name="onboarding_acceptable_ads_header_title3">并支持内容创作者</string>
@@ -103,16 +95,14 @@
     <string name="other_subscriptions_custom_category">活动的自定义筛选清单</string>
     <string name="other_subscriptions_add_custom_title">添加自定义筛选清单</string>
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
-    <string name="other_subscriptions_remove_custom_title">确认删除</string>
+    <string name="delete_dialog_title">确认删除</string>
     <string name="other_subscriptions_remove_custom_message">是否确定要删除来自 %s 的自定义筛选清单？</string>
     <string name="other_subscriptions_dialog_title">添加自定义筛选清单</string>
     <string name="other_subscriptions_dialog_message">这可能需要几秒钟时间</string>
     <string name="other_subscriptions_error_add_custom">添加自定义筛选清单时出错</string>
     <string name="allowlist_add_title">添加网站至允许列表</string>
     <string name="allowlist_add_hint">example.com</string>
-    <string name="allowlist_delete_dialog_title">确认删除</string>
     <string name="allowlist_delete_dialog_message">是否确定要从允许列表中删除 %s？</string>
-    <string name="acceptable_ads_enabled_line1">是，我愿意支持内容创作者</string>
     <string name="acceptable_ads_enabled_line2">通过保持启用可接受广告，您可以帮助内容创作者免费发布其内容</string>
     <string name="acceptable_ads_disabled">否，我想禁用可接受广告</string>
     <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
@@ -126,7 +116,6 @@
     <string name="share_events_description">匿名数据帮助我们改进 Adblock Plus，从而为您打造更好的浏览体验。</string>
     <string name="share_events_consent">是，我愿意共享某些匿名数据。</string>
     <string name="languages_onboarding_title">浏览多种语言的内容？</string>
-    <string name="languages_onboarding_description">针对您通常浏览的语言优化 Adblock Plus，以拦截更多广告。</string>
     <string name="languages_onboarding_option_add">添加其他拦截广告的语言。</string>
     <string name="languages_onboarding_option_skip">不了，谢谢，我只浏览一种语言的内容。</string>
 

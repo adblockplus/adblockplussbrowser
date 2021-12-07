@@ -28,7 +28,6 @@
 
     <!-- base-->
     <string name="product_name">Adblock Plus</string>
-    <string name="target_name">Samsung Internet 用</string>
     <string name="acceptable_ads">控えめな広告</string>
     <string name="intrusive_ads">侵入型広告</string>
     <string name="acceptable_ads_fair_standard_title">公正な基準</string>
@@ -50,13 +49,6 @@
     <string name="onboarding_welcome_security_privacy_description">Adblock Plus がバックグラウンドで保護を提供するため、安心してブラウザ体験ができます</string>
     <string name="onboarding_welcome_language_filters_title">言語特定フィルターリスト</string>
     <string name="onboarding_welcome_language_filters_description">通常閲覧する言語に合わせて Adblock Plus を最適化することで、より多くの広告をブロックできます</string>
-
-    <string name="onboarding_privacy_header_title1">下記のリンクから</string>
-    <string name="onboarding_privacy_header_title2">プライバシー方針</string>
-    <string name="onboarding_privacy_header_title3">をご覧ください</string>
-    <string name="onboarding_privacy_block_title">ウェブ体験をより良くするためにご協力ください</string>
-    <string name="onboarding_privacy_block_description">リンクをクリックして、当社のプライバシー方針をお読みください。最初の部分に当社が収集する情報に関する短く読みやすい説明があります</string>
-    <string name="onboarding_privacy_block_link_text"><a href="https://adblockplus.org/privacy">プライバシー方針</a></string>
 
     <string name="onboarding_acceptable_ads_header_title1">コンテンツクリエーターに</string>
     <string name="onboarding_acceptable_ads_header_title3">協力し、サポートしましょう</string>
@@ -103,16 +95,14 @@
     <string name="other_subscriptions_custom_category">有効カスタムフィルターリスト</string>
     <string name="other_subscriptions_add_custom_title">カスタムフィルターリストを追加</string>
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
-    <string name="other_subscriptions_remove_custom_title">削除の確認</string>
+    <string name="delete_dialog_title">削除の確認</string>
     <string name="other_subscriptions_remove_custom_message">%sからカスタムフィルターを削除しますか？</string>
     <string name="other_subscriptions_dialog_title">カスタムフィルターリストを追加</string>
     <string name="other_subscriptions_dialog_message">数秒かかる場合があります</string>
     <string name="other_subscriptions_error_add_custom">カスタムフィルターリスト追加エラー</string>
     <string name="allowlist_add_title">ウェブサイトを許可リストに追加する</string>
     <string name="allowlist_add_hint">example.com</string>
-    <string name="allowlist_delete_dialog_title">削除を確認</string>
     <string name="allowlist_delete_dialog_message">許可リストから%sを削除しますか？</string>
-    <string name="acceptable_ads_enabled_line1">はい。コンテンツクリエーターをサポートします</string>
     <string name="acceptable_ads_enabled_line2">引き続き控えめな広告を有効にすることで、コンテンツクリエーターがコンテンツを無料で公開する支援をすることができます</string>
     <string name="acceptable_ads_disabled">いいえ。控えめな広告を無効にします</string>
     <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
@@ -126,7 +116,6 @@
     <string name="share_events_description">匿名化データを共有してくださいますと、当社では Adblock Plus の改善に活用させてただき、皆様の良いブラウザ体験に貢献します。</string>
     <string name="share_events_consent">はい</string>
     <string name="languages_onboarding_title">複数の言語でウェブを閲覧しますか？</string>
-    <string name="languages_onboarding_description">通常閲覧する言語に合わせて Adblock Plus を最適化することで、より多くの広告をブロックできます。</string>
     <string name="languages_onboarding_option_add">広告ブロック言語を追加する。</string>
     <string name="languages_onboarding_option_skip">いいえ。１つの言語だけで閲覧します。</string>
 

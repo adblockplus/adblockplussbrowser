@@ -27,12 +27,10 @@
     <string name="onboarding_welcome_language_filters_description">Block more ads by optimizing Crystal for the languages you typically browse in</string>
     <string name="onboarding_enable_header_title2">Enable Crystal</string>
     <string name="onboarding_enable_one_step_description">Enable Crystal in Samsung Internet\'s Adblocker Settings</string>
-    <string name="open_samsung_internet">Open Samsung Internet</string>
 
     <!-- preferences -->
     <string name="preferences_primary_subscriptions_summary">Block more ads by optimizing Crystal for the language(s) you typically browse in</string>
     <string name="share_events_header">Help improve Crystal</string>
     <string name="share_events_description">Anonymized data helps us improve Crystal, thus creating a better browsing experience for you.</string>
-    <string name="languages_onboarding_description">Block more ads by optimizing Crystal for the language(s) you typically browse in.</string>
 
 </resources>

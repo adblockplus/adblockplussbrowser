@@ -73,7 +73,7 @@ internal class OnboardingViewModel @Inject constructor(
             PageInfo.Default(
                 R.string.onboarding_welcome_header_title1,
                 R.string.product_name,
-                R.string.target_name,
+                R.string.app_subtitle,
                 R.layout.onboarding_welcome_page
             )
         )

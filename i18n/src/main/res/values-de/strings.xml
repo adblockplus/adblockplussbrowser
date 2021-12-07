@@ -28,7 +28,6 @@
 
     <!-- base-->
     <string name="product_name">Adblock Plus</string>
-    <string name="target_name">für Samsung Internet</string>
     <string name="acceptable_ads">Acceptable Ads</string>
     <string name="intrusive_ads">Aufdringliche Werbung</string>
     <string name="acceptable_ads_fair_standard_title">Faire Standards</string>
@@ -50,13 +49,6 @@
     <string name="onboarding_welcome_security_privacy_description">Browse sorgenfrei mit Adblock Plus, das dich im Hintergrund beschützt</string>
     <string name="onboarding_welcome_language_filters_title">Sprachspezifische Filterlisten</string>
     <string name="onboarding_welcome_language_filters_description">Blockiere mehr Werbung bei Adblock Plus durch die Auswahl deiner Sprach-Präferenzen</string>
-
-    <string name="onboarding_privacy_header_title1">Bitte lies</string>
-    <string name="onboarding_privacy_header_title2">die Datenschutzerklärung,</string>
-    <string name="onboarding_privacy_header_title3">indem du auf den nachfolgenden Link klickst</string>
-    <string name="onboarding_privacy_block_title">Du kannst uns dabei, helfen, das Internet besser zu machen</string>
-    <string name="onboarding_privacy_block_description">Bitte lies unsere Datenschutzerklärung, indem du auf den Link klickst. Am Anfang findest du einen kurzen, humanen Hinweis darüber, welche Daten wir erheben</string>
-    <string name="onboarding_privacy_block_link_text"><a href="https://adblockplus.org/privacy">Datenschutzerklärung</a></string>
 
     <string name="onboarding_acceptable_ads_header_title1">Nimm teil</string>
     <string name="onboarding_acceptable_ads_header_title3">und unterstütze Content-Ersteller </string>
@@ -103,16 +95,14 @@
     <string name="other_subscriptions_custom_category">Aktive, benutzerdefinierte Filterlisten</string>
     <string name="other_subscriptions_add_custom_title">Benutzerdefinierte Filterlisten hinzufügen</string>
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
-    <string name="other_subscriptions_remove_custom_title">Löschung bestätigen</string>
+    <string name="delete_dialog_title">Löschung bestätigen</string>
     <string name="other_subscriptions_remove_custom_message">Bist du sicher, dass du die benutzerdefinierte Filterliste aus %s löschen möchtest?</string>
     <string name="other_subscriptions_dialog_title">Benutzerdefinierte Liste wird hinzugefügt</string>
     <string name="other_subscriptions_dialog_message">Das kann ein paar Sekunden dauern</string>
     <string name="other_subscriptions_error_add_custom">Fehler beim Hinzufügen der benutzerdefinierten Filterliste</string>
     <string name="allowlist_add_title">Eine Website der Allowlist hinzufügen</string>
     <string name="allowlist_add_hint">example.com</string>
-    <string name="allowlist_delete_dialog_title">Löschung bestätigen</string>
     <string name="allowlist_delete_dialog_message">Bist du sicher, dass du %s aus der Allowlist entfernen möchtest?</string>
-    <string name="acceptable_ads_enabled_line1">Ja, ich werde die Content-Ersteller unterstützen</string>
     <string name="acceptable_ads_enabled_line2">Du hilfst den Content-Erstellern bei der Veröffentlichung ihrer Inhalte, indem Acceptable Ads weiterhin aktiviert bleibt</string>
     <string name="acceptable_ads_disabled">Nein, ich möchte Acceptable Ads deaktivieren</string>
     <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
@@ -126,7 +116,6 @@
     <string name="share_events_description">Anonymisierte Daten helfen uns dabei, Adblock Plus zu verbessern. Damit können wir ein besseres Browsing-Erlebnis für dich gewährleisten.</string>
     <string name="share_events_consent">Ja, ich teile einige anonymisierte Daten.</string>
     <string name="languages_onboarding_title">In mehreren Sprachen browsen?</string>
-    <string name="languages_onboarding_description">Blockiere mehr Werbung durch Optimierung von Adblock Plus für die Sprache(n), die du normalerweise zum Browsen nutzt.</string>
     <string name="languages_onboarding_option_add">Füge eine zusätzliche Werbeblockierungssprache hinzu.</string>
     <string name="languages_onboarding_option_skip">Nein danke, ich browse nur in einer Sprache.</string>
 
