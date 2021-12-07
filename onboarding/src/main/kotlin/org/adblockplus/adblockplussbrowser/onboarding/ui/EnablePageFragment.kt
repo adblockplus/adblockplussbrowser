@@ -34,7 +34,7 @@ internal class EnablePageFragment :
         val headerInclude = binding.onboardingDefaultPageHeaderInclude
         headerInclude.onboardingHeaderTitle1.setText(R.string.onboarding_enable_header_title1)
         headerInclude.onboardingHeaderTitle2.setText(R.string.onboarding_enable_header_title2)
-        headerInclude.onboardingHeaderTitle3.setText(R.string.target_name)
+        headerInclude.onboardingHeaderTitle3.setText(R.string.app_subtitle)
         val guidesWidth = 2 * resources.getDimension(R.dimen.onboarding_guides_margin)
         val availableWidth = resources.displayMetrics.widthPixels - guidesWidth
         val videoView = binding.videoView

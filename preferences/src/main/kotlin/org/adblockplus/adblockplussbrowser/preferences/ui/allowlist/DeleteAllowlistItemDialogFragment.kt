@@ -54,7 +54,7 @@ internal class DeleteAllowlistItemDialogFragment : AppCompatDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         MaterialDialog(requireContext()).show {
-            title(R.string.allowlist_delete_dialog_title)
+            title(R.string.delete_dialog_title)
             message(0, getString(R.string.allowlist_delete_dialog_message, item.domain))
             positiveButton(android.R.string.ok) {
                 viewModel.removeItem(item)

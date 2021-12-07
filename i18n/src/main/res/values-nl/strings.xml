@@ -28,7 +28,6 @@
 
     <!-- base-->
     <string name="product_name">Adblock Plus</string>
-    <string name="target_name">voor Samsung Internet</string>
     <string name="acceptable_ads">Acceptabele advertenties</string>
     <string name="intrusive_ads">Opdringerige advertenties</string>
     <string name="acceptable_ads_fair_standard_title">Redelijke standaard</string>
@@ -50,13 +49,6 @@
     <string name="onboarding_welcome_security_privacy_description">Zorgeloos surfen terwijl Adblock Plus u op de achtergrond beschermt</string>
     <string name="onboarding_welcome_language_filters_title">Taalspecifieke filterlijsten</string>
     <string name="onboarding_welcome_language_filters_description">Blokkeer meer advertenties door Adblock Plus te optimaliseren voor de talen waarin u normaal gesproken surft</string>
-
-    <string name="onboarding_privacy_header_title1">Lees</string>
-    <string name="onboarding_privacy_header_title2">Het privacybeleid</string>
-    <string name="onboarding_privacy_header_title3">door de onderstaande link te openen</string>
-    <string name="onboarding_privacy_block_title">U kunt ons helpen het internet te verbeteren</string>
-    <string name="onboarding_privacy_block_description">Lees ons privacybeleid door de link te volgen. Er is een korte, mensvriendelijke briefing over wat we aan het begin verzamelen</string>
-    <string name="onboarding_privacy_block_link_text"><a href="https://adblockplus.org/privacy">Privacybeleid</a></string>
 
     <string name="onboarding_acceptable_ads_header_title1">Neem deel</string>
     <string name="onboarding_acceptable_ads_header_title3">en ondersteun de makers van inhoud</string>
@@ -103,16 +95,14 @@
     <string name="other_subscriptions_custom_category">Actieve aangepaste filterlijsten</string>
     <string name="other_subscriptions_add_custom_title">Aangepaste filterlijst toevoegen</string>
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
-    <string name="other_subscriptions_remove_custom_title">Verwijdering bevestigen</string>
+    <string name="delete_dialog_title">Verwijdering bevestigen</string>
     <string name="other_subscriptions_remove_custom_message">Weet u zeker dat u de aangepaste filterlijst wilt verwijderen uit %s?</string>
     <string name="other_subscriptions_dialog_title">Aangepaste filterlijst toevoegen</string>
     <string name="other_subscriptions_dialog_message">Dit kan enkele seconden duren</string>
     <string name="other_subscriptions_error_add_custom">Fout bij het toevoegen van aangepaste filterlijst</string>
     <string name="allowlist_add_title">Een website toevoegen aan de toelatingslijst</string>
     <string name="allowlist_add_hint">example.com</string>
-    <string name="allowlist_delete_dialog_title">Verwijdering bevestigen</string>
     <string name="allowlist_delete_dialog_message">Weet u zeker dat u %s van de toelatingslijst wilt verwijderen?</string>
-    <string name="acceptable_ads_enabled_line1">Ja, ik ondersteun de makers van inhoud</string>
     <string name="acceptable_ads_enabled_line2">Door Acceptabele advertenties ingeschakeld te houden, helpt u de makers van inhoud om hun inhoud gratis te publiceren</string>
     <string name="acceptable_ads_disabled">Nee, ik wil Acceptabele advertenties uitschakelen</string>
     <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
@@ -126,7 +116,6 @@
     <string name="share_events_description">Geanonimiseerde gegevens helpen ons om Adblock Plus te verbeteren, en creëren dus een betere surfervaring voor u.</string>
     <string name="share_events_consent">Ja, ik zal wat geanonimiseerde gegevens delen.</string>
     <string name="languages_onboarding_title">Surfen in meerdere talen?</string>
-    <string name="languages_onboarding_description">Blokkeer meer advertenties door Adblock Plus te optimaliseren voor de talen waarin u normaal gesproken surft</string>
     <string name="languages_onboarding_option_add">Een extra taal toevoegen om advertenties te blokkeren</string>
     <string name="languages_onboarding_option_skip">Nee bedankt, ik surf slechts in één taal.</string>
 
