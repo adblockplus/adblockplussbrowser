@@ -36,6 +36,7 @@ dependencies {
     implementation(Deps.Protobuf.JAVALITE)
     implementation(Deps.Hilt.ANDROID)
     kapt(Deps.Hilt.ANDROID_COMPILER)
+    implementation(Deps.TIMBER)
 }
 
 createFlavorsConfig()
