@@ -17,20 +17,21 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">Samsung Internet için Adblock Plus</string>
+    <string name="app_name">Samsung Internet için Adblock</string>
+    <string name="samsung_internet_required_description">Adblock, siz tarayıcıyı kullanırken reklamları filtrelemek için Samsung Internet üzerinde çalışan bir uygulamadır. Adblock\'ın etkili olması için cihazınızda Samsung Internet 4.0 veya üzeri bir sürümün kurulu olması gerekir.\nAşağıdaki düğmeye tıklayarak Samsung Internet tarayıcısını edinebilirsiniz.</string>
 
     <!-- base-->
-    <string name="product_name">Adblock Plus</string>
+    <string name="product_name">Adblock</string>
 
     <!-- onboarding -->
-    <string name="onboarding_welcome_security_privacy_description">Sizi arka planda koruyan Adblock Plus ile endişesiz bir gezinme deneyimi yaşayın</string>
-    <string name="onboarding_welcome_language_filters_description">Adblock Plus\'ı en çok kullandığınız diller için optimize ederek daha fazla reklamı engelleyin</string>
+    <string name="onboarding_welcome_security_privacy_description">Sizi arka planda koruyan Adblock ile endişesiz bir gezinme deneyimi yaşayın</string>
+    <string name="onboarding_welcome_language_filters_description">Adblock\'ı en çok kullandığınız diller için optimize ederek daha fazla reklamı engelleyin</string>
     <string name="onboarding_enable_header_title2">Nasıl Etkinleştirilir</string>
-    <string name="onboarding_enable_one_step_description">Samsung Internet\'in Adblocker Ayarlarında Adblock Plus\'ı Etkinleştirin</string>
+    <string name="onboarding_enable_one_step_description">Samsung Internet\'in Adblocker Ayarlarında Adblock\'ı Etkinleştirin</string>
 
     <!-- preferences -->
-    <string name="preferences_primary_subscriptions_summary">Adblock Plus\'ı en çok kullandığınız dil(ler) için optimize ederek daha fazla reklamı engelleyin</string>
-    <string name="share_events_header">Adblock Plus\'ı iyileştirmemize yardımcı olun</string>
-    <string name="share_events_description">Anonimleştirilmiş veriler Adblock Plus\'ı iyileştirmemize yardımcı olurken sizin için de daha iyi bir gezinme deneyimi sağlar.</string>
+    <string name="preferences_primary_subscriptions_summary">Adblock\'ı en çok kullandığınız dil(ler) için optimize ederek daha fazla reklamı engelleyin</string>
+    <string name="share_events_header">Adblock\'ı iyileştirmemize yardımcı olun</string>
+    <string name="share_events_description">Anonimleştirilmiş veriler Adblock\'ı iyileştirmemize yardımcı olurken sizin için de daha iyi bir gezinme deneyimi sağlar.</string>
 
 </resources>

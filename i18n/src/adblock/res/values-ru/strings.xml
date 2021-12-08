@@ -18,6 +18,7 @@
 <resources>
     <!-- app-->
     <string name="app_name">Adblock для Samsung Internet</string>
+    <string name="samsung_internet_required_description">Adblock – это расширение для Samsung Internet для блокировки рекламы при использовании браузера. Чтобы пользоваться приложением Adblock, установите на ваше устройство Samsung Internet версии 4.0 или выше.\nНажмите на кнопку ниже, чтобы скачать браузер Samsung Internet.</string>
 
     <!-- base-->
     <string name="product_name">Adblock</string>

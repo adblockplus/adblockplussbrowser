@@ -18,6 +18,7 @@
 <resources>
     <!-- app-->
     <string name="app_name">Adblock para Internet de Samsung</string>
+    <string name="samsung_internet_required_description">Adblock es una aplicación que se ejecuta sobre Internet de Samsung para filtrar los anuncios mientras se usa ese navegador. Para que Adblock sea efectivo, necesitas tener instalada la versión 4.0 o superior de Internet de Samsung en tu dispositivo.\nPuedes obtener Internet de Samsung tocando el botón que aparece a continuación.</string>
 
     <!-- base-->
     <string name="product_name">Adblock</string>

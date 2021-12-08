@@ -18,6 +18,7 @@
 <resources>
     <!-- app-->
     <string name="app_name">三星浏览器专用 Adblock</string>
+    <string name="samsung_internet_required_description">Adblock 是一款在您使用三星浏览器时，在该浏览器上层运行的筛选广告的应用程序。如要有效使用 Adblock，您需要在设备上安装三星浏览器 4.0 或更高版本。\n您可以按一下以下按钮获取三星浏览器。</string>
 
     <!-- base-->
     <string name="product_name">Adblock</string>

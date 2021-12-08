@@ -18,6 +18,7 @@
 <resources>
     <!-- app-->
     <string name="app_name">Samsung Internet 用 Adblock</string>
+    <string name="samsung_internet_required_description">Adblock は、Samsung Internet で動作するアプリです。Adblock を有効にするには、お使いのデバイスに Samsung Internet 4.0 以降がインストールされている必要があります。\nSamsung Internet ブラウザを入手するには、下のボタンをタップしてください。</string>
 
     <!-- base-->
     <string name="product_name">Adblock</string>

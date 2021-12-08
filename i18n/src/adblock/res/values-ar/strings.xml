@@ -18,6 +18,7 @@
 <resources>
     <!-- app-->
     <string name="app_name">Adblock لـ Samsung Internet</string>
+    <string name="samsung_internet_required_description">Adblock هو تطبيق  يستخدم المتصفح Samsung Internet لتصفية الإعلانات أثناء استخدامك المتصفح. ولكي يعمل Adblock بفعالية، يجب أن يكون الإصدار 4.0 أو إصدار أحدث للمتصفح Samsung Internet مُثبَّتًا على جهازك.\nويمكنك الحصول على المتصفح Samsung Internet بالنقر فوق الزر أدناه.</string>
 
     <!-- base-->
     <string name="product_name">Adblock</string>

@@ -18,6 +18,7 @@
 <resources>
     <!-- app-->
     <string name="app_name">Adblock Samsung Internet böngészőhöz</string>
+    <string name="samsung_internet_required_description">Az Adblock egy olyan alkalmazás, amely a Samsung Internet böngészőn futtatva szűri a böngészés közben megjelenő reklámokat. Az Adblock hatékony működéséhez Samsung Internet 4.0, vagy újabb változatot szükséges telepítenie eszközére.\nA Samsung Internet böngészőt az alábbi gombra koppintva tekintheti meg.</string>
 
     <!-- base-->
     <string name="product_name">Adblock</string>
