@@ -18,7 +18,6 @@
 
 <resources>
 
-    <color name="foreground_accent">@color/ribbon</color>
     <color name="ribbon">#E40D0D</color>
 
 </resources>
