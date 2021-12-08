@@ -47,7 +47,7 @@
     </style>
 
     <style name="AbpPreferenceSummaryTextStyle.Accent" parent="AbpPreferenceSummaryTextStyle">
-        <item name="android:textColor">@color/foreground_accent</item>
+        <item name="android:textColor">@color/clickable_text</item>
     </style>
 
     <!-- Adapted from preference_category_material.xml -->
