@@ -19,7 +19,7 @@ object Deps {
     const val DETEKT_PLUGIN_ID = "io.gitlab.arturbosch.detekt"
     const val DETEKT_PLUGIN_VERSION = "1.18.1"
 
-    val GRADLE_PLUGIN = "com.android.tools.build:gradle" version "4.2.1"
+    val GRADLE_PLUGIN = "com.android.tools.build:gradle" version "7.0.1"
 
     const val GRADLE_VERSIONS_PLUGIN_ID = "com.github.ben-manes.versions"
     const val GRADLE_VERSIONS_PLUGIN_VERSION = "0.39.0"
@@ -151,7 +151,7 @@ object Deps {
         val COMMONS_VALIDATOR = "commons-validator:commons-validator" version "1.7"
     }
 
-    object Hilt : DependencyGroup("com.google.dagger", "2.36") {
+    object Hilt : DependencyGroup("com.google.dagger", "2.39.1") {
         val ANDROID = dependency { name("hilt-android") }
         val ANDROID_COMPILER = dependency { name("hilt-android-compiler") }
         val ANDROID_GRADLE_PLUGIN = dependency { name("hilt-android-gradle-plugin") }
