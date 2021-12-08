@@ -79,7 +79,7 @@
                 android:paddingTop="8dp"
                 android:paddingBottom="4dp"
                 android:text="@{viewModel.acceptableAdsEnabled ? @string/preferences_acceptable_ads_action : @string/acceptable_ads_disabled}"
-                android:textColor="@color/foreground_accent" />
+                android:textColor="@color/clickable_text" />
 
         </LinearLayout>
 
