@@ -180,7 +180,7 @@ internal class OkHttpDownloader(
                           previousDownload: DownloadedSubscription =
                               DownloadedSubscription(subscription.url)
     ): HttpUrl {
-        return subscription.url.sanatizeUrl().toHttpUrl().newBuilder().apply {
+        return subscription.randomizedUrl.sanatizeUrl().toHttpUrl().newBuilder().apply {
             addQueryParameter("addonName", appInfo.addonName)
             addQueryParameter("addonVersion", appInfo.addonVersion)
             addQueryParameter("application", appInfo.application)

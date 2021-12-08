@@ -25,4 +25,15 @@ data class Subscription(
     val url: String,
     val title: String,
     val lastUpdate: Long,
-) : Parcelable
+) : Parcelable {
+    /**
+     * If the subscription url has easylist-downloads.adblockplus.org as domain, the latter get
+     * replaced by a randomized url on eyeo.com.
+     */
+    val randomizedUrl: String
+        get() {
+            return url.replace(
+                "easylist-downloads.adblockplus.org",
+                "${(0..9).random()}.samsung-internet.filter-list-downloads.eyeo.com")
+        }
+}
