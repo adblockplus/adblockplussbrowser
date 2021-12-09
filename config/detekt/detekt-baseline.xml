@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
-  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <ManuallySuppressedIssues />
   <CurrentIssues>
     <ID>ComplexCondition:UpdateSubscriptionsWorker.kt$UpdateSubscriptionsWorker$!changes.hasChanges() &amp;&amp; !tags.isForceRefresh() &amp;&amp; !tags.isPeriodic() &amp;&amp; runAttemptCount == 0</ID>
     <ID>ComplexMethod:ProtoSettingsMigration.kt$ProtoSettingsMigration$private fun String?.adjustUrl(): String?</ID>
@@ -83,7 +83,7 @@
     <ID>NewLineAtEndOfFile:FilterListContentProvider.kt$org.adblockplus.adblockplussbrowser.core.provider.FilterListContentProvider.kt</ID>
     <ID>NewLineAtEndOfFile:FirebaseAnalyticsProvider.kt$org.adblockplus.adblockplussbrowser.analytics.FirebaseAnalyticsProvider.kt</ID>
     <ID>NewLineAtEndOfFile:GroupItemLayout.kt$org.adblockplus.adblockplussbrowser.preferences.ui.GroupItemLayout.kt</ID>
-    <ID>NewLineAtEndOfFile:HardcodedSubscriptions.kt$org.adblockplus.adblockplussbrowser.settings.data.local.HardcodedSubscriptions.kt</ID>
+    <ID>NewLineAtEndOfFile:HardcodedSubscriptions.kt$org.adblockplus.adblockplussbrowser.settings.data.local.HardcodedSubscriptionsBase.kt</ID>
     <ID>NewLineAtEndOfFile:HardcodedSubscriptionsDataSource.kt$org.adblockplus.adblockplussbrowser.settings.data.local.HardcodedSubscriptionsDataSource.kt</ID>
     <ID>NewLineAtEndOfFile:HardcodedSubscriptionsDsl.kt$org.adblockplus.adblockplussbrowser.settings.data.local.HardcodedSubscriptionsDsl.kt</ID>
     <ID>NewLineAtEndOfFile:IO.kt$org.adblockplus.adblockplussbrowser.core.IO.kt</ID>
