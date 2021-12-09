@@ -83,6 +83,7 @@
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/primary_subscriptions_subscription_item_checkbox"
+            style="@style/ButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"

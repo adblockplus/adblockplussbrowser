@@ -50,7 +50,7 @@
         <item name="android:textColor">@color/clickable_text</item>
     </style>
 
-    <style name="RadioButtonStyle" parent="@style/TextAppearance.AppCompat.Medium">
+    <style name="ButtonStyle" parent="@style/TextAppearance.AppCompat.Medium">
         <item name="android:buttonTint">@color/ribbon</item>
     </style>
 
