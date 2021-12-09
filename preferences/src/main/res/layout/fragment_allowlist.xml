@@ -67,6 +67,8 @@
                 android:layout_gravity="end|bottom"
                 android:layout_margin="16dp"
                 android:src="@drawable/ic_baseline_add_24"
+                android:backgroundTint="@color/ribbon"
+                app:borderWidth="0dp"
                 app:layout_behavior="org.adblockplus.adblockplussbrowser.base.view.ScrollFabBehavior" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>

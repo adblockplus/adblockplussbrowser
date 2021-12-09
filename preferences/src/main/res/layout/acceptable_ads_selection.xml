@@ -50,7 +50,7 @@
 
             <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/acceptable_ads_enabled"
-                style="@style/TextAppearance.AppCompat.Medium"
+                style="@style/RadioButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="@{viewModel.enabled}"
@@ -68,7 +68,7 @@
 
             <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/acceptable_ads_disabled"
-                style="@style/TextAppearance.AppCompat.Medium"
+                style="@style/RadioButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
