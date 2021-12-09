@@ -43,7 +43,9 @@ internal class AddDomainDialogFragment : AppCompatDialogFragment() {
                 hintRes = R.string.allowlist_add_hint,
                 waitForPositiveButton = false
             ) { dialog, text ->
-                val validDomain = DomainValidator.getInstance().isValid(text.toString())
+                val rawDomain = text.toString()
+                val domain = Uri.parse(rawDomain).host ?: rawDomain
+                val validDomain = DomainValidator.getInstance().isValid(domain)
                 dialog.setActionButtonEnabled(WhichButton.POSITIVE, validDomain)
             }
             positiveButton(android.R.string.ok) { dialog ->
