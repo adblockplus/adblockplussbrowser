@@ -34,4 +34,8 @@
     <string name="share_events_header">Contribuisci a migliorare Adblock</string>
     <string name="share_events_description">I dati anonimi ci aiutano a migliorare Adblock offrendoti una migliore esperienza di navigazione.</string>
 
+    <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
+    <string name="about_privacy_policy"><a href="https://getadblock.com/privacy/">Informativa sulla privacy</a></string>
+    <string name="about_terms_of_use"><a href="https://getadblock.com/terms/">Termini di utilizzo</a></string>
+
 </resources>

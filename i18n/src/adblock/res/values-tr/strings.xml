@@ -34,4 +34,8 @@
     <string name="share_events_header">Adblock\'ı iyileştirmemize yardımcı olun</string>
     <string name="share_events_description">Anonimleştirilmiş veriler Adblock\'ı iyileştirmemize yardımcı olurken sizin için de daha iyi bir gezinme deneyimi sağlar.</string>
 
+    <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
+    <string name="about_privacy_policy"><a href="https://getadblock.com/privacy/">Gizlilik Politikası</a></string>
+    <string name="about_terms_of_use"><a href="https://getadblock.com/terms/">Kullanım Şartları</a></string>
+
 </resources>

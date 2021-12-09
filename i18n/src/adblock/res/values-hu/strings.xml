@@ -34,4 +34,8 @@
     <string name="share_events_header">Segítse az Adblock javításában</string>
     <string name="share_events_description">Az anonimizált adatok segítségével javíthatjuk az Adblock alkalmazást, hogy még jobb böngészési élményt nyújthasson.</string>
 
+    <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
+    <string name="about_privacy_policy"><a href="https://getadblock.com/privacy/">Adatvédelmi nyilatkozat</a></string>
+    <string name="about_terms_of_use"><a href="https://getadblock.com/terms/">Használati feltételek</a></string>
+
 </resources>

@@ -34,4 +34,8 @@
     <string name="share_events_header">المساعدة في تحسين Adblock</string>
     <string name="share_events_description">تساعدنا البيانات مجهولة المصدر على تحسين Adblock؛ وهو ما يوفر لك تجربة تصفح أفضل.</string>
 
+    <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
+    <string name="about_privacy_policy"><a href="https://getadblock.com/privacy/">سياسة الخصوصية</a></string>
+    <string name="about_terms_of_use"><a href="https://getadblock.com/terms/">شروط الاستخدام</a></string>
+
 </resources>

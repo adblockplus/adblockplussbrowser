@@ -34,4 +34,8 @@
     <string name="share_events_header">Adblock 개선을 도와주세요</string>
     <string name="share_events_description">Adblock 개선을 지원할 익명화된 데이터를 수집하여 더 나은 브라우징 환경을 만들고 있습니다.</string>
 
+    <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
+    <string name="about_privacy_policy"><a href="https://getadblock.com/privacy/">개인정보 보호 정책</a></string>
+    <string name="about_terms_of_use"><a href="https://getadblock.com/terms/">이용 약관</a></string>
+
 </resources>

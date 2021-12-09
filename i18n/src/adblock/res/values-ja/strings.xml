@@ -34,4 +34,8 @@
     <string name="share_events_header">Adblock の改善にご協力ください</string>
     <string name="share_events_description">匿名化データを共有してくださいますと、当社では Adblock の改善に活用させてただき、皆様の良いブラウザ体験に貢献します。</string>
 
+    <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
+    <string name="about_privacy_policy"><a href="https://getadblock.com/privacy/">プライバシー方針</a></string>
+    <string name="about_terms_of_use"><a href="https://getadblock.com/terms/">ご利用条件</a></string>
+
 </resources>

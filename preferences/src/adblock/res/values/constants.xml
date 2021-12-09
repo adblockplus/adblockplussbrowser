@@ -18,6 +18,4 @@
 
 <resources>
     <string name="about_imprint_text" translatable="false"><![CDATA[<br/><p><b><strong>Adblock, Inc.</strong></b><br/>12333 Sowden Road Suite B PO Box #99623<br/>Houston, Texas 77080-2059<br/>USA</p><p>Support: <a href=\"https://help.getadblock.com/support/home\">AdBlock Help</a><br/>Email: <a href=\"mailto:help@getadblock.com\">help@getadblock.com</a>]]></string>
-    <string name="url_privacy_policy" translatable="false">https://getadblock.com/privacy/</string>
-    <string name="url_terms_of_use" translatable="false">https://getadblock.com/terms/</string>
 </resources>
