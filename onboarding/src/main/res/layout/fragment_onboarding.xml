@@ -79,6 +79,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:trackColor="@color/abp_onboarding_circular_indicator_background"
+            app:indicatorColor="@color/abp_onboarding_icon_foreground_accent"
             app:trackThickness="2dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
