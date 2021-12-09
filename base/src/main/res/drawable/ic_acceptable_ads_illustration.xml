@@ -20,7 +20,7 @@
     android:height="136dp"
     android:viewportWidth="142"
     android:viewportHeight="136"
-    android:tint="@color/foreground_accent">
+    android:tint="@color/ribbon">
   <path
       android:pathData="M133,0L9,0C4.029,0 0,4.029 0,9L0,127C0,131.971 4.029,136 9,136L133,136C137.971,136 142,131.971 142,127L142,9C142,4.029 137.971,0 133,0ZM9,2L133,2C136.866,2 140,5.134 140,9L140,127C140,130.866 136.866,134 133,134L9,134C5.134,134 2,130.866 2,127L2,9C2,5.134 5.134,2 9,2Z"
       android:strokeWidth="1"
