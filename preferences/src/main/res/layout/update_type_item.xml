@@ -36,5 +36,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="@string/preferences_automatic_updates_wifi_only"
-        android:textColor="@color/abp_foreground_accent" />
+        android:textColor="@color/foreground_accent" />
 </LinearLayout>

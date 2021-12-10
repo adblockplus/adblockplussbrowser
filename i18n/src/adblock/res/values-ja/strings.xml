@@ -1,0 +1,41 @@
+<!--
+ This file is part of Adblock Plus <https://adblockplus.org/>,
+ Copyright (C) 2006-present eyeo GmbH
+
+ Adblock Plus is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License version 3 as
+ published by the Free Software Foundation.
+
+ Adblock Plus is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <!-- app-->
+    <string name="app_name">Samsung Internet 用 Adblock</string>
+    <string name="samsung_internet_required_description">Adblock は、Samsung Internet で動作するアプリです。Adblock を有効にするには、お使いのデバイスに Samsung Internet 4.0 以降がインストールされている必要があります。\nSamsung Internet ブラウザを入手するには、下のボタンをタップしてください。</string>
+
+    <!-- base-->
+    <string name="product_name">Adblock</string>
+
+    <!-- onboarding -->
+    <string name="onboarding_welcome_security_privacy_description">Adblock がバックグラウンドで保護を提供するため、安心してブラウザ体験ができます</string>
+    <string name="onboarding_welcome_language_filters_description">通常閲覧する言語に合わせて Adblock を最適化することで、より多くの広告をブロックできます</string>
+    <string name="onboarding_enable_header_title2">Adblock を有効にする</string>
+    <string name="onboarding_enable_one_step_description">Samsung Internet の Adblocker 設定で Adblock を有効にする </string>
+
+    <!-- preferences -->
+    <string name="preferences_primary_subscriptions_summary">通常閲覧する言語に合わせて Adblock を最適化することで、より多くの広告をブロックできます</string>
+    <string name="share_events_header">Adblock の改善にご協力ください</string>
+    <string name="share_events_description">匿名化データを共有してくださいますと、当社では Adblock の改善に活用させてただき、皆様の良いブラウザ体験に貢献します。</string>
+
+    <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
+    <string name="about_privacy_policy"><a href="https://getadblock.com/privacy/">プライバシー方針</a></string>
+    <string name="about_terms_of_use"><a href="https://getadblock.com/terms/">ご利用条件</a></string>
+
+</resources>

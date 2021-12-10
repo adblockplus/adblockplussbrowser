@@ -1,0 +1,41 @@
+<!--
+ This file is part of Adblock Plus <https://adblockplus.org/>,
+ Copyright (C) 2006-present eyeo GmbH
+
+ Adblock Plus is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License version 3 as
+ published by the Free Software Foundation.
+
+ Adblock Plus is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <!-- app-->
+    <string name="app_name">Adblock para Samsung Internet</string>
+    <string name="samsung_internet_required_description">O Adblock é um aplicativo executado no Samsung Internet que filtra anúncios enquanto você usa o navegador. Para que o Adblock seja eficaz, você precisa ter instalado o Samsung Internet 4.0 ou superior no seu dispositivo.\nPara obter o navegador Samsung Internet, toque no botão abaixo.</string>
+
+    <!-- base-->
+    <string name="product_name">Adblock</string>
+
+    <!-- onboarding -->
+    <string name="onboarding_welcome_security_privacy_description">Navegue sem preocupações com a proteção do Adblock em segundo plano</string>
+    <string name="onboarding_welcome_language_filters_description">Bloqueie mais anúncios com a otimização do Adblock com idiomas nos quais você geralmente navega</string>
+    <string name="onboarding_enable_header_title2">Ativar o Adblock</string>
+    <string name="onboarding_enable_one_step_description">Ativar Adblock nas configurações do Adblocker do Samsung Internet</string>
+
+    <!-- preferences -->
+    <string name="preferences_primary_subscriptions_summary">Para bloquear mais anúncios, otimize o Adblock com os idiomas nos quais você costuma navegar</string>
+    <string name="share_events_header">Ajude a melhorar o Adblock</string>
+    <string name="share_events_description">Dados anônimos nos ajudam a melhorar o Adblock e, assim, a criar uma experiência de navegação melhor para você.</string>
+
+    <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
+    <string name="about_privacy_policy"><a href="https://getadblock.com/privacy/">Política de privacidade</a></string>
+    <string name="about_terms_of_use"><a href="https://getadblock.com/terms/">Termos de uso</a></string>
+
+</resources>
