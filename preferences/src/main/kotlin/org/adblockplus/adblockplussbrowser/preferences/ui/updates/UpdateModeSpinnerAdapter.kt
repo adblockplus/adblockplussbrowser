@@ -36,7 +36,7 @@ internal class UpdateModeSpinnerAdapter(
 ) : ArrayAdapter<CharSequence>(context, layoutResID, textViewResourceId, strings) {
 
     var selectedPosition: Int = 0
-    private val colorSelected = ContextCompat.getColor(context, R.color.abp_foreground_accent)
+    private val colorSelected = ContextCompat.getColor(context, R.color.foreground_accent)
     private val colorNormal = ContextCompat.getColor(context, R.color.abp_foreground)
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
