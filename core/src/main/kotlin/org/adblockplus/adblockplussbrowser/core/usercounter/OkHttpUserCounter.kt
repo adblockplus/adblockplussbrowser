@@ -22,7 +22,6 @@ import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
@@ -97,7 +96,7 @@ internal class OkHttpUserCounter(
                     CountUserResult.Success()
                 }
                 else -> {
-                    analyticsProvider.setUserProperty(AnalyticsUserProperty.USER_COUTING_HTTP_ERROR,
+                    analyticsProvider.setUserProperty(AnalyticsUserProperty.USER_COUNTING_HTTP_ERROR,
                         response.code.toString())
                     CountUserResult.Failed()
                 }

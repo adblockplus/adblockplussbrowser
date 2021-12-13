@@ -25,7 +25,6 @@ import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okhttp3.OkHttpClient
-import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
 import org.adblockplus.adblockplussbrowser.core.helpers.Fakes
 import org.adblockplus.adblockplussbrowser.core.usercounter.CountUserResult
@@ -94,7 +93,7 @@ class UserCountingTest {
         assertEquals(fakeCoreRepository.INITIAL_COUNT, fakeCoreRepository.userCountingCount)
         assertNull(analyticsProvider.event)
         assertEquals(analyticsProvider.userPropertyName,
-            AnalyticsUserProperty.USER_COUTING_HTTP_ERROR)
+            AnalyticsUserProperty.USER_COUNTING_HTTP_ERROR)
         assertEquals(analyticsProvider.userPropertyValue, HTTP_INTERNAL_ERROR.toString())
     }
 
