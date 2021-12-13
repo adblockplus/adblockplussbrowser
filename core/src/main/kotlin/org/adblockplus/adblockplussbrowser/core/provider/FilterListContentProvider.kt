@@ -19,6 +19,7 @@ package org.adblockplus.adblockplussbrowser.core.provider
 
 import android.content.ContentProvider
 import android.content.ContentValues
+import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
 import android.os.ParcelFileDescriptor
@@ -38,12 +39,16 @@ import okio.source
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
+import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants
+import org.adblockplus.adblockplussbrowser.base.yandex.YandexConstants
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.usercounter.CountUserResult
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
 import timber.log.Timber
 import java.io.File
 import kotlin.time.ExperimentalTime
+import org.adblockplus.adblockplussbrowser.base.os.PackageHelper
+import org.adblockplus.adblockplussbrowser.core.CallingApp
 
 
 @ExperimentalTime
@@ -85,10 +90,10 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         return true
     }
 
-    private suspend fun triggerUserCountingRequest(userCounter: UserCounter) {
+    private suspend fun triggerUserCountingRequest(userCounter: UserCounter, callingApp: CallingApp) {
         var currentBackOffDelay = INITIAL_BACKOFF_DELAY
         repeat(MAX_USER_COUNT_RETRIES) {
-            val result = userCounter.count()
+            val result = userCounter.count(callingApp)
             if (result is CountUserResult.Success) {
                 Timber.i("User counted")
                 return
@@ -108,9 +113,12 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
 
     override fun openFile(uri: Uri, mode: String): ParcelFileDescriptor? {
         // Set as Activated... If Samsung Internet is asking for the Filters, it is enabled
+        val callingPackageName = callingPackage
+        val packageManager = context?.packageManager
+        getCallingApp(callingPackageName, packageManager)
         launch {
             activationPreferences.updateLastFilterRequest(System.currentTimeMillis())
-            triggerUserCountingRequest(userCounter)
+            triggerUserCountingRequest(userCounter, getCallingApp(callingPackageName, packageManager))
         }
         return try {
             Timber.i("Filter list requested: $uri - $mode...")
@@ -123,6 +131,28 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             analyticsProvider.logException(ex)
             null
         }
+    }
+
+    private fun getCallingApp(callingPackageName: String?, packageManager: PackageManager?): CallingApp {
+        var application = ""
+        var applicationVersion = ""
+        if (callingPackageName != null && packageManager != null) {
+            Timber.i("User count callingPackageName $callingPackageName")
+            application = if (callingPackageName == SamsungInternetConstants.SBROWSER_APP_ID ||
+                callingPackageName == SamsungInternetConstants.SBROWSER_APP_ID_BETA
+            ) {
+                SamsungInternetConstants.SBROWSER_APP_NAME
+            } else if (callingPackageName == YandexConstants.YANDEX_PACKAGE_NAME ||
+                callingPackageName == YandexConstants.YANDEX_BETA_PACKAGE_NAME ||
+                callingPackageName == YandexConstants.YANDEX_ALPHA_PACKAGE_NAME
+            ) {
+                YandexConstants.YANDEX_APP_NAME
+            } else {
+                callingPackageName
+            }
+            applicationVersion = PackageHelper.version(packageManager, callingPackageName)
+        }
+        return CallingApp(application, applicationVersion)
     }
 
     private fun getFilterFile(): File {

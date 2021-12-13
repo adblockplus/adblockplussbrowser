@@ -35,9 +35,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.app.R
 import org.adblockplus.adblockplussbrowser.app.databinding.ActivityMainBinding
 import org.adblockplus.adblockplussbrowser.base.navigation.navControllerFromFragmentContainerView
+import org.adblockplus.adblockplussbrowser.base.os.PackageHelper
 import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.SBROWSER_APP_ID
 import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.SBROWSER_APP_ID_BETA
 import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.SBROWSER_OLDEST_SAMSUNG_INTERNET_4_VERSIONCODE
+import org.adblockplus.adblockplussbrowser.base.yandex.YandexConstants
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -60,7 +62,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (!hasSamsungInternetVersion5OrNewer() && !hasSamsungInternetBeta()) {
+        if (!hasSamsungInternetVersion4OrNewer()
+            && !PackageHelper.isPackageInstalled(packageManager, SBROWSER_APP_ID_BETA)
+            && !PackageHelper.isPackageInstalled(packageManager, YandexConstants.YANDEX_PACKAGE_NAME)
+            && !PackageHelper.isPackageInstalled(packageManager, YandexConstants.YANDEX_BETA_PACKAGE_NAME)
+            && !PackageHelper.isPackageInstalled(packageManager, YandexConstants.YANDEX_ALPHA_PACKAGE_NAME)) {
             showInstallSamsungInternetDialog()
         } else {
             checkAdblockActivation()
@@ -71,28 +77,18 @@ class MainActivity : AppCompatActivity() {
         navController.navigateUp() || super.onSupportNavigateUp()
 
     /**
-     * Starting with Samsung Internet 5.0, the way to enable ad blocking has changed. As a result, we
+     * Starting with Samsung Internet 4.0, the way to enable ad blocking has changed. As a result, we
      * need to check for the version of Samsung Internet and apply text changes to the first run slide.
      *
-     * @return a boolean that indicates, if the user has Samsung Internet version 5.x
+     * @return a boolean that indicates, if the user has Samsung Internet version 4.x
      */
-    private fun hasSamsungInternetVersion5OrNewer(): Boolean {
+    private fun hasSamsungInternetVersion4OrNewer(): Boolean {
         return try {
             val packageInfo = packageManager.getPackageInfo(SBROWSER_APP_ID, 0)
             PackageInfoCompat.getLongVersionCode(packageInfo) >= SBROWSER_OLDEST_SAMSUNG_INTERNET_4_VERSIONCODE
         } catch (e: PackageManager.NameNotFoundException) {
             false
         }
-    }
-
-    private fun hasSamsungInternetBeta(): Boolean {
-        var result = true
-        try {
-            packageManager.getPackageInfo(SBROWSER_APP_ID_BETA, 0)
-        } catch (e: PackageManager.NameNotFoundException) {
-            result = false
-        }
-        return result
     }
 
     private fun showInstallSamsungInternetDialog() {
@@ -127,6 +123,12 @@ class MainActivity : AppCompatActivity() {
                 navigate(LauncherDirection.ONBOARDING_LAST_STEP)
             }
         }
+    }
+
+    companion object {
+        private const val YANDEX_PACKAGE_NAME = "com.yandex.browser"
+        private const val YANDEX_ALPHA_PACKAGE_NAME = "com.yandex.browser.alpha"
+        private const val YANDEX_BETA_PACKAGE_NAME = "com.yandex.browser.beta"
     }
 
 }

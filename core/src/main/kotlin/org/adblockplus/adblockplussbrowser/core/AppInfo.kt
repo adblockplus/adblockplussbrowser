@@ -18,9 +18,8 @@
 package org.adblockplus.adblockplussbrowser.core
 
 import android.content.Context
-import android.content.pm.PackageManager
 import android.os.Build
-import timber.log.Timber
+import org.adblockplus.adblockplussbrowser.base.os.PackageHelper
 
 internal data class AppInfo(
     val addonName: String? = DEFAULT_ADDON_NAME,
@@ -39,7 +38,7 @@ private const val SBROWSER_APP_NAME = "sbrowser"
 
 internal fun Context.buildAppInfo(): AppInfo {
     return AppInfo(
-        addonVersion = version(packageName),
+        addonVersion = PackageHelper.version(packageManager, packageName),
         application = applicationForInstalledBrowser(this),
         applicationVersion = applicationVersion(this)
     )
@@ -47,31 +46,11 @@ internal fun Context.buildAppInfo(): AppInfo {
 
 private fun applicationForInstalledBrowser(context: Context): String {
     var application = ""
-    if (context.isPackageInstalled(SBROWSER_PACKAGE_NAME) || context.isPackageInstalled(
-            SBROWSER_BETA_PACKAGE_NAME)) {
+    if (PackageHelper.isPackageInstalled(context.packageManager, SBROWSER_PACKAGE_NAME) ||
+        PackageHelper.isPackageInstalled(context.packageManager, SBROWSER_BETA_PACKAGE_NAME)) {
         application += SBROWSER_APP_NAME
     }
-
     return application
 }
 
-private fun applicationVersion(context: Context) = context.version(SBROWSER_PACKAGE_NAME)
-
-private fun Context.version(packageId: String): String {
-    return try {
-        packageManager.getPackageInfo(packageId, 0).versionName.toLowerCase()
-    } catch (ex: Exception) {
-        Timber.e("Error retrieving app version for $packageId")
-        "0"
-    }
-}
-
-private fun Context.isPackageInstalled(packageId: String): Boolean {
-    return try {
-        packageManager.getPackageInfo(packageId, 0)
-        true
-    } catch (ex: PackageManager.NameNotFoundException) {
-        Timber.w("$packageId not found")
-        false
-    }
-}
+private fun applicationVersion(context: Context) = PackageHelper.version(context.packageManager, SBROWSER_PACKAGE_NAME)

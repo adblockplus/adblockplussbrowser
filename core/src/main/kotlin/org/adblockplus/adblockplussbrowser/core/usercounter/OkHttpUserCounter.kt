@@ -27,6 +27,7 @@ import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.core.AppInfo
 import org.adblockplus.adblockplussbrowser.core.BuildConfig
+import org.adblockplus.adblockplussbrowser.core.CallingApp
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.extensions.currentData
 import org.adblockplus.adblockplussbrowser.core.extensions.currentSettings
@@ -54,7 +55,7 @@ internal class OkHttpUserCounter(
 ) : UserCounter {
 
     @Suppress("TooGenericExceptionCaught")
-    override suspend fun count() : CountUserResult = coroutineScope {
+    override suspend fun count(callingApp: CallingApp): CountUserResult = coroutineScope {
         try {
             val savedLastUserCountingResponse = repository.currentData().lastUserCountingResponse
             Timber.d("User count lastUserCountingResponse saved is `%d`",
@@ -63,7 +64,7 @@ internal class OkHttpUserCounter(
             val acceptableAdsSubscription = settings.getAcceptableAdsSubscription()
             val currentUserCountingCount = repository.currentData().userCountingCount
             val url = createUrl(acceptableAdsSubscription, acceptableAdsEnabled,
-                savedLastUserCountingResponse, currentUserCountingCount)
+                savedLastUserCountingResponse, currentUserCountingCount, callingApp)
             val request = Request.Builder().url(url).head().build()
             val response = retryIO(description = "User counting HEAD request") {
                 okHttpClient.newCall(request).await()
@@ -117,16 +118,18 @@ internal class OkHttpUserCounter(
     private fun Int.asDownloadCount(): String =
         if (this < MAX_USER_COUNTING_COUNT) this.toString() else "4+"
 
-    private fun createUrl(subscription: Subscription,
-                          acceptableAdsEnabled: Boolean,
-                          savedLastUserCountingResponse: Long,
-                          currentUserCountingCount: Int
+    private fun createUrl(
+        subscription: Subscription,
+        acceptableAdsEnabled: Boolean,
+        savedLastUserCountingResponse: Long,
+        currentUserCountingCount: Int,
+        callingApp: CallingApp
     ): HttpUrl {
         return subscription.randomizedUrl.sanatizeUrl().toHttpUrl().newBuilder().apply {
             addQueryParameter("addonName", appInfo.addonName)
             addQueryParameter("addonVersion", appInfo.addonVersion)
-            addQueryParameter("application", appInfo.application)
-            addQueryParameter("applicationVersion", appInfo.applicationVersion)
+            addQueryParameter("application", callingApp.applicationName)
+            addQueryParameter("applicationVersion", callingApp.applicationVersion)
             addQueryParameter("platform", appInfo.platform)
             addQueryParameter("platformVersion", appInfo.platformVersion)
             addQueryParameter("disabled", (!acceptableAdsEnabled).toString())
