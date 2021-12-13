@@ -26,6 +26,7 @@ import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okhttp3.OkHttpClient
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.core.downloader.DownloadResult
 import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
@@ -53,13 +54,16 @@ class DownloaderTest {
     private val mockWebServer = MockWebServer()
     private lateinit var fakeCoreRepository : Fakes.FakeCoreRepository
     private lateinit var downloader : Downloader
+    private lateinit var analyticsProvider : Fakes.FakeAnalyticsProvider
 
     @Before
     fun setUp() {
         mockWebServer.start()
         val appInfo = AppInfo()
         fakeCoreRepository = Fakes.FakeCoreRepository(mockWebServer.url("").toString())
-        downloader = OkHttpDownloader(mockContext, OkHttpClient(), fakeCoreRepository, appInfo)
+        analyticsProvider = Fakes.FakeAnalyticsProvider()
+        downloader = OkHttpDownloader(mockContext, OkHttpClient(), fakeCoreRepository, appInfo,
+            analyticsProvider)
         `when`(mockContext.applicationContext).thenReturn(mockContext)
         File(cacheDir).mkdirs()
         File(filesDir).mkdirs()
@@ -143,5 +147,8 @@ class DownloaderTest {
             }
         }
         assertEquals(0, filesCount)
+        assertEquals(analyticsProvider.userPropertyName,
+            AnalyticsUserProperty.DOWNLOAD_HTTP_ERROR)
+        assertEquals(analyticsProvider.userPropertyValue, HTTP_INTERNAL_ERROR.toString())
     }
 }

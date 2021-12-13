@@ -29,6 +29,8 @@ import okio.BufferedSource
 import okio.buffer
 import okio.sink
 import okio.source
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.core.AppInfo
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
@@ -51,7 +53,8 @@ internal class OkHttpDownloader(
     private val context: Context,
     private val okHttpClient: OkHttpClient,
     private val repository: CoreRepository,
-    private val appInfo: AppInfo
+    private val appInfo: AppInfo,
+    private val analyticsProvider: AnalyticsProvider
 ) : Downloader {
 
     private val connectivityManager = ContextCompat.getSystemService(context,
@@ -101,6 +104,9 @@ internal class OkHttpDownloader(
                 }
                 else -> {
                     Timber.e("Error downloading $url, response code: ${response.code}")
+                    analyticsProvider.setUserProperty(
+                        AnalyticsUserProperty.DOWNLOAD_HTTP_ERROR,
+                        response.code.toString())
                     DownloadResult.Failed(previousDownload.ifExists())
                 }
             }
@@ -109,6 +115,7 @@ internal class OkHttpDownloader(
         } catch (ex: Exception) {
             val previousDownload = getDownloadedSubscription(subscription)
             Timber.e(ex, "Error downloading ${previousDownload.url}")
+            analyticsProvider.logException(ex)
             DownloadResult.Failed(previousDownload.ifExists())
         }
     }
@@ -172,6 +179,7 @@ internal class OkHttpDownloader(
             )
         } catch (ex: Exception) {
             Timber.e(ex, "Error parsing url: ${subscription.url}")
+            analyticsProvider.logException(ex)
             DownloadedSubscription(subscription.url)
         }
     }

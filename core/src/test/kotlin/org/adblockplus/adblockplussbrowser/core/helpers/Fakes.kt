@@ -30,6 +30,7 @@ import org.adblockplus.adblockplussbrowser.core.data.model.SavedState
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
 import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig
+import java.lang.Exception
 
 class Fakes {
 
@@ -193,16 +194,26 @@ class Fakes {
 
     class FakeAnalyticsProvider : AnalyticsProvider {
 
-        var analyticsEvent : AnalyticsEvent? = null
+        var event : AnalyticsEvent? = null
+        var exception : Exception? = null
+        var userPropertyName : AnalyticsUserProperty? = null
+        var userPropertyValue : String? = null
 
         override fun logEvent(analyticsEvent: AnalyticsEvent) {
-            this.analyticsEvent = analyticsEvent
+            this.event = analyticsEvent
+        }
+
+        override fun logException(exception: Exception) {
+            this.exception = exception
         }
 
         override fun setUserProperty(
             analyticsProperty: AnalyticsUserProperty,
             analyticsPropertyValue: String
-        ) {}
+        ) {
+            userPropertyName = analyticsProperty
+            userPropertyValue = analyticsPropertyValue
+        }
 
         override fun enable() {}
 
