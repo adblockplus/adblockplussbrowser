@@ -25,10 +25,6 @@ internal fun String.sanatizeUrl(): String {
     }
 }
 
-internal fun String.toAllowRule(): String {
-    return "@@||${this}^\$document,domain=${this}"
-}
-
 internal fun String.toBlockRule(): String {
     if (this.startsWith("||") && this.endsWith("^")) return this
     return "||${this}^"
