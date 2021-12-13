@@ -17,8 +17,11 @@
 
 package org.adblockplus.adblockplussbrowser.analytics
 
+import java.lang.Exception
+
 interface AnalyticsProvider {
     fun logEvent(analyticsEvent: AnalyticsEvent)
+    fun logException(exception: Exception)
     fun setUserProperty(analyticsProperty: AnalyticsUserProperty, analyticsPropertyValue: String)
     fun enable()
     fun disable()
