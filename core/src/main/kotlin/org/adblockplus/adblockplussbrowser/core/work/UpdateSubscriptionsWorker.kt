@@ -44,7 +44,6 @@ import org.adblockplus.adblockplussbrowser.core.data.proto.toSavedState
 import org.adblockplus.adblockplussbrowser.core.downloader.DownloadResult
 import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
 import org.adblockplus.adblockplussbrowser.core.downloader.hasFailedResult
-import org.adblockplus.adblockplussbrowser.core.extensions.toAllowRule
 import org.adblockplus.adblockplussbrowser.core.extensions.toBlockRule
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
@@ -255,7 +254,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             }
 
             allowedDomains.forEach { domain ->
-                sink.writeUtf8(domain.toAllowRule())
+                sink.writeUtf8(createAllowlistFilter(domain))
                 sink.writeUtf8("\n")
                 customRules++
             }
@@ -279,6 +278,10 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
 
         oldPath?.let { path -> File(path).delete() }
         newFile
+    }
+
+    private fun createAllowlistFilter(domain: String): String {
+        return "@@||${domain}^\$document,domain=${domain}"
     }
 
     private suspend fun cleanOldFiles(filtersFile: File) = coroutineScope {
