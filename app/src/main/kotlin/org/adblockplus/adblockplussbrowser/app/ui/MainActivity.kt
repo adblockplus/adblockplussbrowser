@@ -39,7 +39,6 @@ import org.adblockplus.adblockplussbrowser.base.os.PackageHelper
 import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.SBROWSER_APP_ID
 import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.SBROWSER_APP_ID_BETA
 import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.SBROWSER_OLDEST_SAMSUNG_INTERNET_4_VERSIONCODE
-import org.adblockplus.adblockplussbrowser.base.yandex.YandexConstants
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
