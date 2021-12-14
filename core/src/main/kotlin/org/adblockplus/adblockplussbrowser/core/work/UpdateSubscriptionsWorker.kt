@@ -83,18 +83,26 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
                 return@withContext Result.failure()
             }
 
+            val updateAll = tags.isForceRefresh() || tags.isPeriodic() || runAttemptCount > 0
+            val updateChanges = changes.hasNewSubscriptions() || changes.acceptableAdsChanged()
+
             // Has settings changes from last update Job???
             // Don't skip force refresh, periodic updates or retries (runAttemptCount > 0)
-            if (!changes.hasChanges() && !tags.isForceRefresh() && !tags.isPeriodic() && runAttemptCount == 0) {
+            if (!updateChanges && !updateAll) {
                 Timber.d("No changes from last update")
                 return@withContext Result.success()
             }
 
             // Current active subscriptions
-            val activeSubscriptions =
+            val activeSubscriptions = if (updateAll) {
                 settings.activePrimarySubscriptions.ensureEasylist(settingsRepository.getEasylistSubscription()) +
-                        settings.activeOtherSubscriptions +
-                        acceptableAdsSubscription(settings.acceptableAdsEnabled)
+                    settings.activeOtherSubscriptions +
+                    acceptableAdsSubscription(settings.acceptableAdsEnabled)
+            } else {
+                changes.newSubscriptions + if (changes.acceptableAdsChanged())
+                    acceptableAdsSubscription(settings.acceptableAdsEnabled) else emptyList()
+            }
+
             totalSteps = activeSubscriptions.size + 1
 
             // Download new subscriptions

@@ -66,7 +66,7 @@ When doing a periodic update, each active _Subscription_ is checked for expirati
 - if the _Subscription_ is not expired and the file still exists then the current file is used.
 
 #### Configurations changes
-When the user adds or removes a _Subscription_, adds/removes domains to the allow/block lists, or changes the Acceptable Ads setting, a new `UpdateSubscriptionsWorker` is fired to run immediately.
+When the user adds a _Subscription_, adds/removes domains to the allow/block lists, or changes the Acceptable Ads setting, a new `UpdateSubscriptionsWorker` is fired to run immediately.
 Configuration changes are debounced by 500ms, so if the user quickly changes more than one setting, they will be combined in just one worker. Otherwise, a new worker will be enqueued for each setting change.
 
 #### Automatic update config changed

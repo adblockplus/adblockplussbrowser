@@ -28,6 +28,8 @@ data class Changes(
 ) {
     fun hasChanges(): Boolean = changes.isNotEmpty()
 
+    fun hasNewSubscriptions(): Boolean = newSubscriptions.isNotEmpty()
+
     fun acceptableAdsChanged(): Boolean = changes.contains(Type.ACCEPTABLE_ADS)
 
     enum class Type {
