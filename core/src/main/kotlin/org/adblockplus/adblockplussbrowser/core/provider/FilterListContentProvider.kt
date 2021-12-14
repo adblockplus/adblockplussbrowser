@@ -113,12 +113,10 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
 
     override fun openFile(uri: Uri, mode: String): ParcelFileDescriptor? {
         // Set as Activated... If Samsung Internet is asking for the Filters, it is enabled
-        val callingPackageName = callingPackage
-        val packageManager = context?.packageManager
-        getCallingApp(callingPackageName, packageManager)
+        val callingApp = getCallingApp(callingPackage, context?.packageManager)
         launch {
             activationPreferences.updateLastFilterRequest(System.currentTimeMillis())
-            triggerUserCountingRequest(userCounter, getCallingApp(callingPackageName, packageManager))
+            triggerUserCountingRequest(userCounter, callingApp)
         }
         return try {
             Timber.i("Filter list requested: $uri - $mode...")
@@ -134,8 +132,8 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
     }
 
     private fun getCallingApp(callingPackageName: String?, packageManager: PackageManager?): CallingApp {
-        var application = ""
-        var applicationVersion = ""
+        var application = DEFAULT_CALLING_APP_NAME
+        var applicationVersion = DEFAULT_CALLING_APP_VERSION
         if (callingPackageName != null && packageManager != null) {
             Timber.i("User count callingPackageName $callingPackageName")
             application = if (callingPackageName == SamsungInternetConstants.SBROWSER_APP_ID ||
@@ -148,7 +146,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             ) {
                 YandexConstants.YANDEX_APP_NAME
             } else {
-                callingPackageName
+                DEFAULT_CALLING_APP_NAME
             }
             applicationVersion = PackageHelper.version(packageManager, callingPackageName)
         }
@@ -202,5 +200,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         const val INITIAL_BACKOFF_DELAY = 5000L
         const val BACKOFF_FACTOR = 4
         const val MAX_USER_COUNT_RETRIES = 5
+        const val DEFAULT_CALLING_APP_NAME = "other"
+        const val DEFAULT_CALLING_APP_VERSION = "0"
     }
 }

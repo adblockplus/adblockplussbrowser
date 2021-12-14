@@ -10,7 +10,7 @@ class PackageHelper private constructor() {
                 packageManager.getPackageInfo(packageId, 0)
                 true
             } catch (ex: PackageManager.NameNotFoundException) {
-                Timber.w("$packageId not found")
+                Timber.i("$packageId not found")
                 false
             }
         }

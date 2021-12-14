@@ -125,10 +125,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    companion object {
-        private const val YANDEX_PACKAGE_NAME = "com.yandex.browser"
-        private const val YANDEX_ALPHA_PACKAGE_NAME = "com.yandex.browser.alpha"
-        private const val YANDEX_BETA_PACKAGE_NAME = "com.yandex.browser.beta"
-    }
-
 }
