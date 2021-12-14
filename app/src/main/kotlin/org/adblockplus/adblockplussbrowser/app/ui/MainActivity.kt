@@ -63,10 +63,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if (!hasSamsungInternetVersion4OrNewer()
-            && !PackageHelper.isPackageInstalled(packageManager, SBROWSER_APP_ID_BETA)
-            && !PackageHelper.isPackageInstalled(packageManager, YandexConstants.YANDEX_PACKAGE_NAME)
-            && !PackageHelper.isPackageInstalled(packageManager, YandexConstants.YANDEX_BETA_PACKAGE_NAME)
-            && !PackageHelper.isPackageInstalled(packageManager, YandexConstants.YANDEX_ALPHA_PACKAGE_NAME)) {
+            && !PackageHelper.isPackageInstalled(packageManager, SBROWSER_APP_ID_BETA)) {
             showInstallSamsungInternetDialog()
         } else {
             checkAdblockActivation()
