@@ -38,9 +38,9 @@ class SubscriptionTest {
         assertEquals(emptyUrlSubscription.url, emptyUrlSubscription.randomizedUrl)
 
         val expectedRegex =
-            """https://([0-9]).samsung-internet.filter-list-downloads.eyeo.com/.*""".toRegex()
+            """https://([0-9])\.samsung-internet\.filter-list-downloads\..*\.com/.*""".toRegex()
 
-        // Check prefix was added
+        // Check prefix was added for subscription
         val easylistSubscription = Subscription (
             "https://easylist-downloads.adblockplus.org/easylist.txt",
             "EasyList", 0L)
@@ -48,7 +48,7 @@ class SubscriptionTest {
 
         // Check np-op (no change) in a correct url
         val randomizedSubscription = Subscription(
-            "3.samsung-internet.filter-list-downloads.eyeo.com",
+            "https://3.samsung-internet.filter-list-downloads.getadblock.com/easylist.txt",
             "Randomized Subscription", 0L)
         assertEquals(randomizedSubscription.url, randomizedSubscription.randomizedUrl)
     }
