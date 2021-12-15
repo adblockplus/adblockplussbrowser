@@ -29,26 +29,26 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import okio.buffer
 import okio.sink
 import okio.source
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
+import org.adblockplus.adblockplussbrowser.base.os.PackageHelper
 import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants
 import org.adblockplus.adblockplussbrowser.base.yandex.YandexConstants
+import org.adblockplus.adblockplussbrowser.core.CallingApp
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.usercounter.CountUserResult
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
 import timber.log.Timber
 import java.io.File
 import kotlin.time.ExperimentalTime
-import org.adblockplus.adblockplussbrowser.base.os.PackageHelper
-import org.adblockplus.adblockplussbrowser.core.CallingApp
 
 
 @ExperimentalTime
@@ -99,8 +99,10 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
                 return
             } else {
                 if (it < MAX_USER_COUNT_RETRIES - 1) {
-                    Timber.e("User counting failed, retrying with delay of %d ms",
-                        currentBackOffDelay)
+                    Timber.e(
+                        "User counting failed, retrying with delay of %d ms",
+                        currentBackOffDelay
+                    )
                     delay(currentBackOffDelay) //backoff
                     currentBackOffDelay = (currentBackOffDelay * BACKOFF_FACTOR)
                 }
@@ -136,17 +138,13 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         var applicationVersion = DEFAULT_CALLING_APP_VERSION
         if (callingPackageName != null && packageManager != null) {
             Timber.i("User count callingPackageName $callingPackageName")
-            application = if (callingPackageName == SamsungInternetConstants.SBROWSER_APP_ID ||
-                callingPackageName == SamsungInternetConstants.SBROWSER_APP_ID_BETA
-            ) {
-                SamsungInternetConstants.SBROWSER_APP_NAME
-            } else if (callingPackageName == YandexConstants.YANDEX_PACKAGE_NAME ||
-                callingPackageName == YandexConstants.YANDEX_BETA_PACKAGE_NAME ||
-                callingPackageName == YandexConstants.YANDEX_ALPHA_PACKAGE_NAME
-            ) {
-                YandexConstants.YANDEX_APP_NAME
-            } else {
-                DEFAULT_CALLING_APP_NAME
+            application = when (callingPackageName) {
+                SamsungInternetConstants.SBROWSER_APP_ID,
+                SamsungInternetConstants.SBROWSER_APP_ID_BETA -> SamsungInternetConstants.SBROWSER_APP_NAME
+                YandexConstants.YANDEX_PACKAGE_NAME,
+                YandexConstants.YANDEX_BETA_PACKAGE_NAME,
+                YandexConstants.YANDEX_ALPHA_PACKAGE_NAME -> YandexConstants.YANDEX_APP_NAME
+                else -> DEFAULT_CALLING_APP_NAME
             }
             applicationVersion = PackageHelper.version(packageManager, callingPackageName)
         }
