@@ -32,10 +32,10 @@ internal data class AppInfo(
     val locale: String? = "en-US"
 )
 
-private const val DEFAULT_ADDON_NAME = "adblockplussbrowser"
 private const val ABP_ADDON_NAME = "adblockplussbrowser"
 private const val AB_ADDON_NAME = "adblocksbrowser"
-private const val CRYSTAL_ADDON_NAME = "crystal"
+private const val CRYSTAL_ADDON_NAME = "crystalsbrowser"
+private const val DEFAULT_ADDON_NAME = ABP_ADDON_NAME
 private const val SBROWSER_PACKAGE_NAME = "com.sec.android.app.sbrowser"
 private const val SBROWSER_BETA_PACKAGE_NAME = "com.sec.android.app.sbrowser.beta"
 private const val SBROWSER_APP_NAME = "sbrowser"
