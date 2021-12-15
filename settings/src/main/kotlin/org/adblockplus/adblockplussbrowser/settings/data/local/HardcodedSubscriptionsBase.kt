@@ -28,7 +28,7 @@ package org.adblockplus.adblockplussbrowser.settings.data.local
 internal open class HardcodedSubscriptionsBase {
 
     open val easylist = subscription {
-        url = "https://*.samsung-internet.filter-list-downloads.eyeo.com/easylist.txt"
+        url = "https://easylist-downloads.adblockplus.org/easylist.txt"
         languages("en")
     }
 

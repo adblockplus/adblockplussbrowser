@@ -23,8 +23,8 @@ internal class FlavoredHardcodedSubscriptions: HardcodedSubscriptionsBase() {
     // we override AA list for `Adblock`
     override val acceptableAds = subscription {
         title = "Acceptable Ads"
-        // `*.samsung-internet` will be replaced with [0-9].samsung-internet, eg `3.samsung-internet`
-        url = "https://*.samsung-internet.filter-list-downloads.getadblock.com/exceptionrules.txt"
+        // TODO put the proper URL here defined by the Ops team
+        url = "https://easylist-downloads.adblockplus.org/exceptionrules.txt"
     }
 
     val defaultPrimarySubscriptions = listOf(easylist) + regionalSubscriptions

@@ -29,16 +29,11 @@ data class Subscription(
     /**
      * If the subscription url has easylist-downloads.adblockplus.org as domain, the latter get
      * replaced by a randomized url on eyeo.com.
-     *
-     * We do the replacement here because the url gets serialized in settings and we cannot change
-     * it for the existing users
      */
     val randomizedUrl: String
-        get() = url.replace( // we patch the domain with the new one for ABP flavor
-            "easylist-downloads.adblockplus.org",
-            "*.samsung-internet.filter-list-downloads.eyeo.com")
-
-            .replace( // then we do the replacement for any samsung internet url
-                "*.samsung-internet",
-                "${(0..9).random()}.samsung-internet")
+        get() {
+            return url.replace(
+                "easylist-downloads.adblockplus.org",
+                "${(0..9).random()}.samsung-internet.filter-list-downloads.eyeo.com")
+        }
 }
