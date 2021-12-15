@@ -19,6 +19,7 @@ package org.adblockplus.adblockplussbrowser.core.provider
 
 import android.content.ContentProvider
 import android.content.ContentValues
+import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
 import android.os.ParcelFileDescriptor
@@ -28,16 +29,20 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import okio.buffer
 import okio.sink
 import okio.source
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
+import org.adblockplus.adblockplussbrowser.base.os.PackageHelper
+import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants
+import org.adblockplus.adblockplussbrowser.base.yandex.YandexConstants
+import org.adblockplus.adblockplussbrowser.core.CallingApp
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.usercounter.CountUserResult
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
@@ -85,17 +90,19 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         return true
     }
 
-    private suspend fun triggerUserCountingRequest(userCounter: UserCounter) {
+    private suspend fun triggerUserCountingRequest(userCounter: UserCounter, callingApp: CallingApp) {
         var currentBackOffDelay = INITIAL_BACKOFF_DELAY
         repeat(MAX_USER_COUNT_RETRIES) {
-            val result = userCounter.count()
+            val result = userCounter.count(callingApp)
             if (result is CountUserResult.Success) {
                 Timber.i("User counted")
                 return
             } else {
                 if (it < MAX_USER_COUNT_RETRIES - 1) {
-                    Timber.e("User counting failed, retrying with delay of %d ms",
-                        currentBackOffDelay)
+                    Timber.e(
+                        "User counting failed, retrying with delay of %d ms",
+                        currentBackOffDelay
+                    )
                     delay(currentBackOffDelay) //backoff
                     currentBackOffDelay = (currentBackOffDelay * BACKOFF_FACTOR)
                 }
@@ -108,9 +115,10 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
 
     override fun openFile(uri: Uri, mode: String): ParcelFileDescriptor? {
         // Set as Activated... If Samsung Internet is asking for the Filters, it is enabled
+        val callingApp = getCallingApp(callingPackage, context?.packageManager)
         launch {
             activationPreferences.updateLastFilterRequest(System.currentTimeMillis())
-            triggerUserCountingRequest(userCounter)
+            triggerUserCountingRequest(userCounter, callingApp)
         }
         return try {
             Timber.i("Filter list requested: $uri - $mode...")
@@ -123,6 +131,24 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             analyticsProvider.logException(ex)
             null
         }
+    }
+
+    private fun getCallingApp(callingPackageName: String?, packageManager: PackageManager?): CallingApp {
+        var application = DEFAULT_CALLING_APP_NAME
+        var applicationVersion = DEFAULT_CALLING_APP_VERSION
+        if (callingPackageName != null && packageManager != null) {
+            Timber.i("User count callingPackageName $callingPackageName")
+            application = when (callingPackageName) {
+                SamsungInternetConstants.SBROWSER_APP_ID,
+                SamsungInternetConstants.SBROWSER_APP_ID_BETA -> SamsungInternetConstants.SBROWSER_APP_NAME
+                YandexConstants.YANDEX_PACKAGE_NAME,
+                YandexConstants.YANDEX_BETA_PACKAGE_NAME,
+                YandexConstants.YANDEX_ALPHA_PACKAGE_NAME -> YandexConstants.YANDEX_APP_NAME
+                else -> DEFAULT_CALLING_APP_NAME
+            }
+            applicationVersion = PackageHelper.version(packageManager, callingPackageName)
+        }
+        return CallingApp(application, applicationVersion)
     }
 
     private fun getFilterFile(): File {
@@ -172,5 +198,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         const val INITIAL_BACKOFF_DELAY = 5000L
         const val BACKOFF_FACTOR = 4
         const val MAX_USER_COUNT_RETRIES = 5
+        const val DEFAULT_CALLING_APP_NAME = "other"
+        const val DEFAULT_CALLING_APP_VERSION = "0"
     }
 }
