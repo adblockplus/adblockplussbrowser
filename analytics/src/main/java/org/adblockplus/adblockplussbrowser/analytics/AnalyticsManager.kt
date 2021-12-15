@@ -17,11 +17,19 @@
 
 package org.adblockplus.adblockplussbrowser.analytics
 
+import java.lang.Exception
+
 class AnalyticsManager(private val providers: List<AnalyticsProvider>) : AnalyticsProvider {
 
     override fun logEvent(analyticsEvent: AnalyticsEvent) {
         for (provider in providers) {
             provider.logEvent(analyticsEvent)
+        }
+    }
+
+    override fun logException(exception: Exception) {
+        for (provider in providers) {
+            provider.logException(exception)
         }
     }
 

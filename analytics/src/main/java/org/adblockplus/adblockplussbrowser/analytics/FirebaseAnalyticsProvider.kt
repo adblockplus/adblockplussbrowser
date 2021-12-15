@@ -21,7 +21,10 @@ import android.content.Context
 import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
 import timber.log.Timber
+import java.lang.Exception
 
 class FirebaseAnalyticsProvider(appContext: Context) : AnalyticsProvider {
 
@@ -32,6 +35,10 @@ class FirebaseAnalyticsProvider(appContext: Context) : AnalyticsProvider {
         val logEvent = analyticsEvent.eventName
         Timber.i(logEvent)
         firebaseAnalytics.logEvent(logEvent, bundle)
+    }
+
+    override fun logException(exception: Exception) {
+        Firebase.crashlytics.recordException(exception)
     }
 
     override fun setUserProperty(analyticsProperty: AnalyticsUserProperty, analyticsPropertyValue: String) {

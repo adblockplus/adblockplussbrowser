@@ -120,6 +120,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY)
         } catch (ex: Exception) {
             Timber.e(ex)
+            analyticsProvider.logException(ex)
             null
         }
     }

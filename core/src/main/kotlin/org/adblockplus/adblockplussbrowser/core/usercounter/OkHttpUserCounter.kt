@@ -22,8 +22,8 @@ import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.core.AppInfo
 import org.adblockplus.adblockplussbrowser.core.BuildConfig
@@ -79,7 +79,7 @@ internal class OkHttpUserCounter(
                             serverDateParser.parse(response.headers["Date"]))
                     } catch (ex: ParseException) {
                         Timber.e(ex)
-                        analyticsProvider.logEvent(AnalyticsEvent.HEAD_RESPONSE_DATA_PARSING_FAILED)
+                        analyticsProvider.logException(ex)
                         if (BuildConfig.DEBUG) {
                             throw ex
                         } else {
@@ -96,6 +96,8 @@ internal class OkHttpUserCounter(
                     CountUserResult.Success()
                 }
                 else -> {
+                    analyticsProvider.setUserProperty(AnalyticsUserProperty.USER_COUNTING_HTTP_ERROR,
+                        response.code.toString())
                     CountUserResult.Failed()
                 }
             }
@@ -104,6 +106,7 @@ internal class OkHttpUserCounter(
         } catch (ex: Exception) {
             Timber.e("User count request failed")
             Timber.e(ex)
+            analyticsProvider.logException(ex)
             if (BuildConfig.DEBUG && ex is ParseException) {
                 throw ex
             }
