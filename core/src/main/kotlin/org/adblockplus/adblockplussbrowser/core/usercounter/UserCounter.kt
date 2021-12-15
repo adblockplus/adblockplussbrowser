@@ -17,8 +17,10 @@
 
 package org.adblockplus.adblockplussbrowser.core.usercounter
 
+import org.adblockplus.adblockplussbrowser.core.CallingApp
+
 internal interface UserCounter {
-    suspend fun count(): CountUserResult
+    suspend fun count(callingApp: CallingApp): CountUserResult
 }
 
 internal sealed class CountUserResult {

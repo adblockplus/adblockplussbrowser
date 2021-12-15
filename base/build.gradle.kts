@@ -45,4 +45,5 @@ dependencies {
     implementation(Deps.AndroidX.DataStore.DATASTORE)
     implementation(Deps.AndroidX.DataStore.PREFERENCES)
     implementation(Deps.AndroidX.Hilt.WORK)
+    implementation(Deps.TIMBER)
 }

@@ -69,7 +69,7 @@ class UserCountingTest {
 
         assertEquals(0, mockWebServer.requestCount)
         runBlocking {
-            assertTrue(userCounter.count() is CountUserResult.Success)
+            assertTrue(userCounter.count(CallingApp("", "")) is CountUserResult.Success)
         }
         assertEquals(1, mockWebServer.requestCount)
         assertEquals(202109231731, fakeCoreRepository.lastUserCountingResponse)
@@ -85,7 +85,7 @@ class UserCountingTest {
 
         assertEquals(0, mockWebServer.requestCount)
         runBlocking {
-            assertTrue(userCounter.count() is CountUserResult.Failed)
+            assertTrue(userCounter.count(CallingApp("", "")) is CountUserResult.Failed)
         }
         assertEquals(1, mockWebServer.requestCount)
         assertEquals(fakeCoreRepository.INITIAL_TIMESTAMP,
@@ -106,7 +106,7 @@ class UserCountingTest {
         assertEquals(0, mockWebServer.requestCount)
         runBlocking {
             try {
-                assertTrue(userCounter.count() is CountUserResult.Success)
+                assertTrue(userCounter.count(CallingApp("", "")) is CountUserResult.Success)
                 if (BuildConfig.DEBUG) {
                     fail() // In Debug mode we throw from count()
                 }

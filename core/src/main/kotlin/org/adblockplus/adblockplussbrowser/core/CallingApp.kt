@@ -15,13 +15,6 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.adblockplus.adblockplussbrowser.base.samsung.constants
+package org.adblockplus.adblockplussbrowser.core
 
-object SamsungInternetConstants {
-    const val SBROWSER_APP_NAME = "sbrowser"
-    const val SBROWSER_APP_ID = "com.sec.android.app.sbrowser"
-    const val SBROWSER_APP_ID_BETA = "com.sec.android.app.sbrowser.beta"
-    const val SBROWSER_ACTION_OPEN_SETTINGS = "com.samsung.android.sbrowser.contentBlocker.ACTION_SETTING"
-    const val SBROWSER_OLDEST_SAMSUNG_INTERNET_4_VERSIONCODE = 400000000
-    const val SBROWSER_START_SETTINGS_DELAY = 500L
-}
+data class CallingApp(val applicationName: String, val applicationVersion: String)

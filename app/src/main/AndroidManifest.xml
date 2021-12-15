@@ -26,6 +26,9 @@
     <queries>
         <package android:name="com.sec.android.app.sbrowser" />
         <package android:name="com.sec.android.app.sbrowser.beta" />
+        <package android:name="com.yandex.browser" />
+        <package android:name="com.yandex.browser.alpha" />
+        <package android:name="com.yandex.browser.beta" />
     </queries>
 
     <application
