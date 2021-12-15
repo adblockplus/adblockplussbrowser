@@ -24,7 +24,7 @@ import java.util.*
 
 internal class HardcodedSubscriptionsDataSource(private val context: Context) : SubscriptionsDataSource {
 
-    private val hardcodedSubscriptions = FlavoredHardcodedSubscriptions()
+    private val hardcodedSubscriptions = HardcodedSubscriptions()
 
     override suspend fun getEasylistSubscription(): Subscription = hardcodedSubscriptions.easylist.toSubscription()
 

@@ -17,28 +17,20 @@
 
 package org.adblockplus.adblockplussbrowser.settings.data.local
 
-/**
- * A data class, that holds all default subscription URLs for various languages
- *
- * It is not meant to be used directly, but rather as a parent class for `*HardcodedSubscriptions`
- * classes, that are defined by every single app flavor.
- * This allows to change the default subscriptions from flavor to flavor
- */
-@Suppress("LeakingThis")
-internal open class HardcodedSubscriptionsBase {
+internal class HardcodedSubscriptions {
 
-    open val easylist = subscription {
+    val easylist = subscription {
         url = "https://easylist-downloads.adblockplus.org/easylist.txt"
         languages("en")
     }
 
-    open val acceptableAds = subscription {
+    val acceptableAds = subscription {
         title = "Acceptable Ads"
         url = "https://easylist-downloads.adblockplus.org/exceptionrules.txt"
     }
 
     // Based on: https://gitlab.com/eyeo/adblockplus/adblockpluscore/-/blob/next/data/subscriptions.json
-    open val regionalSubscriptions = subscriptions {
+    val defaultPrimarySubscriptions = listOf(easylist) + subscriptions {
         subscription {
             url = "https://easylist-downloads.adblockplus.org/abpindo.txt"
             languages("id", "ms")
@@ -128,16 +120,16 @@ internal open class HardcodedSubscriptionsBase {
     }
 
     // TODO: Decide which title we want for the following and if we want to localize them:
-    open val additionalTracking = subscription {
+    val additionalTracking = subscription {
         title = "Block additional tracking"
         url = "https://easylist-downloads.adblockplus.org/easyprivacy.txt"
     }
 
-    open val socialMediaTracking = subscription {
+    val socialMediaTracking = subscription {
         title = "Block social media icons tracking"
         url = "https://easylist-downloads.adblockplus.org/fanboy-social.txt"
     }
-    open val defaultOtherSubscriptions = listOf(additionalTracking, socialMediaTracking)
+    val defaultOtherSubscriptions = listOf(additionalTracking, socialMediaTracking)
 
     // Based on: https://gitlab.com/eyeo/adblockplus/abpui/adblockplusui/-/blob/master/data/locales.json
     companion object {

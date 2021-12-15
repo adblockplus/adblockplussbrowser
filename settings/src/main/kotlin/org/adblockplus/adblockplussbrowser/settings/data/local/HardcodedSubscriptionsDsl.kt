@@ -61,7 +61,7 @@ internal class HardcodedSubscriptionDsl {
 
     private fun processTitle(): String {
         return if (title.isEmpty() && languages.isNotEmpty()) {
-            languages.map { HardcodedSubscriptionsBase.LANGUAGE_DESCRIPTION_MAP[it] ?: "" }
+            languages.map { HardcodedSubscriptions.LANGUAGE_DESCRIPTION_MAP[it] ?: "" }
                 .distinct().filter { it.isNotEmpty() }.joinToString()
         } else {
             title
