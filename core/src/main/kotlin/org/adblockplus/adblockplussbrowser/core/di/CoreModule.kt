@@ -78,9 +78,10 @@ internal object CoreModule {
         @ApplicationContext context: Context,
         okHttpClient: OkHttpClient,
         appInfo: AppInfo,
-        repository: CoreRepository
+        repository: CoreRepository,
+        analyticsProvider: AnalyticsProvider
     ): Downloader =
-        OkHttpDownloader(context, okHttpClient, repository, appInfo)
+        OkHttpDownloader(context, okHttpClient, repository, appInfo, analyticsProvider)
 
     @ExperimentalTime
     @Provides

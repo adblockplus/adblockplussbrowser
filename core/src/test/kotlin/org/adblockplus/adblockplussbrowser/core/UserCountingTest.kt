@@ -25,7 +25,7 @@ import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okhttp3.OkHttpClient
-import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
 import org.adblockplus.adblockplussbrowser.core.helpers.Fakes
 import org.adblockplus.adblockplussbrowser.core.usercounter.CountUserResult
 import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
@@ -74,7 +74,7 @@ class UserCountingTest {
         assertEquals(1, mockWebServer.requestCount)
         assertEquals(202109231731, fakeCoreRepository.lastUserCountingResponse)
         assertEquals(1, fakeCoreRepository.userCountingCount)
-        assertNull(analyticsProvider.analyticsEvent)
+        assertNull(analyticsProvider.event)
     }
 
     @Test
@@ -91,7 +91,10 @@ class UserCountingTest {
         assertEquals(fakeCoreRepository.INITIAL_TIMESTAMP,
             fakeCoreRepository.lastUserCountingResponse)
         assertEquals(fakeCoreRepository.INITIAL_COUNT, fakeCoreRepository.userCountingCount)
-        assertNull(analyticsProvider.analyticsEvent)
+        assertNull(analyticsProvider.event)
+        assertEquals(analyticsProvider.userPropertyName,
+            AnalyticsUserProperty.USER_COUNTING_HTTP_ERROR)
+        assertEquals(analyticsProvider.userPropertyValue, HTTP_INTERNAL_ERROR.toString())
     }
 
     @Test
@@ -120,8 +123,6 @@ class UserCountingTest {
         } else {
             assert(fakeCoreRepository.userCountingCount == 1)
         }
-        assertEquals(analyticsProvider.analyticsEvent,
-            AnalyticsEvent.HEAD_RESPONSE_DATA_PARSING_FAILED
-        )
+        assertTrue(analyticsProvider.exception is ParseException)
     }
 }
