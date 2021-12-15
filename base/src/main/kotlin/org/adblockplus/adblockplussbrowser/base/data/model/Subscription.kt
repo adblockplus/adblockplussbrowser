@@ -19,6 +19,7 @@ package org.adblockplus.adblockplussbrowser.base.data.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import org.adblockplus.adblockplussbrowser.base.BuildConfig
 
 @Parcelize
 data class Subscription(
@@ -31,9 +32,17 @@ data class Subscription(
      * replaced by a randomized url on eyeo.com.
      */
     val randomizedUrl: String
-        get() {
-            return url.replace(
+        get() = when (BuildConfig.FLAVOR_product) {
+            "abp" -> url.replace(
                 "easylist-downloads.adblockplus.org",
-                "${(0..9).random()}.samsung-internet.filter-list-downloads.eyeo.com")
+                "${(0..9).random()}.samsung-internet.filter-list-downloads.eyeo.com"
+            )
+            "adblock" -> url.replace(
+                "easylist-downloads.adblockplus.org",
+                "${(0..9).random()}.samsung-internet.filter-list-downloads.getadblock.com"
+            )
+            "crystal" -> url // no op for crystal so far
+            else -> throw NotImplementedError("You forgot to specify a URL override for the " +
+                    "flavor you have added")
         }
 }
