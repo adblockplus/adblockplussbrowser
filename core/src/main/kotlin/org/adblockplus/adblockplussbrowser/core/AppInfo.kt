@@ -20,7 +20,6 @@ package org.adblockplus.adblockplussbrowser.core
 import android.content.Context
 import android.os.Build
 import org.adblockplus.adblockplussbrowser.base.os.PackageHelper
-import java.util.Locale
 
 internal data class AppInfo(
     val addonName: String = addonName(),
