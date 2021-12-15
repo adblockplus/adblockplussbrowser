@@ -40,7 +40,7 @@ data class Subscription(
             "adblock" -> url.replace(
                 "easylist-downloads.adblockplus.org",
                 "${(0..9).random()}.samsung-internet.filter-list-downloads.getadblock.com"
-            )
+            ).replace("exceptionrules.txt", "samsung_internet_browser.txt")
             "crystal" -> url // no op for crystal so far
             else -> throw NotImplementedError("You forgot to specify a URL override for the " +
                     "flavor you have added")
