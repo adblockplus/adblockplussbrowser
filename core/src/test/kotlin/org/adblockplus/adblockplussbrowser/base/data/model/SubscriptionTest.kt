@@ -17,6 +17,7 @@
 
 package org.adblockplus.adblockplussbrowser.base.data.model
 
+import org.adblockplus.adblockplussbrowser.base.BuildConfig
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -37,8 +38,13 @@ class SubscriptionTest {
         val emptyUrlSubscription = Subscription("", "Wrong URL", 0L)
         assertEquals(emptyUrlSubscription.url, emptyUrlSubscription.randomizedUrl)
 
-        val expectedRegex =
-            """https://([0-9])\.samsung-internet\.filter-list-downloads\..*\.com/.*""".toRegex()
+        val expectedRegex = when (BuildConfig.FLAVOR_product) {
+            "abp" -> """https://([0-9])\.samsung-internet\.filter-list-downloads\.eyeo\.com/.*""".toRegex()
+            "adblock" -> """https://([0-9])\.samsung-internet\.filter-list-downloads\.getadblock\.com/.*""".toRegex()
+            "crystal" -> """https://easylist-downloads\.adblockplus\.org/.*""".toRegex()
+            else -> throw NotImplementedError("You forgot to specify a URL override for the " +
+                    "flavor you have added")
+        }
 
         // Check prefix was added for subscription
         val easylistSubscription = Subscription (
