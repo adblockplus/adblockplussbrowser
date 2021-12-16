@@ -5,7 +5,7 @@ stages:
   - sign_builds
   - automated_tests
 
-image: spacifici/android-sdk:latest
+image: registry.gitlab.com/eyeo/docker/adblockplussbrowser_gitlab-runner:202112.1
 
 variables:
   APK_OUTPUT_PATH: "app/build/outputs/apk"
