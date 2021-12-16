@@ -22,7 +22,7 @@ import android.os.Build
 import org.adblockplus.adblockplussbrowser.base.os.PackageHelper
 
 internal data class AppInfo(
-    val addonName: String? = DEFAULT_ADDON_NAME,
+    val addonName: String = addonName(),
     val addonVersion: String? = null,
     val application: String? = null,
     val applicationVersion: String? = null,
@@ -31,7 +31,10 @@ internal data class AppInfo(
     val locale: String? = "en-US"
 )
 
-private const val DEFAULT_ADDON_NAME = "adblockplussbrowser"
+private const val ABP_ADDON_NAME = "adblockplussbrowser"
+private const val AB_ADDON_NAME = "adblocksbrowser"
+private const val CRYSTAL_ADDON_NAME = "crystalsbrowser"
+private const val DEFAULT_ADDON_NAME = ABP_ADDON_NAME
 private const val SBROWSER_PACKAGE_NAME = "com.sec.android.app.sbrowser"
 private const val SBROWSER_BETA_PACKAGE_NAME = "com.sec.android.app.sbrowser.beta"
 private const val SBROWSER_APP_NAME = "sbrowser"
@@ -42,6 +45,13 @@ internal fun Context.buildAppInfo(): AppInfo {
         application = applicationForInstalledBrowser(this),
         applicationVersion = applicationVersion(this)
     )
+}
+
+private fun addonName(): String = when (BuildConfig.FLAVOR_product) {
+    "abp" -> ABP_ADDON_NAME
+    "adblock" -> AB_ADDON_NAME
+    "crystal" -> CRYSTAL_ADDON_NAME
+    else -> DEFAULT_ADDON_NAME
 }
 
 private fun applicationForInstalledBrowser(context: Context): String {
