@@ -17,22 +17,22 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">Adblock pour Samsung Internet</string>
-    <string name="samsung_internet_required_description">Adblock est une application qui fonctionne en complément de Samsung Internet pour filtrer les publicités pendant que vous utilisez ce navigateur. Pour qu\'Adblock soit efficace, vous devez installer Samsung Internet 4.0 ou une version ultérieure sur votre appareil.\nVous pouvez obtenir le navigateur Samsung Internet en appuyant sur le bouton ci-dessous.</string>
+    <string name="app_name">AdBlock pour Samsung Internet</string>
+    <string name="samsung_internet_required_description">AdBlock est une application qui fonctionne en complément de Samsung Internet pour filtrer les publicités pendant que vous utilisez ce navigateur. Pour qu\'AdBlock soit efficace, vous devez installer Samsung Internet 4.0 ou une version ultérieure sur votre appareil.\nVous pouvez obtenir le navigateur Samsung Internet en appuyant sur le bouton ci-dessous.</string>
 
     <!-- base-->
-    <string name="product_name">Adblock</string>
+    <string name="product_name">AdBlock</string>
 
     <!-- onboarding -->
-    <string name="onboarding_welcome_security_privacy_description">Naviguez sans souci avec Adblock qui vous protège en arrière-plan</string>
-    <string name="onboarding_welcome_language_filters_description">Bloquez plus de publicités en optimisant Adblock pour les langues dans lesquelles vous naviguez généralement</string>
-    <string name="onboarding_enable_header_title2">Activer Adblock</string>
-    <string name="onboarding_enable_one_step_description">Activer Adblock dans la rubrique \"Bloqueurs de publicité\" des paramètres de Samsung Internet</string>
+    <string name="onboarding_welcome_security_privacy_description">Naviguez sans souci avec AdBlock qui vous protège en arrière-plan</string>
+    <string name="onboarding_welcome_language_filters_description">Bloquez plus de publicités en optimisant AdBlock pour les langues dans lesquelles vous naviguez généralement</string>
+    <string name="onboarding_enable_header_title2">Activer AdBlock</string>
+    <string name="onboarding_enable_one_step_description">Activer AdBlock dans la rubrique \"Bloqueurs de publicité\" des paramètres de Samsung Internet</string>
 
     <!-- preferences -->
-    <string name="preferences_primary_subscriptions_summary">Bloquez plus de publicités en optimisant Adblock pour les langues dans lesquelles vous naviguez généralement</string>
-    <string name="share_events_header">Aidez-nous à améliorer Adblock</string>
-    <string name="share_events_description">Les données anonymisées nous aident à améliorer Adblock, créant ainsi une meilleure expérience de navigation pour vous.</string>
+    <string name="preferences_primary_subscriptions_summary">Bloquez plus de publicités en optimisant AdBlock pour les langues dans lesquelles vous naviguez généralement</string>
+    <string name="share_events_header">Aidez-nous à améliorer AdBlock</string>
+    <string name="share_events_description">Les données anonymisées nous aident à améliorer AdBlock, créant ainsi une meilleure expérience de navigation pour vous.</string>
 
     <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
     <string name="about_privacy_policy"><a href="https://getadblock.com/privacy/">Politique de confidentialité</a></string>
