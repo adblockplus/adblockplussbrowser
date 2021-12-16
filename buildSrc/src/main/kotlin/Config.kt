@@ -16,7 +16,7 @@
  */
 
 object Config {
-    const val VERSION_NAME = "3.1.0-rc1"
+    const val VERSION_NAME = "3.1.0-rc2"
 
     const val COMPILE_SDK_VERSION = 30
     const val BUILD_TOOLS_VERSION = "30.0.3"
