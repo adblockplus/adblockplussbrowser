@@ -42,7 +42,8 @@ data class Subscription(
                 "${(0..9).random()}.samsung-internet.filter-list-downloads.getadblock.com"
             ).replace("exceptionrules.txt", "samsung_internet_browser.txt")
             "crystal" -> url // no op for crystal so far
-            else -> throw NotImplementedError("You forgot to specify a URL override for the " +
-                    "flavor you have added")
+            else -> if (BuildConfig.DEBUG) throw NotImplementedError(
+                "You forgot to specify a URL override for the flavor you have added"
+            ) else url
         }
 }
