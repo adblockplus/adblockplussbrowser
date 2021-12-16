@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Apply Adblock color rebranding
 - Improved error reporting
 - Track Adblock for SI separately from Adblock Plus for SI
+- Replace Adblock Plus and eyeo in Copyright notice for Adblock
 
 ### Fixed
 - Accept and domain-parse complete URLs
