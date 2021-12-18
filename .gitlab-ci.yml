@@ -53,6 +53,8 @@ checks:lint:
     paths:
       - ./*/build/reports/lint-results.*
     when: on_failure
+  rules:
+    - when: on_success
 
 checks:detekt:
   extends: .template:environment
@@ -63,6 +65,8 @@ checks:detekt:
     paths:
       - build/reports/detekt/detekt.*
     when: always
+  rules:
+    - when: on_success
 
 build:
   extends: .template:environment
