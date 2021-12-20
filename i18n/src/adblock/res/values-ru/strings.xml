@@ -17,22 +17,22 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">Adblock для Samsung Internet</string>
-    <string name="samsung_internet_required_description">Adblock – это расширение для Samsung Internet для блокировки рекламы при использовании браузера. Чтобы пользоваться приложением Adblock, установите на ваше устройство Samsung Internet версии 4.0 или выше.\nНажмите на кнопку ниже, чтобы скачать браузер Samsung Internet.</string>
+    <string name="app_name">AdBlock для Samsung Internet</string>
+    <string name="samsung_internet_required_description">AdBlock – это расширение для Samsung Internet для блокировки рекламы при использовании браузера. Чтобы пользоваться приложением AdBlock, установите на ваше устройство Samsung Internet версии 4.0 или выше.\nНажмите на кнопку ниже, чтобы скачать браузер Samsung Internet.</string>
 
     <!-- base-->
-    <string name="product_name">Adblock</string>
+    <string name="product_name">AdBlock</string>
 
     <!-- onboarding -->
-    <string name="onboarding_welcome_security_privacy_description">Почувствуйте себя в безопасности благодаря защите Adblock</string>
-    <string name="onboarding_welcome_language_filters_description">Блокируйте больше рекламы, настроив Adblock под используемые вами в браузере языки</string>
-    <string name="onboarding_enable_header_title2">Активировать Adblock</string>
-    <string name="onboarding_enable_one_step_description">Активируйте Adblock в настройках блокиратора рекламы Samsung Internet</string>
+    <string name="onboarding_welcome_security_privacy_description">Почувствуйте себя в безопасности благодаря защите AdBlock</string>
+    <string name="onboarding_welcome_language_filters_description">Блокируйте больше рекламы, настроив AdBlock под используемые вами в браузере языки</string>
+    <string name="onboarding_enable_header_title2">Активировать AdBlock</string>
+    <string name="onboarding_enable_one_step_description">Активируйте AdBlock в настройках блокиратора рекламы Samsung Internet</string>
 
     <!-- preferences -->
-    <string name="preferences_primary_subscriptions_summary">Блокируйте больше рекламы, настроив Adblock под используемые вами в браузере языки</string>
-    <string name="share_events_header">Помогите улучшить Adblock</string>
-    <string name="share_events_description">Обезличенные данные помогут улучшить Adblock, и работать в браузере станет еще приятнее.</string>
+    <string name="preferences_primary_subscriptions_summary">Блокируйте больше рекламы, настроив AdBlock под используемые вами в браузере языки</string>
+    <string name="share_events_header">Помогите улучшить AdBlock</string>
+    <string name="share_events_description">Обезличенные данные помогут улучшить AdBlock, и работать в браузере станет еще приятнее.</string>
 
     <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
     <string name="about_privacy_policy"><a href="https://getadblock.com/privacy/">Политика конфиденциальности</a></string>

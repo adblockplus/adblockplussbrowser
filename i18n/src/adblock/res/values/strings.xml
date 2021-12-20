@@ -17,22 +17,22 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">Adblock for Samsung Internet</string>
-    <string name="samsung_internet_required_description">Adblock is an app that runs on top of Samsung Internet to filter ads while you use that browser. For Adblock to be effective, you need Samsung Internet 4.0 or above installed on your device.\nYou can get Samsung Internet browser by tapping on the button below.</string>
+    <string name="app_name">AdBlock for Samsung Internet</string>
+    <string name="samsung_internet_required_description">AdBlock is an app that runs on top of Samsung Internet to filter ads while you use that browser. For AdBlock to be effective, you need Samsung Internet 4.0 or above installed on your device.\nYou can get Samsung Internet browser by tapping on the button below.</string>
 
     <!-- base-->
-    <string name="product_name">Adblock</string>
+    <string name="product_name">AdBlock</string>
 
     <!-- onboarding -->
-    <string name="onboarding_welcome_security_privacy_description">Browse worry-free with Adblock protecting you in the background</string>
-    <string name="onboarding_welcome_language_filters_description">Block more ads by optimizing Adblock for the languages you typically browse in</string>
-    <string name="onboarding_enable_header_title2">Enable Adblock</string>
-    <string name="onboarding_enable_one_step_description">Enable Adblock in Samsung Internet\'s Adblocker Settings</string>
+    <string name="onboarding_welcome_security_privacy_description">Browse worry-free with AdBlock protecting you in the background</string>
+    <string name="onboarding_welcome_language_filters_description">Block more ads by optimizing AdBlock for the languages you typically browse in</string>
+    <string name="onboarding_enable_header_title2">Enable AdBlock</string>
+    <string name="onboarding_enable_one_step_description">Enable AdBlock in Samsung Internet\'s AdBlocker Settings</string>
 
     <!-- preferences -->
-    <string name="preferences_primary_subscriptions_summary">Block more ads by optimizing Adblock for the language(s) you typically browse in</string>
-    <string name="share_events_header">Help improve Adblock</string>
-    <string name="share_events_description">Anonymized data helps us improve Adblock, thus creating a better browsing experience for you.</string>
+    <string name="preferences_primary_subscriptions_summary">Block more ads by optimizing AdBlock for the language(s) you typically browse in</string>
+    <string name="share_events_header">Help improve AdBlock</string>
+    <string name="share_events_description">Anonymized data helps us improve AdBlock, thus creating a better browsing experience for you.</string>
 
     <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
     <string name="about_privacy_policy"><a href="https://getadblock.com/privacy/">Privacy Policy</a></string>
