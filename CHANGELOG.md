@@ -4,6 +4,30 @@ All notable changes to Adblock Plus for Samsung Internet will be documented in t
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.0-rc3] - 2021-12-17
+
+### Fixed
+- Adblock flavor name assets
+
+## [3.1.0-rc2] - 2021-12-16
+
+### Fixed
+- Adblock flavor name
+
+## [3.1.0-rc1] - 2021-12-16
+### Changed
+- Randomized subscription url
+- Updated Android Gradle Plugin and Gradle
+- Apply Adblock color rebranding
+- Improved error reporting
+- Track Adblock for SI separately from Adblock Plus for SI
+- Replace Adblock Plus and eyeo in Copyright notice for Adblock
+
+### Fixed
+- Accept and domain-parse complete URLs
+- Allowlisting filter domain restriction
+- Mechanism for counting Yandex users
+
 ## [2.0.1] - 2021-12-07
 ### Changed
 - Removed unused resources

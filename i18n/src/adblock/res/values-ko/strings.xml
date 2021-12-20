@@ -17,22 +17,22 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">Samsung Internet용 Adblock</string>
-    <string name="samsung_internet_required_description">Adblock는 브라우저를 사용하는 동안 광고를 필터하기 위해 Samsung Internet 위에 실행되는 앱입니다. Adblock를 효과적으로 사용하기 위해, 기기에 Samsung Internet 4.0 이상을 설치해야 합니다.\n아래 버튼을 탭해서 Samsung Internet 브라우저를 받을 수 있습니다.</string>
+    <string name="app_name">Samsung Internet용 AdBlock</string>
+    <string name="samsung_internet_required_description">AdBlock는 브라우저를 사용하는 동안 광고를 필터하기 위해 Samsung Internet 위에 실행되는 앱입니다. AdBlock를 효과적으로 사용하기 위해, 기기에 Samsung Internet 4.0 이상을 설치해야 합니다.\n아래 버튼을 탭해서 Samsung Internet 브라우저를 받을 수 있습니다.</string>
 
     <!-- base-->
-    <string name="product_name">Adblock</string>
+    <string name="product_name">AdBlock</string>
 
     <!-- onboarding -->
-    <string name="onboarding_welcome_security_privacy_description">백그라운드에서 보호하는 Adblock로 걱정 없는 인터넷을 즐기세요</string>
-    <string name="onboarding_welcome_language_filters_description">일반적으로 탐색에 사용하는 언어에 맞춰 Adblock를 최적화하고 더 많은 광고를 차단하세요</string>
-    <string name="onboarding_enable_header_title2">Adblock 활성화</string>
-    <string name="onboarding_enable_one_step_description"> Samsung Internet의 광고 차단기 설정에서 Adblock 활성화</string>
+    <string name="onboarding_welcome_security_privacy_description">백그라운드에서 보호하는 AdBlock로 걱정 없는 인터넷을 즐기세요</string>
+    <string name="onboarding_welcome_language_filters_description">일반적으로 탐색에 사용하는 언어에 맞춰 AdBlock를 최적화하고 더 많은 광고를 차단하세요</string>
+    <string name="onboarding_enable_header_title2">AdBlock 활성화</string>
+    <string name="onboarding_enable_one_step_description"> Samsung Internet의 광고 차단기 설정에서 AdBlock 활성화</string>
 
     <!-- preferences -->
-    <string name="preferences_primary_subscriptions_summary">일반적으로 탐색에 사용하는 언어에 맞춰 Adblock를 최적화하고 더 많은 광고를 차단하세요</string>
-    <string name="share_events_header">Adblock 개선을 도와주세요</string>
-    <string name="share_events_description">Adblock 개선을 지원할 익명화된 데이터를 수집하여 더 나은 브라우징 환경을 만들고 있습니다.</string>
+    <string name="preferences_primary_subscriptions_summary">일반적으로 탐색에 사용하는 언어에 맞춰 AdBlock를 최적화하고 더 많은 광고를 차단하세요</string>
+    <string name="share_events_header">AdBlock 개선을 도와주세요</string>
+    <string name="share_events_description">AdBlock 개선을 지원할 익명화된 데이터를 수집하여 더 나은 브라우징 환경을 만들고 있습니다.</string>
 
     <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
     <string name="about_privacy_policy"><a href="https://getadblock.com/privacy/">개인정보 보호 정책</a></string>

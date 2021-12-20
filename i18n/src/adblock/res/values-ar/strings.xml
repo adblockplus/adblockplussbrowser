@@ -17,22 +17,22 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">Adblock لـ Samsung Internet</string>
-    <string name="samsung_internet_required_description">Adblock هو تطبيق  يستخدم المتصفح Samsung Internet لتصفية الإعلانات أثناء استخدامك المتصفح. ولكي يعمل Adblock بفعالية، يجب أن يكون الإصدار 4.0 أو إصدار أحدث للمتصفح Samsung Internet مُثبَّتًا على جهازك.\nويمكنك الحصول على المتصفح Samsung Internet بالنقر فوق الزر أدناه.</string>
+    <string name="app_name">AdBlock لـ Samsung Internet</string>
+    <string name="samsung_internet_required_description">AdBlock هو تطبيق  يستخدم المتصفح Samsung Internet لتصفية الإعلانات أثناء استخدامك المتصفح. ولكي يعمل AdBlock بفعالية، يجب أن يكون الإصدار 4.0 أو إصدار أحدث للمتصفح Samsung Internet مُثبَّتًا على جهازك.\nويمكنك الحصول على المتصفح Samsung Internet بالنقر فوق الزر أدناه.</string>
 
     <!-- base-->
-    <string name="product_name">Adblock</string>
+    <string name="product_name">AdBlock</string>
 
     <!-- onboarding -->
-    <string name="onboarding_welcome_security_privacy_description">تصفَّح بدون قلق مع Adblock الذي يحميك في الخلفية</string>
+    <string name="onboarding_welcome_security_privacy_description">تصفَّح بدون قلق مع AdBlock الذي يحميك في الخلفية</string>
     <string name="onboarding_welcome_language_filters_description">احجب مزيدًا من الإعلانات عن طريق إختيار اللغات التي تتصفح بها عادةً</string>
-    <string name="onboarding_enable_header_title2">تمكين Adblock</string>
-    <string name="onboarding_enable_one_step_description">قم بتمكين Adblock في إعدادات حاجب الإعلانات بالمتصفح Samsung Internet</string>
+    <string name="onboarding_enable_header_title2">تمكين AdBlock</string>
+    <string name="onboarding_enable_one_step_description">قم بتمكين AdBlock في إعدادات حاجب الإعلانات بالمتصفح Samsung Internet</string>
 
     <!-- preferences -->
-    <string name="preferences_primary_subscriptions_summary">احجب مزيدًا من الإعلانات عن طريق Adblock بإختيار اللغة (اللغات) التي تتصفح بها عادةً</string>
-    <string name="share_events_header">المساعدة في تحسين Adblock</string>
-    <string name="share_events_description">تساعدنا البيانات مجهولة المصدر على تحسين Adblock؛ وهو ما يوفر لك تجربة تصفح أفضل.</string>
+    <string name="preferences_primary_subscriptions_summary">احجب مزيدًا من الإعلانات عن طريق AdBlock بإختيار اللغة (اللغات) التي تتصفح بها عادةً</string>
+    <string name="share_events_header">المساعدة في تحسين AdBlock</string>
+    <string name="share_events_description">تساعدنا البيانات مجهولة المصدر على تحسين AdBlock؛ وهو ما يوفر لك تجربة تصفح أفضل.</string>
 
     <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
     <string name="about_privacy_policy"><a href="https://getadblock.com/privacy/">سياسة الخصوصية</a></string>
