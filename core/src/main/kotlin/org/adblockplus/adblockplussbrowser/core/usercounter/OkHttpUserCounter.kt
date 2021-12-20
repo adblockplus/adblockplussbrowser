@@ -61,6 +61,7 @@ internal class OkHttpUserCounter(
             Timber.d("User count lastUserCountingResponse saved is `%d`",
                 savedLastUserCountingResponse)
             val acceptableAdsEnabled = settings.currentSettings().acceptableAdsEnabled
+            analyticsProvider.setUserProperty(AnalyticsUserProperty.IS_AA_ENABLED, acceptableAdsEnabled.toString())
             val acceptableAdsSubscription = settings.getAcceptableAdsSubscription()
             val currentUserCountingCount = repository.currentData().userCountingCount
             val url = createUrl(acceptableAdsSubscription, acceptableAdsEnabled,

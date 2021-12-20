@@ -59,7 +59,6 @@ internal class MainViewModel @Inject constructor(
             val acceptableAdsEnabled = settingsRepository.settings.map { settings ->
                 settings.acceptableAdsEnabled
             }.first()
-            analyticsProvider.setUserProperty(AnalyticsUserProperty.IS_AA_ENABLED, acceptableAdsEnabled.toString())
             if (acceptableAdsEnabled)
                 analyticsProvider.logEvent(AnalyticsEvent.AUDIENCE_AA_ENABLED)
             else
