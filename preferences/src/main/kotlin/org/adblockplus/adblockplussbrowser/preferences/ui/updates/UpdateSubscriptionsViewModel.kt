@@ -30,6 +30,7 @@ import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.base.data.model.SubscriptionUpdateStatus
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -61,6 +62,10 @@ class UpdateSubscriptionsViewModel @Inject constructor(
     }
 
     fun updateSubscriptions() {
+        if (updateStatus.value is SubscriptionUpdateStatus.Progress) {
+            Timber.d("Update is already in progress")
+            return
+        }
         subscriptionsManager.scheduleImmediate(force = true)
         analyticsProvider.logEvent(AnalyticsEvent.MANUAL_UPDATE)
     }
