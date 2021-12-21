@@ -30,11 +30,10 @@ import org.adblockplus.adblockplussbrowser.core.data.model.SavedState
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
 import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig
-import java.lang.Exception
 
 class Fakes {
 
-    internal class FakeCoreRepository : CoreRepository {
+    internal class FakeCoreRepository(serverUrl: String) : CoreRepository {
 
         val INITIAL_TIMESTAMP = -1L
         val INITIAL_COUNT = -1
@@ -44,10 +43,9 @@ class Fakes {
         val AA_URL : String
         val EASYLIST_URL : String
 
-        private val serverUrl : String
         private val coreData : CoreData
-        constructor(serverUrl : String) {
-            this.serverUrl = serverUrl
+
+        init {
             AA_URL = "$serverUrl/exceptionrules.txt"
             EASYLIST_URL = "$serverUrl/easylist.txt"
             coreData = CoreData(
@@ -56,7 +54,7 @@ class Fakes {
                 SavedState(true, listOf(""), listOf(""), listOf(""), listOf("")),
                 listOf(),
                 0L,
-                0);
+                0)
         }
 
         override val data: Flow<CoreData>
@@ -78,9 +76,7 @@ class Fakes {
         override suspend fun updateDownloadedSubscriptions(
             subscriptions: List<DownloadedSubscription>,
             updateTimestamp: Boolean
-        ) {
-            updateTimestamp
-        }
+        ) {}
 
         override suspend fun updateLastUpdated(lastUpdated: Long) {}
 
@@ -92,33 +88,29 @@ class Fakes {
             this.userCountingCount = userCountingCount
         }
 
-        override suspend fun updateSavedState(savedState: SavedState) {
-            savedState
-        }
+        override suspend fun updateSavedState(savedState: SavedState) {  }
     }
 
-    class FakeSettingsRepository : SettingsRepository {
-
-        private val serverUrl : String
-        constructor(serverUrl : String) {
-            this.serverUrl = serverUrl
-        }
+    class FakeSettingsRepository(private val serverUrl: String) : SettingsRepository {
+        var acceptableAdsStatus: Boolean = true
 
         override val settings: Flow<Settings>
             get() = flow {
                 emit(
-                    Settings(true,
-                    true,
-                    UpdateConfig.ALWAYS,
-                    listOf(""),
-                    listOf(""),
-                    listOf(
-                        Subscription("$serverUrl/easylist.txt", "", 0L),
-                        Subscription("$serverUrl/exceptionrules.txt", "", 0L)
-                    ),
-                    listOf(),
-                    true,
-                    true)
+                    Settings(
+                        true,
+                        acceptableAdsStatus,
+                        UpdateConfig.ALWAYS,
+                        listOf(""),
+                        listOf(""),
+                        listOf(
+                            Subscription("$serverUrl/easylist.txt", "", 0L),
+                            Subscription("$serverUrl/exceptionrules.txt", "", 0L)
+                        ),
+                        listOf(),
+                        true,
+                        true
+                    )
                 )
             }
 

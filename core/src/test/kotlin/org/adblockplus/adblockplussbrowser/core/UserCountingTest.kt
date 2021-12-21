@@ -17,14 +17,10 @@
 
 package org.adblockplus.adblockplussbrowser.core
 
-import java.lang.Exception
-import java.net.HttpURLConnection.HTTP_INTERNAL_ERROR
-import java.text.ParseException
-import kotlin.time.ExperimentalTime
 import kotlinx.coroutines.runBlocking
+import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
-import okhttp3.OkHttpClient
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
 import org.adblockplus.adblockplussbrowser.core.helpers.Fakes
 import org.adblockplus.adblockplussbrowser.core.usercounter.CountUserResult
@@ -36,6 +32,9 @@ import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
+import java.net.HttpURLConnection.HTTP_INTERNAL_ERROR
+import java.text.ParseException
+import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
 class UserCountingTest {
@@ -71,10 +70,28 @@ class UserCountingTest {
         runBlocking {
             assertTrue(userCounter.count(CallingApp("", "")) is CountUserResult.Success)
         }
+        assertEquals(true.toString(), analyticsProvider.userPropertyValue)
         assertEquals(1, mockWebServer.requestCount)
         assertEquals(202109231731, fakeCoreRepository.lastUserCountingResponse)
         assertEquals(1, fakeCoreRepository.userCountingCount)
         assertNull(analyticsProvider.event)
+    }
+
+    @Test
+    fun testCountAADisabled() {
+        val response = MockResponse()
+            .addHeader("Date", "Thu, 23 Sep 2021 17:31:01 GMT") //202109231731
+        mockWebServer.enqueue(response)
+        val settings = Fakes.FakeSettingsRepository(mockWebServer.url("").toString())
+        val appInfo = AppInfo()
+        assertEquals(0, mockWebServer.requestCount)
+        runBlocking {
+            settings.acceptableAdsStatus = false
+            userCounter = OkHttpUserCounter(OkHttpClient(), fakeCoreRepository, settings, appInfo,
+                analyticsProvider)
+            assertTrue(userCounter.count(CallingApp("", "")) is CountUserResult.Success)
+        }
+        assertEquals(false.toString(), analyticsProvider.userPropertyValue)
     }
 
     @Test
