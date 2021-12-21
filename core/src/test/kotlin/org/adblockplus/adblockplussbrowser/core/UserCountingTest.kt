@@ -86,7 +86,7 @@ class UserCountingTest {
         val appInfo = AppInfo()
         assertEquals(0, mockWebServer.requestCount)
         runBlocking {
-            // Given Acceptable Ads is disabled
+            // Given Acceptable Ads are disabled
             settings.acceptableAdsStatus = false
             // When the user is counted
             userCounter = OkHttpUserCounter(OkHttpClient(), fakeCoreRepository, settings, appInfo,
