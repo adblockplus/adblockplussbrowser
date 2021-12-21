@@ -78,7 +78,7 @@ class UserCountingTest {
     }
 
     @Test
-    fun `test count method when Acceptable Adds is disabled`() {
+    fun `test count method when Acceptable Ads are disabled`() {
         val response = MockResponse()
             .addHeader("Date", "Thu, 23 Sep 2021 17:31:01 GMT") //202109231731
         mockWebServer.enqueue(response)
@@ -88,12 +88,12 @@ class UserCountingTest {
         runBlocking {
             // Given Acceptable Ads is disabled
             settings.acceptableAdsStatus = false
-            // When user is counted
+            // When the user is counted
             userCounter = OkHttpUserCounter(OkHttpClient(), fakeCoreRepository, settings, appInfo,
                 analyticsProvider)
             assertTrue(userCounter.count(CallingApp("", "")) is CountUserResult.Success)
         }
-        // User property value false is reported to Google Analytics
+        // Then User property value is reported to Google Analytics
         assertEquals(false.toString(), analyticsProvider.userPropertyValue)
     }
 
