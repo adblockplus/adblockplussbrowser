@@ -81,43 +81,45 @@ internal class LauncherViewModel @Inject constructor(
             Timber.d("InstallReferrer already checked")
             return
         }
-        Timber.d("Checking InstallReferrer")
-        // All InstallReferrerClient API needs to be called on UiThread
-        val referrerClient = InstallReferrerClient.newBuilder(context).build()
-        referrerClient.startConnection(object : InstallReferrerStateListener {
-            override fun onInstallReferrerSetupFinished(responseCode: Int) {
-                when (responseCode) {
-                    InstallReferrerClient.InstallReferrerResponse.OK -> {
-                        try {
-                            val response = referrerClient.installReferrer
-                            var referrer = response.installReferrer
-                            analyticsProvider.setUserProperty(
-                                AnalyticsUserProperty.INSTALL_REFERRER, referrer)
-                            appPreferences.referrerChecked()
-                            referrerClient.endConnection()
-                            Timber.d("InstallReferrer checked: %s", referrer)
-                        } catch (ex: RemoteException) {
-                            Timber.e(ex, "Error processing InstallReferrerResponse")
+        try {
+            Timber.d("Checking InstallReferrer")
+            // All InstallReferrerClient API needs to be called on UiThread
+            val referrerClient = InstallReferrerClient.newBuilder(context).build()
+            referrerClient.startConnection(object : InstallReferrerStateListener {
+                override fun onInstallReferrerSetupFinished(responseCode: Int) {
+                    when (responseCode) {
+                        InstallReferrerClient.InstallReferrerResponse.OK -> {
+                            try {
+                                val response = referrerClient.installReferrer
+                                var referrer = response.installReferrer
+                                analyticsProvider.setUserProperty(
+                                    AnalyticsUserProperty.INSTALL_REFERRER, referrer
+                                )
+                                appPreferences.referrerChecked()
+                                referrerClient.endConnection()
+                                Timber.d("InstallReferrer checked: %s", referrer)
+                            } catch (ex: RemoteException) {
+                                Timber.e(ex, "Error processing InstallReferrerResponse")
+                            }
                         }
-                    }
-                    InstallReferrerClient.InstallReferrerResponse.DEVELOPER_ERROR,
-                    InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED,
-                    InstallReferrerClient.InstallReferrerResponse.SERVICE_DISCONNECTED,
-                    InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE -> {
-                        // Call referrerChecked() to not repeat on those failures
-                        try {
+                        InstallReferrerClient.InstallReferrerResponse.DEVELOPER_ERROR,
+                        InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED,
+                        InstallReferrerClient.InstallReferrerResponse.SERVICE_DISCONNECTED,
+                        InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE -> {
+                            // Call referrerChecked() to not repeat on those failures
                             appPreferences.referrerChecked()
                             Timber.w("checkInstallReferrer() gets %d", responseCode)
-                        } catch (ex: Exception) {
-                            Timber.e(ex)
                         }
                     }
                 }
-            }
 
-            override fun onInstallReferrerServiceDisconnected() {
-                Timber.d("Install referrer service disconnected")
-            }
-        })
+                override fun onInstallReferrerServiceDisconnected() {
+                    Timber.d("Install referrer service disconnected")
+                }
+            })
+        } catch (ex: Exception) {
+            Timber.e(ex)
+            analyticsProvider.logException(ex)
+        }
     }
 }
