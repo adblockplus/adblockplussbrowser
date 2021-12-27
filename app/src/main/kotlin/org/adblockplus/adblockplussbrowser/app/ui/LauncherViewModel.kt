@@ -120,6 +120,10 @@ internal class LauncherViewModel @Inject constructor(
         } catch (ex: Exception) {
             Timber.e(ex)
             analyticsProvider.logException(ex)
+            if (ex is SecurityException) {
+                // Call referrerChecked() to not repeat on this failure
+                appPreferences.referrerChecked()
+            }
         }
     }
 }
