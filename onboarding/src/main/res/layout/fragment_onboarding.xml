@@ -45,7 +45,7 @@
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/onboarding_pager"
                 currentItem="@{viewModel.currentPageIndex}"
-                onPageScrollSelected="@{viewModel.selectPage}"
+                onPageScrollSelected="@{viewModel::selectPage}"
                 onboardingPages="@{viewModel.pages}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
