@@ -18,6 +18,7 @@
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
+import java.util.*
 
 fun Project.applyCommonConfig() {
     // Enable or disable shrinking resource dynamically depending if this is a app or a library
@@ -81,20 +82,40 @@ fun Project.createFlavorsConfig() {
 
         flavorDimensions(regionDimension, productDimension)
         productFlavors {
-            create("world") {
+            create(Flavors.Region.WORLD) {
                 dimension = regionDimension
+                defaultConfig.buildConfigField(
+                    "String",
+                    "FLAVOR_${this.name.toUpperCase(Locale.ROOT)}",
+                    "\"${this.name}\"",
+                )
             }
 
-            create("abp") {
+            create(Flavors.Product.ABP) {
                 dimension = productDimension
+                defaultConfig.buildConfigField(
+                    "String",
+                    "FLAVOR_${this.name.toUpperCase(Locale.ROOT)}",
+                    "\"${this.name}\"",
+                )
             }
 
-            create("adblock") {
+            create(Flavors.Product.ADBLOCK) {
                 dimension = productDimension
+                defaultConfig.buildConfigField(
+                    "String",
+                    "FLAVOR_${this.name.toUpperCase(Locale.ROOT)}",
+                    "\"${this.name}\"",
+                )
             }
 
-            create("crystal") {
+            create(Flavors.Product.CRYSTAL) {
                 dimension = productDimension
+                defaultConfig.buildConfigField(
+                    "String",
+                    "FLAVOR_${this.name.toUpperCase(Locale.ROOT)}",
+                    "\"${this.name}\"",
+                )
             }
 
         }

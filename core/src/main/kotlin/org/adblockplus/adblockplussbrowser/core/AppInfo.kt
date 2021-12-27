@@ -19,6 +19,7 @@ package org.adblockplus.adblockplussbrowser.core
 
 import android.content.Context
 import android.os.Build
+import org.adblockplus.adblockplussbrowser.base.BuildConfig.*
 import org.adblockplus.adblockplussbrowser.base.os.PackageHelper
 
 internal data class AppInfo(
@@ -47,10 +48,10 @@ internal fun Context.buildAppInfo(): AppInfo {
     )
 }
 
-private fun addonName(): String = when (BuildConfig.FLAVOR_product) {
-    "abp" -> ABP_ADDON_NAME
-    "adblock" -> AB_ADDON_NAME
-    "crystal" -> CRYSTAL_ADDON_NAME
+private fun addonName(): String = when (FLAVOR_product) {
+    FLAVOR_ABP -> ABP_ADDON_NAME
+    FLAVOR_ADBLOCK -> AB_ADDON_NAME
+    FLAVOR_CRYSTAL -> CRYSTAL_ADDON_NAME
     else -> DEFAULT_ADDON_NAME
 }
 

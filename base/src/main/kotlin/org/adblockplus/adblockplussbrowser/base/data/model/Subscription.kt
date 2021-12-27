@@ -33,15 +33,15 @@ data class Subscription(
      */
     val randomizedUrl: String
         get() = when (BuildConfig.FLAVOR_product) {
-            "abp" -> url.replace(
+            BuildConfig.FLAVOR_ABP -> url.replace(
                 "easylist-downloads.adblockplus.org",
                 "${(0..9).random()}.samsung-internet.filter-list-downloads.eyeo.com"
             )
-            "adblock" -> url.replace(
+            BuildConfig.FLAVOR_ADBLOCK -> url.replace(
                 "easylist-downloads.adblockplus.org",
                 "${(0..9).random()}.samsung-internet.filter-list-downloads.getadblock.com"
             ).replace("exceptionrules.txt", "samsung_internet_browser.txt")
-            "crystal" -> url // no op for crystal so far
+            BuildConfig.FLAVOR_CRYSTAL -> url // no op for crystal so far
             else -> if (BuildConfig.DEBUG) throw NotImplementedError(
                 "You forgot to specify a URL override for the flavor you have added"
             ) else url
