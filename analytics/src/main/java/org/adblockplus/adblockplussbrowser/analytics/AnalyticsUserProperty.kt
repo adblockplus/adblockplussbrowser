@@ -36,5 +36,5 @@ enum class AnalyticsUserProperty(val propertyName: String) {
     /**
      * User property used for tracking HTTP error from user counting request.
      */
-    USER_COUNTING_HTTP_ERROR("user_couting_http_error")
+    USER_COUNTING_HTTP_ERROR("user_counting_http_error")
 }
