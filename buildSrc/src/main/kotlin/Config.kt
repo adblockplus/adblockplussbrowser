@@ -16,7 +16,11 @@
  */
 
 object Config {
-    const val VERSION_NAME = "2.1.1"
+    object Versions {
+        const val ABP = "2.1.1"
+        const val ADBLOCK = "3.1.1"
+        const val CRYSTAL = "4.1.1"
+    }
 
     const val COMPILE_SDK_VERSION = 30
     const val BUILD_TOOLS_VERSION = "30.0.3"
