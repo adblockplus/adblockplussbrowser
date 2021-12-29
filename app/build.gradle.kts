@@ -35,32 +35,7 @@ android {
         versionName = "0.0.0"
     }
 
-    val regionDimension = "region"
-    val productDimension = "product"
-    flavorDimensions(regionDimension, productDimension)
-    productFlavors {
-        create("world") {
-            dimension = regionDimension
-        }
-
-        create("abp") {
-            dimension = productDimension
-            versionName = Config.Versions.ABP
-            applicationId = "org.adblockplus.adblockplussbrowser"
-        }
-
-        create("adblock") {
-            dimension = productDimension
-            versionName = Config.Versions.ADBLOCK
-            applicationId = "com.betafish.adblocksbrowser"
-        }
-
-        create("crystal") {
-            dimension = productDimension
-            versionName = Config.Versions.CRYSTAL
-            applicationId = "co.crystalapp.crystal"
-        }
-    }
+    createFlavorsConfig()
 
     buildFeatures {
         dataBinding = true
