@@ -17,13 +17,18 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui
 
+import android.view.View
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentMainPreferencesBinding
+import timber.log.Timber
 
 @AndroidEntryPoint
 internal class MainPreferencesFragment :
@@ -36,51 +41,76 @@ internal class MainPreferencesFragment :
         val supportActionBar = (activity as AppCompatActivity).supportActionBar
         supportActionBar?.subtitle = getString(R.string.app_subtitle)
 
-        binding.mainPreferencesAdBlockingInclude.mainPreferencesPrimarySubscriptions.setOnClickListener {
-            supportActionBar?.subtitle = null
-            val direction = MainPreferencesFragmentDirections
-                .actionMainPreferencesFragmentToPrimarySubscriptionsFragment()
-            findNavController().navigate(direction)
-        }
-        binding.mainPreferencesAdBlockingInclude.mainPreferencesOtherSubscriptions.setOnClickListener {
-            supportActionBar?.subtitle = null
-            val direction = MainPreferencesFragmentDirections
-                .actionMainPreferencesFragmentToOtherSubscriptionsFragment()
-            findNavController().navigate(direction)
-        }
-        binding.mainPreferencesAdBlockingInclude.mainPreferencesAllowlist.setOnClickListener {
-            supportActionBar?.subtitle = null
-            val direction = MainPreferencesFragmentDirections
-                .actionMainPreferencesFragmentToAllowlistFragment()
-            findNavController().navigate(direction)
-        }
-        binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.setOnClickListener {
-            supportActionBar?.subtitle = null
-            val direction = MainPreferencesFragmentDirections
-                .actionMainPreferencesFragmentToUpdateSubscriptionsFragment()
-            findNavController().navigate(direction)
-        }
-        binding.mainPreferencesLanguagesOnboardingInclude.mainPreferencesLanguagesOnboardingOptionAdd.setOnClickListener {
-            supportActionBar?.subtitle = null
-            viewModel.markLanguagesOnboardingComplete(true)
-            val direction = MainPreferencesFragmentDirections
-                .actionMainPreferencesFragmentToPrimarySubscriptionsFragment()
-            findNavController().navigate(direction)
-        }
-        binding.mainPreferencesLanguagesOnboardingInclude.mainPreferencesLanguagesOnboardingOptionSkip.setOnClickListener {
+        binding.mainPreferencesAdBlockingInclude.mainPreferencesPrimarySubscriptions
+            .setOnClickListener(SingleClickListener(supportActionBar, findNavController(),
+                MainPreferencesFragmentDirections
+                .actionMainPreferencesFragmentToPrimarySubscriptionsFragment(), null))
+
+        binding.mainPreferencesAdBlockingInclude.mainPreferencesOtherSubscriptions
+            .setOnClickListener(SingleClickListener(supportActionBar, findNavController(),
+                MainPreferencesFragmentDirections
+                .actionMainPreferencesFragmentToOtherSubscriptionsFragment(), null))
+
+        binding.mainPreferencesAdBlockingInclude.mainPreferencesAllowlist
+            .setOnClickListener(SingleClickListener(supportActionBar, findNavController(),
+                MainPreferencesFragmentDirections
+                .actionMainPreferencesFragmentToAllowlistFragment(), null))
+
+        binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions
+            .setOnClickListener(SingleClickListener(supportActionBar, findNavController(),
+                MainPreferencesFragmentDirections
+                .actionMainPreferencesFragmentToUpdateSubscriptionsFragment(), null))
+
+        binding.mainPreferencesLanguagesOnboardingInclude.mainPreferencesLanguagesOnboardingOptionAdd
+            .setOnClickListener(SingleClickListener(supportActionBar, findNavController(),
+                MainPreferencesFragmentDirections
+                .actionMainPreferencesFragmentToPrimarySubscriptionsFragment(), viewModel))
+
+        binding.mainPreferencesLanguagesOnboardingInclude.mainPreferencesLanguagesOnboardingOptionSkip
+            .setOnClickListener {
             viewModel.markLanguagesOnboardingComplete(false)
         }
-        binding.mainPreferencesAcceptableAdsInclude.mainPreferencesAcceptableAds.setOnClickListener {
-            supportActionBar?.subtitle = null
-            val direction = MainPreferencesFragmentDirections
-                .actionMainPreferencesFragmentToAcceptableAdsFragment()
-            findNavController().navigate(direction)
+
+        binding.mainPreferencesAcceptableAdsInclude.mainPreferencesAcceptableAds
+            .setOnClickListener(SingleClickListener(supportActionBar, findNavController(),
+                MainPreferencesFragmentDirections
+                    .actionMainPreferencesFragmentToAcceptableAdsFragment(), null))
+
+        binding.mainPreferencesAboutInclude.mainPreferencesAbout
+            .setOnClickListener(SingleClickListener(supportActionBar, findNavController(),
+                MainPreferencesFragmentDirections
+                .actionMainPreferencesFragmentToAboutFragment(), null))
+    }
+
+    private class SingleClickListener : View.OnClickListener {
+        private val controller : NavController
+        private val direction : NavDirections
+        private val supportActionBar: ActionBar?
+        private val viewModel: MainPreferencesViewModel?
+        private var previousClickTimeMillis = 0L
+
+        constructor(supportActionBar: ActionBar?, controller : NavController,
+                    direction : NavDirections, viewModel: MainPreferencesViewModel?) {
+            this.supportActionBar = supportActionBar
+            this.controller = controller
+            this.direction = direction
+            this.viewModel = viewModel
         }
-        binding.mainPreferencesAboutInclude.mainPreferencesAbout.setOnClickListener {
-            supportActionBar?.subtitle = null
-            val direction = MainPreferencesFragmentDirections
-                .actionMainPreferencesFragmentToAboutFragment()
-            findNavController().navigate(direction)
+
+        override fun onClick(v: View) {
+            val currentTimeMillis = System.currentTimeMillis()
+            if (currentTimeMillis >= previousClickTimeMillis + DELAY_MILLIS) {
+                previousClickTimeMillis = currentTimeMillis
+                supportActionBar?.subtitle = null
+                viewModel?.markLanguagesOnboardingComplete(true)
+                controller.navigate(direction)
+            } else {
+                Timber.d("Skipping MainPreferencesFragment menu onClick event")
+            }
+        }
+
+        companion object {
+            private const val DELAY_MILLIS = 500L
         }
     }
 }
