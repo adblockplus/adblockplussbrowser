@@ -47,6 +47,9 @@ internal class OnboardingFragment : DataBindingFragment<FragmentOnboardingBindin
 
         binding.onboardingButton.setOnClickListener {
             viewModel.nextPage()
+            if (viewModel.currentPageIndex.value == viewModel.pages.value?.size) {
+                viewModel.completeOnboarding()
+            }
         }
 
         binding.openSiButton.setOnClickListener {
