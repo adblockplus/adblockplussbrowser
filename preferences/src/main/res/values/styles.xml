@@ -34,7 +34,7 @@
 
     <!-- Adapted from preference_material.xml -->
     <style name="AbpPreferenceTitleTextStyle">
-        <item name="android:singleLine">true</item>
+        <item name="android:maxLines">1</item>
         <item name="android:textAppearance">?android:attr/textAppearanceListItem</item>
         <item name="android:ellipsize">marquee</item>
     </style>
