@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun showInstallSamsungInternetDialog() {
         MaterialDialog(this).show {
-            cancelable(false)
+            cancelable(true)
             customView(viewRes = R.layout.dialog_install_si, scrollable = true)
             val installButton = getCustomView().findViewById<View>(R.id.install_si_button)
             installButton.setOnClickListener {
