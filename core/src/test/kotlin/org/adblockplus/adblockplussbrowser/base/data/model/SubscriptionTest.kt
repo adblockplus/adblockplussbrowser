@@ -17,8 +17,10 @@
 
 package org.adblockplus.adblockplussbrowser.base.data.model
 
-import org.adblockplus.adblockplussbrowser.base.BuildConfig
-import org.adblockplus.adblockplussbrowser.base.BuildConfig.*
+import org.adblockplus.adblockplussbrowser.base.BuildConfig.FLAVOR_ABP
+import org.adblockplus.adblockplussbrowser.base.BuildConfig.FLAVOR_ADBLOCK
+import org.adblockplus.adblockplussbrowser.base.BuildConfig.FLAVOR_CRYSTAL
+import org.adblockplus.adblockplussbrowser.base.BuildConfig.FLAVOR_product
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test

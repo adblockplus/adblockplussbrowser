@@ -19,7 +19,10 @@ package org.adblockplus.adblockplussbrowser.core
 
 import android.content.Context
 import android.os.Build
-import org.adblockplus.adblockplussbrowser.base.BuildConfig.*
+import org.adblockplus.adblockplussbrowser.base.BuildConfig.FLAVOR_ABP
+import org.adblockplus.adblockplussbrowser.base.BuildConfig.FLAVOR_ADBLOCK
+import org.adblockplus.adblockplussbrowser.base.BuildConfig.FLAVOR_CRYSTAL
+import org.adblockplus.adblockplussbrowser.base.BuildConfig.FLAVOR_product
 import org.adblockplus.adblockplussbrowser.base.os.PackageHelper
 
 internal data class AppInfo(
