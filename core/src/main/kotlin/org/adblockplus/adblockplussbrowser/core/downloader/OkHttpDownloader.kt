@@ -28,7 +28,6 @@ import okhttp3.Request
 import okio.BufferedSource
 import okio.buffer
 import okio.sink
-import okio.source
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
@@ -39,6 +38,7 @@ import org.adblockplus.adblockplussbrowser.core.data.model.exists
 import org.adblockplus.adblockplussbrowser.core.data.model.ifExists
 import org.adblockplus.adblockplussbrowser.core.extensions.sanatizeUrl
 import org.adblockplus.adblockplussbrowser.core.retryIO
+import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
 import ru.gildor.coroutines.okhttp.await
 import timber.log.Timber
 import java.io.File
@@ -89,10 +89,15 @@ internal class OkHttpDownloader(
                     context.downloadsDir().mkdirs()
                     tempFile.renameTo(downloadFile)
 
+                    val newLastVersion = OkHttpUserCounter.parseDateString(
+                        response.headers["Date"] ?: "",
+                        analyticsProvider
+                    )
+
                     DownloadResult.Success(previousDownload.copy(
                         lastUpdated = System.currentTimeMillis(),
                         lastModified = response.headers["Last-Modified"] ?: "",
-                        version = extractVersion(downloadFile),
+                        version = newLastVersion,
                         etag = response.headers["ETag"] ?: "",
                         downloadCount = previousDownload.downloadCount + 1
                     ))
@@ -229,34 +234,7 @@ internal class OkHttpDownloader(
         return file
     }
 
-    // Parse Version from subscription file
-    private fun extractVersion(file: File): String {
-        val version = readHeader(file).asSequence().map { it.trim() }
-            .filter { it.startsWith("!") }
-            .filter { it.contains(":") }
-            .map { line ->
-                val split = line.split(":", limit = 2)
-                Pair(split[0].trim(), split[1].trim())
-            }
-            .filter { pair -> pair.first.contains("version", true) }
-            .map { pair -> pair.second }
-            .firstOrNull()
-
-        return version ?: "0"
-    }
-
-    private fun readHeader(file: File): List<String> {
-        file.source().buffer().use { source ->
-            return generateSequence { source.readUtf8Line() }
-                .takeWhile { it.isNotEmpty() && (it[0] == '[' || it[0] == '!') }
-                .toList()
-        }
-    }
-
     private fun HttpUrl.toFileName(): String = "${this.toString().hashCode()}.txt"
-
-    private fun DownloadedSubscription.isNotExpired(newSubscription: Boolean, isMetered: Boolean) =
-        !this.isExpired(newSubscription, isMetered)
 
     private fun DownloadedSubscription.isExpired(newSubscription: Boolean, isMetered: Boolean): Boolean {
         val elapsed = Duration.milliseconds(System.currentTimeMillis()) - Duration.milliseconds(this.lastUpdated)
