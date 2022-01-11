@@ -15,9 +15,32 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import com.android.build.gradle.AppExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
+import java.util.Locale
+
+// Flavor descriptor
+internal data class Flavor(
+    val name: String,
+    val dimension: String,
+    val applicationId: String? = null,
+    val versionName: String? = null
+)
+
+// All the flavors (and dimensions) defined in this project
+internal object Flavors {
+    const val PRODUCT_DIMENSION = "product"
+    const val REGION_DIMENSION = "region"
+
+    val ABP = Flavor("abp", PRODUCT_DIMENSION, "org.adblockplus.adblockplussbrowser", Config.Versions.ABP)
+    val ADBLOCK = Flavor("adblock", PRODUCT_DIMENSION, "com.betafish.adblocksbrowser", Config.Versions.ADBLOCK)
+    val CRYSTAL = Flavor("crystal", PRODUCT_DIMENSION, "co.crystalapp.crystal", Config.Versions.CRYSTAL)
+    val WORLD = Flavor("world", REGION_DIMENSION)
+
+    val asList = listOf(WORLD, ABP, ADBLOCK, CRYSTAL)
+}
 
 fun Project.applyCommonConfig() {
     // Enable or disable shrinking resource dynamically depending if this is a app or a library
@@ -74,31 +97,35 @@ fun Project.applyCommonConfig() {
     }
 }
 
+/**
+ * Create all the flavors for the project that invokes this method
+ */
 fun Project.createFlavorsConfig() {
     android {
-        val productDimension = "product"
-        val regionDimension = "region"
-
-        flavorDimensions(regionDimension, productDimension)
+        // Check is the project is an App (not a Library)
+        val isApp = this is AppExtension
+        flavorDimensions(Flavors.REGION_DIMENSION, Flavors.PRODUCT_DIMENSION)
         productFlavors {
-            create("world") {
-                dimension = regionDimension
-            }
+            // Iterate over all the flavors
+            Flavors.asList.forEach { flavor ->
+                create(flavor.name) {
+                    dimension = flavor.dimension
+                    // Only apps can define the applicationId and the versionName
+                    if (isApp) {
+                        // Region flavors do not define applicationId or versionName (they are null)
+                        flavor.applicationId?.let { applicationId = it }
+                        flavor.versionName?.let { versionName = it }
+                    }
+                }
 
-            create("abp") {
-                dimension = productDimension
+                // Just add the FLAVOR_{name} constants to the BuildConfig to keep the names aligned
+                defaultConfig.buildConfigField(
+                    "String",
+                    "FLAVOR_${flavor.name.toUpperCase(Locale.ROOT)}",
+                    "\"${flavor.name}\""
+                )
             }
-
-            create("adblock") {
-                dimension = productDimension
-            }
-
-            create("crystal") {
-                dimension = productDimension
-            }
-
         }
-
     }
 }
 

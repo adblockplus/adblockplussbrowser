@@ -48,9 +48,9 @@ internal fun Context.buildAppInfo(): AppInfo {
 }
 
 private fun addonName(): String = when (BuildConfig.FLAVOR_product) {
-    "abp" -> ABP_ADDON_NAME
-    "adblock" -> AB_ADDON_NAME
-    "crystal" -> CRYSTAL_ADDON_NAME
+    BuildConfig.FLAVOR_ABP -> ABP_ADDON_NAME
+    BuildConfig.FLAVOR_ADBLOCK -> AB_ADDON_NAME
+    BuildConfig.FLAVOR_CRYSTAL -> CRYSTAL_ADDON_NAME
     else -> DEFAULT_ADDON_NAME
 }
 
