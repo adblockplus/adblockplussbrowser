@@ -119,4 +119,7 @@
     <string name="languages_onboarding_option_add">Add an additional ad blocking language.</string>
     <string name="languages_onboarding_option_skip">No thanks, I only browse in one language.</string>
 
+    <!-- image descriptions -->
+    <string name="image_bullet">Bullet Point Symbol</string>
+
 </resources>
