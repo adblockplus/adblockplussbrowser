@@ -63,7 +63,9 @@ internal fun bindProgressPager2(progressBar: ProgressBar, viewPager2: ViewPager2
             val positionMaxValue = viewPager2.adapter!!.itemCount - 1
             val progress = ceil((positionValue * progressBar.max) / positionMaxValue).toInt()
             progressBar.progress = progress
-            if (position == positionMaxValue) {
+            val isEnablePage = (viewPager2.adapter as OnboardingPagerAdapter)
+                .getItem(viewPager2.currentItem) is PageInfo.Enable
+            if (position == positionMaxValue && isEnablePage) {
                 progressBar.visibility = View.INVISIBLE
             } else {
                 progressBar.visibility = View.VISIBLE
@@ -74,15 +76,16 @@ internal fun bindProgressPager2(progressBar: ProgressBar, viewPager2: ViewPager2
 }
 
 @BindingAdapter("onboardingButtonPager2")
-internal fun bindOnboardingButtonPager2(button: ImageButton, viewPager2: ViewPager2) {
+internal fun bindOnboardingButtonPager2(nextScreenButton: ImageButton, viewPager2: ViewPager2) {
     val listener = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
             if (positionOffsetPixels == 0) {
-                val lastPage = position == viewPager2.adapter!!.itemCount - 1
-                if (lastPage) {
-                    button.visibility = View.INVISIBLE
+                val isEnablePage = (viewPager2.adapter as OnboardingPagerAdapter)
+                    .getItem(viewPager2.currentItem) is PageInfo.Enable
+                if (isEnablePage) {
+                    nextScreenButton.visibility = View.INVISIBLE
                 } else {
-                    button.visibility = View.VISIBLE
+                    nextScreenButton.visibility = View.VISIBLE
                 }
             }
         }
@@ -90,7 +93,7 @@ internal fun bindOnboardingButtonPager2(button: ImageButton, viewPager2: ViewPag
         override fun onPageScrollStateChanged(state: Int) {
             super.onPageScrollStateChanged(state)
             if (state == SCROLL_STATE_DRAGGING) {
-                button.visibility = View.VISIBLE
+                nextScreenButton.visibility = View.VISIBLE
             }
         }
     }
@@ -112,7 +115,7 @@ internal fun bindOnboardingPages(viewPager2: ViewPager2, pageList: List<PageInfo
 }
 
 @BindingAdapter("onboardingOpenSamsungButton")
-internal fun bindOnboardingOpenSamsungButton(button: Button, viewPager2: ViewPager2) {
+internal fun bindOnboardingOpenSamsungButton(openSamsungButton: Button, viewPager2: ViewPager2) {
     val listener = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageScrolled(
             position: Int,
@@ -120,11 +123,12 @@ internal fun bindOnboardingOpenSamsungButton(button: Button, viewPager2: ViewPag
             positionOffsetPixels: Int
         ) {
             if (positionOffsetPixels == 0) {
-                val lastPage = position == viewPager2.adapter!!.itemCount - 1
-                if (lastPage) {
-                    button.visibility = View.VISIBLE
+                val isEnablePage = (viewPager2.adapter as OnboardingPagerAdapter)
+                    .getItem(viewPager2.currentItem) is PageInfo.Enable
+                if (isEnablePage) {
+                    openSamsungButton.visibility = View.VISIBLE
                 } else {
-                    button.visibility = View.INVISIBLE
+                    openSamsungButton.visibility = View.INVISIBLE
                 }
             }
         }
@@ -132,7 +136,7 @@ internal fun bindOnboardingOpenSamsungButton(button: Button, viewPager2: ViewPag
         override fun onPageScrollStateChanged(state: Int) {
             super.onPageScrollStateChanged(state)
             if (state == SCROLL_STATE_DRAGGING) {
-                button.visibility = View.INVISIBLE
+                openSamsungButton.visibility = View.INVISIBLE
             }
         }
     }
