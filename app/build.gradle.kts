@@ -32,7 +32,7 @@ applyCommonConfig()
 android {
     defaultConfig {
         versionCode = versionCode()
-        versionName = Config.VERSION_NAME
+        versionName = "0.0.0"
     }
 
     val regionDimension = "region"
@@ -45,16 +45,19 @@ android {
 
         create("abp") {
             dimension = productDimension
+            versionName = Config.Versions.ABP
             applicationId = "org.adblockplus.adblockplussbrowser"
         }
 
         create("adblock") {
             dimension = productDimension
+            versionName = Config.Versions.ADBLOCK
             applicationId = "com.betafish.adblocksbrowser"
         }
 
         create("crystal") {
             dimension = productDimension
+            versionName = Config.Versions.CRYSTAL
             applicationId = "co.crystalapp.crystal"
         }
     }
