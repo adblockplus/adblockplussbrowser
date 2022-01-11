@@ -62,9 +62,8 @@ internal class LauncherViewModel @Inject constructor(
                 var direction = LauncherDirection.MAIN
                 if (!onBoardingCompleted) {
                     direction = LauncherDirection.ONBOARDING
-                } else if (onBoardingCompleted && lastFilterRequest == 0L) {
-                    direction = LauncherDirection.ONBOARDING_LAST_STEP
-                } else if (onBoardingCompleted && isFilterRequestExpired(lastFilterRequest)) {
+                } else if (onBoardingCompleted &&
+                    (lastFilterRequest == 0L || isFilterRequestExpired(lastFilterRequest))) {
                     direction = LauncherDirection.ONBOARDING_LAST_STEP
                 }
                 return@zip direction

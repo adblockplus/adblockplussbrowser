@@ -22,15 +22,21 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.adblockplus.adblockplussbrowser.base.data.ValueWrapper
+import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
+import org.adblockplus.adblockplussbrowser.base.data.prefs.AppPreferences
 import org.adblockplus.adblockplussbrowser.onboarding.R
 import org.adblockplus.adblockplussbrowser.base.data.prefs.OnboardingPreferences
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 internal class OnboardingViewModel @Inject constructor(
     private val preferences: OnboardingPreferences,
+    private val appPreferences: AppPreferences
 ) : ViewModel() {
 
     private val _pages = MutableLiveData<List<PageInfo>>()
@@ -47,6 +53,10 @@ internal class OnboardingViewModel @Inject constructor(
 
     init {
         loadPages()
+    }
+
+    fun selectLastPage() {
+        _currentPageIndex.value = _pages.value?.size?.minus(1)
     }
 
     fun selectPage(index: Int) {
@@ -79,7 +89,20 @@ internal class OnboardingViewModel @Inject constructor(
         )
 
         pageList.add(PageInfo.AcceptableAds)
-        pageList.add(PageInfo.Enable)
+
+        val lastFilterRequestFlow = appPreferences.lastFilterListRequest
+        viewModelScope.launch {
+            lastFilterRequestFlow.map {
+                it != 0L && !ActivationPreferences.isFilterRequestExpired(it)
+            }.collect {
+                if (!it) {
+                    Timber.d("Onboarding: Adding page \"Enable adblock in SI\"")
+                    pageList.add(PageInfo.Enable)
+                } else {
+                    Timber.d("Onboarding: Skipping page \"Enable adblock in SI\"")
+                }
+            }
+        }
 
         _pages.value = pageList
     }
