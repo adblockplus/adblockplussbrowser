@@ -15,7 +15,7 @@
  along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- app-->
     <string name="app_name">Adblock Plus for Samsung Internet</string>
     <string name="app_subtitle">for Samsung Internet</string>
@@ -118,5 +118,6 @@
     <string name="languages_onboarding_title">Browsing in multiple languages?</string>
     <string name="languages_onboarding_option_add">Add an additional ad blocking language.</string>
     <string name="languages_onboarding_option_skip">No thanks, I only browse in one language.</string>
+    <string name="device_not_supported" tools:ignore="MissingTranslation">This device is not supported</string>
 
 </resources>

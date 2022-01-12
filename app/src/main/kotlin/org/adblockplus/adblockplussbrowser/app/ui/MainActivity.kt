@@ -17,11 +17,13 @@
 
 package org.adblockplus.adblockplussbrowser.app.ui
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.pm.PackageInfoCompat
@@ -39,6 +41,7 @@ import org.adblockplus.adblockplussbrowser.base.os.PackageHelper
 import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.SBROWSER_APP_ID
 import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.SBROWSER_APP_ID_BETA
 import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.SBROWSER_OLDEST_SAMSUNG_INTERNET_4_VERSIONCODE
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -62,7 +65,8 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if (!hasSamsungInternetVersion4OrNewer()
-            && !PackageHelper.isPackageInstalled(packageManager, SBROWSER_APP_ID_BETA)) {
+            && !PackageHelper.isPackageInstalled(packageManager, SBROWSER_APP_ID_BETA)
+        ) {
             showInstallSamsungInternetDialog()
         } else {
             checkAdblockActivation()
@@ -93,24 +97,40 @@ class MainActivity : AppCompatActivity() {
             customView(viewRes = R.layout.dialog_install_si, scrollable = true)
             val installButton = getCustomView().findViewById<View>(R.id.install_si_button)
             installButton.setOnClickListener {
-                try {
-                    startActivity(
-                        Intent(
-                            Intent.ACTION_VIEW,
-                            Uri.parse("market://details?id=${SBROWSER_APP_ID}")
-                        )
-                    )
-                } catch (t: Throwable) {
-                    startActivity(
-                        Intent(
-                            Intent.ACTION_VIEW,
-                            Uri.parse("https://play.google.com/store/apps/details?id=${SBROWSER_APP_ID}")
-                        )
-                    )
-                }
-                this.dismiss()
+                installSamsungInternet(this)
             }
         }
+    }
+
+    private fun installSamsungInternet(dialog: MaterialDialog) {
+        try {
+            startStore(PLAY_STORE_PREFIX)
+            dialog.dismiss()
+        } catch (exception: ActivityNotFoundException) {
+            try {
+                try {
+                    startStore(SAMSUNG_STORE_PREFIX)
+                    dialog.dismiss()
+                } catch (exception: ActivityNotFoundException) {
+                    startStore(PLAY_STORE_WEB_PREFIX)
+                    dialog.dismiss()
+                }
+            } catch (exception: ActivityNotFoundException) {
+                // A device without Play Store, Galaxy store, and a browser
+                Timber.e(exception, "This device is not supported")
+                Toast.makeText(applicationContext, getString(R.string.device_not_supported), Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun startStore(storePrefix: String) {
+        Timber.d("Start store with: $storePrefix")
+        val intent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("$storePrefix${SBROWSER_APP_ID}")
+        )
+        startActivity(intent)
     }
 
     private fun checkAdblockActivation() {
@@ -119,6 +139,13 @@ class MainActivity : AppCompatActivity() {
                 navigate(LauncherDirection.ONBOARDING_LAST_STEP)
             }
         }
+    }
+
+    private companion object {
+        private const val PLAY_STORE_PREFIX = "market://details?id="
+        private const val SAMSUNG_STORE_PREFIX = "samsungapps://ProductDetail/"
+        private const val PLAY_STORE_WEB_PREFIX = "https://play.google.com/store/apps/details?id="
+
     }
 
 }
