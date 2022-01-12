@@ -37,13 +37,12 @@ internal class MainPreferencesFragment :
 
     private val viewModel: MainPreferencesViewModel by viewModels()
 
-    fun View.setDebounceOnClickListener(onClickListener: View.OnClickListener) {
-        val thiz = this
+    private fun View.setDebounceOnClickListener(onClickListener: View.OnClickListener) {
         var debounceJob: Job? = null
         val clickWithDebounce: (view: View) -> Unit = {
             if (debounceJob == null) {
                 debounceJob = viewModel.viewModelScope.launch {
-                    onClickListener.onClick(thiz)
+                    onClickListener.onClick(it)
                     delay(1000L)
                     debounceJob = null
                 }
