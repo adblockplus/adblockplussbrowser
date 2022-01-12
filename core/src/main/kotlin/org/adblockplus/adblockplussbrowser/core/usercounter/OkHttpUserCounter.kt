@@ -73,22 +73,8 @@ internal class OkHttpUserCounter(
 
             val result = when (response.code) {
                 HTTP_OK -> {
-                    Timber.d("User count response date: %s", response.headers["Date"])
-                    lastUserCountingResponseFormat.timeZone = serverTimeZone
-                    val newLastVersion = try {
-                        // Expected date format in "Date" header: "Thu, 23 Sep 2021 17:31:01 GMT"
-                        lastUserCountingResponseFormat.format(
-                            serverDateParser.parse(response.headers["Date"]))
-                    } catch (ex: ParseException) {
-                        Timber.e(ex)
-                        analyticsProvider.logException(ex)
-                        if (BuildConfig.DEBUG) {
-                            throw ex
-                        } else {
-                            Timber.e("Parsing 'Date' from header failed, using client GMT time")
-                            lastUserCountingResponseFormat.format(Calendar.getInstance().time)
-                        }
-                    }
+                    val newLastVersion = parseDateString(response.headers["Date"] ?: "",
+                        analyticsProvider)
                     Timber.d("User count saves new lastUserCountingResponse `%s`",
                         newLastVersion)
                     repository.updateLastUserCountingResponse(newLastVersion.toLong())
@@ -106,12 +92,12 @@ internal class OkHttpUserCounter(
             response.close()
             result
         } catch (ex: Exception) {
-            Timber.e("User count request failed")
-            Timber.e(ex)
-            analyticsProvider.logException(ex)
             if (BuildConfig.DEBUG && ex is ParseException) {
                 throw ex
             }
+            Timber.e("User count request failed")
+            Timber.e(ex)
+            analyticsProvider.logException(ex)
             CountUserResult.Failed()
         }
     }
@@ -140,6 +126,25 @@ internal class OkHttpUserCounter(
     }
 
     companion object {
+        fun parseDateString(rawDate: String, analyticsProvider: AnalyticsProvider?): String {
+            Timber.d("HTTP response Date header: %s", rawDate)
+            lastUserCountingResponseFormat.timeZone = serverTimeZone
+            return try {
+                // Expected date format in "Date" header: "Thu, 23 Sep 2021 17:31:01 GMT"
+                lastUserCountingResponseFormat.format(
+                    serverDateParser.parse(rawDate))
+            } catch (ex: ParseException) {
+                Timber.e(ex)
+                analyticsProvider?.logException(ex)
+                if (BuildConfig.DEBUG) {
+                    throw ex
+                } else {
+                    Timber.e("Parsing 'Date' from header failed, using client GMT time")
+                    lastUserCountingResponseFormat.format(Calendar.getInstance().time)
+                }
+            }
+        }
+
         private val lastUserCountingResponseFormat = SimpleDateFormat("yyyyMMddHHmm",
             Locale.ENGLISH)
         private val serverDateParser = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z",

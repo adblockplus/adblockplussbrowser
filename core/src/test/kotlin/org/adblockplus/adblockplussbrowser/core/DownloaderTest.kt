@@ -81,12 +81,11 @@ class DownloaderTest {
 
     @Test
     fun testDownloadOK200_ThenOK304() {
-        val version = "202109091143"
+        val version = "202109231731"
         val etag = "1234567890"
         val lastModified = "Thu, 23 Sep 2021 17:31:01 GMT"
         val downloadFileContent = "[Adblock Plus 2.0]\n" +
             "! Checksum: PRVPDDw+HOO0AQNjsGwCLg\n" +
-            "! Version: $version\n" +
             "! Title: Allow nonintrusive advertising\n" +
             "! Expires: 1 days\n" +
             "! Homepage: https://acceptableads.com/"
@@ -94,6 +93,7 @@ class DownloaderTest {
             .setResponseCode(HTTP_OK)
             .setHeader("ETag", etag)
             .setHeader("Last-Modified", lastModified)
+            .setHeader("Date", "Thu, 23 Sep 2021 17:31:01 GMT") //202109231731
             .setBody(downloadFileContent)
         mockWebServer.enqueue(response)
         mockWebServer.enqueue(MockResponse().setResponseCode(HTTP_NOT_MODIFIED))
