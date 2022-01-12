@@ -103,29 +103,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun installSamsungInternet(dialog: MaterialDialog) {
-        try {
-            startStore(PLAY_STORE_PREFIX)
-            dialog.dismiss()
-        } catch (exception: ActivityNotFoundException) {
+        listOf(PLAY_STORE_PREFIX, SAMSUNG_STORE_PREFIX, PLAY_STORE_WEB_PREFIX).forEach {
             try {
-                try {
-                    startStore(SAMSUNG_STORE_PREFIX)
-                    dialog.dismiss()
-                } catch (exception: ActivityNotFoundException) {
-                    startStore(PLAY_STORE_WEB_PREFIX)
-                    dialog.dismiss()
-                }
-            } catch (exception: ActivityNotFoundException) {
-                // A device without Play Store, Galaxy store, and a browser
-                Timber.e(exception, "This device is not supported")
-                Toast.makeText(applicationContext, getString(R.string.device_not_supported), Toast.LENGTH_LONG)
-                    .show()
-            }
+                startStore(it)
+                dialog.dismiss()
+                return
+            } catch (exception: ActivityNotFoundException) {}
         }
+        // A device without Play Store, Galaxy store, and a browser
+        Timber.e("This device is not supported")
+        Toast.makeText(applicationContext, getString(R.string.device_not_supported), Toast.LENGTH_LONG)
+            .show()
     }
 
     private fun startStore(storePrefix: String) {
-        Timber.d("Start store with: $storePrefix")
+        Timber.d("Start store with prefix: $storePrefix")
         val intent = Intent(
             Intent.ACTION_VIEW,
             Uri.parse("$storePrefix${SBROWSER_APP_ID}")
