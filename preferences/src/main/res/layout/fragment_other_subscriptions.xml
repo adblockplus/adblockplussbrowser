@@ -44,6 +44,7 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/other_subscriptions_add_button"
+            android:contentDescription="@string/other_subscriptions_add_custom_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
