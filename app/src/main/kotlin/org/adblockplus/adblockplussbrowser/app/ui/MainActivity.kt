@@ -34,6 +34,8 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import dagger.hilt.android.AndroidEntryPoint
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.app.R
 import org.adblockplus.adblockplussbrowser.app.databinding.ActivityMainBinding
 import org.adblockplus.adblockplussbrowser.base.navigation.navControllerFromFragmentContainerView
@@ -42,11 +44,15 @@ import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInterne
 import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.SBROWSER_APP_ID_BETA
 import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.SBROWSER_OLDEST_SAMSUNG_INTERNET_4_VERSIONCODE
 import timber.log.Timber
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
+
+    @Inject
+    lateinit var analyticsProvider: AnalyticsProvider
 
     private val navController: NavController
         get() = navControllerFromFragmentContainerView(R.id.nav_host_fragment)
@@ -112,6 +118,7 @@ class MainActivity : AppCompatActivity() {
         }
         // A device without Play Store, Galaxy store, and a browser
         Timber.e("This device is not supported")
+        analyticsProvider.logEvent(AnalyticsEvent.DEVICE_NOT_SUPPORTED)
         Toast.makeText(applicationContext, getString(R.string.device_not_supported), Toast.LENGTH_LONG)
             .show()
     }
