@@ -34,6 +34,7 @@
 
         <ImageView
             android:id="@+id/onboarding_aa_annoying_ads_image"
+            android:contentDescription="@string/onboarding_acceptable_ads_annoying_ads_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/onboarding_content_top_margin"
@@ -72,6 +73,7 @@
 
         <ImageView
             android:id="@+id/onboarding_aa_nonintrusive_ads_image"
+            android:contentDescription="@string/onboarding_acceptable_ads_nonintrusive_ads_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -123,6 +125,7 @@
 
         <ImageView
             android:id="@+id/onboarding_aa_disable_image"
+            android:contentDescription="@string/onboarding_acceptable_ads_disable_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/onboarding_margin"

@@ -23,6 +23,7 @@
 
     <ImageView
         android:id="@+id/install_si_dialog_icon"
+        android:contentDescription="@string/onboarding_welcome_block_ads_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"

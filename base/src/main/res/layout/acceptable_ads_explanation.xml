@@ -47,6 +47,7 @@
 
         <ImageView
             android:id="@+id/aa_explanation_acceptable_ads_image"
+            android:contentDescription="@string/acceptable_ads"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="12dp"
@@ -59,6 +60,7 @@
 
         <ImageView
             android:id="@+id/aa_explanation_intrusive_ads_image"
+            android:contentDescription="@string/intrusive_ads"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="12dp"
@@ -71,6 +73,7 @@
 
         <ImageView
             android:id="@+id/aa_explanation_fair_standards_bullet"
+            android:contentDescription="@string/image_bullet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/bullet"
@@ -103,6 +106,7 @@
 
         <ImageView
             android:id="@+id/aa_explanation_placement_bullet"
+            android:contentDescription="@string/image_bullet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/bullet"
@@ -135,6 +139,7 @@
 
         <ImageView
             android:id="@+id/aa_explanation_distinction_bullet"
+            android:contentDescription="@string/image_bullet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/bullet"
@@ -167,6 +172,7 @@
 
         <ImageView
             android:id="@+id/aa_explanation_size_bullet"
+            android:contentDescription="@string/image_bullet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/bullet"

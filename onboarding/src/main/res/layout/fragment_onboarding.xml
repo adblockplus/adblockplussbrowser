@@ -84,6 +84,7 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/onboarding_button"
+            android:contentDescription="@string/open_samsung_internet"
             android:backgroundTint="@color/ribbon"
             onboardingButtonPager2="@{onboardingPager}"
             android:layout_width="wrap_content"
