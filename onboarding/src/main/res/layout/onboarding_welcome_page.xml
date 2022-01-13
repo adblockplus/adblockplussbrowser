@@ -27,6 +27,7 @@
 
         <ImageView
             android:id="@+id/onboarding_welcome_block_ads_image"
+            android:contentDescription="@string/onboarding_welcome_block_ads_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -65,6 +66,7 @@
 
         <ImageView
             android:id="@+id/onboarding_welcome_tracking_protection_image"
+            android:contentDescription="@string/onboarding_welcome_tracking_protection_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -103,6 +105,7 @@
 
         <ImageView
             android:id="@+id/onboarding_welcome_security_privacy_image"
+            android:contentDescription="@string/onboarding_welcome_security_privacy_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -141,6 +144,7 @@
 
         <ImageView
             android:id="@+id/onboarding_welcome_language_filters_image"
+            android:contentDescription="@string/onboarding_welcome_language_filters_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
