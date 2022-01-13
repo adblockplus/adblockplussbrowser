@@ -159,5 +159,11 @@ enum class AnalyticsEvent(val eventName: String) {
     /**
      * Languages card is dismissed without going to Add Languages
      */
-    LANGUAGES_CARD_NO("languages_card_no_thanks")
+    LANGUAGES_CARD_NO("languages_card_no_thanks"),
+
+    /**
+     * Event sent when device device is not supported.
+     * There is no play store, galaxy store and any browser.
+     */
+    DEVICE_NOT_SUPPORTED("device_not_supported")
 }
