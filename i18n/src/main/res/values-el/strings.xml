@@ -17,17 +17,17 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">Adblock Plus για Samsung Internet</string>
+    <string name="app_name">ABP για Samsung Internet</string>
     <string name="app_subtitle">για Samsung Internet</string>
     <string name="samsung_internet_required_title">Απαραίτητο το Samsung Internet</string>
-    <string name="samsung_internet_required_description">Το Adblock Plus είναι μια εφαρμογή που τρέχει πάνω από το Samsung Internet για να φιλτράρει τις διαφημίσεις ενώ χρησιμοποιείτε αυτό το πρόγραμμα περιήγησης. Για να είναι αποτελεσματικό το Adblock Plus, χρειάζεστε να υπάρχει εγκατεστημένο στη συσκευή σας το Samsung Internet 4.0 ή μεταγενέστερη έκδοση.\nΜπορείτε να αποκτήσετε το πρόγραμμα περιήγησης Samsung Internet πατώντας το παρακάτω κουμπί.</string>
+    <string name="samsung_internet_required_description">Το ABP είναι μια εφαρμογή που τρέχει πάνω από το Samsung Internet για να φιλτράρει τις διαφημίσεις ενώ χρησιμοποιείτε αυτό το πρόγραμμα περιήγησης. Για να είναι αποτελεσματικό το ABP, χρειάζεστε να υπάρχει εγκατεστημένο στη συσκευή σας το Samsung Internet 4.0 ή μεταγενέστερη έκδοση.\nΜπορείτε να αποκτήσετε το πρόγραμμα περιήγησης Samsung Internet πατώντας το παρακάτω κουμπί.</string>
     <string name="download_samsung_internet">Κατεβάστε το Samsung Internet</string>
     <string name="update_status_progress_message">Λήψη ενημερώσεων λιστών φίλτρων…</string>
     <string name="update_status_error_message">Σφάλμα κατά την ενημέρωση: Προσπαθήστε ξανά</string>
     <string name="update_status_retry">Ξαναπροσπαθήστε</string>
 
     <!-- base-->
-    <string name="product_name">Adblock Plus</string>
+    <string name="product_name">ABP</string>
     <string name="acceptable_ads">Αποδεκτές Διαφημίσεις</string>
     <string name="intrusive_ads">Παρεμβατικές διαφημίσεις</string>
     <string name="acceptable_ads_fair_standard_title">Δίκαιο πρότυπο</string>
@@ -46,9 +46,9 @@
     <string name="onboarding_welcome_tracking_protection_title">Προστασία παρακολούθησης</string>
     <string name="onboarding_welcome_tracking_protection_description">Περιηγηθείτε με περισσότερη ασφάλεια μην επιτρέποντας στους ιστότοπους να σας παρακολουθούν στο διαδίκτυο</string>
     <string name="onboarding_welcome_security_privacy_title">Βελτιωμένη ασφάλεια και απόρρητο</string>
-    <string name="onboarding_welcome_security_privacy_description">Περιηγηθείτε χωρίς δεύτερες σκέψεις με το Adblock Plus το οποίο σας προστατεύει</string>
+    <string name="onboarding_welcome_security_privacy_description">Περιηγηθείτε χωρίς δεύτερες σκέψεις με το ABP το οποίο σας προστατεύει</string>
     <string name="onboarding_welcome_language_filters_title">Λίστες φίλτρων για συγκεκριμένες γλώσσες</string>
-    <string name="onboarding_welcome_language_filters_description">Αποκλείστε περισσότερες διαφημίσεις βελτιστοποιώντας το Adblock Plus για τις γλώσσες στις οποίες συνήθως περιηγείστε</string>
+    <string name="onboarding_welcome_language_filters_description">Αποκλείστε περισσότερες διαφημίσεις βελτιστοποιώντας το ABP για τις γλώσσες στις οποίες συνήθως περιηγείστε</string>
 
     <string name="onboarding_acceptable_ads_header_title1">Συνδράμετε</string>
     <string name="onboarding_acceptable_ads_header_title3">και υποστηρίξτε τους δημιουργούς περιεχομένου</string>
@@ -61,9 +61,9 @@
     <string name="onboarding_acceptable_ads_disable_description">Μπορείτε να αλλάξετε αυτήν τη ρύθμιση πατώντας την επιλογή \"Επιτρέψτε μη παρεμβατική διαφήμιση\"</string>
 
     <string name="onboarding_enable_header_title1">Δείτε πώς να</string>
-    <string name="onboarding_enable_header_title2">ενεργοποιήσετε το Adblock Plus</string>
+    <string name="onboarding_enable_header_title2">ενεργοποιήσετε το ABP</string>
     <string name="onboarding_enable_one_step_title">Ένα ακόμη βήμα και ολοκληρώσατε τη διαδικασία</string>
-    <string name="onboarding_enable_one_step_description">Ενεργοποιήστε το Adblock Plus στις Ρυθμίσεις Adblocker του Samsung Internet</string>
+    <string name="onboarding_enable_one_step_description">Ενεργοποιήστε το ABP στις Ρυθμίσεις Adblocker του Samsung Internet</string>
 
     <string name="open_samsung_internet">Ανοίξτε το Samsung Internet</string>
     <!-- /onboarding -->
@@ -71,7 +71,7 @@
     <!-- preferences -->
     <string name="preferences_ad_blocking_category">Επιλογές αποκλεισμού διαφημίσεων</string>
     <string name="preferences_primary_subscriptions_title">Γλώσσα</string>
-    <string name="preferences_primary_subscriptions_summary">Αποκλείστε περισσότερες διαφημίσεις βελτιστοποιώντας το Adblock Plus για τη/τις γλώσσα/ες στην/στις οποία/ες συνήθως περιηγείστε</string>
+    <string name="preferences_primary_subscriptions_summary">Αποκλείστε περισσότερες διαφημίσεις βελτιστοποιώντας το ABP για τη/τις γλώσσα/ες στην/στις οποία/ες συνήθως περιηγείστε</string>
     <string name="preferences_other_subscriptions_title">Περισσότερες επιλογές αποκλεισμού</string>
     <string name="preferences_other_subscriptions_summary">Κατάργηση παρακολούθησης, επιλογών μέσων κοινωνικής δικτύωσης ή προσθήκη προσαρμοσμένων λιστών φίλτρων</string>
     <string name="preferences_allowlist_title">Προσθέστε ιστότοπους στη λίστα επιτρεπόμενων</string>
@@ -111,9 +111,9 @@
     <string name="about_imprint">Εταιρικές Πληροφορίες</string>
     <string name="open_source_licenses">Άδειες Ανοιχτού Κώδικα</string>
     <string name="version">Εκδοχή</string>
-    <string name="share_events_header">Βοηθήστε στη βελτίωση του Adblock Plus</string>
+    <string name="share_events_header">Βοηθήστε στη βελτίωση του ABP</string>
     <string name="share_events_title">Μοιραστείτε ανώνυμα δεδομένα</string>
-    <string name="share_events_description">Τα ανώνυμα δεδομένα μας βοηθούν να βελτιώνουμε το Adblock Plus, δημιουργώντας έτσι μια καλύτερη εμπειρία περιήγησης για εσάς.</string>
+    <string name="share_events_description">Τα ανώνυμα δεδομένα μας βοηθούν να βελτιώνουμε το ABP, δημιουργώντας έτσι μια καλύτερη εμπειρία περιήγησης για εσάς.</string>
     <string name="share_events_consent">Ναι, θα κοινοποιήσω κάποια ανώνυμα δεδομένα.</string>
     <string name="languages_onboarding_title">Περιήγηση σε πολλές γλώσσες;</string>
     <string name="languages_onboarding_option_add">Προσθέστε μια επιπλέον γλώσσα αποκλεισμού διαφημίσεων.</string>
