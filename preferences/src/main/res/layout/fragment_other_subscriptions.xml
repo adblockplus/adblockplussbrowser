@@ -28,32 +28,65 @@
 
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/other_subscriptions_list"
-            style="@style/AbpPreferenceScreen"
-            otherSubscriptions="@{viewModel.subscriptions}"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/other_subscriptions_custom_item" />
+            android:orientation="vertical">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/other_subscriptions_add_button"
-            android:contentDescription="@string/other_subscriptions_add_custom_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:layout_margin="16dp"
-            android:backgroundTint="@color/ribbon"
-            app:borderWidth="0dp"
-            android:src="@drawable/ic_baseline_add_24"
-            app:layout_behavior="org.adblockplus.adblockplussbrowser.base.view.ScrollFabBehavior" />
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/other_subscriptions_list"
+                    style="@style/AbpPreferenceScreen"
+                    otherSubscriptions="@{viewModel.subscriptions}"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/other_subscriptions_custom_item" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/other_subscriptions_add_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|bottom"
+                    android:layout_margin="16dp"
+                    android:backgroundTint="@color/ribbon"
+                    android:contentDescription="@string/other_subscriptions_add_custom_title"
+                    android:src="@drawable/ic_baseline_add_24"
+                    app:borderWidth="0dp"
+                    app:layout_behavior="org.adblockplus.adblockplussbrowser.base.view.ScrollFabBehavior" />
+
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="32dp"
+                android:gravity="top"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/other_subscriptions_hint"
+                    style="@style/AbpPreferenceSummaryTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/outline_info_24"
+                    android:drawablePadding="2dip"
+                    android:gravity="center"
+                    android:text="@string/delete_swipe_hint" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </layout>
