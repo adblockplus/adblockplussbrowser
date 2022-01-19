@@ -20,7 +20,7 @@ package org.adblockplus.adblockplussbrowser.settings.data.local
 import android.content.Context
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.base.res.localeCompat
-import java.util.*
+import java.util.Locale
 
 internal class HardcodedSubscriptionsDataSource(private val context: Context) : SubscriptionsDataSource {
 
