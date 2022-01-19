@@ -26,29 +26,29 @@
             type="org.adblockplus.adblockplussbrowser.preferences.ui.allowlist.AllowlistViewModel" />
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/allowlist_list_header"
-                style="@style/AbpPreferenceCategoryTitleTextStyle"
-                allowlistHeaderVisibility="@{viewModel.items}"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/preferences_allowlist_header"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="@string/preferences_allowlist_header" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <androidx.coordinatorlayout.widget.CoordinatorLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/allowlist_list_header"
+                    style="@style/AbpPreferenceCategoryTitleTextStyle"
+                    allowlistHeaderVisibility="@{viewModel.items}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/preferences_allowlist_header"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@string/preferences_allowlist_header" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/allowlist_list"
@@ -62,42 +62,42 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/other_subscriptions_custom_item" />
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/allowlist_add_button"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end|bottom"
-                    android:layout_margin="16dp"
-                    android:backgroundTint="@color/ribbon"
-                    android:contentDescription="@string/preferences_allowlist_title"
-                    android:src="@drawable/ic_baseline_add_24"
-                    app:borderWidth="0dp"
-                    app:layout_behavior="org.adblockplus.adblockplussbrowser.base.view.ScrollFabBehavior" />
+                    android:layout_gravity="center"
+                    android:layout_margin="32dp"
+                    android:gravity="top"
+                    android:orientation="horizontal">
 
-            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/allowlist_hint"
+                        style="@style/AbpPreferenceSummaryTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/outline_info_24"
+                        android:drawablePadding="2dip"
+                        android:gravity="center"
+                        android:text="@string/delete_swipe_hint" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="32dp"
-                android:gravity="top"
-                android:orientation="horizontal">
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/allowlist_hint"
-                    style="@style/AbpPreferenceSummaryTextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/outline_info_24"
-                    android:drawablePadding="2dip"
-                    android:gravity="center"
-                    android:text="@string/delete_swipe_hint" />
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
-        
-    </androidx.core.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/allowlist_add_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:backgroundTint="@color/ribbon"
+            android:contentDescription="@string/preferences_allowlist_title"
+            android:src="@drawable/ic_baseline_add_24"
+            app:borderWidth="0dp"
+            app:layout_behavior="org.adblockplus.adblockplussbrowser.base.view.ScrollFabBehavior" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>
