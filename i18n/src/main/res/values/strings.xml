@@ -120,6 +120,8 @@
     <string name="languages_onboarding_option_skip">No thanks, I only browse in one language.</string>
     <string name="device_not_supported" tools:ignore="MissingTranslation">This device is not supported</string>
     <string name="delete_swipe_hint" tools:ignore="MissingTranslation">To delete an entry, swipe it to the left.</string>
+    <string name="block_additional_tracking" tools:ignore="MissingTranslation">Block additional tracking</string>
+    <string name="block_social_media_tracking" tools:ignore="MissingTranslation">Block social media icons tracking</string>
 
     <!-- image descriptions -->
     <!-- The translation of this item is postponed, so the lack of translations is ignored -->
