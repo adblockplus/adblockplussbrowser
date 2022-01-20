@@ -18,9 +18,17 @@
 package org.adblockplus.adblockplussbrowser.base.data.prefs
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 interface ActivationPreferences {
     val lastFilterListRequest: Flow<Long>
+
+    suspend fun isAdblockEnabled(): Flow<Boolean> {
+        // When filters were requested and they are not expired we assume adblock is enabled
+        return lastFilterListRequest.map {
+            it != 0L && !isFilterRequestExpired(it)
+        }
+    }
 
     suspend fun updateLastFilterRequest(lastFilterListRequest: Long)
 

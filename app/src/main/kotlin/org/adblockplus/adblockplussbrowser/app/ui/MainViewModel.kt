@@ -32,7 +32,6 @@ import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.base.data.model.SubscriptionUpdateStatus
-import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences.Companion.isFilterRequestExpired
 import org.adblockplus.adblockplussbrowser.base.data.prefs.AppPreferences
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import javax.inject.Inject
@@ -68,9 +67,7 @@ internal class MainViewModel @Inject constructor(
     fun fetchAdblockActivationStatus(): MutableLiveData<Boolean> {
         val isAdblockActivated = MutableLiveData<Boolean>()
         viewModelScope.launch {
-            appPreferences.lastFilterListRequest.map {
-                it != 0L && !isFilterRequestExpired(it)
-            }.collect {
+            appPreferences.isAdblockEnabled().collect {
                 isAdblockActivated.postValue(it)
             }
         }
