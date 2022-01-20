@@ -23,10 +23,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.adblockplus.adblockplussbrowser.base.data.ValueWrapper
-import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.base.data.prefs.AppPreferences
 import org.adblockplus.adblockplussbrowser.onboarding.R
 import org.adblockplus.adblockplussbrowser.base.data.prefs.OnboardingPreferences
@@ -92,9 +90,7 @@ internal class OnboardingViewModel @Inject constructor(
 
         val lastFilterRequestFlow = appPreferences.lastFilterListRequest
         viewModelScope.launch {
-            lastFilterRequestFlow.map {
-                it != 0L && !ActivationPreferences.isFilterRequestExpired(it)
-            }.collect {
+            appPreferences.isAdblockEnabled().collect {
                 if (!it) {
                     Timber.d("Onboarding: Adding page \"Enable adblock in SI\"")
                     pageList.add(PageInfo.Enable)
