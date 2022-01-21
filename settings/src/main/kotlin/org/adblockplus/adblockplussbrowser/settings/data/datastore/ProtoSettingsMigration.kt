@@ -61,9 +61,8 @@ internal class ProtoSettingsMigration(
             }.build()
         }
 
-    private fun isLanguageOnboardingPresumedComplete(primarySubscriptions: List<ProtoSubscription>): Boolean {
-        return primarySubscriptions.size > 1
-    }
+    private fun isLanguageOnboardingPresumedComplete(primarySubscriptions: List<ProtoSubscription>) =
+            primarySubscriptions.size > 1
 
     override suspend fun cleanUp() {
         // We don't delete the default shared preferences file, only the old subscriptions meta and filter files
