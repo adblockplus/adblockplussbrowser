@@ -17,17 +17,17 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">Samsung Internet 用 Adblock Plus</string>
+    <string name="app_name">Samsung Internet 用 ABP</string>
     <string name="app_subtitle">Samsung Internet 用</string>
     <string name="samsung_internet_required_title">Samsung Internet が必要です</string>
-    <string name="samsung_internet_required_description">Adblock Plus は、Samsung Internet で動作するアプリです。Adblock Plus を有効にするには、お使いのデバイスに Samsung Internet 4.0 以降がインストールされている必要があります。\nSamsung Internet ブラウザを入手するには、下のボタンをタップしてください。</string>
+    <string name="samsung_internet_required_description">ABP は、Samsung Internet で動作するアプリです。ABP を有効にするには、お使いのデバイスに Samsung Internet 4.0 以降がインストールされている必要があります。\nSamsung Internet ブラウザを入手するには、下のボタンをタップしてください。</string>
     <string name="download_samsung_internet">Samsung Internet をダウンロード</string>
     <string name="update_status_progress_message">フィルターリストの更新を取得中…</string>
     <string name="update_status_error_message">更新エラー：もう一度お試しください</string>
     <string name="update_status_retry">再試行</string>
 
     <!-- base-->
-    <string name="product_name">Adblock Plus</string>
+    <string name="product_name">ABP</string>
     <string name="acceptable_ads">控えめな広告</string>
     <string name="intrusive_ads">侵入型広告</string>
     <string name="acceptable_ads_fair_standard_title">公正な基準</string>
@@ -46,9 +46,9 @@
     <string name="onboarding_welcome_tracking_protection_title">ラッキング保護</string>
     <string name="onboarding_welcome_tracking_protection_description">ウェブサイトによるユーザーの動きのトラッキングを防止し、より安全なブラウザ体験を提供</string>
     <string name="onboarding_welcome_security_privacy_title">セキュリティとプライバシーの向上</string>
-    <string name="onboarding_welcome_security_privacy_description">Adblock Plus がバックグラウンドで保護を提供するため、安心してブラウザ体験ができます</string>
+    <string name="onboarding_welcome_security_privacy_description">ABP がバックグラウンドで保護を提供するため、安心してブラウザ体験ができます</string>
     <string name="onboarding_welcome_language_filters_title">言語特定フィルターリスト</string>
-    <string name="onboarding_welcome_language_filters_description">通常閲覧する言語に合わせて Adblock Plus を最適化することで、より多くの広告をブロックできます</string>
+    <string name="onboarding_welcome_language_filters_description">通常閲覧する言語に合わせて ABP を最適化することで、より多くの広告をブロックできます</string>
 
     <string name="onboarding_acceptable_ads_header_title1">コンテンツクリエーターに</string>
     <string name="onboarding_acceptable_ads_header_title3">協力し、サポートしましょう</string>
@@ -61,9 +61,9 @@
     <string name="onboarding_acceptable_ads_disable_description">\"一部の非侵入型の広告を許可する\"オプションをタップすることで、この設定を変更することができます</string>
 
     <string name="onboarding_enable_header_title1">その方法は次の通りです</string>
-    <string name="onboarding_enable_header_title2">Adblock Plus を有効にする</string>
+    <string name="onboarding_enable_header_title2">ABP を有効にする</string>
     <string name="onboarding_enable_one_step_title">あと１つのステップで完了です</string>
-    <string name="onboarding_enable_one_step_description">Samsung Internet の Adblocker 設定で Adblock Plus を有効にする </string>
+    <string name="onboarding_enable_one_step_description">Samsung Internet の Adblocker 設定で ABP を有効にする </string>
 
     <string name="open_samsung_internet">Samsung Internet を開く</string>
     <!-- /onboarding -->
@@ -71,7 +71,7 @@
     <!-- preferences -->
     <string name="preferences_ad_blocking_category">広告ブロックオプション</string>
     <string name="preferences_primary_subscriptions_title">言語</string>
-    <string name="preferences_primary_subscriptions_summary">通常閲覧する言語に合わせて Adblock Plus を最適化することで、より多くの広告をブロックできます</string>
+    <string name="preferences_primary_subscriptions_summary">通常閲覧する言語に合わせて ABP を最適化することで、より多くの広告をブロックできます</string>
     <string name="preferences_other_subscriptions_title">その他のブロックオプション</string>
     <string name="preferences_other_subscriptions_summary">追跡やソーシャルメディアボタンを削除するか、カスタムフィルターリストを追加する</string>
     <string name="preferences_allowlist_title">ウェブサイトを許可リストに追加する</string>
@@ -86,7 +86,7 @@
     <string name="preferences_acceptable_ads_title">一部の非侵入型の広告を許可する</string>
     <string name="preferences_acceptable_ads_summary">迷惑広告は常にブロックされますが、デフォルトでは一部の非侵入型の広告は表示されることで、コンテンツクリエーターはコンテンツを無料で公開できるようになります</string>
     <string name="preferences_acceptable_ads_action">はい。コンテンツクリエーターをサポートします</string>
-    <string name="preferences_about_title">Adblock Plus について</string>
+    <string name="preferences_about_title">ABP について</string>
     <string name="primary_subscriptions_active_category">次の言語でのブラウザ体験に最適化</string>
     <string name="primary_subscriptions_inactive_category">その他の言語</string>
     <string name="subscription_last_update">最終更新：%s</string>
@@ -111,9 +111,9 @@
     <string name="about_imprint">商標</string>
     <string name="open_source_licenses">オープンソースライセンス</string>
     <string name="version">バージョン</string>
-    <string name="share_events_header">Adblock Plus の改善にご協力ください</string>
+    <string name="share_events_header">ABP の改善にご協力ください</string>
     <string name="share_events_title">匿名化データを共有する</string>
-    <string name="share_events_description">匿名化データを共有してくださいますと、当社では Adblock Plus の改善に活用させてただき、皆様の良いブラウザ体験に貢献します。</string>
+    <string name="share_events_description">匿名化データを共有してくださいますと、当社では ABP の改善に活用させてただき、皆様の良いブラウザ体験に貢献します。</string>
     <string name="share_events_consent">はい</string>
     <string name="languages_onboarding_title">複数の言語でウェブを閲覧しますか？</string>
     <string name="languages_onboarding_option_add">広告ブロック言語を追加する。</string>
