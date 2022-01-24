@@ -17,17 +17,17 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">Adblock Plus per Samsung Internet</string>
+    <string name="app_name">ABP per Samsung Internet</string>
     <string name="app_subtitle">per Samsung Internet</string>
     <string name="samsung_internet_required_title">Richiede Samsung Internet</string>
-    <string name="samsung_internet_required_description">Adblock Plus è un\'app che funziona con Samsung Internet e filtra gli annunci mentre utilizzi il browser. Affinché Adblock Plus sia efficace, devi avere sul tuo dispositivo Samsung Internet versione 4.0 o superiore.\nSfiora il pulsante qui sotto per scaricare il browser Samsung Internet.</string>
+    <string name="samsung_internet_required_description">ABP è un\'app che funziona con Samsung Internet e filtra gli annunci mentre utilizzi il browser. Affinché ABP sia efficace, devi avere sul tuo dispositivo Samsung Internet versione 4.0 o superiore.\nSfiora il pulsante qui sotto per scaricare il browser Samsung Internet.</string>
     <string name="download_samsung_internet">Scarica Samsung Internet</string>
     <string name="update_status_progress_message">Aggiornamento filtri in corso…</string>
     <string name="update_status_error_message">Errore durante l\'aggiornamento: Riprova</string>
     <string name="update_status_retry">Riprova</string>
 
     <!-- base-->
-    <string name="product_name">Adblock Plus</string>
+    <string name="product_name">ABP</string>
     <string name="acceptable_ads">Annunci Accettabili</string>
     <string name="intrusive_ads">Annunci invasivi</string>
     <string name="acceptable_ads_fair_standard_title">Standard equo</string>
@@ -46,9 +46,9 @@
     <string name="onboarding_welcome_tracking_protection_title">Protezione dal tracciamento</string>
     <string name="onboarding_welcome_tracking_protection_description">Naviga in maggiore sicurezza impedendo ai siti web di tracciarti in rete</string>
     <string name="onboarding_welcome_security_privacy_title">Miglioramento della sicurezza e della privacy</string>
-    <string name="onboarding_welcome_security_privacy_description">Naviga senza pensieri con Adblock Plus che ti protegge dietro le quinte</string>
+    <string name="onboarding_welcome_security_privacy_description">Naviga senza pensieri con ABP che ti protegge dietro le quinte</string>
     <string name="onboarding_welcome_language_filters_title">Filtri specifici per la lingua</string>
-    <string name="onboarding_welcome_language_filters_description">Blocca un numero maggiore di annunci ottimizzando Adblock Plus per le lingue in cui normalmente navighi</string>
+    <string name="onboarding_welcome_language_filters_description">Blocca un numero maggiore di annunci ottimizzando ABP per le lingue in cui normalmente navighi</string>
 
     <string name="onboarding_acceptable_ads_header_title1">Partecipa</string>
     <string name="onboarding_acceptable_ads_header_title3">e supporta i creatori di contenuti</string>
@@ -61,9 +61,9 @@
     <string name="onboarding_acceptable_ads_disable_description">Puoi modificare questa impostazione in qualunque momento abilitando l\'opzione \"Consenti annunci non invasivi\"</string>
 
     <string name="onboarding_enable_header_title1">Come si fa per</string>
-    <string name="onboarding_enable_header_title2">Attivare Adblock Plus</string>
+    <string name="onboarding_enable_header_title2">Attivare ABP</string>
     <string name="onboarding_enable_one_step_title">Un ultimo passo e hai finito</string>
-    <string name="onboarding_enable_one_step_description">Abilitare Adblock Plus nelle impostazioni di ad blocking di Samsung Internet</string>
+    <string name="onboarding_enable_one_step_description">Abilitare ABP nelle impostazioni di ad blocking di Samsung Internet</string>
 
     <string name="open_samsung_internet">Apri Samsung Internet</string>
     <!-- /onboarding -->
@@ -71,7 +71,7 @@
     <!-- preferences -->
     <string name="preferences_ad_blocking_category">Opzioni di ad blocking</string>
     <string name="preferences_primary_subscriptions_title">Lingua</string>
-    <string name="preferences_primary_subscriptions_summary">Blocca un numero maggiore di annunci ottimizzando Adblock Plus per la/le lingua/e in cui normalmente navighi</string>
+    <string name="preferences_primary_subscriptions_summary">Blocca un numero maggiore di annunci ottimizzando ABP per la/le lingua/e in cui normalmente navighi</string>
     <string name="preferences_other_subscriptions_title">Altre opzioni di blocco</string>
     <string name="preferences_other_subscriptions_summary">Rimuovi il tracciamento e i pulsanti dei social media, o aggiungi elenchi filtri personalizzati</string>
     <string name="preferences_allowlist_title">Aggiungi siti web ai siti consentiti</string>
@@ -111,9 +111,9 @@
     <string name="about_imprint">Stampato da</string>
     <string name="open_source_licenses">Licenze open source</string>
     <string name="version">Versione</string>
-    <string name="share_events_header">Contribuisci a migliorare Adblock Plus</string>
+    <string name="share_events_header">Contribuisci a migliorare ABP</string>
     <string name="share_events_title">Condividi dati anonimi</string>
-    <string name="share_events_description">I dati anonimi ci aiutano a migliorare Adblock Plus offrendoti una migliore esperienza di navigazione.</string>
+    <string name="share_events_description">I dati anonimi ci aiutano a migliorare ABP offrendoti una migliore esperienza di navigazione.</string>
     <string name="share_events_consent">Sì, desidero condividere alcuni dati anonimi.</string>
     <string name="languages_onboarding_title">Navighi in più lingue?</string>
     <string name="languages_onboarding_option_add">Aggiungi un\'altra lingua per l\'ad blocking.</string>

@@ -17,17 +17,17 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">三星浏览器专用 Adblock Plus</string>
+    <string name="app_name">三星浏览器专用 ABP</string>
     <string name="app_subtitle">三星浏览器专用</string>
     <string name="samsung_internet_required_title">需要三星浏览器</string>
-    <string name="samsung_internet_required_description">Adblock Plus 是一款在您使用三星浏览器时，在该浏览器上层运行的筛选广告的应用程序。如要有效使用 Adblock Plus，您需要在设备上安装三星浏览器 4.0 或更高版本。\n您可以按一下以下按钮获取三星浏览器。</string>
+    <string name="samsung_internet_required_description">ABP 是一款在您使用三星浏览器时，在该浏览器上层运行的筛选广告的应用程序。如要有效使用 ABP，您需要在设备上安装三星浏览器 4.0 或更高版本。\n您可以按一下以下按钮获取三星浏览器。</string>
     <string name="download_samsung_internet">下载三星浏览器</string>
     <string name="update_status_progress_message">正在提取筛选清单更新…</string>
     <string name="update_status_error_message">更新出错：请重试</string>
     <string name="update_status_retry">重试</string>
 
     <!-- base-->
-    <string name="product_name">Adblock Plus</string>
+    <string name="product_name">ABP</string>
     <string name="acceptable_ads">可接受广告</string>
     <string name="intrusive_ads">侵入性广告</string>
     <string name="acceptable_ads_fair_standard_title">公平标准</string>
@@ -44,11 +44,11 @@
     <string name="onboarding_welcome_block_ads_title">拦截恼人的广告</string>
     <string name="onboarding_welcome_block_ads_description">享受无恼人广告的浏览体验，同时通过可接受广告支持内容创作者</string>
     <string name="onboarding_welcome_tracking_protection_title">跟踪保护</string>
-    <string name="onboarding_welcome_tracking_protection_description">针对您通常浏览的语言优化 Adblock Plus，从而拦截更多广告</string>
+    <string name="onboarding_welcome_tracking_protection_description">针对您通常浏览的语言优化 ABP，从而拦截更多广告</string>
     <string name="onboarding_welcome_security_privacy_title">改进的安全和隐私</string>
-    <string name="onboarding_welcome_security_privacy_description">有 Adblock Plus 在后台保护您，您可以放心无虞地浏览网页</string>
+    <string name="onboarding_welcome_security_privacy_description">有 ABP 在后台保护您，您可以放心无虞地浏览网页</string>
     <string name="onboarding_welcome_language_filters_title">语言特定的筛选清单</string>
-    <string name="onboarding_welcome_language_filters_description">针对您通常浏览的语言优化 Adblock Plus，从而阻止更多广告</string>
+    <string name="onboarding_welcome_language_filters_description">针对您通常浏览的语言优化 ABP，从而阻止更多广告</string>
 
     <string name="onboarding_acceptable_ads_header_title1">参与</string>
     <string name="onboarding_acceptable_ads_header_title3">并支持内容创作者</string>
@@ -61,9 +61,9 @@
     <string name="onboarding_acceptable_ads_disable_description">您可以按一下\"允许一些非侵入性广告\"选项更改此设置</string>
 
     <string name="onboarding_enable_header_title1">方法如下</string>
-    <string name="onboarding_enable_header_title2">启用 Adblock Plus</string>
+    <string name="onboarding_enable_header_title2">启用 ABP</string>
     <string name="onboarding_enable_one_step_title">还需一个步骤就完成了</string>
-    <string name="onboarding_enable_one_step_description">在三星浏览器的广告拦截程序设置中启用 Adblock Plus</string>
+    <string name="onboarding_enable_one_step_description">在三星浏览器的广告拦截程序设置中启用 ABP</string>
 
     <string name="open_samsung_internet">打开三星浏览器</string>
     <!-- /onboarding -->
@@ -71,7 +71,7 @@
     <!-- preferences -->
     <string name="preferences_ad_blocking_category">广告阻止选项</string>
     <string name="preferences_primary_subscriptions_title">语言</string>
-    <string name="preferences_primary_subscriptions_summary">针对您通常浏览的语言优化 Adblock Plus 以拦截更多广告</string>
+    <string name="preferences_primary_subscriptions_summary">针对您通常浏览的语言优化 ABP 以拦截更多广告</string>
     <string name="preferences_other_subscriptions_title">更多过滤选项</string>
     <string name="preferences_other_subscriptions_summary">移除跟踪、社交媒体按钮或添加自定义筛选清单</string>
     <string name="preferences_allowlist_title">添加网站至允许列表</string>
@@ -111,9 +111,9 @@
     <string name="about_imprint">版本说明</string>
     <string name="open_source_licenses">开源许可证</string>
     <string name="version">版本</string>
-    <string name="share_events_header">帮助改进 Adblock Plus</string>
+    <string name="share_events_header">帮助改进 ABP</string>
     <string name="share_events_title">共享匿名数据</string>
-    <string name="share_events_description">匿名数据帮助我们改进 Adblock Plus，从而为您打造更好的浏览体验。</string>
+    <string name="share_events_description">匿名数据帮助我们改进 ABP，从而为您打造更好的浏览体验。</string>
     <string name="share_events_consent">是，我愿意共享某些匿名数据。</string>
     <string name="languages_onboarding_title">浏览多种语言的内容？</string>
     <string name="languages_onboarding_option_add">添加其他拦截广告的语言。</string>

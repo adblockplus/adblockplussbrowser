@@ -17,17 +17,17 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">Adblock Plus لـ Samsung Internet</string>
+    <string name="app_name">ABP لـ Samsung Internet</string>
     <string name="app_subtitle">لـ Samsung Internet</string>
     <string name="samsung_internet_required_title">مطلوب تطبيق Samsung Internet</string>
-    <string name="samsung_internet_required_description">Adblock Plus هو تطبيق  يستخدم المتصفح Samsung Internet لتصفية الإعلانات أثناء استخدامك المتصفح. ولكي يعمل Adblock Plus بفعالية، يجب أن يكون الإصدار 4.0 أو إصدار أحدث للمتصفح Samsung Internet مُثبَّتًا على جهازك.\nويمكنك الحصول على المتصفح Samsung Internet بالنقر فوق الزر أدناه.</string>
+    <string name="samsung_internet_required_description">ABP هو تطبيق  يستخدم المتصفح Samsung Internet لتصفية الإعلانات أثناء استخدامك المتصفح. ولكي يعمل ABP بفعالية، يجب أن يكون الإصدار 4.0 أو إصدار أحدث للمتصفح Samsung Internet مُثبَّتًا على جهازك.\nويمكنك الحصول على المتصفح Samsung Internet بالنقر فوق الزر أدناه.</string>
     <string name="download_samsung_internet">تحميل Samsung Internet</string>
     <string name="update_status_progress_message">جارٍ تحديثات قوائم التصفية…</string>
     <string name="update_status_error_message">خطأ أثناء التحديث: يُرجى إعادة المحاولة</string>
     <string name="update_status_retry">إعادة المحاولة</string>
 
     <!-- base-->
-    <string name="product_name">Adblock Plus</string>
+    <string name="product_name">ABP</string>
     <string name="acceptable_ads">الإعلانات المقبولة</string>
     <string name="intrusive_ads">الإعلانات التطفلية</string>
     <string name="acceptable_ads_fair_standard_title">المعيار المقبول</string>
@@ -46,7 +46,7 @@
     <string name="onboarding_welcome_tracking_protection_title">الحماية من التعقب</string>
     <string name="onboarding_welcome_tracking_protection_description">تصفَّح على نحوٍ أكثر أمانًا بمنع المواقع من تعقبك عبر الإنترنت</string>
     <string name="onboarding_welcome_security_privacy_title">تحسين الأمان والخصوصية</string>
-    <string name="onboarding_welcome_security_privacy_description">تصفَّح بدون قلق مع Adblock Plus الذي يحميك في الخلفية</string>
+    <string name="onboarding_welcome_security_privacy_description">تصفَّح بدون قلق مع ABP الذي يحميك في الخلفية</string>
     <string name="onboarding_welcome_language_filters_title">قوائم التصفية بلغة محددة</string>
     <string name="onboarding_welcome_language_filters_description">احجب مزيدًا من الإعلانات عن طريق إختيار اللغات التي تتصفح بها عادةً</string>
 
@@ -61,9 +61,9 @@
     <string name="onboarding_acceptable_ads_disable_description">يمكنك تغيير هذا الإختيار بالنقر فوق الخيار السماح \"ببعض الإعلانات غير\" التطفلية</string>
 
     <string name="onboarding_enable_header_title1">إليك كيفية</string>
-    <string name="onboarding_enable_header_title2">تمكين Adblock Plus</string>
+    <string name="onboarding_enable_header_title2">تمكين ABP</string>
     <string name="onboarding_enable_one_step_title">خطوة أخيرة أمامك على الانتهاء</string>
-    <string name="onboarding_enable_one_step_description">قم بتمكين Adblock Plus في إعدادات حاجب الإعلانات بالمتصفح Samsung Internet</string>
+    <string name="onboarding_enable_one_step_description">قم بتمكين ABP في إعدادات حاجب الإعلانات بالمتصفح Samsung Internet</string>
 
     <string name="open_samsung_internet">فتح Samsung Internet</string>
     <!-- /onboarding -->
@@ -71,7 +71,7 @@
     <!-- preferences -->
     <string name="preferences_ad_blocking_category">خيارات حجب الإعلانات</string>
     <string name="preferences_primary_subscriptions_title">اللغة</string>
-    <string name="preferences_primary_subscriptions_summary">احجب مزيدًا من الإعلانات عن طريق Adblock Plus بإختيار اللغة (اللغات) التي تتصفح بها عادةً</string>
+    <string name="preferences_primary_subscriptions_summary">احجب مزيدًا من الإعلانات عن طريق ABP بإختيار اللغة (اللغات) التي تتصفح بها عادةً</string>
     <string name="preferences_other_subscriptions_title">المزيد من خيارات الحجب</string>
     <string name="preferences_other_subscriptions_summary">يمكنك إزالة التعقب أو أزرار وسائل التواصل الاجتماعي أو إضافة قوائم تصفية مخصصة</string>
     <string name="preferences_allowlist_title">إضافة مواقع إلى القائمة المسموح بها</string>
@@ -111,9 +111,9 @@
     <string name="about_imprint">الدمغة</string>
     <string name="open_source_licenses">التراخيص مفتوحة المصدر</string>
     <string name="version">الإصدار</string>
-    <string name="share_events_header">المساعدة في تحسين Adblock Plus</string>
+    <string name="share_events_header">المساعدة في تحسين ABP</string>
     <string name="share_events_title">مشاركة بيانات مجهولة المصدر</string>
-    <string name="share_events_description">تساعدنا البيانات مجهولة المصدر على تحسين Adblock Plus؛ وهو ما يوفر لك تجربة تصفح أفضل.</string>
+    <string name="share_events_description">تساعدنا البيانات مجهولة المصدر على تحسين ABP؛ وهو ما يوفر لك تجربة تصفح أفضل.</string>
     <string name="share_events_consent">نعم، سأشارك بعض البيانات مجهولة المصدر.</string>
     <string name="languages_onboarding_title">هل تريد التصفح بلغات متعددة؟</string>
     <string name="languages_onboarding_option_add">أضف لغة إضافية لحجب الإعلانات.</string>
