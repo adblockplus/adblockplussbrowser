@@ -24,6 +24,11 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.ParcelFileDescriptor
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.work.Constraints
+import androidx.work.ExistingWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
@@ -31,7 +36,6 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import okio.buffer
 import okio.sink
@@ -44,12 +48,13 @@ import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInterne
 import org.adblockplus.adblockplussbrowser.base.yandex.YandexConstants
 import org.adblockplus.adblockplussbrowser.core.CallingApp
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
-import org.adblockplus.adblockplussbrowser.core.usercounter.CountUserResult
-import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
+import org.adblockplus.adblockplussbrowser.core.extensions.setBackoffTime
+import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker
+import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker.Companion.USER_COUNTER_KEY_ONESHOT_WORK
 import timber.log.Timber
 import java.io.File
+import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
-
 
 @ExperimentalTime
 internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
@@ -62,14 +67,13 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         fun getCoreRepository(): CoreRepository
         fun getActivationPreferences(): ActivationPreferences
         fun getAnalyticsProvider(): AnalyticsProvider
-        fun getUserCounter(): UserCounter
     }
 
     override val coroutineContext = Dispatchers.IO + SupervisorJob()
 
     lateinit var coreRepository: CoreRepository
     lateinit var activationPreferences: ActivationPreferences
-    lateinit var userCounter: UserCounter
+    lateinit var workManager: WorkManager
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int = 0
 
@@ -78,39 +82,34 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
     override fun insert(uri: Uri, values: ContentValues?): Uri? = null
 
     override fun onCreate(): Boolean {
+        val context = requireContext(this)
         val entryPoint = EntryPointAccessors.fromApplication(
-            requireContext(this),
+            context,
             FilterListContentProviderEntryPoint::class.java
         )
         coreRepository = entryPoint.getCoreRepository()
         activationPreferences = entryPoint.getActivationPreferences()
         analyticsProvider = entryPoint.getAnalyticsProvider()
-        userCounter = entryPoint.getUserCounter()
-
+        workManager = WorkManager.getInstance(context)
         return true
     }
 
-    private suspend fun triggerUserCountingRequest(userCounter: UserCounter, callingApp: CallingApp) {
-        var currentBackOffDelay = INITIAL_BACKOFF_DELAY
-        repeat(MAX_USER_COUNT_RETRIES) {
-            val result = userCounter.count(callingApp)
-            if (result is CountUserResult.Success) {
-                Timber.i("User counted")
-                return
-            } else {
-                if (it < MAX_USER_COUNT_RETRIES - 1) {
-                    Timber.e(
-                        "User counting failed, retrying with delay of %d ms",
-                        currentBackOffDelay
-                    )
-                    delay(currentBackOffDelay) //backoff
-                    currentBackOffDelay = (currentBackOffDelay * BACKOFF_FACTOR)
-                }
-            }
-        }
-        // If we reached here we haven't hit return@launch from repeat above, let's log that
-        Timber.i("User counting failed, reporting this event to analytics")
-        analyticsProvider.logEvent(AnalyticsEvent.HEAD_REQUEST_FAILED)
+    private fun triggerUserCountingRequest(callingApp: CallingApp) {
+        val request = OneTimeWorkRequestBuilder<UserCounterWorker>().apply {
+            setConstraints(
+                Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
+            )
+            setBackoffTime(Duration.seconds(30))
+            setInputData(callingApp())
+        }.build()
+
+        // REPLACE old enqueued works
+        workManager.enqueueUniqueWork(
+            USER_COUNTER_KEY_ONESHOT_WORK,
+            ExistingWorkPolicy.APPEND_OR_REPLACE,
+            request
+        )
+        Timber.d("USER COUNTER JOB SCHEDULED")
     }
 
     override fun openFile(uri: Uri, mode: String): ParcelFileDescriptor? {
@@ -118,7 +117,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         val callingApp = getCallingApp(callingPackage, context?.packageManager)
         launch {
             activationPreferences.updateLastFilterRequest(System.currentTimeMillis())
-            triggerUserCountingRequest(userCounter, callingApp)
+            triggerUserCountingRequest(callingApp)
         }
         return try {
             Timber.i("Filter list requested: $uri - $mode...")
@@ -195,9 +194,6 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
 
     companion object {
         const val DEFAULT_SUBSCRIPTIONS_FILENAME = "default_subscriptions.txt"
-        const val INITIAL_BACKOFF_DELAY = 5000L
-        const val BACKOFF_FACTOR = 4
-        const val MAX_USER_COUNT_RETRIES = 5
         const val DEFAULT_CALLING_APP_NAME = "other"
         const val DEFAULT_CALLING_APP_VERSION = "0"
     }
