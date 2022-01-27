@@ -50,6 +50,7 @@ import org.adblockplus.adblockplussbrowser.core.CallingApp
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.extensions.setBackoffTime
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker
+import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker.Companion.BACKOFF_TIME_S
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker.Companion.USER_COUNTER_KEY_ONESHOT_WORK
 import timber.log.Timber
 import java.io.File
@@ -99,7 +100,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             setConstraints(
                 Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
             )
-            setBackoffTime(Duration.seconds(30))
+            setBackoffTime(Duration.seconds(BACKOFF_TIME_S))
             setInputData(callingApp())
         }.build()
 

@@ -71,6 +71,7 @@ internal class UserCounterWorker @AssistedInject constructor(
 
     companion object {
         private const val RUN_ATTEMPT_MAX_COUNT = 4
+        const val BACKOFF_TIME_S = 30
 
         const val USER_COUNTER_KEY_ONESHOT_WORK = "USER_COUNTER_ONESHOT_WORK"
     }
