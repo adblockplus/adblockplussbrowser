@@ -25,13 +25,9 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.flow.take
-import kotlinx.coroutines.withContext
 import okio.buffer
 import okio.sink
 import okio.source
@@ -108,31 +104,27 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             if (isStopped) return@withContext Result.success()
 
             val subscriptions = results.mapNotNull { it.subscription }
-            val filtersFile =
-                writeFiles(subscriptions, settings.allowedDomains, settings.blockedDomains)
-
-            // check if Work is stopped and return
-            if (isStopped) return@withContext Result.success()
-            coreRepository.updateDownloadedSubscriptions(
-                subscriptions,
-                tags.isForceRefresh() or tags.isPeriodic()
-            )
-            coreRepository.updateSavedState(settings.toSavedState())
-            dispatchUpdate()
-            cleanOldFiles(filtersFile)
-
-            updateStatus(ProgressType.PROGRESS)
-            updateSubscriptionsLastUpdated(settings, subscriptions)
 
             if (results.hasFailedResult()) {
                 Timber.w("Failed subscriptions updates, retrying shortly")
-                filtersFile.delete()
                 delay(DELAY_DEFAULT)
                 updateStatus(ProgressType.FAILED)
                 failedResult()
             } else {
                 Timber.i("Subscriptions downloaded")
                 delay(DELAY_DEFAULT)
+                val filtersFile =
+                    writeFiles(subscriptions, settings.allowedDomains, settings.blockedDomains)
+
+                coreRepository.updateDownloadedSubscriptions(
+                    subscriptions,
+                    tags.isForceRefresh() or tags.isPeriodic()
+                )
+                coreRepository.updateSavedState(settings.toSavedState())
+                dispatchUpdate()
+
+                updateSubscriptionsLastUpdated(settings, subscriptions)
+                cleanOldFiles(filtersFile)
                 updateStatus(ProgressType.SUCCESS)
                 Result.success()
             }
