@@ -126,7 +126,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
                 )
                 coreRepository.updateSavedState(settings.toSavedState())
                 dispatchUpdate()
-
+                updateStatus(ProgressType.PROGRESS)
                 updateSubscriptionsLastUpdated(settings, subscriptions)
                 cleanOldFiles(filtersFile)
                 updateStatus(ProgressType.SUCCESS)
