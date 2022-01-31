@@ -17,4 +17,21 @@
 
 package org.adblockplus.adblockplussbrowser.core
 
-data class CallingApp(val applicationName: String, val applicationVersion: String)
+import androidx.work.Data
+
+data class CallingApp(val applicationName: String, val applicationVersion: String) {
+    constructor(data: Data) : this(
+        data.getString(DATA_APP_NAME_TAG).orEmpty(),
+        data.getString(DATA_APP_VERSION_TAG).orEmpty()
+    )
+
+    operator fun invoke(): Data = Data.Builder()
+        .putString(DATA_APP_NAME_TAG, applicationName)
+        .putString(DATA_APP_VERSION_TAG, applicationVersion)
+        .build()
+
+    companion object {
+        internal const val DATA_APP_NAME_TAG = "APP_NAME"
+        internal const val DATA_APP_VERSION_TAG = "APP_VERSION"
+    }
+}

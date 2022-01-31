@@ -97,7 +97,12 @@ internal class OkHttpUserCounter(
             }
             Timber.e("User count request failed")
             Timber.e(ex)
-            analyticsProvider.logException(ex)
+            if (ex !is java.net.SocketTimeoutException &&
+                ex !is java.net.ConnectException &&
+                ex !is java.net.UnknownHostException
+            ) {
+                analyticsProvider.logException(ex)
+            }
             CountUserResult.Failed()
         }
     }
