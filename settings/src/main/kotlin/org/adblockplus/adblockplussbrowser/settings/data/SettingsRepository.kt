@@ -80,4 +80,5 @@ interface SettingsRepository {
 
     suspend fun markLanguagesOnboardingCompleted()
 
+    suspend fun checkLanguagesOnboardingCompleted()
 }

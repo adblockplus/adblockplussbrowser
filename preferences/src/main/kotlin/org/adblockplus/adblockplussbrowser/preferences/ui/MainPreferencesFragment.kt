@@ -105,4 +105,9 @@ internal class MainPreferencesFragment :
             findNavController().navigate(direction)
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.checkLanguagesOnboarding()
+    }
 }

@@ -69,4 +69,10 @@ internal class MainPreferencesViewModel @Inject constructor(
         }
         analyticsProvider.logEvent(if (wentAdding) LANGUAGES_CARD_ADD else LANGUAGES_CARD_NO)
     }
+
+    fun checkLanguagesOnboarding() {
+        viewModelScope.launch {
+            settingsRepository.checkLanguagesOnboardingCompleted()
+        }
+    }
 }

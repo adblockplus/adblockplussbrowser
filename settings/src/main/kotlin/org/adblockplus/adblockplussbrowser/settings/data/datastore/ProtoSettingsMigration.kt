@@ -56,13 +56,9 @@ internal class ProtoSettingsMigration(
                 val (primarySubscriptions, otherSubscriptions) = loadActiveSubscriptions()
                 addAllActivePrimarySubscriptions(primarySubscriptions)
                 addAllActiveOtherSubscriptions(otherSubscriptions)
-                languagesOnboardingCompleted = isLanguageOnboardingPresumedComplete(primarySubscriptions)
                 analyticsEnabled = true
             }.build()
         }
-
-    private fun isLanguageOnboardingPresumedComplete(primarySubscriptions: List<ProtoSubscription>) =
-            primarySubscriptions.size > 1
 
     override suspend fun cleanUp() {
         // We don't delete the default shared preferences file, only the old subscriptions meta and filter files
