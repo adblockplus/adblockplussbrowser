@@ -37,7 +37,7 @@
 
         <TextView
             android:id="@+id/onboarding_welcome_block_ads_title"
-            style="@style/AbpOnboardingTitleTextStyle"
+            style="@style/OnboardingTitleTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
@@ -48,7 +48,7 @@
 
         <TextView
             android:id="@+id/onboarding_welcome_block_ads_description"
-            style="@style/AbpOnboardingDescriptionTextStyle"
+            style="@style/OnboardingDescriptionTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -76,7 +76,7 @@
 
         <TextView
             android:id="@+id/onboarding_welcome_tracking_protection_title"
-            style="@style/AbpOnboardingTitleTextStyle"
+            style="@style/OnboardingTitleTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
@@ -87,7 +87,7 @@
 
         <TextView
             android:id="@+id/onboarding_welcome_tracking_protection_description"
-            style="@style/AbpOnboardingDescriptionTextStyle"
+            style="@style/OnboardingDescriptionTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -115,7 +115,7 @@
 
         <TextView
             android:id="@+id/onboarding_welcome_security_privacy_title"
-            style="@style/AbpOnboardingTitleTextStyle"
+            style="@style/OnboardingTitleTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
@@ -126,7 +126,7 @@
 
         <TextView
             android:id="@+id/onboarding_welcome_security_privacy_description"
-            style="@style/AbpOnboardingDescriptionTextStyle"
+            style="@style/OnboardingDescriptionTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -154,7 +154,7 @@
 
         <TextView
             android:id="@+id/onboarding_welcome_language_filters_title"
-            style="@style/AbpOnboardingTitleTextStyle"
+            style="@style/OnboardingTitleTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
@@ -165,7 +165,7 @@
 
         <TextView
             android:id="@+id/onboarding_welcome_language_filters_description"
-            style="@style/AbpOnboardingDescriptionTextStyle"
+            style="@style/OnboardingDescriptionTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"

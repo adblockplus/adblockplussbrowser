@@ -18,11 +18,11 @@
 
 <resources>
 
-    <color name="abp_onboarding_foreground_secondary">@color/abp_lynch</color>
-    <color name="abp_onboarding_icon_background">@color/abp_mercury</color>
-    <color name="abp_onboarding_icon_foreground">@color/abp_white</color>
-    <color name="abp_onboarding_icon_foreground_accent">@color/ribbon</color>
-    <color name="abp_onboarding_dot_indicator_background">@color/abp_lynch_opacity_40</color>
-    <color name="abp_onboarding_circular_indicator_background">@color/abp_lynch_opacity_30</color>
+    <color name="onboarding_foreground_secondary">@color/lynch</color>
+    <color name="onboarding_icon_background">@color/mercury</color>
+    <color name="onboarding_icon_foreground">@color/white</color>
+    <color name="onboarding_icon_foreground_accent">@color/ribbon</color>
+    <color name="onboarding_dot_indicator_background">@color/lynch_opacity_40</color>
+    <color name="onboarding_circular_indicator_background">@color/lynch_opacity_30</color>
 
 </resources>

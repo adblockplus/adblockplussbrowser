@@ -18,13 +18,13 @@
 
 <resources>
 
-    <style name="AbpOnboardingTitleTextStyle">
-        <item name="android:textColor">@color/abp_foreground</item>
+    <style name="OnboardingTitleTextStyle">
+        <item name="android:textColor">@color/foreground</item>
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
-    <style name="AbpOnboardingDescriptionTextStyle">
-        <item name="android:textColor">@color/abp_onboarding_foreground_secondary</item>
+    <style name="OnboardingDescriptionTextStyle">
+        <item name="android:textColor">@color/onboarding_foreground_secondary</item>
         <item name="android:textSize">12sp</item>
     </style>
 

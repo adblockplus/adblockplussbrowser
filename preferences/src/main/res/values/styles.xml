@@ -62,7 +62,7 @@
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body2</item>
         <item name="android:paddingTop">16dp</item>
         <item name="android:paddingBottom">8dp</item>
-        <item name="android:textColor">@color/abp_foreground_secondary</item>
+        <item name="android:textColor">@color/foreground_secondary</item>
     </style>
 
     <style name="AbpPreferenceScreen">
@@ -74,7 +74,7 @@
     <style name="AbpPreferenceDivider">
         <item name="android:layout_marginStart">16dp</item>
         <item name="android:layout_marginEnd">16dp</item>
-        <item name="android:background">@color/abp_background</item>
+        <item name="android:background">@color/background</item>
     </style>
 
 </resources>
