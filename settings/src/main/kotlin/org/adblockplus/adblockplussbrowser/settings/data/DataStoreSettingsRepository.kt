@@ -281,5 +281,14 @@ internal class DataStoreSettingsRepository(
         }
     }
 
+    override suspend fun checkLanguagesOnboardingCompleted() {
+        dataStore.updateData { settings ->
+            if (settings.activePrimarySubscriptionsList.count() > 1) {
+                settings.toBuilder().setLanguagesOnboardingCompleted(true).build()
+            } else {
+                settings
+            }
+        }
+    }
 }
 
