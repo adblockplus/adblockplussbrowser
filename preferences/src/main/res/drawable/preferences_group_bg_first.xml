@@ -17,7 +17,7 @@
   -->
 
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/abp_background_secondary" />
+    <solid android:color="@color/background_secondary" />
 
     <corners
         android:topLeftRadius="@dimen/preferences_group_bg_corner_radius"

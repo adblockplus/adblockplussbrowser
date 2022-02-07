@@ -44,7 +44,7 @@
 
         <TextView
             android:id="@+id/onboarding_enable_title"
-            style="@style/AbpOnboardingTitleTextStyle"
+            style="@style/OnboardingTitleTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/onboarding_items_margin_start"
@@ -55,7 +55,7 @@
 
         <TextView
             android:id="@+id/onboarding_enable_description"
-            style="@style/AbpOnboardingDescriptionTextStyle"
+            style="@style/OnboardingDescriptionTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/onboarding_item_description_margin_top"

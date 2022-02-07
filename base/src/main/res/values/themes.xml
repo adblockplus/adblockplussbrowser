@@ -21,20 +21,20 @@
     <style name="Theme.Abp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/foreground_accent</item>
-        <item name="colorPrimaryVariant">@color/abp_background_accent</item>
-        <item name="colorOnPrimary">@color/abp_background</item>
+        <item name="colorPrimaryVariant">@color/background_accent</item>
+        <item name="colorOnPrimary">@color/background</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/foreground_accent</item>
-        <item name="colorSecondaryVariant">@color/abp_background_accent</item>
-        <item name="colorOnSecondary">@color/abp_background</item>
+        <item name="colorSecondaryVariant">@color/background_accent</item>
+        <item name="colorOnSecondary">@color/background</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-        <item name="android:colorBackground">@color/abp_background</item>
-        <item name="android:textColorPrimary">@color/abp_foreground</item>
-        <item name="android:textColorSecondary">@color/abp_foreground_secondary</item>
-        <item name="colorOnSurface">@color/abp_foreground_secondary</item>
-        <item name="colorBackgroundFloating">@color/abp_background_secondary</item>
+        <item name="android:colorBackground">@color/background</item>
+        <item name="android:textColorPrimary">@color/foreground</item>
+        <item name="android:textColorSecondary">@color/foreground_secondary</item>
+        <item name="colorOnSurface">@color/foreground_secondary</item>
+        <item name="colorBackgroundFloating">@color/background_secondary</item>
         <!-- Snackbar -->
         <item name="snackbarStyle">@style/Widget.Abp.Snackbar</item>
         <item name="snackbarTextViewStyle">@style/Widget.Abp.SnackbarTextView</item>
@@ -42,8 +42,8 @@
     </style>
 
     <style name="Theme.Abp.Toolbar" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
-        <item name="android:background">@color/abp_background</item>
-        <item name="colorOnPrimary">@color/abp_foreground</item>
+        <item name="android:background">@color/background</item>
+        <item name="colorOnPrimary">@color/foreground</item>
     </style>
 
     <style name="Theme.Abp.SubTitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Subtitle">
@@ -52,7 +52,7 @@
 
     <style name="ThemeOverlay.Abp.Snackbar" parent="">
         <item name="colorPrimary">@color/foreground_accent</item>
-        <item name="colorOnSurface">@color/abp_background_secondary</item>
+        <item name="colorOnSurface">@color/background_secondary</item>
     </style>
 
     <style name="Widget.Abp.Snackbar" parent="Widget.MaterialComponents.Snackbar">
@@ -61,7 +61,7 @@
     </style>
 
     <style name="Widget.Abp.SnackbarTextView" parent="Widget.MaterialComponents.Snackbar.TextView">
-        <item name="android:textColor">@color/abp_foreground_secondary</item>
+        <item name="android:textColor">@color/foreground_secondary</item>
     </style>
 
     <style name="Widget.Abp.SnackbarButton" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">

@@ -18,6 +18,6 @@
 
 <resources>
 
-    <color name="abp_onboarding_icon_foreground_accent">@color/ribbon</color>
+    <color name="onboarding_icon_foreground_accent">@color/ribbon</color>
 
 </resources>

@@ -18,13 +18,13 @@
 
 <resources>
 
-    <color name="abp_background">@color/abp_black</color>
-    <color name="abp_background_secondary">@color/abp_mirage</color>
-    <color name="abp_background_accent">@color/abp_mirage</color>
-    <color name="abp_foreground">@color/abp_white</color>
-    <color name="abp_foreground_secondary">@color/abp_regent_gray</color>
-    <color name="foreground_accent">@color/abp_dodger_blue</color>
-    <color name="abp_divider">@color/abp_regent_gray_opacity_15</color>
-    <color name="clickable_text">@color/abp_dodger_blue</color>
+    <color name="background">@color/black</color>
+    <color name="background_secondary">@color/mirage</color>
+    <color name="background_accent">@color/mirage</color>
+    <color name="foreground">@color/white</color>
+    <color name="foreground_secondary">@color/regent_gray</color>
+    <color name="foreground_accent">@color/dodger_blue</color>
+    <color name="divider">@color/regent_gray_opacity_15</color>
+    <color name="clickable_text">@color/dodger_blue</color>
 
 </resources>

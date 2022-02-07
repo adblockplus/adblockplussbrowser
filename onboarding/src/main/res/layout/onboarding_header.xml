@@ -26,7 +26,7 @@
 
         <TextView
             android:id="@+id/onboarding_header_title1"
-            style="@style/AbpOnboardingDescriptionTextStyle"
+            style="@style/OnboardingDescriptionTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@id/onboarding_header_title2"
@@ -40,7 +40,7 @@
             android:id="@+id/onboarding_header_title2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/abp_foreground"
+            android:textColor="@color/foreground"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/onboarding_header_title3"
@@ -51,7 +51,7 @@
 
         <TextView
             android:id="@+id/onboarding_header_title3"
-            style="@style/AbpOnboardingDescriptionTextStyle"
+            style="@style/OnboardingDescriptionTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -63,7 +63,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/abp_divider"
+            android:background="@color/divider"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 

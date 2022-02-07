@@ -18,36 +18,36 @@
 
 <resources>
 
-    <color name="abp_background">@color/abp_white_lilac</color>
-    <color name="abp_background_secondary">@color/abp_white</color>
-    <color name="abp_background_accent">@color/abp_blue_bayoux</color>
-    <color name="abp_foreground">@color/abp_black</color>
-    <color name="abp_foreground_secondary">@color/abp_blue_bayoux</color>
-    <color name="foreground_accent">#0070FF</color>
-    <color name="clickable_text">#0070FF</color>
-    <color name="abp_divider">@color/abp_lynch_opacity_15</color>
+    <color name="background">@color/white_lilac</color>
+    <color name="background_secondary">@color/white</color>
+    <color name="background_accent">@color/blue_bayoux</color>
+    <color name="foreground">@color/black</color>
+    <color name="foreground_secondary">@color/blue_bayoux</color>
+    <color name="foreground_accent">@color/ribbon</color>
+    <color name="clickable_text">@color/ribbon</color>
+    <color name="divider">@color/lynch_opacity_15</color>
 
     <!-- Used the following tool to name the colors:
     https://chir.ag/projects/name-that-color -->
 
-    <color name="abp_white">#FFFFFF</color>
-    <color name="abp_white_lilac">#F0F2FA</color>
+    <color name="white">#FFFFFF</color>
+    <color name="white_lilac">#F0F2FA</color>
 
-    <color name="abp_black">#000000</color>
-    <color name="abp_mirage">#181C24</color>
+    <color name="black">#000000</color>
+    <color name="mirage">#181C24</color>
 
-    <color name="abp_mercury">#E7E7E7</color>
-    <color name="abp_regent_gray">#8D98A5</color>
-    <color name="abp_regent_gray_opacity_15">#268D98A5</color>
+    <color name="mercury">#E7E7E7</color>
+    <color name="regent_gray">#8D98A5</color>
+    <color name="regent_gray_opacity_15">#268D98A5</color>
 
-    <color name="abp_lynch">#6A7D95</color>
-    <color name="abp_lynch_opacity_15">#266A7D95</color>
-    <color name="abp_lynch_opacity_30">#4D6A7D95</color>
-    <color name="abp_lynch_opacity_40">#666A7D95</color>
-    <color name="abp_blue_bayoux">#4B5E75</color>
-    <color name="abp_oxford_blue">#3C4857</color>
+    <color name="lynch">#6A7D95</color>
+    <color name="lynch_opacity_15">#266A7D95</color>
+    <color name="lynch_opacity_30">#4D6A7D95</color>
+    <color name="lynch_opacity_40">#666A7D95</color>
+    <color name="blue_bayoux">#4B5E75</color>
+    <color name="oxford_blue">#3C4857</color>
 
-    <color name="abp_dodger_blue">#2786FF</color>
+    <color name="dodger_blue">#2786FF</color>
     <color name="ribbon">#0070FF</color>
 
 </resources>

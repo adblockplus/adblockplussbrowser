@@ -30,7 +30,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/abp_background_secondary">
+        android:background="@color/background_secondary">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="0dp"
@@ -58,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            app:dotsColor="@color/abp_onboarding_dot_indicator_background"
+            app:dotsColor="@color/onboarding_dot_indicator_background"
             app:dotsCornerRadius="1dp"
             app:dotsSize="3dp"
             app:dotsSpacing="2dp"
@@ -66,7 +66,7 @@
             app:layout_constraintBottom_toTopOf="@id/onboarding_circular_indicator"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:selectedDotColor="@color/ribbon" />
+            app:selectedDotColor="?attr/colorPrimary" />
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/onboarding_circular_indicator"
@@ -78,14 +78,14 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:trackColor="@color/abp_onboarding_circular_indicator_background"
-            app:indicatorColor="@color/abp_onboarding_icon_foreground_accent"
+            app:trackColor="@color/onboarding_circular_indicator_background"
+            app:indicatorColor="@color/onboarding_icon_foreground_accent"
             app:trackThickness="2dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/onboarding_button"
             android:contentDescription="@string/open_samsung_internet"
-            android:backgroundTint="@color/ribbon"
+            android:backgroundTint="@color/onboarding_icon_foreground_accent"
             onboardingButtonPager2="@{onboardingPager}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -95,11 +95,11 @@
             app:layout_constraintEnd_toEndOf="@id/onboarding_circular_indicator"
             app:layout_constraintStart_toStartOf="@id/onboarding_circular_indicator"
             app:layout_constraintTop_toTopOf="@id/onboarding_circular_indicator"
-            app:tint="@color/abp_onboarding_icon_foreground" />
+            app:tint="@color/onboarding_icon_foreground" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/open_si_button"
-            android:backgroundTint="@color/ribbon"
+            android:backgroundTint="?attr/colorPrimary"
             onboardingOpenSamsungButton="@{onboardingPager}"
             android:layout_width="0dp"
             android:layout_height="72dp"
@@ -111,12 +111,12 @@
             android:text="@string/open_samsung_internet"
             android:textAlignment="viewStart"
             android:textAllCaps="false"
-            android:textColor="@color/abp_white"
+            android:textColor="@color/white"
             android:visibility="invisible"
             app:cornerRadius="32dp"
             app:icon="@drawable/ic_round_arrow_forward_24"
             app:iconGravity="end"
-            app:iconTint="@color/abp_white"
+            app:iconTint="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
