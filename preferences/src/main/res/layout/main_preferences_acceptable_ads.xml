@@ -44,7 +44,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/main_preferences_acceptable_ads_category"
-            style="@style/AbpPreferenceCategoryTitleTextStyle"
+            style="@style/CustomPreferenceCategoryTitleTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/acceptable_ads"
@@ -53,27 +53,27 @@
 
         <LinearLayout
             android:id="@+id/main_preferences_acceptable_ads"
-            style="@style/AbpPreferenceContainerStyle"
+            style="@style/PreferenceContainerStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/main_preferences_acceptable_ads_category">
 
             <com.google.android.material.textview.MaterialTextView
-                style="@style/AbpPreferenceTitleTextStyle"
+                style="@style/PreferenceTitleTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/preferences_acceptable_ads_title" />
 
             <com.google.android.material.textview.MaterialTextView
-                style="@style/AbpPreferenceSummaryTextStyle"
+                style="@style/CustomPreferenceSummaryTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/preferences_acceptable_ads_summary" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/main_preferences_acceptable_ads_button"
-                style="@style/AbpPreferenceSummaryTextStyle"
+                style="@style/CustomPreferenceSummaryTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="8dp"

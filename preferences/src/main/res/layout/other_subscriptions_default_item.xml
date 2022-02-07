@@ -38,7 +38,7 @@
         android:layout_height="wrap_content">
 
         <View
-            style="@style/AbpPreferenceContainerStyle"
+            style="@style/PreferenceContainerStyle"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:onClick="@{() -> viewModel.toggleActiveSubscription(item)}"
@@ -48,7 +48,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/other_subscriptions_default_item_title"
-            style="@style/AbpPreferenceTitleTextStyle"
+            style="@style/PreferenceTitleTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -66,7 +66,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/other_subscriptions_default_item_summary"
-            style="@style/AbpPreferenceSummaryTextStyle"
+            style="@style/CustomPreferenceSummaryTextStyle"
             gone="@{!item.active}"
             lastUpdate="@{item.subscription.lastUpdate}"
             android:layout_width="wrap_content"
@@ -97,7 +97,7 @@
 
         <View
             android:id="@+id/other_subscriptions_default_item_divider"
-            style="@style/AbpPreferenceDivider"
+            style="@style/PreferenceDivider"
             groupItemDividerVisibility="@{item.layout}"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"

@@ -27,7 +27,7 @@
     </data>
 
     <ScrollView
-        style="@style/AbpPreferenceScreen"
+        style="@style/PreferenceScreen"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -45,7 +45,7 @@
 
             <LinearLayout
                 android:id="@+id/updates_preferences_automatic_updates"
-                style="@style/AbpPreferenceContainerStyle"
+                style="@style/PreferenceContainerStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="0dp"
@@ -63,7 +63,7 @@
 
             <LinearLayout
                 android:id="@+id/updates_preferences_update_now"
-                style="@style/AbpPreferenceContainerStyle"
+                style="@style/PreferenceContainerStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="@{(v) -> viewModel.updateSubscriptions()}"
@@ -72,7 +72,7 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/updates_preferences_update_now_label"
-                    style="@style/AbpPreferenceTitleTextStyle"
+                    style="@style/PreferenceTitleTextStyle"
                     android:layout_marginStart="16dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
 
             <LinearLayout
                 android:id="@+id/updates_preference_last_update"
-                style="@style/AbpPreferenceContainerStyle"
+                style="@style/PreferenceContainerStyle"
                 android:background="@android:color/transparent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
                 app:layout_constraintTop_toBottomOf="@id/updates_preferences_update_now">
 
                 <com.google.android.material.textview.MaterialTextView
-                    style="@style/AbpPreferenceSummaryTextStyle"
+                    style="@style/CustomPreferenceSummaryTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
