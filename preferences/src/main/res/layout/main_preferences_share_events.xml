@@ -44,7 +44,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/main_preferences_share_events_header"
-            style="@style/AbpPreferenceCategoryTitleTextStyle"
+            style="@style/CustomPreferenceCategoryTitleTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/share_events_header"
@@ -53,7 +53,7 @@
 
         <LinearLayout
             android:id="@+id/main_preferences_share_events_category"
-            style="@style/AbpPreferenceContainerStyle"
+            style="@style/PreferenceContainerStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -61,14 +61,14 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/share_events_title"
-                style="@style/AbpPreferenceTitleTextStyle"
+                style="@style/PreferenceTitleTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/share_events_title" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/share_events_description"
-                style="@style/AbpPreferenceSummaryTextStyle"
+                style="@style/CustomPreferenceSummaryTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/share_events_description" />
@@ -77,7 +77,7 @@
 
         <View
             android:id="@+id/main_preferences_divider"
-            style="@style/AbpPreferenceDivider"
+            style="@style/PreferenceDivider"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -85,7 +85,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/share_events_checkbox_description"
-            style="@style/AbpPreferenceTitleTextStyle"
+            style="@style/PreferenceTitleTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

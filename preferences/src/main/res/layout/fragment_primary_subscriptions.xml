@@ -30,7 +30,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/primary_subscriptions_list"
-        style="@style/AbpPreferenceScreen"
+        style="@style/PreferenceScreen"
         primarySubscriptions="@{viewModel.subscriptions}"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

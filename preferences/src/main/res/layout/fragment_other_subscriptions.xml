@@ -42,7 +42,7 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/other_subscriptions_list"
-                    style="@style/AbpPreferenceScreen"
+                    style="@style/PreferenceScreen"
                     otherSubscriptions="@{viewModel.subscriptions}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -61,7 +61,7 @@
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/other_subscriptions_hint"
-                        style="@style/AbpPreferenceSummaryTextStyle"
+                        style="@style/CustomPreferenceSummaryTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/outline_info_24"

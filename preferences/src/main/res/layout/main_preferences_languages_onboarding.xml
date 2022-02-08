@@ -46,7 +46,7 @@
 
         <LinearLayout
             android:id="@+id/main_preferences_languages_onboarding_option_category"
-            style="@style/AbpPreferenceContainerStyle"
+            style="@style/PreferenceContainerStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -54,14 +54,14 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/languages_onboarding_title"
-                style="@style/AbpPreferenceTitleTextStyle"
+                style="@style/PreferenceTitleTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/languages_onboarding_title" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/languages_onboarding_description"
-                style="@style/AbpPreferenceSummaryTextStyle"
+                style="@style/CustomPreferenceSummaryTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/preferences_primary_subscriptions_summary" />
@@ -70,7 +70,7 @@
 
         <View
             android:id="@+id/main_preferences_languages_onboarding_divider"
-            style="@style/AbpPreferenceDivider"
+            style="@style/PreferenceDivider"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -78,7 +78,7 @@
 
         <LinearLayout
             android:id="@+id/main_preferences_languages_onboarding_options"
-            style="@style/AbpPreferenceContainerStyle"
+            style="@style/PreferenceContainerStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -86,14 +86,14 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/main_preferences_languages_onboarding_option_add"
-                style="@style/AbpPreferenceSummaryTextStyle.Accent"
+                style="@style/CustomPreferenceSummaryTextStyle.Accent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/languages_onboarding_option_add" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/main_preferences_languages_onboarding_option_skip"
-                style="@style/AbpPreferenceSummaryTextStyle.Accent"
+                style="@style/CustomPreferenceSummaryTextStyle.Accent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
