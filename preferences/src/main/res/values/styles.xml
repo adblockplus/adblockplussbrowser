@@ -19,7 +19,7 @@
 <resources>
 
     <!-- Adapted from preference_material.xml -->
-    <style name="AbpPreferenceContainerStyle">
+    <style name="PreferenceContainerStyle">
         <item name="android:minHeight">?android:attr/listPreferredItemHeightSmall</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:paddingStart">?android:attr/listPreferredItemPaddingStart</item>
@@ -33,20 +33,20 @@
     </style>
 
     <!-- Adapted from preference_material.xml -->
-    <style name="AbpPreferenceTitleTextStyle">
+    <style name="PreferenceTitleTextStyle">
         <item name="android:maxLines">1</item>
         <item name="android:textAppearance">?android:attr/textAppearanceListItem</item>
         <item name="android:ellipsize">marquee</item>
     </style>
 
     <!-- Adapted from preference_material.xml -->
-    <style name="AbpPreferenceSummaryTextStyle" parent="PreferenceSummaryTextStyle">
+    <style name="CustomPreferenceSummaryTextStyle" parent="PreferenceSummaryTextStyle">
         <item name="android:textAlignment">viewStart</item>
         <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="android:maxLines">10</item>
     </style>
 
-    <style name="AbpPreferenceSummaryTextStyle.Accent" parent="AbpPreferenceSummaryTextStyle">
+    <style name="CustomPreferenceSummaryTextStyle.Accent" parent="CustomPreferenceSummaryTextStyle">
         <item name="android:textColor">@color/clickable_text</item>
     </style>
 
@@ -55,7 +55,7 @@
     </style>
 
     <!-- Adapted from preference_category_material.xml -->
-    <style name="AbpPreferenceCategoryTitleTextStyle" parent="PreferenceCategoryTitleTextStyle">
+    <style name="CustomPreferenceCategoryTitleTextStyle" parent="PreferenceCategoryTitleTextStyle">
         <item name="android:textAlignment">viewStart</item>
         <item name="android:paddingStart">?android:attr/listPreferredItemPaddingStart</item>
         <item name="android:paddingEnd">?android:attr/listPreferredItemPaddingEnd</item>
@@ -65,13 +65,13 @@
         <item name="android:textColor">@color/foreground_secondary</item>
     </style>
 
-    <style name="AbpPreferenceScreen">
+    <style name="PreferenceScreen">
         <item name="android:paddingTop">16dp</item>
         <item name="android:paddingBottom">16dp</item>
         <item name="android:clipToPadding">false</item>
     </style>
 
-    <style name="AbpPreferenceDivider">
+    <style name="PreferenceDivider">
         <item name="android:layout_marginStart">16dp</item>
         <item name="android:layout_marginEnd">16dp</item>
         <item name="android:background">@color/background</item>

@@ -19,20 +19,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/updates_preferences_automatic_updates"
-    style="@style/AbpPreferenceContainerStyle"
+    style="@style/PreferenceContainerStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="0dp">
 
     <com.google.android.material.textview.MaterialTextView
-        style="@style/AbpPreferenceTitleTextStyle"
+        style="@style/PreferenceTitleTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/preferences_automatic_updates_title" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/updates_preferences_automatic_updates_type"
-        style="@style/AbpPreferenceSummaryTextStyle"
+        style="@style/CustomPreferenceSummaryTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="@string/preferences_automatic_updates_wifi_only"
