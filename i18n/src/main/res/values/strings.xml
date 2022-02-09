@@ -122,7 +122,6 @@
     <string name="delete_swipe_hint" tools:ignore="MissingTranslation">To delete an entry, swipe it to the left.</string>
 
     <!-- image descriptions -->
-    <!-- The translation of this item is postponed, so the lack of translations is ignored -->
     <string name="image_bullet" tools:ignore="MissingTranslation">Bullet Point Symbol</string>
 
     <!-- settings -->

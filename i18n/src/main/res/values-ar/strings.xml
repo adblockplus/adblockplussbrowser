@@ -25,6 +25,7 @@
     <string name="update_status_progress_message">جارٍ تحديثات قوائم التصفية…</string>
     <string name="update_status_error_message">خطأ أثناء التحديث: يُرجى إعادة المحاولة</string>
     <string name="update_status_retry">إعادة المحاولة</string>
+    <string name="device_not_supported">هذا الجهاز غير مدعوم</string>
 
     <!-- base-->
     <string name="product_name">ABP</string>
@@ -118,5 +119,14 @@
     <string name="languages_onboarding_title">هل تريد التصفح بلغات متعددة؟</string>
     <string name="languages_onboarding_option_add">أضف لغة إضافية لحجب الإعلانات.</string>
     <string name="languages_onboarding_option_skip">لا، شكرًا، لا أتصفح سوى بلغة واحدة.</string>
+    <string name="delete_swipe_hint">لحذف إدخال ما، اسحبه إلى اليسار.</string>
+
+    <!-- image descriptions -->
+    <string name="image_bullet">رمز تعداد نقطي</string>
+
+    <!-- settings -->
+    <string name="block_additional_tracking">حظر التتبع الإضافي</string>
+    <string name="block_social_media_tracking">حظر تتبع أيقونات وسائل التواصل الاجتماعي</string>
+    <!-- /settings -->
 
 </resources>

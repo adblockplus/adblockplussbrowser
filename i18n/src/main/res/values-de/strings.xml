@@ -25,6 +25,7 @@
     <string name="update_status_progress_message">Aktualisierungen der Filterliste werden abgerufen …</string>
     <string name="update_status_error_message">Fehler bei der Aktualisierung: Bitte versuche es erneut</string>
     <string name="update_status_retry">Erneut versuchen</string>
+    <string name="device_not_supported">Das Gerät wird nicht unterstützt.</string>
 
     <!-- base-->
     <string name="product_name">ABP</string>
@@ -118,5 +119,14 @@
     <string name="languages_onboarding_title">In mehreren Sprachen browsen?</string>
     <string name="languages_onboarding_option_add">Füge eine zusätzliche Werbeblockierungssprache hinzu.</string>
     <string name="languages_onboarding_option_skip">Nein danke, ich browse nur in einer Sprache.</string>
+    <string name="delete_swipe_hint">Wischen Sie einen Eintrag nach links, um ihn zu löschen.</string>
+
+    <!-- image descriptions -->
+    <string name="image_bullet">Symbol für Aufzählungszeichen</string>
+
+    <!-- settings -->
+    <string name="block_additional_tracking">Zusätzliches Tracken blockieren</string>
+    <string name="block_social_media_tracking">Tracken des Social-Media-Symbols blockieren</string>
+    <!-- /settings -->
 
 </resources>

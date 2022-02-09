@@ -25,6 +25,7 @@
     <string name="update_status_progress_message">Λήψη ενημερώσεων λιστών φίλτρων…</string>
     <string name="update_status_error_message">Σφάλμα κατά την ενημέρωση: Προσπαθήστε ξανά</string>
     <string name="update_status_retry">Ξαναπροσπαθήστε</string>
+    <string name="device_not_supported">Αυτή η συσκευή δεν υποστηρίζεται</string>
 
     <!-- base-->
     <string name="product_name">ABP</string>
@@ -118,5 +119,14 @@
     <string name="languages_onboarding_title">Περιήγηση σε πολλές γλώσσες;</string>
     <string name="languages_onboarding_option_add">Προσθέστε μια επιπλέον γλώσσα αποκλεισμού διαφημίσεων.</string>
     <string name="languages_onboarding_option_skip">Όχι, ευχαριστώ, κάνω περιήγηση μόνο σε μία γλώσσα.</string>
+    <string name="delete_swipe_hint">Για να διαγράψετε μια καταχώριση, σύρετέ την προς τα αριστερά.</string>
+
+    <!-- image descriptions -->
+    <string name="image_bullet">Σύμβολο κουκκίδας</string>
+
+    <!-- settings -->
+    <string name="block_additional_tracking">Αποκλεισμός πρόσθετης παρακολούθησης</string>
+    <string name="block_social_media_tracking">Αποκλεισμός παρακολούθησης εικονιδίων μέσων κοινωνικής δικτύωσης</string>
+    <!-- /settings -->
 
 </resources>
