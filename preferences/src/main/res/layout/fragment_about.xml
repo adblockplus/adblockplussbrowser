@@ -104,10 +104,13 @@
                 app:layout_constraintTop_toBottomOf="@id/about_divider_2">
 
                 <org.adblockplus.adblockplussbrowser.base.widget.HyperlinkTextView
+                    android:id="@+id/about_privacy_policy_hyperlink"
                     style="@style/PreferenceTitleTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/about_privacy_policy" />
+                    android:text="@string/about_privacy_policy"
+                    android:clickable="true"
+                    android:focusable="true"/>
 
             </LinearLayout>
 
@@ -129,6 +132,7 @@
                 app:layout_constraintTop_toBottomOf="@id/about_divider_3">
 
                 <org.adblockplus.adblockplussbrowser.base.widget.HyperlinkTextView
+                    android:id="@+id/about_terms_of_use_hyperlink"
                     style="@style/PreferenceTitleTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
