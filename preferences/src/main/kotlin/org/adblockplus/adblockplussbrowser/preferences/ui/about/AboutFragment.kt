@@ -17,11 +17,13 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui.about
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.text.Spanned
 import android.text.style.URLSpan
+import android.widget.Toast
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
@@ -68,7 +70,11 @@ internal class AboutFragment : DataBindingFragment<FragmentAboutBinding>(R.layou
     }
 
     private fun extractUrlAndRedirect(text: CharSequence) {
-        val url = (text as Spanned).getSpans(0, text.length, URLSpan::class.java)[0].url
-        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+        try {
+            val url = (text as Spanned).getSpans(0, text.length, URLSpan::class.java)[0].url
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+        } catch (exception: ActivityNotFoundException) {
+            Toast.makeText(context, getString(R.string.no_browser_found), Toast.LENGTH_LONG).show()
+        }
     }
 }
