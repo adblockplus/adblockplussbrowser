@@ -119,14 +119,14 @@
     <string name="languages_onboarding_title">Vous naviguez dans plusieurs langues ?</string>
     <string name="languages_onboarding_option_add">Ajouter une langue de blocage des publicités supplémentaire.</string>
     <string name="languages_onboarding_option_skip">Non merci, je ne navigue que dans une seule langue.</string>
-    <string name="delete_swipe_hint">Pour supprimer une entrée, la glisser vers la gauche.</string>
+    <string name="delete_swipe_hint">Pour supprimer une entrée, la faire glisser vers la gauche.</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">Symbole puce</string>
 
     <!-- settings -->
-    <string name="block_additional_tracking">Bloquer le suivi supplémentaire</string>
-    <string name="block_social_media_tracking">Bloquer le suivi des icônes de réseaux sociaux</string>
+    <string name="block_additional_tracking">Bloquer le traçage supplémentaire</string>
+    <string name="block_social_media_tracking">Bloquer le tracking par les icônes des médias sociaux</string>
     <!-- /settings -->
 
 </resources>

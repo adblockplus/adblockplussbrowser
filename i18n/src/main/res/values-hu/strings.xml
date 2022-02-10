@@ -125,8 +125,8 @@
     <string name="image_bullet">Felsorolási pont szimbólum</string>
 
     <!-- settings -->
-    <string name="block_additional_tracking">További követés blokkolása</string>
-    <string name="block_social_media_tracking">Közösségi média ikonok követésének blokkolása</string>
+    <string name="block_additional_tracking">További követés tiltása</string>
+    <string name="block_social_media_tracking">Közösségimédia-ikonok követésének tiltása</string>
     <!-- /settings -->
 
 </resources>

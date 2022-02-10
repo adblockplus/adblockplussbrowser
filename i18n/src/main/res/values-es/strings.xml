@@ -122,7 +122,7 @@
     <string name="delete_swipe_hint">Para eliminar una entrada, deslízala hacia la izquierda.</string>
 
     <!-- image descriptions -->
-    <string name="image_bullet">Símbolo de punto</string>
+    <string name="image_bullet">Símbolo de viñeta</string>
 
     <!-- settings -->
     <string name="block_additional_tracking">Bloquear rastreo adicional</string>

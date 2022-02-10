@@ -25,6 +25,7 @@
     <string name="update_status_progress_message">Updates filterlijsten ophalen…</string>
     <string name="update_status_error_message">Fout bij het updaten: Probeer opnieuw</string>
     <string name="update_status_retry">Opnieuw proberen</string>
+    <string name="device_not_supported">Dit apparaat wordt niet ondersteund</string>
 
     <!-- base-->
     <string name="product_name">ABP</string>
@@ -118,5 +119,14 @@
     <string name="languages_onboarding_title">Surfen in meerdere talen?</string>
     <string name="languages_onboarding_option_add">Een extra taal toevoegen om advertenties te blokkeren</string>
     <string name="languages_onboarding_option_skip">Nee bedankt, ik surf slechts in één taal.</string>
+    <string name="delete_swipe_hint">Naar links vegen om invoer te verwijderen.</string>
+
+    <!-- image descriptions -->
+    <string name="image_bullet">Symbool opsommingsteken</string>
+
+    <!-- settings -->
+    <string name="block_additional_tracking">Aanvullende tracking blokkeren</string>
+    <string name="block_social_media_tracking">Tracking via sociale-mediapictogrammen blokkeren</string>
+    <!-- /settings -->
 
 </resources>

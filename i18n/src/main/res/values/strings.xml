@@ -15,7 +15,7 @@
  along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- app-->
     <string name="app_name">ABP for Samsung Internet</string>
     <string name="app_subtitle">for Samsung Internet</string>
@@ -25,7 +25,7 @@
     <string name="update_status_progress_message">Fetching filter lists updates…</string>
     <string name="update_status_error_message">Error updating: Please try again</string>
     <string name="update_status_retry">Retry</string>
-    <string name="device_not_supported" tools:ignore="MissingTranslation">This device is not supported</string>
+    <string name="device_not_supported">This device is not supported</string>
 
     <!-- base-->
     <string name="product_name">ABP</string>
@@ -119,14 +119,14 @@
     <string name="languages_onboarding_title">Browsing in multiple languages?</string>
     <string name="languages_onboarding_option_add">Add an additional ad blocking language.</string>
     <string name="languages_onboarding_option_skip">No thanks, I only browse in one language.</string>
-    <string name="delete_swipe_hint" tools:ignore="MissingTranslation">To delete an entry, swipe it to the left.</string>
+    <string name="delete_swipe_hint">To delete an entry, swipe it to the left.</string>
 
     <!-- image descriptions -->
-    <string name="image_bullet" tools:ignore="MissingTranslation">Bullet Point Symbol</string>
+    <string name="image_bullet">Bullet Point Symbol</string>
 
     <!-- settings -->
-    <string name="block_additional_tracking" tools:ignore="MissingTranslation">Block additional tracking</string>
-    <string name="block_social_media_tracking" tools:ignore="MissingTranslation">Block social media icons tracking</string>
+    <string name="block_additional_tracking">Block additional tracking</string>
+    <string name="block_social_media_tracking">Block social media icons tracking</string>
     <!-- /settings -->
 
 </resources>

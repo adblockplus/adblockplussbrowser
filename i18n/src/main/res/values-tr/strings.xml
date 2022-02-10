@@ -25,6 +25,7 @@
     <string name="update_status_progress_message">Filtre listeleri güncellemeleri getiriliyor…</string>
     <string name="update_status_error_message">Güncelleme hatası: Lütfen tekrar deneyin</string>
     <string name="update_status_retry">Tekrar dene</string>
+    <string name="device_not_supported">Bu cihaz desteklenmiyor</string>
 
     <!-- base-->
     <string name="product_name">ABP</string>
@@ -118,5 +119,14 @@
     <string name="languages_onboarding_title">İnternette birden çok dilde mi geziniyorsunuz?</string>
     <string name="languages_onboarding_option_add">Bir reklam engelleme dili daha ekleyin.</string>
     <string name="languages_onboarding_option_skip">Hayır teşekkürler, yalnızca bir dilde geziniyorum.</string>
+    <string name="delete_swipe_hint">Bir girdiyi silmek için sola kaydırın.</string>
+
+    <!-- image descriptions -->
+    <string name="image_bullet">Madde İşareti Sembolü</string>
+
+    <!-- settings -->
+    <string name="block_additional_tracking">Ek takipçileri engelle</string>
+    <string name="block_social_media_tracking">Sosyal medya simgelerinin izlemesini engelle</string>
+    <!-- /settings -->
 
 </resources>

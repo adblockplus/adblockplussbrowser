@@ -125,8 +125,8 @@
     <string name="image_bullet">Σύμβολο κουκκίδας</string>
 
     <!-- settings -->
-    <string name="block_additional_tracking">Αποκλεισμός πρόσθετης παρακολούθησης</string>
-    <string name="block_social_media_tracking">Αποκλεισμός παρακολούθησης εικονιδίων μέσων κοινωνικής δικτύωσης</string>
+    <string name="block_additional_tracking">Αποκλεισμός επιπρόσθετης παρακολούθησης</string>
+    <string name="block_social_media_tracking">Αποκλεισμός παρακολούθησης εικονιδίων κοινωνικών μέσων</string>
     <!-- /settings -->
 
 </resources>
