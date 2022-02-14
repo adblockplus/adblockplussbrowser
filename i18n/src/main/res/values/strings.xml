@@ -109,6 +109,7 @@
     <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
     <string name="about_privacy_policy"><a href="https://adblockplus.org/privacy">Privacy Policy</a></string>
     <string name="about_terms_of_use"><a href="https://adblockplus.org/terms">Terms of Use</a></string>
+    <string name="no_browser_found" tools:ignore="MissingTranslation">No browser found on this device</string>
     <string name="about_imprint">Imprint</string>
     <string name="open_source_licenses">Open Source Licenses</string>
     <string name="version">Version</string>
