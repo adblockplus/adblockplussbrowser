@@ -15,7 +15,7 @@
  along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- app-->
     <string name="app_name">ABP for Samsung Internet</string>
     <string name="app_subtitle">for Samsung Internet</string>
