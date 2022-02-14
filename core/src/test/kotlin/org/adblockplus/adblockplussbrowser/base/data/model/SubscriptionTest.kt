@@ -24,8 +24,7 @@ import org.junit.Test
 
 class SubscriptionTest {
 
-    @Test
-    fun testUpdateUrl() {
+    fun runTestUpdateUrl(flavor: String) {
         // Non eyeo domains are not changed
         val someNotEyeoSubscription =
             Subscription(
@@ -38,7 +37,7 @@ class SubscriptionTest {
         val emptyUrlSubscription = Subscription("", "Wrong URL", 0L)
         assertEquals(emptyUrlSubscription.url, emptyUrlSubscription.randomizedUrl)
 
-        val expectedRegex = when (BuildConfig.FLAVOR_product) {
+        val expectedRegex = when (flavor) {
             BuildConfig.FLAVOR_ABP -> """https://([0-9])\.samsung-internet\.filter-list-downloads\.eyeo\.com/exceptionrules.txt""".toRegex()
             BuildConfig.FLAVOR_ADBLOCK -> """https://([0-9])\.samsung-internet\.filter-list-downloads\.getadblock\.com/samsung_internet_browser.txt""".toRegex()
             BuildConfig.FLAVOR_CRYSTAL -> """https://easylist-downloads\.adblockplus\.org/.*""".toRegex()
@@ -57,5 +56,11 @@ class SubscriptionTest {
             "https://3.samsung-internet.filter-list-downloads.getadblock.com/easylist.txt",
             "Randomized Subscription", 0L)
         assertEquals(randomizedSubscription.url, randomizedSubscription.randomizedUrl)
+    }
+
+    @Test
+    fun testUpdateUrl() {
+        listOf(BuildConfig.FLAVOR_ABP, BuildConfig.FLAVOR_ADBLOCK, BuildConfig.FLAVOR_CRYSTAL).
+            forEach { flavor -> runTestUpdateUrl(flavor); }
     }
 }
