@@ -18,8 +18,15 @@
 package org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions
 
 import android.app.ProgressDialog
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.Intent.ACTION_LOCALE_CHANGED
+import android.content.IntentFilter
+import android.os.Bundle
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,6 +42,14 @@ internal class OtherSubscriptionsFragment :
     private val viewModel: OtherSubscriptionsViewModel by activityViewModels()
 
     private var progressDialog: ProgressDialog? = null
+
+    private val broadCastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            when (intent?.action) {
+                ACTION_LOCALE_CHANGED -> handleLanguageChanged()
+            }
+        }
+    }
 
     override fun onBindView(binding: FragmentOtherSubscriptionsBinding) {
         binding.viewModel = viewModel
@@ -73,5 +88,23 @@ internal class OtherSubscriptionsFragment :
                 }
             }
         }
+    }
+
+    fun handleLanguageChanged() {
+        val ft = requireFragmentManager().beginTransaction()
+        ft.detach(this).attach(this).commit()
+    }
+
+    override fun onCreate(savedInstance: Bundle?) {
+        super.onCreate(savedInstance)
+        LocalBroadcastManager.getInstance(requireContext())
+            .registerReceiver(broadCastReceiver, IntentFilter(ACTION_LOCALE_CHANGED))
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        LocalBroadcastManager.getInstance(requireContext())
+            .unregisterReceiver(broadCastReceiver)
     }
 }
