@@ -25,6 +25,7 @@
     <string name="update_status_progress_message">正在提取筛选清单更新…</string>
     <string name="update_status_error_message">更新出错：请重试</string>
     <string name="update_status_retry">重试</string>
+    <string name="device_not_supported">此设备不受支持</string>
 
     <!-- base-->
     <string name="product_name">ABP</string>
@@ -118,5 +119,14 @@
     <string name="languages_onboarding_title">浏览多种语言的内容？</string>
     <string name="languages_onboarding_option_add">添加其他拦截广告的语言。</string>
     <string name="languages_onboarding_option_skip">不了，谢谢，我只浏览一种语言的内容。</string>
+    <string name="delete_swipe_hint">要删除条目，请向左轻扫。</string>
+
+    <!-- image descriptions -->
+    <string name="image_bullet">项目编号符号</string>
+
+    <!-- settings -->
+    <string name="block_additional_tracking">阻止额外跟踪</string>
+    <string name="block_social_media_tracking">阻止社交媒体图标跟踪</string>
+    <!-- /settings -->
 
 </resources>

@@ -25,6 +25,7 @@
     <string name="update_status_progress_message">Обновление списков фильтров…</string>
     <string name="update_status_error_message">Ошибка обновления: попробуйте снова</string>
     <string name="update_status_retry">Повторить попытку</string>
+    <string name="device_not_supported">Это устройство не поддерживается</string>
 
     <!-- base-->
     <string name="product_name">ABP</string>
@@ -118,5 +119,14 @@
     <string name="languages_onboarding_title">Пользуетесь разными языками при работе в браузере?</string>
     <string name="languages_onboarding_option_add">Добавить дополнительный язык для блокировки рекламы.</string>
     <string name="languages_onboarding_option_skip">Нет, спасибо, я использую только один язык.</string>
+    <string name="delete_swipe_hint">Чтобы удалить запись, проведите по ней влево.</string>
+
+    <!-- image descriptions -->
+    <string name="image_bullet">Символ Маркер списка</string>
+
+    <!-- settings -->
+    <string name="block_additional_tracking">Блокировать дополнительное отслеживание</string>
+    <string name="block_social_media_tracking">Блокировать отслеживание через значки социальных сетей</string>
+    <!-- /settings -->
 
 </resources>

@@ -17,7 +17,10 @@
 
 package org.adblockplus.adblockplussbrowser.settings.data.local
 
-internal class HardcodedSubscriptions {
+import android.content.Context
+import org.adblockplus.adblockplussbrowser.settings.R
+
+internal class HardcodedSubscriptions(private val context: Context) {
 
     val easylist = subscription {
         url = "https://easylist-downloads.adblockplus.org/easylist.txt"
@@ -119,14 +122,13 @@ internal class HardcodedSubscriptions {
         }
     }
 
-    // TODO: Decide which title we want for the following and if we want to localize them:
     val additionalTracking = subscription {
-        title = "Block additional tracking"
+        title = context.getString(R.string.block_additional_tracking)
         url = "https://easylist-downloads.adblockplus.org/easyprivacy.txt"
     }
 
     val socialMediaTracking = subscription {
-        title = "Block social media icons tracking"
+        title = context.getString(R.string.block_social_media_tracking)
         url = "https://easylist-downloads.adblockplus.org/fanboy-social.txt"
     }
     val defaultOtherSubscriptions = listOf(additionalTracking, socialMediaTracking)
