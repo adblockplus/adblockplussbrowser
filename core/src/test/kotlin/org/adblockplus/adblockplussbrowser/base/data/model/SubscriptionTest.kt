@@ -71,10 +71,4 @@ class SubscriptionTest {
     fun testCrystalUpdateUrl() {
         runTestUpdateUrl(BuildConfig.FLAVOR_CRYSTAL)
     }
-
-    @Test
-    fun testUpdateUrl() {
-        listOf(BuildConfig.FLAVOR_ABP, BuildConfig.FLAVOR_ADBLOCK, BuildConfig.FLAVOR_CRYSTAL).
-            forEach { flavor -> runTestUpdateUrl(flavor); }
-    }
 }
