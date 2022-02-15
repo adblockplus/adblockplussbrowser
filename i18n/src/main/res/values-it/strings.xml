@@ -25,6 +25,7 @@
     <string name="update_status_progress_message">Aggiornamento filtri in corso…</string>
     <string name="update_status_error_message">Errore durante l\'aggiornamento: Riprova</string>
     <string name="update_status_retry">Riprova</string>
+    <string name="device_not_supported">Questo dispositivo non è supportato</string>
 
     <!-- base-->
     <string name="product_name">ABP</string>
@@ -118,5 +119,14 @@
     <string name="languages_onboarding_title">Navighi in più lingue?</string>
     <string name="languages_onboarding_option_add">Aggiungi un\'altra lingua per l\'ad blocking.</string>
     <string name="languages_onboarding_option_skip">No, grazie, navigo solo in una lingua.</string>
+    <string name="delete_swipe_hint">Per cancellare una voce,  falla scorrere verso sinistra.</string>
+
+    <!-- image descriptions -->
+    <string name="image_bullet">Simbolo elenco puntato</string>
+
+    <!-- settings -->
+    <string name="block_additional_tracking">Blocca il tracciamento aggiuntivo</string>
+    <string name="block_social_media_tracking">Blocca il tracciamento tramite le icone dei social media</string>
+    <!-- /settings -->
 
 </resources>
