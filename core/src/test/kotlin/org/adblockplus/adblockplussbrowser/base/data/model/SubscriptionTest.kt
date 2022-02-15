@@ -26,7 +26,7 @@ class SubscriptionTest {
 
     private fun runTestUpdateUrl(flavor: String) {
         val expectedRegex = when (flavor) {
-            BuildConfig.FLAVOR_ABP -> """https://([0-9])\.samsung-internet\.filter-list-downloads\.eyeo\.com/samsung-internet/samsung_internet_browser-adblock_plus\.txt""".toRegex()
+            BuildConfig.FLAVOR_ABP -> """https://([0-9])\.samsung-internet\.filter-list-downloads\.eyeo\.com/aa-variants/samsung_internet_browser-adblock_plus\.txt""".toRegex()
             BuildConfig.FLAVOR_ADBLOCK -> """https://([0-9])\.samsung-internet\.filter-list-downloads\.getadblock\.com/aa-variants/samsung_internet_browser-adblock\.txt""".toRegex()
             BuildConfig.FLAVOR_CRYSTAL -> """https://([0-9])\.samsung-internet\.filter-list-downloads\.eyeo\.com/aa-variants/samsung_internet_browser-crystal\.txt""".toRegex()
             else -> throw NotImplementedError("You forgot to specify a URL override for the " +
