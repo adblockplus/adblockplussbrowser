@@ -38,7 +38,7 @@ data class Subscription(
             BuildConfig.FLAVOR_ABP -> url.replace(
                 "easylist-downloads.adblockplus.org",
                 "${(0..9).random()}.samsung-internet.filter-list-downloads.eyeo.com"
-            ).replace("exceptionrules.txt", "samsung-internet/samsung_internet_browser-adblock_plus.txt")
+            ).replace("exceptionrules.txt", "aa-variants/samsung_internet_browser-adblock_plus.txt")
 
             BuildConfig.FLAVOR_ADBLOCK -> url.replace(
                 "easylist-downloads.adblockplus.org",
