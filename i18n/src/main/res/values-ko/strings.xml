@@ -25,6 +25,7 @@
     <string name="update_status_progress_message">필터 목록 업데이트를 불러오는 중입니다…</string>
     <string name="update_status_error_message">업데이트 에러: 다시 시도해 주십시오</string>
     <string name="update_status_retry">재시도</string>
+    <string name="device_not_supported">이 기기는 지원되지 않습니다</string>
 
     <!-- base-->
     <string name="product_name">ABP</string>
@@ -118,5 +119,14 @@
     <string name="languages_onboarding_title">다양한 언어로 브라우징하십니까?</string>
     <string name="languages_onboarding_option_add">광고 차단 언어를 추가합니다.</string>
     <string name="languages_onboarding_option_skip">아니요, 한 가지 언어만 이용합니다.</string>
+    <string name="delete_swipe_hint">등록을 삭제하려면 왼쪽으로 스와이프하십시오.</string>
+
+    <!-- image descriptions -->
+    <string name="image_bullet">표시 항목 심볼</string>
+
+    <!-- settings -->
+    <string name="block_additional_tracking">추가적인 추적 차단</string>
+    <string name="block_social_media_tracking">소셜 미디어 아이콘 추적 차단</string>
+    <!-- /settings -->
 
 </resources>

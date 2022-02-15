@@ -25,6 +25,7 @@
     <string name="update_status_progress_message">フィルターリストの更新を取得中…</string>
     <string name="update_status_error_message">更新エラー：もう一度お試しください</string>
     <string name="update_status_retry">再試行</string>
+    <string name="device_not_supported">このデバイスはサポートされていません</string>
 
     <!-- base-->
     <string name="product_name">ABP</string>
@@ -118,5 +119,14 @@
     <string name="languages_onboarding_title">複数の言語でウェブを閲覧しますか？</string>
     <string name="languages_onboarding_option_add">広告ブロック言語を追加する。</string>
     <string name="languages_onboarding_option_skip">いいえ。１つの言語だけで閲覧します。</string>
+    <string name="delete_swipe_hint">入力を消去するには、左へスワイプしてくだ さい。</string>
+
+    <!-- image descriptions -->
+    <string name="image_bullet">項目記号</string>
+
+    <!-- settings -->
+    <string name="block_additional_tracking">追加のトラッキングをブロック</string>
+    <string name="block_social_media_tracking">ソーシャルメディア アイコン トラッキングのブロック</string>
+    <!-- /settings -->
 
 </resources>

@@ -25,6 +25,7 @@
     <string name="update_status_progress_message">Szűrőlista frissítések betöltése folyamatban van…</string>
     <string name="update_status_error_message">Hiba a frissítés során: Próbálja meg újból</string>
     <string name="update_status_retry">Újra</string>
+    <string name="device_not_supported">Ez nem támogatott eszköz</string>
 
     <!-- base-->
     <string name="product_name">ABP</string>
@@ -118,5 +119,14 @@
     <string name="languages_onboarding_title">Több nyelven is böngészik?</string>
     <string name="languages_onboarding_option_add">További blokkolási nyelv hozzáadása.</string>
     <string name="languages_onboarding_option_skip">Nem, köszönöm, csak egy nyelven böngészek.</string>
+    <string name="delete_swipe_hint">Egy bejegyzés törléséhez pöccintsen balra.</string>
+
+    <!-- image descriptions -->
+    <string name="image_bullet">Felsorolási pont szimbólum</string>
+
+    <!-- settings -->
+    <string name="block_additional_tracking">További követés tiltása</string>
+    <string name="block_social_media_tracking">Közösségimédia-ikonok követésének tiltása</string>
+    <!-- /settings -->
 
 </resources>
