@@ -40,35 +40,64 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/CustomPreferenceCategoryTitleTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/other_subscriptions_default_category"
+                    tools:text="@string/other_subscriptions_default_category" />
+
+                <include
+                    android:id="@+id/additional_tracking_item"
+                    layout="@layout/other_subscriptions_additional_tracking_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:viewModel="@{viewModel}"/>
+
+                <include
+                    android:id="@+id/social_media_tracking"
+                    layout="@layout/other_subscriptions_social_media_tracking_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:viewModel="@{viewModel}"/>
+
+                <View
+                    android:id="@+id/other_subscriptions_default_item_divider"
+                    style="@style/PreferenceDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp" />
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/custom_category_title"
+                    style="@style/CustomPreferenceCategoryTitleTextStyle"
+                    gone="@{viewModel.customSubscriptions.empty}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/other_subscriptions_custom_category"
+                    tools:text="@string/other_subscriptions_custom_category" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/other_subscriptions_list"
                     style="@style/PreferenceScreen"
-                    otherSubscriptions="@{viewModel.subscriptions}"
+                    android:paddingTop="0dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/other_subscriptions_custom_item" />
 
-                <LinearLayout
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/other_subscriptions_hint"
+                    style="@style/CustomPreferenceSummaryTextStyle"
+                    gone="@{viewModel.customSubscriptions.empty}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_margin="32dp"
-                    android:gravity="top"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/other_subscriptions_hint"
-                        style="@style/CustomPreferenceSummaryTextStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/outline_info_24"
-                        android:drawablePadding="2dip"
-                        android:gravity="center"
-                        android:text="@string/delete_swipe_hint" />
-
-                </LinearLayout>
+                    android:drawableStart="@drawable/outline_info_24"
+                    android:drawablePadding="2dip"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/delete_swipe_hint" />
 
             </LinearLayout>
 

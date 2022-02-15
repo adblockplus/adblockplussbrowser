@@ -36,22 +36,18 @@ internal class OtherSubscriptionsFragment :
 
     override fun onBindView(binding: FragmentOtherSubscriptionsBinding) {
         binding.viewModel = viewModel
-        binding.otherSubscriptionsList.adapter = OtherSubscriptionsAdapter(viewModel, viewLifecycleOwner)
 
         binding.otherSubscriptionsAddButton.setOnClickListener {
             AddCustomSubscriptionDialogFragment().show(parentFragmentManager, null)
         }
 
         val swipeToDeleteHandler = object : SwipeToDeleteCallback() {
-            override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
-                if (viewHolder.adapterPosition < viewModel.nonRemovableItemCount) return 0
-                return super.getMovementFlags(recyclerView, viewHolder)
-            }
-
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val otherSubscriptionsAdapter = binding.otherSubscriptionsList.adapter as OtherSubscriptionsAdapter
+                val otherSubscriptionsAdapter =
+                    binding.otherSubscriptionsList.adapter as OtherSubscriptionsAdapter
                 val item = otherSubscriptionsAdapter.getCustomItem(viewHolder.adapterPosition)
-                DeleteCustomSubscriptionDialogFragment.newInstance(item).show(parentFragmentManager, null)
+                DeleteCustomSubscriptionDialogFragment.newInstance(item)
+                    .show(parentFragmentManager, null)
                 otherSubscriptionsAdapter.notifyDataSetChanged()
             }
         }
@@ -62,16 +58,37 @@ internal class OtherSubscriptionsFragment :
         viewModel.uiState.observe(this) { uiState ->
             when (uiState) {
                 UiState.Done -> binding.indeterminateBar.visibility = View.GONE
-                UiState.Error -> Toast.makeText(requireContext(),
-                    getString(R.string.other_subscriptions_error_add_custom), Toast.LENGTH_LONG).show()
+                UiState.Error -> Toast.makeText(
+                    requireContext(),
+                    getString(R.string.other_subscriptions_error_add_custom), Toast.LENGTH_LONG
+                ).show()
                 UiState.Loading -> binding.indeterminateBar.visibility = View.VISIBLE
             }
         }
 
-        viewModel.subscriptions.observe(this) { otherSubscriptionsList ->
-            val areCustomSubscriptionsEmpty = otherSubscriptionsList.filterIsInstance(OtherSubscriptionsItem.CustomItem::class.java).isEmpty()
-            binding.otherSubscriptionsHint.visibility = if (areCustomSubscriptionsEmpty) View.INVISIBLE else View.VISIBLE
+        viewModel.customSubscriptions.observe(this) { otherSubscriptionsList ->
+            binding.otherSubscriptionsList.adapter =
+                OtherSubscriptionsAdapter(otherSubscriptionsList)
         }
 
+        viewModel.activeSubscriptions.observe(this) { activeSubscriptions ->
+            viewModel.additionalTrackingSubscription.observe(this) { subscription ->
+                val result =
+                    activeSubscriptions.firstOrNull { active -> active.url == subscription.url }
+                viewModel.additionalTrackingLastUpdate.apply { value = result?.lastUpdate }
+                viewModel.blockAdditionalTracking.apply {
+                    value = result != null
+                }
+            }
+
+            viewModel.socialMediaTrackingSubscription.observe(this) { subscription ->
+                val result =
+                    activeSubscriptions.firstOrNull { active -> active.url == subscription.url }
+                viewModel.socialMediaIconsTrackingLastUpdate.apply { value = result?.lastUpdate }
+                viewModel.blockSocialMediaTracking.apply {
+                    value = result != null
+                }
+            }
+        }
     }
 }
