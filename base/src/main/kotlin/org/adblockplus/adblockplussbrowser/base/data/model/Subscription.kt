@@ -31,7 +31,9 @@ data class Subscription(
 ) : Parcelable {
     /**
      * If the subscription url has easylist-downloads.adblockplus.org as domain, the latter get
-     * replaced by a randomized url on eyeo.com.
+     * replaced by a randomized url on:
+     *  - eyeo.com for ABP and Crystal
+     *  - getadblock.com for Adblock.
      */
     val randomizedUrl: String
         get() = when (flavor) {
