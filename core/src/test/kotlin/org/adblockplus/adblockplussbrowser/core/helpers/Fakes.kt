@@ -17,12 +17,17 @@
 
 package org.adblockplus.adblockplussbrowser.core.helpers
 
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.components.SingletonComponent
+import dagger.hilt.testing.TestInstallIn
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
+import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.data.model.CoreData
 import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscription
@@ -31,9 +36,17 @@ import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
 import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig
 
+
 class Fakes {
 
-    internal class FakeCoreRepository(serverUrl: String) : CoreRepository {
+//    @Module
+//    @TestInstallIn(components = [SingletonComponent::class], replaces = [FakeCoreRepository::class])
+//    internal interface FakeDataServiceModule {
+//        @Binds
+//        fun bind(impl: FakeCoreRepository?): CoreRepository?
+//    }
+
+    class FakeCoreRepository(serverUrl: String) : CoreRepository {
 
         val INITIAL_TIMESTAMP = -1L
         val INITIAL_COUNT = -1
@@ -93,6 +106,9 @@ class Fakes {
 
     class FakeSettingsRepository(private val serverUrl: String) : SettingsRepository {
         var acceptableAdsStatus: Boolean = true
+        override suspend fun checkLanguagesOnboardingCompleted() {
+            TODO("Not yet implemented")
+        }
 
         override val settings: Flow<Settings>
             get() = flow {
@@ -213,5 +229,18 @@ class Fakes {
         override fun enable() {}
 
         override fun disable() {}
+    }
+
+    class FakeActivationPreferences : ActivationPreferences{
+        override val lastFilterListRequest: Flow<Long>
+            get() = TODO("Not yet implemented")
+
+        override suspend fun isAdblockEnabled(): Flow<Boolean> {
+            return super.isAdblockEnabled()
+        }
+
+        override suspend fun updateLastFilterRequest(lastFilterListRequest: Long) {
+            TODO("Not yet implemented")
+        }
     }
 }
