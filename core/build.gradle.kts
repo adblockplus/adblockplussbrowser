@@ -47,6 +47,7 @@ dependencies {
     implementation(Deps.AndroidX.Work.RUNTIME)
     implementation(Deps.AndroidX.DataStore.DATASTORE)
     implementation(Deps.Protobuf.JAVALITE)
+    implementation(Deps.XZ.XZ)
 
     implementation(Deps.Hilt.ANDROID)
     kapt(Deps.Hilt.ANDROID_COMPILER)

@@ -52,8 +52,12 @@ import org.adblockplus.adblockplussbrowser.core.extensions.setBackoffTime
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker.Companion.BACKOFF_TIME_S
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker.Companion.USER_COUNTER_KEY_ONESHOT_WORK
+import org.tukaani.xz.XZIOException
+import org.tukaani.xz.XZInputStream
 import timber.log.Timber
 import java.io.File
+import java.io.IOException
+import java.util.concurrent.CountDownLatch
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
@@ -76,6 +80,8 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
     lateinit var activationPreferences: ActivationPreferences
     lateinit var workManager: WorkManager
 
+    var defaultSubscriptionsUnpackingDone: CountDownLatch = CountDownLatch(1)
+
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int = 0
 
     override fun getType(uri: Uri): String? = null
@@ -88,6 +94,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             context,
             FilterListContentProviderEntryPoint::class.java
         )
+        prepareDefaultSubscriptions()
         coreRepository = entryPoint.getCoreRepository()
         activationPreferences = entryPoint.getActivationPreferences()
         analyticsProvider = entryPoint.getAnalyticsProvider()
@@ -151,7 +158,64 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         return CallingApp(application, applicationVersion)
     }
 
+    private fun getDefaultSubscriptionsDir(): File {
+        val context = requireContext(this)
+        val directory = File(context.filesDir, "cache")
+        directory.mkdirs()
+        return directory
+    }
+
+    private fun unpackDefaultSubscriptions()
+    {
+        val context = requireContext(this)
+        val directory = getDefaultSubscriptionsDir()
+        val defaultFile = File(directory, DEFAULT_SUBSCRIPTIONS_FILENAME)
+        val temp = File.createTempFile("filters", ".txt", directory)
+        val start = Duration.milliseconds(System.currentTimeMillis())
+
+        Timber.d("getFilterFile: unpacking")
+        try {
+            var ins = context.assets.open("exceptionrules.txt.xz")
+            var xzInputStream = XZInputStream(ins, 1192 * 1024)
+            xzInputStream.source().use { a ->
+                temp.sink().buffer().use { b -> b.writeAll(a) }
+            }
+
+            ins = context.assets.open("easylist.txt.xz")
+            xzInputStream = XZInputStream(ins, 1192 * 1024)
+            xzInputStream.source().use { a ->
+                temp.sink(append = true).buffer().use { b -> b.writeAll(a) }
+            }
+            temp.renameTo(defaultFile)
+            Timber.d("getFilterFile: unpacked, elapsed: ${Duration.milliseconds(System.currentTimeMillis()) - start}")
+        } catch (ex: XZIOException) {
+            Timber.e(ex)
+            defaultFile.delete()
+        } catch (ex: IOException) {
+            defaultFile.delete()
+        }
+        defaultSubscriptionsUnpackingDone.countDown()
+    }
+
+    private fun prepareDefaultSubscriptions() {
+        val directory = getDefaultSubscriptionsDir()
+        val defaultFile = File(directory, DEFAULT_SUBSCRIPTIONS_FILENAME)
+        val path = coreRepository.subscriptionsPath
+
+        // We have a current file with downloaded subscriptions, return it
+        if (!path.isNullOrEmpty() && File(path).exists()) {
+            defaultFile.delete()
+        } else if (!defaultFile.exists()) {
+            launch {
+                unpackDefaultSubscriptions()
+            }
+            return
+        }
+        defaultSubscriptionsUnpackingDone.countDown()
+    }
+
     private fun getFilterFile(): File {
+        Timber.i("getFilterFile")
         val context = requireContext(this)
         val directory = File(context.filesDir, "cache")
         directory.mkdirs()
@@ -163,23 +227,11 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             return File(path)
         }
 
-        if (defaultFile.exists()) {
-            return defaultFile
+        defaultSubscriptionsUnpackingDone.await()
+
+        if (!defaultFile.exists()) {
+            defaultFile.createNewFile()
         }
-
-        val temp = File.createTempFile("filters", ".txt", directory)
-
-        var ins = context.assets.open("exceptionrules.txt")
-        ins.source().use { a ->
-            temp.sink().buffer().use { b -> b.writeAll(a) }
-        }
-
-        ins = context.assets.open("easylist.txt")
-        ins.source().use { a ->
-            temp.sink(append = true).buffer().use { b -> b.writeAll(a) }
-        }
-
-        temp.renameTo(defaultFile)
         return defaultFile
     }
 
