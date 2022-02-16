@@ -52,15 +52,15 @@ import org.adblockplus.adblockplussbrowser.core.extensions.setBackoffTime
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker.Companion.BACKOFF_TIME_S
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker.Companion.USER_COUNTER_KEY_ONESHOT_WORK
+import org.tukaani.xz.XZInputStream
 import timber.log.Timber
 import java.io.File
+import java.io.IOException
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
 internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
-
-    lateinit var analyticsProvider: AnalyticsProvider
 
     @EntryPoint
     @InstallIn(SingletonComponent::class)
@@ -70,30 +70,48 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         fun getAnalyticsProvider(): AnalyticsProvider
     }
 
+    private val entrypoint: FilterListContentProviderEntryPoint by lazy {
+        EntryPointAccessors.fromApplication(
+            requireContext(this@FilterListContentProvider),
+            FilterListContentProviderEntryPoint::class.java
+        )
+    }
+    val coreRepository: CoreRepository by lazy {
+        entrypoint.getCoreRepository()
+    }
+
+    val activationPreferences: ActivationPreferences by lazy {
+        entrypoint.getActivationPreferences()
+    }
+
+    val analyticsProvider: AnalyticsProvider by lazy {
+        entrypoint.getAnalyticsProvider()
+    }
+
+    val workManager: WorkManager by lazy {
+        WorkManager.getInstance(requireContext(this@FilterListContentProvider))
+    }
+
+    val defaultSubscriptionDir: File by lazy {
+        val context = requireContext(this@FilterListContentProvider)
+        val directory = File(context.filesDir, "cache")
+        directory.mkdirs()
+        directory
+    }
+
+    val defaultSubscriptionFile: File by lazy {
+        File(defaultSubscriptionDir, DEFAULT_SUBSCRIPTIONS_FILENAME)
+    }
+
     override val coroutineContext = Dispatchers.IO + SupervisorJob()
 
-    lateinit var coreRepository: CoreRepository
-    lateinit var activationPreferences: ActivationPreferences
-    lateinit var workManager: WorkManager
+    override fun onCreate(): Boolean { return true }
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int = 0
 
     override fun getType(uri: Uri): String? = null
 
     override fun insert(uri: Uri, values: ContentValues?): Uri? = null
-
-    override fun onCreate(): Boolean {
-        val context = requireContext(this)
-        val entryPoint = EntryPointAccessors.fromApplication(
-            context,
-            FilterListContentProviderEntryPoint::class.java
-        )
-        coreRepository = entryPoint.getCoreRepository()
-        activationPreferences = entryPoint.getActivationPreferences()
-        analyticsProvider = entryPoint.getAnalyticsProvider()
-        workManager = WorkManager.getInstance(context)
-        return true
-    }
 
     private fun triggerUserCountingRequest(callingApp: CallingApp) {
         val request = OneTimeWorkRequestBuilder<UserCounterWorker>().apply {
@@ -124,6 +142,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             Timber.i("Filter list requested: $uri - $mode...")
             analyticsProvider.logEvent(AnalyticsEvent.FILTER_LIST_REQUESTED)
             val file = getFilterFile()
+            Timber.d("Open File file size ${file.length()}")
             Timber.d("Returning ${file.absolutePath}")
             ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY)
         } catch (ex: Exception) {
@@ -151,36 +170,64 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         return CallingApp(application, applicationVersion)
     }
 
-    private fun getFilterFile(): File {
+    private fun unpackDefaultSubscriptions() {
         val context = requireContext(this)
-        val directory = File(context.filesDir, "cache")
-        directory.mkdirs()
-        val defaultFile = File(directory, DEFAULT_SUBSCRIPTIONS_FILENAME)
+        val temp = File.createTempFile("filters", ".txt", defaultSubscriptionDir)
+        val start = Duration.milliseconds(System.currentTimeMillis())
+
+        Timber.d("getFilterFile: unpacking")
+        try {
+            var ins = context.assets.open("exceptionrules.txt.xz")
+            /*
+                XZInputStream params:
+                    - Input stream
+                    - memory limit expressed in kilobytes (KiB)
+                        The worst-case memory usage of XZInputStream is currently 1.5 GiB.
+                        Still, very few files will require more than about 65 MiB.
+                        To calculate, multiply the digital storage value by 1024. E.g.: 65 MiB * 1024
+             */
+            val xzInputStream = XZInputStream(ins, XZ_MEMORY_LIMIT_KB)
+            xzInputStream.source().use { a ->
+                temp.sink().buffer().use { b -> b.writeAll(a) }
+            }
+
+            ins = context.assets.open("easylist.txt")
+            ins.source().use { a ->
+                temp.sink(append = true).buffer().use { b -> b.writeAll(a) }
+            }
+            temp.renameTo(defaultSubscriptionFile)
+            Timber.d("getFilterFile: unpacked, elapsed: ${Duration.milliseconds(System.currentTimeMillis()) - start}")
+        } catch (ex: IOException) {
+            Timber.e(ex)
+            defaultSubscriptionFile.delete()
+            temp.delete()
+        }
+    }
+
+    private fun prepareDefaultSubscriptions() {
         val path = coreRepository.subscriptionsPath
+        // We have a current file with downloaded subscriptions, return it
+        if (!path.isNullOrEmpty() && File(path).exists()) {
+            defaultSubscriptionFile.delete()
+        } else if (!defaultSubscriptionFile.exists()) {
+            unpackDefaultSubscriptions()
+        }
+    }
+
+    private fun getFilterFile(): File {
+        Timber.i("getFilterFile")
+        val path = coreRepository.subscriptionsPath
+
         // We have a current file, return it
         if (!path.isNullOrEmpty() && File(path).exists()) {
-            defaultFile.delete()
+            defaultSubscriptionFile.delete()
             return File(path)
         }
 
-        if (defaultFile.exists()) {
-            return defaultFile
+        if (!defaultSubscriptionFile.exists()) {
+            prepareDefaultSubscriptions()
         }
-
-        val temp = File.createTempFile("filters", ".txt", directory)
-
-        var ins = context.assets.open("exceptionrules.txt")
-        ins.source().use { a ->
-            temp.sink().buffer().use { b -> b.writeAll(a) }
-        }
-
-        ins = context.assets.open("easylist.txt")
-        ins.source().use { a ->
-            temp.sink(append = true).buffer().use { b -> b.writeAll(a) }
-        }
-
-        temp.renameTo(defaultFile)
-        return defaultFile
+        return defaultSubscriptionFile
     }
 
     override fun query(
@@ -197,5 +244,12 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         const val DEFAULT_SUBSCRIPTIONS_FILENAME = "default_subscriptions.txt"
         const val DEFAULT_CALLING_APP_NAME = "other"
         const val DEFAULT_CALLING_APP_VERSION = "0"
+        /*
+            Memory limit was calculated by using a 5x times bigger file and
+            limiting the memory until the unpacking wouldn't work. That value 3x bigger.
+            The result was it wouldn't work with less than 9 * 1024 so rounded up to 10 and
+            multiplied it by 3.
+         */
+        const val XZ_MEMORY_LIMIT_KB = 30 * 1024
     }
 }
