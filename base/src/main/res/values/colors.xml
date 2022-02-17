@@ -23,8 +23,8 @@
     <color name="background_accent">@color/blue_bayoux</color>
     <color name="foreground">@color/black</color>
     <color name="foreground_secondary">@color/blue_bayoux</color>
-    <color name="foreground_accent">@color/ribbon</color>
-    <color name="clickable_text">@color/ribbon</color>
+    <color name="foreground_accent">@color/blue</color>
+    <color name="clickable_text">@color/blue</color>
     <color name="divider">@color/lynch_opacity_15</color>
 
     <!-- Used the following tool to name the colors:
@@ -47,7 +47,8 @@
     <color name="blue_bayoux">#4B5E75</color>
     <color name="oxford_blue">#3C4857</color>
 
+    <color name="ribbon">@color/blue</color>
     <color name="dodger_blue">#2786FF</color>
-    <color name="ribbon">#0070FF</color>
+    <color name="blue">#0070FF</color>
 
 </resources>

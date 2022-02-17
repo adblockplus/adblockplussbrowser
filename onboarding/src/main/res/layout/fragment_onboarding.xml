@@ -66,7 +66,7 @@
             app:layout_constraintBottom_toTopOf="@id/onboarding_circular_indicator"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:selectedDotColor="?attr/colorPrimary" />
+            app:selectedDotColor="@color/ribbon" />
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/onboarding_circular_indicator"
@@ -99,7 +99,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/open_si_button"
-            android:backgroundTint="?attr/colorPrimary"
+            android:backgroundTint="@color/ribbon"
             onboardingOpenSamsungButton="@{onboardingPager}"
             android:layout_width="0dp"
             android:layout_height="72dp"
