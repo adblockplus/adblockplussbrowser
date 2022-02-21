@@ -18,6 +18,7 @@
 <resources>
     <!-- app-->
     <string name="app_name">Crystal for Samsung Internet</string>
+    <string name="samsung_internet_required_description">Crystal is an app that runs on top of Samsung Internet to filter ads while you use that browser. For Crystal to be effective, you need Samsung Internet 4.0 or above installed on your device.\nYou can get Samsung Internet browser by tapping on the button below.</string>
 
     <!-- base-->
     <string name="product_name">Crystal</string>
