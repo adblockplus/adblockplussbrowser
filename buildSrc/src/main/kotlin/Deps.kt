@@ -155,6 +155,7 @@ object Deps {
         val ANDROID = dependency { name("hilt-android") }
         val ANDROID_COMPILER = dependency { name("hilt-android-compiler") }
         val ANDROID_GRADLE_PLUGIN = dependency { name("hilt-android-gradle-plugin") }
+        val ANDROID_TESTING = dependency { name("hilt-android-testing") }
     }
 
     object Kotlin : DependencyGroup("org.jetbrains.kotlin", "1.5.31") {
@@ -203,6 +204,10 @@ object Deps {
 
     object XZ : DependencyGroup("org.tukaani", "1.9") {
         val XZ = dependency { name("xz") }
+    }
+
+    object Robolectric : DependencyGroup("org.robolectric", "4.6") {
+        val ROBOLECTRIC = dependency { name("robolectric") }
     }
 }
 
