@@ -1,0 +1,37 @@
+<!--
+ This file is part of Adblock Plus <https://adblockplus.org/>,
+ Copyright (C) 2006-present eyeo GmbH
+
+ Adblock Plus is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License version 3 as
+ published by the Free Software Foundation.
+
+ Adblock Plus is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <!-- app-->
+    <string name="app_name">Crystal لـ Samsung Internet</string>
+    <string name="samsung_internet_required_description">Crystal هو تطبيق  يستخدم المتصفح Samsung Internet لتصفية الإعلانات أثناء استخدامك المتصفح. ولكي يعمل Crystal بفعالية، يجب أن يكون الإصدار 4.0 أو إصدار أحدث للمتصفح Samsung Internet مُثبَّتًا على جهازك.\nويمكنك الحصول على المتصفح Samsung Internet بالنقر فوق الزر أدناه.</string>
+
+    <!-- base-->
+    <string name="product_name">Crystal</string>
+
+    <!-- onboarding -->
+    <string name="onboarding_welcome_security_privacy_description">تصفَّح بدون قلق مع Crystal الذي يحميك في الخلفية</string>
+    <string name="onboarding_welcome_language_filters_description">احجب مزيدًا من الإعلانات عن طريق إختيار اللغات التي تتصفح بها عادةً</string>
+    <string name="onboarding_enable_header_title2">تمكين Crystal</string>
+    <string name="onboarding_enable_one_step_description">قم بتمكين Crystal في إعدادات حاجب الإعلانات بالمتصفح Samsung Internet</string>
+
+    <!-- preferences -->
+    <string name="preferences_primary_subscriptions_summary">احجب مزيدًا من الإعلانات عن طريق Crystal بإختيار اللغة (اللغات) التي تتصفح بها عادةً</string>
+    <string name="share_events_header">المساعدة في تحسين Crystal</string>
+    <string name="share_events_description">تساعدنا البيانات مجهولة المصدر على تحسين Crystal؛ وهو ما يوفر لك تجربة تصفح أفضل.</string>
+
+</resources>

@@ -1,0 +1,37 @@
+<!--
+ This file is part of Adblock Plus <https://adblockplus.org/>,
+ Copyright (C) 2006-present eyeo GmbH
+
+ Adblock Plus is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License version 3 as
+ published by the Free Software Foundation.
+
+ Adblock Plus is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <!-- app-->
+    <string name="app_name">三星浏览器专用 Crystal</string>
+    <string name="samsung_internet_required_description">Crystal 是一款在您使用三星浏览器时，在该浏览器上层运行的筛选广告的应用程序。如要有效使用 Crystal，您需要在设备上安装三星浏览器 4.0 或更高版本。\n您可以按一下以下按钮获取三星浏览器。</string>
+
+    <!-- base-->
+    <string name="product_name">Crystal</string>
+
+    <!-- onboarding -->
+    <string name="onboarding_welcome_security_privacy_description">有 Crystal 在后台保护您，您可以放心无虞地浏览网页</string>
+    <string name="onboarding_welcome_language_filters_description">针对您通常浏览的语言优化 Crystal，从而阻止更多广告</string>
+    <string name="onboarding_enable_header_title2">启用 Crystal</string>
+    <string name="onboarding_enable_one_step_description">在三星浏览器的广告拦截程序设置中启用 Crystal</string>
+
+    <!-- preferences -->
+    <string name="preferences_primary_subscriptions_summary">针对您通常浏览的语言优化 Crystal 以拦截更多广告</string>
+    <string name="share_events_header">帮助改进 Crystal</string>
+    <string name="share_events_description">匿名数据帮助我们改进 Crystal，从而为您打造更好的浏览体验。</string>
+
+</resources>

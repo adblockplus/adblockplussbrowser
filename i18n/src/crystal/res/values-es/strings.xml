@@ -1,0 +1,37 @@
+<!--
+ This file is part of Adblock Plus <https://adblockplus.org/>,
+ Copyright (C) 2006-present eyeo GmbH
+
+ Adblock Plus is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License version 3 as
+ published by the Free Software Foundation.
+
+ Adblock Plus is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <!-- app-->
+    <string name="app_name">Crystal para Internet de Samsung</string>
+    <string name="samsung_internet_required_description">Crystal es una aplicación que se ejecuta sobre Internet de Samsung para filtrar los anuncios mientras se usa ese navegador. Para que Crystal sea efectivo, necesitas tener instalada la versión 4.0 o superior de Internet de Samsung en tu dispositivo.\nPuedes obtener Internet de Samsung tocando el botón que aparece a continuación.</string>
+
+    <!-- base-->
+    <string name="product_name">Crystal</string>
+
+    <!-- onboarding -->
+    <string name="onboarding_welcome_security_privacy_description">Navega sin preocupaciones, Crystal te protege en un segundo plano</string>
+    <string name="onboarding_welcome_language_filters_description">Bloquea más anuncios optimizando Crystal en los idiomas en los que navegas normalmente</string>
+    <string name="onboarding_enable_header_title2">Activar Crystal</string>
+    <string name="onboarding_enable_one_step_description">Activar Crystal en los ajustes del bloqueador de anuncios de Internet de Samsung</string>
+
+    <!-- preferences -->
+    <string name="preferences_primary_subscriptions_summary">Bloquea más anuncios optimizando Crystal en los idiomas en los que navegas normalmente</string>
+    <string name="share_events_header">Ayuda a mejorar Crystal</string>
+    <string name="share_events_description">Los datos anonimizados nos ayudan a mejorar Crystal y, por tanto, a crear una mejor experiencia de navegación para ti.</string>
+
+</resources>
