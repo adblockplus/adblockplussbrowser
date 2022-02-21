@@ -182,6 +182,9 @@ class Fakes {
         }
 
         override suspend fun markLanguagesOnboardingCompleted() {}
+        override suspend fun checkLanguagesOnboardingCompleted() {
+            TODO("Not yet implemented")
+        }
     }
 
     class FakeAnalyticsProvider : AnalyticsProvider {
