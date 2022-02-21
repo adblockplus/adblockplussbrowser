@@ -26,22 +26,31 @@ data class Subscription(
     val url: String,
     val title: String,
     val lastUpdate: Long,
+    /* Used only for testability! */
+    val flavor: String = BuildConfig.FLAVOR_product
 ) : Parcelable {
     /**
      * If the subscription url has easylist-downloads.adblockplus.org as domain, the latter get
-     * replaced by a randomized url on eyeo.com.
+     * replaced by a randomized url on:
+     *  - eyeo.com for ABP and Crystal
+     *  - getadblock.com for Adblock.
      */
     val randomizedUrl: String
-        get() = when (BuildConfig.FLAVOR_product) {
+        get() = when (flavor) {
             BuildConfig.FLAVOR_ABP -> url.replace(
                 "easylist-downloads.adblockplus.org",
                 "${(0..9).random()}.samsung-internet.filter-list-downloads.eyeo.com"
-            )
+            ).replace("exceptionrules.txt", "aa-variants/samsung_internet_browser-adblock_plus.txt")
+
             BuildConfig.FLAVOR_ADBLOCK -> url.replace(
                 "easylist-downloads.adblockplus.org",
                 "${(0..9).random()}.samsung-internet.filter-list-downloads.getadblock.com"
-            ).replace("exceptionrules.txt", "samsung_internet_browser.txt")
-            BuildConfig.FLAVOR_CRYSTAL -> url // no op for crystal so far
+            ).replace("exceptionrules.txt", "aa-variants/samsung_internet_browser-adblock.txt")
+
+            BuildConfig.FLAVOR_CRYSTAL -> url.replace(
+                "easylist-downloads.adblockplus.org",
+                "${(0..9).random()}.samsung-internet.filter-list-downloads.eyeo.com"
+            ).replace("exceptionrules.txt", "aa-variants/samsung_internet_browser-crystal.txt")
             else -> if (BuildConfig.DEBUG) throw NotImplementedError(
                 "You forgot to specify a URL override for the flavor you have added"
             ) else url
