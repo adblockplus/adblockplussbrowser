@@ -22,7 +22,7 @@ import kotlinx.parcelize.Parcelize
 import java.io.File
 
 @Parcelize
-data class DownloadedSubscription(
+internal data class DownloadedSubscription(
     val url: String,
     val path: String = "",
     val lastUpdated: Long = 0L,

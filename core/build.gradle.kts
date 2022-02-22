@@ -60,12 +60,6 @@ dependencies {
     testImplementation(Deps.OkHttp.MOCK_WEB_SERVER)
     testImplementation(Deps.Mockito.Core)
     testImplementation(Deps.Mockito.Kotlin)
-    testImplementation(Deps.Hilt.ANDROID_TESTING)
-    testImplementation(Deps.Robolectric.ROBOELECTRIC)
-    testAnnotationProcessor(Deps.Hilt.ANDROID_COMPILER)
-    kaptTest(Deps.Hilt.ANDROID_COMPILER)
-    kaptTest(Deps.AndroidX.Hilt.COMPILER)
-    kaptAndroidTest(Deps.Hilt.ANDROID_COMPILER)
 }
 
 protobuf {
