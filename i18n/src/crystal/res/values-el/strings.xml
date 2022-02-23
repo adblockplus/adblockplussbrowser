@@ -1,0 +1,37 @@
+<!--
+ This file is part of Adblock Plus <https://adblockplus.org/>,
+ Copyright (C) 2006-present eyeo GmbH
+
+ Adblock Plus is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License version 3 as
+ published by the Free Software Foundation.
+
+ Adblock Plus is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <!-- app-->
+    <string name="app_name">Crystal για Samsung Internet</string>
+    <string name="samsung_internet_required_description">Το Crystal είναι μια εφαρμογή που τρέχει πάνω από το Samsung Internet για να φιλτράρει τις διαφημίσεις ενώ χρησιμοποιείτε αυτό το πρόγραμμα περιήγησης. Για να είναι αποτελεσματικό το Crystal, χρειάζεστε να υπάρχει εγκατεστημένο στη συσκευή σας το Samsung Internet 4.0 ή μεταγενέστερη έκδοση.\nΜπορείτε να αποκτήσετε το πρόγραμμα περιήγησης Samsung Internet πατώντας το παρακάτω κουμπί.</string>
+
+    <!-- base-->
+    <string name="product_name">Crystal</string>
+
+    <!-- onboarding -->
+    <string name="onboarding_welcome_security_privacy_description">Περιηγηθείτε χωρίς δεύτερες σκέψεις με το Crystal το οποίο σας προστατεύει</string>
+    <string name="onboarding_welcome_language_filters_description">Αποκλείστε περισσότερες διαφημίσεις βελτιστοποιώντας το Crystal για τις γλώσσες στις οποίες συνήθως περιηγείστε</string>
+    <string name="onboarding_enable_header_title2">ενεργοποιήσετε το Crystal</string>
+    <string name="onboarding_enable_one_step_description">Ενεργοποιήστε το Crystal στις Ρυθμίσεις AdBlocker του Samsung Internet</string>
+
+    <!-- preferences -->
+    <string name="preferences_primary_subscriptions_summary">Αποκλείστε περισσότερες διαφημίσεις βελτιστοποιώντας το Crystal για τη/τις γλώσσα/ες στην/στις οποία/ες συνήθως περιηγείστε</string>
+    <string name="share_events_header">Βοηθήστε στη βελτίωση του Crystal</string>
+    <string name="share_events_description">Τα ανώνυμα δεδομένα μας βοηθούν να βελτιώνουμε το Crystal, δημιουργώντας έτσι μια καλύτερη εμπειρία περιήγησης για εσάς.</string>
+
+</resources>
