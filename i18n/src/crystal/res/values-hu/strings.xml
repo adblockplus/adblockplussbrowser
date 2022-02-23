@@ -1,0 +1,37 @@
+<!--
+ This file is part of Adblock Plus <https://adblockplus.org/>,
+ Copyright (C) 2006-present eyeo GmbH
+
+ Adblock Plus is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License version 3 as
+ published by the Free Software Foundation.
+
+ Adblock Plus is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <!-- app-->
+    <string name="app_name">Crystal Samsung Internet böngészőhöz</string>
+    <string name="samsung_internet_required_description">Az Crystal egy olyan alkalmazás, amely a Samsung Internet böngészőn futtatva szűri a böngészés közben megjelenő reklámokat. Az Crystal hatékony működéséhez Samsung Internet 4.0, vagy újabb változatot szükséges telepítenie eszközére.\nA Samsung Internet böngészőt az alábbi gombra koppintva tekintheti meg.</string>
+
+    <!-- base-->
+    <string name="product_name">Crystal</string>
+
+    <!-- onboarding -->
+    <string name="onboarding_welcome_security_privacy_description">Gondmentes böngészés az Crystal alkalmazás védelmével</string>
+    <string name="onboarding_welcome_language_filters_description">Blokkoljon további hirdetéseket az Crystal optimalizálásával a leggyakoribb böngészési nyelveken</string>
+    <string name="onboarding_enable_header_title2">Az Crystal engedélyezését</string>
+    <string name="onboarding_enable_one_step_description">Crystal engedélyezése a Samsung Internet reklámblokkolási beállításaiban</string>
+
+    <!-- preferences -->
+    <string name="preferences_primary_subscriptions_summary">Blokkoljon további reklámokat az Crystal optimalizálásával a leggyakoribb böngészési nyelveken</string>
+    <string name="share_events_header">Segítse az Crystal javításában</string>
+    <string name="share_events_description">Az anonimizált adatok segítségével javíthatjuk az Crystal alkalmazást, hogy még jobb böngészési élményt nyújthasson.</string>
+
+</resources>
