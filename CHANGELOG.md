@@ -4,7 +4,7 @@ All notable changes to Adblock Plus for Samsung Internet will be documented in t
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [cr-2.2.0] - 2022-02-24
+## [CRYSTAL-2.2.0] - 2022-02-24
 ### Fixed
 - Hyperlinks for Terms & Privacy Policy are invisible in Arabic
 - Missing lastVersion parameter for download filters and user counting requests
@@ -46,22 +46,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added mechanism to migrate all data from version 1.2.2 to 2.2.0
 - Added analytics module for sharing anonymized user behavior
 
-## [2.1.1] - 2021-12-28
+## [ABP-2.1.1] - 2021-12-28
 ### Changed
 - Updated preloaded filter list
 
-## [3.1.1] - 2021-12-27
+## [ADBLOCK-3.1.1] - 2021-12-27
 ### Fixed
 - Crash on a SecurityException from LauncherActivity
 
-## [3.1.0] - 2021-12-20
+## [ADBLOCK-3.1.0] - 2021-12-20
 ### Changed
 - AdBlock specific filter list
 
 ### Fixed
 - Adblock analytics user counting property
 
-## [3.1.0-rc3] - 2021-12-17
+## [ADBLOCK-3.1.0-rc3] - 2021-12-17
 
 ### Fixed
 - Adblock flavor name assets
@@ -71,7 +71,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Adblock flavor name
 
-## [3.1.0-rc1] - 2021-12-16
+## [ADBLOCK-3.1.0-rc1] - 2021-12-16
 ### Changed
 - Randomized subscription url
 - Updated Android Gradle Plugin and Gradle
@@ -85,14 +85,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Allowlisting filter domain restriction
 - Mechanism for counting Yandex users
 
-## [2.0.1] - 2021-12-07
+## [ABP-2.0.1] - 2021-12-07
 ### Changed
 - Removed unused resources
 
 ### Fixed
 - Crash in data migration from the old app
 
-## [2.0.0] - 2021-11-25
+## [ABP-2.0.0] - 2021-11-25
 ### Changed
 - Links on the "About page" are better formatted
 - Reduced the app size
@@ -111,7 +111,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Code cleanup
 - Small bugfixes and improvements
 
-## [2.0.0-rc1] - 2021-10-01 - This release contains all current commits from https://gitlab.com/eyeo/distpartners/adblockplussbrowser/-/tree/dev
+## [ABP-2.0.0-rc1] - 2021-10-01 - This release contains all current commits from https://gitlab.com/eyeo/distpartners/adblockplussbrowser/-/tree/dev
 
 ### Changed/Added
 - Fully rebuilt user interface
