@@ -49,22 +49,6 @@ dependencies {
     implementation(Deps.Protobuf.JAVALITE)
 
     implementation(Deps.Hilt.ANDROID)
-    implementation("androidx.work:work-testing:2.7.1")
-    implementation("androidx.test:core-ktx:1.4.0")
-    implementation("androidx.test.ext:junit-ktx:1.1.3")
-
-    // Core library
-    androidTestImplementation("androidx.test:core:1.4.0")
-// AndroidJUnitRunner and JUnit Rules
-    androidTestImplementation("androidx.test:runner:1.4.0")
-    androidTestImplementation("androidx.test:rules:1.4.0")
-// Espresso dependencies
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-    androidTestImplementation("androidx.test.espresso:espresso-intents:3.4.0")
-//    androidTestImplementation("com.google.dagger:hilt-android-testing:2.38.1")
-//    implementation("androidx.test.ext:junit-ktx:1.1.3")
-//    implementation("androidx.test:runner:1.4.0")
-//    implementation("androidx.test:rules:1.4.0")
     kapt(Deps.Hilt.ANDROID_COMPILER)
     implementation(Deps.AndroidX.Hilt.COMMON)
     implementation(Deps.AndroidX.Hilt.WORK)
@@ -92,7 +76,22 @@ protobuf {
 }
 
 android {
-    defaultConfig {
-        testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
+    android {
+        defaultConfig {
+            testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
+        }
+    }
+    dependencies {
+        androidTestImplementation("androidx.work:work-testing:2.6.0")
+        androidTestImplementation("androidx.test:core-ktx:1.1.0")
+
+        androidTestImplementation(Deps.JUNIT)
+        androidTestImplementation(Deps.Mockito.Core)
+        androidTestImplementation(Deps.Mockito.Kotlin)
+
+        // TODO: Not really sure if we need these 3
+        androidTestImplementation("androidx.test:runner:1.4.0")
+        androidTestImplementation("androidx.test:rules:1.4.0")
+        androidTestImplementation("org.hamcrest:hamcrest-library:1.3")
     }
 }
