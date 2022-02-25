@@ -17,6 +17,7 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui.allowlist
 
+import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -49,5 +50,13 @@ internal class AllowlistFragment : DataBindingFragment<FragmentAllowlistBinding>
         }
         val itemTouchHelper = ItemTouchHelper(swipeToDeleteHandler)
         itemTouchHelper.attachToRecyclerView(binding.allowlistList)
+
+        viewModel.items.observe(this) { items ->
+            if (items.isEmpty()) {
+                binding.allowlistHint.visibility = View.INVISIBLE
+            } else {
+                binding.allowlistHint.visibility = View.VISIBLE
+            }
+        }
     }
 }

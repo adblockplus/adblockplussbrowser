@@ -18,6 +18,7 @@
 package org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions
 
 import android.app.ProgressDialog
+import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -73,5 +74,16 @@ internal class OtherSubscriptionsFragment :
                 }
             }
         }
+
+        viewModel.subscriptions.observe(this) { otherSubscriptionsList ->
+            if (otherSubscriptionsList.filterIsInstance(OtherSubscriptionsItem.CustomItem::class.java)
+                    .isEmpty()
+            ) {
+                this.binding?.otherSubscriptionsHint?.visibility =  View.INVISIBLE
+            } else {
+                this.binding?.otherSubscriptionsHint?.visibility = View.VISIBLE
+            }
+        }
+
     }
 }
