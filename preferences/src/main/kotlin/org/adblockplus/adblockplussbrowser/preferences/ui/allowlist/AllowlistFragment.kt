@@ -52,11 +52,7 @@ internal class AllowlistFragment : DataBindingFragment<FragmentAllowlistBinding>
         itemTouchHelper.attachToRecyclerView(binding.allowlistList)
 
         viewModel.items.observe(this) { items ->
-            if (items.isEmpty()) {
-                binding.allowlistHint.visibility = View.INVISIBLE
-            } else {
-                binding.allowlistHint.visibility = View.VISIBLE
-            }
+            binding.allowlistHint.visibility = if (items.isEmpty()) View.INVISIBLE else View.VISIBLE
         }
     }
 }

@@ -76,13 +76,8 @@ internal class OtherSubscriptionsFragment :
         }
 
         viewModel.subscriptions.observe(this) { otherSubscriptionsList ->
-            if (otherSubscriptionsList.filterIsInstance(OtherSubscriptionsItem.CustomItem::class.java)
-                    .isEmpty()
-            ) {
-                this.binding?.otherSubscriptionsHint?.visibility =  View.INVISIBLE
-            } else {
-                this.binding?.otherSubscriptionsHint?.visibility = View.VISIBLE
-            }
+            val areCustomSubscriptionsEmpty = otherSubscriptionsList.filterIsInstance(OtherSubscriptionsItem.CustomItem::class.java).isEmpty()
+            binding.otherSubscriptionsHint.visibility = if (areCustomSubscriptionsEmpty) View.INVISIBLE else View.VISIBLE
         }
 
     }
