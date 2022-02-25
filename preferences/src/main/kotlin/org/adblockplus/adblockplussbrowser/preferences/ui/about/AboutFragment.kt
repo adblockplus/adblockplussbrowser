@@ -58,12 +58,10 @@ internal class AboutFragment : DataBindingFragment<FragmentAboutBinding>(R.layou
         binding.versionNumber.text = context?.versionName
 
         binding.aboutPrivacyPolicy.setOnClickListener {
-            analyticsProvider.logEvent(AnalyticsEvent.PRIVACY_POLICY_VISITED)
             extractUrlAndRedirect(binding.aboutPrivacyPolicyHyperlink.text)
         }
 
         binding.aboutTermsOfUse.setOnClickListener {
-            analyticsProvider.logEvent(AnalyticsEvent.TERMS_OF_USE_VISITED)
             extractUrlAndRedirect(binding.aboutTermsOfUseHyperlink.text)
         }
 
