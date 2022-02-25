@@ -58,6 +58,18 @@ dependencies {
     testImplementation(Deps.OkHttp.MOCK_WEB_SERVER)
     testImplementation(Deps.Mockito.Core)
     testImplementation(Deps.Mockito.Kotlin)
+    testImplementation("org.robolectric:robolectric:4.6")
+    testImplementation("androidx.work:work-testing:2.6.0")
+    testImplementation("androidx.test:core-ktx:1.1.0")
+    // For Robolectric tests.
+    testImplementation("com.google.dagger:hilt-android-testing:2.38.1")
+    // ...with Kotlin.
+    kaptTest("com.google.dagger:hilt-android-compiler:2.38.1")
+    // ...with Java.
+    testAnnotationProcessor("com.google.dagger:hilt-android-compiler:2.38.1")
+//    testImplementation("com.google.dagger:hilt-android-compiler:2.38.1'")
+//    androidTestImplementation(Deps.Mockito.Core)
+//    androidTestImplementation(Deps.Mockito.Kotlin)
 }
 
 protobuf {
@@ -74,3 +86,23 @@ protobuf {
         }
     }
 }
+
+android {
+//    defaultConfig {
+//        testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
+//    }
+//    dependencies {
+//
+////        androidTestImplementation("androidx.work:work-testing:2.6.0")
+////        androidTestImplementation("androidx.test:core-ktx:1.1.0")
+////
+//////        androidTestImplementation(Deps.JUNIT)
+////        androidTestImplementation(Deps.Mockito.Core)
+////        androidTestImplementation(Deps.Mockito.Kotlin)
+//        // TODO: Not really sure if we need these 3
+////        androidTestImplementation("androidx.test:runner:1.4.0")
+////        androidTestImplementation("androidx.test:rules:1.4.0")
+////        androidTestImplementation("org.hamcrest:hamcrest-library:1.3")
+//    }
+}
+
