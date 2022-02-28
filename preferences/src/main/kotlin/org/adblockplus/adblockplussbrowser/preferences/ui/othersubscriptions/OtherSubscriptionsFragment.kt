@@ -18,6 +18,7 @@
 package org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions
 
 import android.app.ProgressDialog
+import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -73,5 +74,11 @@ internal class OtherSubscriptionsFragment :
                 }
             }
         }
+
+        viewModel.subscriptions.observe(this) { otherSubscriptionsList ->
+            val areCustomSubscriptionsEmpty = otherSubscriptionsList.filterIsInstance(OtherSubscriptionsItem.CustomItem::class.java).isEmpty()
+            binding.otherSubscriptionsHint.visibility = if (areCustomSubscriptionsEmpty) View.INVISIBLE else View.VISIBLE
+        }
+
     }
 }
