@@ -112,16 +112,6 @@ enum class AnalyticsEvent(val eventName: String) {
     ABOUT_VISITED("about_visited"),
 
     /**
-     * Privacy policy visited.
-     */
-    PRIVACY_POLICY_VISITED("privacy_policy_visited"),
-
-    /**
-     * Terms of use visited.
-     */
-    TERMS_OF_USE_VISITED("terms_of_use_visited"),
-
-    /**
      * Open source licenses visited.
      */
     OPEN_SOURCE_LICENSES_VISITED("open_source_licenses_visited"),
