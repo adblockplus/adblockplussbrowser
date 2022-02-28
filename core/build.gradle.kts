@@ -58,6 +58,17 @@ dependencies {
     testImplementation(Deps.OkHttp.MOCK_WEB_SERVER)
     testImplementation(Deps.Mockito.Core)
     testImplementation(Deps.Mockito.Kotlin)
+
+    // TODO: Move dependencies declarations to Deps.kt
+    implementation("androidx.work:work-testing:2.5.0")
+    androidTestImplementation("androidx.test:core-ktx:1.4.0")
+    androidTestImplementation(Deps.Mockito.Core)
+    androidTestImplementation(Deps.Mockito.Kotlin)
+    // For instrumented tests.
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.38.1")
+    // ...with Kotlin.
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.38.1")
+
 }
 
 protobuf {
@@ -72,5 +83,12 @@ protobuf {
                 }
             }
         }
+    }
+}
+
+android {
+    defaultConfig {
+        // Replace com.example.android.dagger with your class path.
+        testInstrumentationRunner = "org.adblockplus.adblockplusbrowser.core.helpers.runner.CustomTestRunner"
     }
 }
