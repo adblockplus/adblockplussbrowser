@@ -2,29 +2,23 @@ package org.adblockplus.adblockplusbrowser.core.work
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.work.ListenableWorker
 import androidx.work.testing.TestListenableWorkerBuilder
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import dagger.hilt.android.testing.UninstallModules
 import dagger.hilt.components.SingletonComponent
-import dagger.hilt.testing.TestInstallIn
 import kotlinx.coroutines.runBlocking
 import org.adblockplus.adblockplusbrowser.core.helpers.Fakes
-import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
-import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.core.work.UpdateSubscriptionsWorker
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.Is.`is`
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.Mockito.`when`
 import javax.inject.Singleton
 
 @HiltAndroidTest
@@ -39,18 +33,18 @@ class UpdateSubscriptionsWorkerTest {
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
-    @Module
-    @InstallIn(SingletonComponent::class)
-    object TestDependenciesModule {
-
-        @Singleton
-        @Provides
-        fun getAnalyticsProvider() = Fakes.FakeAnalyticsProvider()
-
-        @Singleton
-        @Provides
-        fun getActivationPreferences() = Fakes.FakeActivationPreferences()
-    }
+//    @Module
+//    @InstallIn(SingletonComponent::class)
+//    object TestDependenciesModule {
+//
+//        @Singleton
+//        @Provides
+//        fun getAnalyticsProvider() = Fakes.FakeAnalyticsProvider()
+//
+//        @Singleton
+//        @Provides
+//        fun getActivationPreferences() = Fakes.FakeActivationPreferences()
+//    }
 
     @Test
     fun testCatchExceptionFailureResult() {

@@ -20,7 +20,7 @@ package org.adblockplus.adblockplussbrowser.core.downloader
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscription
 
-internal interface Downloader {
+interface Downloader {
     suspend fun download(
         subscription: Subscription,
         forced: Boolean,
@@ -31,7 +31,7 @@ internal interface Downloader {
     suspend fun validate(subscription: Subscription): Boolean
 }
 
-internal sealed class DownloadResult(val subscription: DownloadedSubscription?) {
+sealed class DownloadResult(val subscription: DownloadedSubscription?) {
     data class Success(private val sub: DownloadedSubscription) : DownloadResult(sub)
     data class NotModified(private val sub: DownloadedSubscription) : DownloadResult(sub)
     data class Failed(private val sub: DownloadedSubscription?) : DownloadResult(sub)

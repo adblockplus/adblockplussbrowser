@@ -52,7 +52,7 @@ import java.io.File
 
 
 @HiltWorker
-internal class UpdateSubscriptionsWorker @AssistedInject constructor(
+class UpdateSubscriptionsWorker @AssistedInject constructor(
     @Assisted private val appContext: Context,
     @Assisted params: WorkerParameters,
     private val subscriptionsManager: SubscriptionsManager,
@@ -355,6 +355,6 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
 
         internal const val UPDATE_KEY_PERIODIC_WORK = "UPDATE_PERIODIC_KEY"
         internal const val UPDATE_KEY_ONESHOT_WORK = "UPDATE_ONESHOT_WORK"
-        internal const val UPDATE_KEY_FORCE_REFRESH = "UPDATE_FORCE_REFRESH"
+        const val UPDATE_KEY_FORCE_REFRESH = "UPDATE_FORCE_REFRESH"
     }
 }

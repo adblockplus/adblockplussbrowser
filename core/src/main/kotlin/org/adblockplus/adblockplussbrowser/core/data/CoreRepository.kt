@@ -22,7 +22,7 @@ import org.adblockplus.adblockplussbrowser.core.data.model.CoreData
 import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscription
 import org.adblockplus.adblockplussbrowser.core.data.model.SavedState
 
-internal interface CoreRepository {
+interface CoreRepository {
     val data: Flow<CoreData>
     var subscriptionsPath: String?
 

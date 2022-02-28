@@ -21,7 +21,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-internal data class CoreData(
+data class CoreData(
     val configured: Boolean,
     val lastUpdated: Long,
     val lastState: SavedState,
@@ -31,7 +31,7 @@ internal data class CoreData(
 ) : Parcelable
 
 @Parcelize
-internal data class SavedState(
+data class SavedState(
     val acceptableAdsEnabled: Boolean,
     val allowedDomains: List<String>,
     val blockedDomains: List<String>,
