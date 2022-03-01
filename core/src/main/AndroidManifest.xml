@@ -21,11 +21,11 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application>
-        <provider
-            android:name=".provider.FilterListContentProvider"
-            android:authorities="${applicationId}.contentBlocker.contentProvider"
-            android:enabled="true"
-            android:exported="true" />
+<!--        <provider-->
+<!--            android:name=".provider.FilterListContentProvider"-->
+<!--            android:authorities="${applicationId}.contentBlocker.contentProvider"-->
+<!--            android:enabled="true"-->
+<!--            android:exported="true" />-->
     </application>
 
 </manifest>

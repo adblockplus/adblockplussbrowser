@@ -33,7 +33,6 @@ android {
     defaultConfig {
         versionCode = versionCode()
         versionName = "0.0.0"
-        testInstrumentationRunner = "org.adblockplus.adblockplussbrowser.core.helpers.runner.CustomTestRunner"
     }
 
     createFlavorsConfig()
@@ -85,16 +84,6 @@ dependencies {
     implementation(Deps.OkHttp.LOGGER)
     implementation(Deps.Gms.OSS_LICENSES)
     implementation(Deps.Android.INSTALL_REFERRER)
-
-    // TODO: Move dependencies declarations to Deps.kt
-    implementation("androidx.work:work-testing:2.5.0")
-    androidTestImplementation("androidx.test:core-ktx:1.4.0")
-    androidTestImplementation(Deps.Mockito.Core)
-    androidTestImplementation(Deps.Mockito.Kotlin)
-    // For instrumented tests.
-    androidTestImplementation("com.google.dagger:hilt-android-testing:2.38.1")
-    // ...with Kotlin.
-    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.38.1")
 }
 
 // Install commit pre-hook
