@@ -76,10 +76,20 @@ protobuf {
     }
 }
 
+/* To run this task a parameter `flavor` (abp, adblock or crystal) must be provided.
+    gradle :core:downloadSubscriptionsForFlavor -Pflavor=adblock
+ */
 tasks.register("downloadSubscriptionsForFlavor", de.undercouch.gradle.tasks.download.Download::class) {
     val flavor = project.property("flavor").toString().toLowerCase()
+    val baseDir = "src/$flavor/assets"
 
-    // Download exception rules
+    // Create assets folder if doesn't exist
+    project.mkdir(baseDir)
+    // Add empty files to be replaced
+    File("core/$baseDir", "easylist.txt").writeText("")
+    File("core/$baseDir","exceptionrules.txt").writeText("")
+
+//    // Download exception rules
     val source = when(flavor) {
         "abp" -> "https://${(0..9).random()}.samsung-internet.filter-list-downloads.eyeo.com/aa-variants/samsung_internet_browser-adblock_plus.txt"
         "adblock" -> "https://${(0..9).random()}.samsung-internet.filter-list-downloads.getadblock.com/aa-variants/samsung_internet_browser-adblock.txt"
@@ -88,12 +98,12 @@ tasks.register("downloadSubscriptionsForFlavor", de.undercouch.gradle.tasks.down
     }
     download.run {
         src(source)
-        dest("src/$flavor/assets/")
+        dest("$baseDir/exceptionrules.txt")
     }
 
     // Download easylist
     download.run {
         src("https://${(0..9).random()}.samsung-internet.filter-list-downloads.getadblock.com/easylist.txt")
-        dest("src/$flavor/assets/")
+        dest("$baseDir/easylist.txt")
     }
 }
