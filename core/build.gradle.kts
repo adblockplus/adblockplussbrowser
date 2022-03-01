@@ -109,7 +109,7 @@ tasks.register("createAssetsDir") {
     project.mkdir(baseDir)
     // Add empty files to be replaced
     File("core/$baseDir", "easylist.txt")
-    File("core/$baseDir","exceptionrules.txt")
+    File("core/$baseDir", "exceptionrules.txt")
 }
 
 
