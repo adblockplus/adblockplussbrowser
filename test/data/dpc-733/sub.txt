@@ -1,0 +1,5 @@
+[Adblock Plus 2.0]
+
+test-img.png
+##[alt="Test image placeholder"]
+@@||blocked.shadowspar.ca^$document,domain=allowed.shadowspar.ca
