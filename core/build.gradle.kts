@@ -24,6 +24,7 @@ plugins {
     id("kotlin-parcelize")
     id("com.google.protobuf")
     id("dagger.hilt.android.plugin")
+    id("de.undercouch.download")
 }
 
 applyCommonConfig()
@@ -72,5 +73,27 @@ protobuf {
                 }
             }
         }
+    }
+}
+
+tasks.register("downloadSubscriptionsForFlavor", de.undercouch.gradle.tasks.download.Download::class) {
+    val flavor = project.property("flavor").toString().toLowerCase()
+
+    // Download exception rules
+    val source = when(flavor) {
+        "abp" -> "https://${(0..9).random()}.samsung-internet.filter-list-downloads.eyeo.com/aa-variants/samsung_internet_browser-adblock_plus.txt"
+        "adblock" -> "https://${(0..9).random()}.samsung-internet.filter-list-downloads.getadblock.com/aa-variants/samsung_internet_browser-adblock.txt"
+        "crystal" -> "https://${(0..9).random()}.samsung-internet.filter-list-downloads.eyeo.com/aa-variants/samsung_internet_browser-crystal.txt"
+        else -> throw GradleException("Given flavor <$flavor> not supported")
+    }
+    download.run {
+        src(source)
+        dest("src/$flavor/assets/")
+    }
+
+    // Download easylist
+    download.run {
+        src("https://${(0..9).random()}.samsung-internet.filter-list-downloads.getadblock.com/easylist.txt")
+        dest("src/$flavor/assets/")
     }
 }
