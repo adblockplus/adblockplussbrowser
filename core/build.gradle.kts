@@ -88,7 +88,6 @@ protobuf {
 
 android {
     defaultConfig {
-        // Replace com.example.android.dagger with your class path.
-        testInstrumentationRunner = "org.adblockplus.adblockplusbrowser.core.helpers.runner.CustomTestRunner"
+        testInstrumentationRunner = "org.adblockplus.adblockplussbrowser.core.helpers.runner.CustomTestRunner"
     }
 }

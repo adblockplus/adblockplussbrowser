@@ -1,4 +1,4 @@
-package org.adblockplus.adblockplusbrowser.core.helpers
+package org.adblockplus.adblockplussbrowser.core.helpers
 
 import kotlinx.coroutines.flow.Flow
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent

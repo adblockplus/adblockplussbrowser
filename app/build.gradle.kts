@@ -33,7 +33,7 @@ android {
     defaultConfig {
         versionCode = versionCode()
         versionName = "0.0.0"
-        testInstrumentationRunner = "org.adblockplus.adblockplusbrowser.core.helpers.runner.CustomTestRunner"
+        testInstrumentationRunner = "org.adblockplus.adblockplussbrowser.core.helpers.runner.CustomTestRunner"
     }
 
     createFlavorsConfig()
