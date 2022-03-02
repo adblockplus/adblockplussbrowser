@@ -49,17 +49,26 @@ import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
 import timber.log.Timber
 import java.io.File
+import javax.inject.Inject
 
 
 @HiltWorker
 internal class UpdateSubscriptionsWorker @AssistedInject constructor(
     @Assisted private val appContext: Context,
-    @Assisted params: WorkerParameters,
-    private val subscriptionsManager: SubscriptionsManager,
-    private val settingsRepository: SettingsRepository,
-    private val coreRepository: CoreRepository,
-    private val downloader: Downloader
+    @Assisted params: WorkerParameters
 ) : CoroutineWorker(appContext, params) {
+
+    @Inject
+    lateinit var subscriptionsManager: SubscriptionsManager
+
+    @Inject
+    lateinit var settingsRepository: SettingsRepository
+
+    @Inject
+    lateinit var coreRepository: CoreRepository
+
+    @Inject
+    lateinit var downloader: Downloader
 
     private var totalSteps: Int = 0
     private var currentStep: Int = 0
