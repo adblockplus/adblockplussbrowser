@@ -63,6 +63,9 @@ dependencies {
     androidTestImplementation("androidx.test:core-ktx:1.4.0")
     androidTestImplementation(Deps.Mockito.Core)
     androidTestImplementation(Deps.Mockito.Kotlin)
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.39.1")
+    // ...with Kotlin.
+    kaptAndroidTest(Deps.Hilt.ANDROID_COMPILER)
 }
 
 protobuf {
@@ -77,5 +80,11 @@ protobuf {
                 }
             }
         }
+    }
+}
+
+android {
+    defaultConfig {
+        testInstrumentationRunner = "org.adblockplus.adblockplussbrowser.core.work.CustomTestRunner"
     }
 }
