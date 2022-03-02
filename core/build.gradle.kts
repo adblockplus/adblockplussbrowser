@@ -119,8 +119,8 @@ tasks.register("checkSubscriptionsFiles") {
     val easyListLenght = File("$baseDir/easylist.txt").length()
     val exceptionRulesLenght = File("$baseDir/exceptionrules.txt").length()
 
-    println("$flavor EASYLIST SIZE: ${easyListLenght / 1024} KB")
-    println("$flavor EXCEPTIONRULES SIZE: ${exceptionRulesLenght / 1024} KB")
+    println("$flavor EASYLIST SIZE: ${easyListLength / 1024} KB")
+    println("$flavor EXCEPTIONRULES SIZE: ${exceptionRulesLength / 1024} KB")
 
     if (easyListLenght == 0L || exceptionRulesLenght == 0L) {
         throw GradleException("Something went wrong. At least one of the subscriptions files is empty!")
