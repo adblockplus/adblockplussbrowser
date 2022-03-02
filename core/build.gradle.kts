@@ -78,14 +78,15 @@ protobuf {
 
 tasks.register("downloadExceptionRules", de.undercouch.gradle.tasks.download.Download::class) {
     val flavor = project.property("flavor").toString().toLowerCase()
-    val baseDir = "src/$flavor/assets"
-//    // Download exception rules
+    val baseDir = if (flavor == "abp") "src/main/assets" else "src/$flavor/assets"
+
     val source = when(flavor) {
         "abp" -> "https://${(0..9).random()}.samsung-internet.filter-list-downloads.eyeo.com/aa-variants/samsung_internet_browser-adblock_plus.txt"
         "adblock" -> "https://${(0..9).random()}.samsung-internet.filter-list-downloads.getadblock.com/aa-variants/samsung_internet_browser-adblock.txt"
         "crystal" -> "https://${(0..9).random()}.samsung-internet.filter-list-downloads.eyeo.com/aa-variants/samsung_internet_browser-crystal.txt"
         else -> throw GradleException("Given flavor <$flavor> not supported")
     }
+
     download.run {
         src(source)
         dest("$baseDir/exceptionrules.txt")
@@ -94,7 +95,7 @@ tasks.register("downloadExceptionRules", de.undercouch.gradle.tasks.download.Dow
 
 tasks.register("downloadEasyList", de.undercouch.gradle.tasks.download.Download::class) {
     val flavor = project.property("flavor").toString().toLowerCase()
-    val baseDir = "src/$flavor/assets"
+    val baseDir = if (flavor == "abp") "src/main/assets" else "src/$flavor/assets"
 
     download.run {
         src("https://${(0..9).random()}.samsung-internet.filter-list-downloads.getadblock.com/easylist.txt")
@@ -104,14 +105,27 @@ tasks.register("downloadEasyList", de.undercouch.gradle.tasks.download.Download:
 
 tasks.register("createAssetsDir") {
     val flavor = project.property("flavor").toString().toLowerCase()
-    val baseDir = "src/$flavor/assets"
+    val baseDir = if (flavor == "abp") "src/main/assets" else "src/$flavor/assets"
     // Create assets folder if doesn't exist
     project.mkdir(baseDir)
-    // Add empty files to be replaced
-    File("core/$baseDir", "easylist.txt")
-    File("core/$baseDir", "exceptionrules.txt")
+    // Add files if don't exist or replace content to be empty
+    File("core/$baseDir", "easylist.txt").writeText("")
+    File("core/$baseDir", "exceptionrules.txt").writeText("")
 }
 
+tasks.register("checkSubscriptionsFiles") {
+    val flavor = project.property("flavor").toString().toLowerCase()
+    val baseDir = if (flavor == "abp") "core/src/main/assets" else "core/src/$flavor/assets"
+    val easyListLenght = File("$baseDir/easylist.txt").length()
+    val exceptionRulesLenght = File("$baseDir/exceptionrules.txt").length()
+
+    println("$flavor EASYLIST SIZE: ${easyListLenght / 1024} KB")
+    println("$flavor EXCEPTIONRULES SIZE: ${exceptionRulesLenght / 1024} KB")
+
+    if (easyListLenght == 0L || exceptionRulesLenght == 0L) {
+        throw GradleException("Something went wrong. At least one of the subscriptions files is empty!")
+    }
+}
 
 /* To run this task a parameter `flavor` (abp, adblock or crystal) must be provided.
     gradle :core:downloadSubscriptions -Pflavor=adblock
@@ -120,4 +134,7 @@ tasks.register("downloadSubscriptions") {
     dependsOn("createAssetsDir", "downloadEasyList", "downloadExceptionRules")
     tasks.getByName("downloadExceptionRules").mustRunAfter("createAssetsDir")
     tasks.getByName("downloadEasyList").mustRunAfter("downloadExceptionRules")
+    doLast {
+        tasks.getByName("checkSubscriptionsFiles").run{}
+    }
 }
