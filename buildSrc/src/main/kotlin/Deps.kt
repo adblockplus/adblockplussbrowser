@@ -16,6 +16,8 @@
  */
 
 object Deps {
+    const val ROBOLECTRIC = "org.robolectric:robolectric:4.6"
+
     const val DETEKT_PLUGIN_ID = "io.gitlab.arturbosch.detekt"
     const val DETEKT_PLUGIN_VERSION = "1.18.1"
 
@@ -104,6 +106,11 @@ object Deps {
             version("1.1.1")
         }
 
+        val TEST_CORE = dependency {
+            groupName("test:core")
+            version("1.4.0")
+        }
+
         val VIEWPAGER2 = dependency {
             groupName("viewpager2:viewpager2")
             version("1.0.0")
@@ -144,6 +151,7 @@ object Deps {
 
         object Work : DependencyGroup("androidx.work", "2.5.0") {
             val RUNTIME = dependency { name("work-runtime-ktx") }
+            val TESTING = dependency { name("work-testing") }
         }
     }
 

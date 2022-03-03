@@ -58,6 +58,12 @@ dependencies {
     testImplementation(Deps.OkHttp.MOCK_WEB_SERVER)
     testImplementation(Deps.Mockito.Core)
     testImplementation(Deps.Mockito.Kotlin)
+    testImplementation(Deps.ROBOLECTRIC)
+    testImplementation(Deps.AndroidX.TEST_CORE)
+    testImplementation(Deps.AndroidX.Work.TESTING)
+    testImplementation("com.google.dagger:hilt-android-testing:2.39.1")
+    // ...with Kotlin.
+    kaptTest(Deps.Hilt.ANDROID_COMPILER)
 }
 
 protobuf {
