@@ -61,9 +61,7 @@ dependencies {
     testImplementation(Deps.ROBOLECTRIC)
     testImplementation(Deps.AndroidX.TEST_CORE)
     testImplementation(Deps.AndroidX.Work.TESTING)
-    testImplementation("com.google.dagger:hilt-android-testing:2.39.1")
-    // ...with Kotlin.
-    kaptTest(Deps.Hilt.ANDROID_COMPILER)
+    testImplementation(Deps.KotlinXTest.COROUTINES_TEST )
 }
 
 protobuf {

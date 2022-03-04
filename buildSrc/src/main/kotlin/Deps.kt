@@ -175,6 +175,10 @@ object Deps {
         val COROUTINES_ANDROID = dependency { name("kotlinx-coroutines-android") }
     }
 
+    object KotlinXTest: DependencyGroup("org.jetbrains.kotlinx", "1.6.0") {
+        val COROUTINES_TEST = dependency { name("kotlinx-coroutines-test") }
+    }
+
     object MaterialDialogs : DependencyGroup("com.afollestad.material-dialogs", "3.3.0") {
         val CORE = dependency { name("core") }
         val INPUT = dependency { name("input") }
