@@ -21,7 +21,6 @@ import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
-import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
 import org.adblockplus.adblockplussbrowser.core.helpers.Fakes
 import org.adblockplus.adblockplussbrowser.core.usercounter.CountUserResult
 import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
@@ -29,11 +28,9 @@ import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
-import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
 import java.net.HttpURLConnection.HTTP_INTERNAL_ERROR
-import java.text.ParseException
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
@@ -61,24 +58,24 @@ class UserCountingTest {
     }
 
     @Test
-    fun testCountOK() {
+    fun `test counting skipped`() {
         val response = MockResponse()
             .addHeader("Date", "Thu, 23 Sep 2021 17:31:01 GMT") //202109231731
         mockWebServer.enqueue(response)
 
         assertEquals(0, mockWebServer.requestCount)
         runBlocking {
-            assertTrue(userCounter.count(CallingApp("", "")) is CountUserResult.Success)
+            assertTrue(userCounter.count(CallingApp("", "")) is CountUserResult.Skipped)
         }
-        assertEquals(true.toString(), analyticsProvider.userPropertyValue)
-        assertEquals(1, mockWebServer.requestCount)
-        assertEquals(202109231731, fakeCoreRepository.lastUserCountingResponse)
-        assertEquals(1, fakeCoreRepository.userCountingCount)
+        assertEquals(null, analyticsProvider.userPropertyValue)
+        assertEquals(0, mockWebServer.requestCount)
+        assertEquals(-1, fakeCoreRepository.lastUserCountingResponse)
+        assertEquals(-1, fakeCoreRepository.userCountingCount)
         assertNull(analyticsProvider.event)
     }
 
     @Test
-    fun `test count method when Acceptable Ads are disabled`() {
+    fun `test counting skipped when Acceptable Ads are disabled`() {
         val response = MockResponse()
             .addHeader("Date", "Thu, 23 Sep 2021 17:31:01 GMT") //202109231731
         mockWebServer.enqueue(response)
@@ -91,51 +88,43 @@ class UserCountingTest {
             // When the user is counted
             userCounter = OkHttpUserCounter(OkHttpClient(), fakeCoreRepository, settings, appInfo,
                 analyticsProvider)
-            assertTrue(userCounter.count(CallingApp("", "")) is CountUserResult.Success)
+            val countingResult = userCounter.count(CallingApp("", ""))
+            assertTrue(countingResult is CountUserResult.Skipped)
         }
         // Then User property value is reported to Google Analytics
-        assertEquals(false.toString(), analyticsProvider.userPropertyValue)
+        assertEquals(null, analyticsProvider.userPropertyValue)
     }
 
     @Test
-    fun testCountHttp500() {
+    fun `test counting Http 500`() {
         val response = MockResponse()
             .setResponseCode(HTTP_INTERNAL_ERROR)
         mockWebServer.enqueue(response)
 
         assertEquals(0, mockWebServer.requestCount)
         runBlocking {
-            assertTrue(userCounter.count(CallingApp("", "")) is CountUserResult.Failed)
+            assertTrue(userCounter.count(CallingApp("", "")) is CountUserResult.Skipped)
         }
-        assertEquals(1, mockWebServer.requestCount)
+        assertEquals(0, mockWebServer.requestCount)
         assertEquals(fakeCoreRepository.INITIAL_TIMESTAMP,
             fakeCoreRepository.lastUserCountingResponse)
         assertEquals(fakeCoreRepository.INITIAL_COUNT, fakeCoreRepository.userCountingCount)
         assertNull(analyticsProvider.event)
-        assertEquals(analyticsProvider.userPropertyName,
-            AnalyticsUserProperty.USER_COUNTING_HTTP_ERROR)
-        assertEquals(analyticsProvider.userPropertyValue, HTTP_INTERNAL_ERROR.toString())
+        assertEquals(analyticsProvider.userPropertyName, null)
+        assertEquals(analyticsProvider.userPropertyValue, null)
     }
 
     @Test
-    fun testCountDateWrongFormat() {
+    fun `test counting skipped date wrong format`() {
         val response = MockResponse()
             .addHeader("Date", "Thu, 23 Sep 2021 17:31:01") //No timezone (GMT)
         mockWebServer.enqueue(response)
 
         assertEquals(0, mockWebServer.requestCount)
         runBlocking {
-            try {
-                assertTrue(userCounter.count(CallingApp("", "")) is CountUserResult.Success)
-                if (BuildConfig.DEBUG) {
-                    fail() // In Debug mode we throw from count()
-                }
-            } catch (ex: Exception) {
-                assert(ex is ParseException)
-            }
-
+            assertTrue(userCounter.count(CallingApp("", "")) is CountUserResult.Skipped)
         }
-        assertEquals(1, mockWebServer.requestCount)
+        assertEquals(0, mockWebServer.requestCount)
         if (BuildConfig.DEBUG) {
             assertEquals(fakeCoreRepository.INITIAL_TIMESTAMP,
                 fakeCoreRepository.lastUserCountingResponse)
@@ -143,6 +132,5 @@ class UserCountingTest {
         } else {
             assert(fakeCoreRepository.userCountingCount == 1)
         }
-        assertTrue(analyticsProvider.exception is ParseException)
     }
 }
