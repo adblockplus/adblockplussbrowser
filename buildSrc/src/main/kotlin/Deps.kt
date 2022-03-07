@@ -29,6 +29,10 @@ object Deps {
 
     val JUNIT = "junit:junit" version "4.13.2"
 
+    val JACOCO_CORE = "org.jacoco:org.jacoco.core" version "0.8.7"
+
+    val JACOCO = "jacoco"
+
     val DOTS_INDICATOR = "com.tbuonomo:dotsindicator" version "4.2"
 
     val MATERIAL = "com.google.android.material:material" version "1.3.0"

@@ -24,6 +24,7 @@ plugins {
     id("kotlin-parcelize")
     id("com.google.protobuf")
     id("dagger.hilt.android.plugin")
+    id(Deps.JACOCO)
 }
 
 applyCommonConfig()
@@ -76,5 +77,14 @@ protobuf {
                 }
             }
         }
+    }
+}
+
+tasks.register("jacocoTestReport", JacocoReport::class.java) {
+    dependsOn(tasks.getByName("test"))
+    reports {
+        xml.required.set(false)
+        csv.required.set(false)
+        html.required.set(true)
     }
 }
