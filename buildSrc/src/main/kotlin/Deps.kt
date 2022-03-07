@@ -16,7 +16,7 @@
  */
 
 object Deps {
-    const val ROBOLECTRIC = "org.robolectric:robolectric:4.6"
+    const val ROBOLECTRIC = "org.robolectric:robolectric:4.7.3"
 
     const val DETEKT_PLUGIN_ID = "io.gitlab.arturbosch.detekt"
     const val DETEKT_PLUGIN_VERSION = "1.18.1"
