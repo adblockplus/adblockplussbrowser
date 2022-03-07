@@ -130,7 +130,7 @@ class UserCountingTest {
                 fakeCoreRepository.lastUserCountingResponse)
             assertEquals(fakeCoreRepository.INITIAL_COUNT, fakeCoreRepository.userCountingCount)
         } else {
-            assert(fakeCoreRepository.userCountingCount == 0)
+            assert(fakeCoreRepository.userCountingCount == -1)
         }
     }
 }
