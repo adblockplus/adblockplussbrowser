@@ -57,40 +57,45 @@ internal class OkHttpUserCounter(
     @Suppress("TooGenericExceptionCaught")
     override suspend fun count(callingApp: CallingApp): CountUserResult = coroutineScope {
         try {
+            //24h 24*60*60*1000 = 86400000
             val savedLastUserCountingResponse = repository.currentData().lastUserCountingResponse
             Timber.d("User count lastUserCountingResponse saved is `%d`",
                 savedLastUserCountingResponse)
-            val acceptableAdsEnabled = settings.currentSettings().acceptableAdsEnabled
-            analyticsProvider.setUserProperty(AnalyticsUserProperty.IS_AA_ENABLED, acceptableAdsEnabled.toString())
-            val acceptableAdsSubscription = settings.getAcceptableAdsSubscription()
-            val currentUserCountingCount = repository.currentData().userCountingCount
-            val url = createUrl(acceptableAdsSubscription, acceptableAdsEnabled,
-                savedLastUserCountingResponse, currentUserCountingCount, callingApp)
-            val request = Request.Builder().url(url).head().build()
-            val response = retryIO(description = "User counting HEAD request") {
-                okHttpClient.newCall(request).await()
-            }
+            if (isUserCountingExpired(savedLastUserCountingResponse)) {
+                CountUserResult.Skipped()
+            } else {
+                val acceptableAdsEnabled = settings.currentSettings().acceptableAdsEnabled
+                analyticsProvider.setUserProperty(AnalyticsUserProperty.IS_AA_ENABLED, acceptableAdsEnabled.toString())
+                val acceptableAdsSubscription = settings.getAcceptableAdsSubscription()
+                val currentUserCountingCount = repository.currentData().userCountingCount
+                val url = createUrl(acceptableAdsSubscription, acceptableAdsEnabled,
+                    savedLastUserCountingResponse, currentUserCountingCount, callingApp)
+                val request = Request.Builder().url(url).head().build()
+                val response = retryIO(description = "User counting HEAD request") {
+                    okHttpClient.newCall(request).await()
+                }
 
-            val result = when (response.code) {
-                HTTP_OK -> {
-                    val newLastVersion = parseDateString(response.headers["Date"] ?: "",
-                        analyticsProvider)
-                    Timber.d("User count saves new lastUserCountingResponse `%s`",
-                        newLastVersion)
-                    repository.updateLastUserCountingResponse(newLastVersion.toLong())
-                    // No point to update the value otherwise as we send max as "4+"
-                    if (currentUserCountingCount < MAX_USER_COUNTING_COUNT)
-                        repository.updateUserCountingCount(currentUserCountingCount + 1)
-                    CountUserResult.Success()
+                val result = when (response.code) {
+                    HTTP_OK -> {
+                        val newLastVersion = parseDateString(response.headers["Date"] ?: "",
+                            analyticsProvider)
+                        Timber.d("User count saves new lastUserCountingResponse `%s`",
+                            newLastVersion)
+                        repository.updateLastUserCountingResponse(newLastVersion.toLong())
+                        // No point to update the value otherwise as we send max as "4+"
+                        if (currentUserCountingCount < MAX_USER_COUNTING_COUNT)
+                            repository.updateUserCountingCount(currentUserCountingCount + 1)
+                        CountUserResult.Success()
+                    }
+                    else -> {
+                        analyticsProvider.setUserProperty(AnalyticsUserProperty.USER_COUNTING_HTTP_ERROR,
+                            response.code.toString())
+                        CountUserResult.Failed()
+                    }
                 }
-                else -> {
-                    analyticsProvider.setUserProperty(AnalyticsUserProperty.USER_COUNTING_HTTP_ERROR,
-                        response.code.toString())
-                    CountUserResult.Failed()
-                }
+                response.close()
+                result
             }
-            response.close()
-            result
         } catch (ex: Exception) {
             if (BuildConfig.DEBUG && ex is ParseException) {
                 throw ex
@@ -156,5 +161,10 @@ internal class OkHttpUserCounter(
             Locale.ENGLISH)
         private val serverTimeZone = TimeZone.getTimeZone("GMT")
         private const val MAX_USER_COUNTING_COUNT = 4
+
+        //24h 24*60*60*1000 = 86400000
+        private const val USER_COUNTING_CYCLE = 86_400_000
+        fun isUserCountingExpired(lastUserCount: Long) =
+            System.currentTimeMillis() - lastUserCount > USER_COUNTING_CYCLE
     }
 }

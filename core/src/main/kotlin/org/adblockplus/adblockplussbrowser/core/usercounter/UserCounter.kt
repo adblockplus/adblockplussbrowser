@@ -26,4 +26,5 @@ internal interface UserCounter {
 internal sealed class CountUserResult {
     class Success : CountUserResult()
     class Failed : CountUserResult()
+    class Skipped : CountUserResult()
 }
