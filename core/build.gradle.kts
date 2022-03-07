@@ -119,16 +119,18 @@ tasks.register("createAssetsDir") {
 }
 
 tasks.register("checkSubscriptionsFiles") {
-    val flavor = project.findProperty("flavor")?.toString()?.toLowerCase() ?: "abp"
-    val baseDir = if (flavor == "abp") "core/src/main/assets" else "core/src/$flavor/assets"
-    val easyListLength = File("$baseDir/easylist.txt").length()
-    val exceptionRulesLength = File("$baseDir/exceptionrules.txt").length()
+    doLast {
+        val flavor = project.findProperty("flavor")?.toString()?.toLowerCase() ?: "abp"
+        val baseDir = if (flavor == "abp") "core/src/main/assets" else "core/src/$flavor/assets"
+        val easyListLength = File("$baseDir/easylist.txt").length()
+        val exceptionRulesLength = File("$baseDir/exceptionrules.txt").length()
 
-    println("$flavor EASYLIST SIZE: ${easyListLength / 1024} KB")
-    println("$flavor EXCEPTIONRULES SIZE: ${exceptionRulesLength / 1024} KB")
+        println("$flavor EASYLIST SIZE: ${easyListLength / 1024} KB")
+        println("$flavor EXCEPTIONRULES SIZE: ${exceptionRulesLength / 1024} KB")
 
-    if (easyListLength == 0L || exceptionRulesLength == 0L) {
-        throw GradleException("Something went wrong. At least one of the subscriptions files is empty!")
+        if (easyListLength == 0L || exceptionRulesLength == 0L) {
+            throw GradleException("Something went wrong. At least one of the subscriptions files is empty!")
+        }
     }
 }
 
@@ -136,12 +138,10 @@ tasks.register("checkSubscriptionsFiles") {
     gradle :core:downloadSubscriptions -Pflavor=adblock (abp if no flavor is provided)
  */
 tasks.register("downloadSubscriptions") {
-    dependsOn("createAssetsDir", "downloadEasyList", "downloadExceptionRules")
+    dependsOn("createAssetsDir", "downloadExceptionRules", "downloadEasyList", "checkSubscriptionsFiles")
     tasks.getByName("downloadExceptionRules").mustRunAfter("createAssetsDir")
     tasks.getByName("downloadEasyList").mustRunAfter("downloadExceptionRules")
-    doLast {
-        tasks.getByName("checkSubscriptionsFiles").run{}
-    }
+    tasks.getByName("checkSubscriptionsFiles").mustRunAfter("downloadEasyList")
 }
 
 tasks.withType(Test::class.java) {
