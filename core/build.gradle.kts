@@ -82,7 +82,7 @@ protobuf {
 }
 
 tasks.register("downloadExceptionRules", de.undercouch.gradle.tasks.download.Download::class) {
-    val flavor = project.findProperty("flavor")?.toString()?.toLowerCase()
+    val flavor = project.findProperty("flavor")?.toString()?.toLowerCase() ?: "abp"
     val baseDir = if (flavor == "abp") "src/main/assets" else "src/$flavor/assets"
 
     val source = when(flavor) {
@@ -99,7 +99,7 @@ tasks.register("downloadExceptionRules", de.undercouch.gradle.tasks.download.Dow
 }
 
 tasks.register("downloadEasyList", de.undercouch.gradle.tasks.download.Download::class) {
-    val flavor = project.findProperty("flavor")?.toString()?.toLowerCase()
+    val flavor = project.findProperty("flavor")?.toString()?.toLowerCase() ?: "abp"
     val baseDir = if (flavor == "abp") "src/main/assets" else "src/$flavor/assets"
 
     download.run {
@@ -109,7 +109,7 @@ tasks.register("downloadEasyList", de.undercouch.gradle.tasks.download.Download:
 }
 
 tasks.register("createAssetsDir") {
-    val flavor = project.findProperty("flavor")?.toString()?.toLowerCase()
+    val flavor = project.findProperty("flavor")?.toString()?.toLowerCase() ?: "abp"
     val baseDir = if (flavor == "abp") "src/main/assets" else "src/$flavor/assets"
     // Create assets folder if doesn't exist
     project.mkdir(baseDir)
@@ -119,7 +119,7 @@ tasks.register("createAssetsDir") {
 }
 
 tasks.register("checkSubscriptionsFiles") {
-    val flavor = project.findProperty("flavor")?.toString()?.toLowerCase()
+    val flavor = project.findProperty("flavor")?.toString()?.toLowerCase() ?: "abp"
     val baseDir = if (flavor == "abp") "core/src/main/assets" else "core/src/$flavor/assets"
     val easyListLength = File("$baseDir/easylist.txt").length()
     val exceptionRulesLength = File("$baseDir/exceptionrules.txt").length()
@@ -133,7 +133,7 @@ tasks.register("checkSubscriptionsFiles") {
 }
 
 /* To run this task a parameter `flavor` (abp, adblock or crystal) must be provided.
-    gradle :core:downloadSubscriptions -Pflavor=adblock
+    gradle :core:downloadSubscriptions -Pflavor=adblock (abp if no flavor is provided)
  */
 tasks.register("downloadSubscriptions") {
     dependsOn("createAssetsDir", "downloadEasyList", "downloadExceptionRules")
