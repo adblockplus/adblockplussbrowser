@@ -60,7 +60,7 @@ internal class OkHttpUserCounter(
             val savedLastUserCountingResponse = repository.currentData().lastUserCountingResponse
             Timber.d("User count lastUserCountingResponse saved is `%d`",
                 savedLastUserCountingResponse)
-            if (!isUserCountExpired(savedLastUserCountingResponse)) {
+            if (isUserCountedInCurrentCycle(savedLastUserCountingResponse)) {
                 CountUserResult.Skipped()
             } else {
                 val acceptableAdsEnabled = settings.currentSettings().acceptableAdsEnabled
@@ -163,7 +163,7 @@ internal class OkHttpUserCounter(
 
         // There should be one user count request per 24h = 24*60*60*1000 ms = 86400000 ms
         private const val USER_COUNTING_CYCLE = 86_400_000
-        fun isUserCountExpired(lastUserCount: Long) =
-            System.currentTimeMillis() - lastUserCount > USER_COUNTING_CYCLE
+        fun isUserCountedInCurrentCycle(lastUserCount: Long) =
+            System.currentTimeMillis() - lastUserCount < USER_COUNTING_CYCLE
     }
 }
