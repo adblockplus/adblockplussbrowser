@@ -118,7 +118,7 @@ class UserCountingTest {
     }
 
     @Test
-    fun `test counting skipped date wrong format`() {
+    fun `test counting date wrong format`() {
         val response = MockResponse()
             .addHeader("Date", "Thu, 23 Sep 2021 17:31:01") //No timezone (GMT)
         mockWebServer.enqueue(response)
