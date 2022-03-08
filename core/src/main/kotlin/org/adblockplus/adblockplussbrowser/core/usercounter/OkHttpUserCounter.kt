@@ -57,11 +57,10 @@ internal class OkHttpUserCounter(
     @Suppress("TooGenericExceptionCaught")
     override suspend fun count(callingApp: CallingApp): CountUserResult = coroutineScope {
         try {
-            //24h 24*60*60*1000 = 86400000
             val savedLastUserCountingResponse = repository.currentData().lastUserCountingResponse
             Timber.d("User count lastUserCountingResponse saved is `%d`",
                 savedLastUserCountingResponse)
-            if (isUserCountingExpired(savedLastUserCountingResponse)) {
+            if (!isUserCountExpired(savedLastUserCountingResponse)) {
                 CountUserResult.Skipped()
             } else {
                 val acceptableAdsEnabled = settings.currentSettings().acceptableAdsEnabled
@@ -162,9 +161,9 @@ internal class OkHttpUserCounter(
         private val serverTimeZone = TimeZone.getTimeZone("GMT")
         private const val MAX_USER_COUNTING_COUNT = 4
 
-        //24h 24*60*60*1000 = 86400000
+        // There should be one user count request per 24h = 24*60*60*1000 ms = 86400000 ms
         private const val USER_COUNTING_CYCLE = 86_400_000
-        fun isUserCountingExpired(lastUserCount: Long) =
+        fun isUserCountExpired(lastUserCount: Long) =
             System.currentTimeMillis() - lastUserCount > USER_COUNTING_CYCLE
     }
 }
