@@ -40,6 +40,7 @@ import java.net.HttpURLConnection.HTTP_OK
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 import kotlin.time.ExperimentalTime
@@ -161,9 +162,22 @@ internal class OkHttpUserCounter(
         private val serverTimeZone = TimeZone.getTimeZone("GMT")
         private const val MAX_USER_COUNTING_COUNT = 4
 
+        fun convertToTimestamp(stringToFormat: String?): Long {
+            return try {
+                val date: Date = lastUserCountingResponseFormat.parse(stringToFormat)
+                date.time
+            } catch (e: ParseException) {
+                0
+            }
+        }
+
         // There should be one user count request per 24h = 24*60*60*1000 ms = 86400000 ms
         private const val USER_COUNTING_CYCLE = 86_400_000
-        fun isUserCountedInCurrentCycle(lastUserCount: Long) =
-            System.currentTimeMillis() - lastUserCount < USER_COUNTING_CYCLE
+        fun isUserCountedInCurrentCycle(lastUserCount: Long): Boolean {
+            val lastUserCountTimeStamp = convertToTimestamp(lastUserCount.toString())
+            val periodSinceLastUserCount = System.currentTimeMillis() - lastUserCountTimeStamp
+            Timber.i("User has been counted %d ms ago", periodSinceLastUserCount)
+            return periodSinceLastUserCount < USER_COUNTING_CYCLE
+        }
     }
 }
