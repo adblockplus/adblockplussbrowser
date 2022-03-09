@@ -215,7 +215,7 @@ class Fakes {
         override fun disable() {}
     }
 
-    class FakeSettingsRepositoryNoChanges(private val serverUrl: String) :
+    class FakeSettingsRepositoryNoChanges(serverUrl: String) :
         FakeSettingsRepository(serverUrl) {
         override val settings: Flow<Settings>
             get() = flow {

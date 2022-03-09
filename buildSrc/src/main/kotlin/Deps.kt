@@ -31,7 +31,7 @@ object Deps {
 
     val JACOCO_CORE = "org.jacoco:org.jacoco.core" version "0.8.7"
 
-    val JACOCO = "jacoco"
+    const val JACOCO = "jacoco"
 
     val DOTS_INDICATOR = "com.tbuonomo:dotsindicator" version "4.2"
 
