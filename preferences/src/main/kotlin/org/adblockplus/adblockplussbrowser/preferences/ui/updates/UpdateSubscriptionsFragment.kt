@@ -69,6 +69,9 @@ class UpdateSubscriptionsFragment : DataBindingFragment<FragmentUpdateSubscripti
 
         viewModel.updateStatus.observe(this) { value ->
             Timber.d("Update status value: $value")
+            val isUpdating = value is SubscriptionUpdateStatus.Progress
+            binding.updatesPreferencesUpdateNowLabel.text = if (isUpdating) getString(R.string.update_status_progress_message) else getString(R.string.preferences_update_subscriptions_title)
+            binding.updatesPreferencesUpdateNow.isEnabled = !isUpdating
         }
     }
 
@@ -77,13 +80,4 @@ class UpdateSubscriptionsFragment : DataBindingFragment<FragmentUpdateSubscripti
 
     private fun UpdateConfigType.toPosition(): Int =
         if (this == UpdateConfigType.UPDATE_WIFI_ONLY) 0 else 1
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.updateStatus.observe(this) { value ->
-            val isUpdating = value is SubscriptionUpdateStatus.Progress
-            binding?.updatesPreferencesUpdateNowLabel?.text = if (isUpdating) getString(R.string.update_status_progress_message) else getString(R.string.preferences_update_subscriptions_title)
-            binding?.updatesPreferencesUpdateNow?.isEnabled = !isUpdating
-        }
-    }
 }
