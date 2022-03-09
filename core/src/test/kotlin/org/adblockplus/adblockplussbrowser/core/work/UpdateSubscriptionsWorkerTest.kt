@@ -57,13 +57,14 @@ class UpdateSubscriptionsWorkerTest {
         context = ApplicationProvider.getApplicationContext()
         downloader = Mockito.mock(Downloader::class.java)
         Dispatchers.setMain(testDispatcher)
-
     }
 
     @After
     fun tearDownDispatcher() {
         Dispatchers.resetMain()
     }
+
+    private suspend fun whenDownload() = Mockito.`when`(downloader.download(any(), any(), any(), any()))
 
     private fun createWorker(params: WorkerParameters): ListenableWorker {
         val worker = TestListenableWorkerBuilder<UpdateSubscriptionsWorker>(context)
@@ -77,11 +78,16 @@ class UpdateSubscriptionsWorkerTest {
         return worker
     }
 
+    /*
+        Mock that the worker is running for the 5th time,
+        meaning it's over the  RUN_ATTEMPT_MAX_COUNT, which is 4
+        Expected result -> the update should fail
+     */
     @Test
-    fun testHasReachedMaxAttemptsShouldFail() {
-        val worker = createWorker(WorkerParameters(runAttemptCount = 5))
+    fun testIfWorkerHasReachedMaxAttemptsShouldFail() {
+        val updateSubscriptionsWorker = createWorker(WorkerParameters(runAttemptCount = 5)) as UpdateSubscriptionsWorker
         runTest {
-            val result = (worker as UpdateSubscriptionsWorker).doWork()
+            val result = updateSubscriptionsWorker.doWork()
             assertThat(result, `is`(ListenableWorker.Result.failure()))
         }
     }
@@ -104,10 +110,7 @@ class UpdateSubscriptionsWorkerTest {
         directory.mkdirs()
         val file = File.createTempFile("filter", ".txt", directory)
         runTest {
-            Mockito.`when`(downloader.download(any(), any(), any(), any())).thenReturn(DownloadResult.Failed(
-                DownloadedSubscription("", file.path)
-            ))
-
+            whenDownload().thenReturn(DownloadResult.Failed(DownloadedSubscription("", file.path)))
             val result = updateSubscriptionsWorker.doWork()
             assertThat(result, `is`(ListenableWorker.Result.Retry()))
         }
@@ -120,11 +123,7 @@ class UpdateSubscriptionsWorkerTest {
         directory.mkdirs()
         val file = File.createTempFile("filter", ".txt", directory)
         runTest {
-            Mockito.`when`(downloader.download(any(), any(), any(), any())).thenReturn(
-                DownloadResult.Success(
-                    DownloadedSubscription("", file.path)
-                )
-            )
+            whenDownload().thenReturn(DownloadResult.Success(DownloadedSubscription("", file.path)))
             val result = updateSubscriptionsWorker.doWork()
             assertThat(result, `is`(ListenableWorker.Result.Success()))
         }
@@ -134,9 +133,7 @@ class UpdateSubscriptionsWorkerTest {
     fun testWorkerCancellationExceptionShouldSucceed() {
         val updateSubscriptionsWorker = createWorker(WorkerParameters()) as UpdateSubscriptionsWorker
         runTest {
-            Mockito.`when`(downloader.download(any(), any(), any(), any())).thenReturn(DownloadResult.Success(
-                DownloadedSubscription("")
-            ))
+            whenDownload().thenReturn(DownloadResult.Success(DownloadedSubscription("")))
             val result = updateSubscriptionsWorker.run {
                 updateSubscriptionsWorker.stop()
                 updateSubscriptionsWorker.doWork()
