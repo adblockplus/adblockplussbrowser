@@ -81,7 +81,7 @@ tasks.register("downloadExceptionRules", de.undercouch.gradle.tasks.download.Dow
     val flavor = project.property("flavor").toString().toLowerCase()
     val baseDir = if (flavor == "abp") "src/main/assets" else "src/$flavor/assets"
 
-    val source = when(flavor) {
+    val source = when (flavor) {
         "abp" -> "https://0.samsung-internet.filter-list-downloads.eyeo.com/aa-variants/samsung_internet_browser-adblock_plus.txt"
         "adblock" -> "https://0.samsung-internet.filter-list-downloads.getadblock.com/aa-variants/samsung_internet_browser-adblock.txt"
         "crystal" -> "https://0.samsung-internet.filter-list-downloads.eyeo.com/aa-variants/samsung_internet_browser-crystal.txt"
@@ -114,6 +114,33 @@ tasks.register("createAssetsDir") {
     File("core/$baseDir", "exceptionrules.txt").writeText("")
 }
 
+tasks.register("packSubscriptionsFiles") {
+    val flavor = project.property("flavor").toString().toLowerCase()
+    val baseDir = if (flavor == "abp") "src/main/assets" else "src/$flavor/assets"
+    val exceptionRules = "$baseDir/exceptionrules.txt"
+    var exceptionRulesLength = File("$exceptionRules").length()
+    println("$flavor EXCEPTIONRULES ORIGINAL SIZE: ${exceptionRulesLength / 1024} KB")
+
+    val xz = "xz"
+    val logFile = file("$buildDir/resources/main/commit.json")
+    doLast {
+        exec {
+            commandLine(
+                xz,
+                "$exceptionRules"
+            ).standardOutput to logFile
+        }
+        exceptionRulesLength = File("${exceptionRules}.xz").length()
+
+        println("$flavor EXCEPTIONRULES PACKED SIZE: ${exceptionRulesLength / 1024} KB")
+
+        if (exceptionRulesLength == 0L) {
+            throw GradleException("Something went wrong. Exception rules file is empty!")
+        }
+    }
+}
+
+
 tasks.register("checkSubscriptionsFiles") {
     val flavor = project.property("flavor").toString().toLowerCase()
     val baseDir = if (flavor == "abp") "core/src/main/assets" else "core/src/$flavor/assets"
@@ -132,10 +159,12 @@ tasks.register("checkSubscriptionsFiles") {
     gradle :core:downloadSubscriptions -Pflavor=adblock
  */
 tasks.register("downloadSubscriptions") {
-    dependsOn("createAssetsDir", "downloadEasyList", "downloadExceptionRules")
+    dependsOn("createAssetsDir", "downloadEasyList", "downloadExceptionRules","packSubscriptionsFiles")
     tasks.getByName("downloadExceptionRules").mustRunAfter("createAssetsDir")
     tasks.getByName("downloadEasyList").mustRunAfter("downloadExceptionRules")
+    tasks.getByName("packSubscriptionsFiles").mustRunAfter("downloadEasyList")
+
     doLast {
-        tasks.getByName("checkSubscriptionsFiles").run{}
+        tasks.getByName("checkSubscriptionsFiles").run {}
     }
 }
