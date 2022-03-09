@@ -21,6 +21,7 @@ import android.view.View
 import android.widget.AdapterView
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import org.adblockplus.adblockplussbrowser.base.data.model.SubscriptionUpdateStatus
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentUpdateSubscriptionsBinding
@@ -76,4 +77,13 @@ class UpdateSubscriptionsFragment : DataBindingFragment<FragmentUpdateSubscripti
 
     private fun UpdateConfigType.toPosition(): Int =
         if (this == UpdateConfigType.UPDATE_WIFI_ONLY) 0 else 1
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.updateStatus.observe(this) { value ->
+            val isUpdating = value is SubscriptionUpdateStatus.Progress
+            binding?.updatesPreferencesUpdateNowLabel?.text = if (isUpdating) getString(R.string.update_status_progress_message) else getString(R.string.preferences_update_subscriptions_title)
+            binding?.updatesPreferencesUpdateNow?.isEnabled = !isUpdating
+        }
+    }
 }
