@@ -26,6 +26,9 @@ cache: &global_cache
     - export GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.console=plain"
     - '[ -d .android-sdk ] || cp -a /opt/android-sdk ./.android-sdk'
     - export ANDROID_SDK_ROOT=`pwd`/.android-sdk
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - when: on_success
 
 dependencies:
   stage: dependencies
@@ -53,8 +56,6 @@ checks:lint:
     paths:
       - ./*/build/reports/lint-results.*
     when: on_failure
-  rules:
-    - when: on_success
 
 checks:detekt:
   extends: .template:environment
@@ -65,10 +66,8 @@ checks:detekt:
     paths:
       - build/reports/detekt/detekt.*
     when: always
-  rules:
-    - when: on_success
 
-build:
+.template:build:
   extends: .template:environment
   stage: build
   script:
@@ -90,8 +89,24 @@ build:
       # saving all flavors with apks and `output-metadata.json`
       - $APK_OUTPUT_PATH
       - $MAPPING_OUTPUT_PATH
+
+build:
+  extends: .template:build
+
+build:nightly:
+  extends: .template:build
+  cache:
+    key: last-nightly-hash
+    paths:
+      - SHA256.txt
+  before_script:
+    - |
+      sha256 = $(find . -type f -name "*.kt*"|xargs cat|sha256sum)
+      $(echo "$sha256"|sha256sum -c SHA256.txt) && exit 1 || true
+      echo "$sha256" > SHA256.txt
   rules:
-    - when: on_success
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+    - if: '$NIGHTLY_BUILD'
 
 sign_apks:
   stage: "sign_builds"
