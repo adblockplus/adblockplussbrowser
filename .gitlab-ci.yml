@@ -106,7 +106,7 @@ build:nightly:
         - SHA256.txt
   before_script:
     - |
-      checksum=$(find . -type f -name "*.kt*"|xargs cat|sha256sum)
+      checksum="$(find . -type f -name "*.kt*"|xargs cat|sha256sum)"
       $(echo "$checksum"|sha256sum -c SHA256.txt) && exit 1 || true
       echo "$checksum" > SHA256.txt
   rules:
