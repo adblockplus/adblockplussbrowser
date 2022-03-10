@@ -163,7 +163,7 @@ internal class OkHttpUserCounter(
         private val serverTimeZone = TimeZone.getTimeZone("GMT")
         private const val MAX_USER_COUNTING_COUNT = 4
 
-        fun convertToTimestamp(stringToFormat: String?): Long {
+        private fun convertToTimestamp(stringToFormat: String): Long {
             return try {
                 val date: Date = lastUserCountingResponseFormat.parse(stringToFormat)
                 date.time
@@ -174,7 +174,7 @@ internal class OkHttpUserCounter(
 
         // There should be one user count request per 24h = 24*60*60*1000 ms = 86400000 ms
         private const val USER_COUNTING_CYCLE = 86_400_000
-        fun isUserCountedInCurrentCycle(lastUserCount: Long): Boolean {
+        private fun isUserCountedInCurrentCycle(lastUserCount: Long): Boolean {
             val lastUserCountTimeStamp = convertToTimestamp(lastUserCount.toString())
             val periodSinceLastUserCount = System.currentTimeMillis() - lastUserCountTimeStamp
             Timber.i("User has been counted %d ms ago", periodSinceLastUserCount)
