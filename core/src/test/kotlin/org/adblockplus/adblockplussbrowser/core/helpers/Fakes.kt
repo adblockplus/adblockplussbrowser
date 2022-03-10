@@ -82,7 +82,6 @@ class Fakes {
 
         override suspend fun updateLastUserCountingResponse(lastUserCountingResponse: Long) {
             this.lastUserCountingResponse = lastUserCountingResponse
-//            this.coreData.lastUserCountingResponse = lastUserCountingResponse
         }
 
         override suspend fun updateUserCountingCount(userCountingCount: Int) {
