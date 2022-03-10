@@ -24,7 +24,7 @@ cache: &global_cache
   - |
     export GRADLE_USER_HOME=`pwd`/.gradle
     export GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.console=plain"
-    '[ -d .android-sdk ] || cp -a /opt/android-sdk ./.android-sdk'
+    [ -d .android-sdk ] || cp -a /opt/android-sdk ./.android-sdk
     export ANDROID_SDK_ROOT=`pwd`/.android-sdk
 
 .template:environment:
