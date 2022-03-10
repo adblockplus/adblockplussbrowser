@@ -91,31 +91,27 @@ tasks.register("downloadExceptionRules", de.undercouch.gradle.tasks.download.Dow
         "crystal" -> "https://0.samsung-internet.filter-list-downloads.eyeo.com/aa-variants/samsung_internet_browser-crystal.txt"
         else -> throw GradleException("Given flavor <$flavor> not supported")
     }
-
-    download.run {
-        src(source)
-        dest("$baseDir/exceptionrules.txt")
-    }
+    src(source)
+    dest("$baseDir/exceptionrules.txt")
 }
 
 tasks.register("downloadEasyList", de.undercouch.gradle.tasks.download.Download::class) {
     val flavor = project.findProperty("flavor")?.toString()?.toLowerCase() ?: "abp"
     val baseDir = if (flavor == "abp") "src/main/assets" else "src/$flavor/assets"
-
-    download.run {
-        src("https://0.samsung-internet.filter-list-downloads.getadblock.com/easylist.txt")
-        dest("$baseDir/easylist.txt")
-    }
+    src("https://0.samsung-internet.filter-list-downloads.getadblock.com/easylist.txt")
+    dest("$baseDir/easylist.txt")
 }
 
 tasks.register("createAssetsDir") {
-    val flavor = project.findProperty("flavor")?.toString()?.toLowerCase() ?: "abp"
-    val baseDir = if (flavor == "abp") "src/main/assets" else "src/$flavor/assets"
-    // Create assets folder if doesn't exist
-    project.mkdir(baseDir)
-    // Add files if don't exist or replace content to be empty
-    File("core/$baseDir", "easylist.txt").writeText("")
-    File("core/$baseDir", "exceptionrules.txt").writeText("")
+    doLast {
+        val flavor = project.findProperty("flavor")?.toString()?.toLowerCase() ?: "abp"
+        val baseDir = if (flavor == "abp") "src/main/assets" else "src/$flavor/assets"
+        // Create assets folder if doesn't exist
+        project.mkdir(baseDir)
+        // Add files if don't exist or replace content to be empty
+        File("core/$baseDir", "easylist.txt").writeText("")
+        File("core/$baseDir", "exceptionrules.txt").writeText("")
+    }
 }
 
 tasks.register("checkSubscriptionsFiles") {
