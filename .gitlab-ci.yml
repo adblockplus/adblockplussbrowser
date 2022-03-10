@@ -20,12 +20,16 @@ cache: &global_cache
     - .gradle/
   policy: pull
 
+.env_before_script: &env_before_script
+  - |
+    export GRADLE_USER_HOME=`pwd`/.gradle
+    export GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.console=plain"
+    '[ -d .android-sdk ] || cp -a /opt/android-sdk ./.android-sdk'
+    export ANDROID_SDK_ROOT=`pwd`/.android-sdk
+
 .template:environment:
   before_script:
-    - export GRADLE_USER_HOME=`pwd`/.gradle
-    - export GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.console=plain"
-    - '[ -d .android-sdk ] || cp -a /opt/android-sdk ./.android-sdk'
-    - export ANDROID_SDK_ROOT=`pwd`/.android-sdk
+    - *env_before_script
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
     - when: on_success
@@ -106,9 +110,10 @@ build:nightly:
         - SHA256.txt
   before_script:
     - |
-      checksum="$(find . -type f -name "*.kt*"|xargs cat|sha256sum)"
+      checksum="$(find . -type f -name '*.kt*'|xargs cat|sha256sum)"
       $(echo "$checksum"|sha256sum -c SHA256.txt) && exit 1 || true
       echo "$checksum" > SHA256.txt
+    - *env_before_script
   rules:
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
     - if: '$NIGHTLY_BUILD'
