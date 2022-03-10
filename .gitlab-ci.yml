@@ -100,14 +100,15 @@ build:
 build:nightly:
   extends: .template:build
   cache:
-    key: last-nightly-hash
-    paths:
-      - SHA256.txt
+    - <<: *global_cache
+    - key: last-nightly-hash
+      paths:
+        - SHA256.txt
   before_script:
     - |
-      sha256 = $(find . -type f -name "*.kt*"|xargs cat|sha256sum)
-      $(echo "$sha256"|sha256sum -c SHA256.txt) && exit 1 || true
-      echo "$sha256" > SHA256.txt
+      checksum=$(find . -type f -name "*.kt*"|xargs cat|sha256sum)
+      $(echo "$checksum"|sha256sum -c SHA256.txt) && exit 1 || true
+      echo "$checksum" > SHA256.txt
   rules:
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
     - if: '$NIGHTLY_BUILD'
