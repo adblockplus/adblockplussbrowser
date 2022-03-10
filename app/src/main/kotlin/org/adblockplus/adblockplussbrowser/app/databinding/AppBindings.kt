@@ -27,7 +27,7 @@ import org.adblockplus.adblockplussbrowser.base.widget.SnackbarContainer
 internal fun bindUpdateStatus(snackbarContainer: SnackbarContainer, status: SubscriptionUpdateStatus) {
     when (status) {
         SubscriptionUpdateStatus.Failed -> snackbarContainer.showErrorStatus()
-        SubscriptionUpdateStatus.None -> snackbarContainer.dismiss()
+        SubscriptionUpdateStatus.None, SubscriptionUpdateStatus.Success -> snackbarContainer.dismiss()
     }
 }
 
