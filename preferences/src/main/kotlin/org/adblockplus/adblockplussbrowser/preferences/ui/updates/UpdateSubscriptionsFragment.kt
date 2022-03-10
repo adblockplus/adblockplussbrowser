@@ -72,6 +72,8 @@ class UpdateSubscriptionsFragment : DataBindingFragment<FragmentUpdateSubscripti
             val isUpdating = value is SubscriptionUpdateStatus.Progress
             binding.updatesPreferencesUpdateNowLabel.text = if (isUpdating) getString(R.string.update_status_progress_message) else getString(R.string.preferences_update_subscriptions_title)
             binding.updatesPreferencesUpdateNow.isEnabled = !isUpdating
+            binding.updatesPreferencesProgress.progress = if (isUpdating) (value as SubscriptionUpdateStatus.Progress).progress else 0
+            binding.updatesPreferencesProgress.visibility = if (isUpdating) View.VISIBLE else View.GONE
         }
     }
 
