@@ -103,57 +103,36 @@ tasks.register("downloadEasyList", de.undercouch.gradle.tasks.download.Download:
     dest("$baseDir/easylist.txt")
 }
 
-tasks.register("createAssetsDir") {
-    doLast {
-        val flavor = project.findProperty("flavor")?.toString()?.toLowerCase() ?: "abp"
-        val baseDir = if (flavor == "abp") "src/main/assets" else "src/$flavor/assets"
-        // Create assets folder if doesn't exist
-        project.mkdir(baseDir)
-        // Add files if don't exist or replace content to be empty
-        File("core/$baseDir", "easylist.txt").writeText("")
-        File("core/$baseDir", "exceptionrules.txt").writeText("")
-    }
-}
-
 tasks.register("packSubscriptionsFiles") {
-    val flavor = project.property("flavor").toString().toLowerCase()
+    val flavor = project.findProperty("flavor")?.toString()?.toLowerCase() ?: "abp"
     val baseDir = if (flavor == "abp") "src/main/assets" else "src/$flavor/assets"
-    val exceptionRules = "$baseDir/exceptionrules.txt"
-    var exceptionRulesLength = File("$exceptionRules").length()
-    println("$flavor EXCEPTIONRULES ORIGINAL SIZE: ${exceptionRulesLength / 1024} KB")
-
     val xz = "xz"
     val logFile = file("$buildDir/resources/main/commit.json")
+
     doLast {
         exec {
             commandLine(
                 xz,
-                "$exceptionRules"
+                "$baseDir/exceptionrules.txt"
             ).standardOutput to logFile
-        }
-        exceptionRulesLength = File("${exceptionRules}.xz").length()
-
-        println("$flavor EXCEPTIONRULES PACKED SIZE: ${exceptionRulesLength / 1024} KB")
-
-        if (exceptionRulesLength == 0L) {
-            throw GradleException("Something went wrong. Exception rules file is empty!")
         }
     }
 }
 
-
 tasks.register("checkSubscriptionsFiles") {
+    val flavor = project.findProperty("flavor")?.toString()?.toLowerCase() ?: "abp"
+    val baseDir = if (flavor == "abp") "core/src/main/assets" else "core/src/$flavor/assets"
+
     doLast {
-        val flavor = project.findProperty("flavor")?.toString()?.toLowerCase() ?: "abp"
-        val baseDir = if (flavor == "abp") "core/src/main/assets" else "core/src/$flavor/assets"
         val easyListLength = File("$baseDir/easylist.txt").length()
-        val exceptionRulesLength = File("$baseDir/exceptionrules.txt").length()
+        val exceptionRulesLength = File("$baseDir/exceptionrules.txt.xz").length()
 
         println("$flavor EASYLIST SIZE: ${easyListLength / 1024} KB")
-        println("$flavor EXCEPTIONRULES SIZE: ${exceptionRulesLength / 1024} KB")
+        println("$flavor EXCEPTIONRULES PACKED SIZE: ${exceptionRulesLength / 1024} KB")
 
-        if (easyListLength == 0L || exceptionRulesLength == 0L) {
-            throw GradleException("Something went wrong. At least one of the subscriptions files is empty!")
+        when {
+            easyListLength == 0L -> throw GradleException("Something went wrong. Easylist file is empty!")
+            exceptionRulesLength == 0L -> throw GradleException("Something went wrong. Exception rules file is empty!")
         }
     }
 }
@@ -162,10 +141,10 @@ tasks.register("checkSubscriptionsFiles") {
     gradle :core:downloadSubscriptions -Pflavor=adblock (abp if no flavor is provided)
  */
 tasks.register("downloadSubscriptions") {
-    dependsOn("createAssetsDir", "downloadExceptionRules", "downloadEasyList", "checkSubscriptionsFiles")
-    tasks.getByName("downloadExceptionRules").mustRunAfter("createAssetsDir")
+    dependsOn("downloadExceptionRules", "downloadEasyList", "packSubscriptionsFiles", "checkSubscriptionsFiles")
     tasks.getByName("downloadEasyList").mustRunAfter("downloadExceptionRules")
-    tasks.getByName("checkSubscriptionsFiles").mustRunAfter("downloadEasyList")
+    tasks.getByName("packSubscriptionsFiles").mustRunAfter("downloadEasyList")
+    tasks.getByName("checkSubscriptionsFiles").mustRunAfter("packSubscriptionsFiles")
 }
 
 tasks.withType(Test::class.java) {
@@ -175,7 +154,6 @@ tasks.withType(Test::class.java) {
     }
     finalizedBy(tasks.getByName("jacocoTestReport"))
 }
-
 
 tasks.register("jacocoTestReport", JacocoReport::class.java) {
     val coverageSourceDirs = listOf("src/main/kotlin")
