@@ -62,6 +62,7 @@ internal class OkHttpUserCounter(
             Timber.d("User count lastUserCountingResponse saved is `%d`",
                 savedLastUserCountingResponse)
             if (isUserCountedInCurrentCycle(savedLastUserCountingResponse)) {
+                Timber.i("Skip the count. User counted less than 24h ago.")
                 CountUserResult.Skipped()
             } else {
                 val acceptableAdsEnabled = settings.currentSettings().acceptableAdsEnabled
