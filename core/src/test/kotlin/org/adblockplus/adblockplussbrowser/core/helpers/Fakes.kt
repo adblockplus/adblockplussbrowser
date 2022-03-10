@@ -91,7 +91,7 @@ class Fakes {
         override suspend fun updateSavedState(savedState: SavedState) {  }
     }
 
-    class FakeSettingsRepository(private val serverUrl: String) : SettingsRepository {
+    open class FakeSettingsRepository(private val serverUrl: String) : SettingsRepository {
         var acceptableAdsStatus: Boolean = true
 
         override val settings: Flow<Settings>
@@ -213,5 +213,25 @@ class Fakes {
         override fun enable() {}
 
         override fun disable() {}
+    }
+
+    class FakeSettingsRepositoryNoChanges(serverUrl: String) :
+        FakeSettingsRepository(serverUrl) {
+        override val settings: Flow<Settings>
+            get() = flow {
+                emit(
+                    Settings(
+                        true,
+                        acceptableAdsStatus,
+                        UpdateConfig.ALWAYS,
+                        listOf(""),
+                        listOf(""),
+                        listOf(Subscription("", "", 0L)),
+                        listOf(Subscription("", "", 0L)),
+                        true,
+                        true
+                    )
+                )
+            }
     }
 }

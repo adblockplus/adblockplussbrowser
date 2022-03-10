@@ -16,6 +16,8 @@
  */
 
 object Deps {
+    const val ROBOLECTRIC = "org.robolectric:robolectric:4.7.3"
+
     const val DETEKT_PLUGIN_ID = "io.gitlab.arturbosch.detekt"
     const val DETEKT_PLUGIN_VERSION = "1.18.1"
 
@@ -26,6 +28,10 @@ object Deps {
     val GRADLE_VERSIONS_PLUGIN = "com.github.ben-manes:gradle-versions-plugin" version GRADLE_VERSIONS_PLUGIN_VERSION
 
     val JUNIT = "junit:junit" version "4.13.2"
+
+    val JACOCO_CORE = "org.jacoco:org.jacoco.core" version "0.8.7"
+
+    const val JACOCO = "jacoco"
 
     val DOTS_INDICATOR = "com.tbuonomo:dotsindicator" version "4.2"
 
@@ -104,6 +110,11 @@ object Deps {
             version("1.1.1")
         }
 
+        val TEST_CORE = dependency {
+            groupName("test:core")
+            version("1.4.0")
+        }
+
         val VIEWPAGER2 = dependency {
             groupName("viewpager2:viewpager2")
             version("1.0.0")
@@ -144,6 +155,7 @@ object Deps {
 
         object Work : DependencyGroup("androidx.work", "2.5.0") {
             val RUNTIME = dependency { name("work-runtime-ktx") }
+            val TESTING = dependency { name("work-testing") }
         }
     }
 
@@ -165,6 +177,10 @@ object Deps {
     object KotlinX : DependencyGroup("org.jetbrains.kotlinx", "1.5.0") {
         val COROUTINES = dependency { name("kotlinx-coroutines-core") }
         val COROUTINES_ANDROID = dependency { name("kotlinx-coroutines-android") }
+    }
+
+    object KotlinXTest: DependencyGroup("org.jetbrains.kotlinx", "1.6.0") {
+        val COROUTINES_TEST = dependency { name("kotlinx-coroutines-test") }
     }
 
     object MaterialDialogs : DependencyGroup("com.afollestad.material-dialogs", "3.3.0") {
