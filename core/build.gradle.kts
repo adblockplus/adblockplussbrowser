@@ -25,6 +25,7 @@ plugins {
     id("com.google.protobuf")
     id("dagger.hilt.android.plugin")
     id("de.undercouch.download")
+    id(Deps.JACOCO)
 }
 
 applyCommonConfig()
@@ -59,6 +60,10 @@ dependencies {
     testImplementation(Deps.OkHttp.MOCK_WEB_SERVER)
     testImplementation(Deps.Mockito.Core)
     testImplementation(Deps.Mockito.Kotlin)
+    testImplementation(Deps.ROBOLECTRIC)
+    testImplementation(Deps.AndroidX.TEST_CORE)
+    testImplementation(Deps.AndroidX.Work.TESTING)
+    testImplementation(Deps.KotlinXTest.COROUTINES_TEST )
 }
 
 protobuf {
@@ -77,7 +82,7 @@ protobuf {
 }
 
 tasks.register("downloadExceptionRules", de.undercouch.gradle.tasks.download.Download::class) {
-    val flavor = project.property("flavor").toString().toLowerCase()
+    val flavor = project.findProperty("flavor")?.toString()?.toLowerCase() ?: "abp"
     val baseDir = if (flavor == "abp") "src/main/assets" else "src/$flavor/assets"
 
     val source = when(flavor) {
@@ -94,7 +99,7 @@ tasks.register("downloadExceptionRules", de.undercouch.gradle.tasks.download.Dow
 }
 
 tasks.register("downloadEasyList", de.undercouch.gradle.tasks.download.Download::class) {
-    val flavor = project.property("flavor").toString().toLowerCase()
+    val flavor = project.findProperty("flavor")?.toString()?.toLowerCase() ?: "abp"
     val baseDir = if (flavor == "abp") "src/main/assets" else "src/$flavor/assets"
 
     download.run {
@@ -104,7 +109,7 @@ tasks.register("downloadEasyList", de.undercouch.gradle.tasks.download.Download:
 }
 
 tasks.register("createAssetsDir") {
-    val flavor = project.property("flavor").toString().toLowerCase()
+    val flavor = project.findProperty("flavor")?.toString()?.toLowerCase() ?: "abp"
     val baseDir = if (flavor == "abp") "src/main/assets" else "src/$flavor/assets"
     // Create assets folder if doesn't exist
     project.mkdir(baseDir)
@@ -114,27 +119,61 @@ tasks.register("createAssetsDir") {
 }
 
 tasks.register("checkSubscriptionsFiles") {
-    val flavor = project.property("flavor").toString().toLowerCase()
-    val baseDir = if (flavor == "abp") "core/src/main/assets" else "core/src/$flavor/assets"
-    val easyListLength = File("$baseDir/easylist.txt").length()
-    val exceptionRulesLength = File("$baseDir/exceptionrules.txt").length()
+    doLast {
+        val flavor = project.findProperty("flavor")?.toString()?.toLowerCase() ?: "abp"
+        val baseDir = if (flavor == "abp") "core/src/main/assets" else "core/src/$flavor/assets"
+        val easyListLength = File("$baseDir/easylist.txt").length()
+        val exceptionRulesLength = File("$baseDir/exceptionrules.txt").length()
 
-    println("$flavor EASYLIST SIZE: ${easyListLength / 1024} KB")
-    println("$flavor EXCEPTIONRULES SIZE: ${exceptionRulesLength / 1024} KB")
+        println("$flavor EASYLIST SIZE: ${easyListLength / 1024} KB")
+        println("$flavor EXCEPTIONRULES SIZE: ${exceptionRulesLength / 1024} KB")
 
-    if (easyListLength == 0L || exceptionRulesLength == 0L) {
-        throw GradleException("Something went wrong. At least one of the subscriptions files is empty!")
+        if (easyListLength == 0L || exceptionRulesLength == 0L) {
+            throw GradleException("Something went wrong. At least one of the subscriptions files is empty!")
+        }
     }
 }
 
 /* To run this task a parameter `flavor` (abp, adblock or crystal) must be provided.
-    gradle :core:downloadSubscriptions -Pflavor=adblock
+    gradle :core:downloadSubscriptions -Pflavor=adblock (abp if no flavor is provided)
  */
 tasks.register("downloadSubscriptions") {
-    dependsOn("createAssetsDir", "downloadEasyList", "downloadExceptionRules")
+    dependsOn("createAssetsDir", "downloadExceptionRules", "downloadEasyList", "checkSubscriptionsFiles")
     tasks.getByName("downloadExceptionRules").mustRunAfter("createAssetsDir")
     tasks.getByName("downloadEasyList").mustRunAfter("downloadExceptionRules")
-    doLast {
-        tasks.getByName("checkSubscriptionsFiles").run{}
+    tasks.getByName("checkSubscriptionsFiles").mustRunAfter("downloadEasyList")
+}
+
+tasks.withType(Test::class.java) {
+    configure<JacocoTaskExtension> {
+        isIncludeNoLocationClasses = true
+        excludes = listOf("jdk.internal.*")
+    }
+    finalizedBy(tasks.getByName("jacocoTestReport"))
+}
+
+
+tasks.register("jacocoTestReport", JacocoReport::class.java) {
+    val coverageSourceDirs = listOf("src/main/kotlin")
+    val fileFilter = listOf(
+        "**/R.class",
+        "**/R$*.class",
+        "**/BuildConfig.*",
+        "**/Manifest*.*",
+        "**/*Test*.*",
+        "android/**/*.*"
+    )
+
+    val javaClasses = fileTree("$buildDir/intermediates/javac/worldAbpDebug/classes").setExcludes(fileFilter)
+    val kotlinClasses = fileTree("$buildDir/tmp/kotlin-classes/worldAbpDebug").setExcludes(fileFilter)
+    classDirectories.setFrom(files(javaClasses, kotlinClasses))
+    additionalSourceDirs.setFrom(files(coverageSourceDirs))
+    sourceDirectories.setFrom(files(coverageSourceDirs))
+    executionData.setFrom(
+        fileTree("$buildDir").setIncludes(listOf("jacoco/testWorldAbpDebugUnitTest.exec"))
+    )
+
+    reports {
+        html.required.set(true)
     }
 }
