@@ -94,11 +94,11 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             context,
             FilterListContentProviderEntryPoint::class.java
         )
-        prepareDefaultSubscriptions()
         coreRepository = entryPoint.getCoreRepository()
         activationPreferences = entryPoint.getActivationPreferences()
         analyticsProvider = entryPoint.getAnalyticsProvider()
         workManager = WorkManager.getInstance(context)
+        prepareDefaultSubscriptions()
         return true
     }
 
@@ -176,14 +176,13 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         Timber.d("getFilterFile: unpacking")
         try {
             var ins = context.assets.open("exceptionrules.txt.xz")
-            var xzInputStream = XZInputStream(ins, 1192 * 1024)
+            val xzInputStream = XZInputStream(ins, 1192 * 1024)
             xzInputStream.source().use { a ->
                 temp.sink().buffer().use { b -> b.writeAll(a) }
             }
 
-            ins = context.assets.open("easylist.txt.xz")
-            xzInputStream = XZInputStream(ins, 1192 * 1024)
-            xzInputStream.source().use { a ->
+            ins = context.assets.open("easylist.txt")
+            ins.source().use { a ->
                 temp.sink(append = true).buffer().use { b -> b.writeAll(a) }
             }
             temp.renameTo(defaultFile)
