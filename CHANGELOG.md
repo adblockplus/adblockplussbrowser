@@ -27,40 +27,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Updated preloaded filter list
 
-## [3.1.1] - 2021-12-27
-### Fixed
-- Crash on a SecurityException from LauncherActivity
-
-## [3.1.0] - 2021-12-20
-### Changed
-- AdBlock specific filter list
-
 ### Fixed
 - Adblock analytics user counting property
-
-## [3.1.0-rc3] - 2021-12-17
-
-### Fixed
-- Adblock flavor name assets
-
-## [3.1.0-rc2] - 2021-12-16
-
-### Fixed
-- Adblock flavor name
-
-## [3.1.0-rc1] - 2021-12-16
-### Changed
-- Randomized subscription url
-- Updated Android Gradle Plugin and Gradle
-- Apply Adblock color rebranding
-- Improved error reporting
-- Track Adblock for SI separately from Adblock Plus for SI
-- Replace Adblock Plus and eyeo in Copyright notice for Adblock
-
-### Fixed
-- Accept and domain-parse complete URLs
-- Allowlisting filter domain restriction
-- Mechanism for counting Yandex users
 
 ## [2.0.1] - 2021-12-07
 ### Changed
@@ -102,4 +70,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Known issues
 - "Open Samsung Internet" button on the "Enable Adblock Plus" sometimes causes Samsung Internet to show an empty ad blockers list
-- "Enable Adblock Plus" is shown even if an existing user has enabled it in the previous ABP4SI version.
