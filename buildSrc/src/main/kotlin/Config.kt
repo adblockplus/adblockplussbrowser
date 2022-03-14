@@ -17,9 +17,9 @@
 
 object Config {
     object Versions {
-        const val ABP = "2.2.0"
-        const val ADBLOCK = "3.1.1-user-counting-test"
-        const val CRYSTAL = "2.2.0"
+        const val ABP = "2.2.0-user-counting-test"
+        const val ADBLOCK = "3.2.2-user-counting-test"
+        const val CRYSTAL = "2.2.0-user-counting-test"
     }
 
     const val COMPILE_SDK_VERSION = 30
