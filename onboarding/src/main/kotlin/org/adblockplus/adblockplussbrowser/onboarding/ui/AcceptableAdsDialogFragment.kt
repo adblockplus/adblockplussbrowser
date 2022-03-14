@@ -19,15 +19,21 @@ package org.adblockplus.adblockplussbrowser.onboarding.ui
 
 import android.app.Dialog
 import android.os.Bundle
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatDialogFragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.customview.getCustomView
 import org.adblockplus.adblockplussbrowser.onboarding.R
 
 class AcceptableAdsDialogFragment : AppCompatDialogFragment() {
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
-        MaterialDialog(requireContext()).show {
-            customView(viewRes = R.layout.acceptable_ads_explanation, scrollable = true)
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return MaterialDialog(requireContext()).show {
+            customView(viewRes = R.layout.onboarding_acceptable_ads_dialog, scrollable = true)
+            val closeButton = getCustomView().findViewById<ImageButton>(R.id.close_btn)
+            closeButton.setOnClickListener { dismiss() }
         }
+    }
+
 }

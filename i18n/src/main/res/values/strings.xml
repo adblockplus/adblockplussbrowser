@@ -67,6 +67,7 @@
     <string name="onboarding_enable_one_step_description">Enable ABP in Samsung Internet\'s Adblocker Settings</string>
 
     <string name="open_samsung_internet">Open Samsung Internet</string>
+    <string name="close_dialog" tools:ignore="MissingTranslation">Close dialog</string>
     <!-- /onboarding -->
 
     <!-- preferences -->
