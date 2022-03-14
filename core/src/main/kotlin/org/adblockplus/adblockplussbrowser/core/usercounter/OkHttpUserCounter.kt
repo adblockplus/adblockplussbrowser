@@ -173,7 +173,10 @@ internal class OkHttpUserCounter(
         }
 
         // There should be one user count request per 24h = 24*60*60*1000 ms = 86400000 ms
-        private const val USER_COUNTING_CYCLE = 86_400_000
+        // We are comparing device time and server time
+        // subtract 15 min to compensate possible clock synchronization issues
+        // 23h 45min = 86400000 - 15*60*1000 = 85500000 ms
+        private const val USER_COUNTING_CYCLE = 85_500_000
         private fun isUserCountedInCurrentCycle(lastUserCount: Long): Boolean {
             val lastUserCountTimeStamp = convertToTimestamp(lastUserCount.toString())
             val periodSinceLastUserCount = System.currentTimeMillis() - lastUserCountTimeStamp
