@@ -34,5 +34,4 @@ class AcceptableAdsDialogFragment : AppCompatDialogFragment() {
                 .negativeButton(text="OK", click = { dismiss() })
         }
     }
-
 }
