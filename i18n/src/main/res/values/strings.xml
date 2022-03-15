@@ -130,4 +130,6 @@
     <string name="block_social_media_tracking">Block social media icons tracking</string>
     <!-- /settings -->
 
+    <string name="ok" tools:ignore="MissingTranslation">OK</string>
+
 </resources>

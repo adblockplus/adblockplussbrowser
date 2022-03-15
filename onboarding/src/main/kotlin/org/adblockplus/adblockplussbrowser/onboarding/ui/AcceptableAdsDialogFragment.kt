@@ -19,11 +19,9 @@ package org.adblockplus.adblockplussbrowser.onboarding.ui
 
 import android.app.Dialog
 import android.os.Bundle
-import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatDialogFragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
-import com.afollestad.materialdialogs.customview.getCustomView
 import org.adblockplus.adblockplussbrowser.onboarding.R
 
 class AcceptableAdsDialogFragment : AppCompatDialogFragment() {
@@ -31,7 +29,7 @@ class AcceptableAdsDialogFragment : AppCompatDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return MaterialDialog(requireContext()).show {
             customView(viewRes = R.layout.acceptable_ads_explanation, scrollable = true)
-                .negativeButton(text="OK", click = { dismiss() })
+                .negativeButton(text=getString(R.string.ok), click = { dismiss() })
         }
     }
 }
