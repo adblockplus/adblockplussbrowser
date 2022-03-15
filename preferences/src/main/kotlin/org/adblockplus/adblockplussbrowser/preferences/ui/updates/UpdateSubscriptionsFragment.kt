@@ -70,10 +70,17 @@ class UpdateSubscriptionsFragment : DataBindingFragment<FragmentUpdateSubscripti
         viewModel.updateStatus.observe(this) { value ->
             Timber.d("Update status value: $value")
             val isUpdating = value is SubscriptionUpdateStatus.Progress
-            binding.updatesPreferencesUpdateNowLabel.text = if (isUpdating) getString(R.string.update_status_progress_message) else getString(R.string.preferences_update_subscriptions_title)
+            val updatePreferencesProgress = binding.updatesPreferencesProgress
             binding.updatesPreferencesUpdateNow.isEnabled = !isUpdating
-            binding.updatesPreferencesProgress.progress = if (isUpdating) (value as SubscriptionUpdateStatus.Progress).progress else 0
-            binding.updatesPreferencesProgress.visibility = if (isUpdating) View.VISIBLE else View.GONE
+            if (isUpdating) {
+                updatePreferencesProgress.progress = (value as SubscriptionUpdateStatus.Progress).progress
+                updatePreferencesProgress.visibility = View.VISIBLE
+                binding.updatesPreferencesUpdateNowLabel.text = getString(R.string.update_status_progress_message)
+            } else {
+                updatePreferencesProgress.progress = 0
+                updatePreferencesProgress.visibility = View.GONE
+                binding.updatesPreferencesUpdateNowLabel.text = getString(R.string.preferences_update_subscriptions_title)
+            }
         }
     }
 
