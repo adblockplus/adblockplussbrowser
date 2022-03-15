@@ -29,7 +29,7 @@ class AcceptableAdsDialogFragment : AppCompatDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return MaterialDialog(requireContext()).show {
             customView(viewRes = R.layout.acceptable_ads_explanation, scrollable = true)
-                .negativeButton(text=getString(R.string.ok), click = { dismiss() })
+                .negativeButton(text=getString(android.R.string.ok), click = { dismiss() })
         }
     }
 }
