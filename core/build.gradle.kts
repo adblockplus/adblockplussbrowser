@@ -107,14 +107,15 @@ tasks.register("packSubscriptionsFiles") {
     val flavor = project.findProperty("flavor")?.toString()?.toLowerCase() ?: "abp"
     val baseDir = if (flavor == "abp") "src/main/assets" else "src/$flavor/assets"
     val xz = "xz"
-    val logFile = file("$buildDir/resources/main/commit.json")
 
     doLast {
+        // Delete execptionrules compressed file if exists to avoid "File exists" error
+        delete("$baseDir/exceptionrules.txt.xz")
         exec {
             commandLine(
                 xz,
                 "$baseDir/exceptionrules.txt"
-            ).standardOutput to logFile
+            )
         }
     }
 }
