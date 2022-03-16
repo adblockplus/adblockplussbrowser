@@ -26,10 +26,8 @@ import org.adblockplus.adblockplussbrowser.base.widget.SnackbarContainer
 @BindingAdapter("updateStatus")
 internal fun bindUpdateStatus(snackbarContainer: SnackbarContainer, status: SubscriptionUpdateStatus) {
     when (status) {
-        is SubscriptionUpdateStatus.Progress -> snackbarContainer.showProgressStatus(status.progress)
         SubscriptionUpdateStatus.Failed -> snackbarContainer.showErrorStatus()
-        SubscriptionUpdateStatus.Success -> snackbarContainer.dismiss(SnackbarContainer.HIDE_DELAY_LONG)
-        SubscriptionUpdateStatus.None -> snackbarContainer.dismiss()
+        SubscriptionUpdateStatus.None, SubscriptionUpdateStatus.Success -> snackbarContainer.dismiss()
     }
 }
 
@@ -39,17 +37,7 @@ internal fun bindRetryAction(snackbarContainer: SnackbarContainer, listener: Vie
     snackbarContainer.setActionListener(listener)
 }
 
-private fun SnackbarContainer.showProgressStatus(progressValue: Int) {
-    showProgress()
-    progress = progressValue
-    setText(R.string.update_status_progress_message)
-    setTextDrawableStart(null)
-    hideAction()
-    show()
-}
-
 private fun SnackbarContainer.showErrorStatus() {
-    hideProgress()
     setText(R.string.update_status_error_message)
     setTextDrawableStart(R.drawable.ic_baseline_error_outline_24)
     showAction()

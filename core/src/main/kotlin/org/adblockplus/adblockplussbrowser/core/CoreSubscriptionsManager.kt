@@ -157,7 +157,7 @@ class CoreSubscriptionsManager(
 
         val manager = WorkManager.getInstance(appContext)
         // REPLACE old enqueued works
-        manager.enqueueUniqueWork(UPDATE_KEY_ONESHOT_WORK, ExistingWorkPolicy.APPEND_OR_REPLACE, request)
+        manager.enqueueUniqueWork(UPDATE_KEY_ONESHOT_WORK, ExistingWorkPolicy.REPLACE, request)
     }
 
     private fun schedule(updateConfig: UpdateConfig) {
