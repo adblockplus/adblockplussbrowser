@@ -66,9 +66,21 @@
                 style="@style/PreferenceContainerStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:onClick="@{(v) -> viewModel.updateSubscriptions()}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/updates_preferences_automatic_updates">
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/updates_preferences_progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|start"
+                    android:layout_marginStart="8dp"
+                    android:visibility="gone"
+                    app:indicatorSize="16dp"
+                    app:trackColor="@color/background"
+                    app:trackThickness="1dp" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/updates_preferences_update_now_label"

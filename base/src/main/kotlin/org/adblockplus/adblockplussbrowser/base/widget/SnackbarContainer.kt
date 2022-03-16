@@ -65,8 +65,6 @@ class SnackbarContainer @JvmOverloads constructor(
     }
 
     private fun adjustAll() {
-        adjustProgress()
-        adjustProgressVisibility()
         adjustText()
         adjustTextDrawableStart()
         adjustDuration()
@@ -103,31 +101,6 @@ class SnackbarContainer @JvmOverloads constructor(
                 }
             }
         }
-    }
-
-    var progress: Int
-        get() = config.progress
-        set(value) {
-            config.progress = value
-            adjustProgress()
-        }
-
-    private fun adjustProgress() {
-        binding?.snackbarProgress?.progress = config.progress
-    }
-
-    fun showProgress() {
-        config.progressVisibility = VISIBLE
-        adjustProgressVisibility()
-    }
-
-    fun hideProgress() {
-        config.progressVisibility = GONE
-        adjustProgressVisibility()
-    }
-
-    private fun adjustProgressVisibility() {
-        binding?.snackbarProgress?.visibility = config.progressVisibility
     }
 
     var text: CharSequence?
@@ -222,8 +195,6 @@ class SnackbarContainer @JvmOverloads constructor(
 private class SnackbarConfig {
     var shown: Boolean = false
     var dismissDelay: Long = 0L
-    var progress: Int = 0
-    var progressVisibility: Int = View.GONE
     var text: CharSequence? = null
     var textDrawableStart: Drawable? = null
     var duration: Int = Snackbar.LENGTH_INDEFINITE

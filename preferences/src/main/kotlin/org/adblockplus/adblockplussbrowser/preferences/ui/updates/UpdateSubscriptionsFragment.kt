@@ -21,6 +21,7 @@ import android.view.View
 import android.widget.AdapterView
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import org.adblockplus.adblockplussbrowser.base.data.model.SubscriptionUpdateStatus
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentUpdateSubscriptionsBinding
@@ -68,6 +69,18 @@ class UpdateSubscriptionsFragment : DataBindingFragment<FragmentUpdateSubscripti
 
         viewModel.updateStatus.observe(this) { value ->
             Timber.d("Update status value: $value")
+            val isUpdating = value is SubscriptionUpdateStatus.Progress
+            val updatePreferencesProgress = binding.updatesPreferencesProgress
+            binding.updatesPreferencesUpdateNow.isEnabled = !isUpdating
+            if (isUpdating) {
+                updatePreferencesProgress.progress = (value as SubscriptionUpdateStatus.Progress).progress
+                updatePreferencesProgress.visibility = View.VISIBLE
+                binding.updatesPreferencesUpdateNowLabel.text = getString(R.string.update_status_progress_message)
+            } else {
+                updatePreferencesProgress.progress = 0
+                updatePreferencesProgress.visibility = View.GONE
+                binding.updatesPreferencesUpdateNowLabel.text = getString(R.string.preferences_update_subscriptions_title)
+            }
         }
     }
 
