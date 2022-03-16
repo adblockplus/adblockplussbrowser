@@ -26,17 +26,6 @@
         android:layout_gravity="bottom"
         android:orientation="horizontal">
 
-        <com.google.android.material.progressindicator.CircularProgressIndicator
-            android:id="@+id/snackbar_progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|start"
-            android:layout_marginStart="8dp"
-            android:visibility="gone"
-            app:indicatorSize="16dp"
-            app:trackColor="@color/background"
-            app:trackThickness="1dp" />
-
         <TextView
             android:id="@+id/snackbar_text"
             style="?attr/snackbarTextViewStyle"
