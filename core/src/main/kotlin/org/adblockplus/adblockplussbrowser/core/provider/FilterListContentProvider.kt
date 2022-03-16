@@ -176,7 +176,15 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         Timber.d("getFilterFile: unpacking")
         try {
             var ins = context.assets.open("exceptionrules.txt.xz")
-            val xzInputStream = XZInputStream(ins, 1192 * 1024)
+            /*
+                XZInputStream params:
+                    - Input stream
+                    - memory limit expressed in kibibytes (KiB)
+                        The worst-case memory usage of XZInputStream is currently 1.5 GiB.
+                        Still, very few files will require more than about 65 MiB.
+                        To calculate KiB multiply the digital storage value by 1024. E.g.: 65 MiB * 1024
+             */
+            val xzInputStream = XZInputStream(ins, 100 * 1024) // We use 100 to not be in the limit
             xzInputStream.source().use { a ->
                 temp.sink().buffer().use { b -> b.writeAll(a) }
             }
@@ -187,11 +195,14 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             }
             temp.renameTo(defaultFile)
             Timber.d("getFilterFile: unpacked, elapsed: ${Duration.milliseconds(System.currentTimeMillis()) - start}")
-        } catch (ex: XZIOException) {
-            Timber.e(ex)
-            defaultFile.delete()
-        } catch (ex: IOException) {
-            defaultFile.delete()
+        } catch (ex: Exception) {
+            when (ex) {
+                is IOException, is XZIOException -> {
+                    Timber.e(ex)
+                    defaultFile.delete()
+                    temp.delete()
+                }
+            }
         }
         defaultSubscriptionsUnpackingDone.countDown()
     }
