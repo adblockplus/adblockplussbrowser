@@ -19,6 +19,46 @@ Building with Gradle
 - Add your [google-services.json][4] file to `app/` directory
 - From the root dir, run `./gradlew yourBuildVariant`. This will generate an .apk file in the `adblockplussbrowser/app/build/outputs/apk/yourBuildVariant/debug` directory.
 
+#### Downloading Subscriptions
+In the `build.gradle` of the `core` module, there is a task to manually download the subscriptions to prepare the release.
+
+- `downloadSubscriptions` is a task that will execute the following:
+  - Download Exception Rules (`downloadExceptionRules` gradle task)
+    - **_Input_**: flavor
+    - **_Output_**: exceptionrules.txt
+  - Download Easylist (`downloadEasyList` gradle task)
+    - **_Input_**: flavor
+    - **_Output_**: easylist.txt
+  - Pack Subscriptions with XZ (`packSubscriptionsFiles` gradle task)
+    - **_Input_**: flavor
+    - **_Uses_**: exceptionrules.txt 
+    - **_Output_**: exceptionrules.txt.xz
+    - **_Note_**: Only exceptionrules file is being packed. Easylist packing didn't provide any extra benefit.
+
+To run `downloadSubscriptions` a flavor must be provided. Default value is `abp`. E.g.:
+- ####ABP
+```
+    gradle :core:downloadSubscriptions
+```
+OR
+```
+    gradle :core:downloadSubscriptions -Pflavor=abp
+```
+
+**Output Folder**: `src/main/assets`
+
+- ####Adblock
+```
+    gradle :core:downloadSubscriptions -Pflavor=adblock
+```
+**Output Folder**: `src/adblock/assets`
+- ####Crystal
+```
+    gradle :core:downloadSubscriptions -Pflavor=crystal
+```
+**Output Folder**: `src/crystal/assets`
+
+
 Importing into Android Studio
 -----------------------------
 

@@ -165,8 +165,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         return directory
     }
 
-    private fun unpackDefaultSubscriptions()
-    {
+    private fun unpackDefaultSubscriptions() {
         val context = requireContext(this)
         val directory = getDefaultSubscriptionsDir()
         val defaultFile = File(directory, DEFAULT_SUBSCRIPTIONS_FILENAME)
@@ -179,12 +178,12 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             /*
                 XZInputStream params:
                     - Input stream
-                    - memory limit expressed in kibibytes (KiB)
+                    - memory limit expressed in kilobytes (KiB)
                         The worst-case memory usage of XZInputStream is currently 1.5 GiB.
                         Still, very few files will require more than about 65 MiB.
-                        To calculate KiB multiply the digital storage value by 1024. E.g.: 65 MiB * 1024
+                        To calculate, multiply the digital storage value by 1024. E.g.: 65 MiB * 1024
              */
-            val xzInputStream = XZInputStream(ins, 100 * 1024) // We use 100 to not be in the limit
+            val xzInputStream = XZInputStream(ins, XZ_MEMORY_LIMIT_KB) // We use 100 to not be in the limit
             xzInputStream.source().use { a ->
                 temp.sink().buffer().use { b -> b.writeAll(a) }
             }
@@ -195,14 +194,10 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             }
             temp.renameTo(defaultFile)
             Timber.d("getFilterFile: unpacked, elapsed: ${Duration.milliseconds(System.currentTimeMillis()) - start}")
-        } catch (ex: Exception) {
-            when (ex) {
-                is IOException, is XZIOException -> {
-                    Timber.e(ex)
-                    defaultFile.delete()
-                    temp.delete()
-                }
-            }
+        } catch (ex: IOException) {
+            Timber.e(ex)
+            defaultFile.delete()
+            temp.delete()
         }
         defaultSubscriptionsUnpackingDone.countDown()
     }
@@ -259,5 +254,6 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         const val DEFAULT_SUBSCRIPTIONS_FILENAME = "default_subscriptions.txt"
         const val DEFAULT_CALLING_APP_NAME = "other"
         const val DEFAULT_CALLING_APP_VERSION = "0"
+        const val XZ_MEMORY_LIMIT_KB = 100 * 1024
     }
 }
