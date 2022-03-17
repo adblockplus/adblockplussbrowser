@@ -254,6 +254,12 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         const val DEFAULT_SUBSCRIPTIONS_FILENAME = "default_subscriptions.txt"
         const val DEFAULT_CALLING_APP_NAME = "other"
         const val DEFAULT_CALLING_APP_VERSION = "0"
+        /*
+            Memory limit was calculated by using a 5x times bigger file and
+            limiting the memory until the unpacking wouldn't work. That value 3x bigger.
+            The result was it wouldn't work with less than 9 * 1024 so rounded up to 10 and
+            multiplied it by 3.
+         */
         const val XZ_MEMORY_LIMIT_KB = 30 * 1024
     }
 }
