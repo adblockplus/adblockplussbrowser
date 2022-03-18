@@ -96,13 +96,12 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
             addOtherSubscriptionsCount += 1
             if (!subscriptionManager.validateSubscription(subscription)) {
                 _uiState.value = UiState.Error
-                addOtherSubscriptionsCount -= 1
                 delay(100)
             } else {
                 settingsRepository.addActiveOtherSubscription(subscription)
-                addOtherSubscriptionsCount -= 1
                 analyticsProvider.logEvent(AnalyticsEvent.CUSTOM_FILTER_LIST_ADDED)
             }
+            addOtherSubscriptionsCount -= 1
             if (addOtherSubscriptionsCount == 0) {
                 _uiState.value = UiState.Done
             }

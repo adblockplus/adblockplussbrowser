@@ -60,16 +60,15 @@ internal class OtherSubscriptionsFragment :
 
 
         viewModel.uiState.observe(this) { uiState ->
+//            val progressLayout = binding.layoutAddOtherSubscriptionsProgress.addOtherSubscriptionsProgress
             when (uiState) {
                 UiState.Done -> {
-                    binding.layoutAddOtherSubscriptionsProgress
-                        .addOtherSubscriptionsProgress.visibility = View.GONE
+                    binding.indeterminateBar.visibility = View.GONE
                 }
                 UiState.Error -> Toast.makeText(requireContext(),
                     getString(R.string.other_subscriptions_error_add_custom), Toast.LENGTH_LONG).show()
                 UiState.Loading -> {
-                    binding.layoutAddOtherSubscriptionsProgress
-                        .addOtherSubscriptionsProgress.visibility = View.VISIBLE
+                    binding.indeterminateBar.visibility = View.VISIBLE
                 }
             }
         }
