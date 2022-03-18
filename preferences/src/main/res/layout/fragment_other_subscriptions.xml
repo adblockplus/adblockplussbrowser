@@ -72,57 +72,6 @@
 
             </LinearLayout>
 
-<!--            <RelativeLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent">-->
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:orientation="vertical">-->
-
-<!--                    <androidx.recyclerview.widget.RecyclerView-->
-<!--                        android:id="@+id/other_subscriptions_list"-->
-<!--                        style="@style/PreferenceScreen"-->
-<!--                        otherSubscriptions="@{viewModel.subscriptions}"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:orientation="vertical"-->
-<!--                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-<!--                        tools:listitem="@layout/other_subscriptions_custom_item" />-->
-
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_gravity="center"-->
-<!--                        android:layout_margin="32dp"-->
-<!--                        android:gravity="top"-->
-<!--                        android:orientation="horizontal">-->
-
-<!--                        <com.google.android.material.textview.MaterialTextView-->
-<!--                            android:id="@+id/other_subscriptions_hint"-->
-<!--                            style="@style/CustomPreferenceSummaryTextStyle"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:drawableStart="@drawable/outline_info_24"-->
-<!--                            android:drawablePadding="2dip"-->
-<!--                            android:gravity="center"-->
-<!--                            android:text="@string/delete_swipe_hint" />-->
-
-<!--                    </LinearLayout>-->
-
-<!--                </LinearLayout>-->
-
-<!--                <include-->
-<!--                    android:id="@+id/layout_add_other_subscriptions_progress"-->
-<!--                    layout="@layout/add_other_subscriptions_progress"-->
-<!--                    android:layout_centerHorizontal="true"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_margin="10dp" />-->
-
-<!--            </RelativeLayout>-->
-
         </androidx.core.widget.NestedScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
