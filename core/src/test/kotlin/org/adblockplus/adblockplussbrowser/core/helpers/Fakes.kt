@@ -59,7 +59,7 @@ class Fakes {
 
         override val data: Flow<CoreData>
             get() = flow {
-                emit(coreData)
+                emit(coreData.copy(lastUserCountingResponse = this@FakeCoreRepository.lastUserCountingResponse))
             }
 
         override var subscriptionsPath: String?
@@ -68,7 +68,7 @@ class Fakes {
             set(value) {}
 
         override suspend fun getDataSync(): CoreData {
-            return coreData
+            return coreData.copy(lastUserCountingResponse = this.lastUserCountingResponse)
         }
 
         override suspend fun setConfigured() {}
