@@ -98,8 +98,6 @@
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
     <string name="delete_dialog_title">Verwijdering bevestigen</string>
     <string name="other_subscriptions_remove_custom_message">Weet u zeker dat u de aangepaste filterlijst wilt verwijderen uit %s?</string>
-    <string name="other_subscriptions_dialog_title">Aangepaste filterlijst toevoegen</string>
-    <string name="other_subscriptions_dialog_message">Dit kan enkele seconden duren</string>
     <string name="other_subscriptions_error_add_custom">Fout bij het toevoegen van aangepaste filterlijst</string>
     <string name="allowlist_add_title">Een website toevoegen aan de toelatingslijst</string>
     <string name="allowlist_add_hint">example.com</string>

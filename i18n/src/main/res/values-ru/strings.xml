@@ -98,8 +98,6 @@
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
     <string name="delete_dialog_title">Подтвердить удаление</string>
     <string name="other_subscriptions_remove_custom_message">Вы уверены, что хотите удалить пользовательский список фильтров из %s?</string>
-    <string name="other_subscriptions_dialog_title">Добавление пользовательского списка фильтров</string>
-    <string name="other_subscriptions_dialog_message">Это может занять несколько секунд</string>
     <string name="other_subscriptions_error_add_custom">Ошибка при добавлении пользовательского списка фильтров</string>
     <string name="allowlist_add_title">Добавить сайт в список разрешенных сайтов</string>
     <string name="allowlist_add_hint">example.com</string>
