@@ -17,7 +17,6 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions
 
-import android.app.ProgressDialog
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
@@ -34,8 +33,6 @@ internal class OtherSubscriptionsFragment :
     DataBindingFragment<FragmentOtherSubscriptionsBinding>(R.layout.fragment_other_subscriptions) {
 
     private val viewModel: OtherSubscriptionsViewModel by activityViewModels()
-
-    private var progressDialog: ProgressDialog? = null
 
     override fun onBindView(binding: FragmentOtherSubscriptionsBinding) {
         binding.viewModel = viewModel
@@ -64,13 +61,15 @@ internal class OtherSubscriptionsFragment :
 
         viewModel.uiState.observe(this) { uiState ->
             when (uiState) {
-                UiState.Done -> progressDialog?.dismiss()
+                UiState.Done -> {
+                    binding.layoutAddOtherSubscriptionsProgress
+                        .addOtherSubscriptionsProgress.visibility = View.GONE
+                }
                 UiState.Error -> Toast.makeText(requireContext(),
                     getString(R.string.other_subscriptions_error_add_custom), Toast.LENGTH_LONG).show()
                 UiState.Loading -> {
-                    progressDialog = ProgressDialog.show(requireContext(),
-                        getString(R.string.other_subscriptions_dialog_title),
-                        getString(R.string.other_subscriptions_dialog_message))
+                    binding.layoutAddOtherSubscriptionsProgress
+                        .addOtherSubscriptionsProgress.visibility = View.VISIBLE
                 }
             }
         }

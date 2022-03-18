@@ -44,6 +44,8 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
     @Inject
     lateinit var analyticsProvider: AnalyticsProvider
 
+    private var addOtherSubscriptionsCount: Int = 0
+
     val subscriptions: LiveData<List<OtherSubscriptionsItem>> = settingsRepository.settings.map { settings ->
         val defaultSubscriptions = settingsRepository.getDefaultOtherSubscriptions()
         val activeSubscriptions = settings.activeOtherSubscriptions
@@ -91,14 +93,18 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
         viewModelScope.launch {
             val subscription = Subscription(url, url, 0L)
             _uiState.value = UiState.Loading
+            addOtherSubscriptionsCount += 1
             if (!subscriptionManager.validateSubscription(subscription)) {
                 _uiState.value = UiState.Error
+                addOtherSubscriptionsCount -= 1
                 delay(100)
-                _uiState.value = UiState.Done
             } else {
                 settingsRepository.addActiveOtherSubscription(subscription)
-                _uiState.value = UiState.Done
+                addOtherSubscriptionsCount -= 1
                 analyticsProvider.logEvent(AnalyticsEvent.CUSTOM_FILTER_LIST_ADDED)
+            }
+            if (addOtherSubscriptionsCount == 0) {
+                _uiState.value = UiState.Done
             }
         }
     }
