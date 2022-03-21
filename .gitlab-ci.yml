@@ -76,7 +76,7 @@ checks:unit-test:
   artifacts:
     when: always
     reports:
-      junit: ./**/build/test-results/**/TEST-*.xml
+      junit: core/build/test-results/**/TEST*.xml
 
 build:
   extends: .template:environment
