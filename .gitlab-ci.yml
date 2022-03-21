@@ -68,6 +68,16 @@ checks:detekt:
   rules:
     - when: on_success
 
+checks:unit-test:
+  extends: .template:environment
+  stage: checks
+  script:
+    - ./gradlew test
+  artifacts:
+    when: always
+    reports:
+      junit: core/build/test-results/**/TEST*.xml
+
 build:
   extends: .template:environment
   stage: build
