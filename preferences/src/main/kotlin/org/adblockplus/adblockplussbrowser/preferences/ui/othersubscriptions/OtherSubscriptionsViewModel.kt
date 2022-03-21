@@ -18,6 +18,7 @@
 package org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -33,7 +34,6 @@ import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.ui.layoutForIndex
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
-import java.util.concurrent.atomic.AtomicInteger
 import javax.inject.Inject
 
 @HiltViewModel
@@ -44,8 +44,6 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
 
     @Inject
     lateinit var analyticsProvider: AnalyticsProvider
-
-    private var addOtherSubscriptionsCount = AtomicInteger()
 
     val subscriptions: LiveData<List<OtherSubscriptionsItem>> = settingsRepository.settings.map { settings ->
         val defaultSubscriptions = settingsRepository.getDefaultOtherSubscriptions()
@@ -58,6 +56,8 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow<UiState>(UiState.Done)
     val uiState = _uiState.asLiveData()
+
+    private val addOtherSubscriptionsCount = MutableLiveData<Int>().apply { value = 0 }
 
     val nonRemovableItemCount: Int
         get() {
@@ -94,7 +94,7 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
         viewModelScope.launch {
             val subscription = Subscription(url, url, 0L)
             _uiState.value = UiState.Loading
-            addOtherSubscriptionsCount.incrementAndGet()
+            addOtherSubscriptionsCount.apply { value = value?.plus(1) }
             if (!subscriptionManager.validateSubscription(subscription)) {
                 _uiState.value = UiState.Error
                 delay(100)
@@ -102,7 +102,8 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
                 settingsRepository.addActiveOtherSubscription(subscription)
                 analyticsProvider.logEvent(AnalyticsEvent.CUSTOM_FILTER_LIST_ADDED)
             }
-            if (addOtherSubscriptionsCount.decrementAndGet() == 0) {
+            addOtherSubscriptionsCount.apply { value = value?.minus(1) }
+            if (addOtherSubscriptionsCount.value == 0) {
                 _uiState.value = UiState.Done
             }
         }
