@@ -33,6 +33,7 @@ import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.ui.layoutForIndex
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
+import java.util.concurrent.atomic.AtomicInteger
 import javax.inject.Inject
 
 @HiltViewModel
@@ -44,7 +45,7 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
     @Inject
     lateinit var analyticsProvider: AnalyticsProvider
 
-    private var addOtherSubscriptionsCount: Int = 0
+    private var addOtherSubscriptionsCount = AtomicInteger()
 
     val subscriptions: LiveData<List<OtherSubscriptionsItem>> = settingsRepository.settings.map { settings ->
         val defaultSubscriptions = settingsRepository.getDefaultOtherSubscriptions()
@@ -93,7 +94,7 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
         viewModelScope.launch {
             val subscription = Subscription(url, url, 0L)
             _uiState.value = UiState.Loading
-            addOtherSubscriptionsCount += 1
+            addOtherSubscriptionsCount.incrementAndGet()
             if (!subscriptionManager.validateSubscription(subscription)) {
                 _uiState.value = UiState.Error
                 delay(100)
@@ -101,8 +102,7 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
                 settingsRepository.addActiveOtherSubscription(subscription)
                 analyticsProvider.logEvent(AnalyticsEvent.CUSTOM_FILTER_LIST_ADDED)
             }
-            addOtherSubscriptionsCount -= 1
-            if (addOtherSubscriptionsCount == 0) {
+            if (addOtherSubscriptionsCount.decrementAndGet() == 0) {
                 _uiState.value = UiState.Done
             }
         }
