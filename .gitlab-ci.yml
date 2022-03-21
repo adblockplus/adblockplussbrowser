@@ -72,7 +72,7 @@ checks:unit-test:
   extends: .template:environment
   stage: checks
   script:
-    - ./gradlew testDebugUnitTest
+    - ./gradlew test
   artifacts:
     when: always
     reports:
