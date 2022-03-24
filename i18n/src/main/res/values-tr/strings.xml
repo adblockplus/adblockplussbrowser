@@ -98,8 +98,6 @@
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
     <string name="delete_dialog_title">Silme işlemini onayla</string>
     <string name="other_subscriptions_remove_custom_message">Özel filtre listesini %s konumundan silmek istediğinizden emin misiniz?</string>
-    <string name="other_subscriptions_dialog_title">Özel filtre listesi ekleniyor</string>
-    <string name="other_subscriptions_dialog_message">Bu işlem birkaç saniye sürebilir</string>
     <string name="other_subscriptions_error_add_custom">Özel filtre listesi eklenirken hata oluştu</string>
     <string name="allowlist_add_title">İzin verilenler listesine bir web sitesi ekle</string>
     <string name="allowlist_add_hint">example.com</string>

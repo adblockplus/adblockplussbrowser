@@ -98,8 +98,6 @@
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
     <string name="delete_dialog_title">Confirmar eliminación</string>
     <string name="other_subscriptions_remove_custom_message">¿Estás seguro de que quieres eliminar la lista de filtros personalizada de %s?</string>
-    <string name="other_subscriptions_dialog_title">Añadiendo lista de filtros personalizada</string>
-    <string name="other_subscriptions_dialog_message">Esto puede tardar unos segundos</string>
     <string name="other_subscriptions_error_add_custom">Error al añadir la lista de filtros personalizada</string>
     <string name="allowlist_add_title">Añadir un sitio web a la lista de elementos permitidos</string>
     <string name="allowlist_add_hint">example.com</string>

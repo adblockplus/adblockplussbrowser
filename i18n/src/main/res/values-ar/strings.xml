@@ -98,8 +98,6 @@
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
     <string name="delete_dialog_title">تأكيد الحذف</string>
     <string name="other_subscriptions_remove_custom_message">هل تريد بالتأكيد حذف قائمة التصفية المخصصة من %s؟</string>
-    <string name="other_subscriptions_dialog_title">إضافة قائمة عوامل تصفية مخصصة</string>
-    <string name="other_subscriptions_dialog_message">قد يستغرق هذا بضع ثوانٍ</string>
     <string name="other_subscriptions_error_add_custom">حدث خطأ أثناء إضافة قائمة عوامل التصفية المخصصة</string>
     <string name="allowlist_add_title">إضافة موقع إلى القائمة المسموح بها</string>
     <string name="allowlist_add_hint">example.com</string>

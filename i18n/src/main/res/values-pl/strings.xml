@@ -98,8 +98,6 @@
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
     <string name="delete_dialog_title">Potwierdź usunięcie</string>
     <string name="other_subscriptions_remove_custom_message">Czy na pewno chcesz usunąć listę filtrów niestandardowych z %s?</string>
-    <string name="other_subscriptions_dialog_title">Dodawanie niestandardowej listy filtrów</string>
-    <string name="other_subscriptions_dialog_message">Może to potrwać kilka sekund</string>
     <string name="other_subscriptions_error_add_custom">Dodawanie niestandardowej listy filtrów</string>
     <string name="allowlist_add_title">Dodaj witrynę do listy dozwolonych</string>
     <string name="allowlist_add_hint">example.com</string>
