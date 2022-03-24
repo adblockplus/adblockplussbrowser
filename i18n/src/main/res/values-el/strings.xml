@@ -98,8 +98,6 @@
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
     <string name="delete_dialog_title">Επιβεβαιώστε τη διαγραφή</string>
     <string name="other_subscriptions_remove_custom_message">Είστε βέβαιοι ότι θέλετε να διαγράψετε τη λίστα προσαρμοσμένων φίλτρων από %s;</string>
-    <string name="other_subscriptions_dialog_title">Προσθήκη λίστας προσαρμοσμένων φίλτρων</string>
-    <string name="other_subscriptions_dialog_message">Αυτό μπορεί να διαρκέσει μερικά δευτερόλεπτα</string>
     <string name="other_subscriptions_error_add_custom">Σφάλμα κατά την προσθήκη λίστας προσαρμοσμένων φίλτρων</string>
     <string name="allowlist_add_title">Προσθέστε έναν ιστότοπο στη λίστα επιτρεπόμενων</string>
     <string name="allowlist_add_hint">example.com</string>
