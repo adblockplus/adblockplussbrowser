@@ -52,19 +52,15 @@ import org.adblockplus.adblockplussbrowser.core.extensions.setBackoffTime
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker.Companion.BACKOFF_TIME_S
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker.Companion.USER_COUNTER_KEY_ONESHOT_WORK
-import org.tukaani.xz.XZIOException
 import org.tukaani.xz.XZInputStream
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
-import java.util.concurrent.CountDownLatch
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
 internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
-
-    lateinit var analyticsProvider: AnalyticsProvider
 
     @EntryPoint
     @InstallIn(SingletonComponent::class)
@@ -74,34 +70,48 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         fun getAnalyticsProvider(): AnalyticsProvider
     }
 
+    private val entrypoint: FilterListContentProviderEntryPoint by lazy {
+        EntryPointAccessors.fromApplication(
+            requireContext(this@FilterListContentProvider),
+            FilterListContentProviderEntryPoint::class.java
+        )
+    }
+    val coreRepository: CoreRepository by lazy {
+        entrypoint.getCoreRepository()
+    }
+
+    val activationPreferences: ActivationPreferences by lazy {
+        entrypoint.getActivationPreferences()
+    }
+
+    val analyticsProvider: AnalyticsProvider by lazy {
+        entrypoint.getAnalyticsProvider()
+    }
+
+    val workManager: WorkManager by lazy {
+        WorkManager.getInstance(requireContext(this@FilterListContentProvider))
+    }
+
+    val defaultSubscriptionDir: File by lazy {
+        val context = requireContext(this@FilterListContentProvider)
+        val directory = File(context.filesDir, "cache")
+        directory.mkdirs()
+        directory
+    }
+
+    val defaultSubscriptionFile: File by lazy {
+        File(defaultSubscriptionDir, DEFAULT_SUBSCRIPTIONS_FILENAME)
+    }
+
     override val coroutineContext = Dispatchers.IO + SupervisorJob()
 
-    lateinit var coreRepository: CoreRepository
-    lateinit var activationPreferences: ActivationPreferences
-    lateinit var workManager: WorkManager
-
-    var defaultSubscriptionsUnpackingDone: CountDownLatch = CountDownLatch(1)
+    override fun onCreate(): Boolean { return true }
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int = 0
 
     override fun getType(uri: Uri): String? = null
 
     override fun insert(uri: Uri, values: ContentValues?): Uri? = null
-
-    override fun onCreate(): Boolean {
-        Timber.d("DPC-557: ON CREATE")
-        val context = requireContext(this)
-        val entryPoint = EntryPointAccessors.fromApplication(
-            context,
-            FilterListContentProviderEntryPoint::class.java
-        )
-        coreRepository = entryPoint.getCoreRepository()
-        activationPreferences = entryPoint.getActivationPreferences()
-        analyticsProvider = entryPoint.getAnalyticsProvider()
-        workManager = WorkManager.getInstance(context)
-        prepareDefaultSubscriptions()
-        return true
-    }
 
     private fun triggerUserCountingRequest(callingApp: CallingApp) {
         val request = OneTimeWorkRequestBuilder<UserCounterWorker>().apply {
@@ -122,7 +132,6 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
     }
 
     override fun openFile(uri: Uri, mode: String): ParcelFileDescriptor? {
-        Timber.d("DPC-557: OPEN FILE")
         // Set as Activated... If Samsung Internet is asking for the Filters, it is enabled
         val callingApp = getCallingApp(callingPackage, context?.packageManager)
         launch {
@@ -133,7 +142,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             Timber.i("Filter list requested: $uri - $mode...")
             analyticsProvider.logEvent(AnalyticsEvent.FILTER_LIST_REQUESTED)
             val file = getFilterFile()
-            Timber.d("DPC-557: Open File file size ${file.length()}")
+            Timber.d("Open File file size ${file.length()}")
             Timber.d("Returning ${file.absolutePath}")
             ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY)
         } catch (ex: Exception) {
@@ -161,18 +170,9 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         return CallingApp(application, applicationVersion)
     }
 
-    private fun getDefaultSubscriptionsDir(): File {
-        val context = requireContext(this)
-        val directory = File(context.filesDir, "cache")
-        directory.mkdirs()
-        return directory
-    }
-
     private fun unpackDefaultSubscriptions() {
         val context = requireContext(this)
-        val directory = getDefaultSubscriptionsDir()
-        val defaultFile = File(directory, DEFAULT_SUBSCRIPTIONS_FILENAME)
-        val temp = File.createTempFile("filters", ".txt", directory)
+        val temp = File.createTempFile("filters", ".txt", defaultSubscriptionDir)
         val start = Duration.milliseconds(System.currentTimeMillis())
 
         Timber.d("getFilterFile: unpacking")
@@ -195,68 +195,39 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             ins.source().use { a ->
                 temp.sink(append = true).buffer().use { b -> b.writeAll(a) }
             }
-            Timber.d(
-                "DPC-557: prepareDefaultSubscriptions directory $directory and unpacking done is " +
-                        "${defaultSubscriptionsUnpackingDone.count}")
-            Timber.d("DPC-557: files before renaming. Temp: ${temp.length()}, Default file: ${defaultFile.length()}")
-            temp.renameTo(defaultFile)
-            Timber.d("DPC-557: getFilterFile: unpacked, elapsed: ${Duration.milliseconds(System.currentTimeMillis()) - start}")
-            Timber.d("DPC-557: unpackDefaultSubscriptions temp file size ${temp.length()}, defaultFile size ${defaultFile.length()}")
+            temp.renameTo(defaultSubscriptionFile)
+            Timber.d("getFilterFile: unpacked, elapsed: ${Duration.milliseconds(System.currentTimeMillis()) - start}")
         } catch (ex: IOException) {
             Timber.e(ex)
-            defaultFile.delete()
+            defaultSubscriptionFile.delete()
             temp.delete()
         }
-        defaultSubscriptionsUnpackingDone.countDown()
     }
 
     private fun prepareDefaultSubscriptions() {
-        val directory = getDefaultSubscriptionsDir()
-        val defaultFile = File(directory, DEFAULT_SUBSCRIPTIONS_FILENAME)
         val path = coreRepository.subscriptionsPath
-        Timber.d(
-            "DPC-557: prepareDefaultSubscriptions directory $directory, defaultFile size ${defaultFile.length()}, " +
-                    "path $path"
-        )
         // We have a current file with downloaded subscriptions, return it
         if (!path.isNullOrEmpty() && File(path).exists()) {
-            defaultFile.delete()
-        } else if (!defaultFile.exists()) {
-            launch {
-                unpackDefaultSubscriptions()
-            }
-            return
+            defaultSubscriptionFile.delete()
+        } else if (!defaultSubscriptionFile.exists()) {
+            unpackDefaultSubscriptions()
         }
-        defaultSubscriptionsUnpackingDone.countDown()
     }
 
     private fun getFilterFile(): File {
         Timber.i("getFilterFile")
-        val directory = getDefaultSubscriptionsDir()
-        val defaultFile = File(directory, DEFAULT_SUBSCRIPTIONS_FILENAME)
         val path = coreRepository.subscriptionsPath
-        Timber.d(
-            "DPC-557: getFilterFile directory $directory, defaultFile size ${defaultFile.length()}, " +
-                    "path $path and File(path).exists() is ${File(path).exists()}"
-        )
+
         // We have a current file, return it
         if (!path.isNullOrEmpty() && File(path).exists()) {
-            defaultFile.delete()
+            defaultSubscriptionFile.delete()
             return File(path)
         }
 
-        Timber.d("DPC-557 unpacking done count before await: ${defaultSubscriptionsUnpackingDone.count}")
-        Timber.d("DPC-557 defaultFile exists: ${defaultFile.exists()}")
-
-        defaultSubscriptionsUnpackingDone.await()
-
-        Timber.d("DPC-557 unpacking done count after await: ${defaultSubscriptionsUnpackingDone.count}")
-        Timber.d("DPC-557 defaultFile exists after countdown: ${defaultFile.exists()}")
-
-        if (!defaultFile.exists()) {
-            defaultFile.createNewFile()
+        if (!defaultSubscriptionFile.exists()) {
+            prepareDefaultSubscriptions()
         }
-        return defaultFile
+        return defaultSubscriptionFile
     }
 
     override fun query(
