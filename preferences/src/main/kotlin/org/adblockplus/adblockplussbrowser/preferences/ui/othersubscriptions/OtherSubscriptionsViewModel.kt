@@ -18,6 +18,7 @@
 package org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -56,6 +57,8 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<UiState>(UiState.Done)
     val uiState = _uiState.asLiveData()
 
+    private val addOtherSubscriptionsCount = MutableLiveData<Int>().apply { value = 0 }
+
     val nonRemovableItemCount: Int
         get() {
         val defaultOtherListCount = subscriptions.value!!.count { it is OtherSubscriptionsItem.DefaultItem }
@@ -91,14 +94,17 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
         viewModelScope.launch {
             val subscription = Subscription(url, url, 0L)
             _uiState.value = UiState.Loading
+            addOtherSubscriptionsCount.apply { value = value?.plus(1) }
             if (!subscriptionManager.validateSubscription(subscription)) {
                 _uiState.value = UiState.Error
                 delay(100)
-                _uiState.value = UiState.Done
             } else {
                 settingsRepository.addActiveOtherSubscription(subscription)
-                _uiState.value = UiState.Done
                 analyticsProvider.logEvent(AnalyticsEvent.CUSTOM_FILTER_LIST_ADDED)
+            }
+            addOtherSubscriptionsCount.apply { value = value?.minus(1) }
+            if (addOtherSubscriptionsCount.value == 0) {
+                _uiState.value = UiState.Done
             }
         }
     }

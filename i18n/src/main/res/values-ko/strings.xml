@@ -98,8 +98,6 @@
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
     <string name="delete_dialog_title">삭제 확인</string>
     <string name="other_subscriptions_remove_custom_message">%s에서 맞춤 필터를 삭제하시겠습니까?</string>
-    <string name="other_subscriptions_dialog_title">맞춤 필터 목록 추가하기</string>
-    <string name="other_subscriptions_dialog_message">몇 초 정도 소요될 수 있습니다</string>
     <string name="other_subscriptions_error_add_custom">맞춤 필터 목록 추가 오류</string>
     <string name="allowlist_add_title">허용 목록에 웹사이트 추가</string>
     <string name="allowlist_add_hint">example.com</string>

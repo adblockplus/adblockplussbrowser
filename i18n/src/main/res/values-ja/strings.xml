@@ -98,8 +98,6 @@
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
     <string name="delete_dialog_title">削除の確認</string>
     <string name="other_subscriptions_remove_custom_message">%sからカスタムフィルターを削除しますか？</string>
-    <string name="other_subscriptions_dialog_title">カスタムフィルターリストを追加</string>
-    <string name="other_subscriptions_dialog_message">数秒かかる場合があります</string>
     <string name="other_subscriptions_error_add_custom">カスタムフィルターリスト追加エラー</string>
     <string name="allowlist_add_title">ウェブサイトを許可リストに追加する</string>
     <string name="allowlist_add_hint">example.com</string>

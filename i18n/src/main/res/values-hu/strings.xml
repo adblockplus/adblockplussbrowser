@@ -98,8 +98,6 @@
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
     <string name="delete_dialog_title">Törlés megerősítése</string>
     <string name="other_subscriptions_remove_custom_message">Biztosan törölni kívánja a(z) %s egyéni szűrőlistát?</string>
-    <string name="other_subscriptions_dialog_title">Egyéni szűrőlista hozzáadása</string>
-    <string name="other_subscriptions_dialog_message">Ez egy néhány másodpercet igénybe vehet</string>
     <string name="other_subscriptions_error_add_custom">Hiba az egyéni szűrőlista hozzáadásakor</string>
     <string name="allowlist_add_title">Weboldal hozzáadása az engedélyezőlistához</string>
     <string name="allowlist_add_hint">example.com</string>

@@ -98,8 +98,6 @@
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
     <string name="delete_dialog_title">Löschung bestätigen</string>
     <string name="other_subscriptions_remove_custom_message">Bist du sicher, dass du die benutzerdefinierte Filterliste aus %s löschen möchtest?</string>
-    <string name="other_subscriptions_dialog_title">Benutzerdefinierte Liste wird hinzugefügt</string>
-    <string name="other_subscriptions_dialog_message">Das kann ein paar Sekunden dauern</string>
     <string name="other_subscriptions_error_add_custom">Fehler beim Hinzufügen der benutzerdefinierten Filterliste</string>
     <string name="allowlist_add_title">Eine Website der Allowlist hinzufügen</string>
     <string name="allowlist_add_hint">example.com</string>
