@@ -20,18 +20,6 @@ package org.adblockplus.adblockplussbrowser.analytics
 enum class AnalyticsEvent(val eventName: String) {
 
     /**
-     * This event is used to create an audience based on AA status. On every app launch,
-     * this event will be triggered if AA is enabled.
-     */
-    AUDIENCE_AA_ENABLED("audience_aa_enabled"),
-
-    /**
-     * This event is used to create an audience based on AA status. On every app launch,
-     * this event will be triggered if AA is disabled.
-     */
-    AUDIENCE_AA_DISABLED("audience_aa_disabled"),
-
-    /**
      * A new language list has been added.
      */
     LANGUAGE_LIST_ADDED("language_list_added"),
