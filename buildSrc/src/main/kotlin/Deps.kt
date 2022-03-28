@@ -216,6 +216,10 @@ object Deps {
         val Core = dependency { name("mockito-core") }
         val Kotlin = dependency { groupName("kotlin:mockito-kotlin") }
     }
+
+    object XZ : DependencyGroup("org.tukaani", "1.9") {
+        val XZ = dependency { name("xz") }
+    }
 }
 
 abstract class DependencyGroup(

@@ -49,6 +49,7 @@ dependencies {
     implementation(Deps.AndroidX.Work.RUNTIME)
     implementation(Deps.AndroidX.DataStore.DATASTORE)
     implementation(Deps.Protobuf.JAVALITE)
+    implementation(Deps.XZ.XZ)
 
     implementation(Deps.Hilt.ANDROID)
     kapt(Deps.Hilt.ANDROID_COMPILER)
@@ -64,6 +65,10 @@ dependencies {
     testImplementation(Deps.AndroidX.TEST_CORE)
     testImplementation(Deps.AndroidX.Work.TESTING)
     testImplementation(Deps.KotlinXTest.COROUTINES_TEST )
+    testAnnotationProcessor(Deps.Hilt.ANDROID_COMPILER)
+    kaptTest(Deps.Hilt.ANDROID_COMPILER)
+    kaptTest(Deps.AndroidX.Hilt.COMPILER)
+    kaptAndroidTest(Deps.Hilt.ANDROID_COMPILER)
 }
 
 protobuf {
@@ -85,7 +90,7 @@ tasks.register("downloadExceptionRules", de.undercouch.gradle.tasks.download.Dow
     val flavor = project.findProperty("flavor")?.toString()?.toLowerCase() ?: "abp"
     val baseDir = if (flavor == "abp") "src/main/assets" else "src/$flavor/assets"
 
-    val source = when(flavor) {
+    val source = when (flavor) {
         "abp" -> "https://0.samsung-internet.filter-list-downloads.eyeo.com/aa-variants/samsung_internet_browser-adblock_plus.txt"
         "adblock" -> "https://0.samsung-internet.filter-list-downloads.getadblock.com/aa-variants/samsung_internet_browser-adblock.txt"
         "crystal" -> "https://0.samsung-internet.filter-list-downloads.eyeo.com/aa-variants/samsung_internet_browser-crystal.txt"
@@ -102,30 +107,37 @@ tasks.register("downloadEasyList", de.undercouch.gradle.tasks.download.Download:
     dest("$baseDir/easylist.txt")
 }
 
-tasks.register("createAssetsDir") {
+tasks.register("packSubscriptionsFiles") {
+    val flavor = project.findProperty("flavor")?.toString()?.toLowerCase() ?: "abp"
+    val baseDir = if (flavor == "abp") "src/main/assets" else "src/$flavor/assets"
+    val xz = "xz"
+
     doLast {
-        val flavor = project.findProperty("flavor")?.toString()?.toLowerCase() ?: "abp"
-        val baseDir = if (flavor == "abp") "src/main/assets" else "src/$flavor/assets"
-        // Create assets folder if doesn't exist
-        project.mkdir(baseDir)
-        // Add files if don't exist or replace content to be empty
-        File("core/$baseDir", "easylist.txt").writeText("")
-        File("core/$baseDir", "exceptionrules.txt").writeText("")
+        // Delete execptionrules compressed file if exists to avoid "File exists" error
+        delete("$baseDir/exceptionrules.txt.xz")
+        exec {
+            commandLine(
+                xz,
+                "$baseDir/exceptionrules.txt"
+            )
+        }
     }
 }
 
 tasks.register("checkSubscriptionsFiles") {
+    val flavor = project.findProperty("flavor")?.toString()?.toLowerCase() ?: "abp"
+    val baseDir = if (flavor == "abp") "core/src/main/assets" else "core/src/$flavor/assets"
+
     doLast {
-        val flavor = project.findProperty("flavor")?.toString()?.toLowerCase() ?: "abp"
-        val baseDir = if (flavor == "abp") "core/src/main/assets" else "core/src/$flavor/assets"
         val easyListLength = File("$baseDir/easylist.txt").length()
-        val exceptionRulesLength = File("$baseDir/exceptionrules.txt").length()
+        val exceptionRulesLength = File("$baseDir/exceptionrules.txt.xz").length()
 
         println("$flavor EASYLIST SIZE: ${easyListLength / 1024} KB")
-        println("$flavor EXCEPTIONRULES SIZE: ${exceptionRulesLength / 1024} KB")
+        println("$flavor EXCEPTIONRULES PACKED SIZE: ${exceptionRulesLength / 1024} KB")
 
-        if (easyListLength == 0L || exceptionRulesLength == 0L) {
-            throw GradleException("Something went wrong. At least one of the subscriptions files is empty!")
+        when {
+            easyListLength == 0L -> throw GradleException("Something went wrong. Easylist file is empty!")
+            exceptionRulesLength == 0L -> throw GradleException("Something went wrong. Exception rules file is empty!")
         }
     }
 }
@@ -134,10 +146,10 @@ tasks.register("checkSubscriptionsFiles") {
     gradle :core:downloadSubscriptions -Pflavor=adblock (abp if no flavor is provided)
  */
 tasks.register("downloadSubscriptions") {
-    dependsOn("createAssetsDir", "downloadExceptionRules", "downloadEasyList", "checkSubscriptionsFiles")
-    tasks.getByName("downloadExceptionRules").mustRunAfter("createAssetsDir")
+    dependsOn("downloadExceptionRules", "downloadEasyList", "packSubscriptionsFiles", "checkSubscriptionsFiles")
     tasks.getByName("downloadEasyList").mustRunAfter("downloadExceptionRules")
-    tasks.getByName("checkSubscriptionsFiles").mustRunAfter("downloadEasyList")
+    tasks.getByName("packSubscriptionsFiles").mustRunAfter("downloadEasyList")
+    tasks.getByName("checkSubscriptionsFiles").mustRunAfter("packSubscriptionsFiles")
 }
 
 tasks.withType(Test::class.java) {
@@ -147,7 +159,6 @@ tasks.withType(Test::class.java) {
     }
     finalizedBy(tasks.getByName("jacocoTestReport"))
 }
-
 
 tasks.register("jacocoTestReport", JacocoReport::class.java) {
     val coverageSourceDirs = listOf("src/main/kotlin")
