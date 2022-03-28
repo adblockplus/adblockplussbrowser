@@ -26,91 +26,92 @@
             type="org.adblockplus.adblockplussbrowser.preferences.ui.updates.UpdateSubscriptionsViewModel" />
     </data>
 
-    <ScrollView
-        style="@style/PreferenceScreen"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/updates_preferences_progress"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content" />
 
-            <View
+        <ScrollView
+            style="@style/PreferenceScreen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="@drawable/preferences_group_bg_single"
-                app:layout_constraintBottom_toBottomOf="@id/updates_preferences_update_now"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/updates_preferences_automatic_updates" />
+                android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:id="@+id/updates_preferences_automatic_updates"
-                style="@style/PreferenceContainerStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="0dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <Spinner
-                    android:id="@+id/updates_preferences_spinner"
-                    android:spinnerMode="dropdown"
+                <View
+                    android:id="@+id/view"
                     android:layout_width="match_parent"
-                    android:layout_height="?android:attr/listPreferredItemHeightSmall"
-                    android:background="@null"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/updates_preferences_update_now"
-                style="@style/PreferenceContainerStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:onClick="@{(v) -> viewModel.updateSubscriptions()}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/updates_preferences_automatic_updates">
-
-                <com.google.android.material.progressindicator.CircularProgressIndicator
-                    android:id="@+id/updates_preferences_progress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|start"
-                    android:layout_marginStart="8dp"
-                    android:visibility="gone"
-                    app:indicatorSize="16dp"
-                    app:trackColor="@color/background"
-                    app:trackThickness="1dp" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/updates_preferences_update_now_label"
-                    style="@style/PreferenceTitleTextStyle"
-                    android:layout_marginStart="16dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/preferences_update_subscriptions_title" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/updates_preference_last_update"
-                style="@style/PreferenceContainerStyle"
-                android:background="@android:color/transparent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/updates_preferences_update_now">
-
-                <com.google.android.material.textview.MaterialTextView
-                    style="@style/CustomPreferenceSummaryTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/preferences_group_bg_single"
+                    app:layout_constraintBottom_toBottomOf="@id/updates_preferences_update_now"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/updates_preferences_update_now"
-                    app:lastUpdate="@{viewModel.lastUpdate}"
-                    tools:text="Last updated: 12 hours ago" />
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+                    app:layout_constraintTop_toTopOf="@id/updates_preferences_automatic_updates" />
+
+                <LinearLayout
+                    android:id="@+id/updates_preferences_automatic_updates"
+                    style="@style/PreferenceContainerStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="0dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <Spinner
+                        android:id="@+id/updates_preferences_spinner"
+                        android:spinnerMode="dropdown"
+                        android:layout_width="match_parent"
+                        android:layout_height="?android:attr/listPreferredItemHeightSmall"
+                        android:background="@null"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/updates_preferences_update_now"
+                    style="@style/PreferenceContainerStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:onClick="@{(v) -> viewModel.updateSubscriptions()}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/updates_preferences_automatic_updates">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/updates_preferences_update_now_label"
+                        style="@style/PreferenceTitleTextStyle"
+                        android:layout_marginStart="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/preferences_update_subscriptions_title" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/updates_preference_last_update"
+                    style="@style/PreferenceContainerStyle"
+                    android:background="@android:color/transparent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/updates_preferences_update_now">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/CustomPreferenceSummaryTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/updates_preferences_update_now"
+                        app:lastUpdate="@{viewModel.lastUpdate}"
+                        tools:text="Last updated: 12 hours ago" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </LinearLayout>
 </layout>
