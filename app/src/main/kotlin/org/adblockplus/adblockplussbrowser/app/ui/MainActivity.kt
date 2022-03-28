@@ -63,7 +63,6 @@ class MainActivity : AppCompatActivity() {
             DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        viewModel.sendAudienceAAEvent()
         setSupportActionBar(binding.toolbar)
         setupActionBarWithNavController(navController)
     }
