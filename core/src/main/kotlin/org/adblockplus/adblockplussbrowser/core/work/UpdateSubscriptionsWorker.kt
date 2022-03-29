@@ -84,11 +84,12 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
         // if it is a periodic check, force update subscriptions
         return@withContext try {
             Timber.d("DOWNLOAD JOB")
-            Timber.d("Downloader settings: $settings")
+
             val savedState = coreRepository.currentSavedState()
             Timber.d("Saved state: $savedState")
             val changes = settings.changes(savedState)
             Timber.d("Diff: $changes")
+            Timber.d("Downloader settings: $settings")
             Timber.d("Run Attempt: $runAttemptCount")
 
             // Don't let a failing worker run eternally...
