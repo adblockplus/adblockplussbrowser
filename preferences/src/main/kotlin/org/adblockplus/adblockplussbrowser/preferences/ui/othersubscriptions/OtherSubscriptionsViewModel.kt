@@ -31,7 +31,6 @@ import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
-import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.ui.layoutForIndex
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import javax.inject.Inject
@@ -45,49 +44,72 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
     @Inject
     lateinit var analyticsProvider: AnalyticsProvider
 
-    val subscriptions: LiveData<List<OtherSubscriptionsItem>> = settingsRepository.settings.map { settings ->
-        val defaultSubscriptions = settingsRepository.getDefaultOtherSubscriptions()
-        val activeSubscriptions = settings.activeOtherSubscriptions
-        val customSubscriptions = activeSubscriptions.filter { subscription ->
-            defaultSubscriptions.none { it.url == subscription.url }
-        }
-        defaultSubscriptions.defaultItems(activeSubscriptions) + customSubscriptions.customItems()
+    val activeSubscriptions: LiveData<List<Subscription>> =
+        settingsRepository.settings.map { settings ->
+            settings.activeOtherSubscriptions
+        }.asLiveData()
+
+    val customSubscriptions: LiveData<List<OtherSubscriptionsItem.CustomItem>> =
+        settingsRepository.settings.map { settings ->
+            val defaultSubscriptions = settingsRepository.getDefaultOtherSubscriptions()
+            val activeSubscriptions = settings.activeOtherSubscriptions
+            val customSubscriptions = activeSubscriptions.filter { subscription ->
+                defaultSubscriptions.none { it.url == subscription.url }
+            }
+            customSubscriptions.customItems()
+        }.asLiveData()
+
+    val additionalTrackingSubscription: LiveData<Subscription> = settingsRepository.settings.map {
+        settingsRepository.getAdditionalTrackingSubscription()
     }.asLiveData()
+
+    val socialMediaTrackingSubscription: LiveData<Subscription> = settingsRepository.settings.map {
+        settingsRepository.getSocialMediaTrackingSubscription()
+    }.asLiveData()
+
+    val blockAdditionalTracking = MutableLiveData<Boolean?>().apply { value = false }
+    val blockSocialMediaTracking = MutableLiveData<Boolean?>().apply { value = false }
+    val additionalTrackingLastUpdate = MutableLiveData<Long>().apply { value = 0L }
+    val socialMediaIconsTrackingLastUpdate = MutableLiveData<Long>().apply { value = 0L }
 
     private val _uiState = MutableStateFlow<UiState>(UiState.Done)
     val uiState = _uiState.asLiveData()
 
     private val addOtherSubscriptionsCount = MutableLiveData<Int>().apply { value = 0 }
 
-    val nonRemovableItemCount: Int
-        get() {
-        val defaultOtherListCount = subscriptions.value!!.count { it is OtherSubscriptionsItem.DefaultItem }
-        val headerCount = subscriptions.value!!.count { it is OtherSubscriptionsItem.HeaderItem }
-        return defaultOtherListCount + headerCount
+    fun toggleAdditionalTracking() {
+        blockAdditionalTracking.apply { value?.let { it -> value = !it } }
+        handleDefaultSubscriptions(
+            blockAdditionalTracking.value!!, additionalTrackingSubscription.value!!,
+            AnalyticsEvent.DISABLE_TRACKING_OFF, AnalyticsEvent.DISABLE_TRACKING_ON
+        )
     }
 
-    fun toggleActiveSubscription(defaultItem: OtherSubscriptionsItem.DefaultItem) {
-        viewModelScope.launch {
-            if (defaultItem.active) {
-                settingsRepository.removeActiveOtherSubscription(defaultItem.subscription)
-                if (defaultItem.subscription.title ==
-                    settingsRepository.getAdditionalTrackingSubscription().title) {
-                    analyticsProvider.logEvent(AnalyticsEvent.DISABLE_TRACKING_OFF)
-                } else if (defaultItem.subscription.title ==
-                    settingsRepository.getSocialMediaTrackingSubscription().title) {
-                    analyticsProvider.logEvent(AnalyticsEvent.SOCIAL_MEDIA_BUTTONS_OFF)
-                }
-            } else {
-                settingsRepository.addActiveOtherSubscription(defaultItem.subscription)
-                if (defaultItem.subscription.title ==
-                    settingsRepository.getAdditionalTrackingSubscription().title) {
-                    analyticsProvider.logEvent(AnalyticsEvent.DISABLE_TRACKING_ON)
-                } else if (defaultItem.subscription.title ==
-                    settingsRepository.getSocialMediaTrackingSubscription().title) {
-                    analyticsProvider.logEvent(AnalyticsEvent.SOCIAL_MEDIA_BUTTONS_ON)
-                }
+    fun toggleSocialMediaTracking() {
+        blockSocialMediaTracking.apply { value?.let { it -> value = !it } }
+        handleDefaultSubscriptions(
+            blockSocialMediaTracking.value!!, socialMediaTrackingSubscription.value!!,
+            AnalyticsEvent.SOCIAL_MEDIA_BUTTONS_OFF, AnalyticsEvent.SOCIAL_MEDIA_BUTTONS_ON
+        )
+    }
+
+    private fun handleDefaultSubscriptions(
+        checkboxSelected: Boolean, subscription: Subscription,
+        analyticsEventOnSelected: AnalyticsEvent,
+        analyticsEventOnDeselected: AnalyticsEvent
+    ) {
+        if (checkboxSelected) {
+            viewModelScope.launch {
+                settingsRepository.addActiveOtherSubscription(subscription)
             }
+            analyticsProvider.logEvent(analyticsEventOnSelected)
+        } else {
+            viewModelScope.launch {
+                settingsRepository.removeActiveOtherSubscription(subscription)
+            }
+            analyticsProvider.logEvent(analyticsEventOnDeselected)
         }
+
     }
 
     fun addCustomUrl(url: String) {
@@ -116,24 +138,9 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
         }
     }
 
-    private fun List<Subscription>.defaultItems(activeSubscriptions: List<Subscription>): List<OtherSubscriptionsItem> {
-        val result = mutableListOf<OtherSubscriptionsItem>()
+    private fun List<Subscription>.customItems(): List<OtherSubscriptionsItem.CustomItem> {
+        val result = mutableListOf<OtherSubscriptionsItem.CustomItem>()
         if (this.isNotEmpty()) {
-            result.add(OtherSubscriptionsItem.HeaderItem(R.string.other_subscriptions_default_category))
-            this.forEachIndexed { index, subscription ->
-                val activeSubscription = activeSubscriptions.find { it.url == subscription.url }
-                val active = activeSubscription != null
-                val layout = this.layoutForIndex(index)
-                result.add(OtherSubscriptionsItem.DefaultItem(activeSubscription?: subscription, layout, active))
-            }
-        }
-        return result
-    }
-
-    private fun List<Subscription>.customItems(): List<OtherSubscriptionsItem> {
-        val result = mutableListOf<OtherSubscriptionsItem>()
-        if (this.isNotEmpty()) {
-            result.add(OtherSubscriptionsItem.HeaderItem(R.string.other_subscriptions_custom_category))
             this.forEachIndexed { index, subscription ->
                 val layout = this.layoutForIndex(index)
                 result.add(OtherSubscriptionsItem.CustomItem(subscription, layout))
