@@ -190,10 +190,10 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         }
         Timber.i("Is AA enabled: $acceptableAdsEnabled")
 
-        Timber.d("getFilterFile: unpacking")
         try {
             var ins: InputStream
             if (acceptableAdsEnabled) {
+                Timber.d("getFilterFile: unpacking")
                 ins = context.assets.open("exceptionrules.txt.xz")
                 /*
                     XZInputStream params:
