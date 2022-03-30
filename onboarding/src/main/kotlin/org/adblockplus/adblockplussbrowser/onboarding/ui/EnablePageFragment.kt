@@ -40,6 +40,23 @@ internal class EnablePageFragment :
         val videoView = binding.videoView
         videoView.layoutParams.width = (availableWidth).roundToInt()
         videoView.layoutParams.height = (availableWidth / 2).roundToInt()
+
+        var layoutUpdated = false
+        binding.root.viewTreeObserver.addOnPreDrawListener {
+            if (!layoutUpdated) {
+                layoutUpdated = true
+                var availableWidth = binding.onboardingEnableImage.height * 10
+                if (availableWidth > videoView.layoutParams.width) {
+                    availableWidth = videoView.layoutParams.width
+                }
+                videoView.layoutParams.width = availableWidth
+                videoView.layoutParams.height = availableWidth / 2
+                videoView.requestLayout()
+                videoView.invalidate()
+            }
+            true
+        }
+
         mediaPlayer.create(videoView)
     }
 
