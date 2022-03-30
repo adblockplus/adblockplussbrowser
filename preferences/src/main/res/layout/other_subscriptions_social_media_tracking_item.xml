@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+ This file is part of Adblock Plus <https://adblockplus.org/>,
+ Copyright (C) 2006-present eyeo GmbH
+
+ Adblock Plus is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License version 3 as
+ published by the Free Software Foundation.
+
+ Adblock Plus is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions.OtherSubscriptionsViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@drawable/preferences_group_bg_last"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <View
+            android:id="@+id/social_media_tracking_item_view"
+            style="@style/PreferenceContainerStyle"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:onClick="@{() -> viewModel.toggleSocialMediaTracking()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/social_media_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/PreferenceTitleTextStyle"
+            android:text="@string/block_social_media_tracking"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toTopOf="@id/social_media_guideline_bottom"
+            app:layout_constraintEnd_toStartOf="@id/social_media_checkbox"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/social_media_guideline_start"
+            app:layout_constraintTop_toTopOf="@id/social_media_guideline_top"
+            app:layout_constraintVertical_bias="0.0"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/last_update_social_media"
+            style="@style/CustomPreferenceSummaryTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            tools:text="Last update: May 14, 08:15"
+            lastUpdate="@{viewModel.socialMediaIconsTrackingLastUpdate}"
+            gone="@{!viewModel.blockSocialMediaTracking}"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toTopOf="@id/social_media_guideline_bottom"
+            app:layout_constraintEnd_toStartOf="@id/social_media_checkbox"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/social_media_guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/social_media_title"
+            app:layout_constraintVertical_bias="0.0"/>
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/social_media_checkbox"
+            style="@style/ButtonStyle"
+            android:checked="@{viewModel.blockSocialMediaTracking.booleanValue()}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            app:layout_constraintBottom_toTopOf="@id/social_media_guideline_bottom"
+            app:layout_constraintEnd_toStartOf="@id/social_media_guideline_end"
+            app:layout_constraintTop_toBottomOf="@id/social_media_guideline_top" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/social_media_guideline_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/social_media_guideline_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/social_media_guideline_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/social_media_guideline_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="16dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
