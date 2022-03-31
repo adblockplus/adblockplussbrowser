@@ -49,6 +49,7 @@ import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInterne
 import org.adblockplus.adblockplussbrowser.base.yandex.YandexConstants
 import org.adblockplus.adblockplussbrowser.core.CallingApp
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
+import org.adblockplus.adblockplussbrowser.core.extensions.toAllowRule
 import org.adblockplus.adblockplussbrowser.core.extensions.currentSettings
 import org.adblockplus.adblockplussbrowser.core.extensions.setBackoffTime
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker
@@ -221,7 +222,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
                 Timber.d("domain: $domain")
                 temp.sink(append = true).buffer().use { sink ->
                     sink.writeUtf8("\n")
-                    sink.writeUtf8(createAllowlistFilter(domain))
+                    sink.writeUtf8(domain.toAllowRule())
                     sink.writeUtf8("\n")
                 }
             }
@@ -233,10 +234,6 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             defaultSubscriptionFile.delete()
             temp.delete()
         }
-    }
-
-    fun createAllowlistFilter(domain: String): String {
-        return "@@||${domain}^\$document,domain=${domain}"
     }
 
     private fun prepareDefaultSubscriptions() {

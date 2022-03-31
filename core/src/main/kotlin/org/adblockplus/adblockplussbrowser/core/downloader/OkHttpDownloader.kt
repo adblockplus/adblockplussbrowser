@@ -36,7 +36,7 @@ import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscription
 import org.adblockplus.adblockplussbrowser.core.data.model.exists
 import org.adblockplus.adblockplussbrowser.core.data.model.ifExists
-import org.adblockplus.adblockplussbrowser.core.extensions.sanatizeUrl
+import org.adblockplus.adblockplussbrowser.core.extensions.sanitizeUrl
 import org.adblockplus.adblockplussbrowser.core.retryIO
 import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
 import ru.gildor.coroutines.okhttp.await
@@ -174,7 +174,7 @@ internal class OkHttpDownloader(
 
     private suspend fun getDownloadedSubscription(subscription: Subscription): DownloadedSubscription {
         return try {
-            val url = subscription.url.sanatizeUrl().toHttpUrl()
+            val url = subscription.url.sanitizeUrl().toHttpUrl()
             val coreData = repository.getDataSync()
             return coreData.downloadedSubscription.firstOrNull {
                 it.url == subscription.url
@@ -193,7 +193,7 @@ internal class OkHttpDownloader(
                           previousDownload: DownloadedSubscription =
                               DownloadedSubscription(subscription.url)
     ): HttpUrl {
-        return subscription.randomizedUrl.sanatizeUrl().toHttpUrl().newBuilder().apply {
+        return subscription.randomizedUrl.sanitizeUrl().toHttpUrl().newBuilder().apply {
             addQueryParameter("addonName", appInfo.addonName)
             addQueryParameter("addonVersion", appInfo.addonVersion)
             addQueryParameter("application", appInfo.application)
