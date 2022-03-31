@@ -219,10 +219,15 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
                 temp.sink(append = true).buffer().use { b -> b.writeAll(a) }
             }
 
+            if (allowedDomains.isNotEmpty()) {
+                temp.sink(append = true).buffer().use { sink ->
+                    sink.writeUtf8("\n")
+                }
+            }
+
             allowedDomains.forEach { domain ->
                 Timber.d("domain: $domain")
                 temp.sink(append = true).buffer().use { sink ->
-                    sink.writeUtf8("\n")
                     sink.writeUtf8(domain.toAllowRule())
                     sink.writeUtf8("\n")
                 }
