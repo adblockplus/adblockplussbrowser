@@ -185,10 +185,13 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         val start = Duration.milliseconds(System.currentTimeMillis())
 
         var acceptableAdsEnabled: Boolean
+        var allowedDomains: List<String>
         runBlocking {
             acceptableAdsEnabled = settingsRepository.currentSettings().acceptableAdsEnabled
+            allowedDomains = settingsRepository.currentSettings().allowedDomains
         }
         Timber.i("Is AA enabled: $acceptableAdsEnabled")
+        Timber.i("allowed domains ${allowedDomains.size}")
 
         try {
             var ins: InputStream
@@ -213,6 +216,16 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             ins.source().use { a ->
                 temp.sink(append = true).buffer().use { b -> b.writeAll(a) }
             }
+
+            allowedDomains.forEach { domain ->
+                Timber.d("domain: $domain")
+                temp.sink(append = true).buffer().use { sink ->
+                    sink.writeUtf8("\n")
+                    sink.writeUtf8(createAllowlistFilter(domain))
+                    sink.writeUtf8("\n")
+                }
+            }
+
             temp.renameTo(defaultSubscriptionFile)
             Timber.d("getFilterFile: unpacked, elapsed: ${Duration.milliseconds(System.currentTimeMillis()) - start}")
         } catch (ex: IOException) {
@@ -220,6 +233,10 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             defaultSubscriptionFile.delete()
             temp.delete()
         }
+    }
+
+    fun createAllowlistFilter(domain: String): String {
+        return "@@||${domain}^\$document,domain=${domain}"
     }
 
     private fun prepareDefaultSubscriptions() {
