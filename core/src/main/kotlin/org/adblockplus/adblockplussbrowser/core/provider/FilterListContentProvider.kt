@@ -183,7 +183,6 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
     private fun unpackDefaultSubscriptions() {
         val context = requireContext(this)
         val temp = File.createTempFile("filters", ".txt", defaultSubscriptionDir)
-        val start = Duration.milliseconds(System.currentTimeMillis())
 
         var acceptableAdsEnabled: Boolean
         var allowedDomains: List<String>
@@ -197,7 +196,8 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         try {
             var ins: InputStream
             if (acceptableAdsEnabled) {
-                Timber.d("getFilterFile: unpacking")
+                Timber.d("getFilterFile: unpacking AA")
+                val start = Duration.milliseconds(System.currentTimeMillis())
                 ins = context.assets.open("exceptionrules.txt.xz")
                 /*
                     XZInputStream params:
@@ -211,6 +211,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
                 xzInputStream.source().use { a ->
                     temp.sink().buffer().use { b -> b.writeAll(a) }
                 }
+                Timber.d("getFilterFile: unpacked AA, elapsed: ${Duration.milliseconds(System.currentTimeMillis()) - start}")
             }
 
             ins = context.assets.open("easylist.txt")
@@ -228,7 +229,6 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             }
 
             temp.renameTo(defaultSubscriptionFile)
-            Timber.d("getFilterFile: unpacked, elapsed: ${Duration.milliseconds(System.currentTimeMillis()) - start}")
         } catch (ex: IOException) {
             Timber.e(ex)
             defaultSubscriptionFile.delete()
