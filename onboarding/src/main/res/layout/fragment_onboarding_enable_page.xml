@@ -70,9 +70,12 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="16dp"
+            app:layout_constraintDimensionRatio="H,2:1"
             app:layout_constraintEnd_toEndOf="@id/onboarding_enable_guideline_end"
+            app:layout_constraintHeight_max="205dp"
             app:layout_constraintStart_toStartOf="@id/onboarding_enable_guideline_start"
-            app:layout_constraintTop_toBottomOf="@+id/onboarding_enable_description" />
+            app:layout_constraintTop_toBottomOf="@+id/onboarding_enable_description"
+            app:layout_constraintWidth_max="410dp" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/onboarding_enable_guideline_start"
