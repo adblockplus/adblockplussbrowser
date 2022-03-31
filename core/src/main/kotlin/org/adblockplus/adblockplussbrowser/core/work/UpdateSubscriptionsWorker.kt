@@ -29,6 +29,7 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.withContext
@@ -73,17 +74,22 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
     private var totalSteps: Int = 0
     private var currentStep: Int = 0
 
+    private val settings by lazy {
+        runBlocking {
+            settingsRepository.currentSettings()
+        }
+    }
+
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         // if it is a periodic check, force update subscriptions
         return@withContext try {
             Timber.d("DOWNLOAD JOB")
 
-            val settings = settingsRepository.currentSettings()
-            Timber.d("Downloader settings: $settings")
             val savedState = coreRepository.currentSavedState()
             Timber.d("Saved state: $savedState")
             val changes = settings.changes(savedState)
             Timber.d("Diff: $changes")
+            Timber.d("Downloader settings: $settings")
             Timber.d("Run Attempt: $runAttemptCount")
 
             // Don't let a failing worker run eternally...
@@ -116,32 +122,15 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             // check if Work is stopped and return
             if (isStopped) return@withContext Result.success()
 
-            val subscriptions = results.mapNotNull { it.subscription }
-            val filtersFile =
-                writeFiles(subscriptions, settings.allowedDomains, settings.blockedDomains)
-
-            // check if Work is stopped and return
-            if (isStopped) return@withContext Result.success()
-            coreRepository.updateDownloadedSubscriptions(
-                subscriptions,
-                tags.isForceRefresh() or tags.isPeriodic()
-            )
-            coreRepository.updateSavedState(settings.toSavedState())
-            dispatchUpdate()
-            cleanOldFiles(filtersFile)
-
-            updateStatus(ProgressType.PROGRESS)
-            updateSubscriptionsLastUpdated(settings, subscriptions)
-
             if (results.hasFailedResult()) {
                 Timber.w("Failed subscriptions updates, retrying shortly")
-                filtersFile.delete()
                 delay(DELAY_DEFAULT)
                 updateStatus(ProgressType.FAILED)
                 failedResult()
             } else {
                 Timber.i("Subscriptions downloaded")
                 delay(DELAY_DEFAULT)
+                prepareUpdatedSubscriptionsFiles(results)
                 updateStatus(ProgressType.SUCCESS)
                 Result.success()
             }
@@ -151,6 +140,23 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             updateStatus(ProgressType.FAILED)
             if (ex is CancellationException) Result.success() else failedResult()
         }
+    }
+
+    private suspend fun prepareUpdatedSubscriptionsFiles(results: List<DownloadResult>) {
+        val subscriptions = results.mapNotNull { it.subscription }
+        val filtersFile =
+            writeFiles(subscriptions, settings.allowedDomains, settings.blockedDomains)
+
+        coreRepository.updateDownloadedSubscriptions(
+            subscriptions,
+            tags.isForceRefresh() or tags.isPeriodic()
+        )
+        coreRepository.updateSavedState(settings.toSavedState())
+        dispatchUpdate()
+        cleanOldFiles(filtersFile)
+
+        updateStatus(ProgressType.PROGRESS)
+        updateSubscriptionsLastUpdated(settings, subscriptions)
     }
 
     private fun failedResult(): Result =
