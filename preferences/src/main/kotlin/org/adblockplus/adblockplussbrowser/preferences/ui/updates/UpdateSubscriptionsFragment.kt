@@ -78,7 +78,7 @@ class UpdateSubscriptionsFragment : DataBindingFragment<FragmentUpdateSubscripti
                 binding.updatesPreferencesUpdateNowLabel.text = getString(R.string.update_status_progress_message)
             } else {
                 updatePreferencesProgress.progress = 0
-                updatePreferencesProgress.visibility = View.GONE
+                updatePreferencesProgress.visibility = View.INVISIBLE
                 binding.updatesPreferencesUpdateNowLabel.text = getString(R.string.preferences_update_subscriptions_title)
             }
         }
