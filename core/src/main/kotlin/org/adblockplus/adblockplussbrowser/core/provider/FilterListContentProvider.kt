@@ -226,6 +226,10 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
                 }
             }
 
+            temp.sink(append = true).buffer().use { sink ->
+                sink.writeUtf8("\n")
+            }
+
             temp.renameTo(defaultSubscriptionFile)
         } catch (ex: IOException) {
             Timber.e(ex)
