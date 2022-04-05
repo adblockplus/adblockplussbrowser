@@ -238,22 +238,17 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         }
     }
 
-    private fun prepareDefaultSubscriptions() {
-        defaultSubscriptionFile.delete()
-        unpackDefaultSubscriptions()
-    }
-
     private fun getFilterFile(): File {
         Timber.i("getFilterFile")
+        defaultSubscriptionFile.delete()
         val path = coreRepository.subscriptionsPath
 
         // We have a current file, return it
         if (!path.isNullOrEmpty() && File(path).exists()) {
-            defaultSubscriptionFile.delete()
             return File(path)
         }
 
-        prepareDefaultSubscriptions()
+        unpackDefaultSubscriptions()
 
         return defaultSubscriptionFile
     }
