@@ -31,7 +31,7 @@ import org.adblockplus.adblockplussbrowser.core.CallingApp
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.extensions.currentData
 import org.adblockplus.adblockplussbrowser.core.extensions.currentSettings
-import org.adblockplus.adblockplussbrowser.core.extensions.sanatizeUrl
+import org.adblockplus.adblockplussbrowser.core.extensions.sanitizeUrl
 import org.adblockplus.adblockplussbrowser.core.retryIO
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import ru.gildor.coroutines.okhttp.await
@@ -123,7 +123,7 @@ internal class OkHttpUserCounter(
         currentUserCountingCount: Int,
         callingApp: CallingApp
     ): HttpUrl {
-        return subscription.randomizedUrl.sanatizeUrl().toHttpUrl().newBuilder().apply {
+        return subscription.randomizedUrl.sanitizeUrl().toHttpUrl().newBuilder().apply {
             addQueryParameter("addonName", appInfo.addonName)
             addQueryParameter("addonVersion", appInfo.addonVersion)
             addQueryParameter("application", callingApp.applicationName)
