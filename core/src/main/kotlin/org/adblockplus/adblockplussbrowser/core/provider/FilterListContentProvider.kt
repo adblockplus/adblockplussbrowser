@@ -239,13 +239,8 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
     }
 
     private fun prepareDefaultSubscriptions() {
-        val path = coreRepository.subscriptionsPath
-        // We have a current file with downloaded subscriptions, return it
-        if (!path.isNullOrEmpty() && File(path).exists()) {
-            defaultSubscriptionFile.delete()
-        } else if (!defaultSubscriptionFile.exists()) {
-            unpackDefaultSubscriptions()
-        }
+        defaultSubscriptionFile.delete()
+        unpackDefaultSubscriptions()
     }
 
     private fun getFilterFile(): File {
