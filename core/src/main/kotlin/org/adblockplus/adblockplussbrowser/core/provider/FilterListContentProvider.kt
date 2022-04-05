@@ -37,6 +37,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import okio.buffer
 import okio.sink
 import okio.source
@@ -48,14 +49,18 @@ import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInterne
 import org.adblockplus.adblockplussbrowser.base.yandex.YandexConstants
 import org.adblockplus.adblockplussbrowser.core.CallingApp
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
+import org.adblockplus.adblockplussbrowser.core.extensions.toAllowRule
+import org.adblockplus.adblockplussbrowser.core.extensions.currentSettings
 import org.adblockplus.adblockplussbrowser.core.extensions.setBackoffTime
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker.Companion.BACKOFF_TIME_S
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker.Companion.USER_COUNTER_KEY_ONESHOT_WORK
+import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.tukaani.xz.XZInputStream
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
+import java.io.InputStream
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
@@ -66,6 +71,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
     @InstallIn(SingletonComponent::class)
     interface FilterListContentProviderEntryPoint {
         fun getCoreRepository(): CoreRepository
+        fun getSettingsRepository(): SettingsRepository
         fun getActivationPreferences(): ActivationPreferences
         fun getAnalyticsProvider(): AnalyticsProvider
     }
@@ -78,6 +84,10 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
     }
     val coreRepository: CoreRepository by lazy {
         entrypoint.getCoreRepository()
+    }
+
+    val settingsRepository: SettingsRepository by lazy {
+        entrypoint.getSettingsRepository()
     }
 
     val activationPreferences: ActivationPreferences by lazy {
@@ -105,7 +115,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
 
     override val coroutineContext = Dispatchers.IO + SupervisorJob()
 
-    override fun onCreate(): Boolean { return true }
+    override fun onCreate() = true
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int = 0
 
@@ -173,30 +183,54 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
     private fun unpackDefaultSubscriptions() {
         val context = requireContext(this)
         val temp = File.createTempFile("filters", ".txt", defaultSubscriptionDir)
-        val start = Duration.milliseconds(System.currentTimeMillis())
 
-        Timber.d("getFilterFile: unpacking")
+        var acceptableAdsEnabled: Boolean
+        var allowedDomains: List<String>
+        runBlocking {
+            acceptableAdsEnabled = settingsRepository.currentSettings().acceptableAdsEnabled
+            allowedDomains = settingsRepository.currentSettings().allowedDomains
+        }
+        Timber.i("Is AA enabled: $acceptableAdsEnabled")
+
         try {
-            var ins = context.assets.open("exceptionrules.txt.xz")
-            /*
-                XZInputStream params:
-                    - Input stream
-                    - memory limit expressed in kilobytes (KiB)
-                        The worst-case memory usage of XZInputStream is currently 1.5 GiB.
-                        Still, very few files will require more than about 65 MiB.
-                        To calculate, multiply the digital storage value by 1024. E.g.: 65 MiB * 1024
-             */
-            val xzInputStream = XZInputStream(ins, XZ_MEMORY_LIMIT_KB)
-            xzInputStream.source().use { a ->
-                temp.sink().buffer().use { b -> b.writeAll(a) }
+            var ins: InputStream
+            if (acceptableAdsEnabled) {
+                Timber.d("getFilterFile: unpacking AA")
+                val start = Duration.milliseconds(System.currentTimeMillis())
+                ins = context.assets.open("exceptionrules.txt.xz")
+                /*
+                    XZInputStream params:
+                        - Input stream
+                        - memory limit expressed in kilobytes (KiB)
+                            The worst-case memory usage of XZInputStream is currently 1.5 GiB.
+                            Still, very few files will require more than about 65 MiB.
+                            To calculate, multiply the digital storage value by 1024. E.g.: 65 MiB * 1024
+                 */
+                val xzInputStream = XZInputStream(ins, XZ_MEMORY_LIMIT_KB)
+                xzInputStream.source().use { a ->
+                    temp.sink().buffer().use { b -> b.writeAll(a) }
+                }
+                Timber.d("getFilterFile: unpacked AA, elapsed: ${Duration.milliseconds(System.currentTimeMillis()) - start}")
             }
 
             ins = context.assets.open("easylist.txt")
             ins.source().use { a ->
                 temp.sink(append = true).buffer().use { b -> b.writeAll(a) }
             }
+
+            allowedDomains.forEach { domain ->
+                Timber.d("domain: $domain")
+                temp.sink(append = true).buffer().use { sink ->
+                    sink.writeUtf8("\n")
+                    sink.writeUtf8(domain.toAllowRule())
+                }
+            }
+
+            temp.sink(append = true).buffer().use { sink ->
+                sink.writeUtf8("\n")
+            }
+
             temp.renameTo(defaultSubscriptionFile)
-            Timber.d("getFilterFile: unpacked, elapsed: ${Duration.milliseconds(System.currentTimeMillis()) - start}")
         } catch (ex: IOException) {
             Timber.e(ex)
             defaultSubscriptionFile.delete()
@@ -204,29 +238,18 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         }
     }
 
-    private fun prepareDefaultSubscriptions() {
-        val path = coreRepository.subscriptionsPath
-        // We have a current file with downloaded subscriptions, return it
-        if (!path.isNullOrEmpty() && File(path).exists()) {
-            defaultSubscriptionFile.delete()
-        } else if (!defaultSubscriptionFile.exists()) {
-            unpackDefaultSubscriptions()
-        }
-    }
-
     private fun getFilterFile(): File {
         Timber.i("getFilterFile")
+        defaultSubscriptionFile.delete()
         val path = coreRepository.subscriptionsPath
 
         // We have a current file, return it
         if (!path.isNullOrEmpty() && File(path).exists()) {
-            defaultSubscriptionFile.delete()
             return File(path)
         }
 
-        if (!defaultSubscriptionFile.exists()) {
-            prepareDefaultSubscriptions()
-        }
+        unpackDefaultSubscriptions()
+
         return defaultSubscriptionFile
     }
 
@@ -244,6 +267,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         const val DEFAULT_SUBSCRIPTIONS_FILENAME = "default_subscriptions.txt"
         const val DEFAULT_CALLING_APP_NAME = "other"
         const val DEFAULT_CALLING_APP_VERSION = "0"
+
         /*
             Memory limit was calculated by using a 5x times bigger file and
             limiting the memory until the unpacking wouldn't work. That value 3x bigger.
