@@ -258,9 +258,8 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             return File(path)
         }
 
-        if (!defaultSubscriptionFile.exists()) {
-            prepareDefaultSubscriptions()
-        }
+        prepareDefaultSubscriptions()
+
         return defaultSubscriptionFile
     }
 
