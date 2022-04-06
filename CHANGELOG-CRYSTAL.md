@@ -4,6 +4,30 @@ All notable changes to Crystal Adblock for Samsung will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.0] - 2022-04-06
+### Fixed
+- Non-translated elements on "More blocking options" screen are not changing in case of a language change event
+- Enable SI has gigantic graphic
+- Default filters files are not customized
+
+### Changed
+- Removed analytics events from Privacy Policy and Terms of Use
+- Hidden hint when custom subscriptions and allowlist are empty
+- Allowed HTTP subscriptions
+- Manual updates are disabled if an update is already happening
+- Closing AA dialog button
+- Redundant HEAD requests are not sent
+- Removed progress dialog
+- Progress style "Update Now" changed to linear
+- Use the latest filters files in case of download error
+- Progress indicator should not move the UI when it appears and disappears
+
+### Added
+- Gradle Task Download Assets
+- Subscriptions Worker Test
+- Running all the unit tests on CI
+- Alternative packing method for preloaded AA subscriptions
+
 ## [2.2.0] - 2022-02-24
 ### Fixed
 - Hyperlinks for Terms & Privacy Policy are invisible in Arabic
