@@ -13,13 +13,13 @@
 #  You should have received a copy of the GNU General Public License
 #  along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
 
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 
 """
 install pyjwt[crypto]
 pip3 install pyjwt
 export SERVICE_ACCOUNT_ID="your-service-account-id"
-export PRIVATE_KEY= "-----BEGIN RSA PRIVATE KEY-----
+export PRIVATE_KEY="-----BEGIN RSA PRIVATE KEY-----
 your private key
 -----END RSA PRIVATE KEY-----"
 
@@ -38,12 +38,12 @@ Successful result of the validation:
 """
 
 import jwt
-import time
-import requests
 import os
+import requests
+import time
 
 iat = round(time.time())
-exp = iat + 600 # expire after ten minutes
+exp = iat + 600  # expire after ten minutes
 service_account_id = os.environ['SERVICE_ACCOUNT_ID']
 payload = {
     "iss": service_account_id,
