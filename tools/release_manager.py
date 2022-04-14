@@ -32,7 +32,7 @@ curl -X GET \
   -H  "service-account-id: your-service-account-id" \
   "https://devapi.samsungapps.com/auth/checkAccessToken"
 
-Result successful result of the validation:
+Successful result of the validation:
 {"ok":true}
 
 """
