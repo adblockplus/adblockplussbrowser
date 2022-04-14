@@ -19,7 +19,7 @@
 install pyjwt[crypto]
 pip3 install pyjwt
 export SERVICE_ACCOUNT_ID="your-service-account-id"
-export private_key = "-----BEGIN RSA PRIVATE KEY-----
+export PRIVATE_KEY= "-----BEGIN RSA PRIVATE KEY-----
 your private key
 -----END RSA PRIVATE KEY-----"
 
