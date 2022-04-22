@@ -49,9 +49,11 @@ import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInterne
 import org.adblockplus.adblockplussbrowser.base.yandex.YandexConstants
 import org.adblockplus.adblockplussbrowser.core.CallingApp
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
+import org.adblockplus.adblockplussbrowser.core.extensions.currentData
 import org.adblockplus.adblockplussbrowser.core.extensions.toAllowRule
 import org.adblockplus.adblockplussbrowser.core.extensions.currentSettings
 import org.adblockplus.adblockplussbrowser.core.extensions.setBackoffTime
+import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker.Companion.BACKOFF_TIME_S
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker.Companion.USER_COUNTER_KEY_ONESHOT_WORK
@@ -61,6 +63,8 @@ import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
+import java.text.ParseException
+import java.util.Date
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
@@ -146,7 +150,11 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         val callingApp = getCallingApp(callingPackage, context?.packageManager)
         launch {
             activationPreferences.updateLastFilterRequest(System.currentTimeMillis())
-            triggerUserCountingRequest(callingApp)
+            val savedLastUserCountingResponse = coreRepository.currentData().lastUserCountingResponse
+            Timber.d("User count lastUserCountingResponse saved is `%d`", savedLastUserCountingResponse)
+            if (!isUserCountedInCurrentCycle(savedLastUserCountingResponse)) {
+                triggerUserCountingRequest(callingApp)
+            }
         }
         return try {
             Timber.i("Filter list requested: $uri - $mode...")
@@ -275,5 +283,26 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             multiplied it by 3.
          */
         const val XZ_MEMORY_LIMIT_KB = 30 * 1024
+
+        private fun convertToTimestamp(stringToFormat: String): Long {
+            return try {
+                val date: Date = OkHttpUserCounter.lastUserCountingResponseFormat.parse(stringToFormat)
+                date.time
+            } catch (e: ParseException) {
+                0
+            }
+        }
+
+        // There should be one user count request per 24h = 24*60*60*1000 ms = 86400000 ms
+        // We are comparing device time and server time
+        // subtract 15 min to compensate possible clock synchronization issues
+        // 23h 45min = 86400000 - 15*60*1000 = 85500000 ms
+        private const val USER_COUNTING_CYCLE = 85_500_000
+        private fun isUserCountedInCurrentCycle(lastUserCount: Long): Boolean {
+            val lastUserCountTimeStamp = convertToTimestamp(lastUserCount.toString())
+            val periodSinceLastUserCount = System.currentTimeMillis() - lastUserCountTimeStamp
+            Timber.i("User has been counted %d ms ago", periodSinceLastUserCount)
+            return periodSinceLastUserCount < USER_COUNTING_CYCLE
+        }
     }
 }

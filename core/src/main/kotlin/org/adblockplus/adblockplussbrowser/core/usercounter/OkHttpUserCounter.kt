@@ -40,7 +40,6 @@ import java.net.HttpURLConnection.HTTP_OK
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 import kotlin.time.ExperimentalTime
@@ -59,44 +58,49 @@ internal class OkHttpUserCounter(
     override suspend fun count(callingApp: CallingApp): CountUserResult = coroutineScope {
         try {
             val savedLastUserCountingResponse = repository.currentData().lastUserCountingResponse
-            Timber.d("User count lastUserCountingResponse saved is `%d`",
-                savedLastUserCountingResponse)
-            if (isUserCountedInCurrentCycle(savedLastUserCountingResponse)) {
-                Timber.i("Skip the count. User counted less than 24h ago.")
-                CountUserResult.Skipped()
-            } else {
-                val acceptableAdsEnabled = settings.currentSettings().acceptableAdsEnabled
-                analyticsProvider.setUserProperty(AnalyticsUserProperty.IS_AA_ENABLED, acceptableAdsEnabled.toString())
-                val acceptableAdsSubscription = settings.getAcceptableAdsSubscription()
-                val currentUserCountingCount = repository.currentData().userCountingCount
-                val url = createUrl(acceptableAdsSubscription, acceptableAdsEnabled,
-                    savedLastUserCountingResponse, currentUserCountingCount, callingApp)
-                val request = Request.Builder().url(url).head().build()
-                val response = retryIO(description = "User counting HEAD request") {
-                    okHttpClient.newCall(request).await()
-                }
-
-                val result = when (response.code) {
-                    HTTP_OK -> {
-                        val newLastVersion = parseDateString(response.headers["Date"] ?: "",
-                            analyticsProvider)
-                        Timber.d("User count saves new lastUserCountingResponse `%s`",
-                            newLastVersion)
-                        repository.updateLastUserCountingResponse(newLastVersion.toLong())
-                        // No point to update the value otherwise as we send max as "4+"
-                        if (currentUserCountingCount < MAX_USER_COUNTING_COUNT)
-                            repository.updateUserCountingCount(currentUserCountingCount + 1)
-                        CountUserResult.Success()
-                    }
-                    else -> {
-                        analyticsProvider.setUserProperty(AnalyticsUserProperty.USER_COUNTING_HTTP_ERROR,
-                            response.code.toString())
-                        CountUserResult.Failed()
-                    }
-                }
-                response.close()
-                result
+            Timber.d(
+                "User count lastUserCountingResponse saved is `%d`",
+                savedLastUserCountingResponse
+            )
+            val acceptableAdsEnabled = settings.currentSettings().acceptableAdsEnabled
+            analyticsProvider.setUserProperty(AnalyticsUserProperty.IS_AA_ENABLED, acceptableAdsEnabled.toString())
+            val acceptableAdsSubscription = settings.getAcceptableAdsSubscription()
+            val currentUserCountingCount = repository.currentData().userCountingCount
+            val url = createUrl(
+                acceptableAdsSubscription, acceptableAdsEnabled,
+                savedLastUserCountingResponse, currentUserCountingCount, callingApp
+            )
+            val request = Request.Builder().url(url).head().build()
+            val response = retryIO(description = "User counting HEAD request") {
+                okHttpClient.newCall(request).await()
             }
+
+            val result = when (response.code) {
+                HTTP_OK -> {
+                    val newLastVersion = parseDateString(
+                        response.headers["Date"] ?: "",
+                        analyticsProvider
+                    )
+                    Timber.d(
+                        "User count saves new lastUserCountingResponse `%s`",
+                        newLastVersion
+                    )
+                    repository.updateLastUserCountingResponse(newLastVersion.toLong())
+                    // No point to update the value otherwise as we send max as "4+"
+                    if (currentUserCountingCount < MAX_USER_COUNTING_COUNT)
+                        repository.updateUserCountingCount(currentUserCountingCount + 1)
+                    CountUserResult.Success()
+                }
+                else -> {
+                    analyticsProvider.setUserProperty(
+                        AnalyticsUserProperty.USER_COUNTING_HTTP_ERROR,
+                        response.code.toString()
+                    )
+                    CountUserResult.Failed()
+                }
+            }
+            response.close()
+            result
         } catch (ex: Exception) {
             if (BuildConfig.DEBUG && ex is ParseException) {
                 throw ex
@@ -143,7 +147,8 @@ internal class OkHttpUserCounter(
             return try {
                 // Expected date format in "Date" header: "Thu, 23 Sep 2021 17:31:01 GMT"
                 lastUserCountingResponseFormat.format(
-                    serverDateParser.parse(rawDate))
+                    serverDateParser.parse(rawDate)
+                )
             } catch (ex: ParseException) {
                 Timber.e(ex)
                 analyticsProvider?.logException(ex)
@@ -156,32 +161,16 @@ internal class OkHttpUserCounter(
             }
         }
 
-        private val lastUserCountingResponseFormat = SimpleDateFormat("yyyyMMddHHmm",
-            Locale.ENGLISH)
-        private val serverDateParser = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z",
-            Locale.ENGLISH)
+        val lastUserCountingResponseFormat = SimpleDateFormat(
+            "yyyyMMddHHmm",
+            Locale.ENGLISH
+        )
+        private val serverDateParser = SimpleDateFormat(
+            "EEE, dd MMM yyyy HH:mm:ss z",
+            Locale.ENGLISH
+        )
         private val serverTimeZone = TimeZone.getTimeZone("GMT")
         private const val MAX_USER_COUNTING_COUNT = 4
 
-        private fun convertToTimestamp(stringToFormat: String): Long {
-            return try {
-                val date: Date = lastUserCountingResponseFormat.parse(stringToFormat)
-                date.time
-            } catch (e: ParseException) {
-                0
-            }
-        }
-
-        // There should be one user count request per 24h = 24*60*60*1000 ms = 86400000 ms
-        // We are comparing device time and server time
-        // subtract 15 min to compensate possible clock synchronization issues
-        // 23h 45min = 86400000 - 15*60*1000 = 85500000 ms
-        private const val USER_COUNTING_CYCLE = 85_500_000
-        private fun isUserCountedInCurrentCycle(lastUserCount: Long): Boolean {
-            val lastUserCountTimeStamp = convertToTimestamp(lastUserCount.toString())
-            val periodSinceLastUserCount = System.currentTimeMillis() - lastUserCountTimeStamp
-            Timber.i("User has been counted %d ms ago", periodSinceLastUserCount)
-            return periodSinceLastUserCount < USER_COUNTING_CYCLE
-        }
     }
 }
