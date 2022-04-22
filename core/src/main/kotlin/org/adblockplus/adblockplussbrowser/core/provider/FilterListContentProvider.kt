@@ -135,7 +135,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         // REPLACE old enqueued works
         workManager.enqueueUniqueWork(
             USER_COUNTER_KEY_ONESHOT_WORK,
-            ExistingWorkPolicy.APPEND_OR_REPLACE,
+            ExistingWorkPolicy.REPLACE,
             request
         )
         Timber.d("USER COUNTER JOB SCHEDULED")
