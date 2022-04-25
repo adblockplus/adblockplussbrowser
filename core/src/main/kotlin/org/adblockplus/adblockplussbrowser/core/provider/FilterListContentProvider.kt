@@ -86,15 +86,15 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             FilterListContentProviderEntryPoint::class.java
         )
     }
-    val coreRepository: CoreRepository by lazy {
+    private val coreRepository: CoreRepository by lazy {
         entrypoint.getCoreRepository()
     }
 
-    val settingsRepository: SettingsRepository by lazy {
+    private val settingsRepository: SettingsRepository by lazy {
         entrypoint.getSettingsRepository()
     }
 
-    val activationPreferences: ActivationPreferences by lazy {
+    private val activationPreferences: ActivationPreferences by lazy {
         entrypoint.getActivationPreferences()
     }
 
@@ -102,18 +102,18 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         entrypoint.getAnalyticsProvider()
     }
 
-    val workManager: WorkManager by lazy {
+    private val workManager: WorkManager by lazy {
         WorkManager.getInstance(requireContext(this@FilterListContentProvider))
     }
 
-    val defaultSubscriptionDir: File by lazy {
+    private val defaultSubscriptionDir: File by lazy {
         val context = requireContext(this@FilterListContentProvider)
         val directory = File(context.filesDir, "cache")
         directory.mkdirs()
         directory
     }
 
-    val defaultSubscriptionFile: File by lazy {
+    private val defaultSubscriptionFile: File by lazy {
         File(defaultSubscriptionDir, DEFAULT_SUBSCRIPTIONS_FILENAME)
     }
 
