@@ -151,9 +151,11 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         launch {
             activationPreferences.updateLastFilterRequest(System.currentTimeMillis())
             val savedLastUserCountingResponse = coreRepository.currentData().lastUserCountingResponse
-            Timber.d("User count lastUserCountingResponse saved is `%d`", savedLastUserCountingResponse)
             if (!isUserCountedInCurrentCycle(savedLastUserCountingResponse)) {
+                Timber.d("User count lastUserCountingResponse saved is `%d`", savedLastUserCountingResponse)
                 triggerUserCountingRequest(callingApp)
+            } else {
+                Timber.d("Skipp user counting")
             }
         }
         return try {
