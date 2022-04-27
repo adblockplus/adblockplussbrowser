@@ -24,6 +24,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.ParcelFileDescriptor
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.work.BackoffPolicy
 import androidx.work.Constraints
 import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
@@ -50,12 +51,11 @@ import org.adblockplus.adblockplussbrowser.base.yandex.YandexConstants
 import org.adblockplus.adblockplussbrowser.core.CallingApp
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.extensions.currentData
-import org.adblockplus.adblockplussbrowser.core.extensions.toAllowRule
 import org.adblockplus.adblockplussbrowser.core.extensions.currentSettings
-import org.adblockplus.adblockplussbrowser.core.extensions.setBackoffTime
+import org.adblockplus.adblockplussbrowser.core.extensions.toAllowRule
 import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker
-import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker.Companion.BACKOFF_TIME_S
+import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker.Companion.BACKOFF_TIME_MINUTES
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker.Companion.USER_COUNTER_KEY_ONESHOT_WORK
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.tukaani.xz.XZInputStream
@@ -65,6 +65,7 @@ import java.io.IOException
 import java.io.InputStream
 import java.text.ParseException
 import java.util.Date
+import java.util.concurrent.TimeUnit
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
@@ -132,7 +133,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             setConstraints(
                 Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
             )
-            setBackoffTime(Duration.seconds(BACKOFF_TIME_S))
+            setBackoffCriteria(BackoffPolicy.EXPONENTIAL, BACKOFF_TIME_MINUTES, TimeUnit.MINUTES)
             setInputData(callingApp())
         }.build()
 
@@ -155,7 +156,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
                 Timber.d("User count lastUserCountingResponse saved is `%d`", savedLastUserCountingResponse)
                 triggerUserCountingRequest(callingApp)
             } else {
-                Timber.d("Skipp user counting")
+                Timber.d("Skip user counting")
             }
         }
         return try {
