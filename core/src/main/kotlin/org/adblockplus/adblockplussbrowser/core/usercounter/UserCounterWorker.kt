@@ -70,8 +70,9 @@ internal class UserCounterWorker @AssistedInject constructor(
     private fun CoroutineWorker.hasReachedMaxAttempts() = runAttemptCount > RUN_ATTEMPT_MAX_COUNT
 
     companion object {
-        private const val RUN_ATTEMPT_MAX_COUNT = 4
-        const val BACKOFF_TIME_S = 30
+        //retry after about 2m, 4m, 8m, 16m, 32m, 64m, 256m
+        private const val RUN_ATTEMPT_MAX_COUNT = 8
+        const val BACKOFF_TIME_MINUTES = 2L
 
         const val USER_COUNTER_KEY_ONESHOT_WORK = "USER_COUNTER_ONESHOT_WORK"
     }

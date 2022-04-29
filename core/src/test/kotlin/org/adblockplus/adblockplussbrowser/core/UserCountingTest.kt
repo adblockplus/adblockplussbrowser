@@ -85,32 +85,6 @@ class UserCountingTest {
     }
 
     @Test
-    fun `test counting skipped`() {
-        val currentTime = System.currentTimeMillis()
-        val dateHeaderValue = serverDateParser.format(currentTime)
-
-        val response = MockResponse()
-            .addHeader("Date", dateHeaderValue)
-        mockWebServer.enqueue(response)
-
-        assertEquals(0, mockWebServer.requestCount)
-        runBlocking {
-            assertTrue(userCounter.count(CallingApp("", "")) is CountUserResult.Success)
-        }
-        assertEquals(1, mockWebServer.requestCount)
-
-        val secondRequestTime = System.currentTimeMillis()
-        val secondDateHeaderValue = serverDateParser.format(secondRequestTime)
-        val secondResponse = MockResponse().addHeader("Date", secondDateHeaderValue)
-        mockWebServer.enqueue(secondResponse)
-
-        runBlocking {
-            assertTrue(userCounter.count(CallingApp("", "")) is CountUserResult.Skipped)
-        }
-        assertEquals(1, mockWebServer.requestCount)
-    }
-
-    @Test
     fun `test counting when Acceptable Ads are disabled`() {
         val response = MockResponse()
             .addHeader("Date", "Thu, 23 Sep 2021 17:31:01 GMT") //202109231731
