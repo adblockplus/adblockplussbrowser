@@ -24,6 +24,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.ParcelFileDescriptor
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.work.BackoffPolicy
 import androidx.work.Constraints
 import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
@@ -49,11 +50,12 @@ import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInterne
 import org.adblockplus.adblockplussbrowser.base.yandex.YandexConstants
 import org.adblockplus.adblockplussbrowser.core.CallingApp
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
-import org.adblockplus.adblockplussbrowser.core.extensions.toAllowRule
+import org.adblockplus.adblockplussbrowser.core.extensions.currentData
 import org.adblockplus.adblockplussbrowser.core.extensions.currentSettings
-import org.adblockplus.adblockplussbrowser.core.extensions.setBackoffTime
+import org.adblockplus.adblockplussbrowser.core.extensions.toAllowRule
+import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker
-import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker.Companion.BACKOFF_TIME_S
+import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker.Companion.BACKOFF_TIME_MINUTES
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker.Companion.USER_COUNTER_KEY_ONESHOT_WORK
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.tukaani.xz.XZInputStream
@@ -61,6 +63,9 @@ import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
+import java.text.ParseException
+import java.util.Date
+import java.util.concurrent.TimeUnit
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
@@ -82,15 +87,15 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             FilterListContentProviderEntryPoint::class.java
         )
     }
-    val coreRepository: CoreRepository by lazy {
+    private val coreRepository: CoreRepository by lazy {
         entrypoint.getCoreRepository()
     }
 
-    val settingsRepository: SettingsRepository by lazy {
+    private val settingsRepository: SettingsRepository by lazy {
         entrypoint.getSettingsRepository()
     }
 
-    val activationPreferences: ActivationPreferences by lazy {
+    private val activationPreferences: ActivationPreferences by lazy {
         entrypoint.getActivationPreferences()
     }
 
@@ -98,18 +103,18 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         entrypoint.getAnalyticsProvider()
     }
 
-    val workManager: WorkManager by lazy {
+    private val workManager: WorkManager by lazy {
         WorkManager.getInstance(requireContext(this@FilterListContentProvider))
     }
 
-    val defaultSubscriptionDir: File by lazy {
+    private val defaultSubscriptionDir: File by lazy {
         val context = requireContext(this@FilterListContentProvider)
         val directory = File(context.filesDir, "cache")
         directory.mkdirs()
         directory
     }
 
-    val defaultSubscriptionFile: File by lazy {
+    private val defaultSubscriptionFile: File by lazy {
         File(defaultSubscriptionDir, DEFAULT_SUBSCRIPTIONS_FILENAME)
     }
 
@@ -128,14 +133,14 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             setConstraints(
                 Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
             )
-            setBackoffTime(Duration.seconds(BACKOFF_TIME_S))
+            setBackoffCriteria(BackoffPolicy.EXPONENTIAL, BACKOFF_TIME_MINUTES, TimeUnit.MINUTES)
             setInputData(callingApp())
         }.build()
 
         // REPLACE old enqueued works
         workManager.enqueueUniqueWork(
             USER_COUNTER_KEY_ONESHOT_WORK,
-            ExistingWorkPolicy.APPEND_OR_REPLACE,
+            ExistingWorkPolicy.REPLACE,
             request
         )
         Timber.d("USER COUNTER JOB SCHEDULED")
@@ -146,7 +151,13 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         val callingApp = getCallingApp(callingPackage, context?.packageManager)
         launch {
             activationPreferences.updateLastFilterRequest(System.currentTimeMillis())
-            triggerUserCountingRequest(callingApp)
+            val savedLastUserCountingResponse = coreRepository.currentData().lastUserCountingResponse
+            if (!isUserCountedInCurrentCycle(savedLastUserCountingResponse)) {
+                Timber.d("User count lastUserCountingResponse saved is `%d`", savedLastUserCountingResponse)
+                triggerUserCountingRequest(callingApp)
+            } else {
+                Timber.d("Skip user counting")
+            }
         }
         return try {
             Timber.i("Filter list requested: $uri - $mode...")
@@ -275,5 +286,26 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             multiplied it by 3.
          */
         const val XZ_MEMORY_LIMIT_KB = 30 * 1024
+
+        private fun convertToTimestamp(stringToFormat: String): Long {
+            return try {
+                val date: Date = OkHttpUserCounter.lastUserCountingResponseFormat.parse(stringToFormat)
+                date.time
+            } catch (e: ParseException) {
+                0
+            }
+        }
+
+        // There should be one user count request per 24h = 24*60*60*1000 ms = 86400000 ms
+        // We are comparing device time and server time
+        // subtract 15 min to compensate possible clock synchronization issues
+        // 23h 45min = 86400000 - 15*60*1000 = 85500000 ms
+        private const val USER_COUNTING_CYCLE = 85_500_000
+        private fun isUserCountedInCurrentCycle(lastUserCount: Long): Boolean {
+            val lastUserCountTimeStamp = convertToTimestamp(lastUserCount.toString())
+            val periodSinceLastUserCount = System.currentTimeMillis() - lastUserCountTimeStamp
+            Timber.i("User has been counted %d ms ago", periodSinceLastUserCount)
+            return periodSinceLastUserCount < USER_COUNTING_CYCLE
+        }
     }
 }
