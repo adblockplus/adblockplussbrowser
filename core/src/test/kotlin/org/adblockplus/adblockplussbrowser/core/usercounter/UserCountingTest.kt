@@ -15,16 +15,17 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.adblockplus.adblockplussbrowser.core
+package org.adblockplus.adblockplussbrowser.core.usercounter
 
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
+import org.adblockplus.adblockplussbrowser.core.AppInfo
+import org.adblockplus.adblockplussbrowser.core.BuildConfig
+import org.adblockplus.adblockplussbrowser.core.CallingApp
 import org.adblockplus.adblockplussbrowser.core.helpers.Fakes
-import org.adblockplus.adblockplussbrowser.core.usercounter.CountUserResult
-import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
 import org.junit.After
 import org.junit.Assert
 import org.junit.Assert.assertEquals
