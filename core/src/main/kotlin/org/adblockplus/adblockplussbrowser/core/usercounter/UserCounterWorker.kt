@@ -30,15 +30,19 @@ import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.core.CallingApp
 import timber.log.Timber
+import javax.inject.Inject
 
 @HiltWorker
 internal class UserCounterWorker @AssistedInject constructor(
     @Assisted private val appContext: Context,
     @Assisted params: WorkerParameters,
-    private val userCounter: UserCounter,
-    private val analyticsProvider: AnalyticsProvider
-
 ) : CoroutineWorker(appContext, params) {
+
+    @Inject
+    internal lateinit var userCounter: UserCounter
+
+    @Inject
+    internal lateinit var analyticsProvider: AnalyticsProvider
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         // if it is a periodic check, force update subscriptions

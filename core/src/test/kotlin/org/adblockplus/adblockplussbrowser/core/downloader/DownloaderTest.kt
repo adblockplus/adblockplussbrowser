@@ -15,7 +15,7 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.adblockplus.adblockplussbrowser.core
+package org.adblockplus.adblockplussbrowser.core.downloader
 
 import android.content.Context
 import java.net.HttpURLConnection.HTTP_INTERNAL_ERROR
@@ -28,9 +28,7 @@ import okhttp3.mockwebserver.MockWebServer
 import okhttp3.OkHttpClient
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
-import org.adblockplus.adblockplussbrowser.core.downloader.DownloadResult
-import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
-import org.adblockplus.adblockplussbrowser.core.downloader.OkHttpDownloader
+import org.adblockplus.adblockplussbrowser.core.AppInfo
 import org.adblockplus.adblockplussbrowser.core.helpers.Fakes
 import org.junit.After
 import org.junit.Assert.assertEquals
