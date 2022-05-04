@@ -96,6 +96,4 @@ class UserCounterWorkerTest {
             MatcherAssert.assertThat(result, CoreMatchers.`is`(ListenableWorker.Result.Retry()))
         }
     }
-
-
 }

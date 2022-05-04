@@ -27,10 +27,11 @@ import org.adblockplus.adblockplussbrowser.core.BuildConfig
 import org.adblockplus.adblockplussbrowser.core.CallingApp
 import org.adblockplus.adblockplussbrowser.core.helpers.Fakes
 import org.junit.After
-import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
+import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
 import java.net.HttpURLConnection.HTTP_INTERNAL_ERROR
@@ -136,7 +137,7 @@ class UserCountingTest {
             try {
                 assertTrue(userCounter.count(CallingApp("", "")) is CountUserResult.Success)
                 if (BuildConfig.DEBUG) {
-                    Assert.fail() // In Debug mode we throw from count()
+                    fail() // In Debug mode we throw from count()
                 }
             } catch (ex: Exception) {
                 assert(ex is ParseException)
@@ -152,5 +153,18 @@ class UserCountingTest {
             assert(fakeCoreRepository.userCountingCount == 1)
         }
         assertTrue(analyticsProvider.exception is ParseException)
+    }
+
+    @Test
+    fun `test counting no header`() {
+        val response = MockResponse()
+        mockWebServer.enqueue(response)
+        if (BuildConfig.DEBUG) {
+            assertThrows(ParseException::class.java) {
+                runBlocking { userCounter.count(CallingApp("", "")) }
+            }
+        } else {
+            runBlocking { assertTrue(userCounter.count(CallingApp("", "")) is CountUserResult.Success) }
+        }
     }
 }
