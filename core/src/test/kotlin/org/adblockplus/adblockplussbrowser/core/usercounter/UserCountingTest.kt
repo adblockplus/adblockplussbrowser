@@ -15,21 +15,23 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.adblockplus.adblockplussbrowser.core
+package org.adblockplus.adblockplussbrowser.core.usercounter
 
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
+import org.adblockplus.adblockplussbrowser.core.AppInfo
+import org.adblockplus.adblockplussbrowser.core.BuildConfig
+import org.adblockplus.adblockplussbrowser.core.CallingApp
 import org.adblockplus.adblockplussbrowser.core.helpers.Fakes
-import org.adblockplus.adblockplussbrowser.core.usercounter.CountUserResult
-import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
 import org.junit.After
-import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
+import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
 import java.net.HttpURLConnection.HTTP_INTERNAL_ERROR
@@ -135,7 +137,7 @@ class UserCountingTest {
             try {
                 assertTrue(userCounter.count(CallingApp("", "")) is CountUserResult.Success)
                 if (BuildConfig.DEBUG) {
-                    Assert.fail() // In Debug mode we throw from count()
+                    fail() // In Debug mode we throw from count()
                 }
             } catch (ex: Exception) {
                 assert(ex is ParseException)
@@ -151,5 +153,18 @@ class UserCountingTest {
             assert(fakeCoreRepository.userCountingCount == 1)
         }
         assertTrue(analyticsProvider.exception is ParseException)
+    }
+
+    @Test
+    fun `test counting no header`() {
+        val response = MockResponse()
+        mockWebServer.enqueue(response)
+        if (BuildConfig.DEBUG) {
+            assertThrows(ParseException::class.java) {
+                runBlocking { userCounter.count(CallingApp("", "")) }
+            }
+        } else {
+            runBlocking { assertTrue(userCounter.count(CallingApp("", "")) is CountUserResult.Success) }
+        }
     }
 }

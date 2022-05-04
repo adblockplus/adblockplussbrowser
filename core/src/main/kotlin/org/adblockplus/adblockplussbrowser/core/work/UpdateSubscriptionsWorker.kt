@@ -61,16 +61,16 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
 ) : CoroutineWorker(appContext, params) {
 
     @Inject
-    lateinit var subscriptionsManager: SubscriptionsManager
+    internal lateinit var subscriptionsManager: SubscriptionsManager
 
     @Inject
-    lateinit var settingsRepository: SettingsRepository
+    internal lateinit var settingsRepository: SettingsRepository
 
     @Inject
-    lateinit var coreRepository: CoreRepository
+    internal lateinit var coreRepository: CoreRepository
 
     @Inject
-    lateinit var downloader: Downloader
+    internal lateinit var downloader: Downloader
 
     private var totalSteps: Int = 0
     private var currentStep: Int = 0

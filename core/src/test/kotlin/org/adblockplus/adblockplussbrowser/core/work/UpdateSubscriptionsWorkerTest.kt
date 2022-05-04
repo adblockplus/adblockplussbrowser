@@ -32,6 +32,7 @@ import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscriptio
 import org.adblockplus.adblockplussbrowser.core.downloader.DownloadResult
 import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
 import org.adblockplus.adblockplussbrowser.core.helpers.Fakes
+import org.adblockplus.adblockplussbrowser.core.helpers.WorkerParameters
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
@@ -84,7 +85,7 @@ class UpdateSubscriptionsWorkerTest {
         Expected result -> the update should fail
      */
     @Test
-    fun testIfWorkerHasReachedMaxAttemptsShouldFail() {
+    fun `test if worker has reached max attempts should fail`() {
         val updateSubscriptionsWorker = createWorker(WorkerParameters(runAttemptCount = 5)) as UpdateSubscriptionsWorker
         runTest {
             val result = updateSubscriptionsWorker.doWork()
@@ -93,7 +94,7 @@ class UpdateSubscriptionsWorkerTest {
     }
 
     @Test
-    fun testUpdateShouldSucceed() {
+    fun `test update should succeed`() {
         val params = WorkerParameters(runAttemptCount = 0)
         val updateSubscriptionsWorker = createWorker(params) as UpdateSubscriptionsWorker
         updateSubscriptionsWorker.settingsRepository = Fakes.FakeSettingsRepositoryNoChanges("")
@@ -104,7 +105,7 @@ class UpdateSubscriptionsWorkerTest {
     }
 
     @Test
-    fun testDownloadsFailedResultShouldRetry(){
+    fun `test downloads failed result should retry`(){
         val updateSubscriptionsWorker = createWorker(WorkerParameters()) as UpdateSubscriptionsWorker
         val directory = File(context.filesDir,"cache")
         directory.mkdirs()
@@ -117,7 +118,7 @@ class UpdateSubscriptionsWorkerTest {
     }
 
     @Test
-    fun testDownloadsSucceedShouldSucceed(){
+    fun `test downloads Succeed should succeed`(){
         val updateSubscriptionsWorker = createWorker(WorkerParameters()) as UpdateSubscriptionsWorker
         val directory = File(context.filesDir,"cache")
         directory.mkdirs()
@@ -130,7 +131,7 @@ class UpdateSubscriptionsWorkerTest {
     }
 
     @Test
-    fun testWorkerCancellationExceptionShouldSucceed() {
+    fun `test worker CancellationException should succeed`() {
         val updateSubscriptionsWorker = createWorker(WorkerParameters()) as UpdateSubscriptionsWorker
         runTest {
             whenDownload().thenReturn(DownloadResult.Success(DownloadedSubscription("")))
@@ -143,7 +144,7 @@ class UpdateSubscriptionsWorkerTest {
     }
 
     @Test
-    fun testCatchExceptionShouldFail() {
+    fun `test CatchException should fail`() {
         val updateSubscriptionsWorker = createWorker(WorkerParameters(
             tags = mutableListOf(UpdateSubscriptionsWorker.UPDATE_KEY_FORCE_REFRESH)
         )) as UpdateSubscriptionsWorker
@@ -154,16 +155,11 @@ class UpdateSubscriptionsWorkerTest {
     }
 
     @Test
-    fun testCatchExceptionShouldRetry() {
+    fun `test catch Exception should retry`() {
         val updateSubscriptionsWorker = createWorker(WorkerParameters()) as UpdateSubscriptionsWorker
         runTest {
             val result = updateSubscriptionsWorker.doWork()
             assertThat(result, `is`(ListenableWorker.Result.Retry()))
         }
     }
-
-    internal class WorkerParameters(
-        val tags: MutableList<String> = mutableListOf(),
-        var runAttemptCount: Int = 1
-    )
 }
