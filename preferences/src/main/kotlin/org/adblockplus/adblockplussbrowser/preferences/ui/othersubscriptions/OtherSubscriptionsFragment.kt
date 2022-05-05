@@ -37,6 +37,7 @@ internal class OtherSubscriptionsFragment :
     override fun onBindView(binding: FragmentOtherSubscriptionsBinding) {
         binding.viewModel = viewModel
 
+
         binding.otherSubscriptionsAddButton.setOnClickListener {
             AddCustomSubscriptionDialogFragment().show(parentFragmentManager, null)
         }

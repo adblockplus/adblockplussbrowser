@@ -23,6 +23,7 @@ import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.samsung.SISettingsHelper
+import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
 import org.adblockplus.adblockplussbrowser.onboarding.R
 import org.adblockplus.adblockplussbrowser.onboarding.databinding.FragmentOnboardingBinding
 
@@ -45,16 +46,17 @@ internal class OnboardingFragment : DataBindingFragment<FragmentOnboardingBindin
 
         binding.onboardingPager.adapter = OnboardingPagerAdapter(this)
 
-        binding.onboardingButton.setOnClickListener {
+        val lifecycleOwner = this.viewLifecycleOwner
+        binding.onboardingButton.setDebounceOnClickListener({
             viewModel.nextPage()
             if (viewModel.currentPageIndex.value == viewModel.pages.value?.size) {
                 viewModel.completeOnboarding()
             }
-        }
+        }, lifecycleOwner)
 
-        binding.openSiButton.setOnClickListener {
+        binding.openSiButton.setDebounceOnClickListener({
             viewModel.completeOnboarding()
             SISettingsHelper.openSISettings(requireContext())
-        }
+        }, lifecycleOwner)
     }
 }
