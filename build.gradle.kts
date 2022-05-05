@@ -32,6 +32,7 @@ buildscript {
         classpath(Deps.Firebase.GOOGLE_SERVICES)
         classpath(Deps.Firebase.CRASHLYTICS_GRADLE)
         classpath(Deps.JACOCO_CORE)
+        classpath(Deps.JACOBO_PLUGIN)
     }
 }
 

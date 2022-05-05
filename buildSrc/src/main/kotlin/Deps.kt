@@ -29,6 +29,10 @@ object Deps {
 
     val JUNIT = "junit:junit" version "4.13.2"
 
+    val JACOBO_PLUGIN = "gradle.plugin.com.kageiit:jacobo-plugin" version "2.0.5"
+
+    val JACOBO = "com.kageiit.jacobo"
+
     val JACOCO_CORE = "org.jacoco:org.jacoco.core" version "0.8.7"
 
     const val JACOCO = "jacoco"
