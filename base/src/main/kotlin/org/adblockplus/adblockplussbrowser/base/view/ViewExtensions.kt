@@ -29,14 +29,15 @@ import timber.log.Timber
 val View.layoutInflater: LayoutInflater
     get() = LayoutInflater.from(this.context)
 
+private const val DEBOUNCE_TIME = 1000L
+
 fun View.setDebounceOnClickListener(onClickListener: View.OnClickListener, lifecycleOwner: LifecycleOwner) {
     var debounceJob: Job? = null
     val clickWithDebounce: (view: View) -> Unit = {
         if (debounceJob == null) {
-            val scope = lifecycleOwner.lifecycleScope
-            debounceJob = scope.launch {
+            debounceJob = lifecycleOwner.lifecycleScope.launch {
                 onClickListener.onClick(it)
-                delay(1000L)
+                delay(DEBOUNCE_TIME)
                 debounceJob = null
             }
         } else {
