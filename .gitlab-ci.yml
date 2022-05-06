@@ -72,11 +72,14 @@ checks:unit-test:
   extends: .template:environment
   stage: checks
   script:
-    - ./gradlew test
+    - ./gradlew test jacobo checkCoverage
   artifacts:
     when: always
     reports:
       junit: core/build/test-results/**/TEST*.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: core/build/reports/cobertura.xml
 
 build:
   extends: .template:environment
