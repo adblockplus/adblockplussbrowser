@@ -19,6 +19,30 @@ package org.adblockplus.adblockplussbrowser.base.view
 
 import android.view.LayoutInflater
 import android.view.View
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import timber.log.Timber
 
 val View.layoutInflater: LayoutInflater
     get() = LayoutInflater.from(this.context)
+
+private const val DEBOUNCE_TIME = 1000L
+
+fun View.setDebounceOnClickListener(onClickListener: View.OnClickListener, lifecycleOwner: LifecycleOwner) {
+    var debounceJob: Job? = null
+    val clickWithDebounce: (view: View) -> Unit = {
+        if (debounceJob == null) {
+            debounceJob = lifecycleOwner.lifecycleScope.launch {
+                onClickListener.onClick(it)
+                delay(DEBOUNCE_TIME)
+                debounceJob = null
+            }
+        } else {
+            Timber.d("Skipping onClick event")
+        }
+    }
+    setOnClickListener(clickWithDebounce)
+}

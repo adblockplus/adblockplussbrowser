@@ -17,19 +17,14 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui
 
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
+import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentMainPreferencesBinding
-import timber.log.Timber
 
 @AndroidEntryPoint
 internal class MainPreferencesFragment :
@@ -37,73 +32,59 @@ internal class MainPreferencesFragment :
 
     private val viewModel: MainPreferencesViewModel by viewModels()
 
-    private fun View.setDebounceOnClickListener(onClickListener: View.OnClickListener) {
-        var debounceJob: Job? = null
-        val clickWithDebounce: (view: View) -> Unit = {
-            if (debounceJob == null) {
-                debounceJob = viewModel.viewModelScope.launch {
-                    onClickListener.onClick(it)
-                    delay(1000L)
-                    debounceJob = null
-                }
-            } else {
-                Timber.d("Skipping MainPreferencesFragment menu onClick event")
-            }
-        }
-        setOnClickListener(clickWithDebounce)
-    }
-
     override fun onBindView(binding: FragmentMainPreferencesBinding) {
         binding.viewModel = viewModel
         val supportActionBar = (activity as AppCompatActivity).supportActionBar
         supportActionBar?.subtitle = getString(R.string.app_subtitle)
 
-        binding.mainPreferencesAdBlockingInclude.mainPreferencesPrimarySubscriptions.setDebounceOnClickListener {
+        val lifecycleOwner = this.viewLifecycleOwner
+
+        binding.mainPreferencesAdBlockingInclude.mainPreferencesPrimarySubscriptions.setDebounceOnClickListener ({
             supportActionBar?.subtitle = null
             val direction = MainPreferencesFragmentDirections
                 .actionMainPreferencesFragmentToPrimarySubscriptionsFragment()
             findNavController().navigate(direction)
-        }
-        binding.mainPreferencesAdBlockingInclude.mainPreferencesOtherSubscriptions.setDebounceOnClickListener {
+        }, lifecycleOwner)
+        binding.mainPreferencesAdBlockingInclude.mainPreferencesOtherSubscriptions.setDebounceOnClickListener ({
             supportActionBar?.subtitle = null
             val direction = MainPreferencesFragmentDirections
                 .actionMainPreferencesFragmentToOtherSubscriptionsFragment()
             findNavController().navigate(direction)
-        }
-        binding.mainPreferencesAdBlockingInclude.mainPreferencesAllowlist.setDebounceOnClickListener {
+        }, lifecycleOwner)
+        binding.mainPreferencesAdBlockingInclude.mainPreferencesAllowlist.setDebounceOnClickListener ({
             supportActionBar?.subtitle = null
             val direction = MainPreferencesFragmentDirections
                 .actionMainPreferencesFragmentToAllowlistFragment()
             findNavController().navigate(direction)
-        }
-        binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.setDebounceOnClickListener {
+        }, lifecycleOwner)
+        binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.setDebounceOnClickListener ({
             supportActionBar?.subtitle = null
             val direction = MainPreferencesFragmentDirections
                 .actionMainPreferencesFragmentToUpdateSubscriptionsFragment()
             findNavController().navigate(direction)
-        }
-        binding.mainPreferencesLanguagesOnboardingInclude.mainPreferencesLanguagesOnboardingOptionAdd.setDebounceOnClickListener {
+        }, lifecycleOwner)
+        binding.mainPreferencesLanguagesOnboardingInclude.mainPreferencesLanguagesOnboardingOptionAdd.setDebounceOnClickListener ({
             supportActionBar?.subtitle = null
             viewModel.markLanguagesOnboardingComplete(true)
             val direction = MainPreferencesFragmentDirections
                 .actionMainPreferencesFragmentToPrimarySubscriptionsFragment()
             findNavController().navigate(direction)
-        }
-        binding.mainPreferencesLanguagesOnboardingInclude.mainPreferencesLanguagesOnboardingOptionSkip.setDebounceOnClickListener {
+        }, lifecycleOwner)
+        binding.mainPreferencesLanguagesOnboardingInclude.mainPreferencesLanguagesOnboardingOptionSkip.setDebounceOnClickListener ({
             viewModel.markLanguagesOnboardingComplete(false)
-        }
-        binding.mainPreferencesAcceptableAdsInclude.mainPreferencesAcceptableAds.setDebounceOnClickListener {
+        }, lifecycleOwner)
+        binding.mainPreferencesAcceptableAdsInclude.mainPreferencesAcceptableAds.setDebounceOnClickListener ({
             supportActionBar?.subtitle = null
             val direction = MainPreferencesFragmentDirections
                 .actionMainPreferencesFragmentToAcceptableAdsFragment()
             findNavController().navigate(direction)
-        }
-        binding.mainPreferencesAboutInclude.mainPreferencesAbout.setDebounceOnClickListener {
+        }, lifecycleOwner)
+        binding.mainPreferencesAboutInclude.mainPreferencesAbout.setDebounceOnClickListener ({
             supportActionBar?.subtitle = null
             val direction = MainPreferencesFragmentDirections
                 .actionMainPreferencesFragmentToAboutFragment()
             findNavController().navigate(direction)
-        }
+        }, lifecycleOwner)
     }
 
     override fun onResume() {

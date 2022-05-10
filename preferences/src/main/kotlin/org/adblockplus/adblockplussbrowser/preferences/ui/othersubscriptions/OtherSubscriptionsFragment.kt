@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
+import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentOtherSubscriptionsBinding
 import org.adblockplus.adblockplussbrowser.preferences.ui.SwipeToDeleteCallback
@@ -37,9 +38,11 @@ internal class OtherSubscriptionsFragment :
     override fun onBindView(binding: FragmentOtherSubscriptionsBinding) {
         binding.viewModel = viewModel
 
-        binding.otherSubscriptionsAddButton.setOnClickListener {
+
+        val lifecycleOwner = this.viewLifecycleOwner
+        binding.otherSubscriptionsAddButton.setDebounceOnClickListener({
             AddCustomSubscriptionDialogFragment().show(parentFragmentManager, null)
-        }
+        }, lifecycleOwner)
 
         val swipeToDeleteHandler = object : SwipeToDeleteCallback() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
