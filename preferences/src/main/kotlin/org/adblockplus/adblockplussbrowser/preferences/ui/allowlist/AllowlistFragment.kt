@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
+import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentAllowlistBinding
 import org.adblockplus.adblockplussbrowser.preferences.ui.SwipeToDeleteCallback
@@ -36,9 +37,10 @@ internal class AllowlistFragment : DataBindingFragment<FragmentAllowlistBinding>
         binding.viewModel = viewModel
         binding.allowlistList.adapter = AllowlistAdapter(viewModel, viewLifecycleOwner)
 
-        binding.allowlistAddButton.setOnClickListener {
+        val lifecycleOwner = this.viewLifecycleOwner
+        binding.allowlistAddButton.setDebounceOnClickListener({
             AddDomainDialogFragment().show(parentFragmentManager, null)
-        }
+        }, lifecycleOwner)
 
         val swipeToDeleteHandler = object : SwipeToDeleteCallback() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {

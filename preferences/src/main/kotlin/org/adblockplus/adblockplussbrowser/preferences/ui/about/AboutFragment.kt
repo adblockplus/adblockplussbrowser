@@ -29,6 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
+import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentAboutBinding
 import javax.inject.Inject
@@ -49,21 +50,22 @@ internal class AboutFragment : DataBindingFragment<FragmentAboutBinding>(R.layou
 
         analyticsProvider.logEvent(AnalyticsEvent.ABOUT_VISITED)
 
-        binding.openSourceLicenses.setOnClickListener {
+        val lifecycleOwner = this.viewLifecycleOwner
+        binding.openSourceLicenses.setDebounceOnClickListener({
             OssLicensesMenuActivity.setActivityTitle(getString(R.string.open_source_licenses))
             startActivity(Intent(activity, OssLicensesMenuActivity::class.java))
             analyticsProvider.logEvent(AnalyticsEvent.OPEN_SOURCE_LICENSES_VISITED)
-        }
+        }, lifecycleOwner)
 
         binding.versionNumber.text = context?.versionName
 
-        binding.aboutPrivacyPolicy.setOnClickListener {
+        binding.aboutPrivacyPolicy.setDebounceOnClickListener({
             extractUrlAndRedirect(binding.aboutPrivacyPolicyHyperlink.text)
-        }
+        }, lifecycleOwner)
 
-        binding.aboutTermsOfUse.setOnClickListener {
+        binding.aboutTermsOfUse.setDebounceOnClickListener({
             extractUrlAndRedirect(binding.aboutTermsOfUseHyperlink.text)
-        }
+        }, lifecycleOwner)
 
     }
 
