@@ -22,6 +22,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.dataStoreFile
 import androidx.test.core.app.ApplicationProvider
+import java.util.Date
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.adblockplus.adblockplussbrowser.core.data.datastore.ProtoCoreDataSerializer
@@ -34,7 +35,6 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import java.util.*
 
 @RunWith(RobolectricTestRunner::class)
 @ExperimentalCoroutinesApi
@@ -114,7 +114,10 @@ class DataStoreCoreRepositoryTest {
         runBlocking {
             assertEquals(0L, dataStoreCoreRepository.getDataSync().lastUserCountingResponse)
             dataStoreCoreRepository.updateLastUserCountingResponse(currentTimestamp)
-            assertEquals(currentTimestamp, dataStoreCoreRepository.getDataSync().lastUserCountingResponse)
+            assertEquals(
+                currentTimestamp,
+                dataStoreCoreRepository.getDataSync().lastUserCountingResponse
+            )
         }
     }
 
@@ -130,7 +133,7 @@ class DataStoreCoreRepositoryTest {
     @Test
     fun `test update saved state`() {
         // Set up test values
-        val originalSavedState = SavedState (
+        val originalSavedState = SavedState(
             acceptableAdsEnabled = false,
             allowedDomains = emptyList(),
             blockedDomains = emptyList(),
@@ -138,7 +141,7 @@ class DataStoreCoreRepositoryTest {
             otherSubscriptions = emptyList()
         )
 
-        val newState = SavedState (
+        val newState = SavedState(
             acceptableAdsEnabled = true,
             allowedDomains = listOf("www.google.com"),
             blockedDomains = listOf("www.wikipedia.com", "www.stackoverflow.com"),
@@ -155,4 +158,4 @@ class DataStoreCoreRepositoryTest {
             assert(newState == dataStoreCoreRepository.getDataSync().lastState)
         }
     }
- }
+}
