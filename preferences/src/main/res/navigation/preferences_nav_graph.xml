@@ -51,6 +51,8 @@
         <action
             android:id="@+id/action_main_preferences_fragment_to_about_fragment"
             app:destination="@id/about_fragment" />
+        <action android:id="@+id/action_main_preferences_fragment_to_reportIssueFragment"
+                app:destination="@id/reportIssueFragment"/>
     </fragment>
 
     <fragment
@@ -88,5 +90,8 @@
         android:name="org.adblockplus.adblockplussbrowser.preferences.ui.about.AboutFragment"
         android:label="@string/preferences_about_title"
         tools:layout="@layout/fragment_about" />
+    <fragment android:id="@+id/reportIssueFragment"
+              android:name="org.adblockplus.adblockplussbrowser.preferences.ui.reporter.ReportIssueFragment"
+              android:label="ReportIssueFragment"/>
 
 </navigation>
