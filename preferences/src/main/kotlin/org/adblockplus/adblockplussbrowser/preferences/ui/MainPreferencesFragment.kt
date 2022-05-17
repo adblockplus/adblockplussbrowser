@@ -17,6 +17,7 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui
 
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -88,6 +89,8 @@ internal class MainPreferencesFragment :
                     .actionMainPreferencesFragmentToReportIssueFragment()
                 findNavController().navigate(direction)
             }, lifecycleOwner)
+        } else {
+            binding.mainPreferencesReportIssueInclude.mainPreferencesReportIssue.visibility = View.GONE
         }
 
         binding.mainPreferencesAboutInclude.mainPreferencesAbout.setDebounceOnClickListener ({
