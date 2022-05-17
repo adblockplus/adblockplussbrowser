@@ -23,6 +23,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
+import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentMainPreferencesBinding
 
@@ -79,12 +80,16 @@ internal class MainPreferencesFragment :
                 .actionMainPreferencesFragmentToAcceptableAdsFragment()
             findNavController().navigate(direction)
         }, lifecycleOwner)
-        binding.mainPreferencesReportIssueInclude.mainPreferencesReportIssue.setDebounceOnClickListener ({
-            supportActionBar?.subtitle = null
-            val direction = MainPreferencesFragmentDirections
-                .actionMainPreferencesFragmentToReportIssueFragment()
-            findNavController().navigate(direction)
-        }, lifecycleOwner)
+
+        if (BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_ABP) {
+            binding.mainPreferencesReportIssueInclude.mainPreferencesReportIssue.setDebounceOnClickListener ({
+                supportActionBar?.subtitle = null
+                val direction = MainPreferencesFragmentDirections
+                    .actionMainPreferencesFragmentToReportIssueFragment()
+                findNavController().navigate(direction)
+            }, lifecycleOwner)
+        }
+
         binding.mainPreferencesAboutInclude.mainPreferencesAbout.setDebounceOnClickListener ({
             supportActionBar?.subtitle = null
             val direction = MainPreferencesFragmentDirections
