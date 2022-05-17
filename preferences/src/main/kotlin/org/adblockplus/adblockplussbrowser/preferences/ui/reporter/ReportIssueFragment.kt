@@ -26,6 +26,6 @@ import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentRepor
 internal class ReportIssueFragment : DataBindingFragment<FragmentReportIssueBinding>(R.layout.fragment_report_issue) {
 
     override fun onBindView(binding: FragmentReportIssueBinding) {
-        binding.webView.loadUrl("eyeo.com")
+        binding.webView.loadUrl("https://forum.adblockplus.org/")
     }
 }
