@@ -18,6 +18,7 @@
 package org.adblockplus.adblockplussbrowser.preferences.ui.updates
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -32,6 +33,7 @@ import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig
 import timber.log.Timber
 import javax.inject.Inject
+import org.adblockplus.adblockplussbrowser.base.BuildConfig
 
 @HiltViewModel
 class UpdateSubscriptionsViewModel @Inject constructor(
@@ -47,17 +49,29 @@ class UpdateSubscriptionsViewModel @Inject constructor(
         settings.updateConfig.toUpdateConfigType()
     }.asLiveData()
 
+    val isWifiOnlyEnabled = MutableLiveData<Boolean?>().apply {
+        value = updateType.value == UpdateConfigType.UPDATE_WIFI_ONLY
+    }
+
     val updateStatus: LiveData<SubscriptionUpdateStatus> = subscriptionsManager.status.asLiveData()
 
     val lastUpdate = subscriptionsManager.lastUpdate.asLiveData()
 
-    fun setUpdateConfigType(configType: UpdateConfigType) {
+    fun setUpdateConfigType(configType: UpdateConfigType?) {
         viewModelScope.launch {
-            settingsRepository.setUpdateConfig(configType.toUpdateConfig())
-            if (configType == UpdateConfigType.UPDATE_WIFI_ONLY)
+            var newConfigType = configType
+            if (BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_CRYSTAL) {
+                newConfigType =
+                    if (isWifiOnlyEnabled.value!!) UpdateConfigType.UPDATE_ALWAYS else UpdateConfigType.UPDATE_WIFI_ONLY
+            }
+            settingsRepository.setUpdateConfig(newConfigType!!.toUpdateConfig())
+            if (newConfigType == UpdateConfigType.UPDATE_WIFI_ONLY) {
                 analyticsProvider.logEvent(AnalyticsEvent.AUTOMATIC_UPDATES_WIFI)
-            else if (configType == UpdateConfigType.UPDATE_ALWAYS)
+                isWifiOnlyEnabled.apply { value = true }
+            } else if (newConfigType == UpdateConfigType.UPDATE_ALWAYS) {
                 analyticsProvider.logEvent(AnalyticsEvent.AUTOMATIC_UPDATES_ALWAYS)
+                isWifiOnlyEnabled.apply { value = false }
+            }
         }
     }
 

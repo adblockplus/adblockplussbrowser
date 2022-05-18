@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="wifi_only_checkbox" type="id" />
+    <item name="preferences_update_title" type="id" />
+    <item name="update_type_text" type="id" />
+</resources>

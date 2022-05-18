@@ -18,19 +18,24 @@
 package org.adblockplus.adblockplussbrowser.preferences.ui
 
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.checkbox.MaterialCheckBox
+import com.google.android.material.textview.MaterialTextView
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
+import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentMainPreferencesBinding
+import org.adblockplus.adblockplussbrowser.preferences.ui.updates.UpdateSubscriptionsViewModel
 
 @AndroidEntryPoint
 internal class MainPreferencesFragment :
     DataBindingFragment<FragmentMainPreferencesBinding>(R.layout.fragment_main_preferences) {
 
-    private val viewModel: MainPreferencesViewModel by viewModels()
+    private val viewModel: MainPreferencesViewModel by activityViewModels()
+    private val updateViewModel: UpdateSubscriptionsViewModel by activityViewModels()
 
     override fun onBindView(binding: FragmentMainPreferencesBinding) {
         binding.viewModel = viewModel
@@ -57,12 +62,45 @@ internal class MainPreferencesFragment :
                 .actionMainPreferencesFragmentToAllowlistFragment()
             findNavController().navigate(direction)
         }, lifecycleOwner)
-        binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.setDebounceOnClickListener ({
-            supportActionBar?.subtitle = null
-            val direction = MainPreferencesFragmentDirections
-                .actionMainPreferencesFragmentToUpdateSubscriptionsFragment()
-            findNavController().navigate(direction)
-        }, lifecycleOwner)
+
+        if (BuildConfig.FLAVOR_product in listOf(BuildConfig.FLAVOR_ABP, BuildConfig.FLAVOR_ADBLOCK)) {
+            binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.setDebounceOnClickListener ({
+                supportActionBar?.subtitle = null
+                val direction = MainPreferencesFragmentDirections
+                    .actionMainPreferencesFragmentToUpdateSubscriptionsFragment()
+                findNavController().navigate(direction)
+            }, lifecycleOwner)
+        } else {
+            val checkBox = binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.findViewById<MaterialCheckBox>(R.id.wifi_only_checkbox)
+            checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
+                updateViewModel.setUpdateConfigType(null)
+            }
+            checkBox.isChecked = updateViewModel.isWifiOnlyEnabled.value!!
+            binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.setOnClickListener {
+                checkBox.isChecked = !checkBox.isChecked
+            }
+            val updateTypeText = binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.findViewById<MaterialTextView>(R.id.update_type_text)
+
+            updateViewModel.isWifiOnlyEnabled.observe(this) { isWifiOnlyEnabled ->
+                if (isWifiOnlyEnabled!!) {
+                    updateTypeText.text = getString(R.string.preferences_automatic_updates_wifi_only)
+                } else {
+                    updateTypeText.text = getString(R.string.preferences_automatic_updates_always)
+                }
+            }
+//            updateViewModel.updateType.observe(this) { updateType ->
+//                updateViewModel.isWifiOnlyEnabled.postValue(
+//                    updateType == UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY
+//                )
+//
+//                updateTypeText.text = when (updateType) {
+//                    UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY -> getString(
+//                        R.string.preferences_automatic_updates_wifi_only)
+//                    else -> getString()
+//                }
+//            }
+        }
+
         binding.mainPreferencesLanguagesOnboardingInclude.mainPreferencesLanguagesOnboardingOptionAdd.setDebounceOnClickListener ({
             supportActionBar?.subtitle = null
             viewModel.markLanguagesOnboardingComplete(true)
