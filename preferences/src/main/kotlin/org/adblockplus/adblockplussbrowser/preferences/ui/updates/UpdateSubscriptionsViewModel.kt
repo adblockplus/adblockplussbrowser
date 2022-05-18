@@ -49,28 +49,17 @@ class UpdateSubscriptionsViewModel @Inject constructor(
         settings.updateConfig.toUpdateConfigType()
     }.asLiveData()
 
-    val isWifiOnlyEnabled = MutableLiveData<Boolean?>().apply {
-        value = updateType.value == UpdateConfigType.UPDATE_WIFI_ONLY
-    }
-
     val updateStatus: LiveData<SubscriptionUpdateStatus> = subscriptionsManager.status.asLiveData()
 
     val lastUpdate = subscriptionsManager.lastUpdate.asLiveData()
 
-    fun setUpdateConfigType(configType: UpdateConfigType?) {
+    fun setUpdateConfigType(configType: UpdateConfigType) {
         viewModelScope.launch {
-            var newConfigType = configType
-            if (BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_CRYSTAL) {
-                newConfigType =
-                    if (isWifiOnlyEnabled.value!!) UpdateConfigType.UPDATE_ALWAYS else UpdateConfigType.UPDATE_WIFI_ONLY
-            }
-            settingsRepository.setUpdateConfig(newConfigType!!.toUpdateConfig())
-            if (newConfigType == UpdateConfigType.UPDATE_WIFI_ONLY) {
+            settingsRepository.setUpdateConfig(configType.toUpdateConfig())
+            if (configType == UpdateConfigType.UPDATE_WIFI_ONLY) {
                 analyticsProvider.logEvent(AnalyticsEvent.AUTOMATIC_UPDATES_WIFI)
-                isWifiOnlyEnabled.apply { value = true }
-            } else if (newConfigType == UpdateConfigType.UPDATE_ALWAYS) {
+            } else if (configType == UpdateConfigType.UPDATE_ALWAYS) {
                 analyticsProvider.logEvent(AnalyticsEvent.AUTOMATIC_UPDATES_ALWAYS)
-                isWifiOnlyEnabled.apply { value = false }
             }
         }
     }

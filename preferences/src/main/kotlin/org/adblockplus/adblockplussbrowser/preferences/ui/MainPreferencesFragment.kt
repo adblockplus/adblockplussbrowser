@@ -21,7 +21,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.checkbox.MaterialCheckBox
-import com.google.android.material.textview.MaterialTextView
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
@@ -72,33 +71,24 @@ internal class MainPreferencesFragment :
             }, lifecycleOwner)
         } else {
             val checkBox = binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.findViewById<MaterialCheckBox>(R.id.wifi_only_checkbox)
-            checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
-                updateViewModel.setUpdateConfigType(null)
-            }
-            checkBox.isChecked = updateViewModel.isWifiOnlyEnabled.value!!
-            binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.setOnClickListener {
-                checkBox.isChecked = !checkBox.isChecked
-            }
-            val updateTypeText = binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.findViewById<MaterialTextView>(R.id.update_type_text)
 
-            updateViewModel.isWifiOnlyEnabled.observe(this) { isWifiOnlyEnabled ->
-                if (isWifiOnlyEnabled!!) {
-                    updateTypeText.text = getString(R.string.preferences_automatic_updates_wifi_only)
-                } else {
-                    updateTypeText.text = getString(R.string.preferences_automatic_updates_always)
+            binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.setDebounceOnClickListener({
+                checkBox.isChecked = !checkBox.isChecked
+                checkBox.isPressed = true
+            }, lifecycleOwner)
+
+            checkBox.setOnCheckedChangeListener { _, isChecked ->
+                var updateConfigType = UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_ALWAYS
+                if (isChecked) {
+                    updateConfigType = UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY
                 }
+
+                updateViewModel.setUpdateConfigType(updateConfigType)
             }
-//            updateViewModel.updateType.observe(this) { updateType ->
-//                updateViewModel.isWifiOnlyEnabled.postValue(
-//                    updateType == UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY
-//                )
-//
-//                updateTypeText.text = when (updateType) {
-//                    UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY -> getString(
-//                        R.string.preferences_automatic_updates_wifi_only)
-//                    else -> getString()
-//                }
-//            }
+
+            updateViewModel.updateType.observe(this) { updateType ->
+                checkBox.isChecked = updateType.name == UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY.name
+            }
         }
 
         binding.mainPreferencesLanguagesOnboardingInclude.mainPreferencesLanguagesOnboardingOptionAdd.setDebounceOnClickListener ({
