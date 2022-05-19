@@ -18,7 +18,6 @@
 package org.adblockplus.adblockplussbrowser.preferences.ui.updates
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -33,7 +32,6 @@ import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig
 import timber.log.Timber
 import javax.inject.Inject
-import org.adblockplus.adblockplussbrowser.base.BuildConfig
 
 @HiltViewModel
 class UpdateSubscriptionsViewModel @Inject constructor(
@@ -56,11 +54,10 @@ class UpdateSubscriptionsViewModel @Inject constructor(
     fun setUpdateConfigType(configType: UpdateConfigType) {
         viewModelScope.launch {
             settingsRepository.setUpdateConfig(configType.toUpdateConfig())
-            if (configType == UpdateConfigType.UPDATE_WIFI_ONLY) {
+            if (configType == UpdateConfigType.UPDATE_WIFI_ONLY)
                 analyticsProvider.logEvent(AnalyticsEvent.AUTOMATIC_UPDATES_WIFI)
-            } else if (configType == UpdateConfigType.UPDATE_ALWAYS) {
+            else if (configType == UpdateConfigType.UPDATE_ALWAYS)
                 analyticsProvider.logEvent(AnalyticsEvent.AUTOMATIC_UPDATES_ALWAYS)
-            }
         }
     }
 
