@@ -71,11 +71,7 @@ internal class MainPreferencesFragment :
             lifecycleOwner
         )
 
-        if (BuildConfig.FLAVOR_product in listOf(
-                BuildConfig.FLAVOR_ABP,
-                BuildConfig.FLAVOR_ADBLOCK
-            )
-        ) {
+        if (BuildConfig.FLAVOR_product != BuildConfig.FLAVOR_CRYSTAL) {
             binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.setDebounceOnClickListener(
                 {
                     supportActionBar?.subtitle = null
@@ -86,8 +82,8 @@ internal class MainPreferencesFragment :
                 lifecycleOwner
             )
         } else {
-            val checkBox =
-                binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.findViewById<MaterialCheckBox>(
+            val checkBox: MaterialCheckBox =
+                binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.findViewById(
                     R.id.wifi_only_checkbox
                 )
 
