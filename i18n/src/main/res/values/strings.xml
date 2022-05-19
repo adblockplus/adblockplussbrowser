@@ -119,6 +119,7 @@
     <string name="languages_onboarding_option_add">Add an additional ad blocking language.</string>
     <string name="languages_onboarding_option_skip">No thanks, I only browse in one language.</string>
     <string name="delete_swipe_hint">To delete an entry, swipe it to the left.</string>
+    <string name="crystal_disabled_whitelist" tools:ignore="MissingTranslation">This feature will be taken down from Crystal on July 1st.\nIf you want to continue using this feature, please switch to using <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">Adblock for Samsung Internet</a>.In the meantime, we are keeping the allowlist you have created.</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">Bullet Point Symbol</string>
