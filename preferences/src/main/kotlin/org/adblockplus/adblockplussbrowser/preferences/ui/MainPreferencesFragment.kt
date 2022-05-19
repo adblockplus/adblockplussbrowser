@@ -34,6 +34,7 @@ internal class MainPreferencesFragment :
     DataBindingFragment<FragmentMainPreferencesBinding>(R.layout.fragment_main_preferences) {
 
     private val viewModel: MainPreferencesViewModel by activityViewModels()
+    // Lazy loading the UpdateSubscriptionsViewModel so it will only be used for crystal flavor here
     private val updateViewModel: UpdateSubscriptionsViewModel by activityViewModels()
 
     override fun onBindView(binding: FragmentMainPreferencesBinding) {
