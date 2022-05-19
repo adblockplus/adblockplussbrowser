@@ -43,67 +43,101 @@ internal class MainPreferencesFragment :
 
         val lifecycleOwner = this.viewLifecycleOwner
 
-        binding.mainPreferencesAdBlockingInclude.mainPreferencesPrimarySubscriptions.setDebounceOnClickListener ({
-            supportActionBar?.subtitle = null
-            val direction = MainPreferencesFragmentDirections
-                .actionMainPreferencesFragmentToPrimarySubscriptionsFragment()
-            findNavController().navigate(direction)
-        }, lifecycleOwner)
-        binding.mainPreferencesAdBlockingInclude.mainPreferencesOtherSubscriptions.setDebounceOnClickListener ({
-            supportActionBar?.subtitle = null
-            val direction = MainPreferencesFragmentDirections
-                .actionMainPreferencesFragmentToOtherSubscriptionsFragment()
-            findNavController().navigate(direction)
-        }, lifecycleOwner)
-        binding.mainPreferencesAdBlockingInclude.mainPreferencesAllowlist.setDebounceOnClickListener ({
-            supportActionBar?.subtitle = null
-            val direction = MainPreferencesFragmentDirections
-                .actionMainPreferencesFragmentToAllowlistFragment()
-            findNavController().navigate(direction)
-        }, lifecycleOwner)
-
-        if (BuildConfig.FLAVOR_product in listOf(BuildConfig.FLAVOR_ABP, BuildConfig.FLAVOR_ADBLOCK)) {
-            binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.setDebounceOnClickListener ({
+        binding.mainPreferencesAdBlockingInclude.mainPreferencesPrimarySubscriptions.setDebounceOnClickListener(
+            {
                 supportActionBar?.subtitle = null
                 val direction = MainPreferencesFragmentDirections
-                    .actionMainPreferencesFragmentToUpdateSubscriptionsFragment()
+                    .actionMainPreferencesFragmentToPrimarySubscriptionsFragment()
                 findNavController().navigate(direction)
-            }, lifecycleOwner)
+            },
+            lifecycleOwner
+        )
+        binding.mainPreferencesAdBlockingInclude.mainPreferencesOtherSubscriptions.setDebounceOnClickListener(
+            {
+                supportActionBar?.subtitle = null
+                val direction = MainPreferencesFragmentDirections
+                    .actionMainPreferencesFragmentToOtherSubscriptionsFragment()
+                findNavController().navigate(direction)
+            },
+            lifecycleOwner
+        )
+        binding.mainPreferencesAdBlockingInclude.mainPreferencesAllowlist.setDebounceOnClickListener(
+            {
+                supportActionBar?.subtitle = null
+                val direction = MainPreferencesFragmentDirections
+                    .actionMainPreferencesFragmentToAllowlistFragment()
+                findNavController().navigate(direction)
+            },
+            lifecycleOwner
+        )
+
+        if (BuildConfig.FLAVOR_product in listOf(
+                BuildConfig.FLAVOR_ABP,
+                BuildConfig.FLAVOR_ADBLOCK
+            )
+        ) {
+            binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.setDebounceOnClickListener(
+                {
+                    supportActionBar?.subtitle = null
+                    val direction = MainPreferencesFragmentDirections
+                        .actionMainPreferencesFragmentToUpdateSubscriptionsFragment()
+                    findNavController().navigate(direction)
+                },
+                lifecycleOwner
+            )
         } else {
-            val checkBox = binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.findViewById<MaterialCheckBox>(R.id.wifi_only_checkbox)
+            val checkBox =
+                binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.findViewById<MaterialCheckBox>(
+                    R.id.wifi_only_checkbox
+                )
 
-            binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.setDebounceOnClickListener({
-                checkBox.isChecked = !checkBox.isChecked
-                var updateConfigType = UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_ALWAYS
-                if (checkBox.isChecked) {
-                    updateConfigType = UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY
-                }
+            binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.setDebounceOnClickListener(
+                {
+                    checkBox.isChecked = !checkBox.isChecked
+                    var updateConfigType =
+                        UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_ALWAYS
+                    if (checkBox.isChecked) {
+                        updateConfigType =
+                            UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY
+                    }
 
-                updateViewModel.setUpdateConfigType(updateConfigType)
-            }, lifecycleOwner)
+                    updateViewModel.setUpdateConfigType(updateConfigType)
+                },
+                lifecycleOwner
+            )
 
             updateViewModel.updateType.observe(this) { updateType ->
-                checkBox.isChecked = updateType.name == UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY.name
+                checkBox.isChecked =
+                    updateType.name == UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY.name
             }
         }
 
-        binding.mainPreferencesLanguagesOnboardingInclude.mainPreferencesLanguagesOnboardingOptionAdd.setDebounceOnClickListener ({
-            supportActionBar?.subtitle = null
-            viewModel.markLanguagesOnboardingComplete(true)
-            val direction = MainPreferencesFragmentDirections
-                .actionMainPreferencesFragmentToPrimarySubscriptionsFragment()
-            findNavController().navigate(direction)
-        }, lifecycleOwner)
-        binding.mainPreferencesLanguagesOnboardingInclude.mainPreferencesLanguagesOnboardingOptionSkip.setDebounceOnClickListener ({
-            viewModel.markLanguagesOnboardingComplete(false)
-        }, lifecycleOwner)
-        binding.mainPreferencesAcceptableAdsInclude.mainPreferencesAcceptableAds.setDebounceOnClickListener ({
-            supportActionBar?.subtitle = null
-            val direction = MainPreferencesFragmentDirections
-                .actionMainPreferencesFragmentToAcceptableAdsFragment()
-            findNavController().navigate(direction)
-        }, lifecycleOwner)
-        binding.mainPreferencesAboutInclude.mainPreferencesAbout.setDebounceOnClickListener ({
+        binding.mainPreferencesLanguagesOnboardingInclude.mainPreferencesLanguagesOnboardingOptionAdd.setDebounceOnClickListener(
+            {
+                supportActionBar?.subtitle = null
+                viewModel.markLanguagesOnboardingComplete(true)
+                val direction = MainPreferencesFragmentDirections
+                    .actionMainPreferencesFragmentToPrimarySubscriptionsFragment()
+                findNavController().navigate(direction)
+            },
+            lifecycleOwner
+        )
+        binding.mainPreferencesLanguagesOnboardingInclude.mainPreferencesLanguagesOnboardingOptionSkip.setDebounceOnClickListener(
+            {
+                viewModel.markLanguagesOnboardingComplete(false)
+            },
+            lifecycleOwner
+        )
+        binding.mainPreferencesAcceptableAdsInclude.mainPreferencesAcceptableAds.setDebounceOnClickListener(
+            {
+                supportActionBar?.subtitle = null
+                val direction = MainPreferencesFragmentDirections
+                    .actionMainPreferencesFragmentToAcceptableAdsFragment()
+                findNavController().navigate(direction)
+            },
+            lifecycleOwner
+        )
+        binding.mainPreferencesAboutInclude.mainPreferencesAbout.setDebounceOnClickListener({
             supportActionBar?.subtitle = null
             val direction = MainPreferencesFragmentDirections
                 .actionMainPreferencesFragmentToAboutFragment()
