@@ -74,17 +74,13 @@ internal class MainPreferencesFragment :
 
             binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.setDebounceOnClickListener({
                 checkBox.isChecked = !checkBox.isChecked
-                checkBox.isPressed = true
-            }, lifecycleOwner)
-
-            checkBox.setOnCheckedChangeListener { _, isChecked ->
                 var updateConfigType = UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_ALWAYS
-                if (isChecked) {
+                if (checkBox.isChecked) {
                     updateConfigType = UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY
                 }
 
                 updateViewModel.setUpdateConfigType(updateConfigType)
-            }
+            }, lifecycleOwner)
 
             updateViewModel.updateType.observe(this) { updateType ->
                 checkBox.isChecked = updateType.name == UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY.name
