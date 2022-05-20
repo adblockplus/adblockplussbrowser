@@ -17,13 +17,10 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui.allowlist
 
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
@@ -42,13 +39,12 @@ internal class AllowlistFragment : DataBindingFragment<FragmentAllowlistBinding>
         binding.allowlistList.adapter = AllowlistAdapter(viewModel, viewLifecycleOwner)
 
         val lifecycleOwner = this.viewLifecycleOwner
-        if (BuildConfig.FLAVOR_product != BuildConfig.FLAVOR_CRYSTAL) {
-            binding.allowlistAddButton.setDebounceOnClickListener({
-                AddDomainDialogFragment().show(parentFragmentManager, null)
-            }, lifecycleOwner)
-        } else {
-            binding.allowlistAddButton.imageTintList = ColorStateList.valueOf(Color.GRAY)
+        if (BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_CRYSTAL) {
+            binding.allowlistAddButton.hide()
         }
+        binding.allowlistAddButton.setDebounceOnClickListener({
+            AddDomainDialogFragment().show(parentFragmentManager, null)
+        }, lifecycleOwner)
 
         val swipeToDeleteHandler = object : SwipeToDeleteCallback() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {

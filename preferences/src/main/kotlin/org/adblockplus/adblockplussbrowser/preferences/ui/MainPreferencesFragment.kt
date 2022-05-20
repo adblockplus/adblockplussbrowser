@@ -64,7 +64,7 @@ internal class MainPreferencesFragment :
             if (BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_CRYSTAL) {
                 MaterialDialog((activity as AppCompatActivity).window.context).show {
                     cancelable(true)
-                    customView(viewRes = R.layout.dialog_disabled_whitelist, scrollable = true)
+                    customView(viewRes = findViewById(R.id.dialog_disabled_whitelist), scrollable = true)
                     val textView = findViewById<TextView>(R.id.install_si_dialog_summary)
                     textView.movementMethod = LinkMovementMethod.getInstance()
                 }
