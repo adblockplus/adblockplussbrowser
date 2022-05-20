@@ -33,7 +33,7 @@
 
     <TextView
         android:id="@+id/install_si_dialog_summary"
-        style="@style/OnboardingDescriptionTextStyle"
+        style="@style/DescriptionTextStyle"
         android:layout_width="256dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
