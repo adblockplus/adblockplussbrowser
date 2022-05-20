@@ -17,10 +17,10 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui
 
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.checkbox.MaterialCheckBox
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
@@ -83,17 +83,16 @@ internal class MainPreferencesFragment :
                 lifecycleOwner
             )
         } else {
-            val checkBox: MaterialCheckBox =
-                binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.findViewById(
-                    R.id.wifi_only_checkbox
-                )
+            binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.visibility = View.GONE
+            binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptionsConfig.visibility = View.VISIBLE
+            val wifiOnlyCheckbox = binding.mainPreferencesAdBlockingInclude.wifiOnlyCheckbox
 
             binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.setDebounceOnClickListener(
                 {
-                    checkBox.isChecked = !checkBox.isChecked
+                    wifiOnlyCheckbox.isChecked = !wifiOnlyCheckbox.isChecked
                     var updateConfigType =
                         UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_ALWAYS
-                    if (checkBox.isChecked) {
+                    if (wifiOnlyCheckbox.isChecked) {
                         updateConfigType =
                             UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY
                     }
@@ -104,7 +103,7 @@ internal class MainPreferencesFragment :
             )
 
             updateViewModel.updateType.observe(this) { updateType ->
-                checkBox.isChecked =
+                wifiOnlyCheckbox.isChecked =
                     updateType.name == UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY.name
             }
         }
