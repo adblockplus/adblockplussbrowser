@@ -168,6 +168,7 @@
 
             <TextView
                     android:id="@+id/anonymous_submission_warning"
+                    android:visibility="gone"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -191,27 +192,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/comment_description"/>
 
-            <org.adblockplus.adblockplussbrowser.base.widget.HyperlinkTextView
-                    android:id="@+id/about_privacy_policy_hyperlink"
-                    style="@style/PreferenceTitleTextStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:text="@string/about_privacy_policy"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
-
-            <Button
-                    android:id="@+id/button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="@string/cancel"
-                    app:layout_constraintEnd_toStartOf="@+id/send_report"
-                    app:layout_constraintTop_toBottomOf="@+id/edit_text_box_comment"/>
-
             <Button
                     android:id="@+id/cancel"
                     android:layout_width="wrap_content"
@@ -220,7 +200,8 @@
                     android:layout_marginEnd="16dp"
                     android:text="@string/cancel"
                     app:layout_constraintEnd_toStartOf="@+id/send_report"
-                    app:layout_constraintTop_toBottomOf="@+id/edit_text_box_comment"/>
+                    app:layout_constraintTop_toBottomOf="@+id/edit_text_box_comment"
+                    app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="16dp"/>
 
             <Button
                     android:id="@+id/send_report"
@@ -230,8 +211,19 @@
                     android:layout_marginEnd="16dp"
                     android:text="@string/send_report"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/edit_text_box_comment"/>
+                    app:layout_constraintTop_toBottomOf="@+id/edit_text_box_comment"
+                    app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="16dp"/>
 
+            <org.adblockplus.adblockplussbrowser.base.widget.HyperlinkTextView
+                    android:id="@+id/about_privacy_policy_hyperlink"
+                    style="@style/PreferenceTitleTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="@string/report_issue_privacy_policy"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/cancel"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

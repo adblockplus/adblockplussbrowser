@@ -162,5 +162,6 @@
     <string name="cancel" translatable="false">Cancel</string>
     <string name="send_report" translatable="false">Send Report</string>
     <string name="email" translatable="false">Email:</string>
+    <string name="report_issue_privacy_policy" translatable="false"><a href="https://adblockplus.org/en/privacy#issue-reporter">Privacy Policy</a></string>
 
 </resources>
