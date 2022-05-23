@@ -77,4 +77,9 @@
         <item name="android:background">@color/background</item>
     </style>
 
+    <style name="DescriptionTextStyle">
+        <item name="android:textColor">@color/foreground_secondary</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
 </resources>
