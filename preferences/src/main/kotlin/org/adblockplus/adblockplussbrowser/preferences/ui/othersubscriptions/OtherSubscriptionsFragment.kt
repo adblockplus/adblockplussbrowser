@@ -17,17 +17,24 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions
 
+import android.content.ContentResolver
+import android.net.Uri
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
+import java.io.FileInputStream
+import java.io.InputStream
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentOtherSubscriptionsBinding
 import org.adblockplus.adblockplussbrowser.preferences.ui.SwipeToDeleteCallback
+
 
 @AndroidEntryPoint
 internal class OtherSubscriptionsFragment :
@@ -38,11 +45,32 @@ internal class OtherSubscriptionsFragment :
     override fun onBindView(binding: FragmentOtherSubscriptionsBinding) {
         binding.viewModel = viewModel
 
-
         val lifecycleOwner = this.viewLifecycleOwner
-        binding.otherSubscriptionsAddButton.setDebounceOnClickListener({
+        binding.otherSubscriptionsAddFromUrlButton.setDebounceOnClickListener({
             AddCustomSubscriptionDialogFragment().show(parentFragmentManager, null)
         }, lifecycleOwner)
+
+        val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            // Handle the returned Uri
+            if (uri != null) {
+                val inputStream: InputStream = FileInputStream(uri.toString())
+                print("hello")
+            }
+        }
+
+        binding.otherSubscriptionsAddFromLocalButton.setOnClickListener{
+            getContent.launch("text/plain")
+//            val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+//                addCategory(Intent.CATEGORY_OPENABLE)
+//                type = "text/plain"
+//            }
+//            try {
+//                startActivity(intent)
+//            } catch (e: ActivityNotFoundException) {
+//                Toast.makeText(context, getString(R.string.file_explorer_not_found_message), Toast.LENGTH_LONG)
+//                    .show()
+//            }
+        }
 
         val swipeToDeleteHandler = object : SwipeToDeleteCallback() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
