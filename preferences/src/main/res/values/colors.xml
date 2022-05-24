@@ -18,6 +18,7 @@
 
 <resources>
 
+    <!-- Colors for crystal dialog in whitelisting disabling-->
     <color name="onboarding_foreground_secondary">@color/lynch</color>
     <color name="onboarding_icon_background">@color/mercury</color>
     <color name="onboarding_icon_foreground">@color/white</color>
