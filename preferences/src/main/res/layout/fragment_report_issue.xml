@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/select_issue_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/select_issue_type_description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -70,13 +70,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/select_issue_type_description">
 
-                <RadioButton
+                <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/blocking_too_high"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/blocking_too_high" />
 
-                <RadioButton
+                <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/blocking_too_low"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
                     android:text="@string/blocking_too_low" />
             </RadioGroup>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/pick_screenshot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/issue_type_radio_group" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/email_description_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/pick_screenshot" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/enter_email_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/enter_email_explanation" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/comment_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -127,7 +127,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/anonymous_submission_warning" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/enter_email_explanation"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -139,7 +139,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/email_description_title" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/comment_description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -152,7 +152,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/comment_title" />
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_box_email_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -176,7 +176,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_text_box_email_address" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/anonymous_submission_warning"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -190,7 +190,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/anonymous_submission_check_box" />
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_box_comment"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -202,7 +202,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/comment_description" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -214,7 +214,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/send_report"
                 app:layout_constraintTop_toBottomOf="@+id/edit_text_box_comment" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/send_report"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -232,6 +232,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:text="@string/report_issue_privacy_policy"
                 app:layout_constraintBottom_toBottomOf="parent"
