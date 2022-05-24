@@ -141,6 +141,7 @@
         <LinearLayout
             android:id="@+id/main_preferences_update_subscriptions"
             style="@style/PreferenceContainerStyle"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -163,6 +164,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/crystal_main_preferences_update_subscriptions"
             style="@style/PreferenceContainerStyle"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
