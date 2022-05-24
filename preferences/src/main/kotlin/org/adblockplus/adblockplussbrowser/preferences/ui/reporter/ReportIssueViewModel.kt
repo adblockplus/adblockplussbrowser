@@ -30,6 +30,10 @@ internal class ReportIssueViewModel @Inject constructor() : ViewModel() {
 
     var isAnonymousSubmission : Boolean = true
 
+    fun pickScreenshot() {
+        Timber.i("pickSIScreenshot")
+    }
+
     fun toggleAnonymousSubmission() {
         Timber.i("toggleAnonymousSubmission")
 
