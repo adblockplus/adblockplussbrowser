@@ -17,16 +17,23 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui.reporter
 
-import dagger.hilt.android.AndroidEntryPoint
-import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
-import org.adblockplus.adblockplussbrowser.preferences.R
-import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentReportIssueBinding
+import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
+import timber.log.Timber
+import javax.inject.Inject
 
-@AndroidEntryPoint
-internal class ReportIssueFragment : DataBindingFragment<FragmentReportIssueBinding>(R.layout.fragment_report_issue) {
+@HiltViewModel
+internal class ReportIssueViewModel @Inject constructor() : ViewModel() {
 
-    override fun onBindView(binding: FragmentReportIssueBinding) {
+    lateinit var analyticsProvider: AnalyticsProvider
 
+    var isAnonymousSubmission : Boolean = true
 
+    fun toggleAnonymousSubmission() {
+        Timber.i("toggleAnonymousSubmission")
+
+        isAnonymousSubmission = !isAnonymousSubmission
     }
+
 }
