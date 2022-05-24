@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
+import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentAllowlistBinding
 import org.adblockplus.adblockplussbrowser.preferences.ui.SwipeToDeleteCallback
@@ -38,6 +39,9 @@ internal class AllowlistFragment : DataBindingFragment<FragmentAllowlistBinding>
         binding.allowlistList.adapter = AllowlistAdapter(viewModel, viewLifecycleOwner)
 
         val lifecycleOwner = this.viewLifecycleOwner
+        if (BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_CRYSTAL) {
+            binding.allowlistAddButton.hide()
+        }
         binding.allowlistAddButton.setDebounceOnClickListener({
             AddDomainDialogFragment().show(parentFragmentManager, null)
         }, lifecycleOwner)
