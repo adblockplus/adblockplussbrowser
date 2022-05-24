@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@drawable/preferences_group_bg_single"
-            app:layout_constraintBottom_toBottomOf="@id/main_preferences_update_subscriptions"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/main_preferences_primary_subscriptions" />
 
@@ -159,6 +159,45 @@
                 android:text="@string/preferences_updates_subtitle" />
 
         </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/crystal_main_preferences_update_subscriptions"
+            style="@style/PreferenceContainerStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_preferences_divider_3">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/preferences_update_title"
+                style="@style/PreferenceTitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/preferences_updates_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/update_type_text"
+                style="@style/CustomPreferenceSummaryTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/preferences_update_title"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/preferences_automatic_updates_wifi_only" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/wifi_only_checkbox"
+                style="@style/ButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:clickable="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

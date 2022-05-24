@@ -17,6 +17,7 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui
 
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -73,6 +74,8 @@ internal class MainPreferencesFragment :
         )
 
         if (BuildConfig.FLAVOR_product != BuildConfig.FLAVOR_CRYSTAL) {
+            binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.visibility = View.VISIBLE
+            binding.mainPreferencesAdBlockingInclude.crystalMainPreferencesUpdateSubscriptions.visibility = View.GONE
             binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.setDebounceOnClickListener(
                 {
                     supportActionBar?.subtitle = null
@@ -83,28 +86,27 @@ internal class MainPreferencesFragment :
                 lifecycleOwner
             )
         } else {
-            val checkBox: MaterialCheckBox =
-                binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.findViewById(
+            binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.visibility = View.GONE
+            binding.mainPreferencesAdBlockingInclude.crystalMainPreferencesUpdateSubscriptions.visibility = View.VISIBLE
+            val wifiOnlyCheckbox: MaterialCheckBox =
+                binding.mainPreferencesAdBlockingInclude.crystalMainPreferencesUpdateSubscriptions.findViewById(
                     R.id.wifi_only_checkbox
                 )
 
-            binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.setDebounceOnClickListener(
-                {
-                    checkBox.isChecked = !checkBox.isChecked
-                    var updateConfigType =
-                        UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_ALWAYS
-                    if (checkBox.isChecked) {
-                        updateConfigType =
-                            UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY
-                    }
+            binding.mainPreferencesAdBlockingInclude.crystalMainPreferencesUpdateSubscriptions.setOnClickListener {
+                wifiOnlyCheckbox.isChecked = !wifiOnlyCheckbox.isChecked
+                var updateConfigType =
+                    UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_ALWAYS
+                if (wifiOnlyCheckbox.isChecked) {
+                    updateConfigType =
+                        UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY
+                }
 
-                    updateViewModel.setUpdateConfigType(updateConfigType)
-                },
-                lifecycleOwner
-            )
+                updateViewModel.setUpdateConfigType(updateConfigType)
+            }
 
             updateViewModel.updateType.observe(this) { updateType ->
-                checkBox.isChecked =
+                wifiOnlyCheckbox.isChecked =
                     updateType.name == UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY.name
             }
         }
