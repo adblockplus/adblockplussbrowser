@@ -17,6 +17,7 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui.reporter
 
+import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.preferences.R
@@ -25,8 +26,9 @@ import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentRepor
 @AndroidEntryPoint
 internal class ReportIssueFragment : DataBindingFragment<FragmentReportIssueBinding>(R.layout.fragment_report_issue) {
 
+    private val viewModel: ReportIssueViewModel by viewModels()
+
     override fun onBindView(binding: FragmentReportIssueBinding) {
-
-
+        binding.viewModel = viewModel
     }
 }

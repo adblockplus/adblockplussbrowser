@@ -28,7 +28,7 @@ internal class ReportIssueViewModel @Inject constructor() : ViewModel() {
 
     lateinit var analyticsProvider: AnalyticsProvider
 
-    var isAnonymousSubmission : Boolean = true
+    var isAnonymousSubmission : Boolean = false
 
     fun pickScreenshot() {
         Timber.i("pickSIScreenshot")
