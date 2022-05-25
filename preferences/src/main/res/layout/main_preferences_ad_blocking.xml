@@ -17,8 +17,7 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -177,16 +176,16 @@
                 android:layout_height="wrap_content"
                 android:text="@string/allow_updates_on_mobile_data_connection"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/update_type_text"
                 style="@style/CustomPreferenceSummaryTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/preferences_update_title"
+                android:text="@string/automatic_update_checkbox_hint"
                 app:layout_constraintStart_toStartOf="parent"
-                android:text="@string/automatic_update_checkbox_hint" />
+                app:layout_constraintTop_toBottomOf="@id/preferences_update_title" />
 
             <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/wifi_only_checkbox"
@@ -195,9 +194,16 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:clickable="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/update_guideline_end"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/update_guideline_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="30dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
