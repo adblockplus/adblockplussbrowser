@@ -17,50 +17,48 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui.reporter
 
-import android.content.ActivityNotFoundException
+import android.app.Activity
 import android.content.Intent
-import android.widget.Toast
+import android.provider.MediaStore
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentReportIssueBinding
-import java.io.File
+import timber.log.Timber
 
 
 @AndroidEntryPoint
 internal class ReportIssueFragment : DataBindingFragment<FragmentReportIssueBinding>(R.layout.fragment_report_issue) {
 
     private val viewModel: ReportIssueViewModel by viewModels()
-    private val filePath: String? = null
-    private val sourceFile: File? = null
-
-    private val FILE_SELECT_CODE = 0
-
-    private fun showFileChooser() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = "*/*"
-        intent.addCategory(Intent.CATEGORY_OPENABLE)
-        try {
-            startActivityForResult(
-                Intent.createChooser(intent, "Select a File to Copy"),
-                FILE_SELECT_CODE
-            )
-        } catch (ex: ActivityNotFoundException) {
-            Toast.makeText(
-                context, "Please install a File Manager.",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-    }
 
     override fun onBindView(binding: FragmentReportIssueBinding) {
         binding.viewModel = viewModel
         val lifecycleOwner = this.viewLifecycleOwner
 
         binding.pickScreenshot.setDebounceOnClickListener({
-            showFileChooser()
+            pickImageFromGallery()
         }, lifecycleOwner)
     }
+
+    private val pickImageFromGalleryForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val intent = result.data
+            Timber.i("picked image: ${intent?.data?.path}")
+        }
+    }
+
+    private fun pickImageFromGallery() {
+        val pickIntent = Intent(Intent.ACTION_PICK)
+        pickIntent.setDataAndType(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            "image/*"
+        )
+        pickImageFromGalleryForResult.launch(pickIntent)
+    }
+
 }
