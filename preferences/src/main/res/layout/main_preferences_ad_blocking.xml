@@ -175,7 +175,7 @@
                 style="@style/PreferenceTitleTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/preferences_updates_title"
+                android:text="@string/allow_updates_on_mobile_data_connection"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
@@ -186,7 +186,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/preferences_update_title"
                 app:layout_constraintStart_toStartOf="parent"
-                android:text="@string/preferences_automatic_updates_wifi_only" />
+                android:text="@string/automatic_update_checkbox_hint" />
 
             <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/wifi_only_checkbox"

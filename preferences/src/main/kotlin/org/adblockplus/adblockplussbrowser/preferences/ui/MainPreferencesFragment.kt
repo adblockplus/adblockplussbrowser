@@ -107,19 +107,17 @@ internal class MainPreferencesFragment :
                 binding.mainPreferencesAdBlockingInclude.wifiOnlyCheckbox
             binding.mainPreferencesAdBlockingInclude.crystalMainPreferencesUpdateSubscriptions.setOnClickListener {
                 wifiOnlyCheckbox.isChecked = !wifiOnlyCheckbox.isChecked
-                var updateConfigType =
+                val updateConfigType = if (wifiOnlyCheckbox.isChecked) {
                     UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_ALWAYS
-                if (wifiOnlyCheckbox.isChecked) {
-                    updateConfigType =
-                        UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY
+                } else {
+                    UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY
                 }
-
                 updateViewModel.setUpdateConfigType(updateConfigType)
             }
 
             updateViewModel.updateType.observe(this) { updateType ->
                 wifiOnlyCheckbox.isChecked =
-                    updateType.name == UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY.name
+                    updateType.name == UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_ALWAYS.name
             }
         }
         // Languages "Add additional language"
