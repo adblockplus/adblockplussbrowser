@@ -34,7 +34,6 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowContentResolver
-import java.net.URI
 import kotlin.time.ExperimentalTime
 
 @Config(manifest=Config.DEFAULT_MANIFEST_NAME)
@@ -73,7 +72,6 @@ internal class FilterListContentProviderTest {
     }
 
     @OptIn(ExperimentalTime::class)
-    @Test
     fun open() {
         val uriSource = Uri.parse("content://org.adblockplus.adblockplussbrowser.contentBlocker.contentProvider")
         val parcelFileDescriptor = filterListContentProvider?.openFile(uriSource, "r")
