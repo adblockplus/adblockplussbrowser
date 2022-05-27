@@ -20,6 +20,7 @@ package org.adblockplus.adblockplussbrowser.preferences.ui.reporter
 import android.app.Activity
 import android.content.Intent
 import android.provider.MediaStore
+import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
@@ -43,6 +44,14 @@ internal class ReportIssueFragment : DataBindingFragment<FragmentReportIssueBind
         binding.pickScreenshot.setDebounceOnClickListener({
             pickImageFromGallery()
         }, lifecycleOwner)
+
+        binding.anonymousSubmissionCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                binding.anonymousSubmissionWarning.visibility = View.VISIBLE
+            } else {
+                binding.anonymousSubmissionWarning.visibility = View.GONE
+            }
+        }
     }
 
     private val pickImageFromGalleryForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->

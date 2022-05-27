@@ -28,12 +28,5 @@ internal class ReportIssueViewModel @Inject constructor() : ViewModel() {
 
     lateinit var analyticsProvider: AnalyticsProvider
 
-    var isAnonymousSubmission : Boolean = false
-
-    fun toggleAnonymousSubmission() {
-        Timber.i("toggleAnonymousSubmission")
-
-        isAnonymousSubmission = !isAnonymousSubmission
-    }
 
 }

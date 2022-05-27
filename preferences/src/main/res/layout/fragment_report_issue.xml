@@ -190,13 +190,13 @@
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginTop="@dimen/margin"
                 android:minHeight="48dp"
-                android:onCheckedChanged="@{() -> viewModel.toggleAnonymousSubmission()}"
                 android:text="@string/anonymous_submission_check_box_description"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_text_box_email_address" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/anonymous_submission_warning"
+                android:visibility="gone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin"
@@ -204,7 +204,6 @@
                 android:layout_marginEnd="@dimen/margin"
                 android:text="@string/anonymous_submission_warning"
                 android:textColor="@color/design_default_color_error"
-                android:visibility="@{viewModel.anonymousSubmission ? View.VISIBLE : View.GONE}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/anonymous_submission_check_box" />
