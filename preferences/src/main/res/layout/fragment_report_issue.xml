@@ -58,6 +58,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/select_issue_type" />
 
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/select_issue_type_description2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:text="@string/make_screenshot_of_samsung_internet"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/issue_type_radio_group" />
+
             <RadioGroup
                 android:id="@+id/issue_type_radio_group"
                 android:layout_width="0dp"
@@ -92,7 +105,7 @@
                 android:text="@string/pick_samsung_internet_screenshot"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/issue_type_radio_group" />
+                app:layout_constraintTop_toBottomOf="@+id/select_issue_type_description2" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/email_description_title"
@@ -159,7 +172,10 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:ems="10"
+                android:hint="@string/report_issue_enter_email_hint"
                 android:inputType="textEmailAddress"
+                android:minHeight="48dp"
+                android:textColorHint="#546E7A"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/enter_email_title" />
 
@@ -171,6 +187,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:minHeight="48dp"
                 android:onCheckedChanged="@{() -> viewModel.toggleAnonymousSubmission()}"
                 android:text="@string/anonymous_submission_check_box_description"
                 app:layout_constraintStart_toStartOf="parent"
@@ -198,6 +215,9 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:minLines="5"
+                android:hint="@string/report_issue_enter_comment_hint"
+                android:minHeight="48dp"
+                android:textColorHint="@color/hint_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/comment_description" />

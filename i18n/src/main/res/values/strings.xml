@@ -163,5 +163,8 @@
     <string name="send_report" translatable="false">Send Report</string>
     <string name="email" translatable="false">Email:</string>
     <string name="report_issue_privacy_policy" translatable="false"><a href="https://adblockplus.org/en/privacy#issue-reporter">Privacy Policy</a></string>
+    <string name="make_screenshot_of_samsung_internet" translatable="false">Make screenshot of Samsung Internet</string>
+    <string name="report_issue_enter_email_hint" translatable="false">Enter email</string>
+    <string name="report_issue_enter_comment_hint" translatable="false">Enter comment</string>
 
 </resources>
