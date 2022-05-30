@@ -17,6 +17,7 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui
 
+import android.content.Context
 import android.text.method.LinkMovementMethod
 import android.widget.TextView
 import android.view.View
@@ -101,10 +102,17 @@ internal class MainPreferencesFragment :
                 lifecycleOwner
             )
         } else {
+            // Get shared preferences
+            val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+            val setUpdateType = sharedPref.getString(getString(R.string.crystal_update_type), UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY.name)
+
+            // Binding and update configuration type logic
             binding.mainPreferencesAdBlockingInclude.crystalMainPreferencesUpdateSubscriptions.visibility =
                 View.VISIBLE
             val wifiOnlyCheckbox: MaterialCheckBox =
                 binding.mainPreferencesAdBlockingInclude.wifiOnlyCheckbox
+            wifiOnlyCheckbox.isChecked =
+                setUpdateType == UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_ALWAYS.name
             binding.mainPreferencesAdBlockingInclude.crystalMainPreferencesUpdateSubscriptions.setOnClickListener {
                 wifiOnlyCheckbox.isChecked = !wifiOnlyCheckbox.isChecked
                 val updateConfigType = if (wifiOnlyCheckbox.isChecked) {
@@ -113,11 +121,10 @@ internal class MainPreferencesFragment :
                     UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY
                 }
                 updateViewModel.setUpdateConfigType(updateConfigType)
-            }
-
-            updateViewModel.updateType.observe(this) { updateType ->
-                wifiOnlyCheckbox.isChecked =
-                    updateType.name == UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_ALWAYS.name
+                with(sharedPref.edit()) {
+                    putString(getString(R.string.crystal_update_type), updateConfigType.name)
+                    apply()
+                }
             }
         }
         // Languages "Add additional language"
