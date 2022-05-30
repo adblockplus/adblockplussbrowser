@@ -40,6 +40,7 @@ internal class MainPreferencesFragment :
     DataBindingFragment<FragmentMainPreferencesBinding>(R.layout.fragment_main_preferences) {
 
     private val viewModel: MainPreferencesViewModel by activityViewModels()
+
     // Lazy loading the UpdateSubscriptionsViewModel so it will only be used for crystal flavor here
     private val updateViewModel: UpdateSubscriptionsViewModel by activityViewModels()
 
@@ -104,7 +105,10 @@ internal class MainPreferencesFragment :
         } else {
             // Get shared preferences
             val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
-            val setUpdateType = sharedPref.getString(getString(R.string.crystal_update_type), UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY.name)
+            val setUpdateType = sharedPref.getString(
+                getString(R.string.crystal_update_type),
+                UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY.name
+            )
 
             // Binding and update configuration type logic
             binding.mainPreferencesAdBlockingInclude.crystalMainPreferencesUpdateSubscriptions.visibility =
