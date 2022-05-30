@@ -105,18 +105,16 @@ internal class MainPreferencesFragment :
         } else {
             // Get shared preferences
             val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
-            val setUpdateType = sharedPref.getString(
-                getString(R.string.crystal_update_type),
-                UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY.name
-            )
-
+            val selectedUpdateType = sharedPref.getString(getString(R.string.crystal_update_type), null) ?: run {
+                updateViewModel.setUpdateConfigType(UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY)
+            }
             // Binding and update configuration type logic
             binding.mainPreferencesAdBlockingInclude.crystalMainPreferencesUpdateSubscriptions.visibility =
                 View.VISIBLE
             val wifiOnlyCheckbox: MaterialCheckBox =
                 binding.mainPreferencesAdBlockingInclude.wifiOnlyCheckbox
             wifiOnlyCheckbox.isChecked =
-                setUpdateType == UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_ALWAYS.name
+                selectedUpdateType == UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_ALWAYS.name
             binding.mainPreferencesAdBlockingInclude.crystalMainPreferencesUpdateSubscriptions.setOnClickListener {
                 wifiOnlyCheckbox.isChecked = !wifiOnlyCheckbox.isChecked
                 val updateConfigType = if (wifiOnlyCheckbox.isChecked) {
