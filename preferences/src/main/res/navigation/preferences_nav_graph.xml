@@ -93,6 +93,6 @@
 
     <fragment android:id="@+id/report_issue_fragment"
               android:name="org.adblockplus.adblockplussbrowser.preferences.ui.reporter.ReportIssueFragment"
-              android:label="@string/report_issue"/>
+              android:label="@string/issueReporter_page_title"/>
 
 </navigation>

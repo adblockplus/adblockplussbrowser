@@ -127,4 +127,7 @@
     <string name="block_social_media_tracking">حجب تعقب رموز مواقع التواصل الاجتماعي</string>
     <!-- /settings -->
 
+    <!-- Issue reporter -->
+    <string name="issueReporter_page_title">مُبَلِغ المشاكل</string>
+
 </resources>

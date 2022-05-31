@@ -127,4 +127,7 @@
     <string name="block_social_media_tracking">ソーシャルメディア アイコン トラッキングのブロック</string>
     <!-- /settings -->
 
+    <!-- Issue reporter -->
+    <string name="issueReporter_page_title">不具合報告</string>
+
 </resources>

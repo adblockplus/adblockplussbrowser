@@ -130,7 +130,7 @@
     <!-- /settings -->
 
     <!-- Issue reporter -->
-    <string name="report_issue" translatable="false">Report issue</string>
+    <string name="issueReporter_page_title">Issue reporter</string>
     <string name="select_issue_type" translatable="false">Select issue type</string>
     <string name="select_issue_type_description" translatable="false">This window will guide you through the steps required for the
         submission of an Adblock Plus issue report. First, please select the type of issue that you are experiencing on

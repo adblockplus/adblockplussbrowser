@@ -127,4 +127,7 @@
     <string name="block_social_media_tracking">阻止社交媒体图标跟踪</string>
     <!-- /settings -->
 
+    <!-- Issue reporter -->
+    <string name="issueReporter_page_title">问题报告</string>
+
 </resources>

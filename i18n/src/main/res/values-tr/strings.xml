@@ -127,4 +127,7 @@
     <string name="block_social_media_tracking">Sosyal medya simgelerinin izlemesini engelle</string>
     <!-- /settings -->
 
+    <!-- Issue reporter -->
+    <string name="issueReporter_page_title">Sorun bildirici</string>
+
 </resources>

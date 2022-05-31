@@ -127,4 +127,7 @@
     <string name="block_social_media_tracking">Blocca il tracciamento tramite le icone dei social media</string>
     <!-- /settings -->
 
+    <!-- Issue reporter -->
+    <string name="issueReporter_page_title">Segnalazione problemi</string>
+
 </resources>

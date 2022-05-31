@@ -127,4 +127,7 @@
     <string name="block_social_media_tracking">Блокировать отслеживание через значки социальных сетей</string>
     <!-- /settings -->
 
+    <!-- Issue reporter -->
+    <string name="issueReporter_page_title">Сообщить о проблеме</string>
+
 </resources>

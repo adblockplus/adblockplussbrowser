@@ -127,4 +127,7 @@
     <string name="block_social_media_tracking">Tracking via sociale-mediapictogrammen blokkeren</string>
     <!-- /settings -->
 
+    <!-- Issue reporter -->
+    <string name="issueReporter_page_title">Probleemrapportage</string>
+
 </resources>

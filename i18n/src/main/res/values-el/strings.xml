@@ -127,4 +127,7 @@
     <string name="block_social_media_tracking">Αποκλεισμός παρακολούθησης εικονιδίων κοινωνικών μέσων</string>
     <!-- /settings -->
 
+    <!-- Issue reporter -->
+    <string name="issueReporter_page_title">Αναφορά ζητήματος</string>
+
 </resources>
