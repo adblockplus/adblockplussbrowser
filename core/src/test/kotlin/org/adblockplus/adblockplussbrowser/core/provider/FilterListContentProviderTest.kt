@@ -36,15 +36,14 @@ import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowContentResolver
 import kotlin.time.ExperimentalTime
 
-@Config(manifest=Config.DEFAULT_MANIFEST_NAME)
+@ExperimentalTime
+@Config(manifest=Config.DEFAULT_MANIFEST_NAME, sdk=[19])
 @RunWith(RobolectricTestRunner::class)
 internal class FilterListContentProviderTest {
     private var contentResolver : ContentResolver? = null
     private var shadowContentResolver : ShadowContentResolver? = null
-    @OptIn(ExperimentalTime::class)
     private var filterListContentProvider : FilterListContentProvider? = null
 
-    @OptIn(ExperimentalTime::class)
     @Before
     fun setUp() {
         contentResolver = ApplicationProvider.getApplicationContext<Context>().contentResolver
@@ -56,7 +55,6 @@ internal class FilterListContentProviderTest {
         filterListContentProvider = controller.get()
     }
 
-    @OptIn(ExperimentalTime::class)
     @Test
     fun onCreate() {
         val res  = filterListContentProvider?.onCreate()
@@ -71,7 +69,7 @@ internal class FilterListContentProviderTest {
         assertNull(uri)
     }
 
-    @OptIn(ExperimentalTime::class)
+//    @Test
     fun open() {
         val uriSource = Uri.parse("content://org.adblockplus.adblockplussbrowser.contentBlocker.contentProvider")
         val parcelFileDescriptor = filterListContentProvider?.openFile(uriSource, "r")
