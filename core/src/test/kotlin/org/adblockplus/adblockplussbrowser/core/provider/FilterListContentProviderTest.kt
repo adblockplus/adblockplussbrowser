@@ -23,6 +23,14 @@ import android.content.Context
 import android.content.pm.ProviderInfo
 import android.net.Uri
 import androidx.test.core.app.ApplicationProvider
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNotNull
 import junit.framework.Assert.assertNull
@@ -35,14 +43,53 @@ import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowContentResolver
 import kotlin.time.ExperimentalTime
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
+import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
+import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
+import org.adblockplus.adblockplussbrowser.core.helpers.Fakes
+import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
+import org.junit.Rule
+import org.mockito.Mockito
 
 @ExperimentalTime
-@Config(manifest=Config.DEFAULT_MANIFEST_NAME, sdk=[19])
+@Config(sdk=[21])
 @RunWith(RobolectricTestRunner::class)
+@HiltAndroidTest
 internal class FilterListContentProviderTest {
     private var contentResolver : ContentResolver? = null
     private var shadowContentResolver : ShadowContentResolver? = null
     private var filterListContentProvider : FilterListContentProvider? = null
+
+    @get:Rule
+    var hiltRule = HiltAndroidRule(this)
+
+    @Module
+    @InstallIn(SingletonComponent::class)
+    internal class TestModule {
+        @Provides
+        @Singleton
+        fun getCoreRepository(): CoreRepository {
+            return Fakes.FakeCoreRepository("")
+        }
+
+        @Provides
+        @Singleton
+        fun getSettingsRepository(): SettingsRepository {
+            return Fakes.FakeSettingsRepository("")
+        }
+
+        @Provides
+        @Singleton
+        fun getActivationPreferences(): ActivationPreferences {
+            return Fakes.FakeActivationPreferences()
+        }
+
+        @Provides
+        @Singleton
+        fun getAnalyticsProvider(): AnalyticsProvider {
+            return Fakes.FakeAnalyticsProvider()
+        }
+    }
 
     @Before
     fun setUp() {

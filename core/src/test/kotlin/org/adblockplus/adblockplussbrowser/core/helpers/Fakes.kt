@@ -23,6 +23,7 @@ import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
+import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.data.model.CoreData
 import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscription
@@ -233,5 +234,14 @@ class Fakes {
                     )
                 )
             }
+    }
+
+    class FakeActivationPreferences : ActivationPreferences {
+        override val lastFilterListRequest: Flow<Long>
+            get() = TODO("Not yet implemented")
+
+        override suspend fun updateLastFilterRequest(lastFilterListRequest: Long) {
+            TODO("Not yet implemented")
+        }
     }
 }

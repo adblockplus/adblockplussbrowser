@@ -67,6 +67,7 @@ dependencies {
     testImplementation(Deps.AndroidX.TEST_CORE)
     testImplementation(Deps.AndroidX.Work.TESTING)
     testImplementation(Deps.KotlinXTest.COROUTINES_TEST )
+    testImplementation(Deps.Hilt.ANDROID_TESTING)
     testAnnotationProcessor(Deps.Hilt.ANDROID_COMPILER)
     kaptTest(Deps.Hilt.ANDROID_COMPILER)
     kaptTest(Deps.AndroidX.Hilt.COMPILER)
