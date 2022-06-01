@@ -131,19 +131,13 @@
 
     <!-- Issue reporter -->
     <string name="issueReporter_page_title">Issue reporter</string>
-    <string name="select_issue_type" translatable="false">Select issue type</string>
-    <string name="select_issue_type_description" translatable="false">This window will guide you through the steps required for the
+    <string name="issueReporter_typeSelector_heading" translatable="false">Select issue type</string>
+    <string name="issueReporter_typeSelector_description" translatable="false">This window will guide you through the steps required for the
         submission of an Adblock Plus issue report. First, please select the type of issue that you are experiencing on
         this page:
     </string>
-    <string name="blocking_too_high" translatable="false">Adblock Plus is blocking too much:\nSelect this option if the page lacks important
-        content, displays incorrectly or fails to function properly. You can determine whether Adblock Plus is the cause
-        of the problem by disabling it temporarily.
-    </string>
-    <string name="blocking_too_low" translatable="false">
-        Adblock Plus doesn\'t block an advertisement:\nSelect this option if an advertisement is displayed despite
-        Adblock Plus being enabled.
-    </string>
+    <string name="issueReporter_falsePositive_label" translatable="false">Adblock Plus is blocking too much</string>
+    <string name="issueReporter_falseNegative_label" translatable="false">Adblock Plus doesn\'t block an advertisement</string>
     <string name="pick_samsung_internet_screenshot" translatable="false">Pick Samsung Internet screenshot</string>
     <string name="enter_email_comment" translatable="false">Enter comment</string>
     <string name="comment_title" translatable="false">Comment (optional):</string>

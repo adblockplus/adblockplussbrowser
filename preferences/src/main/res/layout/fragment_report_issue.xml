@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginTop="@dimen/margin"
-                android:text="@string/select_issue_type"
+                android:text="@string/issueReporter_typeSelector_heading"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -53,7 +53,7 @@
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginTop="@dimen/margin"
                 android:layout_marginEnd="@dimen/margin"
-                android:text="@string/select_issue_type_description"
+                android:text="@string/issueReporter_typeSelector_description"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/select_issue_type" />
@@ -87,14 +87,14 @@
                     android:id="@+id/blocking_too_high"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/blocking_too_high" />
+                    android:text="@string/issueReporter_falsePositive_label" />
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/blocking_too_low"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin"
-                    android:text="@string/blocking_too_low" />
+                    android:text="@string/issueReporter_falseNegative_label" />
             </RadioGroup>
 
             <com.google.android.material.button.MaterialButton
