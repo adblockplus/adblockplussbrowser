@@ -104,7 +104,7 @@ internal class MainPreferencesFragment :
             )
         } else {
             // Get shared preferences
-            val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+            val sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE)
             val selectedUpdateType = sharedPref.getString(getString(R.string.crystal_update_type), null) ?: run {
                 updateViewModel.setUpdateConfigType(UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY)
             }
