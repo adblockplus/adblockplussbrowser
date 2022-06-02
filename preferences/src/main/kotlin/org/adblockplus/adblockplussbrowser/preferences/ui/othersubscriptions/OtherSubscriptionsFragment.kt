@@ -22,9 +22,14 @@ import android.net.Uri
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
+import androidx.core.view.accessibility.AccessibilityEventCompat.setAction
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import com.leinardi.android.speeddial.SpeedDialActionItem
+import com.leinardi.android.speeddial.SpeedDialView
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.FileInputStream
@@ -46,31 +51,42 @@ internal class OtherSubscriptionsFragment :
         binding.viewModel = viewModel
 
         val lifecycleOwner = this.viewLifecycleOwner
-        binding.otherSubscriptionsAddFromUrlButton.setDebounceOnClickListener({
-            AddCustomSubscriptionDialogFragment().show(parentFragmentManager, null)
-        }, lifecycleOwner)
+//        binding.otherSubscriptionsAddFromUrlButton.setDebounceOnClickListener({
+//            AddCustomSubscriptionDialogFragment().show(parentFragmentManager, null)
+//        }, lifecycleOwner)
 
-        val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-            // Handle the returned Uri
-            if (uri != null) {
-                val inputStream: InputStream = FileInputStream(uri.toString())
-                print("hello")
+        val addWithUrlButton = SpeedDialActionItem.Builder(R.id.other_subscriptions_add_from_url_button, R.drawable.ic_baseline_link_24)
+            .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.background_accent))
+            .create()
+
+        val addFromLocalStorageButton = SpeedDialActionItem.Builder(R.id.other_subscriptions_add_from_local_button, R.drawable.ic_baseline_folder_24)
+            .setFabBackgroundColor(ContextCompat.getColor(requireContext(), R.color.background_accent))
+            .create()
+
+        binding.speedDial.addAllActionItems(listOf(addWithUrlButton, addFromLocalStorageButton))
+
+        binding.speedDial.setOnActionSelectedListener{ actionItem ->
+            when (actionItem.id) {
+                R.id.other_subscriptions_add_from_url_button -> {
+                    AddCustomSubscriptionDialogFragment().show(parentFragmentManager, null)
+                    binding.speedDial.close(true)
+                }
+                R.id.other_subscriptions_add_from_local_button -> {
+                    // TODO: finish integration with file explorer
+                    Toast.makeText(context, "Please, install a file manager", Toast.LENGTH_LONG).show()
+                    binding.speedDial.close(true)
+                }
             }
+            true
         }
 
-        binding.otherSubscriptionsAddFromLocalButton.setOnClickListener{
-            getContent.launch("text/plain")
-//            val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
-//                addCategory(Intent.CATEGORY_OPENABLE)
-//                type = "text/plain"
-//            }
-//            try {
-//                startActivity(intent)
-//            } catch (e: ActivityNotFoundException) {
-//                Toast.makeText(context, getString(R.string.file_explorer_not_found_message), Toast.LENGTH_LONG)
-//                    .show()
-//            }
-        }
+        binding.speedDial.setOnChangeListener(object : SpeedDialView.OnChangeListener {
+            override fun onMainActionSelected(): Boolean {
+                return false // True to keep the Speed Dial open
+            }
+
+            override fun onToggleChanged(isOpen: Boolean) {}
+        })
 
         val swipeToDeleteHandler = object : SwipeToDeleteCallback() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
