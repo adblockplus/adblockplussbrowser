@@ -84,6 +84,11 @@ dependencies {
     implementation(Deps.OkHttp.LOGGER)
     implementation(Deps.Gms.OSS_LICENSES)
     implementation(Deps.Android.INSTALL_REFERRER)
+
+    testImplementation(Deps.KotlinXTest.COROUTINES_TEST)
+    testImplementation(Deps.Hilt.ANDROID_TESTING)
+    kaptTest(Deps.Hilt.ANDROID_COMPILER)
+    testImplementation(Deps.ROBOLECTRIC)
 }
 
 // Install commit pre-hook

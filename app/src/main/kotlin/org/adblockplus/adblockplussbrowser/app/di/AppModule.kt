@@ -42,7 +42,7 @@ import kotlin.time.ExperimentalTime
 @ExperimentalTime
 @InstallIn(SingletonComponent::class)
 @Module
-internal object AppModule {
+object AppModule {
 
     @Singleton
     @Provides
