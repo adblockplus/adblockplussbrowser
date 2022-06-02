@@ -131,34 +131,34 @@
 
     <!-- Issue reporter -->
     <string name="issueReporter_page_title">Issue reporter</string>
-    <string name="issueReporter_typeSelector_heading" translatable="false">Select issue type</string>
-    <string name="issueReporter_typeSelector_description" translatable="false">This window will guide you through the steps required for the
+    <string name="issueReporter_typeSelector_heading" tools:ignore="MissingTranslation">Select issue type</string>
+    <string name="issueReporter_typeSelector_description" tools:ignore="MissingTranslation">This window will guide you through the steps required for the
         submission of an Adblock Plus issue report. First, please select the type of issue that you are experiencing on
         this page:
     </string>
-    <string name="issueReporter_falsePositive_label" translatable="false">Adblock Plus is blocking too much</string>
-    <string name="issueReporter_falseNegative_label" translatable="false">Adblock Plus doesn\'t block an advertisement</string>
-    <string name="pick_samsung_internet_screenshot" translatable="false">Pick Samsung Internet screenshot</string>
-    <string name="enter_email_comment" translatable="false">Enter comment</string>
-    <string name="comment_title" translatable="false">Comment (optional):</string>
-    <string name="enter_email_explanation" translatable="false">We encourage you to enter a valid email address so that we can contact you if
+    <string name="issueReporter_falsePositive_label" tools:ignore="MissingTranslation">Adblock Plus is blocking too much</string>
+    <string name="issueReporter_falseNegative_label" tools:ignore="MissingTranslation">Adblock Plus doesn\'t block an advertisement</string>
+    <string name="pick_samsung_internet_screenshot" tools:ignore="MissingTranslation">Pick Samsung Internet screenshot</string>
+    <string name="enter_email_comment" tools:ignore="MissingTranslation">Enter comment</string>
+    <string name="comment_title" tools:ignore="MissingTranslation">Comment (optional):</string>
+    <string name="issueReporter_email_description" tools:ignore="MissingTranslation">We encourage you to enter a valid email address so that we can contact you if
         there are questions about your report. It will also allow us to recognize your contributions and to prioritize
         them higher.
     </string>
-    <string name="comment_description" translatable="false">The text field below allows you to enter a comment to help us understand the
+    <string name="issueReporter_comment_description" tools:ignore="MissingTranslation">The text field below allows you to enter a comment to help us understand the
         issue. This step is optional but recommended if the problem isn\'t obvious. You can also review the report data
         before it is sent.
     </string>
-    <string name="anonymous_submission_check_box_description" translatable="false">Anonymous submission</string>
-    <string name="anonymous_submission_warning" translatable="false">We won\'t be able to come back to you and will likely prioritize the
+    <string name="issueReporter_anonymousSubmission_label" tools:ignore="MissingTranslation">Anonymous submission</string>
+    <string name="issueReporter_anonymousSubmission_warning" tools:ignore="MissingTranslation">We won\'t be able to come back to you and will likely prioritize the
         report lower.
     </string>
-    <string name="cancel" translatable="false">Cancel</string>
-    <string name="send_report" translatable="false">Send Report</string>
-    <string name="email" translatable="false">Email:</string>
-    <string name="report_issue_privacy_policy" translatable="false"><a href="https://adblockplus.org/en/privacy#issue-reporter">Privacy Policy</a></string>
-    <string name="make_screenshot_of_samsung_internet" translatable="false">Make screenshot of Samsung Internet</string>
-    <string name="report_issue_enter_email_hint" translatable="false">Enter email</string>
-    <string name="report_issue_enter_comment_hint" translatable="false">Enter comment</string>
+    <string name="cancel" tools:ignore="MissingTranslation">Cancel</string>
+    <string name="issueReporter_sendButton_label" tools:ignore="MissingTranslation">Send Report</string>
+    <string name="issueReporter_email_label" tools:ignore="MissingTranslation">Email:</string>
+    <string name="issueReporter_privacyPolicy" tools:ignore="MissingTranslation"><a href="https://adblockplus.org/en/privacy#issue-reporter">Privacy Policy</a></string>
+    <string name="make_screenshot_of_samsung_internet" tools:ignore="MissingTranslation">Make screenshot of Samsung Internet</string>
+    <string name="report_issue_enter_email_hint" tools:ignore="MissingTranslation">Enter email</string>
+    <string name="report_issue_enter_comment_hint" tools:ignore="MissingTranslation">Enter comment</string>
 
 </resources>
