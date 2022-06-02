@@ -21,7 +21,6 @@ import android.app.Application
 import android.os.RemoteException
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.android.installreferrer.api.InstallReferrerClient
 import com.android.installreferrer.api.InstallReferrerStateListener
@@ -37,7 +36,6 @@ import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.base.data.prefs.AppPreferences
 import timber.log.Timber
 import javax.inject.Inject
-import kotlinx.coroutines.flow.map
 import org.adblockplus.adblockplussbrowser.core.BuildConfig
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig

@@ -39,7 +39,6 @@ internal class MainPreferencesFragment :
     DataBindingFragment<FragmentMainPreferencesBinding>(R.layout.fragment_main_preferences) {
 
     private val viewModel: MainPreferencesViewModel by activityViewModels()
-
     // Lazy loading the UpdateSubscriptionsViewModel so it will only be used for crystal flavor here
     private val updateViewModel: UpdateSubscriptionsViewModel by activityViewModels()
 
@@ -116,6 +115,7 @@ internal class MainPreferencesFragment :
                 }
                 updateViewModel.setUpdateConfigType(updateConfigType)
             }
+
             updateViewModel.updateType.observe(this) { updateType ->
                 wifiOnlyCheckbox.isChecked =
                     updateType.name == UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_ALWAYS.name

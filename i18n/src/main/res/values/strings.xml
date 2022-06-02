@@ -106,7 +106,6 @@
     <string name="acceptable_ads_disabled">No, I\'d like to disable Acceptable Ads</string>
     <string name="allow_updates_on_mobile_data_connection" tools:ignore="MissingTranslation">Allow updates on mobile data connection</string>
     <string name="automatic_update_checkbox_hint" tools:ignore="MissingTranslation">Automatic updates will use your mobile data \nwhen you are not connected to wifi</string>
-    <string name="crystal_update_type" translatable="false">crystal_update_type</string>
     <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
     <string name="about_privacy_policy"><a href="https://adblockplus.org/privacy">Privacy Policy</a></string>
     <string name="about_terms_of_use"><a href="https://adblockplus.org/terms">Terms of Use</a></string>
