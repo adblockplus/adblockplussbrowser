@@ -16,8 +16,8 @@
  along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <import type="android.view.View"/>
@@ -108,17 +108,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/select_issue_type_description2" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/email_description_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin"
-                android:layout_marginTop="@dimen/margin"
-                android:text="@string/enter_email_comment"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pick_screenshot" />
-
-            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/enter_email_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -141,16 +130,15 @@
                 app:layout_constraintTop_toBottomOf="@+id/anonymous_submission_warning" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/enter_email_explanation"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin"
-                android:layout_marginTop="@dimen/margin"
-                android:layout_marginEnd="@dimen/margin"
-                android:text="@string/issueReporter_email_description"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/email_description_title" />
+                    android:id="@+id/enter_email_explanation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin"
+                    android:layout_marginEnd="@dimen/margin"
+                    android:text="@string/issueReporter_email_description"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/pick_screenshot" android:layout_marginTop="16dp"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/comment_description"

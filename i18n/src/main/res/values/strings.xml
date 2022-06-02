@@ -140,7 +140,6 @@
     <string name="issueReporter_falseNegative_label">Adblock Plus doesn\'t block an advertisement</string>
 
     <string name="pick_samsung_internet_screenshot" tools:ignore="MissingTranslation">Pick Samsung Internet screenshot</string>
-    <string name="enter_email_comment" tools:ignore="MissingTranslation">Enter comment</string>
     <string name="comment_title" tools:ignore="MissingTranslation">Comment (optional):</string>
     <string name="make_screenshot_of_samsung_internet" tools:ignore="MissingTranslation">Make screenshot of Samsung Internet</string>
     <string name="cancel" tools:ignore="MissingTranslation">Cancel</string>
