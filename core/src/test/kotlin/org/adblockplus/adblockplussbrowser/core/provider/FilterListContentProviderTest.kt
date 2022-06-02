@@ -27,8 +27,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import junit.framework.Assert.assertEquals
@@ -43,10 +45,19 @@ import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowContentResolver
 import kotlin.time.ExperimentalTime
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
+import org.adblockplus.adblockplussbrowser.analytics.BuildConfig
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
+import org.adblockplus.adblockplussbrowser.core.AppInfo
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
+import org.adblockplus.adblockplussbrowser.core.di.CoreModule
+import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
+import org.adblockplus.adblockplussbrowser.core.downloader.OkHttpDownloader
 import org.adblockplus.adblockplussbrowser.core.helpers.Fakes
+import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
+import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.junit.Rule
 import org.mockito.Mockito
@@ -54,6 +65,7 @@ import org.mockito.Mockito
 @ExperimentalTime
 @Config(sdk=[21])
 @RunWith(RobolectricTestRunner::class)
+@UninstallModules(CoreModule::class)
 @HiltAndroidTest
 internal class FilterListContentProviderTest {
     private var contentResolver : ContentResolver? = null
@@ -89,6 +101,48 @@ internal class FilterListContentProviderTest {
         fun getAnalyticsProvider(): AnalyticsProvider {
             return Fakes.FakeAnalyticsProvider()
         }
+
+        @Provides
+        @Singleton
+        fun provideSubscriptionDownloader(
+            @ApplicationContext context: Context,
+            okHttpClient: OkHttpClient,
+            appInfo: AppInfo,
+            repository: CoreRepository,
+            analyticsProvider: AnalyticsProvider
+        ): Downloader =
+            OkHttpDownloader(context, okHttpClient, repository, appInfo, analyticsProvider)
+
+        @Provides
+        @Singleton
+        fun provideUserCounter(
+            okHttpClient: OkHttpClient,
+            appInfo: AppInfo,
+            repository: CoreRepository,
+            settings: SettingsRepository,
+            analyticsProvider: AnalyticsProvider
+        ): UserCounter =
+            OkHttpUserCounter(okHttpClient, repository, settings, appInfo, analyticsProvider)
+
+        @Provides
+        @Singleton
+        fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor) =
+            OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build()
+
+        @Provides
+        @Singleton
+        fun provideOkHttpClientLogger() =
+            HttpLoggingInterceptor().apply {
+                if (BuildConfig.DEBUG) {
+                    level = HttpLoggingInterceptor.Level.HEADERS // The default is Level.NONE
+                }
+            }
+
+        @Provides
+        @Singleton
+        fun provideAppInfo() = AppInfo()
     }
 
     @Before
