@@ -17,7 +17,6 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui
 
-import android.content.Context
 import android.text.method.LinkMovementMethod
 import android.widget.TextView
 import android.view.View
@@ -103,18 +102,11 @@ internal class MainPreferencesFragment :
                 lifecycleOwner
             )
         } else {
-            // Get shared preferences
-            val sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE)
-            val selectedUpdateType = sharedPref.getString(getString(R.string.crystal_update_type), null) ?: run {
-                updateViewModel.setUpdateConfigType(UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY)
-            }
             // Binding and update configuration type logic
             binding.mainPreferencesAdBlockingInclude.crystalMainPreferencesUpdateSubscriptions.visibility =
                 View.VISIBLE
             val wifiOnlyCheckbox: MaterialCheckBox =
                 binding.mainPreferencesAdBlockingInclude.wifiOnlyCheckbox
-            wifiOnlyCheckbox.isChecked =
-                selectedUpdateType == UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_ALWAYS.name
             binding.mainPreferencesAdBlockingInclude.crystalMainPreferencesUpdateSubscriptions.setOnClickListener {
                 wifiOnlyCheckbox.isChecked = !wifiOnlyCheckbox.isChecked
                 val updateConfigType = if (wifiOnlyCheckbox.isChecked) {
@@ -123,10 +115,10 @@ internal class MainPreferencesFragment :
                     UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY
                 }
                 updateViewModel.setUpdateConfigType(updateConfigType)
-                with(sharedPref.edit()) {
-                    putString(getString(R.string.crystal_update_type), updateConfigType.name)
-                    apply()
-                }
+            }
+            updateViewModel.updateType.observe(this) { updateType ->
+                wifiOnlyCheckbox.isChecked =
+                    updateType.name == UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_ALWAYS.name
             }
         }
         // Languages "Add additional language"
