@@ -16,7 +16,7 @@
  along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<layout xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -231,6 +231,7 @@
                 android:layout_marginEnd="@dimen/margin"
                 android:layout_marginBottom="@dimen/margin"
                 android:text="@string/issueReporter_sendButton_label"
+                android:enabled="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_text_box_comment" />

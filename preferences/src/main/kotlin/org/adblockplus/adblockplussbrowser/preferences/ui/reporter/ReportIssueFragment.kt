@@ -24,6 +24,7 @@ import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
@@ -52,6 +53,11 @@ internal class ReportIssueFragment : DataBindingFragment<FragmentReportIssueBind
                 binding.anonymousSubmissionWarning.visibility = View.GONE
             }
         }
+
+        binding.cancel.setDebounceOnClickListener({
+            val direction = ReportIssueFragmentDirections.actionReportIssueFragmentToMainPreferencesFragment()
+            findNavController().navigate(direction)
+        }, lifecycleOwner)
     }
 
     private val pickImageFromGalleryForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
