@@ -129,5 +129,17 @@
 
     <!-- Issue reporter -->
     <string name="issueReporter_page_title">Αναφορά ζητήματος</string>
+    <string name="issueReporter_typeSelector_heading">Τύπος ζητήματος</string>
+    <string name="issueReporter_typeSelector_description">Σε αυτό το παράθυρο θα βρείτε βοήθεια για τα βήματα που πρέπει να ακολουθηθούν ώστε να υποβληθεί μια αναφορά για κάποιο ζήτημα που αντιμετωπίζετε σχετικά με το Adblock Plus. Παρακαλώ πρώτα επιλέξτε τον τύπο του ζητήματος που αντιμετωπίζετε σε αυτή την σελίδα:</string>
+    <string name="issueReporter_falsePositive_label">Το Adblock Plus φράζει πάρα πολλά στοιχεία</string>
+    <string name="issueReporter_falseNegative_label">Το Adblock Plus δεν φράζει μια διαφήμιση</string>
+
+    <string name="issueReporter_email_description">Σας συνιστούμε να εισάγετε μια έγκυρη διεύθυνση ηλεκτρονικού ταχυδρομείου, ώστε να επικοινωνήσουμε μαζί σας εάν υπάρχουν ερωτήσεις σχετικά με την αναφορά σας. Θα μας επιτρέψει επίσης, να αναγνωρίζουμε τις συνεισφορές σας και να τις δώσουμε υψηλότερη προτεραιότητα.</string>
+    <string name="issueReporter_comment_description">Το πεδίο κειμένου παρακάτω σας επιτρέπει να εισάγετε κάποιο σχόλιο το οποίο θα μας βοηθήσει να κατανοήσουμε το ζήτημα που αντιμετωπίζετε. Το παρόν βήμα είναι προαιρετικό αλλά προτείνεται να συμπληρωθεί αν το πρόβλημα δεν είναι προφανές. Μπορείτε να αναθεωρήσετε την αναφορά πριν την αποστείλετε.</string>
+    <string name="issueReporter_anonymousSubmission_label">Ανώνυμη υποβολή</string>
+    <string name="issueReporter_anonymousSubmission_warning">Δεν θα μπορέσουμε να επικοινωνήσουμε μαζί σας και πιθανώς η αναφορά σας να θεωρηθεί χαμηλής προτεραιότητας.</string>
+    <string name="issueReporter_sendButton_label">Αποστολή αναφοράς</string>
+    <string name="issueReporter_email_label">Email:</string>
+    <string name="issueReporter_privacyPolicy"><a href="https://adblockplus.org/en/privacy#issue-reporter">Πολιτική ιδιωτικού απορρήτου</a></string>
 
 </resources>

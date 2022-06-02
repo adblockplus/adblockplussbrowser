@@ -129,4 +129,16 @@
 
     <!-- Issue reporter -->
     <string name="issueReporter_page_title">Relatório de erro</string>
+    <string name="issueReporter_typeSelector_heading">Que tipo de problema você está enfrentando?</string>
+    <string name="issueReporter_typeSelector_description">Selecione um problema:</string>
+    <string name="issueReporter_falsePositive_label">A página que estou tentando ver não acessa</string>
+    <string name="issueReporter_falseNegative_label">Eu ainda vejo anúncios</string>
+
+    <string name="issueReporter_email_description">É útil informar um endereço de e-mail válido. Isso nos permite entrar em contato com você para resolver problemas difíceis, como malware. Tenha em mente que não é obrigatório informar um endereço de e-mail e seu endereço nunca será compartilhado.</string>
+    <string name="issueReporter_comment_description">Por favor, ajudem-nos a entender melhor a questão, deixando um comentário abaixo.</string>
+    <string name="issueReporter_anonymousSubmission_label">Envio anônimo</string>
+    <string name="issueReporter_anonymousSubmission_warning">Nós não vamos ser capazes de entrar em contato com você e, portanto, seus relatórios terão baixa prioridade.</string>
+    <string name="issueReporter_sendButton_label">Enviar relatório</string>
+    <string name="issueReporter_email_label">E-mail:</string>
+    <string name="issueReporter_privacyPolicy"><a href="https://adblockplus.org/en/privacy#issue-reporter">Política de Privacidade</a></string>
 </resources>

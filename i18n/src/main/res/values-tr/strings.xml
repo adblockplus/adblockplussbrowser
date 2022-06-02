@@ -129,5 +129,17 @@
 
     <!-- Issue reporter -->
     <string name="issueReporter_page_title">Sorun bildirici</string>
+    <string name="issueReporter_typeSelector_heading">Ne tür bir sorun yaşıyorsunuz?</string>
+    <string name="issueReporter_typeSelector_description">Lütfen bir sorun seçin:</string>
+    <string name="issueReporter_falsePositive_label">Görüntülemeye çalıştığım sayfa bozulmuş</string>
+    <string name="issueReporter_falseNegative_label">Hâlâ reklamları görüyorum</string>
+
+    <string name="issueReporter_email_description">Geçerli bir e-posta adresi girilmesi faydalı olacaktır. Bu, kötü amaçlı yazılım gibi zorlu sorunları çözmek amacıyla sizinle iletişim kurmamızı sağlar. E-posta adresi girilmesinin zorunlu olmadığını ve adresinizin hiçbir şekilde paylaşılmayacağını unutmayın.</string>
+    <string name="issueReporter_comment_description">Lütfen aşağıya bir yorum bırakarak sorunu daha iyi anlamamıza yardımcı olun.</string>
+    <string name="issueReporter_anonymousSubmission_label">Anonim gönder</string>
+    <string name="issueReporter_anonymousSubmission_warning">Size geri dönemeyiz ve muhtemelen rapor önceliği düşük olarak ayarlanır.</string>
+    <string name="issueReporter_sendButton_label">Bildirimi gönder</string>
+    <string name="issueReporter_email_label">E-posta:</string>
+    <string name="issueReporter_privacyPolicy"><a href="https://adblockplus.org/en/privacy#issue-reporter">Gizlilik Politikası</a></string>
 
 </resources>

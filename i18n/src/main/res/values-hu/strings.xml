@@ -129,5 +129,17 @@
 
     <!-- Issue reporter -->
     <string name="issueReporter_page_title">Hibajelentő</string>
+    <string name="issueReporter_typeSelector_heading">Vállasszon típust</string>
+    <string name="issueReporter_typeSelector_description">Ez az ablak végigvezeti az Adblock Plus hiba bejelentési lépésein. Először kérem válassza ki a webhelyen jelentkező hiba jellegét:</string>
+    <string name="issueReporter_falsePositive_label">Az Adblock Plus túl sok mindent letilt</string>
+    <string name="issueReporter_falseNegative_label">Az Adblock Plus nem tiltott le egy hirdetést</string>
+
+    <string name="issueReporter_email_description">Javasoljuk, hogy érvényes e-mail címet adjon meg, így fel tudjuk venni Önnel a kapcsolatot, ha kérdés merül fel a jelentésével kapcsolatban. Ezzel azt is lehetővé teszi, hogy felismerjük az Ön hozzájárulásait, és azok magasabb prioritást kapjanak.</string>
+    <string name="issueReporter_comment_description">Az alábbi szöveges mezőbe beírhat egy megjegyzést, ami segíthet megérteni a problémát. Ez a lépés kihagyható, de ajánlott, ha a probléma nem egyértelmű. A jelentés elküldése előtt még lesz lehetősége átnézni a megadott adatokat.</string>
+    <string name="issueReporter_anonymousSubmission_label">Névtelen beküldendő</string>
+    <string name="issueReporter_anonymousSubmission_warning">Nem fogunk tudni kapcsolatba lépni Önnel, és valószínű, hogy a jelentése alacsonyabb prioritást kap.</string>
+    <string name="issueReporter_sendButton_label">Jelentés küldése</string>
+    <string name="issueReporter_email_label">Email:</string>
+    <string name="issueReporter_privacyPolicy"><a href="https://adblockplus.org/en/privacy#issue-reporter">Adatvédelmi irányelv</a></string>
 
 </resources>
