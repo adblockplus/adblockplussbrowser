@@ -49,8 +49,10 @@ internal class ReportIssueFragment : DataBindingFragment<FragmentReportIssueBind
         binding.anonymousSubmissionCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 binding.anonymousSubmissionWarning.visibility = View.VISIBLE
+                binding.editTextBoxEmailAddress.isEnabled = false
             } else {
                 binding.anonymousSubmissionWarning.visibility = View.GONE
+                binding.editTextBoxEmailAddress.isEnabled = true
             }
         }
 
