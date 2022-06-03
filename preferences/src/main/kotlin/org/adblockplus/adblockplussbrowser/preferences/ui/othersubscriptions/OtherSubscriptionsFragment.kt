@@ -114,7 +114,7 @@ internal class OtherSubscriptionsFragment :
             .setFabBackgroundColor(
                 ContextCompat.getColor(
                     requireContext(),
-                    R.color.foreground_secondary
+                    R.color.onboarding_icon_foreground_accent
                 )
             )
             .create()
@@ -126,7 +126,7 @@ internal class OtherSubscriptionsFragment :
             .setFabBackgroundColor(
                 ContextCompat.getColor(
                     requireContext(),
-                    R.color.foreground_secondary
+                    R.color.onboarding_icon_foreground_accent
                 )
             )
             .create()
