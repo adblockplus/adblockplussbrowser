@@ -68,7 +68,7 @@ internal class LauncherViewModel @Inject constructor(
                 var direction = LauncherDirection.MAIN
                 if (!onBoardingCompleted) {
                     direction = LauncherDirection.ONBOARDING
-                    if(BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_CRYSTAL) {
+                    if (BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_CRYSTAL) {
                         settingsRepository.setUpdateConfig(UpdateConfig.WIFI_ONLY)
                     }
                 } else if (onBoardingCompleted &&
