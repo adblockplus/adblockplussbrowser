@@ -95,8 +95,6 @@
     <string name="other_subscriptions_default_category">Built-in filter lists</string>
     <string name="other_subscriptions_custom_category">Active custom filter lists</string>
     <string name="other_subscriptions_add_custom_title">Add custom filter list</string>
-    <string name="other_subscriptions_add_custom_from_url_title" tools:ignore="MissingTranslation">Add custom filter list from external URL</string>
-    <string name="other_subscriptions_add_custom_from_file_title" tools:ignore="MissingTranslation">Add custom filter list from local storage</string>
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
     <string name="file_manager_not_found_message" tools:ignore="MissingTranslation">"Please, install a file manager"</string>
     <string name="delete_dialog_title">Confirm deletion</string>
