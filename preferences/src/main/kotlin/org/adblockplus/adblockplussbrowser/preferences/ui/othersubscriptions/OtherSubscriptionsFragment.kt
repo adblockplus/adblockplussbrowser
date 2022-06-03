@@ -44,51 +44,7 @@ internal class OtherSubscriptionsFragment :
         binding.viewModel = viewModel
 
         if (BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_ABP) {
-            val speedDial = binding.speedDial
-            speedDial.visibility = View.VISIBLE
-
-            val addWithUrlButton = SpeedDialActionItem.Builder(
-                R.id.other_subscriptions_add_from_url_button,
-                R.drawable.ic_baseline_link_24
-            )
-                .setFabBackgroundColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.background_accent
-                    )
-                )
-                .create()
-
-            val addFromLocalStorageButton = SpeedDialActionItem.Builder(
-                R.id.other_subscriptions_add_from_local_button,
-                R.drawable.ic_baseline_folder_24
-            )
-                .setFabBackgroundColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.background_accent
-                    )
-                )
-                .create()
-
-            speedDial.addAllActionItems(listOf(addWithUrlButton, addFromLocalStorageButton))
-
-            speedDial.setOnActionSelectedListener(SpeedDialView.OnActionSelectedListener { actionItem ->
-                when (actionItem.id) {
-                    R.id.other_subscriptions_add_from_url_button -> {
-                        AddCustomSubscriptionDialogFragment().show(parentFragmentManager, null)
-                    }
-                    R.id.other_subscriptions_add_from_local_button -> {
-                        // TODO: finish integration with file explorer
-                        Toast.makeText(
-                            context,
-                            getText(R.string.file_manager_not_found_message),
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                }
-                false
-            })
+            initSpeedDial(binding)
         } else {
             val lifecycleOwner = this.viewLifecycleOwner
             binding.otherSubscriptionsAddButton.visibility = View.VISIBLE
@@ -109,7 +65,6 @@ internal class OtherSubscriptionsFragment :
         }
         val itemTouchHelper = ItemTouchHelper(swipeToDeleteHandler)
         itemTouchHelper.attachToRecyclerView(binding.otherSubscriptionsList)
-
 
         viewModel.uiState.observe(this) { uiState ->
             when (uiState) {
@@ -146,5 +101,53 @@ internal class OtherSubscriptionsFragment :
                 }
             }
         }
+    }
+
+    private fun initSpeedDial(binding: FragmentOtherSubscriptionsBinding) {
+        val speedDial = binding.speedDial
+        speedDial.visibility = View.VISIBLE
+
+        val addWithUrlButton = SpeedDialActionItem.Builder(
+            R.id.other_subscriptions_add_from_url_button,
+            R.drawable.ic_baseline_link_24
+        )
+            .setFabBackgroundColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.foreground_secondary
+                )
+            )
+            .create()
+
+        val addFromLocalStorageButton = SpeedDialActionItem.Builder(
+            R.id.other_subscriptions_add_from_local_button,
+            R.drawable.ic_baseline_folder_24
+        )
+            .setFabBackgroundColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.foreground_secondary
+                )
+            )
+            .create()
+
+        speedDial.addAllActionItems(listOf(addWithUrlButton, addFromLocalStorageButton))
+
+        speedDial.setOnActionSelectedListener(SpeedDialView.OnActionSelectedListener { actionItem ->
+            when (actionItem.id) {
+                R.id.other_subscriptions_add_from_url_button -> {
+                    AddCustomSubscriptionDialogFragment().show(parentFragmentManager, null)
+                }
+                R.id.other_subscriptions_add_from_local_button -> {
+                    // TODO: finish integration with file explorer
+                    Toast.makeText(
+                        context,
+                        getText(R.string.file_manager_not_found_message),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+            false
+        })
     }
 }
