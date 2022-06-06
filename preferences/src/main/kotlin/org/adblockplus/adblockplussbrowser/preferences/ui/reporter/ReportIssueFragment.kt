@@ -46,7 +46,7 @@ internal class ReportIssueFragment : DataBindingFragment<FragmentReportIssueBind
             pickImageFromGallery()
         }, lifecycleOwner)
 
-        binding.anonymousSubmissionCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.anonymousSubmissionCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 binding.anonymousSubmissionWarning.visibility = View.VISIBLE
                 binding.editTextBoxEmailAddress.isEnabled = false

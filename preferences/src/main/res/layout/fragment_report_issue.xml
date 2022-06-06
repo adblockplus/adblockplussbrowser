@@ -191,7 +191,7 @@
                 android:layout_marginTop="@dimen/margin"
                 android:layout_marginEnd="@dimen/margin"
                 android:text="@string/issueReporter_anonymousSubmission_warning"
-                android:textColor="@color/design_default_color_error"
+                android:textColor="@color/clickable_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/anonymous_submission_check_box" />
@@ -203,7 +203,6 @@
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginTop="@dimen/margin"
                 android:layout_marginEnd="@dimen/margin"
-                android:minLines="5"
                 android:hint="@string/report_issue_enter_comment_hint"
                 android:minHeight="48dp"
                 android:textColorHint="@color/hint_color"
