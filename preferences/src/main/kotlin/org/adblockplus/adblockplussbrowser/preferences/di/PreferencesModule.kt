@@ -15,29 +15,22 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.adblockplus.adblockplussbrowser.preferences.ui.reporter
+package org.adblockplus.adblockplussbrowser.preferences.di
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
-import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import org.adblockplus.adblockplussbrowser.preferences.data.HttpReportIssueRepository
 import org.adblockplus.adblockplussbrowser.preferences.data.ReportIssueRepository
-import javax.inject.Inject
+import javax.inject.Singleton
 
-@HiltViewModel
-internal class ReportIssueViewModel @Inject constructor() : ViewModel() {
+@Module
+@InstallIn(SingletonComponent::class)
+internal object PreferencesModule {
 
-    @Inject
-    lateinit var reportIssueRepository: ReportIssueRepository
-
-    @Inject
-    lateinit var analyticsProvider: AnalyticsProvider
-
-    fun sendReport(){
-        viewModelScope.launch{
-            reportIssueRepository.sendReport()
-        }
-    }
-
+    @Singleton
+    @Provides
+    fun provideReportIssueRepository(): ReportIssueRepository =
+        HttpReportIssueRepository()
 }

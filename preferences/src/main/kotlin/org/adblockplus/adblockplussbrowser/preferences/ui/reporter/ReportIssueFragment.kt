@@ -56,9 +56,20 @@ internal class ReportIssueFragment : DataBindingFragment<FragmentReportIssueBind
             }
         }
 
+        binding.issueTypeRadioGroup.setOnCheckedChangeListener{ radioGroup, checkedId ->
+            when(checkedId)
+            {
+                binding.blockingTooHigh.id, binding.blockingTooLow.id -> binding.sendReport.isEnabled = true
+            }
+        }
+
         binding.cancel.setDebounceOnClickListener({
             val direction = ReportIssueFragmentDirections.actionReportIssueFragmentToMainPreferencesFragment()
             findNavController().navigate(direction)
+        }, lifecycleOwner)
+
+        binding.sendReport.setDebounceOnClickListener({
+            viewModel.sendReport()
         }, lifecycleOwner)
     }
 
