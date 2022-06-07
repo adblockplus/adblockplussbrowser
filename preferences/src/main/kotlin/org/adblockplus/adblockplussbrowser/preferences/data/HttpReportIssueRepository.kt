@@ -17,13 +17,17 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.data
 
+import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData
 import javax.inject.Inject
 
 class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
 
-    val DEFAULT_URL = """https://reports.adblockplus.org/submitReport"""
-
-    override suspend fun sendReport() {
+    override suspend fun sendReport(data: ReportIssueData): String {
+        return ""
         TODO("Not yet implemented")
+    }
+
+    companion object{
+        const val DEFAULT_URL = """https://reports.adblockplus.org/submitReport"""
     }
 }

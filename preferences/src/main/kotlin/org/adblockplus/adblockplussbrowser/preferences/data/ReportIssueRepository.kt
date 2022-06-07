@@ -17,7 +17,9 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.data
 
+import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData
+
 interface ReportIssueRepository {
 
-    suspend fun sendReport()
+    suspend fun sendReport(data: ReportIssueData): String
 }
