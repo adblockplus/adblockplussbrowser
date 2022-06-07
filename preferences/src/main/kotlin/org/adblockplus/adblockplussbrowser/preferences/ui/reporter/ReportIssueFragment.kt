@@ -49,11 +49,28 @@ internal class ReportIssueFragment :
         val lifecycleOwner = this.viewLifecycleOwner
 
         viewModel.returnedString.observe(this) {
-            if (viewModel.returnedString.value?.isNotEmpty() == true) {
-                Toast.makeText(context, viewModel.returnedString.value, Toast.LENGTH_LONG)
-                    .show()
+            when (viewModel.returnedString.value) {
+                REPORT_ISSUE_FRAGMENT_IMAGE_READ_SUCCESS -> {
+                    binding.sendReport.isEnabled =
+                        viewModel.data.validate()
+                }
+                REPORT_ISSUE_FRAGMENT_SEND_SUCCESS -> {
+                    val direction =
+                        ReportIssueFragmentDirections.actionReportIssueFragmentToMainPreferencesFragment()
+                    findNavController().navigate(direction)
+                    Toast.makeText(
+                        context,
+                        REPORT_ISSUE_FRAGMENT_SEND_SUCCESS_MESSAGE,
+                        Toast.LENGTH_LONG
+                    )
+                        .show()
+                }
+                else -> {
+                    Toast.makeText(context, viewModel.returnedString.value, Toast.LENGTH_LONG)
+                        .show()
+                    binding.sendReport.isEnabled = viewModel.data.validate()
+                }
             }
-            binding.sendReport.isEnabled = viewModel.data.validate()
         }
 
         binding.pickScreenshot.setDebounceOnClickListener({
@@ -75,7 +92,8 @@ internal class ReportIssueFragment :
 
         binding.issueTypeRadioGroup.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
-                binding.blockingTooHigh.id -> viewModel.data.type = REPORT_ISSUE_DATA_TYPE_FALSE_POSITIVE
+                binding.blockingTooHigh.id -> viewModel.data.type =
+                    REPORT_ISSUE_DATA_TYPE_FALSE_POSITIVE
                 binding.blockingTooLow.id -> viewModel.data.type = REPORT_ISSUE_DATA_TYPE_MISSED_AD
             }
             binding.sendReport.isEnabled = viewModel.data.validate()
@@ -117,4 +135,10 @@ internal class ReportIssueFragment :
         pickImageFromGalleryForResult.launch(pickIntent)
     }
 
+    companion object {
+        const val REPORT_ISSUE_FRAGMENT_IMAGE_READ_SUCCESS = ""
+        const val REPORT_ISSUE_FRAGMENT_SEND_SUCCESS = "SEND_SUCCESS"
+        const val REPORT_ISSUE_FRAGMENT_SEND_ERROR = "SEND_ERROR"
+        const val REPORT_ISSUE_FRAGMENT_SEND_SUCCESS_MESSAGE = "Report sent"
+    }
 }

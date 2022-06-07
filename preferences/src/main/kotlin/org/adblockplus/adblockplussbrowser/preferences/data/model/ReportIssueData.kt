@@ -21,7 +21,7 @@ import android.util.Patterns
 
 data class ReportIssueData(
     var type: String = "",
-    var image: String = "",
+    var screenshot: String = "",
     var email: String = "",
     var comment: String = ""
 ) {
@@ -29,11 +29,11 @@ data class ReportIssueData(
             || type == REPORT_ISSUE_DATA_TYPE_MISSED_AD))
             && (email == REPORT_ISSUE_DATA_VALID_BLANK
             || Patterns.EMAIL_ADDRESS.matcher(email).matches())
-            && image.isNotEmpty()
+            && screenshot.isNotEmpty()
 
     companion object {
         const val REPORT_ISSUE_DATA_VALID_BLANK = " "
-        const val REPORT_ISSUE_DATA_TYPE_FALSE_POSITIVE = "false_positive"
-        const val REPORT_ISSUE_DATA_TYPE_MISSED_AD = "missed_ad"
+        const val REPORT_ISSUE_DATA_TYPE_FALSE_POSITIVE = "false positive"
+        const val REPORT_ISSUE_DATA_TYPE_MISSED_AD = "missed ad"
     }
 }

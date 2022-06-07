@@ -32,6 +32,8 @@ import kotlinx.coroutines.launch
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.preferences.data.ReportIssueRepository
 import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData
+import org.adblockplus.adblockplussbrowser.preferences.ui.reporter.ReportIssueFragment.Companion.REPORT_ISSUE_FRAGMENT_SEND_ERROR
+import org.adblockplus.adblockplussbrowser.preferences.ui.reporter.ReportIssueFragment.Companion.REPORT_ISSUE_FRAGMENT_SEND_SUCCESS
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
@@ -51,18 +53,20 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
 
     internal fun sendReport() {
         viewModelScope.launch {
-            returnedString.value = reportIssueRepository.sendReport(data)
+            returnedString.value = if (reportIssueRepository.sendReport(data)
+                    .isEmpty()
+            ) REPORT_ISSUE_FRAGMENT_SEND_SUCCESS else REPORT_ISSUE_FRAGMENT_SEND_ERROR
         }
     }
 
     internal fun processImage(unresolvedUri: String) {
         viewModelScope.launch {
-            data.image = imageFileToBase64(unresolvedUri)
-            returnedString.value = if (data.image.isEmpty()) {
+            data.screenshot = imageFileToBase64(unresolvedUri)
+            returnedString.value = if (data.screenshot.isEmpty()) {
                 // Operation failed, show error message
                 "Failed to load image"
             } else {
-                Timber.i("ReportIssue: base64 image: ${data.image.subSequence(0, 20)}")
+                Timber.i("ReportIssue: base64 image: ${data.screenshot.subSequence(0, 20)}")
                 // Operation successful, validate data
                 ""
             }
