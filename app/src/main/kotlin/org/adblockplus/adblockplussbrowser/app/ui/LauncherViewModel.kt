@@ -36,6 +36,9 @@ import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.base.data.prefs.AppPreferences
 import timber.log.Timber
 import javax.inject.Inject
+import org.adblockplus.adblockplussbrowser.core.BuildConfig
+import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
+import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig
 
 @HiltViewModel
 internal class LauncherViewModel @Inject constructor(
@@ -52,6 +55,9 @@ internal class LauncherViewModel @Inject constructor(
     @Inject
     lateinit var analyticsProvider: AnalyticsProvider
 
+    @Inject
+    lateinit var settingsRepository: SettingsRepository
+
     private val onBoardingCompletedFlow = appPreferences.onboardingCompleted
     private val lastFilterRequestFlow = appPreferences.lastFilterListRequest
 
@@ -62,6 +68,9 @@ internal class LauncherViewModel @Inject constructor(
                 var direction = LauncherDirection.MAIN
                 if (!onBoardingCompleted) {
                     direction = LauncherDirection.ONBOARDING
+                    if (BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_CRYSTAL) {
+                        settingsRepository.setUpdateConfig(UpdateConfig.WIFI_ONLY)
+                    }
                 } else if (onBoardingCompleted &&
                     (lastFilterRequest == 0L || isFilterRequestExpired(lastFilterRequest))) {
                     direction = LauncherDirection.ONBOARDING_LAST_STEP

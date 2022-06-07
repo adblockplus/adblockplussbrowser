@@ -101,6 +101,7 @@ internal class MainPreferencesFragment :
                 lifecycleOwner
             )
         } else {
+            // Binding and update configuration type logic
             binding.mainPreferencesAdBlockingInclude.crystalMainPreferencesUpdateSubscriptions.visibility =
                 View.VISIBLE
             val wifiOnlyCheckbox: MaterialCheckBox =
