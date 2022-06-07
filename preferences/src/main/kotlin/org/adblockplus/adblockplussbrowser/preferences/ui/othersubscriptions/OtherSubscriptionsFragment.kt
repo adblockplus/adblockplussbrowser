@@ -19,15 +19,20 @@ package org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions
 
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.leinardi.android.speeddial.SpeedDialActionItem
+import com.leinardi.android.speeddial.SpeedDialView
 import dagger.hilt.android.AndroidEntryPoint
+import org.adblockplus.adblockplussbrowser.base.BuildConfig
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentOtherSubscriptionsBinding
 import org.adblockplus.adblockplussbrowser.preferences.ui.SwipeToDeleteCallback
+
 
 @AndroidEntryPoint
 internal class OtherSubscriptionsFragment :
@@ -38,11 +43,15 @@ internal class OtherSubscriptionsFragment :
     override fun onBindView(binding: FragmentOtherSubscriptionsBinding) {
         binding.viewModel = viewModel
 
-
-        val lifecycleOwner = this.viewLifecycleOwner
-        binding.otherSubscriptionsAddButton.setDebounceOnClickListener({
-            AddCustomSubscriptionDialogFragment().show(parentFragmentManager, null)
-        }, lifecycleOwner)
+        if (BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_ABP) {
+            initSpeedDial(binding)
+        } else {
+            val lifecycleOwner = this.viewLifecycleOwner
+            binding.otherSubscriptionsAddButton.visibility = View.VISIBLE
+            binding.otherSubscriptionsAddButton.setDebounceOnClickListener({
+                AddCustomSubscriptionDialogFragment().show(parentFragmentManager, null)
+            }, lifecycleOwner)
+        }
 
         val swipeToDeleteHandler = object : SwipeToDeleteCallback() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -56,7 +65,6 @@ internal class OtherSubscriptionsFragment :
         }
         val itemTouchHelper = ItemTouchHelper(swipeToDeleteHandler)
         itemTouchHelper.attachToRecyclerView(binding.otherSubscriptionsList)
-
 
         viewModel.uiState.observe(this) { uiState ->
             when (uiState) {
@@ -93,5 +101,53 @@ internal class OtherSubscriptionsFragment :
                 }
             }
         }
+    }
+
+    private fun initSpeedDial(binding: FragmentOtherSubscriptionsBinding) {
+        val speedDial = binding.speedDial
+        speedDial.visibility = View.VISIBLE
+
+        val addWithUrlButton = SpeedDialActionItem.Builder(
+            R.id.other_subscriptions_add_from_url_button,
+            R.drawable.ic_baseline_link_24
+        )
+            .setFabBackgroundColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.onboarding_icon_foreground_accent
+                )
+            )
+            .create()
+
+        val addFromLocalStorageButton = SpeedDialActionItem.Builder(
+            R.id.other_subscriptions_add_from_local_button,
+            R.drawable.ic_baseline_folder_24
+        )
+            .setFabBackgroundColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.onboarding_icon_foreground_accent
+                )
+            )
+            .create()
+
+        speedDial.addAllActionItems(listOf(addWithUrlButton, addFromLocalStorageButton))
+
+        speedDial.setOnActionSelectedListener(SpeedDialView.OnActionSelectedListener { actionItem ->
+            when (actionItem.id) {
+                R.id.other_subscriptions_add_from_url_button -> {
+                    AddCustomSubscriptionDialogFragment().show(parentFragmentManager, null)
+                }
+                R.id.other_subscriptions_add_from_local_button -> {
+                    // TODO: finish integration with file explorer
+                    Toast.makeText(
+                        context,
+                        getText(R.string.file_manager_not_found_message),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+            false
+        })
     }
 }
