@@ -53,9 +53,9 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
 
     internal fun sendReport() {
         viewModelScope.launch {
-            returnedString.value = if (reportIssueRepository.sendReport(data)
-                    .isEmpty()
-            ) REPORT_ISSUE_FRAGMENT_SEND_SUCCESS else REPORT_ISSUE_FRAGMENT_SEND_ERROR
+            returnedString.value = if (reportIssueRepository.sendReport(data).isEmpty())
+                REPORT_ISSUE_FRAGMENT_SEND_SUCCESS
+            else REPORT_ISSUE_FRAGMENT_SEND_ERROR
         }
     }
 
@@ -76,7 +76,6 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
     private fun imageFileToBase64(unresolvedUri: String): String {
         val context = getApplication<Application>().applicationContext
         val cr: ContentResolver = context.contentResolver ?: return ""
-
         val pic: Uri = Uri.parse("content://media$unresolvedUri")
 
         Timber.i("ReportIssue: image path: $pic")
@@ -89,12 +88,15 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
 
         val bs = ByteArrayOutputStream()
         return try {
-            ImageDecoder.decodeBitmap(source).compress(Bitmap.CompressFormat.PNG, 100, bs)
+            ImageDecoder.decodeBitmap(source).compress(Bitmap.CompressFormat.PNG, REPORT_ISSUE_VIEW_MODEL_IMAGE_QUALITY, bs)
             "data:image/png;base64," + Base64.encodeToString(bs.toByteArray(), Base64.DEFAULT)
         } catch (e: Exception) {
-            Timber.d("ReportIssue: failed")
+            Timber.e("ReportIssue: Screenshot decode failed")
             ""
         }
     }
 
+    companion object{
+        private const val REPORT_ISSUE_VIEW_MODEL_IMAGE_QUALITY = 100
+    }
 }

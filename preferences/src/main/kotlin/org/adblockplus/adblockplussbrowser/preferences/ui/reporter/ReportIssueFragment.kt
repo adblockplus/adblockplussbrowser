@@ -50,9 +50,9 @@ internal class ReportIssueFragment :
 
         viewModel.returnedString.observe(this) {
             when (viewModel.returnedString.value) {
-                REPORT_ISSUE_FRAGMENT_IMAGE_READ_SUCCESS -> {
-                    binding.sendReport.isEnabled =
-                        viewModel.data.validate()
+                REPORT_ISSUE_FRAGMENT_SCREENSHOT_READ_SUCCESS -> {
+                    binding.sendReport.isEnabled = viewModel.data.validate()
+                    Timber.d("ReportIssue Screenshot read success")
                 }
                 REPORT_ISSUE_FRAGMENT_SEND_SUCCESS -> {
                     val direction =
@@ -62,8 +62,7 @@ internal class ReportIssueFragment :
                         context,
                         REPORT_ISSUE_FRAGMENT_SEND_SUCCESS_MESSAGE,
                         Toast.LENGTH_LONG
-                    )
-                        .show()
+                    ).show()
                 }
                 else -> {
                     Toast.makeText(context, viewModel.returnedString.value, Toast.LENGTH_LONG)
@@ -88,6 +87,7 @@ internal class ReportIssueFragment :
                 viewModel.data.email = binding.editTextBoxEmailAddress.text.toString()
             }
             binding.sendReport.isEnabled = viewModel.data.validate()
+            Timber.d("ReportIssue Email read success")
         }
 
         binding.issueTypeRadioGroup.setOnCheckedChangeListener { _, checkedId ->
@@ -97,6 +97,7 @@ internal class ReportIssueFragment :
                 binding.blockingTooLow.id -> viewModel.data.type = REPORT_ISSUE_DATA_TYPE_MISSED_AD
             }
             binding.sendReport.isEnabled = viewModel.data.validate()
+            Timber.d("ReportIssue Radio read success")
         }
 
         binding.editTextBoxComment.addTextChangedListener {
@@ -119,10 +120,7 @@ internal class ReportIssueFragment :
             if (result.resultCode == Activity.RESULT_OK) {
                 val intent = result.data
                 val unresolvedUri = intent?.data?.path.toString()
-                Timber.i("ReportIssue: picked image: $unresolvedUri")
                 viewModel.processImage(unresolvedUri)
-
-                binding?.sendReport?.isEnabled = viewModel.data.validate()
             }
         }
 
@@ -136,7 +134,7 @@ internal class ReportIssueFragment :
     }
 
     companion object {
-        const val REPORT_ISSUE_FRAGMENT_IMAGE_READ_SUCCESS = ""
+        const val REPORT_ISSUE_FRAGMENT_SCREENSHOT_READ_SUCCESS = ""
         const val REPORT_ISSUE_FRAGMENT_SEND_SUCCESS = "SEND_SUCCESS"
         const val REPORT_ISSUE_FRAGMENT_SEND_ERROR = "SEND_ERROR"
         const val REPORT_ISSUE_FRAGMENT_SEND_SUCCESS_MESSAGE = "Report sent"

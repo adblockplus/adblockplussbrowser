@@ -17,54 +17,73 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.data
 
+import android.net.Uri
 import android.util.Xml
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData
 import org.xmlpull.v1.XmlSerializer
+import ru.gildor.coroutines.okhttp.await
 import timber.log.Timber
-import java.io.BufferedOutputStream
 import java.io.StringWriter
-import java.net.HttpURLConnection
 import java.net.URL
+import java.util.*
 import javax.inject.Inject
 
 
 class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
 
+    private val okHttpClient = OkHttpClient()
+
     override suspend fun sendReport(data: ReportIssueData): String {
 
         val xml = makeXML(data)
-        if (xml.isEmpty()) {
-            return XML_ERROR
+        return if (xml.isEmpty()) {
+            XML_ERROR
+        } else {
+            makeHttpPost(xml)
         }
-        Timber.i(xml)
-
-        val url = makeHttpPost(xml)
-
-        return ""
-        TODO("Not yet implemented")
     }
 
-    private fun makeHttpPost(xml: String): String {
+    private suspend fun makeHttpPost(xml: String): String {
+        val query = Uri.Builder()
+            .appendQueryParameter("version", "1")
+            .appendQueryParameter("guid", UUID.randomUUID().toString()) // version 4, variant 1
+            .appendQueryParameter("lang", "US-EN").build().toString() // TODO add real language
 
-        var url = URL(DEFAULT_URL)
-        url.query
-        val con : HttpURLConnection = URL(DEFAULT_URL).openConnection()
-        try {
-            con.doOutput = true
-            con.requestMethod = "POST"
-            con.setRequestProperty("Content-Type", "application/json");
-            con.setChunkedStreamingMode(0)
-            val os = BufferedOutputStream(con.outputStream)
+        var url = ""
+        runCatching { url = URL(DEFAULT_URL + query).toString() }
 
+        val request = Request.Builder()
+            .url(url)
+            .addHeader("Content-Type", "text/xml")
+            .addHeader("X-Adblock-Plus", "1")
+            .post(xml.toRequestBody("text/xml".toMediaTypeOrNull()))
+            .build()
+
+        val response = okHttpClient.newCall(request).await()
+
+
+        // TODO remove the report if it's not needed
+        val responseBody = kotlin.runCatching { response.body?.string() }
+        val report = Regex(A_PATTERN).findAll(responseBody.toString()).map { it.value }.last()
+
+        Timber.d("ReportIssue report: $report")
+
+        return if (response.code == 200) {
+            ""
+        } else {
+            "HTTP returned ${response.code}"
         }
-
-
     }
 
     private fun makeXML(data: ReportIssueData): String {
         val writer = StringWriter()
         val serializer: XmlSerializer = Xml.newSerializer()
         try {
+            // TODO replace the placeholders with real data
             serializer.setOutput(writer)
             serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true)
             serializer.startTag(null, "report")
@@ -121,5 +140,6 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
     companion object {
         const val DEFAULT_URL = """https://reports.adblockplus.org/submitReport"""
         const val XML_ERROR = "Error creating XML"
+        const val A_PATTERN = """<a.+</a>"""
     }
 }
