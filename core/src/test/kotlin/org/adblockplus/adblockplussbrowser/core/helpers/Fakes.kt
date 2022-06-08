@@ -238,10 +238,10 @@ class Fakes {
 
     class FakeActivationPreferences : ActivationPreferences {
         override val lastFilterListRequest: Flow<Long>
-            get() = TODO("Not yet implemented")
+            get() = flow { System.currentTimeMillis() }
 
         override suspend fun updateLastFilterRequest(lastFilterListRequest: Long) {
-            TODO("Not yet implemented")
+            lastFilterListRequest
         }
     }
 }

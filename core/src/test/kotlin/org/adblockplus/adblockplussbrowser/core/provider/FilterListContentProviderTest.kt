@@ -25,35 +25,19 @@ import android.net.Uri
 import androidx.test.core.app.ApplicationProvider
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import dagger.hilt.android.testing.UninstallModules
 import dagger.hilt.components.SingletonComponent
-import dagger.hilt.testing.TestInstallIn
-import javax.inject.Inject
 import javax.inject.Singleton
-import junit.framework.Assert.assertEquals
-import junit.framework.Assert.assertNotNull
-import junit.framework.Assert.assertNull
-import org.junit.Before
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.Robolectric
-import org.robolectric.RobolectricTestRunner
-import org.robolectric.Shadows.shadowOf
-import org.robolectric.annotation.Config
-import org.robolectric.shadows.ShadowContentResolver
 import kotlin.time.ExperimentalTime
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.analytics.BuildConfig
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
-import org.adblockplus.adblockplussbrowser.core.AppInfo
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.di.CoreModule
 import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
@@ -62,119 +46,100 @@ import org.adblockplus.adblockplussbrowser.core.helpers.Fakes
 import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
+import org.adblockplus.adblockplussbrowser.settings.di.SettingsModule
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
+import org.junit.Before
 import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
 import org.mockito.Mockito
+import org.robolectric.Robolectric
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows.shadowOf
+import org.robolectric.annotation.Config
+import org.robolectric.shadows.ShadowContentResolver
 
 @ExperimentalTime
-@Config(application = HiltTestApplication::class, sdk=[21])
+@Config(application = HiltTestApplication::class, sdk = [21])
 @RunWith(RobolectricTestRunner::class)
-@UninstallModules(CoreModule::class)
+@UninstallModules(CoreModule::class, SettingsModule::class)
 @HiltAndroidTest
 internal class FilterListContentProviderTest {
-    private var contentResolver : ContentResolver? = null
-    private var shadowContentResolver : ShadowContentResolver? = null
-    private var filterListContentProvider : FilterListContentProvider? = null
+    private var contentResolver: ContentResolver? = null
+    private var shadowContentResolver: ShadowContentResolver? = null
+    private var filterListContentProvider: FilterListContentProvider? = null
+    private val context = ApplicationProvider.getApplicationContext<Context>()
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
-//    @Module
-//    @InstallIn(SingletonComponent::class)
-//    internal class TestModule {
-//        @Provides
-//        @Singleton
-//        fun getCoreRepository(): CoreRepository {
-//            return Fakes.FakeCoreRepository("")
-//        }
-//
-//        @Provides
-//        @Singleton
-//        fun getSettingsRepository(): SettingsRepository {
-//            return Fakes.FakeSettingsRepository("")
-//        }
-//
-//        @Provides
-//        @Singleton
-//        fun getActivationPreferences(): ActivationPreferences {
-//            return Fakes.FakeActivationPreferences()
-//        }
-//
-//        @Provides
-//        @Singleton
-//        fun getAnalyticsProvider(): AnalyticsProvider {
-//            return Fakes.FakeAnalyticsProvider()
-//        }
-//
-//        @Provides
-//        @Singleton
-//        fun provideSubscriptionDownloader(
-//            @ApplicationContext context: Context,
-//            okHttpClient: OkHttpClient,
-//            appInfo: AppInfo,
-//            repository: CoreRepository,
-//            analyticsProvider: AnalyticsProvider
-//        ): Downloader =
-//            OkHttpDownloader(context, okHttpClient, repository, appInfo, analyticsProvider)
-//
-//        @Provides
-//        @Singleton
-//        fun provideUserCounter(
-//            okHttpClient: OkHttpClient,
-//            appInfo: AppInfo,
-//            repository: CoreRepository,
-//            settings: SettingsRepository,
-//            analyticsProvider: AnalyticsProvider
-//        ): UserCounter =
-//            OkHttpUserCounter(okHttpClient, repository, settings, appInfo, analyticsProvider)
-//
-//        @Provides
-//        @Singleton
-//        fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor) =
-//            OkHttpClient.Builder()
-//                .addInterceptor(loggingInterceptor)
-//                .build()
-//
-//        @Provides
-//        @Singleton
-//        fun provideOkHttpClientLogger() =
-//            HttpLoggingInterceptor().apply {
-//                if (BuildConfig.DEBUG) {
-//                    level = HttpLoggingInterceptor.Level.HEADERS // The default is Level.NONE
-//                }
-//            }
-//
-//        @Provides
-//        @Singleton
-//        fun provideAppInfo() = AppInfo()
-//    }
+    @Module
+    @InstallIn(SingletonComponent::class)
+    internal class TestModule {
+        @Provides
+        @Singleton
+        fun getCoreRepository(): CoreRepository {
+            return Fakes.FakeCoreRepository("")
+        }
 
-    @Inject
-    lateinit var analyticsProvider: AnalyticsProvider
+        @Provides
+        @Singleton
+        fun getSettingsRepository(): SettingsRepository {
+            return Fakes.FakeSettingsRepository("")
+        }
 
-    @Inject
-    lateinit var coreRepository: CoreRepository
+        @Provides
+        @Singleton
+        fun getActivationPreferences(): ActivationPreferences {
+            return Fakes.FakeActivationPreferences()
+        }
 
-    @Inject
-    lateinit var activationPreferences: ActivationPreferences
+        @Provides
+        @Singleton
+        fun getAnalyticsProvider(): AnalyticsProvider {
+            return Fakes.FakeAnalyticsProvider()
+        }
 
-    @Inject
-    lateinit var settingsRepository: SettingsRepository
+        @Provides
+        @Singleton
+        fun provideSubscriptionDownloader(): Downloader = Mockito.mock(OkHttpDownloader::class.java)
+
+        @Provides
+        @Singleton
+        fun provideUserCounter(): UserCounter = Mockito.mock(OkHttpUserCounter::class.java)
+
+        @Provides
+        @Singleton
+        fun provideOkHttpClient(): OkHttpClient = Mockito.mock(OkHttpClient::class.java)
+
+
+        @Provides
+        @Singleton
+        fun provideOkHttpClientLogger() =
+            HttpLoggingInterceptor().apply {
+                if (BuildConfig.DEBUG) {
+                    level = HttpLoggingInterceptor.Level.HEADERS // The default is Level.NONE
+                }
+            }
+    }
 
     @Before
     fun setUp() {
-        hiltRule.inject()
-        contentResolver = ApplicationProvider.getApplicationContext<Context>().contentResolver
+        contentResolver = context.contentResolver
         val providerInfo = ProviderInfo()
         providerInfo.authority = "org.adblockplus.adblockplussbrowser.contentBlocker.contentProvider"
         providerInfo.grantUriPermissions = true
-        val controller = Robolectric.buildContentProvider(FilterListContentProvider::class.java).create(providerInfo)
+        val controller = Robolectric.buildContentProvider(FilterListContentProvider::class.java)
+            .create(providerInfo)
         shadowContentResolver = shadowOf(contentResolver)
         filterListContentProvider = controller.get()
     }
 
     @Test
     fun onCreate() {
-        val res  = filterListContentProvider?.onCreate()
+        val res = filterListContentProvider?.onCreate()
         assertEquals(res, true)
     }
 
@@ -182,11 +147,11 @@ internal class FilterListContentProviderTest {
     fun insert() {
         val values = ContentValues()
         val uriSource = Uri.parse("content://org.adblockplus.adblockplussbrowser.contentBlocker.contentProvider")
-        val uri = contentResolver?.insert(uriSource, values);
+        val uri = contentResolver?.insert(uriSource, values)
         assertNull(uri)
     }
 
-//    @Test
+    @Test
     fun open() {
         val uriSource = Uri.parse("content://org.adblockplus.adblockplussbrowser.contentBlocker.contentProvider")
         val parcelFileDescriptor = filterListContentProvider?.openFile(uriSource, "r")
