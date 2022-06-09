@@ -23,6 +23,9 @@ import android.content.Context
 import android.content.pm.ProviderInfo
 import android.net.Uri
 import androidx.test.core.app.ApplicationProvider
+import androidx.work.Configuration
+import androidx.work.WorkManager
+import androidx.work.testing.WorkManagerTestInitHelper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -50,6 +53,7 @@ import org.adblockplus.adblockplussbrowser.settings.di.SettingsModule
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -62,7 +66,7 @@ import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowContentResolver
 
 @ExperimentalTime
-@Config(application = HiltTestApplication::class, sdk = [21])
+@Config(application = HiltTestApplication::class, sdk = [21], manifest = "src/test/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner::class)
 @UninstallModules(CoreModule::class, SettingsModule::class)
 @HiltAndroidTest
@@ -71,6 +75,7 @@ internal class FilterListContentProviderTest {
     private var shadowContentResolver: ShadowContentResolver? = null
     private var filterListContentProvider: FilterListContentProvider? = null
     private val context = ApplicationProvider.getApplicationContext<Context>()
+    private val uriSource = Uri.parse("content://org.adblockplus.adblockplussbrowser.contentBlocker.contentProvider")
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
@@ -140,21 +145,43 @@ internal class FilterListContentProviderTest {
     @Test
     fun onCreate() {
         val res = filterListContentProvider?.onCreate()
-        assertEquals(res, true)
+        assertEquals(true, res)
+    }
+
+    @Test
+    fun delete() {
+        assertEquals(0, filterListContentProvider?.delete(uriSource, null, null))
+    }
+
+    @Test
+    fun getType() {
+        assertNull(filterListContentProvider?.getType(uriSource))
     }
 
     @Test
     fun insert() {
         val values = ContentValues()
-        val uriSource = Uri.parse("content://org.adblockplus.adblockplussbrowser.contentBlocker.contentProvider")
-        val uri = contentResolver?.insert(uriSource, values)
-        assertNull(uri)
+        assertNull(filterListContentProvider?.insert(uriSource, values))
     }
 
     @Test
-    fun open() {
-        val uriSource = Uri.parse("content://org.adblockplus.adblockplussbrowser.contentBlocker.contentProvider")
+    fun openFile() {
+        WorkManagerTestInitHelper.initializeTestWorkManager(context)
+        val myConfig = Configuration.Builder()
+            .setMinimumLoggingLevel(android.util.Log.INFO)
+            .build()
+        WorkManager.initialize(context, myConfig)
         val parcelFileDescriptor = filterListContentProvider?.openFile(uriSource, "r")
         assertNotNull(parcelFileDescriptor)
+    }
+
+    @Test
+    fun query() {
+        assertNull(filterListContentProvider?.query(uriSource, null, null, null, null))
+    }
+
+    @Test
+    fun update() {
+        assertEquals(0, filterListContentProvider?.update(uriSource, null, null, null))
     }
 }
