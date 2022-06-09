@@ -53,7 +53,6 @@ import org.adblockplus.adblockplussbrowser.settings.di.SettingsModule
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
-import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -66,7 +65,11 @@ import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowContentResolver
 
 @ExperimentalTime
-@Config(application = HiltTestApplication::class, sdk = [21], manifest = "src/test/AndroidManifest.xml")
+@Config(
+    application = HiltTestApplication::class,
+    sdk = [21],
+    manifest = "src/test/AndroidManifest.xml"
+)
 @RunWith(RobolectricTestRunner::class)
 @UninstallModules(CoreModule::class, SettingsModule::class)
 @HiltAndroidTest
@@ -75,7 +78,8 @@ internal class FilterListContentProviderTest {
     private var shadowContentResolver: ShadowContentResolver? = null
     private var filterListContentProvider: FilterListContentProvider? = null
     private val context = ApplicationProvider.getApplicationContext<Context>()
-    private val uriSource = Uri.parse("content://org.adblockplus.adblockplussbrowser.contentBlocker.contentProvider")
+    private val uriSource =
+        Uri.parse("content://org.adblockplus.adblockplussbrowser.contentBlocker.contentProvider")
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
@@ -134,7 +138,8 @@ internal class FilterListContentProviderTest {
     fun setUp() {
         contentResolver = context.contentResolver
         val providerInfo = ProviderInfo()
-        providerInfo.authority = "org.adblockplus.adblockplussbrowser.contentBlocker.contentProvider"
+        providerInfo.authority =
+            "org.adblockplus.adblockplussbrowser.contentBlocker.contentProvider"
         providerInfo.grantUriPermissions = true
         val controller = Robolectric.buildContentProvider(FilterListContentProvider::class.java)
             .create(providerInfo)
