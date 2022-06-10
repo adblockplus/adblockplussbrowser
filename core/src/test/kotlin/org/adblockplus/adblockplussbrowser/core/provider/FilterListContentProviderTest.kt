@@ -26,29 +26,13 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.work.Configuration
 import androidx.work.WorkManager
 import androidx.work.testing.WorkManagerTestInitHelper
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import dagger.hilt.android.testing.UninstallModules
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 import kotlin.time.ExperimentalTime
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
-import org.adblockplus.adblockplussbrowser.analytics.BuildConfig
-import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
-import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.di.CoreModule
-import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
-import org.adblockplus.adblockplussbrowser.core.downloader.OkHttpDownloader
-import org.adblockplus.adblockplussbrowser.core.helpers.Fakes
-import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
-import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
-import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
+import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker.Companion.USER_COUNTER_KEY_ONESHOT_WORK
 import org.adblockplus.adblockplussbrowser.settings.di.SettingsModule
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -57,7 +41,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
@@ -83,56 +66,6 @@ internal class FilterListContentProviderTest {
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
-
-    @Module
-    @InstallIn(SingletonComponent::class)
-    internal class TestModule {
-        @Provides
-        @Singleton
-        fun getCoreRepository(): CoreRepository {
-            return Fakes.FakeCoreRepository("")
-        }
-
-        @Provides
-        @Singleton
-        fun getSettingsRepository(): SettingsRepository {
-            return Fakes.FakeSettingsRepository("")
-        }
-
-        @Provides
-        @Singleton
-        fun getActivationPreferences(): ActivationPreferences {
-            return Fakes.FakeActivationPreferences()
-        }
-
-        @Provides
-        @Singleton
-        fun getAnalyticsProvider(): AnalyticsProvider {
-            return Fakes.FakeAnalyticsProvider()
-        }
-
-        @Provides
-        @Singleton
-        fun provideSubscriptionDownloader(): Downloader = Mockito.mock(OkHttpDownloader::class.java)
-
-        @Provides
-        @Singleton
-        fun provideUserCounter(): UserCounter = Mockito.mock(OkHttpUserCounter::class.java)
-
-        @Provides
-        @Singleton
-        fun provideOkHttpClient(): OkHttpClient = Mockito.mock(OkHttpClient::class.java)
-
-
-        @Provides
-        @Singleton
-        fun provideOkHttpClientLogger() =
-            HttpLoggingInterceptor().apply {
-                if (BuildConfig.DEBUG) {
-                    level = HttpLoggingInterceptor.Level.HEADERS // The default is Level.NONE
-                }
-            }
-    }
 
     @Before
     fun setUp() {
@@ -170,14 +103,19 @@ internal class FilterListContentProviderTest {
     }
 
     @Test
-    fun openFile() {
+    fun `open File AA Enabled`() {
         WorkManagerTestInitHelper.initializeTestWorkManager(context)
         val myConfig = Configuration.Builder()
             .setMinimumLoggingLevel(android.util.Log.INFO)
             .build()
         WorkManager.initialize(context, myConfig)
+        // Open file and check result is not null
         val parcelFileDescriptor = filterListContentProvider?.openFile(uriSource, "r")
         assertNotNull(parcelFileDescriptor)
+        // User counter work was enqueued
+        val userCounterWork = WorkManager.getInstance(context)
+            .getWorkInfosForUniqueWork(USER_COUNTER_KEY_ONESHOT_WORK)
+        assertEquals(1, userCounterWork.get().size)
     }
 
     @Test
