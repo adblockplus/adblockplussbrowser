@@ -131,6 +131,7 @@
 
     <!-- Issue reporter -->
     <string name="issueReporter_page_title">Issue reporter</string>
+    <string name="issueReporter_page_description" tools:ignore="MissingTranslation">Share issues when they happen.</string>
     <string name="issueReporter_typeSelector_heading">Select issue type</string>
     <string name="issueReporter_typeSelector_description">This window will guide you through the steps required for the
         submission of an Adblock Plus issue report. First, please select the type of issue that you are experiencing on
