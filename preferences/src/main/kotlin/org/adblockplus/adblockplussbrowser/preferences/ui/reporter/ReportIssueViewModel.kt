@@ -74,16 +74,16 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
     }
 
     private fun imageFileToBase64(unresolvedUri: String): String {
+        Timber.d("ReportIssue: unresolvedUri: $unresolvedUri")
         val context = getApplication<Application>().applicationContext
         val cr: ContentResolver = context.contentResolver ?: return ""
-        Timber.i("ReportIssue: unresolvedUri: $unresolvedUri")
         var fixedUri = unresolvedUri
         if (!fixedUri.contains("content://")) {
             fixedUri = "content://media$fixedUri"
         }
         val pic: Uri = Uri.parse(fixedUri)
 
-        Timber.i("ReportIssue: image path: $pic")
+        Timber.d("ReportIssue: image path: $pic")
 
         val source = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             ImageDecoder.createSource(cr, pic)

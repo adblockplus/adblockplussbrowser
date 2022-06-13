@@ -29,7 +29,7 @@ import ru.gildor.coroutines.okhttp.await
 import timber.log.Timber
 import java.io.StringWriter
 import java.net.URL
-import java.util.*
+import java.util.UUID
 import javax.inject.Inject
 
 
