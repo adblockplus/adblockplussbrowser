@@ -44,6 +44,8 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
     @Inject
     lateinit var analyticsProvider: AnalyticsProvider
 
+    val READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE = 101
+
     val activeSubscriptions: LiveData<List<Subscription>> =
         settingsRepository.settings.map { settings ->
             settings.activeOtherSubscriptions

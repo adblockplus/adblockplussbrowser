@@ -17,8 +17,16 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions
 
+import android.Manifest
+import android.app.Activity
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -26,6 +34,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import com.leinardi.android.speeddial.SpeedDialView
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
 import org.adblockplus.adblockplussbrowser.base.BuildConfig
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
@@ -39,6 +48,15 @@ internal class OtherSubscriptionsFragment :
     DataBindingFragment<FragmentOtherSubscriptionsBinding>(R.layout.fragment_other_subscriptions) {
 
     private val viewModel: OtherSubscriptionsViewModel by activityViewModels()
+
+    private val getResult =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()) {
+            if(it.resultCode == Activity.RESULT_OK){
+                var file = it.data?.data?.path?.let { it1 -> File(it1) }
+                print(file)
+            }
+        }
 
     override fun onBindView(binding: FragmentOtherSubscriptionsBinding) {
         binding.viewModel = viewModel
@@ -139,15 +157,40 @@ internal class OtherSubscriptionsFragment :
                     AddCustomSubscriptionDialogFragment().show(parentFragmentManager, null)
                 }
                 R.id.other_subscriptions_add_from_local_button -> {
-                    // TODO: finish integration with file explorer
-                    Toast.makeText(
-                        context,
-                        getText(R.string.file_manager_not_found_message),
-                        Toast.LENGTH_LONG
-                    ).show()
+                    loadFileFromStorage()
                 }
             }
             false
         })
+    }
+
+    private fun loadFileFromStorage() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "text/plain"
+        }
+        val chooser = Intent.createChooser(intent, "Open file from...")
+        try {
+            getResult.launch(chooser)
+        } catch (ex: ActivityNotFoundException) {
+            Toast.makeText(
+                context,
+                getText(R.string.file_manager_not_found_message),
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
+    private fun isStoragePermissionGranted(): Boolean {
+        // Todo: Review if we actually need this, because the explorer is opened without permission granted as well
+        if (Build.VERSION.SDK_INT <= 28) {
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                // Requesting the permission
+                ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    viewModel.READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE
+                )
+            }
+        }
+        return true
     }
 }
