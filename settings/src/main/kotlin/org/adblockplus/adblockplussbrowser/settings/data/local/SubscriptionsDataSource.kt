@@ -19,7 +19,7 @@ package org.adblockplus.adblockplussbrowser.settings.data.local
 
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 
-internal interface SubscriptionsDataSource {
+interface SubscriptionsDataSource {
 
     suspend fun getEasylistSubscription(): Subscription
 
