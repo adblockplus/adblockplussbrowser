@@ -77,11 +77,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         Timber.d("ReportIssue: unresolvedUri: $unresolvedUri")
         val context = getApplication<Application>().applicationContext
         val cr: ContentResolver = context.contentResolver ?: return ""
-        var fixedUri = unresolvedUri
-        if (!fixedUri.contains("content://")) {
-            fixedUri = "content://media$fixedUri"
-        }
-        val pic: Uri = Uri.parse(fixedUri)
+        val pic: Uri = Uri.parse(unresolvedUri)
 
         Timber.d("ReportIssue: image path: $pic")
 
@@ -96,7 +92,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
             ImageDecoder.decodeBitmap(source).compress(Bitmap.CompressFormat.PNG, REPORT_ISSUE_VIEW_MODEL_IMAGE_QUALITY, bs)
             "data:image/png;base64," + Base64.encodeToString(bs.toByteArray(), Base64.DEFAULT)
         } catch (e: Exception) {
-            Timber.e("ReportIssue: Screenshot decode failed")
+            Timber.e("ReportIssue: Screenshot decode failed\n" + e.printStackTrace())
             ""
         }
     }

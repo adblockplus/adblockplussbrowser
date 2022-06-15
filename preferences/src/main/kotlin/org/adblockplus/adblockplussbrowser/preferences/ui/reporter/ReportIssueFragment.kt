@@ -51,7 +51,7 @@ internal class ReportIssueFragment :
         viewModel.returnedString.observe(this) {
             when (viewModel.returnedString.value) {
                 REPORT_ISSUE_FRAGMENT_SCREENSHOT_READ_SUCCESS -> {
-                    binding.sendReport.isEnabled = viewModel.data.validate()
+                    validateData()
                     Timber.d("ReportIssue Screenshot read success")
                 }
                 REPORT_ISSUE_FRAGMENT_SEND_SUCCESS -> {
@@ -67,7 +67,7 @@ internal class ReportIssueFragment :
                 else -> {
                     Toast.makeText(context, viewModel.returnedString.value, Toast.LENGTH_LONG)
                         .show()
-                    binding.sendReport.isEnabled = viewModel.data.validate()
+                    validateData()
                 }
             }
         }
@@ -86,7 +86,7 @@ internal class ReportIssueFragment :
                 binding.editTextBoxEmailAddress.isEnabled = true
                 viewModel.data.email = binding.editTextBoxEmailAddress.text.toString()
             }
-            binding.sendReport.isEnabled = viewModel.data.validate()
+            validateData()
             Timber.d("ReportIssue Email read success")
         }
 
@@ -96,7 +96,7 @@ internal class ReportIssueFragment :
                     REPORT_ISSUE_DATA_TYPE_FALSE_POSITIVE
                 binding.blockingTooLow.id -> viewModel.data.type = REPORT_ISSUE_DATA_TYPE_MISSED_AD
             }
-            binding.sendReport.isEnabled = viewModel.data.validate()
+            validateData()
             Timber.d("ReportIssue Radio read success")
         }
 
@@ -119,8 +119,13 @@ internal class ReportIssueFragment :
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val intent = result.data
-                val unresolvedUri = intent?.data?.path.toString()
-                viewModel.processImage(unresolvedUri)
+                val unresolvedUri = intent?.data?.toString()
+                if (unresolvedUri != null) {
+                    viewModel.processImage(unresolvedUri)
+                } else {
+                    viewModel.data.screenshot = ""
+                    validateData()
+                }
             }
         }
 
@@ -133,6 +138,11 @@ internal class ReportIssueFragment :
         pickImageFromGalleryForResult.launch(pickIntent)
     }
 
+    private fun validateData() {
+        if (binding != null && binding!!.sendReport != null) {
+            binding!!.sendReport.isEnabled = viewModel.data.validate()
+        }
+    }
     companion object {
         const val REPORT_ISSUE_FRAGMENT_SCREENSHOT_READ_SUCCESS = ""
         const val REPORT_ISSUE_FRAGMENT_SEND_SUCCESS = "SEND_SUCCESS"
