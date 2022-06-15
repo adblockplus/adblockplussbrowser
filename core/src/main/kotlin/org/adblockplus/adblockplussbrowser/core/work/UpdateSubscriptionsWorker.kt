@@ -52,6 +52,7 @@ import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
 import timber.log.Timber
 import java.io.File
+import java.io.FileNotFoundException
 import java.io.InputStreamReader
 import java.util.Objects
 import javax.inject.Inject
@@ -347,7 +348,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
                 }
             }
             stringBuilder.toString()
-        } catch (ex: Exception) {
+        } catch (ex: FileNotFoundException) {
             localFileSubscriptions.find { it.url == uri.toString() }?.hasError = true
             null
         }
