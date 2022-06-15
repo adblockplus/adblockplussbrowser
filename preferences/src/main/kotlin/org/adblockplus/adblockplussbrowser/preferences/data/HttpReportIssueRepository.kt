@@ -66,11 +66,15 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
         val response = okHttpClient.newCall(request).await()
 
 
-        // TODO remove the report if it's not needed
+        // TODO remove the URL parsing if it's not needed
         val responseBody = kotlin.runCatching { response.body?.string() }
-        val report = Regex(A_PATTERN).findAll(responseBody.toString()).map { it.value }.last()
-
-        Timber.d("ReportIssue report: $report")
+        val responseUrls = Regex(A_PATTERN).findAll(responseBody.toString()).map { it.value }
+        if (responseUrls.any()) {
+            Timber.d("ReportIssue report sent: ${responseUrls.last()}")
+        } else {
+            Timber.d("ReportIssue report sent, but no URL received: $responseBody")
+            return "Send error"
+        }
 
         return if (response.code == 200) {
             ""
