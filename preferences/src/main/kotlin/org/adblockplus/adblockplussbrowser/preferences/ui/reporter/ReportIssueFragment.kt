@@ -139,10 +139,9 @@ internal class ReportIssueFragment :
     }
 
     private fun validateData() {
-        if (binding != null && binding!!.sendReport != null) {
-            binding!!.sendReport.isEnabled = viewModel.data.validate()
-        }
+            binding?.sendReport?.let { it.isEnabled = viewModel.data.validate() }
     }
+    
     companion object {
         const val REPORT_ISSUE_FRAGMENT_SCREENSHOT_READ_SUCCESS = ""
         const val REPORT_ISSUE_FRAGMENT_SEND_SUCCESS = "SEND_SUCCESS"
