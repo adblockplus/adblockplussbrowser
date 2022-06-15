@@ -53,8 +53,9 @@ import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
 import timber.log.Timber
 import java.io.BufferedReader
 import java.io.File
-import java.io.FileNotFoundException
+import java.io.IOException
 import java.io.InputStreamReader
+import java.lang.RuntimeException
 import java.util.Objects
 import javax.inject.Inject
 
@@ -341,7 +342,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             getFiltersFromFile(uri)
         } catch (ex: Exception) {
             when (ex) {
-                is FileNotFoundException, is SecurityException -> {
+                is RuntimeException, is IOException -> {
                     localFileSubscriptions.find { it.url == uri.toString() }?.hasError = true
                 }
             }
