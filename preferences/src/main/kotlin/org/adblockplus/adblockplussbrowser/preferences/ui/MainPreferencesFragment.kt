@@ -95,14 +95,15 @@ internal class MainPreferencesFragment :
         }, lifecycleOwner)
 
         if (BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_ABP) {
-            binding.mainPreferencesReportIssueInclude.mainPreferencesReportIssue.setDebounceOnClickListener ({
+            binding.mainPreferencesShareEventsInclude.mainPreferencesIssueReporterCategory.setDebounceOnClickListener({
                 supportActionBar?.subtitle = null
                 val direction = MainPreferencesFragmentDirections
                     .actionMainPreferencesFragmentToReportIssueFragment()
                 findNavController().navigate(direction)
             }, lifecycleOwner)
         } else {
-            binding.mainPreferencesReportIssueInclude.mainPreferencesReportIssue.visibility = View.GONE
+            binding.mainPreferencesShareEventsInclude.mainPreferencesIssueReporterCategory.visibility = View.GONE
+            binding.mainPreferencesShareEventsInclude.mainPreferencesDivider1.visibility = View.GONE
         }
 
         binding.mainPreferencesAboutInclude.mainPreferencesAbout.setDebounceOnClickListener ({
