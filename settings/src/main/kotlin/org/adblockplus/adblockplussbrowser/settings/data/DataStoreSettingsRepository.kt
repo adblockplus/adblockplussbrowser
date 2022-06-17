@@ -154,7 +154,7 @@ internal class DataStoreSettingsRepository(
 
     override suspend fun addActiveOtherSubscription(subscription: Subscription) {
         dataStore.updateData { settings ->
-            if (settings.activeOtherSubscriptionsList.any { it.url == subscription.url }) {
+            if (settings.activeOtherSubscriptionsList.any { it.title == subscription.title }) {
                 settings
             } else {
                 settings.toBuilder().addActiveOtherSubscriptions(subscription.toProtoSubscription()).build()

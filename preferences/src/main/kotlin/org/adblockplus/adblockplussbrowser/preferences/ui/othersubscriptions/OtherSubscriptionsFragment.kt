@@ -20,6 +20,8 @@ package org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
+import android.provider.OpenableColumns
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
@@ -116,7 +118,7 @@ internal class OtherSubscriptionsFragment :
             ) { result: ActivityResult ->
                 if (result.resultCode == Activity.RESULT_OK) {
                     result.data?.data?.let { filePath ->
-                        viewModel.addCustomFilterFile(filePath.toString(), filePath.path.toString())
+                        viewModel.addCustomFilterFile(filePath.toString(), getFilename(filePath))
                     }
                 }
             }
@@ -180,5 +182,19 @@ internal class OtherSubscriptionsFragment :
                 Toast.LENGTH_LONG
             ).show()
         }
+    }
+
+    private fun getFilename(uri: Uri): String {
+        val cursor = activity?.contentResolver?.query(uri, null, null, null, null)
+        var filename: String = uri.path.toString()
+
+        cursor?.getColumnIndex(OpenableColumns.DISPLAY_NAME)?.let { nameIndex ->
+            cursor.moveToFirst()
+
+            filename = cursor.getString(nameIndex)
+            cursor.close()
+        }
+
+        return filename
     }
 }

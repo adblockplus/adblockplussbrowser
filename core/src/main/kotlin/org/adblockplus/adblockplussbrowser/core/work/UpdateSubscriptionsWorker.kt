@@ -26,18 +26,24 @@ import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import java.io.BufferedReader
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.InputStreamReader
+import java.util.Objects
+import javax.inject.Inject
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import okio.buffer
 import okio.sink
 import okio.source
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
+import org.adblockplus.adblockplussbrowser.base.data.model.CustomSubscriptionType
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.base.data.model.SubscriptionUpdateStatus
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
@@ -51,12 +57,6 @@ import org.adblockplus.adblockplussbrowser.core.extensions.toBlockRule
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
 import timber.log.Timber
-import java.io.File
-import java.io.FileNotFoundException
-import java.io.InputStreamReader
-import java.util.Objects
-import javax.inject.Inject
-import org.adblockplus.adblockplussbrowser.base.data.model.CustomSubscriptionType
 
 
 @HiltWorker
@@ -337,6 +337,8 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
     private fun readFile(uri: Uri): String? {
         val stringBuilder = StringBuilder()
         return try {
+            val takeFlags: Int = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+            applicationContext.grantUriPermission(applicationContext.packageName, uri, takeFlags)
             applicationContext.contentResolver.openInputStream(uri).use { inputStream ->
                 BufferedReader(
                     InputStreamReader(Objects.requireNonNull(inputStream))
@@ -348,8 +350,12 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
                 }
             }
             stringBuilder.toString()
-        } catch (ex: FileNotFoundException) {
-            localFileSubscriptions.find { it.url == uri.toString() }?.hasError = true
+        } catch (ex: Exception) {
+            when(ex) {
+                is FileNotFoundException, is SecurityException -> {
+                    localFileSubscriptions.find { it.url == uri.toString() }?.hasError = true
+                }
+            }
             null
         }
     }

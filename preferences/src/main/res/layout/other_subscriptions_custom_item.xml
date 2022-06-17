@@ -97,6 +97,7 @@
             android:id="@+id/file_not_found_error_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:tint="@android:color/holo_red_dark"
             app:layout_constraintEnd_toStartOf="@id/other_subscriptions_custom_item_guideline_end"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
