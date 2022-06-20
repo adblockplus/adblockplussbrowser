@@ -177,7 +177,12 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             SubscriptionUpdateStatus.None
         }
 
-        subscriptionsManager.updateStatus(progress)
+        // Avoid the crash for testing
+        if (this::subscriptionsManager.isInitialized) {
+            subscriptionsManager.updateStatus(progress)
+        } else {
+            Timber.e("subscriptionsManager is not initialized when invoked from UpdateSubscriptionsWorker")
+        }
     }
 
     @Suppress("BlockingMethodInNonBlockingContext")

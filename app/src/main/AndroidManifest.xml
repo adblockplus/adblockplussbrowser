@@ -48,7 +48,8 @@
 
         <activity
             android:name=".ui.LauncherActivity"
-            android:theme="@style/Theme.Abp.Launcher">
+            android:theme="@style/Theme.Abp.Launcher"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -56,11 +57,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.MainActivity" />
+        <activity android:name=".ui.MainActivity" android:exported="true"/>
 
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
-            android:theme="@style/Theme.Abp" />
+            android:theme="@style/Theme.Abp"
+            android:exported="true"/>
 
         <provider
             android:name="androidx.work.impl.WorkManagerInitializer"
