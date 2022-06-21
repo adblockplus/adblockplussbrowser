@@ -99,7 +99,7 @@ internal class LauncherViewModel @Inject constructor(
                         InstallReferrerClient.InstallReferrerResponse.OK -> {
                             try {
                                 val response = referrerClient.installReferrer
-                                var referrer = response.installReferrer
+                                val referrer = response.installReferrer
                                 analyticsProvider.setUserProperty(
                                     AnalyticsUserProperty.INSTALL_REFERRER, referrer
                                 )
