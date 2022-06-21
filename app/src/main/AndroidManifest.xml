@@ -57,17 +57,21 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.MainActivity" android:exported="true"/>
+        <activity android:name=".ui.MainActivity" />
 
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
-            android:theme="@style/Theme.Abp"
-            android:exported="true"/>
+            android:theme="@style/Theme.Abp" />
 
         <provider
-            android:name="androidx.work.impl.WorkManagerInitializer"
-            android:authorities="${applicationId}.workmanager-init"
-            tools:node="remove" />
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            tools:node="merge">
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+        </provider>
 
         <meta-data
             android:name="com.samsung.android.sbrowser.contentBlocker.interfaceVersion"
