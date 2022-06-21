@@ -18,9 +18,8 @@
 package org.adblockplus.adblockplussbrowser.settings.data.local
 
 import android.content.Context
-import org.adblockplus.adblockplussbrowser.settings.R
 
-internal class HardcodedSubscriptions(private val context: Context) {
+internal class HardcodedSubscriptions() {
 
     val easylist = subscription {
         url = "https://easylist-downloads.adblockplus.org/easylist.txt"
