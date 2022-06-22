@@ -219,6 +219,7 @@ abp_regression:
 ab_regression:
   extends: .template:automation
   needs:
+    - build
     - abp_regression # we can run this on debug apk
   variables:
     CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldAdblock/debug/app-world-adblock-debug.apk"'
