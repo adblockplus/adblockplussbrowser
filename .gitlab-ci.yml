@@ -199,14 +199,6 @@ sign_apks:
         echo "**********************************"
         cat platform_version-${PLATFORM_VERSION}.log
       done
-  artifacts:
-    when: always
-    expire_in: 1 week
-    reports:
-      junit: '"${AUTOMATION_PATH}"/target/cucumber-reports/*.xml'
-    paths:
-      - '"${AUTOMATION_PATH}"/platform_version-*.log'
-      - '"${AUTOMATION_PATH}"/result_*'
 
 abp_regression:
   extends: .template:automation
