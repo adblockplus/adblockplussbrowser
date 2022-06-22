@@ -188,23 +188,7 @@ sign_apks:
         do test $(cat result_${PLATFORM_VERSION}) = 0
       done
   after_script:
-    - cd automation
-    - |
-      for PLATFORM_VERSION in $PLATFORM_VERSIONS
-        do
-        echo "**********************************"
-        echo "Logs for tests with platform version ${PLATFORM_VERSION}"
-        echo "**********************************"
-        cat platform_version-${PLATFORM_VERSION}.log
-      done
-  artifacts:
-    when: always
-    expire_in: 6 months
-    reports:
-      junit: "automation/target/cucumber-reports/*.xml"
-    paths:
-      - "automation/platform_version-*.log"
-      - "automation/result_*"
+    - rm -fr automation
 
 abp_regression:
   extends: .template:automation
