@@ -208,7 +208,6 @@ sign_apks:
       - '"${AUTOMATION_PATH}"/platform_version-*.log'
       - '"${AUTOMATION_PATH}"/result_*'
 
-
 abp_regression:
   extends: .template:automation
   needs:
