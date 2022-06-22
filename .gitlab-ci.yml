@@ -236,6 +236,9 @@ smoke_tests:
   needs:
     - build # we can run this on debug apk
   variables:
+    CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldAbp/debug/app-world-abp-debug.apk"'
+    CURL_NAME: 'name="app-world-abp-debug.apk"'
+    APK_NAME: "app-world-adblock-debug.apk"
     PLATFORM_VERSIONS: "7 8 9 11"
     GRADLE_TASK: "multiAPI"
   rules:
