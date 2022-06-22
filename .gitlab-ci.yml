@@ -208,9 +208,23 @@ abp_regression:
   needs:
     - build # we can run this on debug apk
   variables:
-    APK_OUTPUT_PATH: "app/build/outputs/apk/worldAbp/debug/app-world-abp-debug.apk"
     CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldAbp/debug/app-world-abp-debug.apk"'
     CURL_NAME: 'name="app-world-abp-debug.apk"'
+    APK_NAME: "app-world-adblock-debug.apk"
+    PLATFORM_VERSIONS: "10"
+    GRADLE_TASK: "regression"
+  rules:
+    - if: '$FORCE_REGRESSION == "true"'
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"'
+
+ab_regression:
+  extends: .template:automation
+  needs:
+    - build # we can run this on debug apk
+  variables:
+    CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldAbp/debug/app-world-adblock-debug.apk"'
+    CURL_NAME: 'name="app-world-adblock-debug.apk"'
+    APK_NAME: "app-world-adblock-debug.apk"
     PLATFORM_VERSIONS: "10"
     GRADLE_TASK: "regression"
   rules:
