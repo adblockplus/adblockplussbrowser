@@ -249,4 +249,3 @@ functional_tests:
   rules:
     - if: '$FORCE_FUNCTIONAL == "true"'
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
-
