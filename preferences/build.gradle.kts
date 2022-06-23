@@ -62,4 +62,7 @@ dependencies {
     implementation(Deps.MaterialDialogs.CORE)
     implementation(Deps.MaterialDialogs.INPUT)
     implementation(Deps.Gms.OSS_LICENSES)
+    implementation(Deps.OkHttp.OKHTTP)
+    implementation(Deps.OkHttp.COROUTINES)
+    implementation(Deps.KotlinX.COROUTINES)
 }

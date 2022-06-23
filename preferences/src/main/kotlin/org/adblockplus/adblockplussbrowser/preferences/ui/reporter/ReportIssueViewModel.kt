@@ -17,16 +17,87 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui.reporter
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import android.content.ContentResolver
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
+import android.util.Base64
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
+import org.adblockplus.adblockplussbrowser.preferences.data.ReportIssueRepository
+import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData
+import org.adblockplus.adblockplussbrowser.preferences.ui.reporter.ReportIssueFragment.Companion.REPORT_ISSUE_FRAGMENT_SEND_ERROR
+import org.adblockplus.adblockplussbrowser.preferences.ui.reporter.ReportIssueFragment.Companion.REPORT_ISSUE_FRAGMENT_SEND_SUCCESS
 import timber.log.Timber
+import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
 @HiltViewModel
-internal class ReportIssueViewModel @Inject constructor() : ViewModel() {
+internal class ReportIssueViewModel @Inject constructor(application: Application) :
+    AndroidViewModel(application) {
 
+    val returnedString = MutableLiveData<String>()
+    var data: ReportIssueData = ReportIssueData()
+
+    @Inject
+    lateinit var reportIssueRepository: ReportIssueRepository
+
+    @Inject
     lateinit var analyticsProvider: AnalyticsProvider
 
+    internal fun sendReport() {
+        viewModelScope.launch {
+            returnedString.value = if (reportIssueRepository.sendReport(data).isEmpty())
+                REPORT_ISSUE_FRAGMENT_SEND_SUCCESS
+            else REPORT_ISSUE_FRAGMENT_SEND_ERROR
+        }
+    }
 
+    internal fun processImage(unresolvedUri: String) {
+        viewModelScope.launch {
+            data.screenshot = imageFileToBase64(unresolvedUri)
+            returnedString.value = if (data.screenshot.isEmpty()) {
+                // Operation failed, show error message
+                "Failed to load image"
+            } else {
+                Timber.i("ReportIssue: base64 image: ${data.screenshot.subSequence(0, 20)}")
+                // Operation successful, validate data
+                ""
+            }
+        }
+    }
+
+    private fun imageFileToBase64(unresolvedUri: String): String {
+        Timber.d("ReportIssue: unresolvedUri: $unresolvedUri")
+        val context = getApplication<Application>().applicationContext
+        val cr: ContentResolver = context.contentResolver ?: return ""
+        val pic: Uri = Uri.parse(unresolvedUri)
+
+        Timber.d("ReportIssue: image path: $pic")
+
+        val source = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            ImageDecoder.createSource(cr, pic)
+        } else {
+            TODO("VERSION.SDK_INT < P")
+        }
+
+        val bs = ByteArrayOutputStream()
+        return try {
+            ImageDecoder.decodeBitmap(source).compress(Bitmap.CompressFormat.PNG, REPORT_ISSUE_VIEW_MODEL_IMAGE_QUALITY, bs)
+            "data:image/png;base64," + Base64.encodeToString(bs.toByteArray(), Base64.DEFAULT)
+        } catch (e: Exception) {
+            Timber.e("ReportIssue: Screenshot decode failed\n" + e.printStackTrace())
+            ""
+        }
+    }
+
+    companion object{
+        private const val REPORT_ISSUE_VIEW_MODEL_IMAGE_QUALITY = 100
+    }
 }
