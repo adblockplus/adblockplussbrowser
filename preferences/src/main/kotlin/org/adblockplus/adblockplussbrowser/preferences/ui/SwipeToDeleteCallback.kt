@@ -72,3 +72,4 @@ abstract class SwipeToDeleteCallback : ItemTouchHelper.SimpleCallback(0, ItemTou
         this.drawRect(left, top, right, bottom, clearPaint)
     }
 }
+

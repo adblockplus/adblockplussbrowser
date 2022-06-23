@@ -35,3 +35,4 @@ interface SubscriptionsDataSource {
 
     suspend fun getSocialMediaTrackingSubscription(): Subscription
 }
+

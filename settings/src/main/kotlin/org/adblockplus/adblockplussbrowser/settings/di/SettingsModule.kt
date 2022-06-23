@@ -65,3 +65,4 @@ object SettingsModule {
     ): SettingsRepository =
         DataStoreSettingsRepository(dataStore, subscriptionsDataSource)
 }
+

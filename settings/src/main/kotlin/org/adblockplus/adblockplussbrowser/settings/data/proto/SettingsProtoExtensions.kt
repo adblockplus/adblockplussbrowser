@@ -59,3 +59,4 @@ internal fun UpdateConfig.toProtoUpdateConfig(): ProtoUpdateConfig =
         UpdateConfig.WIFI_ONLY -> ProtoUpdateConfig.WIFI_ONLY
         UpdateConfig.ALWAYS -> ProtoUpdateConfig.ALWAYS
     }
+

@@ -63,3 +63,4 @@ internal class DeleteCustomSubscriptionDialogFragment : AppCompatDialogFragment(
         }
     }
 }
+

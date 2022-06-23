@@ -84,3 +84,4 @@ internal class PrimarySubscriptionsViewModel @Inject constructor(
         return result
     }
 }
+

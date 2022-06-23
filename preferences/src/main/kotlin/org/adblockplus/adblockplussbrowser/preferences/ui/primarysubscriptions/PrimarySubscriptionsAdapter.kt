@@ -102,3 +102,4 @@ private class PrimarySubscriptionsItemDiffCallback : DiffUtil.ItemCallback<Prima
     override fun areContentsTheSame(oldItem: PrimarySubscriptionsItem, newItem: PrimarySubscriptionsItem): Boolean =
         oldItem == newItem
 }
+

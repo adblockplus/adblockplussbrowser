@@ -115,3 +115,4 @@ class LocalMediaPlayer : TextureView.SurfaceTextureListener, MediaPlayer.OnPrepa
         }
     }
 }
+

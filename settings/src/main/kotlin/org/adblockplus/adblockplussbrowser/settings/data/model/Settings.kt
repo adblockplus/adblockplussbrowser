@@ -38,3 +38,4 @@ enum class UpdateConfig {
     WIFI_ONLY,
     ALWAYS
 }
+

@@ -22,3 +22,4 @@ sealed class UiState {
     object Error : UiState()
     object Loading : UiState()
 }
+

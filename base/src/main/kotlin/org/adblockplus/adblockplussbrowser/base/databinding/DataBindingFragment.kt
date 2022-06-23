@@ -44,3 +44,4 @@ abstract class DataBindingFragment<T : ViewDataBinding>(@LayoutRes private val l
         return binding.root
     }
 }
+

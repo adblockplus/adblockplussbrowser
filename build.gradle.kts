@@ -97,3 +97,4 @@ tasks.named<com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask>("
         }
     }
 }
+

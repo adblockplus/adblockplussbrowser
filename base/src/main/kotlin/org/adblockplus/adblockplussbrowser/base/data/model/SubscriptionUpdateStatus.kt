@@ -27,3 +27,4 @@ sealed class SubscriptionUpdateStatus {
 
     object None : SubscriptionUpdateStatus()
 }
+

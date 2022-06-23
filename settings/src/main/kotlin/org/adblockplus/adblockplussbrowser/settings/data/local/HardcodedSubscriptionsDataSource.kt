@@ -54,3 +54,4 @@ internal class HardcodedSubscriptionsDataSource(private val context: Context) : 
     override suspend fun getSocialMediaTrackingSubscription(): Subscription =
         hardcodedSubscriptions.socialMediaTracking.toSubscription()
 }
+

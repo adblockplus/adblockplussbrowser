@@ -34,3 +34,4 @@ internal class PrimarySubscriptionsFragment :
         binding.primarySubscriptionsList.adapter = PrimarySubscriptionsAdapter(viewModel, viewLifecycleOwner)
     }
 }
+

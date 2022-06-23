@@ -54,3 +54,4 @@ internal fun bindGroupItemDivider(view: View, groupItemLayout: GroupItemLayout) 
     }
     view.visibility = visibility
 }
+
