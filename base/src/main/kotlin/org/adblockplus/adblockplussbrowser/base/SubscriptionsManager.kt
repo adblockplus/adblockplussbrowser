@@ -34,3 +34,4 @@ interface SubscriptionsManager {
 
     suspend fun updateStatus(status: SubscriptionUpdateStatus)
 }
+

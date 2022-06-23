@@ -50,3 +50,4 @@ internal class CustomViewHolder(val binding: OtherSubscriptionsCustomItemBinding
         binding.executePendingBindings()
     }
 }
+

@@ -29,3 +29,4 @@ internal sealed class OtherSubscriptionsItem(val id: String) {
     data class CustomItem(val subscription: Subscription, val layout: GroupItemLayout) :
         OtherSubscriptionsItem(subscription.url), Serializable
 }
+

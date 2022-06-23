@@ -35,3 +35,4 @@ internal object ProtoCoreDataSerializer : Serializer<ProtoCoreData> {
         t.writeTo(output)
     }
 }
+

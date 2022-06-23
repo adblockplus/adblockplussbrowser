@@ -128,3 +128,4 @@ internal class FilterListContentProviderTest {
         assertEquals(0, filterListContentProvider?.update(uriSource, null, null, null))
     }
 }
+

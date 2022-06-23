@@ -177,3 +177,4 @@ internal class ProtoSettingsMigration(
             else -> this
         }
 }
+

@@ -33,3 +33,4 @@ internal fun String.toBlockRule(): String {
 internal fun String.toAllowRule(): String {
     return "@@||${this}^\$document,domain=${this}"
 }
+

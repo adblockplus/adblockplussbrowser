@@ -63,3 +63,4 @@ internal class DeleteAllowlistItemDialogFragment : AppCompatDialogFragment() {
             negativeButton(android.R.string.cancel)
         }
 }
+

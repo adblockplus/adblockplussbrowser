@@ -90,3 +90,4 @@ class UpdateSubscriptionsFragment : DataBindingFragment<FragmentUpdateSubscripti
     private fun UpdateConfigType.toPosition(): Int =
         if (this == UpdateConfigType.UPDATE_WIFI_ONLY) 0 else 1
 }
+

@@ -45,3 +45,4 @@ internal interface CoreRepository {
         const val KEY_CURRENT_SUBSCRIPTIONS_FILE = "KEY_CURRENT_SUBSCRIPTIONS_FILE"
     }
 }
+

@@ -80,3 +80,4 @@ internal fun Settings.toSavedState(): SavedState =
         activePrimarySubscriptions.map { it.url },
         activeOtherSubscriptions.map { it.url }
     )
+

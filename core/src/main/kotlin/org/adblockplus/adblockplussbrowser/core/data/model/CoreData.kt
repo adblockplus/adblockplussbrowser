@@ -38,3 +38,4 @@ internal data class SavedState(
     val primarySubscriptions: List<String>,
     val otherSubscriptions: List<String>
 ) : Parcelable
+
