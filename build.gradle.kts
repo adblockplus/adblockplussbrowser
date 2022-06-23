@@ -54,6 +54,7 @@ detekt {
         exclude(".gradle")
     })
     parallel = true
+    buildUponDefaultConfig = true
     config = files("${projectDir}/config/detekt/detekt.yml")
     baseline = file("${projectDir}/config/detekt/detekt-baseline.xml")
 
