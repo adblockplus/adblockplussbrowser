@@ -23,13 +23,15 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import org.adblockplus.adblockplussbrowser.base.databinding.*
+import org.adblockplus.adblockplussbrowser.base.databinding.bindHolder
 import org.adblockplus.adblockplussbrowser.base.kotlin.exhaustive
 import org.adblockplus.adblockplussbrowser.base.view.layoutInflater
 import org.adblockplus.adblockplussbrowser.preferences.databinding.PrimarySubscriptionsHeaderItemBinding
 import org.adblockplus.adblockplussbrowser.preferences.databinding.PrimarySubscriptionsSubscriptionItemBinding
-import org.adblockplus.adblockplussbrowser.preferences.ui.primarysubscriptions.PrimarySubscriptionsItemType.*
-import org.adblockplus.adblockplussbrowser.preferences.ui.primarysubscriptions.PrimarySubscriptionsViewHolder.*
+import org.adblockplus.adblockplussbrowser.preferences.ui.primarysubscriptions.PrimarySubscriptionsItemType.HEADER_ITEM
+import org.adblockplus.adblockplussbrowser.preferences.ui.primarysubscriptions.PrimarySubscriptionsItemType.SUBSCRIPTION_ITEM
+import org.adblockplus.adblockplussbrowser.preferences.ui.primarysubscriptions.PrimarySubscriptionsViewHolder.HeaderViewHolder
+import org.adblockplus.adblockplussbrowser.preferences.ui.primarysubscriptions.PrimarySubscriptionsViewHolder.SubscriptionViewHolder
 
 internal class PrimarySubscriptionsAdapter(
     private val viewModel: PrimarySubscriptionsViewModel,

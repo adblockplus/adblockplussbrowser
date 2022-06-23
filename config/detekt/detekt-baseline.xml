@@ -177,10 +177,5 @@
     <ID>UnusedPrivateMember:HardcodedSubscriptions.kt$HardcodedSubscriptions$private val context: Context</ID>
     <ID>UnusedPrivateMember:OnboardingViewModel.kt$OnboardingViewModel$val lastFilterRequestFlow = appPreferences.lastFilterListRequest</ID>
     <ID>UnusedPrivateMember:ProtoSettingsMigration.kt$ProtoSettingsMigration$i</ID>
-    <ID>WildcardImport:PrimarySubscriptionsAdapter.kt$import org.adblockplus.adblockplussbrowser.base.databinding.*</ID>
-    <ID>WildcardImport:PrimarySubscriptionsAdapter.kt$import org.adblockplus.adblockplussbrowser.preferences.ui.primarysubscriptions.PrimarySubscriptionsItemType.*</ID>
-    <ID>WildcardImport:PrimarySubscriptionsAdapter.kt$import org.adblockplus.adblockplussbrowser.preferences.ui.primarysubscriptions.PrimarySubscriptionsViewHolder.*</ID>
-    <ID>WildcardImport:SwipeToDeleteCallback.kt$import android.graphics.*</ID>
-    <ID>WildcardImport:build.gradle.kts$import com.google.protobuf.gradle.*</ID>
   </CurrentIssues>
 </SmellBaseline>
