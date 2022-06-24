@@ -107,7 +107,7 @@
     <string name="acceptable_ads_enabled_line2">En maintenant Publicité Acceptable activée, vous aidez les créateurs de contenu à publier leur contenu gratuitement</string>
     <string name="acceptable_ads_disabled">Non, j\'aimerais désactiver Publicité Acceptable</string>
     <string name="allow_updates_on_mobile_data_connection">Autoriser les mises à jour sur la connexion de données mobiles</string>
-    <string name="automatic_update_checkbox_hint">Les mises à jour automatiques utiliseront vos données mobiles \nlorsque vous n'êtes pas connecté au wifi</string>
+    <string name="automatic_update_checkbox_hint">Les mises à jour automatiques utiliseront vos données mobiles \nlorsque vous n\'êtes pas connecté au wifi</string>
     <string name="about_privacy_policy"><a href="https://adblockplus.org/privacy">Politique de confidentialité</a></string>
     <string name="about_terms_of_use"><a href="https://adblockplus.org/terms">Conditions d\'utilisation</a></string>
     <string name="no_browser_found">Aucun navigateur détecté sur cet appareil</string>
@@ -122,7 +122,7 @@
     <string name="languages_onboarding_option_add">Ajouter une langue de blocage des publicités supplémentaire.</string>
     <string name="languages_onboarding_option_skip">Non merci, je ne navigue que dans une seule langue.</string>
     <string name="delete_swipe_hint">Pour supprimer une entrée, faites-la glisser vers la gauche.</string>
-    <string name="crystal_disabled_whitelist">Cette fonctionnalité sera supprimée de Crystal dans la prochaine version.\nSi vous souhaitez continuer à utiliser cette fonctionnalité, utilisez <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">AdBlock pour Samsung Internet</a>. Entre temps, nous conservons la liste d'autorisation que vous avez créée.</string>
+    <string name="crystal_disabled_whitelist">Cette fonctionnalité sera supprimée de Crystal dans la prochaine version.\nSi vous souhaitez continuer à utiliser cette fonctionnalité, utilisez <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">AdBlock pour Samsung Internet</a>. Entre temps, nous conservons la liste d\'autorisation que vous avez créée.</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">Symbole de puce</string>
