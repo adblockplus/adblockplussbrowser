@@ -200,8 +200,8 @@ abp_regression:
   needs:
     - build # we can run this on debug apk
   variables:
-    CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldAbp/debug/app-world-abp-debug.apk"'
-    CURL_NAME: 'name="app-world-abp-debug.apk"'
+    CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldAbp/debug/$APK_NAME"'
+    CURL_NAME: 'name=$APK_NAME'
     APK_NAME: "app-world-abp-debug.apk"
     PLATFORM_VERSIONS: "10"
     GRADLE_TASK: "regression"
@@ -215,8 +215,8 @@ ab_regression:
     - build
     - abp_regression # we can run this on debug apk
   variables:
-    CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldAdblock/debug/app-world-adblock-debug.apk"'
-    CURL_NAME: 'name="app-world-adblock-debug.apk"'
+    CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldAdblock/debug/$APK_NAME"'
+    CURL_NAME: 'name=$APK_NAME'
     APK_NAME: "app-world-adblock-debug.apk"
     PLATFORM_VERSIONS: "10"
     GRADLE_TASK: "regression"
