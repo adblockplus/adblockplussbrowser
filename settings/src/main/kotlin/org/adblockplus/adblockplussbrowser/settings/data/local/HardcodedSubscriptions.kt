@@ -17,8 +17,6 @@
 
 package org.adblockplus.adblockplussbrowser.settings.data.local
 
-import android.content.Context
-
 internal class HardcodedSubscriptions() {
 
     val easylist = subscription {
