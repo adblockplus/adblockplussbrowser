@@ -154,6 +154,7 @@ internal class DataStoreSettingsRepository(
 
     override suspend fun addActiveOtherSubscription(subscription: Subscription) {
         dataStore.updateData { settings ->
+            // Different file managers are returning different URIs hence subscription title is used for uniqueness
             if (settings.activeOtherSubscriptionsList.any { it.title == subscription.title }) {
                 settings
             } else {

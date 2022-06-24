@@ -32,7 +32,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.leinardi.android.speeddial.SpeedDialActionItem
-import com.leinardi.android.speeddial.SpeedDialView
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.BuildConfig
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
@@ -154,7 +153,7 @@ internal class OtherSubscriptionsFragment :
 
         speedDial.addAllActionItems(listOf(addWithUrlButton, addFromLocalStorageButton))
 
-        speedDial.setOnActionSelectedListener(SpeedDialView.OnActionSelectedListener { actionItem ->
+        speedDial.setOnActionSelectedListener { actionItem ->
             when (actionItem.id) {
                 R.id.other_subscriptions_add_from_url_button -> {
                     AddCustomSubscriptionDialogFragment().show(parentFragmentManager, null)
@@ -164,7 +163,7 @@ internal class OtherSubscriptionsFragment :
                 }
             }
             false
-        })
+        }
     }
 
     private fun loadFileFromStorage() {

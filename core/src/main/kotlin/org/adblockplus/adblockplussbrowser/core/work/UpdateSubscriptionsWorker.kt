@@ -25,12 +25,6 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import java.io.BufferedReader
-import java.io.File
-import java.io.FileNotFoundException
-import java.io.InputStreamReader
-import java.util.Objects
-import javax.inject.Inject
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
@@ -57,6 +51,12 @@ import org.adblockplus.adblockplussbrowser.core.extensions.toBlockRule
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
 import timber.log.Timber
+import java.io.BufferedReader
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.InputStreamReader
+import java.util.Objects
+import javax.inject.Inject
 
 
 @HiltWorker
@@ -241,15 +241,17 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
                 subscription.copy(lastUpdate = downloaded.lastUpdated)
             }
         }
+
+        // Get custom subscriptions from public url
         val downloadedOtherSubscriptions = settings.activeOtherSubscriptions.mapNotNull { subscription ->
             subscriptions.firstOrNull { it.url == subscription.url }?.let { downloaded ->
-                print(downloaded.lastUpdated)
                 subscription.copy(lastUpdate = downloaded.lastUpdated)
             }
         }
 
+        // Get subscriptions from local file
         val localFilesOtherSubscriptions = settings.activeOtherSubscriptions.mapNotNull { subscription ->
-            localFileSubscriptions.firstOrNull { it.url == subscription.url}?.let { localFileSubscription ->
+            localFileSubscriptions.firstOrNull { it.url == subscription.url }?.let { localFileSubscription ->
                 var lastUpdate: Long = System.currentTimeMillis()
                 if (localFileSubscription.hasError) lastUpdate = Subscription.SUBSCRIPTION_LAST_UPDATE_ERROR_STATUS
                 subscription.copy(lastUpdate = lastUpdate)
@@ -351,7 +353,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             }
             stringBuilder.toString()
         } catch (ex: Exception) {
-            when(ex) {
+            when (ex) {
                 is FileNotFoundException, is SecurityException -> {
                     localFileSubscriptions.find { it.url == uri.toString() }?.hasError = true
                 }
