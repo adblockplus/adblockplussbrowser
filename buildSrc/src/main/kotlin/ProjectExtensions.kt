@@ -34,10 +34,10 @@ internal object Flavors {
     const val PRODUCT_DIMENSION = "product"
     const val REGION_DIMENSION = "region"
 
-    val ABP = Flavor("abp", PRODUCT_DIMENSION, "org.adblockplus.adblockplussbrowser", Config.Versions.ABP)
-    val ADBLOCK = Flavor("adblock", PRODUCT_DIMENSION, "com.betafish.adblocksbrowser", Config.Versions.ADBLOCK)
-    val CRYSTAL = Flavor("crystal", PRODUCT_DIMENSION, "co.crystalapp.crystal", Config.Versions.CRYSTAL)
-    val WORLD = Flavor("world", REGION_DIMENSION)
+    private val ABP = Flavor("abp", PRODUCT_DIMENSION, "org.adblockplus.adblockplussbrowser", Config.Versions.ABP)
+    private val ADBLOCK = Flavor("adblock", PRODUCT_DIMENSION, "com.betafish.adblocksbrowser", Config.Versions.ADBLOCK)
+    private val CRYSTAL = Flavor("crystal", PRODUCT_DIMENSION, "co.crystalapp.crystal", Config.Versions.CRYSTAL)
+    private val WORLD = Flavor("world", REGION_DIMENSION)
 
     val asList = listOf(WORLD, ABP, ADBLOCK, CRYSTAL)
 }

@@ -24,7 +24,7 @@ import java.util.Locale
 
 internal class HardcodedSubscriptionsDataSource(private val context: Context) : SubscriptionsDataSource {
 
-    private val hardcodedSubscriptions = HardcodedSubscriptions(context)
+    private val hardcodedSubscriptions = HardcodedSubscriptions()
 
     override suspend fun getEasylistSubscription(): Subscription = hardcodedSubscriptions.easylist.toSubscription()
 
