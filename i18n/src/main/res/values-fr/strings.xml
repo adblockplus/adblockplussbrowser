@@ -23,21 +23,21 @@
     <string name="samsung_internet_required_description">ABP est une application qui fonctionne en complément de Samsung Internet pour filtrer les publicités pendant que vous utilisez ce navigateur. Pour qu\'ABP soit efficace, vous devez installer Samsung Internet 4.0 ou une version ultérieure sur votre appareil.\nVous pouvez obtenir le navigateur Samsung Internet en appuyant sur le bouton ci-dessous.</string>
     <string name="download_samsung_internet">Télécharger Samsung Internet</string>
     <string name="update_status_progress_message">Récupération des mises à jour des listes de filtres…</string>
-    <string name="update_status_error_message">Erreur de mise à jour : veuillez réessayer</string>
+    <string name="update_status_error_message">Erreur de mise à jour : veuillez réessayer</string>
     <string name="update_status_retry">Réessayer</string>
-    <string name="device_not_supported">Cet appareil n\'est pas pris en charge.</string>
+    <string name="device_not_supported">Cet appareil n\'est pas compatible</string>
 
     <!-- base-->
     <string name="product_name">ABP</string>
     <string name="acceptable_ads">Publicité Acceptable</string>
     <string name="intrusive_ads">Publicités intrusives</string>
-    <string name="acceptable_ads_fair_standard_title">Un standard équitable</string>
+    <string name="acceptable_ads_fair_standard_title">Norme juste</string>
     <string name="acceptable_ads_fair_standard_description">Les publicités diffusées avec Publicité Acceptable ne sont jamais des publicités vidéo, sonores ou des pop-ups</string>
     <string name="acceptable_ads_placement_title">Placement</string>
-    <string name="acceptable_ads_placement_description">Ne gênent pas la lecture</string>
+    <string name="acceptable_ads_placement_description">Ne gênent pas la lecture </string>
     <string name="acceptable_ads_distinction_title">Distinction</string>
     <string name="acceptable_ads_distinction_description">Les publicités diffusées avec Publicité Acceptable sont toujours clairement identifiées comme des publicités</string>
-    <string name="acceptable_ads_size_title">Format</string>
+    <string name="acceptable_ads_size_title">Taille</string>
     <string name="acceptable_ads_size_description">Couvrent moins de 15 % de l\'écran lors du chargement initial</string>
 
     <!-- onboarding -->
@@ -45,14 +45,14 @@
     <string name="onboarding_welcome_block_ads_title">Bloquez les publicités gênantes</string>
     <string name="onboarding_welcome_block_ads_description">Naviguez sans publicité tout en soutenant les créateurs de contenu à l\'aide de Publicité Acceptable</string>
     <string name="onboarding_welcome_tracking_protection_title">Protection de suivi</string>
-    <string name="onboarding_welcome_tracking_protection_description">Naviguez en toute sécurité en empêchant les sites Web de vous pister sur le Web</string>
+    <string name="onboarding_welcome_tracking_protection_description">Naviguez en toute sécurité en empêchant les sites de vous suivre sur le Web</string>
     <string name="onboarding_welcome_security_privacy_title">Sécurité et confidentialité améliorées</string>
     <string name="onboarding_welcome_security_privacy_description">Naviguez sans souci avec ABP qui vous protège en arrière-plan</string>
     <string name="onboarding_welcome_language_filters_title">Listes de filtres spécifiques à la langue</string>
     <string name="onboarding_welcome_language_filters_description">Bloquez plus de publicités en optimisant ABP pour les langues dans lesquelles vous naviguez généralement</string>
 
     <string name="onboarding_acceptable_ads_header_title1">Participez au programme</string>
-    <string name="onboarding_acceptable_ads_header_title3">et soutenez les créateurs de contenu</string>
+    <string name="onboarding_acceptable_ads_header_title3">et soutez les créateurs de contenu</string>
     <string name="onboarding_acceptable_ads_annoying_ads_title">Les publicités gênantes sont toujours bloquées</string>
     <string name="onboarding_acceptable_ads_annoying_ads_description">Les publicités gênantes qui vous empêchent de lire le contenu qui vous intéresse seront toujours bloquées</string>
     <string name="onboarding_acceptable_ads_nonintrusive_ads_title">Un petit nombre de publicités non intrusives sont affichées par défaut</string>
@@ -63,23 +63,24 @@
 
     <string name="onboarding_enable_header_title1">Voici comment</string>
     <string name="onboarding_enable_header_title2">Activer ABP</string>
-    <string name="onboarding_enable_one_step_title">Un pas de plus et vous aurez terminé</string>
-    <string name="onboarding_enable_one_step_description">Activer ABP dans la rubrique \"Bloqueurs de publicité\" des paramètres de Samsung Internet</string>
+    <string name="onboarding_enable_one_step_title">Une étape de plus et vous aurez terminé</string>
+    <string name="onboarding_enable_one_step_description">Activer ABP dans la rubrique « Bloqueurs de publicité » des paramètres de Samsung Internet\</string>
 
     <string name="open_samsung_internet">Ouvrir Samsung Internet</string>
+
     <!-- /onboarding -->
 
     <!-- preferences -->
     <string name="preferences_ad_blocking_category">Options de blocage des publicités</string>
     <string name="preferences_primary_subscriptions_title">Langue</string>
-    <string name="preferences_primary_subscriptions_summary">Bloquez plus de publicités en optimisant ABP pour les langues dans lesquelles vous naviguez généralement</string>
+    <string name="preferences_primary_subscriptions_summary">Bloquez plus de publicités en optimisant ABP pour la/les langue(s) dans laquelle/lesquelles vous naviguez généralement</string>
     <string name="preferences_other_subscriptions_title">Autres options de blocage</string>
     <string name="preferences_other_subscriptions_summary">Supprimer le suivi, les boutons de réseaux sociaux ou ajouter des listes de filtres personnalisées</string>
     <string name="preferences_allowlist_title">Ajouter des sites Web à la liste d\'autorisation</string>
     <string name="preferences_allowlist_summary">Désactiver le blocage des publicités sur les sites Web de votre choix</string>
     <string name="preferences_allowlist_header">Sites Web autorisés</string>
     <string name="preferences_updates_title">Mettre à jour les listes de filtres publicitaires</string>
-    <string name="preferences_updates_subtitle">Définir quand mettre à jour les listes utilisées pour filtrer les annonces</string>
+    <string name="preferences_updates_subtitle">Définir quand mettre à jour les listes utilisées pour filtrer les publicités</string>
     <string name="preferences_automatic_updates_title">Mises à jour automatiques</string>
     <string name="preferences_automatic_updates_wifi_only">Wi-Fi uniquement</string>
     <string name="preferences_automatic_updates_always">Toujours</string>
@@ -96,6 +97,7 @@
     <string name="other_subscriptions_custom_category">Listes de filtres personnalisées actives</string>
     <string name="other_subscriptions_add_custom_title">Ajouter une liste de filtres personnalisée</string>
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
+    <string name="file_manager_not_found_message">Veuillez installer un gestionnaire de fichiers</string>
     <string name="delete_dialog_title">Confirmer la suppression</string>
     <string name="other_subscriptions_remove_custom_message">Êtes-vous sûr de vouloir supprimer la liste de filtres personnalisée de %s ?</string>
     <string name="other_subscriptions_error_add_custom">Erreur lors de l\'ajout de la liste de filtres personnalisée</string>
@@ -104,27 +106,30 @@
     <string name="allowlist_delete_dialog_message">Êtes-vous sûr de vouloir supprimer %s de la liste d\'autorisation ?</string>
     <string name="acceptable_ads_enabled_line2">En maintenant Publicité Acceptable activée, vous aidez les créateurs de contenu à publier leur contenu gratuitement</string>
     <string name="acceptable_ads_disabled">Non, j\'aimerais désactiver Publicité Acceptable</string>
-    <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
+    <string name="allow_updates_on_mobile_data_connection">Autoriser les mises à jour sur la connexion de données mobiles</string>
+    <string name="automatic_update_checkbox_hint">Les mises à jour automatiques utiliseront vos données mobiles \nlorsque vous n'êtes pas connecté au wifi</string>
     <string name="about_privacy_policy"><a href="https://adblockplus.org/privacy">Politique de confidentialité</a></string>
     <string name="about_terms_of_use"><a href="https://adblockplus.org/terms">Conditions d\'utilisation</a></string>
+    <string name="no_browser_found">Aucun navigateur détecté sur cet appareil</string>
     <string name="about_imprint">Mentions légales</string>
     <string name="open_source_licenses">Licences Open Source</string>
     <string name="version">Version</string>
-    <string name="share_events_header">Aidez-nous à améliorer ABP</string>
+    <string name="share_events_header">Contribuez à améliorer ABP</string>
     <string name="share_events_title">Partager des données anonymisées</string>
-    <string name="share_events_description">Les données anonymisées nous aident à améliorer ABP, créant ainsi une meilleure expérience de navigation pour vous.</string>
+    <string name="share_events_description">Les données anonymisées nous aident à améliorer ABP, ce qui nous permet de vous offrir une meilleure expérience de navigation.</string>
     <string name="share_events_consent">Oui, j\'accepte de partager des données anonymisées.</string>
     <string name="languages_onboarding_title">Vous naviguez dans plusieurs langues ?</string>
     <string name="languages_onboarding_option_add">Ajouter une langue de blocage des publicités supplémentaire.</string>
     <string name="languages_onboarding_option_skip">Non merci, je ne navigue que dans une seule langue.</string>
-    <string name="delete_swipe_hint">Pour supprimer une entrée, la faire glisser vers la gauche.</string>
+    <string name="delete_swipe_hint">Pour supprimer une entrée, faites-la glisser vers la gauche.</string>
+    <string name="crystal_disabled_whitelist">Cette fonctionnalité sera supprimée de Crystal dans la prochaine version.\nSi vous souhaitez continuer à utiliser cette fonctionnalité, utilisez <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">AdBlock pour Samsung Internet</a>. Entre temps, nous conservons la liste d'autorisation que vous avez créée.</string>
 
     <!-- image descriptions -->
-    <string name="image_bullet">Symbole puce</string>
+    <string name="image_bullet">Symbole de puce</string>
 
     <!-- settings -->
-    <string name="block_additional_tracking">Bloquer le traçage supplémentaire</string>
-    <string name="block_social_media_tracking">Bloquer le tracking par les icônes des médias sociaux</string>
+    <string name="block_additional_tracking">Bloquer le suivi supplémentaire</string>
+    <string name="block_social_media_tracking">Bloquer le suivi des icônes de réseaux sociaux</string>
     <!-- /settings -->
 
 </resources>

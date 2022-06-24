@@ -38,10 +38,7 @@
     <string name="acceptable_ads_distinction_title">Distinzione</string>
     <string name="acceptable_ads_distinction_description">Gli annunci mostrati come Annunci Accettabili sono sempre chiaramente contrassegnati come annunci</string>
     <string name="acceptable_ads_size_title">Dimensioni</string>
-    <string name="acceptable_ads_size_description">Coprono meno del 15% dello schermo al momento del caricamento iniziale</string>
-
-    <!-- onboarding -->
-    <string name="onboarding_welcome_header_title1">Ti diamo il benvenuto a</string>
+    <string name="acceptable_ads_size_description">Coprono meno del 15% dello schermo al momento del caricamento iniziale</string>      <!-- onboarding -->     <string name="onboarding_welcome_header_title1">Ti diamo il benvenuto a</string>
     <string name="onboarding_welcome_block_ads_title">Blocca gli annunci fastidiosi</string>
     <string name="onboarding_welcome_block_ads_description">Naviga senza annunci e supporta i creatori di contenuti tramite gli Annunci Accettabili</string>
     <string name="onboarding_welcome_tracking_protection_title">Protezione dal tracciamento</string>
@@ -62,9 +59,9 @@
     <string name="onboarding_acceptable_ads_disable_description">Puoi modificare questa impostazione in qualunque momento abilitando l\'opzione \"Consenti annunci non invasivi\"</string>
 
     <string name="onboarding_enable_header_title1">Come si fa per</string>
-    <string name="onboarding_enable_header_title2">Attivare ABP</string>
+    <string name="onboarding_enable_header_title2">Abilita ABP</string>
     <string name="onboarding_enable_one_step_title">Un ultimo passo e hai finito</string>
-    <string name="onboarding_enable_one_step_description">Abilitare ABP nelle impostazioni di ad blocking di Samsung Internet</string>
+    <string name="onboarding_enable_one_step_description">Abilita ABP nelle impostazioni di ad blocking di Samsung Internet</string>
 
     <string name="open_samsung_internet">Apri Samsung Internet</string>
     <!-- /onboarding -->
@@ -72,13 +69,13 @@
     <!-- preferences -->
     <string name="preferences_ad_blocking_category">Opzioni di ad blocking</string>
     <string name="preferences_primary_subscriptions_title">Lingua</string>
-    <string name="preferences_primary_subscriptions_summary">Blocca un numero maggiore di annunci ottimizzando ABP per la/le lingua/e in cui normalmente navighi</string>
+    <string name="preferences_primary_subscriptions_summary">Blocca un numero maggiore di annunci ottimizzando ABP per la/e lingua/e in cui normalmente navighi</string>
     <string name="preferences_other_subscriptions_title">Altre opzioni di blocco</string>
     <string name="preferences_other_subscriptions_summary">Rimuovi il tracciamento e i pulsanti dei social media, o aggiungi elenchi filtri personalizzati</string>
     <string name="preferences_allowlist_title">Aggiungi siti web ai siti consentiti</string>
     <string name="preferences_allowlist_summary">Disattiva l\'ad blocking sui siti web di tua scelta</string>
     <string name="preferences_allowlist_header">Siti inseriti tra i siti consentiti</string>
-    <string name="preferences_updates_title">Aggiorna i filtri</string>
+    <string name="preferences_updates_title">Aggiorna gli elenchi filtri annunci</string>
     <string name="preferences_updates_subtitle">Configura quando effettuare l\'aggiornamento dei filtri</string>
     <string name="preferences_automatic_updates_title">Aggiornamenti automatici</string>
     <string name="preferences_automatic_updates_wifi_only">Solo con Wi-Fi</string>
@@ -96,6 +93,7 @@
     <string name="other_subscriptions_custom_category">Elenchi filtri personalizzati attivi</string>
     <string name="other_subscriptions_add_custom_title">Aggiungi elenco filtri personalizzati</string>
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
+    <string name="file_manager_not_found_message">Installa un file manager</string>
     <string name="delete_dialog_title">Conferma eliminazione</string>
     <string name="other_subscriptions_remove_custom_message">Vuoi eliminare l\'elenco filtri personalizzati da %s?</string>
     <string name="other_subscriptions_error_add_custom">Errore durante l\'aggiunta elenco filtri personalizzati</string>
@@ -104,27 +102,30 @@
     <string name="allowlist_delete_dialog_message">Vuoi rimuovere %s dai siti consentiti?</string>
     <string name="acceptable_ads_enabled_line2">Mantenendo attivi gli Annunci Accettabili, aiuti i creatori a pubblicare i loro contenuti gratuitamente</string>
     <string name="acceptable_ads_disabled">No, desidero disattivare gli Annunci Accettabili</string>
-    <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
+    <string name="allow_updates_on_mobile_data_connection">Consenti gli aggiornamenti con la connessione dati mobile</string>
+    <string name="automatic_update_checkbox_hint">Gli aggiornamenti automatici utilizzano i dati del cellulare quando non si è connessi alla rete Wi-Fi</string>
     <string name="about_privacy_policy"><a href="https://adblockplus.org/privacy">Informativa sulla privacy</a></string>
     <string name="about_terms_of_use"><a href="https://adblockplus.org/terms">Termini di utilizzo</a></string>
+    <string name="no_browser_found">Nessun browser trovato su questo dispositivo</string>
     <string name="about_imprint">Stampato da</string>
     <string name="open_source_licenses">Licenze open source</string>
     <string name="version">Versione</string>
-    <string name="share_events_header">Contribuisci a migliorare ABP</string>
+    <string name="share_events_header">Aiuta a migliorare ABP</string>
     <string name="share_events_title">Condividi dati anonimi</string>
     <string name="share_events_description">I dati anonimi ci aiutano a migliorare ABP offrendoti una migliore esperienza di navigazione.</string>
     <string name="share_events_consent">Sì, desidero condividere alcuni dati anonimi.</string>
     <string name="languages_onboarding_title">Navighi in più lingue?</string>
     <string name="languages_onboarding_option_add">Aggiungi un\'altra lingua per l\'ad blocking.</string>
     <string name="languages_onboarding_option_skip">No, grazie, navigo solo in una lingua.</string>
-    <string name="delete_swipe_hint">Per cancellare una voce,  falla scorrere verso sinistra.</string>
+    <string name="delete_swipe_hint">Per eliminare una voce, passa il dito verso sinistra.</string>
+    <string name="crystal_disabled_whitelist">Questa funzionalità sarà eliminata da Crystal nella prossima versione.\nSe desideri continuare a usare questa funzione, passa su Utilizza <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">AdBlock per Samsung Internet</a>.Nel frattempo, manteniamo l'elenco dei siti accettati che hai creato.</string>
 
     <!-- image descriptions -->
-    <string name="image_bullet">Simbolo elenco puntato</string>
+    <string name="image_bullet">Simbolo del punto elenco</string>
 
     <!-- settings -->
     <string name="block_additional_tracking">Blocca il tracciamento aggiuntivo</string>
-    <string name="block_social_media_tracking">Blocca il tracciamento tramite le icone dei social media</string>
+    <string name="block_social_media_tracking">Blocca il tracciamento delle icone dei social media</string>
     <!-- /settings -->
 
 </resources>

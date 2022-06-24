@@ -20,7 +20,7 @@
     <string name="app_name">Samsung Internet için ABP</string>
     <string name="app_subtitle">Samsung Internet için</string>
     <string name="samsung_internet_required_title">Samsung Internet gerekli</string>
-    <string name="samsung_internet_required_description">ABP, siz tarayıcıyı kullanırken reklamları filtrelemek için Samsung Internet üzerinde çalışan bir uygulamadır. ABP\'ın etkili olması için cihazınızda Samsung Internet 4.0 veya üzeri bir sürümün kurulu olması gerekir.\nAşağıdaki düğmeye tıklayarak Samsung Internet tarayıcısını edinebilirsiniz.</string>
+    <string name="samsung_internet_required_description">ABP, siz Samsung Internet’i kullanırken bu tarayıcı üzerinde çalışarak reklamları filtreleyen bir uygulamadır. ABP\'nin etkin biçimde çalışması için, cihazınızda Samsung Internet 4.0 ya da üstü bir sürümün kurulu olması gerekir.\nAşağıdaki düğmeye tıklayarak Samsung Internet tarayıcıyı edinebilirsiniz.</string>
     <string name="download_samsung_internet">Samsung Internet\'i indir</string>
     <string name="update_status_progress_message">Filtre listeleri güncellemeleri getiriliyor…</string>
     <string name="update_status_error_message">Güncelleme hatası: Lütfen tekrar deneyin</string>
@@ -43,13 +43,13 @@
     <!-- onboarding -->
     <string name="onboarding_welcome_header_title1">Hoş geldiniz</string>
     <string name="onboarding_welcome_block_ads_title">Rahatsız edici reklamları engelle</string>
-    <string name="onboarding_welcome_block_ads_description">Kabul Edilebilir Reklamlar sayesinde içerik oluşturucuları desteklerken reklamsız bir gezinme deneyimi yaşayın </string>
+    <string name="onboarding_welcome_block_ads_description">Kabul Edilebilir Reklamlar sayesinde içerik oluşturucuları desteklerken reklamsız bir gezinme deneyimi yaşayın</string>
     <string name="onboarding_welcome_tracking_protection_title">İzleme koruması</string>
     <string name="onboarding_welcome_tracking_protection_description">Web sitelerinin sizi web üzerinde izlemesini engelleyerek daha güvenli bir gezinme deneyimi yaşayın</string>
     <string name="onboarding_welcome_security_privacy_title">İyileştirilmiş güvenlik &amp; gizlilik</string>
-    <string name="onboarding_welcome_security_privacy_description">Sizi arka planda koruyan ABP ile endişesiz bir gezinme deneyimi yaşayın</string>
+    <string name="onboarding_welcome_security_privacy_description">ABP sizi arka planda korurken endişesizce gezinin</string>
     <string name="onboarding_welcome_language_filters_title">Dile özel filtre listeleri</string>
-    <string name="onboarding_welcome_language_filters_description">ABP\'ı en çok kullandığınız diller için optimize ederek daha fazla reklamı engelleyin</string>
+    <string name="onboarding_welcome_language_filters_description">ABP’yi, gezinirken kullandığınız diller için optimize ederek daha fazla reklam engelleyin</string>
 
     <string name="onboarding_acceptable_ads_header_title1">Katılın</string>
     <string name="onboarding_acceptable_ads_header_title3">ve içerik oluşturucuları destekleyin</string>
@@ -61,10 +61,10 @@
     <string name="onboarding_acceptable_ads_disable_title">İstediğiniz zaman devre dışı bırakın</string>
     <string name="onboarding_acceptable_ads_disable_description">Bu ayarı istediğiniz zaman \"Rahatsız etmeyen bazı reklamlara izin ver\" seçeneğine dokunarak değiştirebilirsiniz</string>
 
-    <string name="onboarding_enable_header_title1">ABP</string>
-    <string name="onboarding_enable_header_title2">Nasıl Etkinleştirilir</string>
+    <string name="onboarding_enable_header_title1">Adblock Plus\’ı</string>
+    <string name="onboarding_enable_header_title2">Şöyle Etkinleştirebilirsiniz</string>
     <string name="onboarding_enable_one_step_title">Yalnızca bir adım daha kaldı</string>
-    <string name="onboarding_enable_one_step_description">Samsung Internet\'in Adblocker Ayarlarında ABP\'ı Etkinleştirin</string>
+    <string name="onboarding_enable_one_step_description">Samsung Internet\’in Reklam Engelleyici Ayarlarında ABP’yi etkinleştirin</string>
 
     <string name="open_samsung_internet">Samsung Internet\'i açın</string>
     <!-- /onboarding -->
@@ -72,9 +72,9 @@
     <!-- preferences -->
     <string name="preferences_ad_blocking_category">Reklam engelleme seçenekleri</string>
     <string name="preferences_primary_subscriptions_title">Dil</string>
-    <string name="preferences_primary_subscriptions_summary">ABP\'ı en çok kullandığınız dil(ler) için optimize ederek daha fazla reklamı engelleyin</string>
+    <string name="preferences_primary_subscriptions_summary">ABP’yi, gezinirken kullandığınız dil(ler) için optimize ederek daha fazla reklam engelleyin</string>
     <string name="preferences_other_subscriptions_title">Daha fazla engelleme seçeneği</string>
-    <string name="preferences_other_subscriptions_summary">İzlemeyi, sosyal medya düğmelerini kaldırın veya özel filtre listeleri ekleyin </string>
+    <string name="preferences_other_subscriptions_summary">İzlemeyi, sosyal medya düğmelerini kaldırın veya özel filtre listeleri ekleyin</string>
     <string name="preferences_allowlist_title">İzin verilenler listesine web sitesi ekleyin</string>
     <string name="preferences_allowlist_summary">Kendi seçtiğiniz web sitelerinde reklam engelleme özelliğini devre dışı bırakın</string>
     <string name="preferences_allowlist_header">İzin verilenler listesindeki web siteleri</string>
@@ -96,6 +96,7 @@
     <string name="other_subscriptions_custom_category">Aktif özel filtre listeleri</string>
     <string name="other_subscriptions_add_custom_title">Özel filtre listesi ekle</string>
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
+    <string name="file_manager_not_found_message">Lütfen bir dosya yöneticisi kurun</string>
     <string name="delete_dialog_title">Silme işlemini onayla</string>
     <string name="other_subscriptions_remove_custom_message">Özel filtre listesini %s konumundan silmek istediğinizden emin misiniz?</string>
     <string name="other_subscriptions_error_add_custom">Özel filtre listesi eklenirken hata oluştu</string>
@@ -104,27 +105,30 @@
     <string name="allowlist_delete_dialog_message">%s web sitesini izin verilenler listesinden kaldırmak istediğinizden emin misiniz?</string>
     <string name="acceptable_ads_enabled_line2">Kabul Edilebilir Reklamları etkin durumda tutarak içerik oluşturucuların içeriklerini ücretsiz olarak yayınlamasına yardımcı oluyorsunuz</string>
     <string name="acceptable_ads_disabled">Hayır, Kabul Edilebilir Reklamları devre dışı bırakmak istiyorum</string>
-    <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
+    <string name="allow_updates_on_mobile_data_connection">Mobil veri bağlantısı üzerinden güncellemelere izin ver</string>
+    <string name="automatic_update_checkbox_hint">WiFi bağlantınız olmadığında \notomatik güncellemeler için mobil veri bağlantınız kullanılacaktır</string>
     <string name="about_privacy_policy"><a href="https://adblockplus.org/privacy">Gizlilik Politikası</a></string>
     <string name="about_terms_of_use"><a href="https://adblockplus.org/terms">Kullanım Şartları</a></string>
+    <string name="no_browser_found">Bu cihazda tarayıcı bulunamadı</string>
     <string name="about_imprint">Damga</string>
     <string name="open_source_licenses">Açık Kaynak İzinleri</string>
     <string name="version">Sürüm</string>
-    <string name="share_events_header">ABP\'ı iyileştirmemize yardımcı olun</string>
+    <string name="share_events_header">ABP’yi iyileştirmemize yardım edin</string>
     <string name="share_events_title">Anonimleştirilmiş verileri paylaş</string>
-    <string name="share_events_description">Anonimleştirilmiş veriler ABP\'ı iyileştirmemize yardımcı olurken sizin için de daha iyi bir gezinme deneyimi sağlar.</string>
+    <string name="share_events_description">Anonimleştirilmiş veriler Adblock Plus\'ı iyileştirmemize yardımcı olurken sizin için de daha iyi bir gezinme deneyimi sağlar.</string>
     <string name="share_events_consent">Evet, bazı anonimleştirilmiş verileri paylaşacağım.</string>
     <string name="languages_onboarding_title">İnternette birden çok dilde mi geziniyorsunuz?</string>
     <string name="languages_onboarding_option_add">Bir reklam engelleme dili daha ekleyin.</string>
     <string name="languages_onboarding_option_skip">Hayır teşekkürler, yalnızca bir dilde geziniyorum.</string>
     <string name="delete_swipe_hint">Bir girdiyi silmek için sola kaydırın.</string>
+    <string name="crystal_disabled_whitelist">Bu özellik Crystal\'ın sonraki sürümünde kaldırılacaktır.\nBu özelliği kullanmaya devam etmek istiyorsanız lütfen şu tarayıcı sürümüne dönün: <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">Samsung Internet için AdBlock</a>.Bu arada, oluşturmuş olduğunuz izin verilenler listesi korunacaktır.</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">Madde İşareti Sembolü</string>
 
     <!-- settings -->
-    <string name="block_additional_tracking">Ek takipçileri engelle</string>
-    <string name="block_social_media_tracking">Sosyal medya simgelerinin izlemesini engelle</string>
+    <string name="block_additional_tracking">Ek izlemeyi engelle</string>
+    <string name="block_social_media_tracking">Sosyal medya simgelerinin izlenmesini engelle</string>
     <!-- /settings -->
 
 </resources>
