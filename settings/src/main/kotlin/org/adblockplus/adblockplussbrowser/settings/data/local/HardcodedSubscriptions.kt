@@ -17,7 +17,7 @@
 
 package org.adblockplus.adblockplussbrowser.settings.data.local
 
-internal class HardcodedSubscriptions() {
+internal class HardcodedSubscriptions {
 
     val easylist = subscription {
         url = "https://easylist-downloads.adblockplus.org/easylist.txt"
