@@ -148,8 +148,9 @@ sign_apks:
   before_script:
     - test -z ${SAUCE_USERNAME} && echo "echo SAUCE_USERNAME not set. Unable to run tests." && exit 1
     - test -z ${SAUCE_ACCESS_KEY} && echo "echo SAUCE_ACCESS_KEY not set. Unable to run tests." && exit 1
+    - echo ${APK_NAME}
     - curl -u "${SAUCE_USERNAME}:${SAUCE_ACCESS_KEY}" --location --request POST 'https://api.eu-central-1.saucelabs.com/v1/storage/upload'
-      --form 'payload=@"app/build/outputs/apk/worldAbp/debug/app-world-abp-debug.apk"' --form 'name="app-world-abp-debug.apk"'
+      --form ${CURL_PAYLOAD} --form ${CURL_NAME}
     # we are not using submodules, because automation is not a part of repository functionality
   script:
     # its rather a standalone set of scripts
@@ -193,20 +194,30 @@ sign_apks:
         echo "**********************************"
         cat platform_version-${PLATFORM_VERSION}.log
       done
-  artifacts:
-    when: always
-    expire_in: 6 months
-    reports:
-      junit: "automation/target/cucumber-reports/*.xml"
-    paths:
-      - "automation/platform_version-*.log"
-      - "automation/result_*"
 
-regression_autojob:
+abp_regression:
   extends: .template:automation
   needs:
     - build # we can run this on debug apk
   variables:
+    APK_NAME: "app-world-abp-debug.apk"
+    CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldAbp/debug/$APK_NAME"'
+    CURL_NAME: 'name=$APK_NAME'
+    PLATFORM_VERSIONS: "10"
+    GRADLE_TASK: "regression"
+  rules:
+    - if: '$FORCE_REGRESSION == "true"'
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"'
+
+ab_regression:
+  extends: .template:automation
+  needs:
+    - build
+    - abp_regression # we can run this on debug apk
+  variables:
+    APK_NAME: "app-world-adblock-debug.apk"
+    CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldAdblock/debug/$APK_NAME"'
+    CURL_NAME: 'name=$APK_NAME'
     PLATFORM_VERSIONS: "10"
     GRADLE_TASK: "regression"
   rules:
@@ -218,6 +229,9 @@ smoke_tests:
   needs:
     - build # we can run this on debug apk
   variables:
+    APK_NAME: "app-world-abp-debug.apk"
+    CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldAbp/debug/$APK_NAME"'
+    CURL_NAME: 'name=$APK_NAME'
     PLATFORM_VERSIONS: "7 8 9 11"
     GRADLE_TASK: "multiAPI"
   rules:
