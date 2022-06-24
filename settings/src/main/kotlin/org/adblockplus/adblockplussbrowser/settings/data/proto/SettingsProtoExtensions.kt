@@ -18,6 +18,7 @@
 package org.adblockplus.adblockplussbrowser.settings.data.proto
 
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
+import org.adblockplus.adblockplussbrowser.base.data.model.CustomSubscriptionType
 import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
 import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig
 
@@ -39,6 +40,7 @@ internal fun ProtoSubscription.toSubscription(): Subscription =
         this.url,
         this.title,
         this.lastUpdate,
+        this.type.toCustomSubscriptionType()
     )
 
 internal fun Subscription.toProtoSubscription(): ProtoSubscription =
@@ -46,6 +48,7 @@ internal fun Subscription.toProtoSubscription(): ProtoSubscription =
         .setUrl(this.url)
         .setTitle(this.title)
         .setLastUpdate(this.lastUpdate)
+        .setType(this.type.toProtoCustomSubscriptionType())
         .build()
 
 internal fun ProtoUpdateConfig.toUpdateConfig(): UpdateConfig =
@@ -60,3 +63,14 @@ internal fun UpdateConfig.toProtoUpdateConfig(): ProtoUpdateConfig =
         UpdateConfig.ALWAYS -> ProtoUpdateConfig.ALWAYS
     }
 
+internal fun ProtoCustomSubscriptionType.toCustomSubscriptionType(): CustomSubscriptionType =
+    when(this) {
+        ProtoCustomSubscriptionType.FROM_URL -> CustomSubscriptionType.FROM_URL
+        else -> CustomSubscriptionType.LOCAL_FILE
+    }
+
+internal fun CustomSubscriptionType.toProtoCustomSubscriptionType(): ProtoCustomSubscriptionType =
+    when(this) {
+        CustomSubscriptionType.FROM_URL -> ProtoCustomSubscriptionType.FROM_URL
+        else -> ProtoCustomSubscriptionType.LOCAL_FILE
+    }

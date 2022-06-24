@@ -18,6 +18,7 @@
 package org.adblockplus.adblockplussbrowser.base.data.model
 
 import android.os.Parcelable
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import org.adblockplus.adblockplussbrowser.base.BuildConfig
 
@@ -26,6 +27,7 @@ data class Subscription(
     val url: String,
     val title: String,
     val lastUpdate: Long,
+    val type: CustomSubscriptionType,
     /* Used only for testability! */
     val flavor: String = BuildConfig.FLAVOR_product
 ) : Parcelable {
@@ -55,4 +57,16 @@ data class Subscription(
                 "You forgot to specify a URL override for the flavor you have added"
             ) else url
         }
+
+    @IgnoredOnParcel
+    var hasError: Boolean = false
+
+    companion object {
+        const val SUBSCRIPTION_LAST_UPDATE_ERROR_STATUS = 9999L
+    }
+}
+
+enum class CustomSubscriptionType {
+    FROM_URL,
+    LOCAL_FILE
 }

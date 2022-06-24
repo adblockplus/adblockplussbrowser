@@ -30,6 +30,8 @@ import kotlinx.coroutines.launch
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
+import org.adblockplus.adblockplussbrowser.base.data.model.CustomSubscriptionType.FROM_URL
+import org.adblockplus.adblockplussbrowser.base.data.model.CustomSubscriptionType.LOCAL_FILE
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.preferences.ui.layoutForIndex
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
@@ -116,7 +118,7 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
 
     fun addCustomUrl(url: String) {
         viewModelScope.launch {
-            val subscription = Subscription(url, url, 0L)
+            val subscription = Subscription(url, url,0L, FROM_URL)
             _uiState.value = UiState.Loading
             addOtherSubscriptionsCount.apply { value = value?.plus(1) }
             if (!subscriptionManager.validateSubscription(subscription)) {
@@ -126,10 +128,18 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
                 settingsRepository.addActiveOtherSubscription(subscription)
                 analyticsProvider.logEvent(AnalyticsEvent.CUSTOM_FILTER_LIST_ADDED)
             }
-            addOtherSubscriptionsCount.apply { value = value?.minus(1) }
-            if (addOtherSubscriptionsCount.value == 0) {
-                _uiState.value = UiState.Done
-            }
+            finishAddingCustomSubscription()
+        }
+    }
+
+    fun addCustomFilterFile(url: String, title: String) {
+        viewModelScope.launch {
+            val subscription = Subscription(url, title, 0L, LOCAL_FILE)
+            _uiState.value = UiState.Loading
+            addOtherSubscriptionsCount.apply { value = value?.plus(1) }
+            settingsRepository.addActiveOtherSubscription(subscription)
+            analyticsProvider.logEvent(AnalyticsEvent.CUSTOM_FILTER_LIST_ADDED)
+            finishAddingCustomSubscription()
         }
     }
 
@@ -151,5 +161,11 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
         return result
     }
 
-}
+    private fun finishAddingCustomSubscription() {
+        addOtherSubscriptionsCount.apply { value = value?.minus(1) }
+        if (addOtherSubscriptionsCount.value == 0) {
+            _uiState.value = UiState.Done
+        }
+    }
 
+}

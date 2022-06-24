@@ -25,6 +25,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import java.io.BufferedReader
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
@@ -51,7 +52,10 @@ import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
 import timber.log.Timber
 import java.io.File
+import java.io.InputStreamReader
+import java.util.Objects
 import javax.inject.Inject
+import org.adblockplus.adblockplussbrowser.base.data.model.CustomSubscriptionType
 
 
 @HiltWorker
@@ -74,6 +78,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
 
     private var totalSteps: Int = 0
     private var currentStep: Int = 0
+    lateinit var localFileSubscriptions: List<Subscription>
 
     private val settings by lazy {
         runBlocking {
@@ -115,8 +120,13 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
 
             // Download new subscriptions
             updateStatus(ProgressType.PROGRESS)
+            // Only download subscriptions from URLs
+            val (downloadableActiveSubscriptions, localFiles) = activeSubscriptions.partition { subscription ->
+                subscription.type != CustomSubscriptionType.LOCAL_FILE
+            }
+            localFileSubscriptions = localFiles
             val results = downloadSubscriptions(
-                settings, activeSubscriptions, changes, tags.isForceRefresh(),
+                settings, downloadableActiveSubscriptions, changes, tags.isForceRefresh(),
                 tags.isPeriodic()
             )
 
@@ -157,7 +167,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
         cleanOldFiles(filtersFile)
 
         updateStatus(ProgressType.PROGRESS)
-        updateSubscriptionsLastUpdated(settings, subscriptions)
+        updateSubscriptionsLastUpdatedStatus(settings, subscriptions)
     }
 
     private fun failedResult(): Result =
@@ -221,7 +231,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             emptyList()
         }
 
-    private suspend fun updateSubscriptionsLastUpdated(
+    private suspend fun updateSubscriptionsLastUpdatedStatus(
         settings: Settings,
         subscriptions: List<DownloadedSubscription>
     ) {
@@ -230,11 +240,22 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
                 subscription.copy(lastUpdate = downloaded.lastUpdated)
             }
         }
-        val otherSubscriptions = settings.activeOtherSubscriptions.mapNotNull { subscription ->
+        val downloadedOtherSubscriptions = settings.activeOtherSubscriptions.mapNotNull { subscription ->
             subscriptions.firstOrNull { it.url == subscription.url }?.let { downloaded ->
+                print(downloaded.lastUpdated)
                 subscription.copy(lastUpdate = downloaded.lastUpdated)
             }
         }
+
+        val localFilesOtherSubscriptions = settings.activeOtherSubscriptions.mapNotNull { subscription ->
+            localFileSubscriptions.firstOrNull { it.url == subscription.url}?.let { localFileSubscription ->
+                var lastUpdate: Long = System.currentTimeMillis()
+                if (localFileSubscription.hasError) lastUpdate = Subscription.SUBSCRIPTION_LAST_UPDATE_ERROR_STATUS
+                subscription.copy(lastUpdate = lastUpdate)
+            }
+        }
+
+        val otherSubscriptions = downloadedOtherSubscriptions + localFilesOtherSubscriptions
 
         settingsRepository.updatePrimarySubscriptionsLastUpdate(primarySubscriptions)
         settingsRepository.updateOtherSubscriptionsLastUpdate(otherSubscriptions)
@@ -267,6 +288,13 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             sink.writeUtf8("! This file was automatically created.\n")
             subscriptions.forEach { subscription ->
                 sink.writeUtf8("! ${subscription.url}\n")
+            }
+
+            localFileSubscriptions.forEach { subscription ->
+                val fileContent = readFile(Uri.parse(subscription.url))
+                if (!fileContent.isNullOrEmpty()) {
+                    sink.writeUtf8(fileContent)
+                }
             }
 
             allowedDomains.forEach { domain ->
@@ -305,6 +333,25 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
         }
     }
 
+    private fun readFile(uri: Uri): String? {
+        val stringBuilder = StringBuilder()
+        return try {
+            applicationContext.contentResolver.openInputStream(uri).use { inputStream ->
+                BufferedReader(
+                    InputStreamReader(Objects.requireNonNull(inputStream))
+                ).use { reader ->
+                    var line: String?
+                    while (reader.readLine().also { line = it } != null) {
+                        stringBuilder.appendLine(line)
+                    }
+                }
+            }
+            stringBuilder.toString()
+        } catch (ex: Exception) {
+            localFileSubscriptions.find { it.url == uri.toString() }?.hasError = true
+            null
+        }
+    }
 
     private fun List<DownloadedSubscription>.toFiltersSet(): Set<String> {
         val filters = mutableSetOf<String>()
