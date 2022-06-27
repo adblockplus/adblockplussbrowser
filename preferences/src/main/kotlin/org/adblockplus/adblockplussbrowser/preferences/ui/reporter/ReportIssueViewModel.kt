@@ -23,6 +23,7 @@ import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
+import android.provider.MediaStore
 import android.util.Base64
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -81,15 +82,15 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
 
         Timber.d("ReportIssue: image path: $pic")
 
-        val source = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            ImageDecoder.createSource(cr, pic)
-        } else {
-            TODO("VERSION.SDK_INT < P")
-        }
-
         val bs = ByteArrayOutputStream()
         return try {
-            ImageDecoder.decodeBitmap(source).compress(Bitmap.CompressFormat.PNG, REPORT_ISSUE_VIEW_MODEL_IMAGE_QUALITY, bs)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                ImageDecoder.decodeBitmap(ImageDecoder.createSource(cr, pic))
+                    .compress(Bitmap.CompressFormat.PNG, REPORT_ISSUE_VIEW_MODEL_IMAGE_QUALITY, bs)
+            } else {
+                MediaStore.Images.Media.getBitmap(cr, pic)
+                    .compress(Bitmap.CompressFormat.PNG, REPORT_ISSUE_VIEW_MODEL_IMAGE_QUALITY, bs)
+            }
             "data:image/png;base64," + Base64.encodeToString(bs.toByteArray(), Base64.DEFAULT)
         } catch (e: Exception) {
             Timber.e("ReportIssue: Screenshot decode failed\n" + e.printStackTrace())
@@ -97,7 +98,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         }
     }
 
-    companion object{
+    companion object {
         private const val REPORT_ISSUE_VIEW_MODEL_IMAGE_QUALITY = 100
     }
 }
