@@ -244,6 +244,9 @@ functional_tests:
   needs:
     - build # we can run this on debug apk
   variables:
+    APK_NAME: "app-world-abp-debug.apk"
+    CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldAbp/debug/$APK_NAME"'
+    CURL_NAME: 'name=$APK_NAME'
     PLATFORM_VERSIONS: "10"
     GRADLE_TASK: "functional"
   rules:
