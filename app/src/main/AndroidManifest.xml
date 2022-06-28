@@ -48,7 +48,8 @@
 
         <activity
             android:name=".ui.LauncherActivity"
-            android:theme="@style/Theme.Abp.Launcher">
+            android:theme="@style/Theme.Abp.Launcher"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -63,9 +64,14 @@
             android:theme="@style/Theme.Abp" />
 
         <provider
-            android:name="androidx.work.impl.WorkManagerInitializer"
-            android:authorities="${applicationId}.workmanager-init"
-            tools:node="remove" />
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            tools:node="merge">
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+        </provider>
 
         <meta-data
             android:name="com.samsung.android.sbrowser.contentBlocker.interfaceVersion"
