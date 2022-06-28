@@ -339,8 +339,6 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
     private fun readFile(uri: Uri): String? {
         val stringBuilder = StringBuilder()
         return try {
-            val takeFlags: Int = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-            applicationContext.grantUriPermission(applicationContext.packageName, uri, takeFlags)
             applicationContext.contentResolver.openInputStream(uri).use { inputStream ->
                 BufferedReader(
                     InputStreamReader(Objects.requireNonNull(inputStream))
