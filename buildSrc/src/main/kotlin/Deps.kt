@@ -98,7 +98,7 @@ object Deps {
 
         val CORE = dependency {
             groupName("core:core-ktx")
-            version("1.5.0")
+            version("1.8.0")
         }
 
         val CONSTRAINT_LAYOUT = dependency {
@@ -159,7 +159,7 @@ object Deps {
             }
         }
 
-        object Work : DependencyGroup("androidx.work", "2.5.0") {
+        object Work : DependencyGroup("androidx.work", "2.7.0") {
             val RUNTIME = dependency { name("work-runtime-ktx") }
             val TESTING = dependency { name("work-testing") }
         }
