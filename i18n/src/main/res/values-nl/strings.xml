@@ -17,10 +17,10 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">ABP voor Samsung Internet</string>
+    <string name="app_name">ABP for Samsung Internet</string>
     <string name="app_subtitle">voor Samsung Internet</string>
     <string name="samsung_internet_required_title">Samsung Internet vereist</string>
-    <string name="samsung_internet_required_description">ABP is een app die werkt met Samsung Internet om advertenties te filteren terwijl u die browser gebruikt. Om ABP goed te laten werken, moet u Samsung Internet 4.0 of hoger op uw apparaat geïnstalleerd hebben.\nU kunt Samsung Internet browser krijgen door op de onderstaande knop te tikken</string>
+    <string name="samsung_internet_required_description">ABP is een app die bovenop Samsung Internet draait om advertenties te filteren terwijl u die browser gebruikt. Om ABP goed te laten werken, moet u Samsung Internet 4.0 of hoger op uw apparaat geïnstalleerd hebben.\nU kunt Samsung Internet browser krijgen door op de onderstaande knop te tikken.</string>
     <string name="download_samsung_internet">Samsung Internet downloaden</string>
     <string name="update_status_progress_message">Updates filterlijsten ophalen…</string>
     <string name="update_status_error_message">Fout bij het updaten: Probeer opnieuw</string>
@@ -64,7 +64,7 @@
     <string name="onboarding_enable_header_title1">Hier staat hoe dat moet</string>
     <string name="onboarding_enable_header_title2">ABP inschakelen</string>
     <string name="onboarding_enable_one_step_title">Nog één stap en u bent klaar</string>
-    <string name="onboarding_enable_one_step_description">ABP inschakelen in de adblocker-instellingen van in Samsung Internet</string>
+    <string name="onboarding_enable_one_step_description">ABP inschakelen in de \Adblocker-instellingen van Samsung Internet</string>
 
     <string name="open_samsung_internet">Samsung Internet openen</string>
     <!-- /onboarding -->
@@ -72,7 +72,7 @@
     <!-- preferences -->
     <string name="preferences_ad_blocking_category">Opties om advertenties te blokkeren</string>
     <string name="preferences_primary_subscriptions_title">Taal</string>
-    <string name="preferences_primary_subscriptions_summary">Blokkeer meer advertenties door ABP te optimaliseren voor de talen waarin u normaal gesproken surft</string>
+    <string name="preferences_primary_subscriptions_summary">Blokkeer meer advertenties door APB te optimaliseren voor de talen waarin u normaal gesproken surft</string>
     <string name="preferences_other_subscriptions_title">Meer blokkeeropties</string>
     <string name="preferences_other_subscriptions_summary">Tracking en sociale mediaknoppen verwijderen en aangepaste filters toevoegen</string>
     <string name="preferences_allowlist_title">Websites aan de toelatingslijst toevoegen</string>
@@ -96,6 +96,7 @@
     <string name="other_subscriptions_custom_category">Actieve aangepaste filterlijsten</string>
     <string name="other_subscriptions_add_custom_title">Aangepaste filterlijst toevoegen</string>
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
+    <string name="file_manager_not_found_message">Een bestandsmanager installeren</string>
     <string name="delete_dialog_title">Verwijdering bevestigen</string>
     <string name="other_subscriptions_remove_custom_message">Weet u zeker dat u de aangepaste filterlijst wilt verwijderen uit %s?</string>
     <string name="other_subscriptions_error_add_custom">Fout bij het toevoegen van aangepaste filterlijst</string>
@@ -104,27 +105,30 @@
     <string name="allowlist_delete_dialog_message">Weet u zeker dat u %s van de toelatingslijst wilt verwijderen?</string>
     <string name="acceptable_ads_enabled_line2">Door Acceptabele advertenties ingeschakeld te houden, helpt u de makers van inhoud om hun inhoud gratis te publiceren</string>
     <string name="acceptable_ads_disabled">Nee, ik wil Acceptabele advertenties uitschakelen</string>
-    <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
+    <string name="allow_updates_on_mobile_data_connection">Updates toestaan op mobiele gegevensverbinding</string>
+    <string name="automatic_update_checkbox_hint">Automatische updates gebruiken uw mobiele data \nals u niet met wifi verbonden bent</string>
     <string name="about_privacy_policy"><a href="https://adblockplus.org/privacy">Privacybeleid</a></string>
     <string name="about_terms_of_use"><a href="https://adblockplus.org/terms">Gebruiksvoorwaarden</a></string>
+    <string name="no_browser_found">Geen browser gevonden op dit apparaat</string>
     <string name="about_imprint">Impressum</string>
     <string name="open_source_licenses">Open source licenties</string>
     <string name="version">Versie</string>
     <string name="share_events_header">Help bij het verbeteren van ABP</string>
     <string name="share_events_title">Deel geanonimiseerde gegevens</string>
-    <string name="share_events_description">Geanonimiseerde gegevens helpen ons om ABP te verbeteren, en creëren dus een betere surfervaring voor u.</string>
+    <string name="share_events_description">Geanonimiseerde gegevens helpen ons om ABP te verbeteren, en creëren zo een betere surfervaring voor u.</string>
     <string name="share_events_consent">Ja, ik zal wat geanonimiseerde gegevens delen.</string>
     <string name="languages_onboarding_title">Surfen in meerdere talen?</string>
     <string name="languages_onboarding_option_add">Een extra taal toevoegen om advertenties te blokkeren</string>
     <string name="languages_onboarding_option_skip">Nee bedankt, ik surf slechts in één taal.</string>
-    <string name="delete_swipe_hint">Naar links vegen om invoer te verwijderen.</string>
+    <string name="delete_swipe_hint">Om invoer te verwijderen, naar links vegen.</string>
+    <string name="crystal_disabled_whitelist">Deze functie zal uit Crystal verdwijnen in de volgende versie.\nAls u deze functie wilt blijven gebruiken, stap dan over op <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">AdBlock voor Samsung Internet</a>In de tussentijd, houden we de toelatingslijst die u heeft gemaakt.</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">Symbool opsommingsteken</string>
 
     <!-- settings -->
-    <string name="block_additional_tracking">Aanvullende tracking blokkeren</string>
-    <string name="block_social_media_tracking">Tracking via sociale-mediapictogrammen blokkeren</string>
+    <string name="block_additional_tracking">Blokkeer aanvullende tracking</string>
+    <string name="block_social_media_tracking">Blokkeer tracking van sociale media pictogrammen</string>
     <!-- /settings -->
 
 </resources>

@@ -17,18 +17,15 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">ABP Samsung Internet böngészőhöz</string>
+    <string name="app_name">ABP Samsung Internet számára</string>
     <string name="app_subtitle">Samsung Internet böngészőhöz</string>
     <string name="samsung_internet_required_title">Samsung Internet szükséges</string>
-    <string name="samsung_internet_required_description">Az ABP egy olyan alkalmazás, amely a Samsung Internet böngészőn futtatva szűri a böngészés közben megjelenő reklámokat. Az ABP hatékony működéséhez Samsung Internet 4.0, vagy újabb változatot szükséges telepítenie eszközére.\nA Samsung Internet böngészőt az alábbi gombra koppintva tekintheti meg.</string>
+    <string name="samsung_internet_required_description">Az ABPs egy olyan alkalmazás, amely a Samsung Internet böngészőn futtatva szűri a böngészés közben megjelenő reklámokat. Az ABP hatékony működéséhez Samsung Internet 4.0, vagy újabb változatot szükséges telepítenie eszközére.\nA Samsung Internet böngészőt az alábbi gombra koppintva tekintheti meg.</string>
     <string name="download_samsung_internet">Samsung Internet letöltése</string>
     <string name="update_status_progress_message">Szűrőlista frissítések betöltése folyamatban van…</string>
     <string name="update_status_error_message">Hiba a frissítés során: Próbálja meg újból</string>
     <string name="update_status_retry">Újra</string>
-    <string name="device_not_supported">Ez nem támogatott eszköz</string>
-
-    <!-- base-->
-    <string name="product_name">ABP</string>
+    <string name="device_not_supported">Nem támogatott ezen eszköz</string>      <!-- base-->     <string name="product_name">ABP</string>
     <string name="acceptable_ads">Elfogadható hirdetések</string>
     <string name="intrusive_ads">Zavaró hirdetések</string>
     <string name="acceptable_ads_fair_standard_title">Méltányos megjelenítés</string>
@@ -38,16 +35,13 @@
     <string name="acceptable_ads_distinction_title">Kiemelés</string>
     <string name="acceptable_ads_distinction_description">Az Elfogadható hirdetések mindig egyértelműen hirdetésként vannak megjelölve</string>
     <string name="acceptable_ads_size_title">Méret</string>
-    <string name="acceptable_ads_size_description">A képernyő kevesebb mint 15%-át foglalják el a kezdeti betöltéskor</string>
-
-    <!-- onboarding -->
-    <string name="onboarding_welcome_header_title1">Üdvözöljük</string>
+    <string name="acceptable_ads_size_description">A képernyő kevesebb mint 15%-át foglalják el a kezdeti betöltéskor</string>      <!-- onboarding -->     <string name="onboarding_welcome_header_title1">Üdvözöljük</string>
     <string name="onboarding_welcome_block_ads_title">Bosszantó hirdetések blokkolása</string>
     <string name="onboarding_welcome_block_ads_description">Böngésszen hirdetésmentesen, miközben az Elfogadható hirdetésekkel támogatja a tartalomkészítőket</string>
     <string name="onboarding_welcome_tracking_protection_title">Követésvédelem</string>
     <string name="onboarding_welcome_tracking_protection_description">Böngésszen biztonságosabban, megakadályozva, hogy a weboldalak követhessék a böngészését</string>
     <string name="onboarding_welcome_security_privacy_title">Jobb biztonság és adatvédelem</string>
-    <string name="onboarding_welcome_security_privacy_description">Gondmentes böngészés az ABP alkalmazás védelmével</string>
+    <string name="onboarding_welcome_security_privacy_description">Gondmentes böngészés a háttérben futó ABP alkalmazás védelmével</string>
     <string name="onboarding_welcome_language_filters_title">Nyelvspecifikus szűrőlisták</string>
     <string name="onboarding_welcome_language_filters_description">Blokkoljon további hirdetéseket az ABP optimalizálásával a leggyakoribb böngészési nyelveken</string>
 
@@ -62,17 +56,16 @@
     <string name="onboarding_acceptable_ads_disable_description">Ezt a beállítást a \"Nem zavaró reklámok engedélyezése\" opcióra kattintva módosíthatja</string>
 
     <string name="onboarding_enable_header_title1">Így végezheti el</string>
-    <string name="onboarding_enable_header_title2">Az ABP engedélyezését</string>
+    <string name="onboarding_enable_header_title2">ABP engedélyezése</string>
     <string name="onboarding_enable_one_step_title">Még egy lépés, és elkészült</string>
     <string name="onboarding_enable_one_step_description">ABP engedélyezése a Samsung Internet reklámblokkolási beállításaiban</string>
 
     <string name="open_samsung_internet">Samsung Internet megnyitása</string>
     <!-- /onboarding -->
 
-    <!-- preferences -->
-    <string name="preferences_ad_blocking_category">Reklámblokkolási lehetőségek</string>
+    <!-- preferences -->     <string name="preferences_ad_blocking_category">Reklámblokkolási lehetőségek</string>
     <string name="preferences_primary_subscriptions_title">Nyelv</string>
-    <string name="preferences_primary_subscriptions_summary">Blokkoljon további reklámokat az ABP optimalizálásával a leggyakoribb böngészési nyelveken</string>
+    <string name="preferences_primary_subscriptions_summary">Blokkolja a további hirdetéseket az ABP optimalizálásával a leggyakoribb böngészési nyelveken</string>
     <string name="preferences_other_subscriptions_title">További reklámblokkolási lehetőségek</string>
     <string name="preferences_other_subscriptions_summary">Követés megszüntetése, közösségi média gombok vagy egyéni szűrőlisták hozzáadása</string>
     <string name="preferences_allowlist_title">Weboldalak hozzáadása az engedélyezőlistához</string>
@@ -96,6 +89,7 @@
     <string name="other_subscriptions_custom_category">Aktív egyéni szűrőlisták</string>
     <string name="other_subscriptions_add_custom_title">Egyéni szűrőlista hozzáadása</string>
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
+    <string name="file_manager_not_found_message">Telepítsen egy fájlkezelőt.</string>
     <string name="delete_dialog_title">Törlés megerősítése</string>
     <string name="other_subscriptions_remove_custom_message">Biztosan törölni kívánja a(z) %s egyéni szűrőlistát?</string>
     <string name="other_subscriptions_error_add_custom">Hiba az egyéni szűrőlista hozzáadásakor</string>
@@ -104,27 +98,30 @@
     <string name="allowlist_delete_dialog_message">Biztos benne, hogy eltávolítja %s elemet az engedélyezőlistáról?</string>
     <string name="acceptable_ads_enabled_line2">Az elfogadható hirdetések engedélyezésével segítséget nyújt a tartalomkészítőknek a tartalmaik ingyenesen közléséhez</string>
     <string name="acceptable_ads_disabled">Nem, ki szeretném kapcsolni az Elfogadható hirdetéseket</string>
-    <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
+    <string name="allow_updates_on_mobile_data_connection">Mobil adatátviteli kapcsolaton keresztüli frissítések engedélyezése</string>
+    <string name="automatic_update_checkbox_hint">Automatikus frissítéseket hajt végre a mobil adatátviteli kapcsolata, \namikor nem kacsolódik WiFi hozzáférési ponthoz.</string>
     <string name="about_privacy_policy"><a href="https://adblockplus.org/privacy">Adatvédelmi nyilatkozat</a></string>
     <string name="about_terms_of_use"><a href="https://adblockplus.org/terms">Használati feltételek</a></string>
+    <string name="no_browser_found">Nem található böngésző ezen az eszközön.</string>
     <string name="about_imprint">Impresszum</string>
     <string name="open_source_licenses">Nyitott forráskódú licencek</string>
     <string name="version">Változat</string>
-    <string name="share_events_header">Segítse az ABP javításában</string>
+    <string name="share_events_header">Segítse az ABP fejlesztését.</string>
     <string name="share_events_title">Anonimizált adatok megosztása</string>
     <string name="share_events_description">Az anonimizált adatok segítségével javíthatjuk az ABP alkalmazást, hogy még jobb böngészési élményt nyújthasson.</string>
     <string name="share_events_consent">Igen, megosztom az anonimizált adatokat.</string>
     <string name="languages_onboarding_title">Több nyelven is böngészik?</string>
     <string name="languages_onboarding_option_add">További blokkolási nyelv hozzáadása.</string>
     <string name="languages_onboarding_option_skip">Nem, köszönöm, csak egy nyelven böngészek.</string>
-    <string name="delete_swipe_hint">Egy bejegyzés törléséhez pöccintsen balra.</string>
+    <string name="delete_swipe_hint">Pöccintsen balra egy bejegyzés törléséhez.</string>
+    <string name="crystal_disabled_whitelist">A következő verzióban e funkció eltávolításra kerül a Crystalról.\nHa továbbra is használni akarja e funkciót, akkor térjen át az <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">AdBlock Samsung Internet számára alkalmazásra.</a>.Az időközben megőrizzük az Ön által létrehozott Engedélyezőlistát.</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">Felsorolási pont szimbólum</string>
 
     <!-- settings -->
-    <string name="block_additional_tracking">További követés tiltása</string>
-    <string name="block_social_media_tracking">Közösségimédia-ikonok követésének tiltása</string>
+    <string name="block_additional_tracking">További követés blokkolása</string>
+    <string name="block_social_media_tracking">Közösségi média ikonok követésének a blokkolása</string>
     <!-- /settings -->
 
 </resources>
