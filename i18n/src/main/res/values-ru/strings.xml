@@ -20,7 +20,7 @@
     <string name="app_name">ABP для Samsung Internet</string>
     <string name="app_subtitle">для Samsung Internet</string>
     <string name="samsung_internet_required_title">Требуется Samsung Internet</string>
-    <string name="samsung_internet_required_description">ABP – это расширение для Samsung Internet для блокировки рекламы при использовании браузера. Чтобы пользоваться приложением ABP, установите на ваше устройство Samsung Internet версии 4.0 или выше.\nНажмите на кнопку ниже, чтобы скачать браузер Samsung Internet.</string>
+    <string name="samsung_internet_required_description">ABP – это приложение, которое фильтрует рекламу в Samsung Internet, когда вы используете этот браузер. Для эффективности ABP на вашем устройстве должен быть установлен Samsung Internet 4.0 или его более поздняя версия.\nВы можете установить браузер Samsung Internet, нажав на кнопку ниже.</string>
     <string name="download_samsung_internet">Скачать Samsung Internet</string>
     <string name="update_status_progress_message">Обновление списков фильтров…</string>
     <string name="update_status_error_message">Ошибка обновления: попробуйте снова</string>
@@ -36,7 +36,7 @@
     <string name="acceptable_ads_placement_title">Размещение</string>
     <string name="acceptable_ads_placement_description">Не мешает нормальному чтению текста</string>
     <string name="acceptable_ads_distinction_title">Выделение</string>
-    <string name="acceptable_ads_distinction_description">Допустимая реклама всегда четко обозначена как реклама</string>
+    <string name="acceptable_ads_distinction_description">Допустимая реклама всегда будет четко обозначена как реклама</string>
     <string name="acceptable_ads_size_title">Размер</string>
     <string name="acceptable_ads_size_description">Занимает не более 15% площади экрана при начальной загрузке</string>
 
@@ -49,22 +49,22 @@
     <string name="onboarding_welcome_security_privacy_title">Улучшенная безопасность и конфиденциальность</string>
     <string name="onboarding_welcome_security_privacy_description">Почувствуйте себя в безопасности благодаря защите ABP</string>
     <string name="onboarding_welcome_language_filters_title">Списки фильтров для конкретных языков</string>
-    <string name="onboarding_welcome_language_filters_description">Блокируйте больше рекламы, настроив ABP под используемые вами в браузере языки</string>
+    <string name="onboarding_welcome_language_filters_description">Блокируйте больше рекламы, настроив ABP под языки тех веб-сайтов, которые вы обычно просматриваете</string>
 
     <string name="onboarding_acceptable_ads_header_title1">Присоединитесь к</string>
     <string name="onboarding_acceptable_ads_header_title3">и поддержите разработчиков контента</string>
     <string name="onboarding_acceptable_ads_annoying_ads_title">Постоянная блокировка назойливой рекламы</string>
     <string name="onboarding_acceptable_ads_annoying_ads_description">Назойливая реклама, мешающая просмотру любимого контента, всегда будет блокироваться</string>
-    <string name="onboarding_acceptable_ads_nonintrusive_ads_title">Вы можете изменить эту настройку, используя функцию «Разрешить некоторую ненавязчивую  рекламу» .</string>
+    <string name="onboarding_acceptable_ads_nonintrusive_ads_title">По умолчанию отображается небольшое количество ненавязчивой рекламы</string>
     <string name="onboarding_acceptable_ads_nonintrusive_ads_description">Будет отображаться реклама, не мешающая работе в браузере, что позволит разработчикам продолжить публиковать свой контент</string>
     <string name="onboarding_acceptable_ads_nonintrusive_ads_example">Посмотреть пример</string>
     <string name="onboarding_acceptable_ads_disable_title">Отключить можно в любое время</string>
-    <string name="onboarding_acceptable_ads_disable_description">Вы можете изменить эту настройку, используя функцию \"Разрешить некоторую ненавязчивую рекламу\" </string>
+    <string name="onboarding_acceptable_ads_disable_description">Вы можете изменить эту настройку, используя функцию \"Разрешить некоторую ненавязчивую рекламу\"</string>
 
     <string name="onboarding_enable_header_title1">Как</string>
     <string name="onboarding_enable_header_title2">Активировать ABP</string>
     <string name="onboarding_enable_one_step_title">Еще один шаг – и готово</string>
-    <string name="onboarding_enable_one_step_description">Активируйте ABP в настройках блокиратора рекламы Samsung Internet</string>
+    <string name="onboarding_enable_one_step_description">Активируйте ABP в настройках блокировщика рекламы для Samsung Internet</string>
 
     <string name="open_samsung_internet">Открыть Samsung Internet</string>
     <!-- /onboarding -->
@@ -72,7 +72,7 @@
     <!-- preferences -->
     <string name="preferences_ad_blocking_category">Опции блокировки рекламы</string>
     <string name="preferences_primary_subscriptions_title">Язык</string>
-    <string name="preferences_primary_subscriptions_summary">Блокируйте больше рекламы, настроив ABP под используемые вами в браузере языки</string>
+    <string name="preferences_primary_subscriptions_summary">Блокируйте больше рекламы, настроив ABP под язык(-и) тех веб-сайтов, которые вы обычно просматриваете</string>
     <string name="preferences_other_subscriptions_title">Дополнительные настройки блокировки</string>
     <string name="preferences_other_subscriptions_summary">Предотвратите слежение со стороны сайтов, отключите кнопки социальных сетей или добавьте пользовательские списки фильтров</string>
     <string name="preferences_allowlist_title">Добавить сайты в список разрешенных сайтов</string>
@@ -96,35 +96,39 @@
     <string name="other_subscriptions_custom_category">Активные пользовательские списки фильтров</string>
     <string name="other_subscriptions_add_custom_title">Добавить пользовательский список фильтров</string>
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
+    <string name="file_manager_not_found_message">Установите менеджер файлов</string>
     <string name="delete_dialog_title">Подтвердить удаление</string>
     <string name="other_subscriptions_remove_custom_message">Вы уверены, что хотите удалить пользовательский список фильтров из %s?</string>
     <string name="other_subscriptions_error_add_custom">Ошибка при добавлении пользовательского списка фильтров</string>
     <string name="allowlist_add_title">Добавить сайт в список разрешенных сайтов</string>
     <string name="allowlist_add_hint">example.com</string>
     <string name="allowlist_delete_dialog_message">Вы уверены, что хотите удалить %s из списка разрешенных сайтов?</string>
-    <string name="acceptable_ads_enabled_line2">Активировав опцию «Допустимая реклама», вы помогаете разработчикам публиковать бесплатный контент</string>
-    <string name="acceptable_ads_disabled">Нет, я хочу отключить опцию «Допустимая реклама»</string>
-    <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
+    <string name="acceptable_ads_enabled_line2">Активировав опцию Допустимая реклама, вы помогаете разработчикам публиковать бесплатный контент</string>
+    <string name="acceptable_ads_disabled">Нет, я хочу отключить опцию Допустимая реклама</string>
+    <string name="allow_updates_on_mobile_data_connection">Разрешить обновления через мобильный интернет</string>
+    <string name="automatic_update_checkbox_hint">Для автоматических обновлений,\nкогда вы не подключены к Wi-Fi, будет использоваться мобильный интернет.</string>
     <string name="about_privacy_policy"><a href="https://adblockplus.org/privacy">Политика конфиденциальности</a></string>
     <string name="about_terms_of_use"><a href="https://adblockplus.org/terms">Условия использования</a></string>
+    <string name="no_browser_found">На данном устройстве браузер не найден</string>
     <string name="about_imprint">Правовая информация</string>
     <string name="open_source_licenses">Лицензии на ПО c открытым исходным кодом</string>
     <string name="version">Версия</string>
-    <string name="share_events_header">Помогите улучшить ABP</string>
+    <string name="share_events_header">Помочь в улучшении ABP</string>
     <string name="share_events_title">Поделиться обезличенными данными</string>
     <string name="share_events_description">Обезличенные данные помогут улучшить ABP, и работать в браузере станет еще приятнее.</string>
     <string name="share_events_consent">Да, я готов(а) поделиться обезличенными данными.</string>
     <string name="languages_onboarding_title">Пользуетесь разными языками при работе в браузере?</string>
     <string name="languages_onboarding_option_add">Добавить дополнительный язык для блокировки рекламы.</string>
     <string name="languages_onboarding_option_skip">Нет, спасибо, я использую только один язык.</string>
-    <string name="delete_swipe_hint">Чтобы удалить запись, проведите по ней влево.</string>
+    <string name="delete_swipe_hint">Для удаления записи проведите по ней влево.</string>
+    <string name="crystal_disabled_whitelist">Эта функция будет удалена из следующей версии Crystal.\nЕсли вы хотите продолжить ее использование, переходите на <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">AdBlock для Samsung Internet</a>.При этом мы сохраним созданный вами список разрешенных сайтов.</string>
 
     <!-- image descriptions -->
-    <string name="image_bullet">Символ Маркер списка</string>
+    <string name="image_bullet">Значок пункта маркированного списка</string>
 
     <!-- settings -->
-    <string name="block_additional_tracking">Блокировать дополнительное отслеживание</string>
-    <string name="block_social_media_tracking">Блокировать отслеживание через значки социальных сетей</string>
+    <string name="block_additional_tracking">Блокировать дополнительное слежение</string>
+    <string name="block_social_media_tracking">Блокировать слежение за иконками социальных сетей</string>
     <!-- /settings -->
 
 </resources>

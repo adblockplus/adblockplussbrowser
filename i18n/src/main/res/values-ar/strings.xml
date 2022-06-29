@@ -20,9 +20,9 @@
     <string name="app_name">ABP لـ Samsung Internet</string>
     <string name="app_subtitle">لـ Samsung Internet</string>
     <string name="samsung_internet_required_title">مطلوب تطبيق Samsung Internet</string>
-    <string name="samsung_internet_required_description">ABP هو تطبيق  يستخدم المتصفح Samsung Internet لتصفية الإعلانات أثناء استخدامك المتصفح. ولكي يعمل ABP بفعالية، يجب أن يكون الإصدار 4.0 أو إصدار أحدث للمتصفح Samsung Internet مُثبَّتًا على جهازك.\nويمكنك الحصول على المتصفح Samsung Internet بالنقر فوق الزر أدناه.</string>
+    <string name="samsung_internet_required_description">ABP هو تطبيق يستخدم المتصفح Samsung Internet لتصفية الإعلانات أثناء استخدامك المتصفح. ولكي يعمل ABP بفعالية، يجب أن يكون الإصدار 4.0 أو إصدار أحدث للمتصفح Samsung Internet مُثبَّتًا على جهازك.\nيمكنك الحصول على المتصفح Samsung Internet بالنقر فوق الزر أدناه.</string>
     <string name="download_samsung_internet">تحميل Samsung Internet</string>
-    <string name="update_status_progress_message">جارٍ تحديثات قوائم التصفية…</string>
+    <string name="update_status_progress_message">جارٍ إحضار تحديثات قوائم عوامل التصفية…</string>
     <string name="update_status_error_message">خطأ أثناء التحديث: يُرجى إعادة المحاولة</string>
     <string name="update_status_retry">إعادة المحاولة</string>
     <string name="device_not_supported">هذا الجهاز غير مدعوم</string>
@@ -33,7 +33,7 @@
     <string name="intrusive_ads">الإعلانات التطفلية</string>
     <string name="acceptable_ads_fair_standard_title">المعيار المقبول</string>
     <string name="acceptable_ads_fair_standard_description">الإعلانات المعروضة ضمن "الإعلانات المقبولة" لا تكون أبدًا إعلانات فيديو أو صوتية أو منبثقة</string>
-    <string name="acceptable_ads_placement_title">الموضع</string>
+    <string name="acceptable_ads_placement_title">تعيين الموضع</string>
     <string name="acceptable_ads_placement_description">عدم التشويش على التدفق الطبيعي للقراءة</string>
     <string name="acceptable_ads_distinction_title">التمييز</string>
     <string name="acceptable_ads_distinction_description">الإعلانات المعروضة ضمن "الإعلانات المقبولة" يتم دائمًا تمييزها بوضوح على أنها إعلانات</string>
@@ -49,7 +49,7 @@
     <string name="onboarding_welcome_security_privacy_title">تحسين الأمان والخصوصية</string>
     <string name="onboarding_welcome_security_privacy_description">تصفَّح بدون قلق مع ABP الذي يحميك في الخلفية</string>
     <string name="onboarding_welcome_language_filters_title">قوائم التصفية بلغة محددة</string>
-    <string name="onboarding_welcome_language_filters_description">احجب مزيدًا من الإعلانات عن طريق إختيار اللغات التي تتصفح بها عادةً</string>
+    <string name="onboarding_welcome_language_filters_description">احجب مزيدًا من الإعلانات عن طريق تحسين ABP للغات التي تتصفح بها عادةً</string>
 
     <string name="onboarding_acceptable_ads_header_title1">يمكنك تفعيل</string>
     <string name="onboarding_acceptable_ads_header_title3">ودعم صناع المحتوى</string>
@@ -67,17 +67,18 @@
     <string name="onboarding_enable_one_step_description">قم بتمكين ABP في إعدادات حاجب الإعلانات بالمتصفح Samsung Internet</string>
 
     <string name="open_samsung_internet">فتح Samsung Internet</string>
+
     <!-- /onboarding -->
 
     <!-- preferences -->
     <string name="preferences_ad_blocking_category">خيارات حجب الإعلانات</string>
     <string name="preferences_primary_subscriptions_title">اللغة</string>
-    <string name="preferences_primary_subscriptions_summary">احجب مزيدًا من الإعلانات عن طريق ABP بإختيار اللغة (اللغات) التي تتصفح بها عادةً</string>
+    <string name="preferences_primary_subscriptions_summary">احجب مزيدًا من الإعلانات عن طريق تحسين ABP للغة (اللغات) التي تتصفح بها عادةً</string>
     <string name="preferences_other_subscriptions_title">المزيد من خيارات الحجب</string>
-    <string name="preferences_other_subscriptions_summary">يمكنك إزالة التعقب أو أزرار وسائل التواصل الاجتماعي أو إضافة قوائم تصفية مخصصة</string>
-    <string name="preferences_allowlist_title">إضافة مواقع إلى القائمة المسموح بها</string>
-    <string name="preferences_allowlist_summary">يمكنك تعطيل حجب الإعلانات على مواقع تختارها</string>
-    <string name="preferences_allowlist_header">المواقع المسموح بها</string>
+    <string name="preferences_other_subscriptions_summary">يمكنك إزالة التعقب أو أزرار وسائل التواصل الاجتماعي أو إضافة قوائم  تصفية مخصصة</string>
+    <string name="preferences_allowlist_title">إضافة مواقع ويب إلى القائمة المسموح بها</string>
+    <string name="preferences_allowlist_summary">يمكنك تعطيل حجب الإعلانات على مواقع ويب تختارها</string>
+    <string name="preferences_allowlist_header">مواقع الويب المسموح بها</string>
     <string name="preferences_updates_title">تحديث قوائم تصفية الإعلانات</string>
     <string name="preferences_updates_subtitle">يمكنك إختيار موعد تحديث القوائم المستخدمة لتصفية الإعلانات</string>
     <string name="preferences_automatic_updates_title">تحديثات تلقائية</string>
@@ -93,20 +94,23 @@
     <string name="subscription_last_update">تاريخ آخر تحديث: %s</string>
     <string name="subscription_last_update_never">أبدًا</string>
     <string name="other_subscriptions_default_category">قوائم تصفية مُضمَّنة</string>
-    <string name="other_subscriptions_custom_category">قوائم تصفية مخصصة مفعلة</string>
+    <string name="other_subscriptions_custom_category">قوائم تصفية مخصصة مفعلة </string>
     <string name="other_subscriptions_add_custom_title">إضافة قائمة عوامل تصفية مخصصة</string>
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
+    <string name="file_manager_not_found_message">يرجى تثبيت مدير ملفات</string>
     <string name="delete_dialog_title">تأكيد الحذف</string>
-    <string name="other_subscriptions_remove_custom_message">هل تريد بالتأكيد حذف قائمة التصفية المخصصة من %s؟</string>
+    <string name="other_subscriptions_remove_custom_message">هل تريد بالتأكيد حذف قائمة عوامل التصفية المخصصة من %s؟</string>
     <string name="other_subscriptions_error_add_custom">حدث خطأ أثناء إضافة قائمة عوامل التصفية المخصصة</string>
-    <string name="allowlist_add_title">إضافة موقع إلى القائمة المسموح بها</string>
+    <string name="allowlist_add_title">إضافة موقع ويب إلى القائمة المسموح بها</string>
     <string name="allowlist_add_hint">example.com</string>
-    <string name="allowlist_delete_dialog_message">هل تريد بالتأكيد الإزالة من القائمة المسموح بها؟</string>
-    <string name="acceptable_ads_enabled_line2">عن طريق تفعيل \"الإعلانات المقبولة\"، فإنك تساعد صناع المحتوى على نشر محتواهم مجانًا</string>
-    <string name="acceptable_ads_disabled">لا، أود تعطيل \"الإعلانات المقبولة\"</string>
-    <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
+    <string name="allowlist_delete_dialog_message">هل تريد بالتأكيد الإزالة من القائمة %s المسموح بها؟</string>
+    <string name="acceptable_ads_enabled_line2">عن طريق تفعيل "الإعلانات المقبولة"، فإنك تساعد صناع المحتوى على نشر محتواهم مجانًا</string>
+    <string name="acceptable_ads_disabled">لا، أود تعطيل "الإعلانات المقبولة"</string>
+    <string name="allow_updates_on_mobile_data_connection">السماح بالتحديثات أثناء اتصال بيانات الهاتف</string>
+    <string name="automatic_update_checkbox_hint">ستستخدم التحديثات التلقائية بيانات الهاتف \nعندما لا تكون متصلاً بشبكة واي فاي</string>
     <string name="about_privacy_policy"><a href="https://adblockplus.org/privacy">سياسة الخصوصية</a></string>
     <string name="about_terms_of_use"><a href="https://adblockplus.org/terms">شروط الاستخدام</a></string>
+    <string name="no_browser_found">لم يتم العثور على متصفح على هذا الجهاز</string>
     <string name="about_imprint">الدمغة</string>
     <string name="open_source_licenses">التراخيص مفتوحة المصدر</string>
     <string name="version">الإصدار</string>
@@ -117,14 +121,15 @@
     <string name="languages_onboarding_title">هل تريد التصفح بلغات متعددة؟</string>
     <string name="languages_onboarding_option_add">أضف لغة إضافية لحجب الإعلانات.</string>
     <string name="languages_onboarding_option_skip">لا، شكرًا، لا أتصفح سوى بلغة واحدة.</string>
-    <string name="delete_swipe_hint">لحذف الاختيار، اسحبه إلى اليسار.</string>
+    <string name="delete_swipe_hint">لحذف إدخال ما، اسحبه إلى اليسار.</string>
+    <string name="crystal_disabled_whitelist">ستتم إزالة هذه الميزة من Crystal في الإصدار التالي.\nإذا كنت تريد متابعة استخدام هذه الميزة، يرجى التبديل إلى استخدام <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">AdBlock لـ Samsung Internet</a>في غضون ذلك، سنحتفظ بالقائمة المسموح بها التي أنشأتها.</string>
 
     <!-- image descriptions -->
-    <string name="image_bullet">رمزالنقطة</string>
+    <string name="image_bullet">رمز نقطي</string>
 
     <!-- settings -->
-    <string name="block_additional_tracking">حجب أنواع التعقب الإضافية</string>
-    <string name="block_social_media_tracking">حجب تعقب رموز مواقع التواصل الاجتماعي</string>
+    <string name="block_additional_tracking">حجب التعقب الإضافي</string>
+    <string name="block_social_media_tracking">حجب تعقب أيقونات وسائل التواصل الاجتماعي</string>
     <!-- /settings -->
 
 </resources>
