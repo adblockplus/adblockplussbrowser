@@ -33,12 +33,14 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import dagger.hilt.android.AndroidEntryPoint
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.BuildConfig
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentOtherSubscriptionsBinding
 import org.adblockplus.adblockplussbrowser.preferences.ui.SwipeToDeleteCallback
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -48,6 +50,9 @@ internal class OtherSubscriptionsFragment :
     private val viewModel: OtherSubscriptionsViewModel by activityViewModels()
 
     private lateinit var getTextFile: ActivityResultLauncher<Intent>
+
+    @Inject
+    lateinit var analyticsProvider: AnalyticsProvider
 
     override fun onBindView(binding: FragmentOtherSubscriptionsBinding) {
         binding.viewModel = viewModel
@@ -175,6 +180,7 @@ internal class OtherSubscriptionsFragment :
         try {
             getTextFile.launch(chooser)
         } catch (ex: ActivityNotFoundException) {
+            analyticsProvider.logException(ex)
             Toast.makeText(
                 context,
                 getText(R.string.file_manager_not_found_message),
