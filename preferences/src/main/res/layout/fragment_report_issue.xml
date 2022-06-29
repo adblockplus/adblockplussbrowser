@@ -59,7 +59,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/select_issue_type" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/select_issue_type_description2"
+                android:id="@+id/pick_screenshot_description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin"
@@ -105,7 +105,7 @@
                 android:text="@string/pick_samsung_internet_screenshot"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/select_issue_type_description2" />
+                app:layout_constraintTop_toBottomOf="@+id/pick_screenshot_description" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/enter_email_title"

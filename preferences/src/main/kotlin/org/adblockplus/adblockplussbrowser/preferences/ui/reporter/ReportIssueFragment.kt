@@ -19,14 +19,18 @@ package org.adblockplus.adblockplussbrowser.preferences.ui.reporter
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.text.buildSpannedString
+import androidx.core.text.color
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.textview.MaterialTextView
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
@@ -87,7 +91,6 @@ internal class ReportIssueFragment :
                 viewModel.data.email = binding.editTextBoxEmailAddress.text.toString()
             }
             validateData()
-            Timber.d("ReportIssue Email read success")
         }
 
         binding.issueTypeRadioGroup.setOnCheckedChangeListener { _, checkedId ->
@@ -97,22 +100,44 @@ internal class ReportIssueFragment :
                 binding.blockingTooLow.id -> viewModel.data.type = REPORT_ISSUE_DATA_TYPE_MISSED_AD
             }
             validateData()
-            Timber.d("ReportIssue Radio read success")
         }
 
         binding.editTextBoxComment.addTextChangedListener {
             viewModel.data.comment = binding.editTextBoxComment.text.toString()
         }
 
+        binding.editTextBoxEmailAddress.addTextChangedListener {
+            viewModel.data.email = binding.editTextBoxEmailAddress.text.toString()
+            validateData()
+        }
+
         binding.cancel.setDebounceOnClickListener({
-            val direction =
-                ReportIssueFragmentDirections.actionReportIssueFragmentToMainPreferencesFragment()
+            val direction = ReportIssueFragmentDirections.actionReportIssueFragmentToMainPreferencesFragment()
             findNavController().navigate(direction)
         }, lifecycleOwner)
 
         binding.sendReport.setDebounceOnClickListener({
             viewModel.sendReport()
         }, lifecycleOwner)
+
+        // Sets the Mandatory Marks for empty default field values
+        validateData()
+    }
+
+    private fun MaterialTextView.addMandatoryMark() {
+        this.text = buildSpannedString { append(text).color(Color.RED) { append(MANDATORY_MARK) } }
+    }
+
+    private fun MaterialTextView.removeMandatoryMark() {
+        this.text = this.text.removeSuffix(MANDATORY_MARK)
+    }
+
+    private fun markMandatoryField(textView: MaterialTextView, enabled: Boolean) {
+        val hasAsterisk = textView.text.endsWith(MANDATORY_MARK)
+        when {
+            !hasAsterisk && enabled -> textView.addMandatoryMark()
+            hasAsterisk && !enabled -> textView.removeMandatoryMark()
+        }
     }
 
     private val pickImageFromGalleryForResult =
@@ -139,13 +164,19 @@ internal class ReportIssueFragment :
     }
 
     private fun validateData() {
-            binding?.sendReport?.let { it.isEnabled = viewModel.data.validate() }
+        binding?.let {
+            it.sendReport.isEnabled = viewModel.data.validate()
+            markMandatoryField(it.enterEmailTitle, !viewModel.data.validateEmail())
+            markMandatoryField(it.selectIssueType, !viewModel.data.validateType())
+            markMandatoryField(it.pickScreenshotDescription, !viewModel.data.validateScreenshot())
+        }
     }
-    
+
     companion object {
         const val REPORT_ISSUE_FRAGMENT_SCREENSHOT_READ_SUCCESS = ""
         const val REPORT_ISSUE_FRAGMENT_SEND_SUCCESS = "SEND_SUCCESS"
         const val REPORT_ISSUE_FRAGMENT_SEND_ERROR = "SEND_ERROR"
         const val REPORT_ISSUE_FRAGMENT_SEND_SUCCESS_MESSAGE = "Report sent"
+        const val MANDATORY_MARK = " *"
     }
 }
