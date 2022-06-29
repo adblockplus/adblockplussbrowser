@@ -339,16 +339,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
     private fun readFile(uri: Uri): String? {
         val stringBuilder = StringBuilder()
         return try {
-            applicationContext.contentResolver.openInputStream(uri).use { inputStream ->
-                BufferedReader(
-                    InputStreamReader(Objects.requireNonNull(inputStream))
-                ).use { reader ->
-                    var line: String?
-                    while (reader.readLine().also { line = it } != null) {
-                        stringBuilder.appendLine(line)
-                    }
-                }
-            }
+            getFilterFromFile(uri, stringBuilder)
             stringBuilder.toString()
         } catch (ex: Exception) {
             when (ex) {
@@ -357,6 +348,19 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
                 }
             }
             null
+        }
+    }
+
+    private fun getFilterFromFile(uri: Uri, stringBuilder: StringBuilder) {
+        applicationContext.contentResolver.openInputStream(uri).use { inputStream ->
+            BufferedReader(
+                InputStreamReader(Objects.requireNonNull(inputStream))
+            ).use { reader ->
+                var line: String?
+                while (reader.readLine().also { line = it } != null) {
+                    stringBuilder.appendLine(line)
+                }
+            }
         }
     }
 
