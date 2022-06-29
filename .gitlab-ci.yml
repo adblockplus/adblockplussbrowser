@@ -224,6 +224,21 @@ ab_regression:
     - if: '$FORCE_REGRESSION == "true"'
     - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"'
 
+crystal_regression:
+  extends: .template:automation
+  needs:
+    - build
+    - ab_regression # we can run this on debug apk
+  variables:
+    APK_NAME: "app-world-crystal-debug.apk"
+    CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldCrystal/debug/$APK_NAME"'
+    CURL_NAME: 'name=$APK_NAME'
+    PLATFORM_VERSIONS: "10"
+    GRADLE_TASK: "regression"
+  rules:
+    - if: '$FORCE_REGRESSION == "true"'
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"'
+
 smoke_tests:
   extends: .template:automation
   needs:
