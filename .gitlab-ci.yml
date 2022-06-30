@@ -150,7 +150,7 @@ sign_apks:
     - test -z ${SAUCE_ACCESS_KEY} && echo "echo SAUCE_ACCESS_KEY not set. Unable to run tests." && exit 1
     - echo ${APK_NAME}
     - curl -u "${SAUCE_USERNAME}:${SAUCE_ACCESS_KEY}" --location --request POST 'https://api.eu-central-1.saucelabs.com/v1/storage/upload'
-      --form ${CURL_PAYLOAD} --form ${CURL_NAME}
+      --form ${CURL_PAYLOAD} --form 'name="${APK_NAME}"'
     # we are not using submodules, because automation is not a part of repository functionality
   script:
     # its rather a standalone set of scripts
@@ -202,7 +202,6 @@ abp_regression:
   variables:
     APK_NAME: "app-world-abp-debug.apk"
     CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldAbp/debug/$APK_NAME"'
-    CURL_NAME: 'name=$APK_NAME'
     PLATFORM_VERSIONS: "10"
     GRADLE_TASK: "regression"
   rules:
@@ -217,7 +216,20 @@ ab_regression:
   variables:
     APK_NAME: "app-world-adblock-debug.apk"
     CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldAdblock/debug/$APK_NAME"'
-    CURL_NAME: 'name=$APK_NAME'
+    PLATFORM_VERSIONS: "10"
+    GRADLE_TASK: "regression"
+  rules:
+    - if: '$FORCE_REGRESSION == "true"'
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"'
+
+crystal_regression:
+  extends: .template:automation
+  needs:
+    - build
+    - ab_regression # we can run this on debug apk
+  variables:
+    APK_NAME: "app-world-crystal-debug.apk"
+    CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldCrystal/debug/$APK_NAME"'
     PLATFORM_VERSIONS: "10"
     GRADLE_TASK: "regression"
   rules:
@@ -231,7 +243,6 @@ smoke_tests:
   variables:
     APK_NAME: "app-world-abp-debug.apk"
     CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldAbp/debug/$APK_NAME"'
-    CURL_NAME: 'name=$APK_NAME'
     PLATFORM_VERSIONS: "7 8 9 11"
     GRADLE_TASK: "multiAPI"
   rules:
@@ -246,7 +257,6 @@ functional_tests:
   variables:
     APK_NAME: "app-world-abp-debug.apk"
     CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldAbp/debug/$APK_NAME"'
-    CURL_NAME: 'name=$APK_NAME'
     PLATFORM_VERSIONS: "10"
     GRADLE_TASK: "functional"
   rules:
