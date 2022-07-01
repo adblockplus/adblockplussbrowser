@@ -171,18 +171,20 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/preferences_update_title"
-                style="@style/PreferenceTitleTextStyle"
-                android:layout_width="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceListItem"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/allow_updates_on_mobile_data_connection"
+                app:layout_constraintEnd_toStartOf="@id/update_guideline_end"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/update_type_text"
                 style="@style/CustomPreferenceSummaryTextStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@id/update_guideline_end"
                 android:text="@string/automatic_update_checkbox_hint"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/preferences_update_title" />
