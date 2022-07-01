@@ -25,11 +25,15 @@ data class ReportIssueData(
     var email: String = "",
     var comment: String = ""
 ) {
-    fun validate(): Boolean = ((type == REPORT_ISSUE_DATA_TYPE_FALSE_POSITIVE
-            || type == REPORT_ISSUE_DATA_TYPE_MISSED_AD))
-            && (email == REPORT_ISSUE_DATA_VALID_BLANK
-            || Patterns.EMAIL_ADDRESS.matcher(email).matches())
-            && screenshot.isNotEmpty()
+    fun validate(): Boolean = validateType() && validateEmail() && validateScreenshot()
+
+    fun validateScreenshot() = screenshot.isNotEmpty()
+
+    fun validateEmail() = (email == REPORT_ISSUE_DATA_VALID_BLANK
+                || Patterns.EMAIL_ADDRESS.matcher(email).matches())
+
+    fun validateType() = (type == REPORT_ISSUE_DATA_TYPE_FALSE_POSITIVE
+                || type == REPORT_ISSUE_DATA_TYPE_MISSED_AD)
 
     companion object {
         const val REPORT_ISSUE_DATA_VALID_BLANK = " "
