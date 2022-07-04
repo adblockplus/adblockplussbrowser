@@ -143,5 +143,11 @@ enum class AnalyticsEvent(val eventName: String) {
      * Event sent when device device is not supported.
      * There is no play store, galaxy store and any browser.
      */
-    DEVICE_NOT_SUPPORTED("device_not_supported")
+    DEVICE_NOT_SUPPORTED("device_not_supported"),
+
+    /**
+     * The event is sent when the device file manager returns the wrong
+     * result when loading custom filters.
+     */
+    DEVICE_FILE_MANAGER_NOT_SUPPORTED("device_file_manager_not_supported")
 }

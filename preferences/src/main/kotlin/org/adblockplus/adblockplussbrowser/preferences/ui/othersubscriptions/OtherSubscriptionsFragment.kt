@@ -33,6 +33,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import dagger.hilt.android.AndroidEntryPoint
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.BuildConfig
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
@@ -124,6 +125,13 @@ internal class OtherSubscriptionsFragment :
                     result.data?.data?.let { filePath ->
                         viewModel.addCustomFilterFile(filePath.toString(), getFilename(filePath))
                     }
+                } else {
+                    analyticsProvider.logEvent(AnalyticsEvent.DEVICE_FILE_MANAGER_NOT_SUPPORTED)
+                    Toast.makeText(
+                        context,
+                        getText(R.string.device_not_supported),
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
     }
