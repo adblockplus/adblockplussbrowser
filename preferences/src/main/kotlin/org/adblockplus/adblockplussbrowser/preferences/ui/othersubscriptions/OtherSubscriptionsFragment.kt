@@ -121,19 +121,23 @@ internal class OtherSubscriptionsFragment :
             registerForActivityResult(
                 ActivityResultContracts.StartActivityForResult()
             ) { result: ActivityResult ->
-                if (result.resultCode == Activity.RESULT_OK) {
-                    result.data?.data?.let { filePath ->
-                        viewModel.addCustomFilterFile(filePath.toString(), getFilename(filePath))
-                    }
-                } else {
-                    analyticsProvider.logEvent(AnalyticsEvent.DEVICE_FILE_MANAGER_NOT_SUPPORTED)
-                    Toast.makeText(
-                        context,
-                        getText(R.string.device_not_supported),
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
+                handleFilePickingResult(result)
             }
+    }
+
+    private fun handleFilePickingResult(result: ActivityResult) {
+        if (result.resultCode == Activity.RESULT_OK) {
+            result.data?.data?.let { filePath ->
+                viewModel.addCustomFilterFile(filePath.toString(), getFilename(filePath))
+            }
+        } else {
+            analyticsProvider.logEvent(AnalyticsEvent.DEVICE_FILE_MANAGER_NOT_SUPPORTED)
+            Toast.makeText(
+                context,
+                getText(R.string.device_not_supported),
+                Toast.LENGTH_LONG
+            ).show()
+        }
     }
 
     private fun initSpeedDial(binding: FragmentOtherSubscriptionsBinding) {
