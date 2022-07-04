@@ -45,7 +45,7 @@ object Deps {
 
     val TIMBER = "com.jakewharton.timber:timber" version "4.7.1"
 
-    val SPEED_DIAL = "com.leinardi.android:speed-dial" version "3.2.0"
+    val SPEED_DIAL = "com.leinardi.android:speed-dial" version "3.3.0"
 
     object Gms: DependencyGroup("com.google.android") {
         val OSS_LICENSES_PLUGIN = dependency {
