@@ -346,7 +346,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
                     localFileSubscriptions.find { it.url == uri.toString() }?.hasError = true
                 }
             }
-            null
+            ""
         }
     }
 
