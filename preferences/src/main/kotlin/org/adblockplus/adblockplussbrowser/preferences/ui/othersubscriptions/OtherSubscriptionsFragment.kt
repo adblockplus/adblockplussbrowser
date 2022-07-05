@@ -173,9 +173,11 @@ internal class OtherSubscriptionsFragment :
         speedDial.setOnActionSelectedListener { actionItem ->
             when (actionItem.id) {
                 R.id.other_subscriptions_add_from_url_button -> {
+                    analyticsProvider.logEvent(AnalyticsEvent.LOAD_CUSTOM_FILTER_LIST_FROM_URL)
                     AddCustomSubscriptionDialogFragment().show(parentFragmentManager, null)
                 }
                 R.id.other_subscriptions_add_from_local_button -> {
+                    analyticsProvider.logEvent(AnalyticsEvent.LOAD_CUSTOM_FILTER_LIST_FROM_FILE)
                     loadFileFromStorage()
                 }
             }

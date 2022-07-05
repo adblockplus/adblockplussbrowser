@@ -149,5 +149,15 @@ enum class AnalyticsEvent(val eventName: String) {
      * The event is sent when the device file manager returns the wrong
      * result when loading custom filters.
      */
-    DEVICE_FILE_MANAGER_NOT_SUPPORTED("device_file_manager_not_supported")
+    DEVICE_FILE_MANAGER_NOT_SUPPORTED("device_file_manager_not_supported"),
+
+    /**
+     * The user has chosen to load custom filter list from url.
+     */
+    LOAD_CUSTOM_FILTER_LIST_FROM_URL("load_custom_filter_list_from_url"),
+
+    /**
+     * The user has chosen to load custom filter list from file.
+     */
+    LOAD_CUSTOM_FILTER_LIST_FROM_FILE("load_custom_filter_list_from_file")
 }
