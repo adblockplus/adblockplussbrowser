@@ -50,9 +50,15 @@ enum class AnalyticsEvent(val eventName: String) {
     SOCIAL_MEDIA_BUTTONS_OFF("social_media_buttons_off"),
 
     /**
-     * The user adds manually a custom filter list.
+     * The user adds manually a custom filter list from url.
      */
-    CUSTOM_FILTER_LIST_ADDED("custom_filter_list_added"),
+    CUSTOM_FILTER_LIST_ADDED_FROM_URL("custom_filter_list_added_from_url"),
+
+
+    /**
+     * The user adds manually a custom filter list from file.
+     */
+    CUSTOM_FILTER_LIST_ADDED_FROM_FILE("custom_filter_list_added_from_file"),
 
     /**
      * The user removes a custom filter list.

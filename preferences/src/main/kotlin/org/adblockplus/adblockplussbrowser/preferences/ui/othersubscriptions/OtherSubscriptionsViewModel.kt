@@ -124,7 +124,7 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
                 delay(100)
             } else {
                 settingsRepository.addActiveOtherSubscription(subscription)
-                analyticsProvider.logEvent(AnalyticsEvent.CUSTOM_FILTER_LIST_ADDED)
+                analyticsProvider.logEvent(AnalyticsEvent.CUSTOM_FILTER_LIST_ADDED_FROM_URL)
             }
             finishAddingCustomSubscription()
         }
@@ -136,7 +136,7 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
             _uiState.value = UiState.Loading
             addOtherSubscriptionsCount.apply { value = value?.plus(1) }
             settingsRepository.addActiveOtherSubscription(subscription)
-            analyticsProvider.logEvent(AnalyticsEvent.CUSTOM_FILTER_LIST_ADDED)
+            analyticsProvider.logEvent(AnalyticsEvent.CUSTOM_FILTER_LIST_ADDED_FROM_FILE)
             finishAddingCustomSubscription()
         }
     }
