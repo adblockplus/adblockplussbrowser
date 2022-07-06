@@ -54,7 +54,7 @@ internal class ReportIssueFragment :
         val lifecycleOwner = this.viewLifecycleOwner
 
         viewModel.returnedString.observe(this) {
-            binding.indeterminateBar.visibility = View.GONE
+            hideProgressBar()
             when (viewModel.returnedString.value) {
                 REPORT_ISSUE_FRAGMENT_SCREENSHOT_READ_SUCCESS -> {
                     validateData()
@@ -119,8 +119,7 @@ internal class ReportIssueFragment :
         }, lifecycleOwner)
 
         binding.sendReport.setDebounceOnClickListener({
-            binding.reportIssueScrollView.fullScroll(ScrollView.FOCUS_UP)
-            binding.indeterminateBar.visibility = View.VISIBLE
+            showProgressBar()
             viewModel.sendReport()
         }, lifecycleOwner)
 
@@ -174,6 +173,19 @@ internal class ReportIssueFragment :
             markMandatoryField(it.selectIssueType, !viewModel.data.validateType())
             markMandatoryField(it.pickScreenshotDescription, !viewModel.data.validateScreenshot())
         }
+    }
+
+    private fun showProgressBar() {
+        binding?. let {
+            /* Scroll up so that the progress bar is seen even if the user
+            is at the bottom of the fragment */
+            it.reportIssueScrollView.fullScroll(ScrollView.FOCUS_UP)
+            it.indeterminateBar.visibility = View.VISIBLE
+        }
+    }
+
+    private fun hideProgressBar() {
+        binding?.indeterminateBar?.visibility = View.GONE
     }
 
     companion object {
