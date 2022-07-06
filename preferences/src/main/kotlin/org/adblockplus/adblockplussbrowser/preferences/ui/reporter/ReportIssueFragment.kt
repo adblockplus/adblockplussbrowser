@@ -22,7 +22,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.provider.MediaStore
 import android.view.View
-import android.widget.ScrollView
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -176,12 +175,7 @@ internal class ReportIssueFragment :
     }
 
     private fun showProgressBar() {
-        binding?. let {
-            /* Scroll up so that the progress bar is seen even if the user
-            is at the bottom of the fragment */
-            it.reportIssueScrollView.fullScroll(ScrollView.FOCUS_UP)
-            it.indeterminateBar.visibility = View.VISIBLE
-        }
+        binding?.indeterminateBar?.visibility = View.VISIBLE
     }
 
     private fun hideProgressBar() {
