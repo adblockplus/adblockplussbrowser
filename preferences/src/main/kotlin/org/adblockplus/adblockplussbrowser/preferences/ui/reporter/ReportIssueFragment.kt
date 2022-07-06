@@ -22,6 +22,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.provider.MediaStore
 import android.view.View
+import android.widget.ScrollView
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -53,6 +54,7 @@ internal class ReportIssueFragment :
         val lifecycleOwner = this.viewLifecycleOwner
 
         viewModel.returnedString.observe(this) {
+            binding.indeterminateBar.visibility = View.GONE
             when (viewModel.returnedString.value) {
                 REPORT_ISSUE_FRAGMENT_SCREENSHOT_READ_SUCCESS -> {
                     validateData()
@@ -117,6 +119,8 @@ internal class ReportIssueFragment :
         }, lifecycleOwner)
 
         binding.sendReport.setDebounceOnClickListener({
+            binding.reportIssueScrollView.fullScroll(ScrollView.FOCUS_UP)
+            binding.indeterminateBar.visibility = View.VISIBLE
             viewModel.sendReport()
         }, lifecycleOwner)
 
