@@ -53,6 +53,7 @@ internal class ReportIssueFragment :
         val lifecycleOwner = this.viewLifecycleOwner
 
         viewModel.returnedString.observe(this) {
+            hideProgressBar()
             when (viewModel.returnedString.value) {
                 REPORT_ISSUE_FRAGMENT_SCREENSHOT_READ_SUCCESS -> {
                     validateData()
@@ -117,6 +118,7 @@ internal class ReportIssueFragment :
         }, lifecycleOwner)
 
         binding.sendReport.setDebounceOnClickListener({
+            showProgressBar()
             viewModel.sendReport()
         }, lifecycleOwner)
 
@@ -170,6 +172,14 @@ internal class ReportIssueFragment :
             markMandatoryField(it.selectIssueType, !viewModel.data.validateType())
             markMandatoryField(it.pickScreenshotDescription, !viewModel.data.validateScreenshot())
         }
+    }
+
+    private fun showProgressBar() {
+        binding?.indeterminateBar?.visibility = View.VISIBLE
+    }
+
+    private fun hideProgressBar() {
+        binding?.indeterminateBar?.visibility = View.GONE
     }
 
     companion object {
