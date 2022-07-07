@@ -54,7 +54,7 @@
     <ID>TooManyFunctions:SettingsRepository.kt$SettingsRepository</ID>
     <ID>TooManyFunctions:SnackbarContainer.kt$SnackbarContainer : View</ID>
     <ID>TooManyFunctions:UpdateSubscriptionsWorker.kt$UpdateSubscriptionsWorker : CoroutineWorker</ID>
-    <ID>TooManyFunctions:MainPreferencesFragment.MainPreferencesFragment : MainPreferencesFragment</ID>
+    <ID>TooManyFunctions:MainPreferencesFragment.kt$MainPreferencesFragment : MainPreferencesFragment</ID>
     <ID>UnnecessaryAbstractClass:Deps.kt$DependencyGroup</ID>
     <ID>UnusedPrivateMember:HardcodedSubscriptions.kt$HardcodedSubscriptions$private val context: Context</ID>
     <ID>UnusedPrivateMember:OnboardingViewModel.kt$OnboardingViewModel$val lastFilterRequestFlow = appPreferences.lastFilterListRequest</ID>
