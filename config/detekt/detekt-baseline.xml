@@ -2,11 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>ClassNaming:CheckCoverageTask.kt$jacocoReport</ID>
-    <ID>ClassNaming:CheckCoverageTask.kt$jacocoReport$attrNames</ID>
-    <ID>ClassNaming:CheckCoverageTask.kt$jacocoReport$attrValues</ID>
-    <ID>ClassNaming:CheckCoverageTask.kt$jacocoReport$tags</ID>
-    <ID>ClassNaming:CheckCoverageTask.kt$xmlParserFeatures</ID>
     <ID>ComplexCondition:UpdateSubscriptionsWorker.kt$UpdateSubscriptionsWorker$!changes.hasChanges() &amp;&amp; !tags.isForceRefresh() &amp;&amp; !tags.isPeriodic() &amp;&amp; runAttemptCount == 0</ID>
     <ID>ComplexMethod:ProtoSettingsMigration.kt$ProtoSettingsMigration$private fun String?.adjustUrl(): String?</ID>
     <ID>EmptyCatchBlock:MainActivity.kt$MainActivity${}</ID>
@@ -18,47 +13,19 @@
     <ID>ForbiddenComment:OtherSubscriptionsFragment.kt$OtherSubscriptionsFragment$// TODO: finish integration with file explorer</ID>
     <ID>LongMethod:MainPreferencesFragment.kt$MainPreferencesFragment$override fun onBindView(binding: FragmentMainPreferencesBinding)</ID>
     <ID>LongParameterList:IO.kt$( description: String = "&lt;missing description&gt;", times: Int = DEFAULT_RETRY, initialDelay: Long = 200, // 0.2 second maxDelay: Long = 2000, // 2 second factor: Double = 2.0, dispatcher: CoroutineDispatcher = Dispatchers.IO, block: suspend () -&gt; T )</ID>
-    <ID>MagicNumber:CoreSubscriptionsManager.kt$CoreSubscriptionsManager$500</ID>
     <ID>MagicNumber:OkHttpDownloader.kt$4</ID>
-    <ID>MagicNumber:OkHttpDownloader.kt$OkHttpDownloader$200</ID>
     <ID>MagicNumber:OtherSubscriptionsViewModel.kt$OtherSubscriptionsViewModel$100</ID>
     <ID>MagicNumber:Subscription.kt$Subscription$9</ID>
     <ID>MagicNumber:UpdateSubscriptionsWorker.kt$UpdateSubscriptionsWorker$100</ID>
     <ID>MagicNumber:build.gradle.kts$0.4F</ID>
     <ID>MagicNumber:build.gradle.kts$1024</ID>
     <ID>MatchingDeclarationName:DiffUtil.kt$Changes</ID>
-    <ID>MaxLineLength:AcceptableAdsFragment.kt$AcceptableAdsFragment$internal</ID>
-    <ID>MaxLineLength:FilterListContentProvider.kt$FilterListContentProvider$Timber.d("getFilterFile: unpacked AA, elapsed: ${Duration.milliseconds(System.currentTimeMillis()) - start}")</ID>
-    <ID>MaxLineLength:MainPreferencesFragment.kt$MainPreferencesFragment$binding.mainPreferencesLanguagesOnboardingInclude.mainPreferencesLanguagesOnboardingOptionAdd</ID>
-    <ID>MaxLineLength:MainPreferencesFragment.kt$MainPreferencesFragment$binding.mainPreferencesLanguagesOnboardingInclude.mainPreferencesLanguagesOnboardingOptionSkip</ID>
-    <ID>MaxLineLength:PrimarySubscriptionsViewModel.kt$PrimarySubscriptionsViewModel$if (active) R.string.primary_subscriptions_active_category else R.string.primary_subscriptions_inactive_category</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/abpindo+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/abpindo.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/abpvn+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/abpvn.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/bulgarian_list+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/bulgarian_list.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/easylistchina.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/easylistczechslovak+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/easylistczechslovak.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/easylistdutch+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/easylistdutch.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/easylistgermany+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/easylistgermany.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/easylistitaly+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/easylistitaly.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/easylistlithuania+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/easylistlithuania.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/easylistpolish+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/easylistpolish.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/easylistportuguese+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/easylistportuguese.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/easylistspanish+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/easylistspanish.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/indianlist+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/indianlist.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/israellist+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/israellist.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/koreanlist+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/koreanlist.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/latvianlist+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/latvianlist.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/liste_fr+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/liste_fr.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/rolist+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/rolist.txt"</ID>
     <ID>MaxLineLength:SubscriptionTest.kt$SubscriptionTest$BuildConfig.FLAVOR_ABP -&gt; """https://([0-9])\.samsung-internet\.filter-list-downloads\.eyeo\.com/aa-variants/samsung_internet_browser-adblock_plus\.txt""".toRegex()</ID>
     <ID>MaxLineLength:SubscriptionTest.kt$SubscriptionTest$BuildConfig.FLAVOR_ADBLOCK -&gt; """https://([0-9])\.samsung-internet\.filter-list-downloads\.getadblock\.com/aa-variants/samsung_internet_browser-adblock\.txt""".toRegex()</ID>
     <ID>MaxLineLength:SubscriptionTest.kt$SubscriptionTest$BuildConfig.FLAVOR_CRYSTAL -&gt; """https://([0-9])\.samsung-internet\.filter-list-downloads\.eyeo\.com/aa-variants/samsung_internet_browser-crystal\.txt""".toRegex()</ID>
-    <ID>MaxLineLength:UpdateSubscriptionsFragment.kt$UpdateSubscriptionsFragment$binding.updatesPreferencesUpdateNowLabel.text = getString(R.string.preferences_update_subscriptions_title)</ID>
-    <ID>MaxLineLength:UpdateSubscriptionsFragment.kt$UpdateSubscriptionsFragment$class</ID>
     <ID>MaxLineLength:build.gradle.kts$"abp" -&gt; "https://0.samsung-internet.filter-list-downloads.eyeo.com/aa-variants/samsung_internet_browser-adblock_plus.txt"</ID>
     <ID>MaxLineLength:build.gradle.kts$"adblock" -&gt; "https://0.samsung-internet.filter-list-downloads.getadblock.com/aa-variants/samsung_internet_browser-adblock.txt"</ID>
     <ID>MaxLineLength:build.gradle.kts$"crystal" -&gt; "https://0.samsung-internet.filter-list-downloads.eyeo.com/aa-variants/samsung_internet_browser-crystal.txt"</ID>
-    <ID>MayBeConst:Deps.kt$Deps$val JACOBO = "com.kageiit.jacobo"</ID>
     <ID>MemberNameEqualsClassName:Deps.kt$Deps.AndroidX.DataStore$val DATASTORE = dependency { name("datastore") }</ID>
     <ID>MemberNameEqualsClassName:Deps.kt$Deps.OkHttp$val OKHTTP = dependency { name("okhttp") }</ID>
     <ID>MemberNameEqualsClassName:Deps.kt$Deps.XZ$val XZ = dependency { name("xz") }</ID>

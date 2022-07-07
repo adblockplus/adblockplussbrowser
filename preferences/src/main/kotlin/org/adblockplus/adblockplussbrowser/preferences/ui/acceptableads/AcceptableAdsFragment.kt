@@ -28,7 +28,8 @@ import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentAcceptableAdsBinding
 
 @AndroidEntryPoint
-internal class AcceptableAdsFragment : DataBindingFragment<FragmentAcceptableAdsBinding>(R.layout.fragment_acceptable_ads) {
+internal class AcceptableAdsFragment :
+    DataBindingFragment<FragmentAcceptableAdsBinding>(R.layout.fragment_acceptable_ads) {
     private val viewModel: AcceptableAdsViewModel by viewModels()
 
     override fun onBindView(binding: FragmentAcceptableAdsBinding) {

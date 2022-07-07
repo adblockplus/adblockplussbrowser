@@ -18,10 +18,12 @@
 package org.adblockplus.adblockplussbrowser.preferences.ui
 
 import android.text.method.LinkMovementMethod
-import android.widget.TextView
 import android.view.View
+import android.widget.TextView
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
@@ -39,6 +41,7 @@ internal class MainPreferencesFragment :
     DataBindingFragment<FragmentMainPreferencesBinding>(R.layout.fragment_main_preferences) {
 
     private val viewModel: MainPreferencesViewModel by activityViewModels()
+
     // Lazy loading the UpdateSubscriptionsViewModel so it will only be used for crystal flavor here
     private val updateViewModel: UpdateSubscriptionsViewModel by activityViewModels()
 
@@ -49,17 +52,126 @@ internal class MainPreferencesFragment :
 
         val lifecycleOwner = this.viewLifecycleOwner
 
-        // Primary Subscriptions
-        binding.mainPreferencesAdBlockingInclude.mainPreferencesPrimarySubscriptions.setDebounceOnClickListener(
+        bindPrimarySubscriptions(binding, supportActionBar, lifecycleOwner)
+        bindOtherSubscriptions(binding, supportActionBar, lifecycleOwner)
+        bindAllowList(binding, supportActionBar, lifecycleOwner)
+
+        if (BuildConfig.FLAVOR_product != BuildConfig.FLAVOR_CRYSTAL) {
+            bindUpdateSubscriptions(binding, supportActionBar, lifecycleOwner)
+        } else {
+            bindCrystalUpdateTypeSettings(binding)
+        }
+
+        bindAdditionalLanguage(binding, supportActionBar, lifecycleOwner)
+        bindOnboardingLanguages(binding, lifecycleOwner)
+        bindAcceptableAds(binding, supportActionBar, lifecycleOwner)
+        bindAbout(binding, supportActionBar, lifecycleOwner)
+    }
+
+    private fun bindAbout(
+        binding: FragmentMainPreferencesBinding,
+        supportActionBar: ActionBar?,
+        lifecycleOwner: LifecycleOwner
+    ) {
+        binding.mainPreferencesAboutInclude.mainPreferencesAbout.setDebounceOnClickListener({
+            supportActionBar?.subtitle = null
+            val direction = MainPreferencesFragmentDirections
+                .actionMainPreferencesFragmentToAboutFragment()
+            findNavController().navigate(direction)
+        }, lifecycleOwner)
+    }
+
+    private fun bindAcceptableAds(
+        binding: FragmentMainPreferencesBinding,
+        supportActionBar: ActionBar?,
+        lifecycleOwner: LifecycleOwner
+    ) {
+        binding.mainPreferencesAcceptableAdsInclude.mainPreferencesAcceptableAds.setDebounceOnClickListener(
             {
                 supportActionBar?.subtitle = null
                 val direction = MainPreferencesFragmentDirections
-                    .actionMainPreferencesFragmentToPrimarySubscriptionsFragment()
+                    .actionMainPreferencesFragmentToAcceptableAdsFragment()
                 findNavController().navigate(direction)
             },
             lifecycleOwner
         )
-        // Other Subscriptions
+    }
+
+    private fun bindOnboardingLanguages(
+        binding: FragmentMainPreferencesBinding,
+        lifecycleOwner: LifecycleOwner
+    ) {
+        binding.mainPreferencesLanguagesOnboardingInclude.mainPreferencesLanguagesOnboardingOptionSkip
+            .setDebounceOnClickListener(
+                {
+                    viewModel.markLanguagesOnboardingComplete(false)
+                },
+                lifecycleOwner
+            )
+    }
+
+    private fun bindAdditionalLanguage(
+        binding: FragmentMainPreferencesBinding,
+        supportActionBar: ActionBar?,
+        lifecycleOwner: LifecycleOwner
+    ) {
+        binding.mainPreferencesLanguagesOnboardingInclude.mainPreferencesLanguagesOnboardingOptionAdd
+            .setDebounceOnClickListener(
+                {
+                    supportActionBar?.subtitle = null
+                    viewModel.markLanguagesOnboardingComplete(true)
+                    val direction = MainPreferencesFragmentDirections
+                        .actionMainPreferencesFragmentToPrimarySubscriptionsFragment()
+                    findNavController().navigate(direction)
+                },
+                lifecycleOwner
+            )
+    }
+
+    private fun bindCrystalUpdateTypeSettings(binding: FragmentMainPreferencesBinding) {
+        binding.mainPreferencesAdBlockingInclude.crystalMainPreferencesUpdateSubscriptions.visibility =
+            View.VISIBLE
+        val wifiOnlyCheckbox: MaterialCheckBox =
+            binding.mainPreferencesAdBlockingInclude.wifiOnlyCheckbox
+        binding.mainPreferencesAdBlockingInclude.crystalMainPreferencesUpdateSubscriptions.setOnClickListener {
+            wifiOnlyCheckbox.isChecked = !wifiOnlyCheckbox.isChecked
+            val updateConfigType = if (wifiOnlyCheckbox.isChecked) {
+                UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_ALWAYS
+            } else {
+                UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY
+            }
+            updateViewModel.setUpdateConfigType(updateConfigType)
+        }
+
+        updateViewModel.updateType.observe(this) { updateType ->
+            wifiOnlyCheckbox.isChecked =
+                updateType.name == UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_ALWAYS.name
+        }
+    }
+
+    private fun bindUpdateSubscriptions(
+        binding: FragmentMainPreferencesBinding,
+        supportActionBar: ActionBar?,
+        lifecycleOwner: LifecycleOwner
+    ) {
+        binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.visibility =
+            View.VISIBLE
+        binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.setDebounceOnClickListener(
+            {
+                supportActionBar?.subtitle = null
+                val direction = MainPreferencesFragmentDirections
+                    .actionMainPreferencesFragmentToUpdateSubscriptionsFragment()
+                findNavController().navigate(direction)
+            },
+            lifecycleOwner
+        )
+    }
+
+    private fun bindOtherSubscriptions(
+        binding: FragmentMainPreferencesBinding,
+        supportActionBar: ActionBar?,
+        lifecycleOwner: LifecycleOwner
+    ) {
         binding.mainPreferencesAdBlockingInclude.mainPreferencesOtherSubscriptions.setDebounceOnClickListener(
             {
                 supportActionBar?.subtitle = null
@@ -69,7 +181,13 @@ internal class MainPreferencesFragment :
             },
             lifecycleOwner
         )
-        // Allowlist
+    }
+
+    private fun bindAllowList(
+        binding: FragmentMainPreferencesBinding,
+        supportActionBar: ActionBar?,
+        lifecycleOwner: LifecycleOwner
+    ) {
         binding.mainPreferencesAdBlockingInclude.mainPreferencesAllowlist.setDebounceOnClickListener(
             {
                 supportActionBar?.subtitle = null
@@ -87,75 +205,22 @@ internal class MainPreferencesFragment :
             },
             lifecycleOwner
         )
-        // Update Subscriptions
-        if (BuildConfig.FLAVOR_product != BuildConfig.FLAVOR_CRYSTAL) {
-            binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.visibility =
-                View.VISIBLE
-            binding.mainPreferencesAdBlockingInclude.mainPreferencesUpdateSubscriptions.setDebounceOnClickListener(
-                {
-                    supportActionBar?.subtitle = null
-                    val direction = MainPreferencesFragmentDirections
-                        .actionMainPreferencesFragmentToUpdateSubscriptionsFragment()
-                    findNavController().navigate(direction)
-                },
-                lifecycleOwner
-            )
-        } else {
-            // Binding and update configuration type logic
-            binding.mainPreferencesAdBlockingInclude.crystalMainPreferencesUpdateSubscriptions.visibility =
-                View.VISIBLE
-            val wifiOnlyCheckbox: MaterialCheckBox =
-                binding.mainPreferencesAdBlockingInclude.wifiOnlyCheckbox
-            binding.mainPreferencesAdBlockingInclude.crystalMainPreferencesUpdateSubscriptions.setOnClickListener {
-                wifiOnlyCheckbox.isChecked = !wifiOnlyCheckbox.isChecked
-                val updateConfigType = if (wifiOnlyCheckbox.isChecked) {
-                    UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_ALWAYS
-                } else {
-                    UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY
-                }
-                updateViewModel.setUpdateConfigType(updateConfigType)
-            }
+    }
 
-            updateViewModel.updateType.observe(this) { updateType ->
-                wifiOnlyCheckbox.isChecked =
-                    updateType.name == UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_ALWAYS.name
-            }
-        }
-        // Languages "Add additional language"
-        binding.mainPreferencesLanguagesOnboardingInclude.mainPreferencesLanguagesOnboardingOptionAdd.setDebounceOnClickListener(
+    private fun bindPrimarySubscriptions(
+        binding: FragmentMainPreferencesBinding,
+        supportActionBar: ActionBar?,
+        lifecycleOwner: LifecycleOwner
+    ) {
+        binding.mainPreferencesAdBlockingInclude.mainPreferencesPrimarySubscriptions.setDebounceOnClickListener(
             {
                 supportActionBar?.subtitle = null
-                viewModel.markLanguagesOnboardingComplete(true)
                 val direction = MainPreferencesFragmentDirections
                     .actionMainPreferencesFragmentToPrimarySubscriptionsFragment()
                 findNavController().navigate(direction)
             },
             lifecycleOwner
         )
-        // Languages "Only browse in one language"
-        binding.mainPreferencesLanguagesOnboardingInclude.mainPreferencesLanguagesOnboardingOptionSkip.setDebounceOnClickListener(
-            {
-                viewModel.markLanguagesOnboardingComplete(false)
-            },
-            lifecycleOwner
-        )
-        // Acceptable Ads
-        binding.mainPreferencesAcceptableAdsInclude.mainPreferencesAcceptableAds.setDebounceOnClickListener(
-            {
-                supportActionBar?.subtitle = null
-                val direction = MainPreferencesFragmentDirections
-                    .actionMainPreferencesFragmentToAcceptableAdsFragment()
-                findNavController().navigate(direction)
-            },
-            lifecycleOwner
-        )
-        // About
-        binding.mainPreferencesAboutInclude.mainPreferencesAbout.setDebounceOnClickListener({
-            supportActionBar?.subtitle = null
-            val direction = MainPreferencesFragmentDirections
-                .actionMainPreferencesFragmentToAboutFragment()
-            findNavController().navigate(direction)
-        }, lifecycleOwner)
     }
 
     override fun onResume() {

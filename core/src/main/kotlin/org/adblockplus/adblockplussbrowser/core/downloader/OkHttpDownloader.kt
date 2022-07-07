@@ -165,7 +165,7 @@ internal class OkHttpDownloader(
             val response = retryIO(description = subscription.title) {
                 okHttpClient.newCall(request).await()
             }
-            response.code == 200
+            response.code == HTTP_OK
         } catch (ex: Exception) {
             Timber.e(ex, "Error downloading ${subscription.url}")
             false

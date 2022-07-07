@@ -17,6 +17,7 @@
 
 package org.adblockplus.adblockplussbrowser.core.provider
 
+import android.annotation.SuppressLint
 import android.content.ContentProvider
 import android.content.ContentValues
 import android.content.pm.PackageManager
@@ -191,6 +192,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         return CallingApp(application, applicationVersion)
     }
 
+    @SuppressLint("BinaryOperationInTimber")
     private fun unpackDefaultSubscriptions() {
         val context = requireContext(this)
         val temp = File.createTempFile("filters", ".txt", defaultSubscriptionDir)
@@ -221,7 +223,10 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
                 xzInputStream.source().use { a ->
                     temp.sink().buffer().use { b -> b.writeAll(a) }
                 }
-                Timber.d("getFilterFile: unpacked AA, elapsed: ${Duration.milliseconds(System.currentTimeMillis()) - start}")
+                Timber.d(
+                    "getFilterFile: unpacked AA, elapsed: %s",
+                    (Duration.milliseconds(System.currentTimeMillis()) - start).toString()
+                )
             }
 
             ins = context.assets.open("easylist.txt")
