@@ -1,6 +1,9 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
-  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <ManuallySuppressedIssues>
+    <ID>TooManyFunctions:MainPreferencesFragment.kt$MainPreferencesFragment : MainPreferencesFragment</ID>
+    <ID>NestedBlockDepth:FilterListContentProvider.kt$FilterListContentProvider$private fun unpackDefaultSubscriptions()</ID>
+  </ManuallySuppressedIssues>
   <CurrentIssues>
     <ID>ComplexCondition:UpdateSubscriptionsWorker.kt$UpdateSubscriptionsWorker$!changes.hasChanges() &amp;&amp; !tags.isForceRefresh() &amp;&amp; !tags.isPeriodic() &amp;&amp; runAttemptCount == 0</ID>
     <ID>ComplexMethod:ProtoSettingsMigration.kt$ProtoSettingsMigration$private fun String?.adjustUrl(): String?</ID>
@@ -28,7 +31,6 @@
     <ID>MemberNameEqualsClassName:Deps.kt$Deps.AndroidX.DataStore$val DATASTORE = dependency { name("datastore") }</ID>
     <ID>MemberNameEqualsClassName:Deps.kt$Deps.OkHttp$val OKHTTP = dependency { name("okhttp") }</ID>
     <ID>MemberNameEqualsClassName:Deps.kt$Deps.XZ$val XZ = dependency { name("xz") }</ID>
-    <ID>NestedBlockDepth:FilterListContentProvider.kt$FilterListContentProvider$private fun unpackDefaultSubscriptions()</ID>
     <ID>NestedBlockDepth:ProtoSettingsMigration.kt$ProtoSettingsMigration$private fun loadActiveUrls(): List&lt;String&gt;</ID>
     <ID>NestedBlockDepth:ProtoSettingsMigration.kt$ProtoSettingsMigration$private fun retrieveUrlIfActive(file: File): String?</ID>
     <ID>ReturnCount:ProtoSettingsMigration.kt$ProtoSettingsMigration$private fun retrieveUrlIfActive(file: File): String?</ID>
@@ -54,7 +56,6 @@
     <ID>TooManyFunctions:SettingsRepository.kt$SettingsRepository</ID>
     <ID>TooManyFunctions:SnackbarContainer.kt$SnackbarContainer : View</ID>
     <ID>TooManyFunctions:UpdateSubscriptionsWorker.kt$UpdateSubscriptionsWorker : CoroutineWorker</ID>
-    <ID>TooManyFunctions:MainPreferencesFragment.kt$MainPreferencesFragment : MainPreferencesFragment</ID>
     <ID>UnnecessaryAbstractClass:Deps.kt$DependencyGroup</ID>
     <ID>UnusedPrivateMember:HardcodedSubscriptions.kt$HardcodedSubscriptions$private val context: Context</ID>
     <ID>UnusedPrivateMember:OnboardingViewModel.kt$OnboardingViewModel$val lastFilterRequestFlow = appPreferences.lastFilterListRequest</ID>
