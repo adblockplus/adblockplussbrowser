@@ -85,6 +85,7 @@ internal class ReportIssueFragment :
             if (isChecked) {
                 binding.anonymousSubmissionWarning.visibility = View.VISIBLE
                 binding.editTextBoxEmailAddress.isEnabled = false
+                binding.editTextBoxEmailAddress.setText("")
                 viewModel.data.email = REPORT_ISSUE_DATA_VALID_BLANK
             } else {
                 binding.anonymousSubmissionWarning.visibility = View.GONE

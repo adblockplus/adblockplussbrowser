@@ -29,13 +29,16 @@ import ru.gildor.coroutines.okhttp.await
 import timber.log.Timber
 import java.io.StringWriter
 import java.net.URL
+import java.util.Locale
 import java.util.UUID
 import javax.inject.Inject
+import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
 
 
 class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
 
     private val okHttpClient = OkHttpClient()
+    private val locale = Locale.getDefault()
 
     override suspend fun sendReport(data: ReportIssueData): String {
 
@@ -51,7 +54,7 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
         val query = Uri.Builder()
             .appendQueryParameter("version", "1")
             .appendQueryParameter("guid", UUID.randomUUID().toString()) // version 4, variant 1
-            .appendQueryParameter("lang", "US-EN").build().toString() // TODO add real language
+            .appendQueryParameter("lang", locale.language).build().toString()
 
         var url = ""
         runCatching { url = URL(DEFAULT_URL + query).toString() }
@@ -100,9 +103,9 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
             serializer.endTag(null, "filters")
 
             serializer.startTag(null, "platform")
-            serializer.attribute(null, "build", "Build")
+            serializer.attribute(null, "build", BuildConfig.BUILD_TYPE)
             serializer.attribute(null, "name", "ABP")
-            serializer.attribute(null, "version", "99") // Development environment
+            serializer.attribute(null, "version", BuildConfig.APPLICATION_VERSION)
             serializer.endTag(null, "platform")
 
             serializer.startTag(null, "window")
@@ -113,19 +116,23 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
 
             serializer.startTag(null, "adblock-plus")
             serializer.attribute(null, "version", "Build")
-            serializer.attribute(null, "locale", "EN-US")
+            serializer.attribute(null, "locale", locale.toString())
             serializer.endTag(null, "adblock-plus")
 
             serializer.startTag(null, "application")
             serializer.attribute(null, "name", "Samsung Internet")
-            serializer.attribute(null, "version", "Build")
-            serializer.attribute(null, "vendor", "")
+            serializer.attribute(null, "version", "unknown")
+            serializer.attribute(null, "vendor", "Samsung Electronics Co.")
             serializer.attribute(null, "userAgent", "")
             serializer.endTag(null, "application")
 
             serializer.startTag(null, "comment")
             serializer.text(data.comment)
             serializer.endTag(null, "comment")
+
+            serializer.startTag(null, "email")
+            serializer.text(data.email)
+            serializer.endTag(null, "email")
 
             serializer.startTag(null, "screenshot")
             serializer.attribute(null, "edited", "false")

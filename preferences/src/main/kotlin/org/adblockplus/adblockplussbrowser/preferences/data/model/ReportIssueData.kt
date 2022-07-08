@@ -38,6 +38,6 @@ data class ReportIssueData(
     companion object {
         const val REPORT_ISSUE_DATA_VALID_BLANK = " "
         const val REPORT_ISSUE_DATA_TYPE_FALSE_POSITIVE = "false positive"
-        const val REPORT_ISSUE_DATA_TYPE_MISSED_AD = "missed ad"
+        const val REPORT_ISSUE_DATA_TYPE_MISSED_AD = "false negative"
     }
 }
