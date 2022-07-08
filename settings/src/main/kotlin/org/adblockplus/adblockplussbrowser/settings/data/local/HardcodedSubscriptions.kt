@@ -121,10 +121,12 @@ internal class HardcodedSubscriptions {
 
     val additionalTracking = subscription {
         url = "https://easylist-downloads.adblockplus.org/easyprivacy.txt"
+        title = "Additional Tracking Subscription"
     }
 
     val socialMediaTracking = subscription {
         url = "https://easylist-downloads.adblockplus.org/fanboy-social.txt"
+        title = "Social Media Tracking Subscription"
     }
     val defaultOtherSubscriptions = listOf(additionalTracking, socialMediaTracking)
 

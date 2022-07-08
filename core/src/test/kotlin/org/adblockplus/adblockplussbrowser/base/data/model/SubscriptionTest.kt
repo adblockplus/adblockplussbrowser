@@ -36,23 +36,23 @@ class SubscriptionTest {
         // Check prefix was added for subscription
         val easylistSubscription = Subscription (
             "https://easylist-downloads.adblockplus.org/exceptionrules.txt",
-            "EasyList", 0L, flavor)
+            "EasyList", 0L, CustomSubscriptionType.FROM_URL ,flavor)
         assertTrue(expectedRegex.matches(easylistSubscription.randomizedUrl))
 
         // Check np-op (no change) in a correct url
         val randomizedSubscription = Subscription(
             "https://3.samsung-internet.filter-list-downloads.getadblock.com/easylist.txt",
-            "Randomized Subscription", 0L, flavor)
+            "Randomized Subscription", 0L, CustomSubscriptionType.FROM_URL, flavor)
         assertEquals(randomizedSubscription.url, randomizedSubscription.randomizedUrl)
 
         // Non eyeo domains are not changed
         val someNotEyeoSubscription = Subscription(
                 "https://some.not.eyeo.domain.com/filter-list.txt",
-                "Some List", 0L, flavor)
+                "Some List", 0L, CustomSubscriptionType.FROM_URL, flavor)
         assertEquals(someNotEyeoSubscription.url, someNotEyeoSubscription.randomizedUrl)
 
         // Empty domains are not changed (wrong input => no op)
-        val emptyUrlSubscription = Subscription("", "Wrong URL", 0L, flavor)
+        val emptyUrlSubscription = Subscription("", "Wrong URL", 0L, CustomSubscriptionType.FROM_URL, flavor)
         assertEquals(emptyUrlSubscription.url, emptyUrlSubscription.randomizedUrl)
 
     }

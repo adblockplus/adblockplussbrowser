@@ -17,9 +17,12 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions
 
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.base.view.layoutInflater
+import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.OtherSubscriptionsCustomItemBinding
 
 internal class OtherSubscriptionsAdapter(
@@ -48,6 +51,11 @@ internal class CustomViewHolder(val binding: OtherSubscriptionsCustomItemBinding
     fun bind(item: OtherSubscriptionsItem.CustomItem) {
         binding.item = item
         binding.executePendingBindings()
+        if (item.subscription.lastUpdate == Subscription.SUBSCRIPTION_LAST_UPDATE_ERROR_STATUS) {
+            binding.otherSubscriptionsCustomItemSummary.visibility = View.GONE
+            binding.otherSubscriptionsFileNotFoundMessage.visibility = View.VISIBLE
+            binding.fileNotFoundErrorIcon.visibility = View.VISIBLE
+        }
     }
 }
 
