@@ -124,6 +124,7 @@
     <string name="languages_onboarding_option_skip">No thanks, I only browse in one language.</string>
     <string name="delete_swipe_hint">To delete an entry, swipe it to the left.</string>
     <string name="crystal_disabled_whitelist">This feature will be taken down from Crystal in the next version.\nIf you want to continue using this feature, please switch to using <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">AdBlock for Samsung Internet</a>.In the meantime, we are keeping the allowlist you have created.</string>
+    <string name="file_picking_canceled" tools:ignore="MissingTranslation">File picking is canceled</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">Bullet Point Symbol</string>

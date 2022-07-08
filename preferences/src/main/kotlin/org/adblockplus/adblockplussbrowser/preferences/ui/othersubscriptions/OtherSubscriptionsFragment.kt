@@ -131,10 +131,10 @@ internal class OtherSubscriptionsFragment :
                 viewModel.addCustomFilterFile(filePath.toString(), getFilename(filePath))
             }
         } else {
-            analyticsProvider.logEvent(AnalyticsEvent.DEVICE_FILE_MANAGER_NOT_SUPPORTED)
+            analyticsProvider.logEvent(AnalyticsEvent.DEVICE_FILE_MANAGER_NOT_SUPPORTED_OR_CANCELED)
             Toast.makeText(
                 context,
-                getText(R.string.device_not_supported),
+                getText(R.string.file_picking_canceled),
                 Toast.LENGTH_LONG
             ).show()
         }
