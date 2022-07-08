@@ -7,6 +7,12 @@ message ProtoSubscription {
   string url = 1;
   string title = 2;
   int64 last_update = 3;
+  ProtoCustomSubscriptionType type = 4;
+}
+
+enum ProtoCustomSubscriptionType {
+    FROM_URL = 0;
+    LOCAL_FILE = 1;
 }
 
 enum ProtoUpdateConfig {

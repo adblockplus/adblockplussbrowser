@@ -22,6 +22,7 @@ import android.content.SharedPreferences
 import androidx.datastore.core.DataMigration
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.adblockplus.adblockplussbrowser.base.data.model.CustomSubscriptionType
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.settings.data.local.SubscriptionsDataSource
 import org.adblockplus.adblockplussbrowser.settings.data.proto.ProtoSettings
@@ -106,7 +107,14 @@ internal class ProtoSettingsMigration(
                 if (otherSubscription != null) {
                     otherSubscriptions.add(otherSubscription.toProtoSubscription())
                 } else {
-                    otherSubscriptions.add(Subscription(url, url, 0L).toProtoSubscription())
+                    otherSubscriptions.add(
+                        Subscription(
+                            url,
+                            url,
+                            0L,
+                            CustomSubscriptionType.FROM_URL
+                        ).toProtoSubscription()
+                    )
                 }
             }
         }

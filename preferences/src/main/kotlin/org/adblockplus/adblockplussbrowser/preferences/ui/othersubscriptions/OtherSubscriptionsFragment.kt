@@ -17,21 +17,31 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions
 
+import android.app.Activity
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
+import android.provider.OpenableColumns
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.leinardi.android.speeddial.SpeedDialActionItem
-import com.leinardi.android.speeddial.SpeedDialView
 import dagger.hilt.android.AndroidEntryPoint
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.BuildConfig
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentOtherSubscriptionsBinding
 import org.adblockplus.adblockplussbrowser.preferences.ui.SwipeToDeleteCallback
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -39,6 +49,11 @@ internal class OtherSubscriptionsFragment :
     DataBindingFragment<FragmentOtherSubscriptionsBinding>(R.layout.fragment_other_subscriptions) {
 
     private val viewModel: OtherSubscriptionsViewModel by activityViewModels()
+
+    private lateinit var getTextFile: ActivityResultLauncher<Intent>
+
+    @Inject
+    lateinit var analyticsProvider: AnalyticsProvider
 
     override fun onBindView(binding: FragmentOtherSubscriptionsBinding) {
         binding.viewModel = viewModel
@@ -101,6 +116,28 @@ internal class OtherSubscriptionsFragment :
                 }
             }
         }
+
+        getTextFile =
+            registerForActivityResult(
+                ActivityResultContracts.StartActivityForResult()
+            ) { result: ActivityResult ->
+                handleFilePickingResult(result)
+            }
+    }
+
+    private fun handleFilePickingResult(result: ActivityResult) {
+        if (result.resultCode == Activity.RESULT_OK) {
+            result.data?.data?.let { filePath ->
+                viewModel.addCustomFilterFile(filePath.toString(), getFilename(filePath))
+            }
+        } else {
+            analyticsProvider.logEvent(AnalyticsEvent.DEVICE_FILE_MANAGER_NOT_SUPPORTED_OR_CANCELED)
+            Toast.makeText(
+                context,
+                getText(R.string.file_picking_canceled),
+                Toast.LENGTH_LONG
+            ).show()
+        }
     }
 
     private fun initSpeedDial(binding: FragmentOtherSubscriptionsBinding) {
@@ -133,21 +170,50 @@ internal class OtherSubscriptionsFragment :
 
         speedDial.addAllActionItems(listOf(addWithUrlButton, addFromLocalStorageButton))
 
-        speedDial.setOnActionSelectedListener(SpeedDialView.OnActionSelectedListener { actionItem ->
+        speedDial.setOnActionSelectedListener { actionItem ->
             when (actionItem.id) {
                 R.id.other_subscriptions_add_from_url_button -> {
+                    analyticsProvider.logEvent(AnalyticsEvent.LOAD_CUSTOM_FILTER_LIST_FROM_URL)
                     AddCustomSubscriptionDialogFragment().show(parentFragmentManager, null)
                 }
                 R.id.other_subscriptions_add_from_local_button -> {
-                    // TODO: finish integration with file explorer
-                    Toast.makeText(
-                        context,
-                        getText(R.string.file_manager_not_found_message),
-                        Toast.LENGTH_LONG
-                    ).show()
+                    analyticsProvider.logEvent(AnalyticsEvent.LOAD_CUSTOM_FILTER_LIST_FROM_FILE)
+                    loadFileFromStorage()
                 }
             }
             false
-        })
+        }
+    }
+
+    private fun loadFileFromStorage() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "text/plain"
+        }
+        val chooser = Intent.createChooser(intent, "Open file from...")
+        try {
+            getTextFile.launch(chooser)
+        } catch (ex: ActivityNotFoundException) {
+            analyticsProvider.logException(ex)
+            Toast.makeText(
+                context,
+                getText(R.string.file_manager_not_found_message),
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
+    private fun getFilename(uri: Uri): String {
+        val cursor = activity?.contentResolver?.query(uri, null, null, null, null)
+        var filename: String = uri.path.toString()
+
+        cursor?.getColumnIndex(OpenableColumns.DISPLAY_NAME)?.let { nameIndex ->
+            cursor.moveToFirst()
+
+            filename = cursor.getString(nameIndex)
+            cursor.close()
+        }
+
+        return filename
     }
 }

@@ -17,6 +17,7 @@
 
 package org.adblockplus.adblockplussbrowser.settings.data.local
 
+import org.adblockplus.adblockplussbrowser.base.data.model.CustomSubscriptionType
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.base.kotlin.asMutable
 
@@ -56,7 +57,8 @@ internal class HardcodedSubscriptionDsl {
     fun toSubscription(): Subscription = Subscription(
         this.url,
         processTitle(),
-        0L
+        0L,
+        CustomSubscriptionType.FROM_URL
     )
 
     private fun processTitle(): String {
