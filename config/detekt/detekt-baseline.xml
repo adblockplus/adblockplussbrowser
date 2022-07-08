@@ -2,8 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues>
     <ID>TooManyFunctions:MainPreferencesFragment.kt$MainPreferencesFragment : DataBindingFragment</ID>
-  </ManuallySuppressedIssues>
-  <CurrentIssues>
     <ID>ComplexCondition:UpdateSubscriptionsWorker.kt$UpdateSubscriptionsWorker$!changes.hasChanges() &amp;&amp; !tags.isForceRefresh() &amp;&amp; !tags.isPeriodic() &amp;&amp; runAttemptCount == 0</ID>
     <ID>ComplexMethod:ProtoSettingsMigration.kt$ProtoSettingsMigration$private fun String?.adjustUrl(): String?</ID>
     <ID>EmptyCatchBlock:MainActivity.kt$MainActivity${}</ID>
@@ -12,12 +10,8 @@
     <ID>EmptyFunctionBlock:Fakes.kt$Fakes.FakeCoreRepository${}</ID>
     <ID>EmptyFunctionBlock:Fakes.kt$Fakes.FakeSettingsRepository${}</ID>
     <ID>EmptyFunctionBlock:LocalMediaPlayer.kt$LocalMediaPlayer${ }</ID>
-    <ID>ForbiddenComment:OtherSubscriptionsFragment.kt$OtherSubscriptionsFragment$// TODO: finish integration with file explorer</ID>
     <ID>LongParameterList:IO.kt$( description: String = "&lt;missing description&gt;", times: Int = DEFAULT_RETRY, initialDelay: Long = 200, // 0.2 second maxDelay: Long = 2000, // 2 second factor: Double = 2.0, dispatcher: CoroutineDispatcher = Dispatchers.IO, block: suspend () -&gt; T )</ID>
-    <ID>MagicNumber:OkHttpDownloader.kt$4</ID>
-    <ID>MagicNumber:OtherSubscriptionsViewModel.kt$OtherSubscriptionsViewModel$100</ID>
     <ID>MagicNumber:Subscription.kt$Subscription$9</ID>
-    <ID>MagicNumber:UpdateSubscriptionsWorker.kt$UpdateSubscriptionsWorker$100</ID>
     <ID>MagicNumber:build.gradle.kts$0.4F</ID>
     <ID>MagicNumber:build.gradle.kts$1024</ID>
     <ID>MatchingDeclarationName:DiffUtil.kt$Changes</ID>
@@ -29,12 +23,21 @@
     <ID>MaxLineLength:build.gradle.kts$"crystal" -&gt; "https://0.samsung-internet.filter-list-downloads.eyeo.com/aa-variants/samsung_internet_browser-crystal.txt"</ID>
     <ID>MemberNameEqualsClassName:Deps.kt$Deps.AndroidX.DataStore$val DATASTORE = dependency { name("datastore") }</ID>
     <ID>MemberNameEqualsClassName:Deps.kt$Deps.OkHttp$val OKHTTP = dependency { name("okhttp") }</ID>
-    <ID>MemberNameEqualsClassName:Deps.kt$Deps.XZ$val XZ = dependency { name("xz") }</ID>
+    <ID>TooManyFunctions:CoreSubscriptionsManager.kt$CoreSubscriptionsManager : SubscriptionsManagerCoroutineScope</ID>
+    <ID>TooManyFunctions:DataStoreSettingsRepository.kt$DataStoreSettingsRepository : SettingsRepository</ID>
+    <ID>TooManyFunctions:FilterListContentProvider.kt$FilterListContentProvider : ContentProviderCoroutineScope</ID>
+    <ID>TooManyFunctions:LocalMediaPlayer.kt$LocalMediaPlayer : SurfaceTextureListenerOnPreparedListenerOnCompletionListener</ID>
+    <ID>TooManyFunctions:SettingsRepository.kt$SettingsRepository</ID>
+    <ID>TooManyFunctions:SnackbarContainer.kt$SnackbarContainer : View</ID>
+    <ID>TooManyFunctions:UpdateSubscriptionsWorker.kt$UpdateSubscriptionsWorker : CoroutineWorker</ID>
+    <ID>UnnecessaryAbstractClass:Deps.kt$DependencyGroup</ID>
     <ID>NestedBlockDepth:ProtoSettingsMigration.kt$ProtoSettingsMigration$private fun loadActiveUrls(): List&lt;String&gt;</ID>
     <ID>NestedBlockDepth:ProtoSettingsMigration.kt$ProtoSettingsMigration$private fun retrieveUrlIfActive(file: File): String?</ID>
     <ID>ReturnCount:ProtoSettingsMigration.kt$ProtoSettingsMigration$private fun retrieveUrlIfActive(file: File): String?</ID>
-    <ID>SerialVersionUIDInSerializableClass:AllowlistItem.kt$AllowlistItem : Serializable</ID>
-    <ID>SerialVersionUIDInSerializableClass:OtherSubscriptionsItem.kt$OtherSubscriptionsItem$CustomItem : OtherSubscriptionsItemSerializable</ID>
+    <ID>MemberNameEqualsClassName:Deps.kt$Deps.XZ$val XZ = dependency { name("xz") }</ID>
+  </ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>MagicNumber:OtherSubscriptionsViewModel.kt$OtherSubscriptionsViewModel$100</ID>
     <ID>SwallowedException:AboutFragment.kt$AboutFragment$catch (exception: ActivityNotFoundException) { Toast.makeText(context, getString(R.string.no_browser_found), Toast.LENGTH_LONG).show() }</ID>
     <ID>SwallowedException:MainActivity.kt$MainActivity$catch (e: PackageManager.NameNotFoundException) { false }</ID>
     <ID>SwallowedException:MainActivity.kt$MainActivity$catch (exception: ActivityNotFoundException) {}</ID>
@@ -48,16 +51,5 @@
     <ID>TooGenericExceptionCaught:UpdateSubscriptionsWorker.kt$UpdateSubscriptionsWorker$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:UserCounterWorker.kt$UserCounterWorker$ex: Exception</ID>
     <ID>TooGenericExceptionThrown:IO.kt$throw Exception("Job canceled when trying to execute retryIO")</ID>
-    <ID>TooManyFunctions:CoreSubscriptionsManager.kt$CoreSubscriptionsManager : SubscriptionsManagerCoroutineScope</ID>
-    <ID>TooManyFunctions:DataStoreSettingsRepository.kt$DataStoreSettingsRepository : SettingsRepository</ID>
-    <ID>TooManyFunctions:FilterListContentProvider.kt$FilterListContentProvider : ContentProviderCoroutineScope</ID>
-    <ID>TooManyFunctions:LocalMediaPlayer.kt$LocalMediaPlayer : SurfaceTextureListenerOnPreparedListenerOnCompletionListener</ID>
-    <ID>TooManyFunctions:SettingsRepository.kt$SettingsRepository</ID>
-    <ID>TooManyFunctions:SnackbarContainer.kt$SnackbarContainer : View</ID>
-    <ID>TooManyFunctions:UpdateSubscriptionsWorker.kt$UpdateSubscriptionsWorker : CoroutineWorker</ID>
-    <ID>UnnecessaryAbstractClass:Deps.kt$DependencyGroup</ID>
-    <ID>UnusedPrivateMember:HardcodedSubscriptions.kt$HardcodedSubscriptions$private val context: Context</ID>
-    <ID>UnusedPrivateMember:OnboardingViewModel.kt$OnboardingViewModel$val lastFilterRequestFlow = appPreferences.lastFilterListRequest</ID>
-    <ID>UnusedPrivateMember:ProtoSettingsMigration.kt$ProtoSettingsMigration$i</ID>
   </CurrentIssues>
 </SmellBaseline>

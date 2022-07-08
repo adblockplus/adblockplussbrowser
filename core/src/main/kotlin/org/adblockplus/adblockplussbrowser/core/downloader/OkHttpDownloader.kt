@@ -258,7 +258,9 @@ internal class OkHttpDownloader(
     }
 }
 
-private fun Int.asDownloadCount(): String = if (this < 4) this.toString() else "4+"
+private const val MAX_RETRY_COUNT = 4
+
+private fun Int.asDownloadCount(): String = if (this < MAX_RETRY_COUNT) this.toString() else "4+"
 
 private fun Context.downloadsDir(): File =
     File(applicationContext.filesDir, "downloads")

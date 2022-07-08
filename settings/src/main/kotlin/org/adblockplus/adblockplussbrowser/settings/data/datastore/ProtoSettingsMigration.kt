@@ -141,7 +141,7 @@ internal class ProtoSettingsMigration(
             DataInputStream(BufferedInputStream(GZIPInputStream(FileInputStream(file)))).use { stream ->
                 val url = stream.readUTF()
                 val numEntries = stream.readInt()
-                for (i in 0 until numEntries) {
+                repeat(numEntries) {
                     val key = stream.readUTF()
                     val value = stream.readUTF()
                     if (key == "_enabled") {
