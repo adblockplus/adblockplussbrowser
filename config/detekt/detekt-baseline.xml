@@ -1,8 +1,7 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
   <ManuallySuppressedIssues>
-    <ID>TooManyFunctions:MainPreferencesFragment.kt$MainPreferencesFragment : MainPreferencesFragment</ID>
-    <ID>NestedBlockDepth:FilterListContentProvider.kt$FilterListContentProvider$private fun unpackDefaultSubscriptions()</ID>
+    <ID>TooManyFunctions:MainPreferencesFragment.kt$MainPreferencesFragment : DataBindingFragment</ID>
   </ManuallySuppressedIssues>
   <CurrentIssues>
     <ID>ComplexCondition:UpdateSubscriptionsWorker.kt$UpdateSubscriptionsWorker$!changes.hasChanges() &amp;&amp; !tags.isForceRefresh() &amp;&amp; !tags.isPeriodic() &amp;&amp; runAttemptCount == 0</ID>
