@@ -21,6 +21,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.provider.MediaStore
+import android.util.Base64
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
@@ -74,6 +75,14 @@ internal class ReportIssueFragment :
                         .show()
                     validateData()
                 }
+            }
+        }
+
+        viewModel.screenshot.observe(this){
+            with(binding) {
+                screenshotPreview.root.visibility = View.VISIBLE
+                screenshotPreview.screenshot.setImageBitmap(it)
+//                screenshotPreview.screenshotName.text = viewModel?.fileName
             }
         }
 
