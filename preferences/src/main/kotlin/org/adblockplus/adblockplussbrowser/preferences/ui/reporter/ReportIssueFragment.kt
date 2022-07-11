@@ -82,7 +82,7 @@ internal class ReportIssueFragment :
             with(binding) {
                 screenshotPreview.root.visibility = View.VISIBLE
                 screenshotPreview.screenshot.setImageBitmap(it)
-//                screenshotPreview.screenshotName.text = viewModel?.fileName
+                screenshotPreview.screenshotName.text = viewModel?.fileName
             }
         }
 

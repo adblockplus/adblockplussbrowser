@@ -5,26 +5,29 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@color/background_secondary">
 
         <ImageView
             android:id="@+id/screenshot"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="0.3"
             android:layout_margin="6dp"
             tools:src="@drawable/ic_acceptable_ads_illustration"
-            android:contentDescription="Report Issue Image Thumbnail" />
+            android:contentDescription="@string/issueReporter_attached_image_thumbnail" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/screenshot_name"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="0.7"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:layout_margin="6dp"-->
-<!--            android:textSize="16sp"-->
-<!--            android:textAppearance="@style/TextAppearance.AppCompat.Large"-->
-<!--            tools:text="Screenshot......."/>-->
+        <TextView
+            android:id="@+id/screenshot_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:layout_gravity="center"
+            android:layout_margin="6dp"
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            tools:text="Screenshot......."/>
 
     </LinearLayout>
 

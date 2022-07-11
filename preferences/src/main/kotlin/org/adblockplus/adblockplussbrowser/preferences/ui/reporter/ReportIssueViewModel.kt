@@ -89,7 +89,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
              is that depending on the version of android, the filename provided in lastPathSegment
              could be just a number instead of the correct text.
          */
-        fileName = pic.lastPathSegment.toString()
+        fileName = "${pic.lastPathSegment.toString()}.png"
 
         Timber.d("ReportIssue: image path: $pic")
 
