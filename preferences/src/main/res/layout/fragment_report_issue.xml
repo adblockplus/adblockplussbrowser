@@ -70,19 +70,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/select_issue_type" />
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/pick_screenshot_description"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin"
-                    android:layout_marginTop="@dimen/margin"
-                    android:layout_marginEnd="@dimen/margin"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:text="@string/make_screenshot_of_samsung_internet"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/issue_type_radio_group" />
-
                 <RadioGroup
                     android:id="@+id/issue_type_radio_group"
                     android:layout_width="0dp"
@@ -109,6 +96,19 @@
                         android:text="@string/issueReporter_falseNegative_label" />
                 </RadioGroup>
 
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/pick_screenshot_description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin"
+                    android:layout_marginTop="@dimen/margin"
+                    android:layout_marginEnd="@dimen/margin"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:text="@string/make_screenshot_of_samsung_internet"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/issue_type_radio_group" />
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/pick_screenshot"
                     android:layout_width="wrap_content"
@@ -120,6 +120,58 @@
                     app:layout_constraintTop_toBottomOf="@+id/pick_screenshot_description" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/enter_url_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin"
+                    android:layout_marginTop="@dimen/margin"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:text="@string/issueReporter_url_label"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/pick_screenshot" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/enter_url_explanation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin"
+                    android:layout_marginEnd="@dimen/margin"
+                    android:text="@string/issueReporter_url_description"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/enter_url_title"
+                    android:layout_marginTop="16dp" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_box_url"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin"
+                    android:layout_marginTop="@dimen/margin"
+                    android:layout_marginEnd="@dimen/margin"
+                    android:ems="10"
+                    android:hint="@string/report_issue_enter_url_hint"
+                    android:minHeight="@dimen/touch_size"
+                    android:textColorHint="#546E7A"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/enter_url_explanation" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/invalid_url_hint"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin"
+                    android:layout_marginEnd="@dimen/margin"
+                    android:visibility="gone"
+                    android:text="@string/issueReporter_invalid_url_hint"
+                    android:textColor="@android:color/holo_red_dark"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edit_text_box_url"
+                    android:layout_marginTop="16dp" />
+
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/enter_email_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -128,42 +180,19 @@
                     android:text="@string/issueReporter_email_label"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/enter_email_explanation" />
+                    app:layout_constraintTop_toBottomOf="@+id/invalid_url_hint" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/comment_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin"
-                    android:layout_marginTop="@dimen/margin"
-                    android:text="@string/comment_title"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/anonymous_submission_warning" />
-
-                <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/enter_email_explanation"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin"
-                        android:layout_marginEnd="@dimen/margin"
-                        android:text="@string/issueReporter_email_description"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/pick_screenshot" android:layout_marginTop="16dp"/>
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/comment_description"
+                    android:id="@+id/enter_email_explanation"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin"
-                    android:layout_marginTop="@dimen/margin"
                     android:layout_marginEnd="@dimen/margin"
-                    android:text="@string/issueReporter_comment_description"
+                    android:text="@string/issueReporter_email_description"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/comment_title" />
+                    app:layout_constraintTop_toBottomOf="@+id/enter_email_title"
+                    android:layout_marginTop="16dp" />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_text_box_email_address"
@@ -179,8 +208,7 @@
                     android:textColorHint="#546E7A"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/enter_email_title" />
-
+                    app:layout_constraintTop_toBottomOf="@+id/enter_email_explanation" />
 
                 <com.google.android.material.checkbox.MaterialCheckBox
                     android:id="@+id/anonymous_submission_check_box"
@@ -193,6 +221,30 @@
                     android:text="@string/issueReporter_anonymousSubmission_label"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/edit_text_box_email_address" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/comment_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin"
+                    android:layout_marginTop="@dimen/margin"
+                    android:text="@string/comment_title"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/anonymous_submission_warning" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/comment_description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin"
+                    android:layout_marginTop="@dimen/margin"
+                    android:layout_marginEnd="@dimen/margin"
+                    android:text="@string/issueReporter_comment_description"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/comment_title" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/anonymous_submission_warning"

@@ -145,11 +145,15 @@
     <string name="make_screenshot_of_samsung_internet" tools:ignore="MissingTranslation">Make screenshot of Samsung Internet</string>
     <string name="cancel" tools:ignore="MissingTranslation">Cancel</string>
     <string name="report_issue_enter_email_hint" tools:ignore="MissingTranslation">Enter email</string>
+    <string name="report_issue_enter_url_hint" tools:ignore="MissingTranslation">Enter url</string>
     <string name="report_issue_enter_comment_hint" tools:ignore="MissingTranslation">Enter comment</string>
 
     <string name="issueReporter_email_description">We encourage you to enter a valid email address so that we can contact you if
         there are questions about your report. It will also allow us to recognize your contributions and to prioritize
         them higher.
+    </string>
+    <string name="issueReporter_url_description" tools:ignore="MissingTranslation"> We encourage you to enter the URL where you found
+        the issue. Just think of copying and pasting the link of the page.
     </string>
     <string name="issueReporter_comment_description">The text field below allows you to enter a comment to help us understand the
         issue. This step is optional but recommended if the problem isn\'t obvious. You can also review the report data
@@ -159,8 +163,10 @@
     <string name="issueReporter_anonymousSubmission_warning">We won\'t be able to come back to you and will likely prioritize the
         report lower.
     </string>
+    <string name="issueReporter_invalid_url_hint" tools:ignore="MissingTranslation">Please enter a valid web URL</string>
     <string name="issueReporter_sendButton_label">Send Report</string>
     <string name="issueReporter_email_label">Email:</string>
+    <string name="issueReporter_url_label" tools:ignore="MissingTranslation">URL (optional):</string>
     <string name="issueReporter_privacyPolicy"><a href="https://adblockplus.org/en/privacy#issue-reporter">Privacy Policy</a></string>
 
 </resources>
