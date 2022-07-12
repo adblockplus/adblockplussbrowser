@@ -31,6 +31,9 @@ internal class HardcodedSubscriptionsDataSource(private val context: Context) : 
     override suspend fun getAcceptableAdsSubscription(): Subscription =
         hardcodedSubscriptions.acceptableAds.toSubscription()
 
+    override suspend fun getTestPagesSubscription(): Subscription =
+        hardcodedSubscriptions.testPages.toSubscription()
+
     override suspend fun getDefaultActiveSubscription(): Subscription {
         val currentLanguage = context.resources.configuration.localeCompat.language
         val preloadedSubscription =

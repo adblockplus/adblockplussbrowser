@@ -29,6 +29,10 @@ internal class HardcodedSubscriptions {
         url = "https://easylist-downloads.adblockplus.org/exceptionrules.txt"
     }
 
+    val testPages = subscription {
+        url = "https://testpages.adblockplus.org/en/abp-testcase-subscription.txt"
+    }
+
     // Based on: https://gitlab.com/eyeo/adblockplus/adblockpluscore/-/blob/next/data/subscriptions.json
     val defaultPrimarySubscriptions = listOf(easylist) + subscriptions {
         subscription {

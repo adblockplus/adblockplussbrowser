@@ -43,6 +43,9 @@ internal class DataStoreSettingsRepository(
     override suspend fun getAcceptableAdsSubscription(): Subscription =
         subscriptionsDataSource.getAcceptableAdsSubscription()
 
+    override suspend fun getTestPagesSubscription(): Subscription =
+        subscriptionsDataSource.getTestPagesSubscription()
+
     override suspend fun getDefaultPrimarySubscriptions(): List<Subscription> =
         subscriptionsDataSource.getDefaultPrimarySubscriptions()
 
