@@ -30,6 +30,7 @@ internal class HardcodedSubscriptions {
     }
 
     val testPages = subscription {
+        title = "Samsung Test Case ABP"
         url = "https://testpages.adblockplus.org/en/abp-testcase-subscription.txt"
     }
 

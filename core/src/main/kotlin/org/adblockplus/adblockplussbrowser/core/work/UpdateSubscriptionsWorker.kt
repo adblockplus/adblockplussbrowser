@@ -115,17 +115,11 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             }
 
             // Current active subscriptions
-            var activeSubscriptions =
-                settings.activePrimarySubscriptions.ensureEasylist(settingsRepository.getEasylistSubscription()) +
+            val activeSubscriptions =
+                (settings.activePrimarySubscriptions.ensureEasylist(settingsRepository.getEasylistSubscription()) +
                         settings.activeOtherSubscriptions +
-                        acceptableAdsSubscription(settings.acceptableAdsEnabled)
+                        acceptableAdsSubscription(settings.acceptableAdsEnabled))
             totalSteps = activeSubscriptions.size + 1
-
-            if (BuildConfig.DEBUG) {
-                // For debug build, remove easyList and use testPages list
-                activeSubscriptions = activeSubscriptions.minus(settingsRepository.getEasylistSubscription()) +
-                        settingsRepository.getTestPagesSubscription()
-            }
 
             // Download new subscriptions
             updateStatus(ProgressType.PROGRESS)
@@ -138,6 +132,12 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
                 settings, downloadableActiveSubscriptions, changes, tags.isForceRefresh(),
                 tags.isPeriodic()
             )
+
+            if (BuildConfig.DEBUG) {
+                // For debug build, add testPages list and remove easylist from active subscriptions
+                settingsRepository.addActiveOtherSubscription(settingsRepository.getTestPagesSubscription())
+                settingsRepository.removeActivePrimarySubscription(settingsRepository.getEasylistSubscription())
+            }
 
             // check if Work is stopped and return
             if (isStopped) return@withContext Result.success()
