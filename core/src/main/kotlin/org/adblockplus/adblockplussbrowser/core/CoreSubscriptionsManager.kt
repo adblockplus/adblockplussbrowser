@@ -131,7 +131,7 @@ class CoreSubscriptionsManager(
     }
 
     private suspend fun listenSettingsChanges() = coroutineScope {
-        settingsRepository.settings.debounce(500).onEach { settings ->
+        settingsRepository.settings.debounce(SETTINGS_CHANGES_DELAY).onEach { settings ->
             Timber.d("Old settings: $currentSettings, new settings: $settings")
 
             if (currentSettings.changed(settings)) {
@@ -213,6 +213,7 @@ class CoreSubscriptionsManager(
         private val UPDATE_INTERVAL = Duration.hours(6)
         private val FLEX_UPDATE_INTERVAL = Duration.minutes(30)
         private val INITIAL_UPDATE_DELAY = Duration.hours(6)
+        private const val SETTINGS_CHANGES_DELAY: Long = 500
     }
 }
 

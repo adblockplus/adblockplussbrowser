@@ -29,7 +29,8 @@ import org.adblockplus.adblockplussbrowser.preferences.ui.updates.UpdateSubscrip
 import timber.log.Timber
 
 @AndroidEntryPoint
-class UpdateSubscriptionsFragment : DataBindingFragment<FragmentUpdateSubscriptionsBinding>(R.layout.fragment_update_subscriptions) {
+class UpdateSubscriptionsFragment :
+    DataBindingFragment<FragmentUpdateSubscriptionsBinding>(R.layout.fragment_update_subscriptions) {
     private val viewModel: UpdateSubscriptionsViewModel by viewModels()
 
     private var isFirstSelection = true
@@ -37,9 +38,11 @@ class UpdateSubscriptionsFragment : DataBindingFragment<FragmentUpdateSubscripti
     override fun onBindView(binding: FragmentUpdateSubscriptionsBinding) {
         binding.viewModel = viewModel
 
-        val adapter = UpdateModeSpinnerAdapter.createFromResource(requireContext(),
+        val adapter = UpdateModeSpinnerAdapter.createFromResource(
+            requireContext(),
             R.array.updates_preferences_types, R.layout.update_type_item,
-            R.layout.update_type_selection_item, R.id.updates_preferences_automatic_updates_type)
+            R.layout.update_type_selection_item, R.id.updates_preferences_automatic_updates_type
+        )
         binding.updatesPreferencesSpinner.adapter = adapter
         binding.updatesPreferencesSpinner.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
@@ -79,7 +82,8 @@ class UpdateSubscriptionsFragment : DataBindingFragment<FragmentUpdateSubscripti
             } else {
                 updatePreferencesProgress.progress = 0
                 updatePreferencesProgress.visibility = View.INVISIBLE
-                binding.updatesPreferencesUpdateNowLabel.text = getString(R.string.preferences_update_subscriptions_title)
+                binding.updatesPreferencesUpdateNowLabel.text =
+                    getString(R.string.preferences_update_subscriptions_title)
             }
         }
     }

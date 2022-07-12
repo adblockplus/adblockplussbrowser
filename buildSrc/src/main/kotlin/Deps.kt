@@ -31,7 +31,7 @@ object Deps {
 
     val JACOBO_PLUGIN = "gradle.plugin.com.kageiit:jacobo-plugin" version "2.0.5"
 
-    val JACOBO = "com.kageiit.jacobo"
+    const val JACOBO = "com.kageiit.jacobo"
 
     val JACOCO_CORE = "org.jacoco:org.jacoco.core" version "0.8.7"
 

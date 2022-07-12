@@ -179,7 +179,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
         val progress = if (tags.isForceRefresh()) {
             when (type) {
                 ProgressType.PROGRESS -> {
-                    val step = 100 / totalSteps
+                    val step = MAX_PROGRESS / totalSteps
                     SubscriptionUpdateStatus.Progress(step * currentStep++)
                 }
                 ProgressType.SUCCESS -> SubscriptionUpdateStatus.Success
@@ -421,6 +421,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
     }
 
     companion object {
+        private const val MAX_PROGRESS = 100
         private const val DELAY_DEFAULT = 500L
         private const val RUN_ATTEMPT_MAX_COUNT = 4
 

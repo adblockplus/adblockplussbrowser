@@ -68,7 +68,11 @@ internal class PrimarySubscriptionsViewModel @Inject constructor(
         val result = mutableListOf<PrimarySubscriptionsItem>()
         if (this.isNotEmpty()) {
             val headerResId =
-                if (active) R.string.primary_subscriptions_active_category else R.string.primary_subscriptions_inactive_category
+                if (active) {
+                    R.string.primary_subscriptions_active_category
+                } else {
+                    R.string.primary_subscriptions_inactive_category
+                }
             result.add(PrimarySubscriptionsItem.HeaderItem(headerResId))
             this.forEachIndexed { index, subscription ->
                 val layout = this.layoutForIndex(index)
