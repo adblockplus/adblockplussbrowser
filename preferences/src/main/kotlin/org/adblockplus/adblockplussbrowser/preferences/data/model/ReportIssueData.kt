@@ -26,7 +26,7 @@ data class ReportIssueData(
     var comment: String = "",
     var url: String = ""
 ) {
-    fun validate(): Boolean = validateType() && validateEmail() && validateScreenshot() && validateUrl()
+    fun validate(): Boolean = validateType() && validateEmail() && validateScreenshot()
 
     fun validateScreenshot() = screenshot.isNotEmpty()
 
@@ -35,8 +35,6 @@ data class ReportIssueData(
 
     fun validateType() = (type == REPORT_ISSUE_DATA_TYPE_FALSE_POSITIVE
                 || type == REPORT_ISSUE_DATA_TYPE_MISSED_AD)
-
-    fun validateUrl() = (url.isEmpty() || Patterns.WEB_URL.matcher(url).matches())
 
     companion object {
         const val REPORT_ISSUE_DATA_VALID_BLANK = " "

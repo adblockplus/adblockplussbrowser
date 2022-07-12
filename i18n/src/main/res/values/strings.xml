@@ -145,7 +145,7 @@
     <string name="make_screenshot_of_samsung_internet" tools:ignore="MissingTranslation">Make screenshot of Samsung Internet</string>
     <string name="cancel" tools:ignore="MissingTranslation">Cancel</string>
     <string name="report_issue_enter_email_hint" tools:ignore="MissingTranslation">Enter email</string>
-    <string name="report_issue_enter_url_hint" tools:ignore="MissingTranslation">Enter url</string>
+    <string name="report_issue_enter_url_hint" tools:ignore="MissingTranslation">Enter URL</string>
     <string name="report_issue_enter_comment_hint" tools:ignore="MissingTranslation">Enter comment</string>
 
     <string name="issueReporter_email_description">We encourage you to enter a valid email address so that we can contact you if
@@ -163,7 +163,6 @@
     <string name="issueReporter_anonymousSubmission_warning">We won\'t be able to come back to you and will likely prioritize the
         report lower.
     </string>
-    <string name="issueReporter_invalid_url_hint" tools:ignore="MissingTranslation">Please enter a valid web URL</string>
     <string name="issueReporter_sendButton_label">Send Report</string>
     <string name="issueReporter_email_label">Email:</string>
     <string name="issueReporter_url_label" tools:ignore="MissingTranslation">URL (optional):</string>

@@ -158,20 +158,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/enter_url_explanation" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/invalid_url_hint"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin"
-                    android:layout_marginEnd="@dimen/margin"
-                    android:visibility="gone"
-                    android:text="@string/issueReporter_invalid_url_hint"
-                    android:textColor="@android:color/holo_red_dark"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/edit_text_box_url"
-                    android:layout_marginTop="16dp" />
-
-                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/enter_email_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -180,7 +166,7 @@
                     android:text="@string/issueReporter_email_label"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/invalid_url_hint" />
+                    app:layout_constraintTop_toBottomOf="@+id/edit_text_box_url" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/enter_email_explanation"

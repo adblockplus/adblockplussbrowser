@@ -115,7 +115,6 @@ internal class ReportIssueFragment :
 
         binding.editTextBoxUrl.addTextChangedListener {
             viewModel.data.url = binding.editTextBoxUrl.text.toString()
-            validateData()
         }
 
         binding.cancel.setDebounceOnClickListener({
@@ -177,12 +176,7 @@ internal class ReportIssueFragment :
             markMandatoryField(it.enterEmailTitle, !viewModel.data.validateEmail())
             markMandatoryField(it.selectIssueType, !viewModel.data.validateType())
             markMandatoryField(it.pickScreenshotDescription, !viewModel.data.validateScreenshot())
-            markUrlWithError(!viewModel.data.validateUrl())
         }
-    }
-
-    private fun markUrlWithError(isError: Boolean) {
-        binding?.invalidUrlHint?.visibility = if (isError) View.VISIBLE else View.GONE
     }
 
     private fun showProgressBar() {
