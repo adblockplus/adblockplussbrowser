@@ -90,7 +90,6 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
         val writer = StringWriter()
         val serializer: XmlSerializer = Xml.newSerializer()
         try {
-            // TODO replace the placeholders with real data
             serializer.setOutput(writer)
             serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true)
             serializer.startTag(null, "report")
@@ -109,6 +108,9 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
             serializer.endTag(null, "platform")
 
             serializer.startTag(null, "window")
+            if (data.url.isNotEmpty()) {
+                serializer.attribute(null, "url", data.url)
+            }
             serializer.endTag(null, "window")
 
             serializer.startTag(null, "subscriptions")
