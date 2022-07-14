@@ -124,6 +124,10 @@ class Fakes {
             return Subscription("$serverUrl/exceptionrules.txt", "", 0L, CustomSubscriptionType.FROM_URL)
         }
 
+        override suspend fun getTestPagesSubscription(): Subscription {
+            return Subscription("$serverUrl/exceptionrules.txt", "", 0L, CustomSubscriptionType.FROM_URL)
+        }
+
         override suspend fun getDefaultPrimarySubscriptions(): List<Subscription> {
             return listOf(
                 Subscription("$serverUrl/easylist.txt", "", 0L, CustomSubscriptionType.FROM_URL),

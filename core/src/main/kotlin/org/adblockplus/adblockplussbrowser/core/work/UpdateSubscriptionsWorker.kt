@@ -58,6 +58,7 @@ import java.io.InputStreamReader
 import java.lang.RuntimeException
 import java.util.Objects
 import javax.inject.Inject
+import org.adblockplus.adblockplussbrowser.core.BuildConfig
 
 
 @HiltWorker
@@ -115,9 +116,9 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
 
             // Current active subscriptions
             val activeSubscriptions =
-                settings.activePrimarySubscriptions.ensureEasylist(settingsRepository.getEasylistSubscription()) +
+                (settings.activePrimarySubscriptions.ensureEasylist(settingsRepository.getEasylistSubscription()) +
                         settings.activeOtherSubscriptions +
-                        acceptableAdsSubscription(settings.acceptableAdsEnabled)
+                        acceptableAdsSubscription(settings.acceptableAdsEnabled))
             totalSteps = activeSubscriptions.size + 1
 
             // Download new subscriptions
@@ -131,6 +132,12 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
                 settings, downloadableActiveSubscriptions, changes, tags.isForceRefresh(),
                 tags.isPeriodic()
             )
+
+            if (BuildConfig.DEBUG) {
+                // For debug build, add testPages list and remove easylist from active subscriptions
+                settingsRepository.addActiveOtherSubscription(settingsRepository.getTestPagesSubscription())
+                settingsRepository.removeActivePrimarySubscription(settingsRepository.getEasylistSubscription())
+            }
 
             // check if Work is stopped and return
             if (isStopped) return@withContext Result.success()

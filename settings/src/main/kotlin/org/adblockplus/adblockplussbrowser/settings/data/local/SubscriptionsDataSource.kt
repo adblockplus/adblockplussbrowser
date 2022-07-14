@@ -25,6 +25,8 @@ interface SubscriptionsDataSource {
 
     suspend fun getAcceptableAdsSubscription(): Subscription
 
+    suspend fun getTestPagesSubscription(): Subscription
+
     suspend fun getDefaultActiveSubscription(): Subscription
 
     suspend fun getDefaultPrimarySubscriptions(): List<Subscription>
