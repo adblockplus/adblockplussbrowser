@@ -122,6 +122,10 @@ internal class ReportIssueFragment :
             validateData()
         }
 
+        binding.editTextBoxUrl.addTextChangedListener {
+            viewModel.data.url = binding.editTextBoxUrl.text.toString()
+        }
+
         binding.cancel.setDebounceOnClickListener({
             val direction = ReportIssueFragmentDirections.actionReportIssueFragmentToMainPreferencesFragment()
             findNavController().navigate(direction)

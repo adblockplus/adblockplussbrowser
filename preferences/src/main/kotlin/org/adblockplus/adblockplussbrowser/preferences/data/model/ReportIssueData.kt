@@ -23,7 +23,8 @@ data class ReportIssueData(
     var type: String = "",
     var screenshot: String = "",
     var email: String = "",
-    var comment: String = ""
+    var comment: String = "",
+    var url: String = ""
 ) {
     fun validate(): Boolean = validateType() && validateEmail() && validateScreenshot()
 
