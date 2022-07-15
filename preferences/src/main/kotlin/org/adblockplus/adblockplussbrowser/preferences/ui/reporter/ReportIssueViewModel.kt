@@ -87,12 +87,10 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         return try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 imageBitmap = ImageDecoder.decodeBitmap(ImageDecoder.createSource(cr, pic))
-//                .compress(Bitmap.CompressFormat.PNG, REPORT_ISSUE_VIEW_MODEL_IMAGE_QUALITY, bs)
             } else {
                 imageBitmap = MediaStore.Images.Media.getBitmap(cr, pic)
-//                    .compress(Bitmap.CompressFormat.PNG, REPORT_ISSUE_VIEW_MODEL_IMAGE_QUALITY, bs)
             }
-            validateImageSize(imageBitmap)
+            scaleImage(imageBitmap).compress(Bitmap.CompressFormat.PNG, REPORT_ISSUE_VIEW_MODEL_IMAGE_QUALITY, bs)
             "data:image/png;base64," + Base64.encodeToString(bs.toByteArray(), Base64.DEFAULT)
         } catch (e: Exception) {
             Timber.e("ReportIssue: Screenshot decode failed\n" + e.printStackTrace())
@@ -100,9 +98,14 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         }
     }
 
-    private fun validateImageSize(imageBitmap: Bitmap) {
-        var (orientation, scaledLongerSide) = if (imageBitmap.height > imageBitmap.width) Pair("portrait", imageBitmap.height) else Pair("landscape", imageBitmap.width)
-        var scaledShorterSide = if (imageBitmap.width > imageBitmap.height) imageBitmap.height else imageBitmap.width
+    private fun scaleImage(imageBitmap: Bitmap): Bitmap {
+        val (width, height) = validateImageSize(imageBitmap.width, imageBitmap.height)
+        return Bitmap.createScaledBitmap(imageBitmap, width, height, true)
+    }
+
+    internal fun validateImageSize(imageWidth: Int, imageHeight: Int): Pair<Int, Int> {
+        var (orientation, scaledLongerSide) = if (imageHeight > imageWidth) Pair("portrait", imageHeight) else Pair("landscape", imageWidth)
+        var scaledShorterSide = if (imageWidth > imageHeight) imageHeight else imageWidth
 
         if (scaledShorterSide > REPORT_ISSUE_VIEW_MODEL_IMAGE_MAX_SHORTER_SIDE) {
             val ratio = REPORT_ISSUE_VIEW_MODEL_IMAGE_MAX_SHORTER_SIDE / scaledShorterSide
@@ -114,9 +117,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
             scaledShorterSide = (scaledShorterSide * ratio).toInt()
             scaledLongerSide = (scaledLongerSide * ratio).toInt()
         }
-        val (width, height) = if (orientation == "portrait") Pair(scaledShorterSide, scaledLongerSide) else Pair(scaledLongerSide, scaledShorterSide)
-        val scaledImage = Bitmap.createScaledBitmap(imageBitmap, width, height, true)
-        print("hello")
+        return if (orientation == "portrait") Pair(scaledShorterSide, scaledLongerSide) else Pair(scaledLongerSide, scaledShorterSide)
     }
 
     companion object {
