@@ -83,14 +83,16 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         Timber.d("ReportIssue: image path: $pic")
 
         val bs = ByteArrayOutputStream()
+        lateinit var imageBitmap: Bitmap
         return try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                ImageDecoder.decodeBitmap(ImageDecoder.createSource(cr, pic))
-                    .compress(Bitmap.CompressFormat.PNG, REPORT_ISSUE_VIEW_MODEL_IMAGE_QUALITY, bs)
+                imageBitmap = ImageDecoder.decodeBitmap(ImageDecoder.createSource(cr, pic))
+//                .compress(Bitmap.CompressFormat.PNG, REPORT_ISSUE_VIEW_MODEL_IMAGE_QUALITY, bs)
             } else {
-                MediaStore.Images.Media.getBitmap(cr, pic)
-                    .compress(Bitmap.CompressFormat.PNG, REPORT_ISSUE_VIEW_MODEL_IMAGE_QUALITY, bs)
+                imageBitmap = MediaStore.Images.Media.getBitmap(cr, pic)
+//                    .compress(Bitmap.CompressFormat.PNG, REPORT_ISSUE_VIEW_MODEL_IMAGE_QUALITY, bs)
             }
+            validateImageSize(imageBitmap)
             "data:image/png;base64," + Base64.encodeToString(bs.toByteArray(), Base64.DEFAULT)
         } catch (e: Exception) {
             Timber.e("ReportIssue: Screenshot decode failed\n" + e.printStackTrace())
@@ -98,7 +100,29 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         }
     }
 
+    private fun validateImageSize(imageBitmap: Bitmap) {
+        var (orientation, scaledLongerSide) = if (imageBitmap.height > imageBitmap.width) Pair("portrait", imageBitmap.height) else Pair("landscape", imageBitmap.width)
+        var scaledShorterSide = if (imageBitmap.width > imageBitmap.height) imageBitmap.height else imageBitmap.width
+
+        if (scaledShorterSide > REPORT_ISSUE_VIEW_MODEL_IMAGE_MAX_SHORTER_SIDE) {
+            val ratio = REPORT_ISSUE_VIEW_MODEL_IMAGE_MAX_SHORTER_SIDE / scaledShorterSide
+            scaledShorterSide = (scaledShorterSide * ratio).toInt()
+            scaledLongerSide = (scaledLongerSide * ratio).toInt()
+        }
+        if (scaledLongerSide > REPORT_ISSUE_VIEW_MODEL_IMAGE_MAX_LONGER_SIDE) {
+            val ratio = REPORT_ISSUE_VIEW_MODEL_IMAGE_MAX_LONGER_SIDE / scaledLongerSide
+            scaledShorterSide = (scaledShorterSide * ratio).toInt()
+            scaledLongerSide = (scaledLongerSide * ratio).toInt()
+        }
+        val (width, height) = if (orientation == "portrait") Pair(scaledShorterSide, scaledLongerSide) else Pair(scaledLongerSide, scaledShorterSide)
+        val scaledImage = Bitmap.createScaledBitmap(imageBitmap, width, height, true)
+        print("hello")
+    }
+
     companion object {
-        private const val REPORT_ISSUE_VIEW_MODEL_IMAGE_QUALITY = 100
+        private const val REPORT_ISSUE_VIEW_MODEL_IMAGE_QUALITY = 80
+        // HD max size
+        private const val REPORT_ISSUE_VIEW_MODEL_IMAGE_MAX_LONGER_SIDE = 1280f
+        private const val REPORT_ISSUE_VIEW_MODEL_IMAGE_MAX_SHORTER_SIDE = 720f
     }
 }
