@@ -166,6 +166,7 @@
     <string name="issueReporter_sendButton_label">Send Report</string>
     <string name="issueReporter_email_label">Email:</string>
     <string name="issueReporter_url_label" tools:ignore="MissingTranslation">URL (optional):</string>
+    <string name="issueReporter_attached_image_thumbnail" tools:ignore="MissingTranslation">attached image thumbnail</string>
     <string name="issueReporter_privacyPolicy"><a href="https://adblockplus.org/en/privacy#issue-reporter">Privacy Policy</a></string>
 
 </resources>

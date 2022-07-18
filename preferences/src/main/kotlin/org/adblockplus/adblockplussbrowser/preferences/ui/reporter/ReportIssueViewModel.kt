@@ -20,6 +20,7 @@ package org.adblockplus.adblockplussbrowser.preferences.ui.reporter
 import android.app.Application
 import android.content.ContentResolver
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
@@ -29,6 +30,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.io.ByteArrayOutputStream
+import javax.inject.Inject
 import kotlinx.coroutines.launch
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.preferences.data.ReportIssueRepository
@@ -36,14 +39,15 @@ import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueDat
 import org.adblockplus.adblockplussbrowser.preferences.ui.reporter.ReportIssueFragment.Companion.REPORT_ISSUE_FRAGMENT_SEND_ERROR
 import org.adblockplus.adblockplussbrowser.preferences.ui.reporter.ReportIssueFragment.Companion.REPORT_ISSUE_FRAGMENT_SEND_SUCCESS
 import timber.log.Timber
-import java.io.ByteArrayOutputStream
-import javax.inject.Inject
+
 
 @HiltViewModel
 internal class ReportIssueViewModel @Inject constructor(application: Application) :
     AndroidViewModel(application) {
 
     val returnedString = MutableLiveData<String>()
+    val screenshot = MutableLiveData<Bitmap>()
+    var fileName: String = ""
     var data: ReportIssueData = ReportIssueData()
 
     @Inject
@@ -79,6 +83,13 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         val context = getApplication<Application>().applicationContext
         val cr: ContentResolver = context.contentResolver ?: return ""
         val pic: Uri = Uri.parse(unresolvedUri)
+        /*
+            TODO: we should reuse here the method to extract the filename that was used
+             in OtherSubscriptionsFragment when adding a custom filter file. Reason for this,
+             is that depending on the version of android, the filename provided in lastPathSegment
+             could be just a number instead of the correct text.
+         */
+        fileName = "${pic.lastPathSegment.toString()}.png"
 
         Timber.d("ReportIssue: image path: $pic")
 
@@ -92,6 +103,9 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
             }
             scaleImage(imageBitmap).compress(Bitmap.CompressFormat.PNG, REPORT_ISSUE_VIEW_MODEL_IMAGE_QUALITY, bs)
             "data:image/png;base64," + Base64.encodeToString(bs.toByteArray(), Base64.DEFAULT)
+            val screenshotByteArray = bs.toByteArray()
+            screenshot.value = BitmapFactory.decodeByteArray(screenshotByteArray, 0, screenshotByteArray.size)
+            "data:image/png;base64," + Base64.encodeToString(screenshotByteArray, Base64.DEFAULT)
         } catch (e: Exception) {
             Timber.e("ReportIssue: Screenshot decode failed\n" + e.printStackTrace())
             ""
