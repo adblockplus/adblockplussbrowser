@@ -47,6 +47,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
 
     val returnedString = MutableLiveData<String>()
     val screenshot = MutableLiveData<Bitmap>()
+    var screenshotUri: String = ""
     var fileName: String = ""
     var data: ReportIssueData = ReportIssueData()
 

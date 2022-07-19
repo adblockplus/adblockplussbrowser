@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout  xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <LinearLayout
+        android:id="@+id/image_placeholder_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/background_secondary">
+        android:background="@color/background_secondary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/screenshot"
@@ -14,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.3"
             android:layout_margin="6dp"
-            tools:src="@drawable/ic_acceptable_ads_illustration"
+            android:src="@drawable/ic_baseline_image_placeholder_24"
             android:contentDescription="@string/issueReporter_attached_image_thumbnail" />
 
         <TextView
@@ -27,8 +35,19 @@
             android:textSize="16sp"
             android:textStyle="italic"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            tools:text="Screenshot......."/>
+            android:text="Please pick a screenshot"/>
 
     </LinearLayout>
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/processing_image_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image_placeholder_container"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
