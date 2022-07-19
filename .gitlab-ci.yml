@@ -262,3 +262,79 @@ functional_tests:
   rules:
     - if: '$FORCE_FUNCTIONAL == "true"'
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
+
+samsung_filter_tests:
+  stage: automated_tests
+  interruptible: true
+  tags:
+    - "ce11171b5399805a0c"
+  retry: 1
+  image: "registry.gitlab.com/eyeo/docker/appium:1.20.2"
+  allow_failure: true
+  variables:
+    GIT_STRATEGY: "none"
+    PLATFORM_VERSIONS: "10"
+    GIT_AUTOMATION_REPO: "https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/eyeo/distpartners/samsung_automation"
+    GIT_AUTOMATION_BRANCH: "main"
+    TEST_APK: "app/build/outputs/apk/worldAbp/debug/app-world-abp-debug.apk"
+  before_script:
+    - apt-get -y update
+    - apt-get -y install openjdk-8-jdk git
+    - echo "Using android device with serial ${ANDROID_SERIAL}"
+    - adb devices
+    - adb shell getprop | egrep "ro.product.manufacturer|ro.product.model|ro.build.version.release|ro.vendor.build.version.sdk"
+  script:
+    - git clone $GIT_AUTOMATION_REPO si_automation
+    - cd si_automation
+    - export TEST_APK
+    - git checkout ${GIT_AUTOMATION_BRANCH:-main}
+    # Launch an instance of gradle for each bunch of tags we want to test
+    - set +e
+    - |
+      for PLATFORM_VERSION in $PLATFORM_VERSIONS
+        do export PLATFORM_VERSION
+        echo Starting job for version ${PLATFORM_VERSION}
+        (APPIUM_HOST="localhost:4723" ./gradlew filterTests &> platform_version-${PLATFORM_VERSION}.log ; echo $? > result_${PLATFORM_VERSION}) &
+        pids="$pids $!"
+      done
+    - wait $pids
+    # Check for any failures and re-run them
+    - echo "Check for any failures and re-run them"
+    - cat target/rerun.txt
+    - |
+      for PLATFORM_VERSION in $PLATFORM_VERSIONS
+        do if [ -s target/rerun.txt ] ; then
+          echo "Rerunning failed test cases for platform version ${PLATFORM_VERSION}"
+          APPIUM_HOST="localhost:4723" ./gradlew rerunFailed
+          echo $? > result_${PLATFORM_VERSION}
+          rm -f target/rerun.txt
+        fi
+      done
+    # check the exit codes of all processes were 0
+    - |
+      for PLATFORM_VERSION in $PLATFORM_VERSIONS
+        do test $(cat result_${PLATFORM_VERSION}) = 0
+      done
+  after_script:
+    - cd si_automation
+    - |
+      for PLATFORM_VERSION in $PLATFORM_VERSIONS
+        do
+        echo "**********************************"
+        echo "Logs for tests with platform version ${PLATFORM_VERSION}"
+        echo "**********************************"
+        cat platform_version-${PLATFORM_VERSION}.log
+      done
+  except:
+    variables:
+      - $SKIP_TESTS
+  rules:
+    - if: '$FORCE_SAMSUNG == "true"'
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+  artifacts:
+    when: always
+    expire_in: "1 week"
+    paths:
+      - "si_automation/platform_version-*.log"
+      - "si_automation/result_*"
+      - "si_automation/target/"
