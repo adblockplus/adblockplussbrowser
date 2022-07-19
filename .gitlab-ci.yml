@@ -266,6 +266,8 @@ functional_tests:
 samsung_filter_tests:
   stage: automated_tests
   interruptible: true
+  needs:
+    - build # we can run this on debug apk
   tags:
     - "ce11171b5399805a0c"
   retry: 1
