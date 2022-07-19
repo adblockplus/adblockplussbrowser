@@ -325,9 +325,6 @@ samsung_filter_tests:
         echo "**********************************"
         cat platform_version-${PLATFORM_VERSION}.log
       done
-  except:
-    variables:
-      - $SKIP_TESTS
   rules:
     - if: '$FORCE_SAMSUNG == "true"'
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
