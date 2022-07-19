@@ -20,7 +20,6 @@ package org.adblockplus.adblockplussbrowser.preferences.ui.reporter
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
-import android.os.AsyncTask
 import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
@@ -34,10 +33,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textview.MaterialTextView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
 import org.adblockplus.adblockplussbrowser.preferences.R
@@ -145,23 +141,6 @@ internal class ReportIssueFragment :
         validateData()
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewLifecycleOwner.lifecycleScope.launch {
-            processScreenshot()
-        }
-    }
-
-    private fun processScreenshot() {
-        if (viewModel.screenshotUri.isNotEmpty()) {
-            binding?.screenshotPreview?.processingImageBar?.visibility = View.VISIBLE
-            viewModel.processImage(viewModel.screenshotUri)
-        } else {
-            viewModel.data.screenshot = ""
-            validateData()
-        }
-    }
-
     private fun MaterialTextView.addMandatoryMark() {
         this.text = buildSpannedString { append(text).color(Color.RED) { append(MANDATORY_MARK) } }
     }
@@ -181,8 +160,17 @@ internal class ReportIssueFragment :
     private val pickImageFromGalleryForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
-                viewModel.screenshotUri = result.data?.data.toString()
-                Timber.d(viewModel.screenshotUri)
+                binding?.screenshotPreview?.processingImageBar?.visibility = View.VISIBLE
+                val intent = result.data
+                val unresolvedUri = intent?.data?.toString()
+                if (unresolvedUri != null) {
+                    lifecycleScope.launch {
+                        viewModel.processImage(unresolvedUri)
+                    }
+                } else {
+                    viewModel.data.screenshot = ""
+                    validateData()
+                }
             }
         }
 
