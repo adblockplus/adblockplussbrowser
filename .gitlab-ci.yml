@@ -80,6 +80,8 @@ checks:unit-test:
       coverage_report:
         coverage_format: cobertura
         path: core/build/reports/cobertura.xml
+  rules:
+    - when: on_success
 
 build:
   extends: .template:environment
