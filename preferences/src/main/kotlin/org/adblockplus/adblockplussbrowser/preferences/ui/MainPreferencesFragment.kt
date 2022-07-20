@@ -17,19 +17,14 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui
 
-import android.text.method.LinkMovementMethod
 import android.view.View
-import android.widget.CheckBox
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.customview.customView
 import com.google.android.material.checkbox.MaterialCheckBox
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
@@ -144,10 +139,10 @@ internal class MainPreferencesFragment :
     }
 
     private fun bindCrystalUpdateTypeSettings(binding: FragmentMainPreferencesBinding) {
-        val wifiOnlyCheckbox: MaterialCheckBox? =
-            view?.findViewById(R.id.wifi_only_checkbox)
+        val rootView = binding.mainPreferencesAdBlockingInclude.root
+        val wifiOnlyCheckbox: MaterialCheckBox? = rootView.findViewById(R.id.wifi_only_checkbox)
         val crystalMainPreferencesUpdateSubscriptions =
-            view?.findViewById<ConstraintLayout>(R.id.crystal_main_preferences_update_subscriptions)
+            rootView.findViewById<ConstraintLayout>(R.id.crystal_main_preferences_update_subscriptions)
         crystalMainPreferencesUpdateSubscriptions?.visibility =
             View.VISIBLE
         crystalMainPreferencesUpdateSubscriptions?.setOnClickListener {
@@ -210,15 +205,16 @@ internal class MainPreferencesFragment :
         lifecycleOwner: LifecycleOwner
     ) {
         if (BuildConfig.FLAVOR_product != BuildConfig.FLAVOR_CRYSTAL) {
-            view?.findViewById<LinearLayout>(R.id.main_preferences_allowlist)?.setDebounceOnClickListener(
-                {
-                    supportActionBar?.subtitle = null
-                    val direction = MainPreferencesFragmentDirections
-                        .actionMainPreferencesFragmentToAllowlistFragment()
-                    findNavController().navigate(direction)
-                },
-                lifecycleOwner
-            )
+            binding.mainPreferencesAdBlockingInclude.root.findViewById<LinearLayout>(R.id.main_preferences_allowlist)
+                ?.setDebounceOnClickListener(
+                    {
+                        supportActionBar?.subtitle = null
+                        val direction = MainPreferencesFragmentDirections
+                            .actionMainPreferencesFragmentToAllowlistFragment()
+                        findNavController().navigate(direction)
+                    },
+                    lifecycleOwner
+                )
         }
     }
 

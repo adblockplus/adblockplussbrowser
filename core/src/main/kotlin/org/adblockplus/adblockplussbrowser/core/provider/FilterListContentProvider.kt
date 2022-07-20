@@ -50,6 +50,7 @@ import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.base.os.PackageHelper
 import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants
 import org.adblockplus.adblockplussbrowser.base.yandex.YandexConstants
+import org.adblockplus.adblockplussbrowser.core.BuildConfig
 import org.adblockplus.adblockplussbrowser.core.CallingApp
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.extensions.currentData
@@ -199,10 +200,12 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         val temp = File.createTempFile("filters", ".txt", defaultSubscriptionDir)
 
         var acceptableAdsEnabled: Boolean
-        var allowedDomains: List<String>
+        var allowedDomains: List<String> = emptyList()
         runBlocking {
             acceptableAdsEnabled = settingsRepository.currentSettings().acceptableAdsEnabled
-            allowedDomains = settingsRepository.currentSettings().allowedDomains
+            if (BuildConfig.FLAVOR_product != BuildConfig.FLAVOR_CRYSTAL) {
+                allowedDomains = settingsRepository.currentSettings().allowedDomains
+            }
         }
         Timber.i("Is AA enabled: $acceptableAdsEnabled")
 
