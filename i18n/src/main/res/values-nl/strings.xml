@@ -121,7 +121,7 @@
     <string name="languages_onboarding_option_add">Een extra taal toevoegen om advertenties te blokkeren</string>
     <string name="languages_onboarding_option_skip">Nee bedankt, ik surf slechts in één taal.</string>
     <string name="delete_swipe_hint">Om invoer te verwijderen, naar links vegen.</string>
-    <string name="crystal_disabled_whitelist">Deze functie zal uit Crystal verdwijnen in de volgende versie.\nAls u deze functie wilt blijven gebruiken, stap dan over op <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">AdBlock voor Samsung Internet</a>In de tussentijd, houden we de toelatingslijst die u heeft gemaakt.</string>
+    <string name="crystal_disabled_allowlist">Deze functie zal uit Crystal verdwijnen in de volgende versie.\nAls u deze functie wilt blijven gebruiken, stap dan over op <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">AdBlock voor Samsung Internet</a>In de tussentijd, houden we de toelatingslijst die u heeft gemaakt.</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">Symbool opsommingsteken</string>

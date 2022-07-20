@@ -121,7 +121,7 @@
     <string name="languages_onboarding_option_add">Dodaj dodatkowy język blokowania reklam.</string>
     <string name="languages_onboarding_option_skip">Nie, dziękuję, przeglądam tylko w jednym języku.</string>
     <string name="delete_swipe_hint">Aby usunąć wpis, przesuń go w lewo.</string>
-    <string name="crystal_disabled_whitelist">Ta funkcja zostanie usunięta z Crystal w następnej wersji.\nJeśli chcesz nadal korzystać z tej funkcji, przełącz się na używanie <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">AdBlock dla Samsung Internet</a>.Jednocześnie zachowujemy stworzoną przez Ciebie listę dozwolonych.</string>
+    <string name="crystal_disabled_allowlist">Ta funkcja zostanie usunięta z Crystal w następnej wersji.\nJeśli chcesz nadal korzystać z tej funkcji, przełącz się na używanie <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">AdBlock dla Samsung Internet</a>.Jednocześnie zachowujemy stworzoną przez Ciebie listę dozwolonych.</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">Symbol punktu</string>

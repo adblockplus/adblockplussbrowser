@@ -37,7 +37,7 @@
         android:layout_width="256dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="@string/crystal_disabled_whitelist"
+        android:text="@string/crystal_disabled_allowlist"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

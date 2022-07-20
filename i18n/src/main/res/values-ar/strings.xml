@@ -122,7 +122,7 @@
     <string name="languages_onboarding_option_add">أضف لغة إضافية لحجب الإعلانات.</string>
     <string name="languages_onboarding_option_skip">لا، شكرًا، لا أتصفح سوى بلغة واحدة.</string>
     <string name="delete_swipe_hint">لحذف إدخال ما، اسحبه إلى اليسار.</string>
-    <string name="crystal_disabled_whitelist">ستتم إزالة هذه الميزة من Crystal في الإصدار التالي.\nإذا كنت تريد متابعة استخدام هذه الميزة، يرجى التبديل إلى استخدام <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">AdBlock لـ Samsung Internet</a>في غضون ذلك، سنحتفظ بالقائمة المسموح بها التي أنشأتها.</string>
+    <string name="crystal_disabled_allowlist">ستتم إزالة هذه الميزة من Crystal في الإصدار التالي.\nإذا كنت تريد متابعة استخدام هذه الميزة، يرجى التبديل إلى استخدام <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">AdBlock لـ Samsung Internet</a>في غضون ذلك، سنحتفظ بالقائمة المسموح بها التي أنشأتها.</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">رمز نقطي</string>

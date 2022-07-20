@@ -120,7 +120,7 @@
     <string name="languages_onboarding_option_add">Προσθέστε μια επιπλέον γλώσσα αποκλεισμού διαφημίσεων.</string>
     <string name="languages_onboarding_option_skip">Όχι, ευχαριστώ, κάνω περιήγηση μόνο σε μία γλώσσα.</string>
     <string name="delete_swipe_hint">Για να διαγράψετε μια καταχώριση, σύρετέ την προς τα αριστερά.</string>
-    <string name="crystal_disabled_whitelist">Αυτή η δυνατότητα θα καταργηθεί από το Crystal στην επόμενη έκδοση.\nΕάν θέλετε να συνεχίσετε να χρησιμοποιείτε αυτήν τη δυνατότητα, μεταβείτε στη χρήση του <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">AdBlock για το Samsung Internet</a>.Στο μεταξύ, διατηρούμε τη λίστα επιτρεπόμενων που έχετε δημιουργήσει.</string>
+    <string name="crystal_disabled_allowlist">Αυτή η δυνατότητα θα καταργηθεί από το Crystal στην επόμενη έκδοση.\nΕάν θέλετε να συνεχίσετε να χρησιμοποιείτε αυτήν τη δυνατότητα, μεταβείτε στη χρήση του <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">AdBlock για το Samsung Internet</a>.Στο μεταξύ, διατηρούμε τη λίστα επιτρεπόμενων που έχετε δημιουργήσει.</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">Σύμβολο κουκκίδας</string>
