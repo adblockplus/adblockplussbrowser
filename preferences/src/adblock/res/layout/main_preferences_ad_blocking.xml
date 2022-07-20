@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ This file is part of Adblock Plus <https://adblockplus.org/>,
+ Copyright (C) 2006-present eyeo GmbH
+
+ Adblock Plus is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License version 3 as
+ published by the Free Software Foundation.
+
+ Adblock Plus is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="org.adblockplus.adblockplussbrowser.preferences.ui.MainPreferencesViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/preferences_group_bg_single"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/main_preferences_primary_subscriptions" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/main_preferences_ad_blocking_category"
+            style="@style/CustomPreferenceCategoryTitleTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/preferences_ad_blocking_category"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/main_preferences_primary_subscriptions"
+            style="@style/PreferenceContainerStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_preferences_ad_blocking_category">
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/PreferenceTitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/preferences_primary_subscriptions_title" />
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/CustomPreferenceSummaryTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/preferences_primary_subscriptions_summary" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/main_preferences_divider_1"
+            style="@style/PreferenceDivider"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_preferences_primary_subscriptions" />
+
+        <LinearLayout
+            android:id="@+id/main_preferences_other_subscriptions"
+            style="@style/PreferenceContainerStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_preferences_divider_1">
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/PreferenceTitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/preferences_other_subscriptions_title" />
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/CustomPreferenceSummaryTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/preferences_other_subscriptions_summary" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/main_preferences_divider_2"
+            style="@style/PreferenceDivider"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_preferences_other_subscriptions" />
+
+        <LinearLayout
+            android:id="@+id/main_preferences_allowlist"
+            style="@style/PreferenceContainerStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_preferences_divider_2">
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/PreferenceTitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/preferences_allowlist_title" />
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/CustomPreferenceSummaryTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/preferences_allowlist_summary" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/main_preferences_divider_3"
+            style="@style/PreferenceDivider"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_preferences_allowlist" />
+
+        <LinearLayout
+            android:id="@+id/main_preferences_update_subscriptions"
+            style="@style/PreferenceContainerStyle"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_preferences_divider_3">
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/PreferenceTitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/preferences_updates_title" />
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/CustomPreferenceSummaryTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/preferences_updates_subtitle" />
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/crystal_main_preferences_update_subscriptions"
+            style="@style/PreferenceContainerStyle"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_preferences_divider_3">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/preferences_update_title"
+                android:textAppearance="?android:attr/textAppearanceListItem"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/allow_updates_on_mobile_data_connection"
+                app:layout_constraintEnd_toStartOf="@id/update_guideline_end"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/update_type_text"
+                style="@style/CustomPreferenceSummaryTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@id/update_guideline_end"
+                android:text="@string/automatic_update_checkbox_hint"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/preferences_update_title" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/wifi_only_checkbox"
+                style="@style/ButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:clickable="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/update_guideline_end"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/update_guideline_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="30dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
