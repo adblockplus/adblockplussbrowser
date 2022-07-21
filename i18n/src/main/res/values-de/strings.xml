@@ -121,7 +121,6 @@
     <string name="languages_onboarding_option_add">Füge eine zusätzliche Werbeblockierungssprache hinzu.</string>
     <string name="languages_onboarding_option_skip">Nein danke, ich browse nur in einer Sprache.</string>
     <string name="delete_swipe_hint">Nach links wischen, um einen Eintrag zu löschen.</string>
-    <string name="crystal_disabled_allowlist">Diese Funktion wird bei der nächsten Version von Crystal entfernt.\nWenn du diese Funktion weiter verwenden möchtest, wechsle bitte zu <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">AdBlock für Samsung Internet.</a>In der Zwischenzeit behalten wir die von dir erstellte Allowlist.</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">Aufzählungszeichen-Symbol</string>

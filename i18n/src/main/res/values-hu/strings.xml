@@ -114,7 +114,6 @@
     <string name="languages_onboarding_option_add">További blokkolási nyelv hozzáadása.</string>
     <string name="languages_onboarding_option_skip">Nem, köszönöm, csak egy nyelven böngészek.</string>
     <string name="delete_swipe_hint">Pöccintsen balra egy bejegyzés törléséhez.</string>
-    <string name="crystal_disabled_allowlist">A következő verzióban e funkció eltávolításra kerül a Crystalról.\nHa továbbra is használni akarja e funkciót, akkor térjen át az <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">AdBlock Samsung Internet számára alkalmazásra.</a>.Az időközben megőrizzük az Ön által létrehozott Engedélyezőlistát.</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">Felsorolási pont szimbólum</string>

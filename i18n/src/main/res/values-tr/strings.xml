@@ -121,7 +121,6 @@
     <string name="languages_onboarding_option_add">Bir reklam engelleme dili daha ekleyin.</string>
     <string name="languages_onboarding_option_skip">Hayır teşekkürler, yalnızca bir dilde geziniyorum.</string>
     <string name="delete_swipe_hint">Bir girdiyi silmek için sola kaydırın.</string>
-    <string name="crystal_disabled_allowlist">Bu özellik Crystal\'ın sonraki sürümünde kaldırılacaktır.\nBu özelliği kullanmaya devam etmek istiyorsanız lütfen şu tarayıcı sürümüne dönün: <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">Samsung Internet için AdBlock</a>.Bu arada, oluşturmuş olduğunuz izin verilenler listesi korunacaktır.</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">Madde İşareti Sembolü</string>

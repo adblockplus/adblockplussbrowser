@@ -122,7 +122,6 @@
     <string name="languages_onboarding_option_add">Ajouter une langue de blocage des publicités supplémentaire.</string>
     <string name="languages_onboarding_option_skip">Non merci, je ne navigue que dans une seule langue.</string>
     <string name="delete_swipe_hint">Pour supprimer une entrée, faites-la glisser vers la gauche.</string>
-    <string name="crystal_disabled_allowlist">Cette fonctionnalité sera supprimée de Crystal dans la prochaine version.\nSi vous souhaitez continuer à utiliser cette fonctionnalité, utilisez <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">AdBlock pour Samsung Internet</a>. Entre temps, nous conservons la liste d\'autorisation que vous avez créée.</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">Symbole de puce</string>
