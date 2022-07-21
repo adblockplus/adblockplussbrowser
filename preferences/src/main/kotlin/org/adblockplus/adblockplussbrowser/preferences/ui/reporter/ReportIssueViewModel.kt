@@ -84,7 +84,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         val cr: ContentResolver = context.contentResolver ?: return ""
         val pic: Uri = Uri.parse(unresolvedUri)
         Timber.d("ReportIssue: image path: $pic")
-        getFileName(pic)
+        fileName = getFileNameFromUri(pic)
 
         val bs = ByteArrayOutputStream()
         return try {
@@ -94,7 +94,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
                 MediaStore.Images.Media.getBitmap(cr, pic)
             }
             processBitmap(imageBitmap).compress(Bitmap.CompressFormat.PNG, REPORT_ISSUE_VIEW_MODEL_IMAGE_QUALITY, bs)
-            configScreenshotPreview(bs)
+            makePreviewForScreenshot(bs)
             "data:image/png;base64," + Base64.encodeToString(bs.toByteArray(), Base64.DEFAULT)
         } catch (e: Exception) {
             Timber.e("ReportIssue: Screenshot decode failed\n" + e.printStackTrace())
@@ -102,19 +102,14 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         }
     }
 
-    private fun configScreenshotPreview(bs: ByteArrayOutputStream) {
+    private fun makePreviewForScreenshot(bs: ByteArrayOutputStream) {
         val byteArray = bs.toByteArray()
         screenshot.value = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
     }
 
-    private fun getFileName(pic: Uri){
-        /*
-            TODO: we should reuse here the method to extract the filename that was used
-             in OtherSubscriptionsFragment when adding a custom filter file. Reason for this,
-             is that depending on the version of android, the filename provided in lastPathSegment
-             could be just a number instead of the correct text.
-         */
-        fileName = "${pic.lastPathSegment.toString()}.png"
+    private fun getFileNameFromUri(pic: Uri): String{
+        // Replace when solving https://jira.eyeo.com/browse/DPC-926
+        return "${pic.lastPathSegment.toString()}.png"
     }
 
     /**
@@ -127,7 +122,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         // Convert image to 16bit
         val imageBitmap16bits = imageBitmap.copy(Bitmap.Config.RGB_565, true)
         // Calculate smaller size for the sides
-        val (width, height) = validateImageSize(imageBitmap.width, imageBitmap.height)
+        val (width, height) = calculateImageSize(imageBitmap.width, imageBitmap.height)
 
         return Bitmap.createScaledBitmap(imageBitmap16bits, width, height, true)
     }
@@ -139,12 +134,15 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
      * @param imageHeight
      * @return a pair containing the new width and height Pair(width, height)
      */
-    internal fun validateImageSize(imageWidth: Int, imageHeight: Int): Pair<Int, Int> {
+    internal fun calculateImageSize(imageWidth: Int, imageHeight: Int): Pair<Int, Int> {
         // Determine if image is portrait or landscape and assign "shorter side" and "longer side"
-        var (orientation, scaledLongerSide) = if (imageHeight > imageWidth) Pair("portrait", imageHeight) else Pair("landscape", imageWidth)
-        var scaledShorterSide = if (imageWidth > imageHeight) imageHeight else imageWidth
+        var (orientation, scaledLongerSide, scaledShorterSide) = if (imageHeight > imageWidth) {
+            Triple(Orientation.PORTRAIT, imageHeight, imageWidth)
+        } else {
+            Triple(Orientation.LANDSCAPE, imageWidth, imageHeight)
+        }
 
-        // Verify if the sizes need conversion and scale them accordingly
+        // Check if the sizes need conversion and scale them accordingly
         if (scaledShorterSide > REPORT_ISSUE_VIEW_MODEL_IMAGE_MAX_SHORTER_SIDE) {
             val ratio = REPORT_ISSUE_VIEW_MODEL_IMAGE_MAX_SHORTER_SIDE / scaledShorterSide
             scaledShorterSide = (scaledShorterSide * ratio).toInt()
@@ -156,7 +154,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
             scaledLongerSide = (scaledLongerSide * ratio).toInt()
         }
 
-        return if (orientation == "portrait") Pair(scaledShorterSide, scaledLongerSide) else Pair(scaledLongerSide, scaledShorterSide)
+        return if (orientation == Orientation.PORTRAIT) Pair(scaledShorterSide, scaledLongerSide) else Pair(scaledLongerSide, scaledShorterSide)
     }
 
     companion object {
@@ -164,5 +162,10 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         // HD max size
         private const val REPORT_ISSUE_VIEW_MODEL_IMAGE_MAX_LONGER_SIDE = 1280f
         private const val REPORT_ISSUE_VIEW_MODEL_IMAGE_MAX_SHORTER_SIDE = 720f
+    }
+
+    private enum class Orientation {
+        PORTRAIT,
+        LANDSCAPE
     }
 }

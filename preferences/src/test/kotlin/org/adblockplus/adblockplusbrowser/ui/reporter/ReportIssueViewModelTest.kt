@@ -57,7 +57,7 @@ class ReportIssueViewModelTest {
 
     @Test
     fun `test validateImageSize SD`() {
-        val (scaledWidth, scaledHeight) = reportIssueViewModel.validateImageSize(480, 640)
+        val (scaledWidth, scaledHeight) = reportIssueViewModel.calculateImageSize(480, 640)
         // assert same ratio after conversion
         assertEquals(3/4, scaledWidth/scaledHeight)
         // assert correct size after conversion
@@ -67,7 +67,7 @@ class ReportIssueViewModelTest {
 
     @Test
     fun `test validateImageSize square image`() {
-        val (scaledWidth, scaledHeight) = reportIssueViewModel.validateImageSize(2160, 2160)
+        val (scaledWidth, scaledHeight) = reportIssueViewModel.calculateImageSize(2160, 2160)
         // assert same ratio after conversion
         assertEquals(1, scaledWidth/scaledHeight)
         // assert correct size after conversion
@@ -78,7 +78,7 @@ class ReportIssueViewModelTest {
     private fun calculateForSizes(imageSizes: List<Pair<Int, Int>>): List<Pair<Int, Int>> {
         val result: MutableList<Pair<Int, Int>> = mutableListOf()
         for(p in imageSizes) {
-            val (scaledWidth, scaledHeight) = reportIssueViewModel.validateImageSize(p.first, p.second)
+            val (scaledWidth, scaledHeight) = reportIssueViewModel.calculateImageSize(p.first, p.second)
             // assert same ratio after conversion
             assertEquals(p.first/p.second, scaledWidth/scaledHeight)
             result.add(Pair(scaledWidth, scaledHeight))
