@@ -295,6 +295,7 @@ samsung_filter_tests:
     - |
       for PLATFORM_VERSION in $PLATFORM_VERSIONS
         do export PLATFORM_VERSION
+        echo CHROMEDRIVER_EXECUTABLE
         echo Starting job for version ${PLATFORM_VERSION}
         (APPIUM_HOST="localhost:4723" ./gradlew filterTests &> platform_version-${PLATFORM_VERSION}.log ; echo $? > result_${PLATFORM_VERSION}) &
         pids="$pids $!"
