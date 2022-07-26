@@ -16,7 +16,6 @@
  */
 
 import com.google.protobuf.gradle.*
-import com.kageiit.jacobo.JacoboTask
 
 plugins {
     id("com.android.library")
@@ -27,7 +26,6 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("de.undercouch.download")
     id(Deps.JACOCO)
-    id(Deps.JACOBO)
 }
 
 applyCommonConfig()
@@ -156,6 +154,10 @@ tasks.register("downloadSubscriptions") {
 }
 
 tasks.withType(Test::class.java) {
+    // We want coverage only for the worldAbp flavor
+    if (name != "testWorldAbpDebugUnitTest")
+        return@withType
+
     configure<JacocoTaskExtension> {
         isIncludeNoLocationClasses = true
         excludes = listOf("jdk.internal.*")
@@ -171,7 +173,8 @@ tasks.register("jacocoTestReport", JacocoReport::class.java) {
         "**/BuildConfig.*",
         "**/Manifest*.*",
         "**/*Test*.*",
-        "android/**/*.*"
+        "android/**/*.*",
+        "**/_*.class"
     )
 
     val javaClasses = fileTree("$buildDir/intermediates/javac/worldAbpDebug/classes").setExcludes(fileFilter)
@@ -189,15 +192,8 @@ tasks.register("jacocoTestReport", JacocoReport::class.java) {
     }
 }
 
-tasks.register("jacobo", JacoboTask::class.java) {
-    dependsOn("jacocoTestReport")
-    jacocoReport = file("$buildDir/reports/jacoco/jacocoTestReport/jacocoTestReport.xml")
-    coberturaReport = file("$buildDir/reports/cobertura.xml")
-    includeFileNames = setOf<String>()
-}
-
 tasks.register("checkCoverage", CheckCoverageTask::class.java) {
     coverageFile = file("$buildDir/reports/jacoco/jacocoTestReport/jacocoTestReport.xml")
     threshold = 0.4F
-    dependsOn("jacocoTestReport")
+    dependsOn("testWorldAbpDebugUnitTest")
 }

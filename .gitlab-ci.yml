@@ -68,15 +68,29 @@ checks:detekt:
   rules:
     - when: on_success
 
-checks:unit-test:
+checks:unit-tests:
   extends: .template:environment
   stage: checks
   script:
-    - ./gradlew test jacobo checkCoverage
+    - ./gradlew test core:checkCoverage
+  artifacts:
+    when: always
+    paths:
+      - core/build/reports/
+    reports:
+      junit: core/build/test-results/**/TEST*.xml
+  rules:
+    - when: on_success
+
+checks:coverage:
+  stage: checks
+  needs: ["checks:unit-tests"]
+  image: spacifici/jacoco2cobertura:latest
+  script:
+    - /app/cover2cover.py core/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml core/src/main/kotlin > core/build/reports/cobertura.xml
   artifacts:
     when: always
     reports:
-      junit: core/build/test-results/**/TEST*.xml
       coverage_report:
         coverage_format: cobertura
         path: core/build/reports/cobertura.xml
