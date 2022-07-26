@@ -47,7 +47,8 @@ class ReportIssueViewModelTest {
         val scaledSizes = calculateForSizes(listOf(
             Pair(1280, 720), // HD
             Pair(1280, 960), // Landscape
-            Pair(3840, 2160) //UHD
+            Pair(3840, 2160), //UHD
+            Pair(3840, 2130)
         ))
         // assert correct size after conversion
         assertTrue(scaledSizes.all {

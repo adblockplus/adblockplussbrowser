@@ -119,12 +119,10 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
      * @return bitmap configured to 16bit and max HD size
      */
     private fun processBitmap(imageBitmap: Bitmap): Bitmap {
-        // Convert image to 16bit
-        val imageBitmap16bits = imageBitmap.copy(Bitmap.Config.RGB_565, true)
         // Calculate smaller size for the sides
         val (width, height) = calculateImageSize(imageBitmap.width, imageBitmap.height)
 
-        return Bitmap.createScaledBitmap(imageBitmap16bits, width, height, true)
+        return Bitmap.createScaledBitmap(imageBitmap, width, height, true)
     }
 
     /**
