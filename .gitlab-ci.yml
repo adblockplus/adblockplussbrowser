@@ -293,6 +293,7 @@ samsung_filter_tests:
     - export TEST_APK
     - git checkout ${GIT_AUTOMATION_BRANCH:-main}
     - pwd
+    - ls
     # Launch an instance of gradle for each bunch of tags we want to test
     - set +e
     - |
