@@ -275,7 +275,7 @@ samsung_filter_tests:
   allow_failure: true
   variables:
     GIT_STRATEGY: "none"
-    PLATFORM_VERSIONS: "10"
+    PLATFORM_VERSIONS: "9"
     GIT_AUTOMATION_REPO: "https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/eyeo/distpartners/samsung_automation"
     GIT_AUTOMATION_BRANCH: "main"
     TEST_APK: "app/build/outputs/apk/worldAbp/debug/app-world-abp-debug.apk"
