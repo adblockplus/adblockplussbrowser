@@ -286,7 +286,7 @@ samsung_filter_tests:
     - adb devices
     - adb shell getprop | egrep "ro.product.manufacturer|ro.product.model|ro.build.version.release|ro.vendor.build.version.sdk"
   script:
-    - CHROMEDRIVER_AUTODOWNLOAD=false /root/entry_point.sh &> appium.log &
+    - /root/entry_point.sh &> appium.log &
     - echo $! > appium_pid
     - git clone $GIT_AUTOMATION_REPO si_automation
     - cd si_automation
