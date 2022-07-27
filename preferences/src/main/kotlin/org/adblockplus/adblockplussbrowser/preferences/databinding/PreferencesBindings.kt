@@ -59,7 +59,11 @@ internal fun bindGroupItemDivider(view: View, groupItemLayout: GroupItemLayout) 
 
 @BindingAdapter("issueReporterResult")
 internal fun bindReporterResult(snackbarContainer: SnackbarContainer, status: String) {
-    with (snackbarContainer) {
+    with(snackbarContainer) {
+        if (status.isEmpty()) {
+            dismiss()
+            return
+        }
         text = status
         setTextDrawableStart(R.drawable.outline_info_24)
         showAction()

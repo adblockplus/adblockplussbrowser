@@ -136,6 +136,9 @@ internal class ReportIssueFragment :
                         Toast.LENGTH_LONG
                     ).show()
                 }
+                REPORT_ISSUE_FRAGMENT_SEND_ERROR -> {
+                    Timber.d("Send error")
+                }
                 else -> {
                     Toast.makeText(context, viewModel.returnedString.value, Toast.LENGTH_LONG)
                         .show()

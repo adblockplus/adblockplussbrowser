@@ -33,10 +33,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import java.io.ByteArrayOutputStream
-import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -48,6 +45,8 @@ import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueDat
 import org.adblockplus.adblockplussbrowser.preferences.ui.reporter.ReportIssueFragment.Companion.REPORT_ISSUE_FRAGMENT_SEND_ERROR
 import org.adblockplus.adblockplussbrowser.preferences.ui.reporter.ReportIssueFragment.Companion.REPORT_ISSUE_FRAGMENT_SEND_SUCCESS
 import timber.log.Timber
+import java.io.ByteArrayOutputStream
+import javax.inject.Inject
 
 
 @HiltViewModel
@@ -78,7 +77,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
                 returnedString.value = REPORT_ISSUE_FRAGMENT_SEND_SUCCESS
             } else {
                 _status.value = "Error: $sendResult"
-                REPORT_ISSUE_FRAGMENT_SEND_ERROR
+                returnedString.value = REPORT_ISSUE_FRAGMENT_SEND_ERROR
             }
         }
     }
