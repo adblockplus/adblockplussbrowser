@@ -28,9 +28,13 @@ import android.provider.MediaStore
 import android.util.Base64
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
@@ -38,6 +42,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.os.FileNameHelper
+import org.adblockplus.adblockplussbrowser.base.data.model.SubscriptionUpdateStatus
 import org.adblockplus.adblockplussbrowser.preferences.data.ReportIssueRepository
 import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData
 import org.adblockplus.adblockplussbrowser.preferences.ui.reporter.ReportIssueFragment.Companion.REPORT_ISSUE_FRAGMENT_SEND_ERROR
@@ -54,6 +59,11 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
     var fileName: String = ""
     var data: ReportIssueData = ReportIssueData()
 
+    private val _status: MutableStateFlow<String> = MutableStateFlow(String())
+    val sendReportStatus: LiveData<String>
+        get() = _status.asLiveData()
+
+
     @Inject
     lateinit var reportIssueRepository: ReportIssueRepository
 
@@ -62,9 +72,14 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
 
     internal fun sendReport() {
         viewModelScope.launch {
-            returnedString.value = if (reportIssueRepository.sendReport(data).isEmpty())
-                REPORT_ISSUE_FRAGMENT_SEND_SUCCESS
-            else REPORT_ISSUE_FRAGMENT_SEND_ERROR
+            val sendResult = reportIssueRepository.sendReport(data);
+            if (sendResult.isEmpty()) {
+                _status.value = "Thanks for reporting the issue!"
+                returnedString.value = REPORT_ISSUE_FRAGMENT_SEND_SUCCESS
+            } else {
+                _status.value = "Error: $sendResult"
+                REPORT_ISSUE_FRAGMENT_SEND_ERROR
+            }
         }
     }
 
