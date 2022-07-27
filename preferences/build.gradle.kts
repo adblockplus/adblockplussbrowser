@@ -36,21 +36,8 @@ android {
 createFlavorsConfig()
 
 android {
-    productFlavors.forEach() { flavor ->
-        if (!flavor.name.contains("crystal")) {
-            sourceSets {
-                forEach { sourceSet ->
-                    if (sourceSet.name.contains(flavor.name)) {
-                        sourceSet.java {
-                            srcDir("src/ab-common/kotlin")
-                        }
-                        sourceSet.res {
-                            srcDir("src/ab-common/res")
-                        }
-                    }
-                }
-            }
-        }
+    sourceSets.filter { it.name.contains("abp") || it.name.contains("adblock") }.forEach { sourceSet ->
+        addCommonFiles(sourceSet)
     }
 }
 

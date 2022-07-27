@@ -15,6 +15,7 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import com.android.build.api.dsl.AndroidSourceSet
 import com.android.build.gradle.AppExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
@@ -157,6 +158,16 @@ fun versionCode(): Int {
     // Days since 2021-10-05
     val days = ((System.currentTimeMillis() - Constants.DAY_0) / Constants.ONE_DAY_IN_MS).toInt()
     return Constants.VERSION_OFFSET + (days shl 3) + dayVersion
+}
+
+fun addCommonFiles(sourceSet: AndroidSourceSet) {
+    sourceSet.java {
+        srcDir("src/ab-common/kotlin")
+    }
+    sourceSet.res {
+        srcDir("src/ab-common/res")
+    }
+
 }
 
 internal object Constants {
