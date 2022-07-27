@@ -24,6 +24,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
+import okhttp3.Response
 import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData
 import org.xmlpull.v1.XmlSerializer
 import ru.gildor.coroutines.okhttp.await
@@ -69,7 +70,12 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
             .post(xml.toRequestBody("text/xml".toMediaTypeOrNull()))
             .build()
 
-        val response = okHttpClient.newCall(request).await()
+        val response: Response
+        try {
+            response = okHttpClient.newCall(request).await()
+        } catch (ex: Exception) {
+            return "HTTP request failed: ${ex.localizedMessage}"
+        }
 
 
         // TODO remove the URL parsing if it's not needed
@@ -79,7 +85,7 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
             Timber.d("ReportIssue report sent: ${responseUrls.last()}")
         } else {
             Timber.d("ReportIssue report sent, but no URL received: $responseBody")
-            return "Send error"
+            return "Server-side error"
         }
 
         return if (response.code == HTTP_OK) {
