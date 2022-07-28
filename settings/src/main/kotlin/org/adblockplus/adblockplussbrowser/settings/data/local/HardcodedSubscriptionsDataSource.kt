@@ -24,12 +24,15 @@ import java.util.Locale
 
 internal class HardcodedSubscriptionsDataSource(private val context: Context) : SubscriptionsDataSource {
 
-    private val hardcodedSubscriptions = HardcodedSubscriptions(context)
+    private val hardcodedSubscriptions = HardcodedSubscriptions()
 
     override suspend fun getEasylistSubscription(): Subscription = hardcodedSubscriptions.easylist.toSubscription()
 
     override suspend fun getAcceptableAdsSubscription(): Subscription =
         hardcodedSubscriptions.acceptableAds.toSubscription()
+
+    override suspend fun getTestPagesSubscription(): Subscription =
+        hardcodedSubscriptions.testPages.toSubscription()
 
     override suspend fun getDefaultActiveSubscription(): Subscription {
         val currentLanguage = context.resources.configuration.localeCompat.language
@@ -54,3 +57,4 @@ internal class HardcodedSubscriptionsDataSource(private val context: Context) : 
     override suspend fun getSocialMediaTrackingSubscription(): Subscription =
         hardcodedSubscriptions.socialMediaTracking.toSubscription()
 }
+

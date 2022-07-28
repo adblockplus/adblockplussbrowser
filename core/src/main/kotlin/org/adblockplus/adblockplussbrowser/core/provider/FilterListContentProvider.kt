@@ -17,8 +17,10 @@
 
 package org.adblockplus.adblockplussbrowser.core.provider
 
+import android.annotation.SuppressLint
 import android.content.ContentProvider
 import android.content.ContentValues
+import android.content.Context
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
@@ -191,6 +193,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         return CallingApp(application, applicationVersion)
     }
 
+    @SuppressLint("BinaryOperationInTimber")
     private fun unpackDefaultSubscriptions() {
         val context = requireContext(this)
         val temp = File.createTempFile("filters", ".txt", defaultSubscriptionDir)
@@ -204,12 +207,26 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         Timber.i("Is AA enabled: $acceptableAdsEnabled")
 
         try {
-            var ins: InputStream
-            if (acceptableAdsEnabled) {
-                Timber.d("getFilterFile: unpacking AA")
-                val start = Duration.milliseconds(System.currentTimeMillis())
-                ins = context.assets.open("exceptionrules.txt.xz")
-                /*
+            createDefaultFilterFile(acceptableAdsEnabled, context, temp, allowedDomains)
+        } catch (ex: IOException) {
+            Timber.e(ex)
+            defaultSubscriptionFile.delete()
+            temp.delete()
+        }
+    }
+
+    private fun createDefaultFilterFile(
+        acceptableAdsEnabled: Boolean,
+        context: Context,
+        temp: File,
+        allowedDomains: List<String>
+    ) {
+        var ins: InputStream
+        if (acceptableAdsEnabled) {
+            Timber.d("getFilterFile: unpacking AA")
+            val start = Duration.milliseconds(System.currentTimeMillis())
+            ins = context.assets.open("exceptionrules.txt.xz")
+            /*
                     XZInputStream params:
                         - Input stream
                         - memory limit expressed in kilobytes (KiB)
@@ -217,36 +234,34 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
                             Still, very few files will require more than about 65 MiB.
                             To calculate, multiply the digital storage value by 1024. E.g.: 65 MiB * 1024
                  */
-                val xzInputStream = XZInputStream(ins, XZ_MEMORY_LIMIT_KB)
-                xzInputStream.source().use { a ->
-                    temp.sink().buffer().use { b -> b.writeAll(a) }
-                }
-                Timber.d("getFilterFile: unpacked AA, elapsed: ${Duration.milliseconds(System.currentTimeMillis()) - start}")
+            val xzInputStream = XZInputStream(ins, XZ_MEMORY_LIMIT_KB)
+            xzInputStream.source().use { a ->
+                temp.sink().buffer().use { b -> b.writeAll(a) }
             }
+            Timber.d(
+                "getFilterFile: unpacked AA, elapsed: %s",
+                (Duration.milliseconds(System.currentTimeMillis()) - start).toString()
+            )
+        }
 
-            ins = context.assets.open("easylist.txt")
-            ins.source().use { a ->
-                temp.sink(append = true).buffer().use { b -> b.writeAll(a) }
-            }
+        ins = context.assets.open("easylist.txt")
+        ins.source().use { a ->
+            temp.sink(append = true).buffer().use { b -> b.writeAll(a) }
+        }
 
-            allowedDomains.forEach { domain ->
-                Timber.d("domain: $domain")
-                temp.sink(append = true).buffer().use { sink ->
-                    sink.writeUtf8("\n")
-                    sink.writeUtf8(domain.toAllowRule())
-                }
-            }
-
+        allowedDomains.forEach { domain ->
+            Timber.d("domain: $domain")
             temp.sink(append = true).buffer().use { sink ->
                 sink.writeUtf8("\n")
+                sink.writeUtf8(domain.toAllowRule())
             }
-
-            temp.renameTo(defaultSubscriptionFile)
-        } catch (ex: IOException) {
-            Timber.e(ex)
-            defaultSubscriptionFile.delete()
-            temp.delete()
         }
+
+        temp.sink(append = true).buffer().use { sink ->
+            sink.writeUtf8("\n")
+        }
+
+        temp.renameTo(defaultSubscriptionFile)
     }
 
     private fun getFilterFile(): File {

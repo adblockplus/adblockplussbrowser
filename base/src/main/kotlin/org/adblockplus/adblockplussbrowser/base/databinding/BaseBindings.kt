@@ -24,3 +24,4 @@ import androidx.databinding.BindingAdapter
 fun bindGone(view: View, gone: Boolean) {
     view.visibility = if (gone) View.GONE else View.VISIBLE
 }
+

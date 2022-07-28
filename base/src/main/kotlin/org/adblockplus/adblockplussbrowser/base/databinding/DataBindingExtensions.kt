@@ -23,3 +23,4 @@ inline fun <reified T : ViewDataBinding> T.bindHolder(config: T.() -> Unit) {
     this.config()
     this.executePendingBindings()
 }
+

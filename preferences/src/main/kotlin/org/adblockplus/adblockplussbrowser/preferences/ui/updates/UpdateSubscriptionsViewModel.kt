@@ -81,3 +81,4 @@ class UpdateSubscriptionsViewModel @Inject constructor(
     private fun UpdateConfigType.toUpdateConfig(): UpdateConfig =
         if (this == UpdateConfigType.UPDATE_WIFI_ONLY) UpdateConfig.WIFI_ONLY else UpdateConfig.ALWAYS
 }
+

@@ -1,182 +1,55 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
-  <ManuallySuppressedIssues></ManuallySuppressedIssues>
-  <CurrentIssues>
+  <ManuallySuppressedIssues>
+    <ID>TooManyFunctions:MainPreferencesFragment.kt$MainPreferencesFragment : DataBindingFragment</ID>
     <ID>ComplexCondition:UpdateSubscriptionsWorker.kt$UpdateSubscriptionsWorker$!changes.hasChanges() &amp;&amp; !tags.isForceRefresh() &amp;&amp; !tags.isPeriodic() &amp;&amp; runAttemptCount == 0</ID>
     <ID>ComplexMethod:ProtoSettingsMigration.kt$ProtoSettingsMigration$private fun String?.adjustUrl(): String?</ID>
+    <ID>EmptyCatchBlock:MainActivity.kt$MainActivity${}</ID>
+    <ID>EmptyFunctionBlock:Fakes.kt$Fakes.FakeAnalyticsProvider${}</ID>
+    <ID>EmptyFunctionBlock:Fakes.kt$Fakes.FakeCoreRepository${ }</ID>
+    <ID>EmptyFunctionBlock:Fakes.kt$Fakes.FakeCoreRepository${}</ID>
+    <ID>EmptyFunctionBlock:Fakes.kt$Fakes.FakeSettingsRepository${}</ID>
     <ID>EmptyFunctionBlock:LocalMediaPlayer.kt$LocalMediaPlayer${ }</ID>
-    <ID>ForbiddenComment:HardcodedSubscriptions.kt$HardcodedSubscriptions$// TODO: Decide which title we want for the following and if we want to localize them:</ID>
-    <ID>LongMethod:UpdateSubscriptionsWorker.kt$UpdateSubscriptionsWorker$override suspend fun doWork(): Result</ID>
     <ID>LongParameterList:IO.kt$( description: String = "&lt;missing description&gt;", times: Int = DEFAULT_RETRY, initialDelay: Long = 200, // 0.2 second maxDelay: Long = 2000, // 2 second factor: Double = 2.0, dispatcher: CoroutineDispatcher = Dispatchers.IO, block: suspend () -&gt; T )</ID>
-    <ID>MagicNumber:CoreSubscriptionsManager.kt$CoreSubscriptionsManager$500</ID>
-    <ID>MagicNumber:OkHttpDownloader.kt$4</ID>
-    <ID>MagicNumber:OkHttpDownloader.kt$OkHttpDownloader$200</ID>
-    <ID>MagicNumber:OkHttpDownloader.kt$OkHttpDownloader$304</ID>
-    <ID>MagicNumber:OtherSubscriptionsViewModel.kt$OtherSubscriptionsViewModel$100</ID>
-    <ID>MagicNumber:UpdateSubscriptionsWorker.kt$UpdateSubscriptionsWorker$100</ID>
-    <ID>MagicNumber:UpdateSubscriptionsWorker.kt$UpdateSubscriptionsWorker$4</ID>
+    <ID>MagicNumber:Subscription.kt$Subscription$9</ID>
+    <ID>MagicNumber:build.gradle.kts$0.4F</ID>
+    <ID>MagicNumber:build.gradle.kts$1024</ID>
     <ID>MatchingDeclarationName:DiffUtil.kt$Changes</ID>
-    <ID>MaxLineLength:AcceptableAdsFragment.kt$AcceptableAdsFragment$internal</ID>
-    <ID>MaxLineLength:PrimarySubscriptionsViewModel.kt$PrimarySubscriptionsViewModel$if (active) R.string.primary_subscriptions_active_category else R.string.primary_subscriptions_inactive_category</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/abpindo+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/abpindo.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/abpvn+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/abpvn.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/bulgarian_list+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/bulgarian_list.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/easylistchina.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/easylistczechslovak+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/easylistczechslovak.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/easylistdutch+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/easylistdutch.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/easylistgermany+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/easylistgermany.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/easylistitaly+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/easylistitaly.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/easylistlithuania+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/easylistlithuania.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/easylistpolish+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/easylistpolish.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/easylistportuguese+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/easylistportuguese.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/easylistspanish+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/easylistspanish.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/indianlist+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/indianlist.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/israellist+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/israellist.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/koreanlist+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/koreanlist.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/latvianlist+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/latvianlist.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/liste_fr+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/liste_fr.txt"</ID>
-    <ID>MaxLineLength:ProtoSettingsMigration.kt$ProtoSettingsMigration$"https://easylist-downloads.adblockplus.org/rolist+easylist.txt" -&gt; "https://easylist-downloads.adblockplus.org/rolist.txt"</ID>
-    <ID>MaxLineLength:UpdateSubscriptionsFragment.kt$UpdateSubscriptionsFragment$class</ID>
+    <ID>MaxLineLength:SubscriptionTest.kt$SubscriptionTest$BuildConfig.FLAVOR_ABP -&gt; """https://([0-9])\.samsung-internet\.filter-list-downloads\.eyeo\.com/aa-variants/samsung_internet_browser-adblock_plus\.txt""".toRegex()</ID>
+    <ID>MaxLineLength:SubscriptionTest.kt$SubscriptionTest$BuildConfig.FLAVOR_ADBLOCK -&gt; """https://([0-9])\.samsung-internet\.filter-list-downloads\.getadblock\.com/aa-variants/samsung_internet_browser-adblock\.txt""".toRegex()</ID>
+    <ID>MaxLineLength:SubscriptionTest.kt$SubscriptionTest$BuildConfig.FLAVOR_CRYSTAL -&gt; """https://([0-9])\.samsung-internet\.filter-list-downloads\.eyeo\.com/aa-variants/samsung_internet_browser-crystal\.txt""".toRegex()</ID>
+    <ID>MaxLineLength:build.gradle.kts$"abp" -&gt; "https://0.samsung-internet.filter-list-downloads.eyeo.com/aa-variants/samsung_internet_browser-adblock_plus.txt"</ID>
+    <ID>MaxLineLength:build.gradle.kts$"adblock" -&gt; "https://0.samsung-internet.filter-list-downloads.getadblock.com/aa-variants/samsung_internet_browser-adblock.txt"</ID>
+    <ID>MaxLineLength:build.gradle.kts$"crystal" -&gt; "https://0.samsung-internet.filter-list-downloads.eyeo.com/aa-variants/samsung_internet_browser-crystal.txt"</ID>
     <ID>MemberNameEqualsClassName:Deps.kt$Deps.AndroidX.DataStore$val DATASTORE = dependency { name("datastore") }</ID>
     <ID>MemberNameEqualsClassName:Deps.kt$Deps.OkHttp$val OKHTTP = dependency { name("okhttp") }</ID>
-    <ID>NestedBlockDepth:ProtoSettingsMigration.kt$ProtoSettingsMigration$private fun loadActiveUrls(): List&lt;String&gt;</ID>
-    <ID>NestedBlockDepth:ProtoSettingsMigration.kt$ProtoSettingsMigration$private fun retrieveUrlIfActive(file: File): String?</ID>
-    <ID>NewLineAtEndOfFile:AboutFragment.kt$org.adblockplus.adblockplussbrowser.preferences.ui.about.AboutFragment.kt</ID>
-    <ID>NewLineAtEndOfFile:AbpApplication.kt$org.adblockplus.adblockplussbrowser.app.AbpApplication.kt</ID>
-    <ID>NewLineAtEndOfFile:AcceptableAdsDialogFragment.kt$org.adblockplus.adblockplussbrowser.onboarding.ui.AcceptableAdsDialogFragment.kt</ID>
-    <ID>NewLineAtEndOfFile:AcceptableAdsFragment.kt$org.adblockplus.adblockplussbrowser.preferences.ui.acceptableads.AcceptableAdsFragment.kt</ID>
-    <ID>NewLineAtEndOfFile:AcceptableAdsPageFragment.kt$org.adblockplus.adblockplussbrowser.onboarding.ui.AcceptableAdsPageFragment.kt</ID>
-    <ID>NewLineAtEndOfFile:AcceptableAdsViewModel.kt$org.adblockplus.adblockplussbrowser.preferences.ui.acceptableads.AcceptableAdsViewModel.kt</ID>
-    <ID>NewLineAtEndOfFile:Accessors.kt$.Accessors.kt</ID>
-    <ID>NewLineAtEndOfFile:ActivationPreferences.kt$org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences.kt</ID>
-    <ID>NewLineAtEndOfFile:AddCustomSubscriptionDialogFragment.kt$org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions.AddCustomSubscriptionDialogFragment.kt</ID>
-    <ID>NewLineAtEndOfFile:AddDomainDialogFragment.kt$org.adblockplus.adblockplussbrowser.preferences.ui.allowlist.AddDomainDialogFragment.kt</ID>
-    <ID>NewLineAtEndOfFile:AllowlistAdapter.kt$org.adblockplus.adblockplussbrowser.preferences.ui.allowlist.AllowlistAdapter.kt</ID>
-    <ID>NewLineAtEndOfFile:AllowlistFragment.kt$org.adblockplus.adblockplussbrowser.preferences.ui.allowlist.AllowlistFragment.kt</ID>
-    <ID>NewLineAtEndOfFile:AllowlistItem.kt$org.adblockplus.adblockplussbrowser.preferences.ui.allowlist.AllowlistItem.kt</ID>
-    <ID>NewLineAtEndOfFile:AllowlistViewModel.kt$org.adblockplus.adblockplussbrowser.preferences.ui.allowlist.AllowlistViewModel.kt</ID>
-    <ID>NewLineAtEndOfFile:AnalyticsEvent.kt$org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent.kt</ID>
-    <ID>NewLineAtEndOfFile:AnalyticsManager.kt$org.adblockplus.adblockplussbrowser.analytics.AnalyticsManager.kt</ID>
-    <ID>NewLineAtEndOfFile:AnalyticsProvider.kt$org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider.kt</ID>
-    <ID>NewLineAtEndOfFile:AppBindings.kt$org.adblockplus.adblockplussbrowser.app.databinding.AppBindings.kt</ID>
-    <ID>NewLineAtEndOfFile:AppInfo.kt$org.adblockplus.adblockplussbrowser.core.AppInfo.kt</ID>
-    <ID>NewLineAtEndOfFile:AppModule.kt$org.adblockplus.adblockplussbrowser.app.di.AppModule.kt</ID>
-    <ID>NewLineAtEndOfFile:AppPreferences.kt$org.adblockplus.adblockplussbrowser.app.data.prefs.AppPreferences.kt</ID>
-    <ID>NewLineAtEndOfFile:BaseBindings.kt$org.adblockplus.adblockplussbrowser.base.databinding.BaseBindings.kt</ID>
-    <ID>NewLineAtEndOfFile:Config.kt$.Config.kt</ID>
-    <ID>NewLineAtEndOfFile:CoreData.kt$org.adblockplus.adblockplussbrowser.core.data.model.CoreData.kt</ID>
-    <ID>NewLineAtEndOfFile:CoreModule.kt$org.adblockplus.adblockplussbrowser.core.di.CoreModule.kt</ID>
-    <ID>NewLineAtEndOfFile:CoreProtoExtensions.kt$org.adblockplus.adblockplussbrowser.core.data.proto.CoreProtoExtensions.kt</ID>
-    <ID>NewLineAtEndOfFile:CoreRepository.kt$org.adblockplus.adblockplussbrowser.core.data.CoreRepository.kt</ID>
-    <ID>NewLineAtEndOfFile:CoreSubscriptionsManager.kt$org.adblockplus.adblockplussbrowser.core.CoreSubscriptionsManager.kt</ID>
-    <ID>NewLineAtEndOfFile:DataBindingExtensions.kt$org.adblockplus.adblockplussbrowser.base.databinding.DataBindingExtensions.kt</ID>
-    <ID>NewLineAtEndOfFile:DataBindingFragment.kt$org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment.kt</ID>
-    <ID>NewLineAtEndOfFile:DataStoreAppPreferences.kt$org.adblockplus.adblockplussbrowser.app.data.prefs.DataStoreAppPreferences.kt</ID>
-    <ID>NewLineAtEndOfFile:DataStoreCoreRepository.kt$org.adblockplus.adblockplussbrowser.core.data.DataStoreCoreRepository.kt</ID>
-    <ID>NewLineAtEndOfFile:DefaultPageFragment.kt$org.adblockplus.adblockplussbrowser.onboarding.ui.DefaultPageFragment.kt</ID>
-    <ID>NewLineAtEndOfFile:DeleteAllowlistItemDialogFragment.kt$org.adblockplus.adblockplussbrowser.preferences.ui.allowlist.DeleteAllowlistItemDialogFragment.kt</ID>
-    <ID>NewLineAtEndOfFile:DeleteCustomSubscriptionDialogFragment.kt$org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions.DeleteCustomSubscriptionDialogFragment.kt</ID>
-    <ID>NewLineAtEndOfFile:Deps.kt$.Deps.kt</ID>
-    <ID>NewLineAtEndOfFile:DiffUtil.kt$org.adblockplus.adblockplussbrowser.core.work.DiffUtil.kt</ID>
-    <ID>NewLineAtEndOfFile:DownloadedSubscription.kt$org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscription.kt</ID>
-    <ID>NewLineAtEndOfFile:EnablePageFragment.kt$org.adblockplus.adblockplussbrowser.onboarding.ui.EnablePageFragment.kt</ID>
-    <ID>NewLineAtEndOfFile:FilterListContentProvider.kt$org.adblockplus.adblockplussbrowser.core.provider.FilterListContentProvider.kt</ID>
-    <ID>NewLineAtEndOfFile:FirebaseAnalyticsProvider.kt$org.adblockplus.adblockplussbrowser.analytics.FirebaseAnalyticsProvider.kt</ID>
-    <ID>NewLineAtEndOfFile:GroupItemLayout.kt$org.adblockplus.adblockplussbrowser.preferences.ui.GroupItemLayout.kt</ID>
-    <ID>NewLineAtEndOfFile:HardcodedSubscriptions.kt$org.adblockplus.adblockplussbrowser.settings.data.local.HardcodedSubscriptions.kt</ID>
-    <ID>NewLineAtEndOfFile:HardcodedSubscriptionsDataSource.kt$org.adblockplus.adblockplussbrowser.settings.data.local.HardcodedSubscriptionsDataSource.kt</ID>
-    <ID>NewLineAtEndOfFile:HardcodedSubscriptionsDsl.kt$org.adblockplus.adblockplussbrowser.settings.data.local.HardcodedSubscriptionsDsl.kt</ID>
-    <ID>NewLineAtEndOfFile:IO.kt$org.adblockplus.adblockplussbrowser.core.IO.kt</ID>
-    <ID>NewLineAtEndOfFile:KotlinExtensions.kt$org.adblockplus.adblockplussbrowser.base.kotlin.KotlinExtensions.kt</ID>
-    <ID>NewLineAtEndOfFile:LauncherActivity.kt$org.adblockplus.adblockplussbrowser.app.ui.LauncherActivity.kt</ID>
-    <ID>NewLineAtEndOfFile:LauncherDirection.kt$org.adblockplus.adblockplussbrowser.app.ui.LauncherDirection.kt</ID>
-    <ID>NewLineAtEndOfFile:LauncherViewModel.kt$org.adblockplus.adblockplussbrowser.app.ui.LauncherViewModel.kt</ID>
-    <ID>NewLineAtEndOfFile:ListFragmentStateAdapter.kt$org.adblockplus.adblockplussbrowser.base.widget.ListFragmentStateAdapter.kt</ID>
-    <ID>NewLineAtEndOfFile:LocalMediaPlayer.kt$org.adblockplus.adblockplussbrowser.base.media.LocalMediaPlayer.kt</ID>
-    <ID>NewLineAtEndOfFile:MainActivity.kt$org.adblockplus.adblockplussbrowser.app.ui.MainActivity.kt</ID>
-    <ID>NewLineAtEndOfFile:MainPreferencesFragment.kt$org.adblockplus.adblockplussbrowser.preferences.ui.MainPreferencesFragment.kt</ID>
-    <ID>NewLineAtEndOfFile:MainPreferencesViewModel.kt$org.adblockplus.adblockplussbrowser.preferences.ui.MainPreferencesViewModel.kt</ID>
-    <ID>NewLineAtEndOfFile:MainViewModel.kt$org.adblockplus.adblockplussbrowser.app.ui.MainViewModel.kt</ID>
-    <ID>NewLineAtEndOfFile:NavigationExtensions.kt$org.adblockplus.adblockplussbrowser.base.navigation.NavigationExtensions.kt</ID>
-    <ID>NewLineAtEndOfFile:OkHttpDownloader.kt$org.adblockplus.adblockplussbrowser.core.downloader.OkHttpDownloader.kt</ID>
-    <ID>NewLineAtEndOfFile:OnboardingActivity.kt$org.adblockplus.adblockplussbrowser.onboarding.ui.OnboardingActivity.kt</ID>
-    <ID>NewLineAtEndOfFile:OnboardingBindings.kt$org.adblockplus.adblockplussbrowser.onboarding.databinding.OnboardingBindings.kt</ID>
-    <ID>NewLineAtEndOfFile:OnboardingFragment.kt$org.adblockplus.adblockplussbrowser.onboarding.ui.OnboardingFragment.kt</ID>
-    <ID>NewLineAtEndOfFile:OnboardingPagerAdapter.kt$org.adblockplus.adblockplussbrowser.onboarding.ui.OnboardingPagerAdapter.kt</ID>
-    <ID>NewLineAtEndOfFile:OnboardingPreferences.kt$org.adblockplus.adblockplussbrowser.onboarding.data.prefs.OnboardingPreferences.kt</ID>
-    <ID>NewLineAtEndOfFile:OnboardingViewModel.kt$org.adblockplus.adblockplussbrowser.onboarding.ui.OnboardingViewModel.kt</ID>
-    <ID>NewLineAtEndOfFile:OtherSubscriptionsAdapter.kt$org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions.OtherSubscriptionsAdapter.kt</ID>
-    <ID>NewLineAtEndOfFile:OtherSubscriptionsBindings.kt$org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions.OtherSubscriptionsBindings.kt</ID>
-    <ID>NewLineAtEndOfFile:OtherSubscriptionsFragment.kt$org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions.OtherSubscriptionsFragment.kt</ID>
-    <ID>NewLineAtEndOfFile:OtherSubscriptionsItem.kt$org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions.OtherSubscriptionsItem.kt</ID>
-    <ID>NewLineAtEndOfFile:OtherSubscriptionsViewModel.kt$org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions.OtherSubscriptionsViewModel.kt</ID>
-    <ID>NewLineAtEndOfFile:PageInfo.kt$org.adblockplus.adblockplussbrowser.onboarding.ui.PageInfo.kt</ID>
-    <ID>NewLineAtEndOfFile:PreferencesBindings.kt$org.adblockplus.adblockplussbrowser.preferences.databinding.PreferencesBindings.kt</ID>
-    <ID>NewLineAtEndOfFile:PrimarySubscriptionsAdapter.kt$org.adblockplus.adblockplussbrowser.preferences.ui.primarysubscriptions.PrimarySubscriptionsAdapter.kt</ID>
-    <ID>NewLineAtEndOfFile:PrimarySubscriptionsBindings.kt$org.adblockplus.adblockplussbrowser.preferences.ui.primarysubscriptions.PrimarySubscriptionsBindings.kt</ID>
-    <ID>NewLineAtEndOfFile:PrimarySubscriptionsFragment.kt$org.adblockplus.adblockplussbrowser.preferences.ui.primarysubscriptions.PrimarySubscriptionsFragment.kt</ID>
-    <ID>NewLineAtEndOfFile:PrimarySubscriptionsItem.kt$org.adblockplus.adblockplussbrowser.preferences.ui.primarysubscriptions.PrimarySubscriptionsItem.kt</ID>
-    <ID>NewLineAtEndOfFile:PrimarySubscriptionsViewModel.kt$org.adblockplus.adblockplussbrowser.preferences.ui.primarysubscriptions.PrimarySubscriptionsViewModel.kt</ID>
-    <ID>NewLineAtEndOfFile:ProtoCoreDataSerializer.kt$org.adblockplus.adblockplussbrowser.core.data.datastore.ProtoCoreDataSerializer.kt</ID>
-    <ID>NewLineAtEndOfFile:ProtoSettingsMigration.kt$org.adblockplus.adblockplussbrowser.settings.data.datastore.ProtoSettingsMigration.kt</ID>
-    <ID>NewLineAtEndOfFile:ProtoSettingsSerializer.kt$org.adblockplus.adblockplussbrowser.settings.data.datastore.ProtoSettingsSerializer.kt</ID>
-    <ID>NewLineAtEndOfFile:Repositories.kt$org.adblockplus.adblockplussbrowser.core.extensions.Repositories.kt</ID>
-    <ID>NewLineAtEndOfFile:ResourcesExtensions.kt$org.adblockplus.adblockplussbrowser.base.res.ResourcesExtensions.kt</ID>
-    <ID>NewLineAtEndOfFile:SamsungInternetConstants.kt$org.adblockplus.adblockplussbrowser.base.SamsungInternetConstants.kt</ID>
-    <ID>NewLineAtEndOfFile:ScrollFabBehavior.kt$org.adblockplus.adblockplussbrowser.base.view.ScrollFabBehavior.kt</ID>
-    <ID>NewLineAtEndOfFile:Settings.kt$org.adblockplus.adblockplussbrowser.settings.data.model.Settings.kt</ID>
-    <ID>NewLineAtEndOfFile:SettingsModule.kt$org.adblockplus.adblockplussbrowser.settings.di.SettingsModule.kt</ID>
-    <ID>NewLineAtEndOfFile:SettingsProtoExtensions.kt$org.adblockplus.adblockplussbrowser.settings.data.proto.SettingsProtoExtensions.kt</ID>
-    <ID>NewLineAtEndOfFile:SettingsRepository.kt$org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository.kt</ID>
-    <ID>NewLineAtEndOfFile:SnackbarContainer.kt$org.adblockplus.adblockplussbrowser.base.widget.SnackbarContainer.kt</ID>
-    <ID>NewLineAtEndOfFile:StringExtensions.kt$org.adblockplus.adblockplussbrowser.core.extensions.StringExtensions.kt</ID>
-    <ID>NewLineAtEndOfFile:Subscription.kt$org.adblockplus.adblockplussbrowser.base.data.model.Subscription.kt</ID>
-    <ID>NewLineAtEndOfFile:SubscriptionUpdateStatus.kt$org.adblockplus.adblockplussbrowser.base.data.model.SubscriptionUpdateStatus.kt</ID>
-    <ID>NewLineAtEndOfFile:SubscriptionsDataSource.kt$org.adblockplus.adblockplussbrowser.settings.data.local.SubscriptionsDataSource.kt</ID>
-    <ID>NewLineAtEndOfFile:SubscriptionsManager.kt$org.adblockplus.adblockplussbrowser.base.SubscriptionsManager.kt</ID>
-    <ID>NewLineAtEndOfFile:SwipeToDeleteCallback.kt$org.adblockplus.adblockplussbrowser.preferences.ui.SwipeToDeleteCallback.kt</ID>
-    <ID>NewLineAtEndOfFile:UiState.kt$org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions.UiState.kt</ID>
-    <ID>NewLineAtEndOfFile:UpdateModeSpinnerAdapter.kt$org.adblockplus.adblockplussbrowser.preferences.ui.updates.UpdateModeSpinnerAdapter.kt</ID>
-    <ID>NewLineAtEndOfFile:UpdateSubscriptionsFragment.kt$org.adblockplus.adblockplussbrowser.preferences.ui.updates.UpdateSubscriptionsFragment.kt</ID>
-    <ID>NewLineAtEndOfFile:UpdateSubscriptionsViewModel.kt$org.adblockplus.adblockplussbrowser.preferences.ui.updates.UpdateSubscriptionsViewModel.kt</ID>
-    <ID>NewLineAtEndOfFile:ValueWrapper.kt$org.adblockplus.adblockplussbrowser.base.data.ValueWrapper.kt</ID>
-    <ID>NewLineAtEndOfFile:VersionUtils.kt$org.adblockplus.adblockplussbrowser.base.os.VersionUtils.kt</ID>
-    <ID>NewLineAtEndOfFile:ViewExtensions.kt$org.adblockplus.adblockplussbrowser.base.view.ViewExtensions.kt</ID>
-    <ID>NewLineAtEndOfFile:WorkExtensions.kt$org.adblockplus.adblockplussbrowser.core.extensions.WorkExtensions.kt</ID>
-    <ID>NewLineAtEndOfFile:build.gradle.kts$.build.gradle.kts</ID>
-    <ID>ReturnCount:FilterListContentProvider.kt$FilterListContentProvider$private fun getFilterFile(): File</ID>
-    <ID>SerialVersionUIDInSerializableClass:AllowlistItem.kt$AllowlistItem : Serializable</ID>
-    <ID>SerialVersionUIDInSerializableClass:OtherSubscriptionsItem.kt$OtherSubscriptionsItem$CustomItem : OtherSubscriptionsItemSerializable</ID>
-    <ID>SwallowedException:AppInfo.kt$catch (ex: Exception) { Timber.e("Error retrieving app version for $packageId") "0" }</ID>
-    <ID>SwallowedException:AppInfo.kt$catch (ex: PackageManager.NameNotFoundException) { Timber.w("$packageId not found") false }</ID>
-    <ID>SwallowedException:MainActivity.kt$MainActivity$catch (e: PackageManager.NameNotFoundException) { false }</ID>
-    <ID>SwallowedException:MainActivity.kt$MainActivity$catch (e: PackageManager.NameNotFoundException) { result = false }</ID>
-    <ID>SwallowedException:MainActivity.kt$MainActivity$catch (t: Throwable) { startActivity( Intent( Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=${SBROWSER_APP_ID}") ) ) }</ID>
-    <ID>TooGenericExceptionCaught:AppInfo.kt$ex: Exception</ID>
-    <ID>TooGenericExceptionCaught:FilterListContentProvider.kt$FilterListContentProvider$ex: Exception</ID>
-    <ID>TooGenericExceptionCaught:IO.kt$e: Exception</ID>
-    <ID>TooGenericExceptionCaught:MainActivity.kt$MainActivity$t: Throwable</ID>
-    <ID>TooGenericExceptionCaught:OkHttpDownloader.kt$OkHttpDownloader$ex: Exception</ID>
-    <ID>TooGenericExceptionCaught:UpdateSubscriptionsWorker.kt$UpdateSubscriptionsWorker$ex: Exception</ID>
-    <ID>TooGenericExceptionThrown:IO.kt$throw Exception("Job canceled when trying to execute retryIO")</ID>
     <ID>TooManyFunctions:CoreSubscriptionsManager.kt$CoreSubscriptionsManager : SubscriptionsManagerCoroutineScope</ID>
     <ID>TooManyFunctions:DataStoreSettingsRepository.kt$DataStoreSettingsRepository : SettingsRepository</ID>
+    <ID>TooManyFunctions:FilterListContentProvider.kt$FilterListContentProvider : ContentProviderCoroutineScope</ID>
     <ID>TooManyFunctions:LocalMediaPlayer.kt$LocalMediaPlayer : SurfaceTextureListenerOnPreparedListenerOnCompletionListener</ID>
-    <ID>TooManyFunctions:OkHttpDownloader.kt$OkHttpDownloader : Downloader</ID>
     <ID>TooManyFunctions:SettingsRepository.kt$SettingsRepository</ID>
     <ID>TooManyFunctions:SnackbarContainer.kt$SnackbarContainer : View</ID>
     <ID>TooManyFunctions:UpdateSubscriptionsWorker.kt$UpdateSubscriptionsWorker : CoroutineWorker</ID>
     <ID>UnnecessaryAbstractClass:Deps.kt$DependencyGroup</ID>
-    <ID>UnusedPrivateMember:OkHttpDownloader.kt$OkHttpDownloader$private fun DownloadedSubscription.isNotExpired(newSubscription: Boolean, isMetered: Boolean)</ID>
-    <ID>UnusedPrivateMember:ProtoSettingsMigration.kt$ProtoSettingsMigration$i</ID>
-    <ID>UtilityClassWithPublicConstructor:SamsungInternetConstants.kt$SamsungInternetConstants</ID>
-    <ID>WildcardImport:OtherSubscriptionsAdapter.kt$import org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions.OtherSubscriptionsItemType.*</ID>
-    <ID>WildcardImport:OtherSubscriptionsAdapter.kt$import org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions.OtherSubscriptionsViewHolder.*</ID>
-    <ID>WildcardImport:PrimarySubscriptionsAdapter.kt$import org.adblockplus.adblockplussbrowser.base.databinding.*</ID>
-    <ID>WildcardImport:PrimarySubscriptionsAdapter.kt$import org.adblockplus.adblockplussbrowser.preferences.ui.primarysubscriptions.PrimarySubscriptionsItemType.*</ID>
-    <ID>WildcardImport:PrimarySubscriptionsAdapter.kt$import org.adblockplus.adblockplussbrowser.preferences.ui.primarysubscriptions.PrimarySubscriptionsViewHolder.*</ID>
-    <ID>WildcardImport:SwipeToDeleteCallback.kt$import android.graphics.*</ID>
-    <ID>WildcardImport:UpdateSubscriptionsWorker.kt$import kotlinx.coroutines.*</ID>
-    <ID>WildcardImport:build.gradle.kts$import com.google.protobuf.gradle.*</ID>
+    <ID>NestedBlockDepth:ProtoSettingsMigration.kt$ProtoSettingsMigration$private fun loadActiveUrls(): List&lt;String&gt;</ID>
+    <ID>NestedBlockDepth:ProtoSettingsMigration.kt$ProtoSettingsMigration$private fun retrieveUrlIfActive(file: File): String?</ID>
+    <ID>ReturnCount:ProtoSettingsMigration.kt$ProtoSettingsMigration$private fun retrieveUrlIfActive(file: File): String?</ID>
+    <ID>MemberNameEqualsClassName:Deps.kt$Deps.XZ$val XZ = dependency { name("xz") }</ID>
+  </ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>MagicNumber:OtherSubscriptionsViewModel.kt$OtherSubscriptionsViewModel$100</ID>
+    <ID>SwallowedException:AboutFragment.kt$AboutFragment$catch (exception: ActivityNotFoundException) { Toast.makeText(context, getString(R.string.no_browser_found), Toast.LENGTH_LONG).show() }</ID>
+    <ID>SwallowedException:MainActivity.kt$MainActivity$catch (e: PackageManager.NameNotFoundException) { false }</ID>
+    <ID>SwallowedException:MainActivity.kt$MainActivity$catch (exception: ActivityNotFoundException) {}</ID>
+    <ID>SwallowedException:PackageHelper.kt$PackageHelper.Companion$catch (ex: Exception) { Timber.e("Error retrieving app version for $packageId") "0" }</ID>
+    <ID>SwallowedException:PackageHelper.kt$PackageHelper.Companion$catch (ex: PackageManager.NameNotFoundException) { Timber.i("$packageId not found") false }</ID>
+    <ID>TooGenericExceptionCaught:FilterListContentProvider.kt$FilterListContentProvider$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:IO.kt$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:LauncherViewModel.kt$LauncherViewModel$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:OkHttpDownloader.kt$OkHttpDownloader$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:PackageHelper.kt$PackageHelper.Companion$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:UpdateSubscriptionsWorker.kt$UpdateSubscriptionsWorker$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:UserCounterWorker.kt$UserCounterWorker$ex: Exception</ID>
+    <ID>TooGenericExceptionThrown:IO.kt$throw Exception("Job canceled when trying to execute retryIO")</ID>
   </CurrentIssues>
 </SmellBaseline>

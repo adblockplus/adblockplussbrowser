@@ -26,17 +26,18 @@ import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import okio.buffer
 import okio.sink
 import okio.source
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
+import org.adblockplus.adblockplussbrowser.base.data.model.CustomSubscriptionType
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.base.data.model.SubscriptionUpdateStatus
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
@@ -50,8 +51,14 @@ import org.adblockplus.adblockplussbrowser.core.extensions.toBlockRule
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
 import timber.log.Timber
+import java.io.BufferedReader
 import java.io.File
+import java.io.IOException
+import java.io.InputStreamReader
+import java.lang.RuntimeException
+import java.util.Objects
 import javax.inject.Inject
+import org.adblockplus.adblockplussbrowser.core.BuildConfig
 
 
 @HiltWorker
@@ -74,6 +81,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
 
     private var totalSteps: Int = 0
     private var currentStep: Int = 0
+    lateinit var localFileSubscriptions: List<Subscription>
 
     private val settings by lazy {
         runBlocking {
@@ -108,17 +116,28 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
 
             // Current active subscriptions
             val activeSubscriptions =
-                settings.activePrimarySubscriptions.ensureEasylist(settingsRepository.getEasylistSubscription()) +
+                (settings.activePrimarySubscriptions.ensureEasylist(settingsRepository.getEasylistSubscription()) +
                         settings.activeOtherSubscriptions +
-                        acceptableAdsSubscription(settings.acceptableAdsEnabled)
+                        acceptableAdsSubscription(settings.acceptableAdsEnabled))
             totalSteps = activeSubscriptions.size + 1
 
             // Download new subscriptions
             updateStatus(ProgressType.PROGRESS)
+            // Only download subscriptions from URLs
+            val (downloadableActiveSubscriptions, localFiles) = activeSubscriptions.partition { subscription ->
+                subscription.type != CustomSubscriptionType.LOCAL_FILE
+            }
+            localFileSubscriptions = localFiles
             val results = downloadSubscriptions(
-                settings, activeSubscriptions, changes, tags.isForceRefresh(),
+                settings, downloadableActiveSubscriptions, changes, tags.isForceRefresh(),
                 tags.isPeriodic()
             )
+
+            if (BuildConfig.DEBUG) {
+                // For debug build, add testPages list and remove easylist from active subscriptions
+                settingsRepository.addActiveOtherSubscription(settingsRepository.getTestPagesSubscription())
+                settingsRepository.removeActivePrimarySubscription(settingsRepository.getEasylistSubscription())
+            }
 
             // check if Work is stopped and return
             if (isStopped) return@withContext Result.success()
@@ -157,7 +176,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
         cleanOldFiles(filtersFile)
 
         updateStatus(ProgressType.PROGRESS)
-        updateSubscriptionsLastUpdated(settings, subscriptions)
+        updateSubscriptionsLastUpdatedStatus(settings, subscriptions)
     }
 
     private fun failedResult(): Result =
@@ -167,7 +186,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
         val progress = if (tags.isForceRefresh()) {
             when (type) {
                 ProgressType.PROGRESS -> {
-                    val step = 100 / totalSteps
+                    val step = MAX_PROGRESS / totalSteps
                     SubscriptionUpdateStatus.Progress(step * currentStep++)
                 }
                 ProgressType.SUCCESS -> SubscriptionUpdateStatus.Success
@@ -221,7 +240,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             emptyList()
         }
 
-    private suspend fun updateSubscriptionsLastUpdated(
+    private suspend fun updateSubscriptionsLastUpdatedStatus(
         settings: Settings,
         subscriptions: List<DownloadedSubscription>
     ) {
@@ -230,11 +249,24 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
                 subscription.copy(lastUpdate = downloaded.lastUpdated)
             }
         }
-        val otherSubscriptions = settings.activeOtherSubscriptions.mapNotNull { subscription ->
+
+        // Get custom subscriptions from public url
+        val downloadedOtherSubscriptions = settings.activeOtherSubscriptions.mapNotNull { subscription ->
             subscriptions.firstOrNull { it.url == subscription.url }?.let { downloaded ->
                 subscription.copy(lastUpdate = downloaded.lastUpdated)
             }
         }
+
+        // Get subscriptions from local file
+        val localFilesOtherSubscriptions = settings.activeOtherSubscriptions.mapNotNull { subscription ->
+            localFileSubscriptions.firstOrNull { it.url == subscription.url }?.let { localFileSubscription ->
+                var lastUpdate: Long = System.currentTimeMillis()
+                if (localFileSubscription.hasError) lastUpdate = Subscription.SUBSCRIPTION_LAST_UPDATE_ERROR_STATUS
+                subscription.copy(lastUpdate = lastUpdate)
+            }
+        }
+
+        val otherSubscriptions = downloadedOtherSubscriptions + localFilesOtherSubscriptions
 
         settingsRepository.updatePrimarySubscriptionsLastUpdate(primarySubscriptions)
         settingsRepository.updateOtherSubscriptionsLastUpdate(otherSubscriptions)
@@ -267,6 +299,13 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             sink.writeUtf8("! This file was automatically created.\n")
             subscriptions.forEach { subscription ->
                 sink.writeUtf8("! ${subscription.url}\n")
+            }
+
+            localFileSubscriptions.forEach { subscription ->
+                val fileContent = readFile(Uri.parse(subscription.url))
+                if (!fileContent.isNullOrEmpty()) {
+                    sink.writeUtf8(fileContent)
+                }
             }
 
             allowedDomains.forEach { domain ->
@@ -305,6 +344,33 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
         }
     }
 
+    private fun readFile(uri: Uri): String? {
+        return try {
+            getFiltersFromFile(uri)
+        } catch (ex: Exception) {
+            when (ex) {
+                is RuntimeException, is IOException -> {
+                    localFileSubscriptions.find { it.url == uri.toString() }?.hasError = true
+                }
+            }
+            ""
+        }
+    }
+
+    private fun getFiltersFromFile(uri: Uri): String {
+        applicationContext.contentResolver.openInputStream(uri).use { inputStream ->
+            BufferedReader(
+                InputStreamReader(Objects.requireNonNull(inputStream))
+            ).use { reader ->
+                val stringBuilder = StringBuilder()
+                var line: String?
+                while (reader.readLine().also { line = it } != null) {
+                    stringBuilder.appendLine(line)
+                }
+                return stringBuilder.toString()
+            }
+        }
+    }
 
     private fun List<DownloadedSubscription>.toFiltersSet(): Set<String> {
         val filters = mutableSetOf<String>()
@@ -362,6 +428,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
     }
 
     companion object {
+        private const val MAX_PROGRESS = 100
         private const val DELAY_DEFAULT = 500L
         private const val RUN_ATTEMPT_MAX_COUNT = 4
 

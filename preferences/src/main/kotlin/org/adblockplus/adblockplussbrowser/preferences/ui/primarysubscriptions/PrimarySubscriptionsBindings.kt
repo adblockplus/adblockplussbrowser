@@ -24,3 +24,4 @@ import androidx.recyclerview.widget.RecyclerView
 internal fun bindPrimarySubscriptions(recyclerView: RecyclerView, items: List<PrimarySubscriptionsItem>) {
     (recyclerView.adapter as PrimarySubscriptionsAdapter).submitList(items)
 }
+

@@ -28,3 +28,4 @@ internal sealed class PrimarySubscriptionsItem(val id: String) {
     data class SubscriptionItem(val subscription: Subscription, val layout: GroupItemLayout, val active: Boolean) :
         PrimarySubscriptionsItem(subscription.url)
 }
+

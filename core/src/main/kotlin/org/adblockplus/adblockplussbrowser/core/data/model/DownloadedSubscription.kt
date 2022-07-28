@@ -36,3 +36,4 @@ internal fun DownloadedSubscription.exists(): Boolean = File(path).exists()
 
 internal fun DownloadedSubscription.ifExists(): DownloadedSubscription? =
     if (this.exists()) this else null
+

@@ -4,6 +4,25 @@ All notable changes to Crystal Adblock for Samsung will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.0] - 2022-07-01
+### Fixed
+- Overlapping texts for verbose translations
+- Don't count failed download in user counting requests
+
+### Changed
+- Disable Allowlisting feature 
+- Automatic updates done on Wifi by default
+- Remove manual update
+- Target SDK set to Android 12
+
+### Added
+- UserCounterWorker tests
+- Coverage report to the CI artifacts and coverage check
+- Test data store core repository
+- Tests for FilterListContentProvider
+- Automated testing on CI pipeline
+- Translations for allowlisting changes
+
 ## [2.3.0] - 2022-04-06
 ### Fixed
 - Non-translated elements on "More blocking options" screen are not changing in case of a language change event
