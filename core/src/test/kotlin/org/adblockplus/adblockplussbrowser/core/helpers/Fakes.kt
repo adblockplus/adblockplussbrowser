@@ -25,6 +25,7 @@ import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
 import org.adblockplus.adblockplussbrowser.base.data.model.CustomSubscriptionType
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
+import org.adblockplus.adblockplussbrowser.base.data.prefs.DebugPreferences
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.data.model.CoreData
 import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscription
@@ -247,6 +248,15 @@ class Fakes {
 
         override suspend fun updateLastFilterRequest(lastFilterListRequest: Long) {
             lastFilterListRequest
+        }
+    }
+
+    class FakeDebugPreferences: DebugPreferences {
+        override val shouldAddTestPages: Flow<Boolean>
+            get() = flow { false }
+
+        override fun addTestPagesCompleted() {
+            TODO("Not yet implemented")
         }
     }
 }
