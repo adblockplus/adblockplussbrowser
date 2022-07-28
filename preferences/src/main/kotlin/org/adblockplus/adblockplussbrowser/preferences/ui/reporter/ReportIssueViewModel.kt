@@ -32,7 +32,9 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.preferences.data.ReportIssueRepository
 import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData
@@ -64,10 +66,10 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         }
     }
 
-    internal fun processImage(unresolvedUri: String) {
-        viewModelScope.launch {
+    internal suspend fun processImage(unresolvedUri: String) {
+        withContext(Dispatchers.Default) {
             data.screenshot = imageFileToBase64(unresolvedUri)
-            returnedString.value = if (data.screenshot.isEmpty()) {
+            val resultString = if (data.screenshot.isEmpty()) {
                 // Operation failed, show error message
                 "Failed to load image"
             } else {
@@ -75,6 +77,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
                 // Operation successful, validate data
                 ""
             }
+            returnedString.postValue(resultString)
         }
     }
 
@@ -103,7 +106,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
                     .compress(Bitmap.CompressFormat.PNG, REPORT_ISSUE_VIEW_MODEL_IMAGE_QUALITY, bs)
             }
             val screenshotByteArray = bs.toByteArray()
-            screenshot.value = BitmapFactory.decodeByteArray(screenshotByteArray, 0, screenshotByteArray.size)
+            screenshot.postValue(BitmapFactory.decodeByteArray(screenshotByteArray, 0, screenshotByteArray.size))
             "data:image/png;base64," + Base64.encodeToString(screenshotByteArray, Base64.DEFAULT)
         } catch (e: Exception) {
             Timber.e("ReportIssue: Screenshot decode failed\n" + e.printStackTrace())

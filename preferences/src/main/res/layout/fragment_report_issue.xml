@@ -125,7 +125,6 @@
                     android:layout_width="0dp"
                     android:layout_height="80dp"
                     android:layout_marginTop="16dp"
-                    android:visibility="gone"
                     app:layout_constraintBottom_toTopOf="@id/pick_screenshot"
                     app:layout_constraintTop_toBottomOf="@id/pick_screenshot_description"
                     app:layout_constraintStart_toStartOf="parent"
