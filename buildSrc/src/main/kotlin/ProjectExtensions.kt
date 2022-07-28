@@ -160,14 +160,21 @@ fun versionCode(): Int {
     return Constants.VERSION_OFFSET + (days shl 3) + dayVersion
 }
 
-fun addCommonFiles(sourceSet: AndroidSourceSet) {
-    sourceSet.java {
-        srcDir("src/ab-common/kotlin")
+/**
+ * Add a feature source and resource folders to a flavor. I.E. if the feature is called `test` the source folder added
+ * will be `src/featureTest/kotlin`.
+ *
+ * @param featureName
+ * @param flavorName
+ */
+fun Project.addFeature(featureName: String, flavorName: String) {
+    val featureDirName = "feature${featureName.capitalize()}"
+    android {
+        sourceSets.find { it.name == flavorName }?.let {
+            it.java.srcDir("src/$featureDirName/kotlin")
+            it.res.srcDir("src/$featureDirName/res")
+        }
     }
-    sourceSet.res {
-        srcDir("src/ab-common/res")
-    }
-
 }
 
 internal object Constants {

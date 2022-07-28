@@ -34,12 +34,8 @@ android {
 }
 
 createFlavorsConfig()
-
-android {
-    sourceSets.filter { it.name.contains("abp") || it.name.contains("adblock") }.forEach { sourceSet ->
-        addCommonFiles(sourceSet)
-    }
-}
+addFeature("allowlisting", "abp")
+addFeature("allowlisting", "adblock")
 
 configurations {
     all {
