@@ -58,6 +58,8 @@ import java.io.InputStreamReader
 import java.lang.RuntimeException
 import java.util.Objects
 import javax.inject.Inject
+import kotlinx.coroutines.flow.first
+import org.adblockplus.adblockplussbrowser.base.data.prefs.DebugPreferences
 import org.adblockplus.adblockplussbrowser.core.BuildConfig
 
 
@@ -78,6 +80,9 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
 
     @Inject
     internal lateinit var downloader: Downloader
+
+    @Inject
+    internal lateinit var debugPreferences: DebugPreferences
 
     private var totalSteps: Int = 0
     private var currentStep: Int = 0
@@ -133,10 +138,12 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
                 tags.isPeriodic()
             )
 
-            if (BuildConfig.DEBUG) {
+            if (BuildConfig.DEBUG && debugPreferences.shouldAddTestPages.first()) {
                 // For debug build, add testPages list and remove easylist from active subscriptions
                 settingsRepository.addActiveOtherSubscription(settingsRepository.getTestPagesSubscription())
                 settingsRepository.removeActivePrimarySubscription(settingsRepository.getEasylistSubscription())
+                // Don't add them after the first start
+                debugPreferences.addTestPagesCompleted()
             }
 
             // check if Work is stopped and return

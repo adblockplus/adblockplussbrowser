@@ -38,6 +38,7 @@ class DataStoreAppPreferences(private val dataStore: DataStore<Preferences>) :
         val ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
         val LAST_FILTER_REQUEST = longPreferencesKey("last_filter_request")
         val REFERRER_CHECKED = booleanPreferencesKey("referrer_checked")
+        val SHOULD_ADD_TEST_PAGES = booleanPreferencesKey("should_add_test_pages")
     }
 
     override val referrerAlreadyChecked: Boolean =
@@ -69,6 +70,19 @@ class DataStoreAppPreferences(private val dataStore: DataStore<Preferences>) :
     override suspend fun updateLastFilterRequest(lastFilterListRequest: Long) {
         dataStore.edit { preferences ->
             preferences[Keys.LAST_FILTER_REQUEST] = lastFilterListRequest
+        }
+    }
+
+    override val shouldAddTestPages: Flow<Boolean> =
+        runBlocking {
+            dataStore.data.map { it[Keys.SHOULD_ADD_TEST_PAGES] ?: true}
+        }
+
+    override fun addTestPagesCompleted() {
+        runBlocking {
+            dataStore.edit { preferences ->
+                preferences[Keys.SHOULD_ADD_TEST_PAGES] = false
+            }
         }
     }
 }

@@ -38,6 +38,7 @@ import org.adblockplus.adblockplussbrowser.core.CoreSubscriptionsManager
 import org.adblockplus.adblockplussbrowser.base.data.prefs.OnboardingPreferences
 import javax.inject.Singleton
 import kotlin.time.ExperimentalTime
+import org.adblockplus.adblockplussbrowser.base.data.prefs.DebugPreferences
 
 @ExperimentalTime
 @InstallIn(SingletonComponent::class)
@@ -65,6 +66,10 @@ internal object AppModule {
     @Provides
     fun provideActivationPreferences(appPreferences: AppPreferences): ActivationPreferences =
         appPreferences
+
+    @Singleton
+    @Provides
+    fun provideDebugPreferences(appPreferences: AppPreferences): DebugPreferences = appPreferences
 
     @Singleton
     @Provides
