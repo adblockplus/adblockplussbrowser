@@ -287,14 +287,13 @@ samsung_filter_tests:
     - adb shell getprop | egrep "ro.product.manufacturer|ro.product.model|ro.build.version.release|ro.vendor.build.version.sdk"
   script:
     - cat /root/entry_point.sh
-    - /root/entry_point.sh &> appium.log &
+    - DEFAULT_CAPABILITIES=true /root/entry_point.sh &> appium.log &
     - echo $! > appium_pid
     - git clone $GIT_AUTOMATION_REPO si_automation
     - cd si_automation
     - export TEST_APK
     - git checkout ${GIT_AUTOMATION_BRANCH:-main}
     - pwd
-    - ls
     # Launch an instance of gradle for each bunch of tags we want to test
     - set +e
     - |
@@ -337,7 +336,7 @@ samsung_filter_tests:
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
   artifacts:
     when: always
-    expire_in: "1 week"
+    expire_in: "1 day"
     paths:
       - "si_automation/platform_version-*.log"
       - "si_automation/result_*"
