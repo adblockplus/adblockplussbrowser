@@ -26,6 +26,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.util.Base64
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -36,6 +37,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
+import org.adblockplus.adblockplussbrowser.base.os.FileNameHelper
 import org.adblockplus.adblockplussbrowser.preferences.data.ReportIssueRepository
 import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData
 import org.adblockplus.adblockplussbrowser.preferences.ui.reporter.ReportIssueFragment.Companion.REPORT_ISSUE_FRAGMENT_SEND_ERROR
@@ -66,14 +68,13 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         }
     }
 
-    internal suspend fun processImage(unresolvedUri: String) {
+    internal suspend fun processImage(unresolvedUri: String, activity: FragmentActivity?) {
         withContext(Dispatchers.Default) {
-            data.screenshot = imageFileToBase64(unresolvedUri)
+            data.screenshot = imageFileToBase64(unresolvedUri, activity)
             val resultString = if (data.screenshot.isEmpty()) {
                 // Operation failed, show error message
                 "Failed to load image"
             } else {
-                Timber.i("ReportIssue: base64 image: ${data.screenshot.subSequence(0, 20)}")
                 // Operation successful, validate data
                 ""
             }
@@ -81,19 +82,13 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         }
     }
 
-    private fun imageFileToBase64(unresolvedUri: String): String {
+    private fun imageFileToBase64(unresolvedUri: String, activity: FragmentActivity?): String {
         Timber.d("ReportIssue: unresolvedUri: $unresolvedUri")
         val context = getApplication<Application>().applicationContext
         val cr: ContentResolver = context.contentResolver ?: return ""
         val pic: Uri = Uri.parse(unresolvedUri)
-        /*
-            TODO: we should reuse here the method to extract the filename that was used
-             in OtherSubscriptionsFragment when adding a custom filter file. Reason for this,
-             is that depending on the version of android, the filename provided in lastPathSegment
-             could be just a number instead of the correct text.
-         */
-        fileName = "${pic.lastPathSegment.toString()}.png"
 
+        fileName = FileNameHelper.getFilename(activity, pic)
         Timber.d("ReportIssue: image path: $pic")
 
         val bs = ByteArrayOutputStream()
@@ -108,8 +103,8 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
             val screenshotByteArray = bs.toByteArray()
             screenshot.postValue(BitmapFactory.decodeByteArray(screenshotByteArray, 0, screenshotByteArray.size))
             "data:image/png;base64," + Base64.encodeToString(screenshotByteArray, Base64.DEFAULT)
-        } catch (e: Exception) {
-            Timber.e("ReportIssue: Screenshot decode failed\n" + e.printStackTrace())
+        } catch (e: OutOfMemoryError) {
+            Timber.e(e, "ReportIssue: Screenshot decode failed\n");
             ""
         }
     }

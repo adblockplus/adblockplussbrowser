@@ -37,6 +37,7 @@ import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.BuildConfig
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
+import org.adblockplus.adblockplussbrowser.base.os.FileNameHelper
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentOtherSubscriptionsBinding
@@ -128,7 +129,10 @@ internal class OtherSubscriptionsFragment :
     private fun handleFilePickingResult(result: ActivityResult) {
         if (result.resultCode == Activity.RESULT_OK) {
             result.data?.data?.let { filePath ->
-                viewModel.addCustomFilterFile(filePath.toString(), getFilename(filePath))
+                viewModel.addCustomFilterFile(
+                    filePath.toString(),
+                    FileNameHelper.getFilename(activity, filePath)
+                )
             }
         } else {
             analyticsProvider.logEvent(AnalyticsEvent.DEVICE_FILE_MANAGER_NOT_SUPPORTED_OR_CANCELED)
