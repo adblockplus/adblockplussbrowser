@@ -282,18 +282,23 @@ samsung_filter_tests:
   before_script:
     - apt-get -y update
     - apt-get -y install openjdk-8-jdk git
+    - apt-get -y install net-tools iputils-ping
+    - netstat -tulpn
     - echo "Using android device with serial ${ANDROID_SERIAL}"
     - adb devices
     - adb shell getprop | egrep "ro.product.manufacturer|ro.product.model|ro.build.version.release|ro.vendor.build.version.sdk"
   script:
-    - cat /root/entry_point.sh
-    - DEFAULT_CAPABILITIES=true /root/entry_point.sh &> appium.log &
-    - echo $! > appium_pid
+    - netstat -tulpn
+    - ping localhost -c 1
+    - echo $(pgrep xvfb-run) > appium_pid
+    - /root/entry_point.sh &> appium.log &
+    - netstat -tulpn
     - git clone $GIT_AUTOMATION_REPO si_automation
     - cd si_automation
-    - export TEST_APK
+    - export TEST_APK="/builds/eyeo/distpartners/adblockplussbrowser/$TEST_APK"
     - git checkout ${GIT_AUTOMATION_BRANCH:-main}
-    - pwd
+    - find / -name *app-world-abp-debug.apk
+    - find / -name *chromedriver
     # Launch an instance of gradle for each bunch of tags we want to test
     - set +e
     - |
