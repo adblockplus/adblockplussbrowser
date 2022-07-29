@@ -23,7 +23,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -121,7 +120,6 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
             addOtherSubscriptionsCount.apply { value = value?.plus(1) }
             if (!subscriptionManager.validateSubscription(subscription)) {
                 _uiState.value = UiState.Error
-                delay(100)
             } else {
                 settingsRepository.addActiveOtherSubscription(subscription)
                 analyticsProvider.logEvent(AnalyticsEvent.CUSTOM_FILTER_LIST_ADDED_FROM_URL)
