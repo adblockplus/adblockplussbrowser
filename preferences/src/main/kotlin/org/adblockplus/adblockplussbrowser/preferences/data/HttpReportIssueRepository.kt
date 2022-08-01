@@ -39,6 +39,8 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
 
     private val okHttpClient = OkHttpClient()
     private val locale = Locale.getDefault()
+    internal val writer = StringWriter()
+    internal var serializer: XmlSerializer = Xml.newSerializer()
 
     override suspend fun sendReport(data: ReportIssueData): String {
 
@@ -87,8 +89,6 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
     }
 
     private fun makeXML(data: ReportIssueData): String {
-        val writer = StringWriter()
-        val serializer: XmlSerializer = Xml.newSerializer()
         try {
             serializer.setOutput(writer)
             serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true)
@@ -151,7 +151,7 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
     }
 
     companion object {
-        const val DEFAULT_URL = """https://reports.adblockplus.org/submitReport"""
+        var DEFAULT_URL = """https://reports.adblockplus.org/submitReport"""
         const val XML_ERROR = "Error creating XML"
         const val A_PATTERN = """<a.+</a>"""
     }
