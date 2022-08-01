@@ -41,10 +41,23 @@ class SnackbarContainer @JvmOverloads constructor(
     private var snackbar: Snackbar? = null
     private var binding: SnackbarLayoutBinding? = null
 
+    override fun onDetachedFromWindow() {
+        if (snackbar?.isShown == true) {
+            snackbar?.view?.postDelayed(dismissRunnableForced, config.dismissDelay)
+        } else {
+            snackbar?.dismiss()
+        }
+        super.onDetachedFromWindow()
+    }
+
     private val dismissRunnable: Runnable = Runnable {
         if (!config.shown && this.isShown) {
             snackbar?.dismiss()
         }
+    }
+
+    private val dismissRunnableForced: Runnable = Runnable {
+            snackbar?.dismiss()
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
