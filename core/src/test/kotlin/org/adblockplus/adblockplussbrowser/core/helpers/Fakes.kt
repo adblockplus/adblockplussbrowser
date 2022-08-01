@@ -255,7 +255,7 @@ class Fakes {
         override val shouldAddTestPages: Flow<Boolean>
             get() = flow { false }
 
-        override fun addTestPagesCompleted() {
+        override fun initialTestPagesConfigurationCompleted() {
             TODO("Not yet implemented")
         }
     }
