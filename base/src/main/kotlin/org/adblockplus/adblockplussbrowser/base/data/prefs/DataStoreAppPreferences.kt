@@ -78,7 +78,7 @@ class DataStoreAppPreferences(private val dataStore: DataStore<Preferences>) :
             dataStore.data.map { it[Keys.SHOULD_ADD_TEST_PAGES] ?: true}
         }
 
-    override fun addTestPagesCompleted() {
+    override fun initialTestPagesConfigurationCompleted() {
         runBlocking {
             dataStore.edit { preferences ->
                 preferences[Keys.SHOULD_ADD_TEST_PAGES] = false

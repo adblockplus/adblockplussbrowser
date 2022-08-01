@@ -144,7 +144,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
                 settingsRepository.addActiveOtherSubscription(settingsRepository.getTestPagesSubscription())
                 settingsRepository.removeActivePrimarySubscription(settingsRepository.getEasylistSubscription())
                 // Don't add them after the first start
-                debugPreferences.addTestPagesCompleted()
+                debugPreferences.initialTestPagesConfigurationCompleted()
             }
 
             // check if Work is stopped and return

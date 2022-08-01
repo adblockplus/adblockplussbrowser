@@ -19,9 +19,20 @@ package org.adblockplus.adblockplussbrowser.base.data.prefs
 
 import kotlinx.coroutines.flow.Flow
 
+/**
+ *  This interface contains the configuration preferences in debug mode
+ */
 interface DebugPreferences {
 
+    /**
+     * This value will be true by default on the first start, so that
+     * if the app is in debug mode, the test pages filters are added.
+     */
     val shouldAddTestPages: Flow<Boolean>
 
-    fun addTestPagesCompleted()
+    /**
+     * The point of this method is to indicate that test pages should
+     * not longer be added by default when the filters are updated.
+     */
+    fun initialTestPagesConfigurationCompleted()
 }
