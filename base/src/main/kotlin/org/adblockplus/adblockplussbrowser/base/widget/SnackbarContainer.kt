@@ -43,9 +43,7 @@ class SnackbarContainer @JvmOverloads constructor(
 
     override fun onDetachedFromWindow() {
         if (snackbar?.isShown == true) {
-            snackbar?.view?.postDelayed(dismissRunnableForced, config.dismissDelay)
-        } else {
-            snackbar?.dismiss()
+            snackbar?.view?.postDelayed(forcedDismissRunnable, config.dismissDelay)
         }
         super.onDetachedFromWindow()
     }
@@ -56,7 +54,7 @@ class SnackbarContainer @JvmOverloads constructor(
         }
     }
 
-    private val dismissRunnableForced: Runnable = Runnable {
+    private val forcedDismissRunnable: Runnable = Runnable {
             snackbar?.dismiss()
     }
 
