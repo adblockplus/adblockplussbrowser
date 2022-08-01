@@ -36,6 +36,8 @@ import java.net.URL
 import java.util.Locale
 import java.util.UUID
 import javax.inject.Inject
+import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
+import java.io.IOException
 
 
 class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
