@@ -291,10 +291,10 @@ samsung_filter_tests:
     - git clone $GIT_AUTOMATION_REPO si_automation
     - cd si_automation
     - git checkout ${GIT_AUTOMATION_BRANCH:-main}
-    - TEST_APK=$(find / -name "*samsungInternetBrowser.apk")
+    #- TEST_APK=$(find / -name "*samsungInternetBrowser.apk")
     - export OTHER_TEST_APK
     - export TEST_APK
-    - echo other apk $OTHER_TEST_APK
+    #- echo other apk $OTHER_TEST_APK
     - echo test apk $TEST_APK
     - pwd
     # Launch an instance of gradle for each bunch of tags we want to test
