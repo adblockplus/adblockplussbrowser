@@ -32,7 +32,7 @@ interface DebugPreferences {
 
     /**
      * The point of this method is to indicate that test pages should
-     * not longer be added by default when the filters are updated.
+     * no longer be added by default when the filters are updated.
      */
     fun initialTestPagesConfigurationCompleted()
 }
