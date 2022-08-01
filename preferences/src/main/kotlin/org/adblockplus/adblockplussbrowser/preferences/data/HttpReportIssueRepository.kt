@@ -37,6 +37,7 @@ import java.net.URL
 import java.util.Locale
 import java.util.UUID
 import javax.inject.Inject
+import java.io.IOException
 
 
 class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
@@ -73,7 +74,7 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
         val response: Response
         try {
             response = okHttpClient.newCall(request).await()
-        } catch (ex: Exception) {
+        } catch (ex: IOException) {
             return "HTTP request failed: ${ex.localizedMessage}"
         }
 
