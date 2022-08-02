@@ -16,7 +16,7 @@
  */
 
 @file:Suppress("UnstableApiUsage")
-
+import com.kageiit.jacobo.JacoboTask
 plugins {
     id("com.android.library")
     kotlin("android")
@@ -24,6 +24,7 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("androidx.navigation.safeargs.kotlin")
     id(Deps.JACOCO)
+    id(Deps.JACOBO)
     id("coverage")
 }
 
@@ -75,4 +76,11 @@ dependencies {
     testImplementation(Deps.KotlinXTest.COROUTINES_TEST )
     testAnnotationProcessor(Deps.Hilt.ANDROID_COMPILER)
     testImplementation(Deps.OkHttp.MOCK_WEB_SERVER)
+}
+
+tasks.register("jacobo", JacoboTask::class.java) {
+    dependsOn("jacocoTestReport")
+    jacocoReport = file("$buildDir/reports/jacoco/jacocoTestReport/jacocoTestReport.xml")
+    coberturaReport = file("$buildDir/reports/cobertura.xml")
+    includeFileNames = setOf<String>()
 }
