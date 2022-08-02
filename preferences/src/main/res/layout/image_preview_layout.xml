@@ -35,7 +35,7 @@
             android:textSize="16sp"
             android:textStyle="italic"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:text="Please pick a screenshot"/>
+            android:text="@string/tap_here_to_pick_screenshot"/>
 
     </LinearLayout>
 

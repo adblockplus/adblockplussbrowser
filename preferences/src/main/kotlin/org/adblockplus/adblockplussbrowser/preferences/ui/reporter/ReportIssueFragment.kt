@@ -87,7 +87,7 @@ internal class ReportIssueFragment :
             }
         }
 
-        binding.pickScreenshot.setDebounceOnClickListener({
+        binding.screenshotPreview.imagePlaceholderContainer.setDebounceOnClickListener({
             pickImageFromGallery()
         }, lifecycleOwner)
 
