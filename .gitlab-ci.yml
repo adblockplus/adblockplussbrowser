@@ -307,22 +307,21 @@ samsung_filter_tests:
         pids="$pids $!"
       done
     - wait $pids
-    # Check for any failures and re-run them
-    - echo "Check for any failures and re-run them"
-    - cat target/rerun.txt
-    - |
+      # Check for any failures and re-run them
+      - |
       for PLATFORM_VERSION in $PLATFORM_VERSIONS
-        do if [ -s target/rerun.txt ] ; then
-          echo "Rerunning failed test cases for platform version ${PLATFORM_VERSION}"
-          APPIUM_HOST="localhost:4723" ./gradlew rerunFailed
-          echo $? > result_${PLATFORM_VERSION}
-          rm -f target/rerun.txt
-        fi
+      do if [ -s target/rerun${PLATFORM_VERSION}.txt ] ; then
+      echo "Rerunning failed test cases for platform version ${PLATFORM_VERSION}"
+      mv target/rerun${PLATFORM_VERSION}.txt target/rerun.txt
+      ./gradlew rerunFailed
+      echo $? > result_${PLATFORM_VERSION}
+      rm -f target/rerun.txt
+      fi
       done
-    # check the exit codes of all processes were 0
-    - |
+      # check the exit codes of all processes were 0
+      - |
       for PLATFORM_VERSION in $PLATFORM_VERSIONS
-        do test $(cat result_${PLATFORM_VERSION}) = 0
+      do test $(cat result_${PLATFORM_VERSION}) = 0
       done
   after_script:
     - cd si_automation
