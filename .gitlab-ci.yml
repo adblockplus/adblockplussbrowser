@@ -110,7 +110,7 @@ sign_apks:
   stage: "sign_builds"
   variables:
     GIT_STRATEGY: none
-  cache: []
+  cache: [ ]
   tags:
     - "apk_signer_apk-signing-2.uplink.eyeo.it"
   before_script:
@@ -309,20 +309,20 @@ samsung_filter_tests:
     - wait $pids
       # Check for any failures and re-run them
       - |
-      for PLATFORM_VERSION in $PLATFORM_VERSIONS
-      do if [ -s target/rerun${PLATFORM_VERSION}.txt ] ; then
-      echo "Rerunning failed test cases for platform version ${PLATFORM_VERSION}"
-      mv target/rerun${PLATFORM_VERSION}.txt target/rerun.txt
-      ./gradlew rerunFailed
-      echo $? > result_${PLATFORM_VERSION}
-      rm -f target/rerun.txt
-      fi
-      done
+        for PLATFORM_VERSION in $PLATFORM_VERSIONS
+          do if [ -s target/rerun${PLATFORM_VERSION}.txt ] ; then
+            echo "Rerunning failed test cases for platform version ${PLATFORM_VERSION}"
+            mv target/rerun${PLATFORM_VERSION}.txt target/rerun.txt
+            ./gradlew rerunFailed
+            echo $? > result_${PLATFORM_VERSION}
+            rm -f target/rerun.txt
+          fi
+        done
       # check the exit codes of all processes were 0
       - |
-      for PLATFORM_VERSION in $PLATFORM_VERSIONS
-      do test $(cat result_${PLATFORM_VERSION}) = 0
-      done
+        for PLATFORM_VERSION in $PLATFORM_VERSIONS
+          do test $(cat result_${PLATFORM_VERSION}) = 0
+        done
   after_script:
     - cd si_automation
     - |
