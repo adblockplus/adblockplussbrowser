@@ -31,9 +31,12 @@ import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Before
 import org.junit.runner.RunWith
+import org.mockito.Mockito.any
 import org.mockito.Mockito.mock
+import org.mockito.kotlin.doThrow
 import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
@@ -47,7 +50,7 @@ class HttpReportIssueRepositoryTest {
     @Before
     fun setUp() {
         mockWebServer.start()
-        HttpReportIssueRepository.DEFAULT_URL = "http://${mockWebServer.hostName}:${mockWebServer.port}"
+        httpReportIssueRepository.setDefaultURL("http://${mockWebServer.hostName}:${mockWebServer.port}")
     }
 
     @After
@@ -88,7 +91,6 @@ class HttpReportIssueRepositoryTest {
         runTest {
             val response = MockResponse()
                 .setResponseCode(HTTP_INTERNAL_ERROR)
-                .setBody("<a>http://www.exampleReport.com</a>")
             mockWebServer.enqueue(response)
             assertEquals(
                 "HTTP returned $HTTP_INTERNAL_ERROR",
@@ -100,12 +102,36 @@ class HttpReportIssueRepositoryTest {
     @Test
     fun `test sendReport XML error`() {
         val xmlSerializerMock = mock(Xml.newSerializer()::class.java)
-        `when`(xmlSerializerMock.startTag(anyString(), anyString())).thenThrow(IOException("Exception"))
+        doThrow(RuntimeException("Exception")).`when`(xmlSerializerMock).setOutput(any())
         runTest {
             httpReportIssueRepository.serializer = xmlSerializerMock
             assertEquals(
                 "Error creating XML",
                 httpReportIssueRepository.sendReport(fakeReportIssueData))
         }
+    }
+
+    @Test
+    fun `test makeXML success`() {
+        val resultXml = httpReportIssueRepository.makeXML(fakeReportIssueData)
+        assert(resultXml.contains(fakeReportIssueData.type))
+        assert(resultXml.contains(fakeReportIssueData.email))
+        assert(resultXml.contains(fakeReportIssueData.comment))
+        assert(resultXml.contains(fakeReportIssueData.url))
+    }
+
+    @Test
+    fun `test makeXML without url`() {
+        fakeReportIssueData.url = ""
+        val resultXml = httpReportIssueRepository.makeXML(fakeReportIssueData)
+        assertFalse(resultXml.contains("www.example.com"))
+    }
+
+    @Test
+    fun `test makeXML empty XML`() {
+        val xmlSerializerMock = mock(Xml.newSerializer()::class.java)
+        `when`(xmlSerializerMock.startTag(anyString(), anyString())).thenThrow(RuntimeException("Exception"))
+        httpReportIssueRepository.serializer = xmlSerializerMock
+        assert(httpReportIssueRepository.makeXML(fakeReportIssueData).isEmpty())
     }
 }

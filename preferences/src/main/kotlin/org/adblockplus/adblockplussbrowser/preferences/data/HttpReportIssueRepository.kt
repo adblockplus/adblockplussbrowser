@@ -39,7 +39,6 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
 
     private val okHttpClient = OkHttpClient()
     private val locale = Locale.getDefault()
-    internal val writer = StringWriter()
     internal var serializer: XmlSerializer = Xml.newSerializer()
 
     override suspend fun sendReport(data: ReportIssueData): String {
@@ -70,25 +69,24 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
 
         val response = okHttpClient.newCall(request).await()
 
-
-        // TODO remove the URL parsing if it's not needed
-        val responseBody = kotlin.runCatching { response.body?.string() }
-        val responseUrls = Regex(A_PATTERN).findAll(responseBody.toString()).map { it.value }
-        if (responseUrls.any()) {
-            Timber.d("ReportIssue report sent: ${responseUrls.last()}")
-        } else {
-            Timber.d("ReportIssue report sent, but no URL received: $responseBody")
-            return "Send error"
-        }
-
         return if (response.code == 200) {
-            ""
+            // TODO remove the URL parsing if it's not needed
+            val responseBody = kotlin.runCatching { response.body?.string() }
+            val responseUrls = Regex(A_PATTERN).findAll(responseBody.toString()).map { it.value }
+            if (responseUrls.any()) {
+                Timber.d("ReportIssue report sent: ${responseUrls.last()}")
+                ""
+            } else {
+                Timber.d("ReportIssue report sent, but no URL received: $responseBody")
+                "Send error"
+            }
         } else {
             "HTTP returned ${response.code}"
         }
     }
 
-    private fun makeXML(data: ReportIssueData): String {
+    internal fun makeXML(data: ReportIssueData): String {
+        val writer = StringWriter()
         try {
             serializer.setOutput(writer)
             serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true)
@@ -150,8 +148,12 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
         return writer.toString()
     }
 
+    internal fun setDefaultURL(serverUrl: String) {
+        DEFAULT_URL = serverUrl
+    }
+
     companion object {
-        var DEFAULT_URL = """https://reports.adblockplus.org/submitReport"""
+        private var DEFAULT_URL = """https://reports.adblockplus.org/submitReport"""
         const val XML_ERROR = "Error creating XML"
         const val A_PATTERN = """<a.+</a>"""
     }
