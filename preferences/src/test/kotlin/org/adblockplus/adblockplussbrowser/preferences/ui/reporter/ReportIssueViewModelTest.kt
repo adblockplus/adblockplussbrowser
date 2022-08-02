@@ -17,44 +17,59 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui.reporter
 
-import android.app.Application
-import android.content.ContentResolver
-import android.content.Context
 import android.net.Uri
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import java.io.File
-import kotlin.coroutines.coroutineContext
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
+import org.junit.After
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito
-import org.mockito.Mockito.`when`
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.RuntimeEnvironment
 import org.robolectric.RuntimeEnvironment.getApplication
 
 @RunWith(RobolectricTestRunner::class)
+@ExperimentalCoroutinesApi
 class ReportIssueViewModelTest {
 
-    private val application = Mockito.mock(Application::class.java)
-    private val mContext = Mockito.mock(Context::class.java)
-    private val mContentResolver = Mockito.mock(ContentResolver::class.java)
-    private lateinit var reportIssueViewModel: ReportIssueViewModel
+    private val reportIssueViewModel = ReportIssueViewModel(getApplication())
+    lateinit var tempFile: File
+    lateinit var tempFileUri: Uri
 
     @Before
     fun setUp() {
-        reportIssueViewModel = ReportIssueViewModel(application)
+        tempFile = File("test_screenshot.jpg")
+        val result = javaClass.classLoader?.getResourceAsStream("test_screenshot.jpg")
+        if (result != null) {
+            tempFile.writeBytes(result.readBytes())
+        }
+        tempFileUri = Uri.fromFile(tempFile)
     }
 
+    @After
+    fun tearDown() {
+        if (tempFile.exists()) {
+            tempFile.delete()
+        }
+    }
 
     @Test
-    fun test1() {
-        val testImageFile = File("mock/test_screenshot.jpg")
-        val imageUri = Uri.fromFile(testImageFile)
-        runBlocking {
-            reportIssueViewModel.processImage(imageUri.toString())
+    fun `test image correctly processed`() {
+        runTest {
+            reportIssueViewModel.processImage(tempFileUri.toString())
+            assertTrue(reportIssueViewModel.data.screenshot.isNotEmpty())
+        }
+    }
+
+    @Test
+    fun `test image failed to load`() {
+        tempFile.delete()
+        if (!tempFile.exists()) {
+            runTest {
+                reportIssueViewModel.processImage(tempFileUri.toString())
+                assertTrue(reportIssueViewModel.data.screenshot.isEmpty())
+            }
         }
     }
 }

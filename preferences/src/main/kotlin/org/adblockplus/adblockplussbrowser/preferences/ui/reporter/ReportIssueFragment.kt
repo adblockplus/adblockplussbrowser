@@ -21,7 +21,6 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.provider.MediaStore
-import android.util.Base64
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResult

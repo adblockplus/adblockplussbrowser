@@ -42,7 +42,7 @@ import timber.log.Timber
 
 
 @HiltViewModel
-internal class ReportIssueViewModel @Inject constructor(application: Application) :
+class ReportIssueViewModel @Inject constructor(application: Application) :
     AndroidViewModel(application) {
 
     val returnedString = MutableLiveData<String>()
