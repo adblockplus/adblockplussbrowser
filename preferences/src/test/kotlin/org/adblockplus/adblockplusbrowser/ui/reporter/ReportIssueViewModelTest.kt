@@ -18,11 +18,17 @@
 package org.adblockplus.adblockplusbrowser.ui.reporter
 
 import android.app.Application
+import android.util.Size
 import org.adblockplus.adblockplussbrowser.preferences.ui.reporter.ReportIssueViewModel
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
+@RunWith(RobolectricTestRunner::class)
+@Config(sdk = [21])
 class ReportIssueViewModelTest {
 
     private val reportIssueViewModel = ReportIssueViewModel(Application())
@@ -31,13 +37,13 @@ class ReportIssueViewModelTest {
     fun `test validateImageSize Portrait`() {
         // Pair(Width, Height)
         val scaledSizes = calculateForSizes(listOf(
-            Pair(720, 1280), // HD
-            Pair(960, 1280), // Portrait
-            Pair(2160, 3840), //UHD
+            Size(720, 1280), // HD
+            Size(960, 1280), // Portrait
+            Size(2160, 3840), //UHD
         ))
         // assert correct size after conversion
         assertTrue(scaledSizes.all {
-            it.first <= 720 && it.second <= 1280
+            it.width <= 720 && it.height <= 1280
         })
     }
 
@@ -45,44 +51,44 @@ class ReportIssueViewModelTest {
     fun `test validateImageSize Landscape`() {
         // Pair(Width, Height)
         val scaledSizes = calculateForSizes(listOf(
-            Pair(1280, 720), // HD
-            Pair(1280, 960), // Landscape
-            Pair(3840, 2160), //UHD
-            Pair(3840, 2130)
+            Size(1280, 720), // HD
+            Size(1280, 960), // Landscape
+            Size(3840, 2160), //UHD
+            Size(3840, 2130)
         ))
         // assert correct size after conversion
         assertTrue(scaledSizes.all {
-            it.first <= 1280 && it.second <= 720
+            it.width <= 1280 && it.height <= 720
         })
     }
 
     @Test
     fun `test validateImageSize SD`() {
-        val (scaledWidth, scaledHeight) = reportIssueViewModel.calculateImageSize(480, 640)
+        val newSize = reportIssueViewModel.calculateImageSize(480, 640)
         // assert same ratio after conversion
-        assertEquals(3/4, scaledWidth/scaledHeight)
+        assertEquals(3/4, newSize.width/newSize.height)
         // assert correct size after conversion
-        assertEquals(480, scaledWidth)
-        assertEquals(640, scaledHeight)
+        assertEquals(480, newSize.width)
+        assertEquals(640, newSize.height)
     }
 
     @Test
     fun `test validateImageSize square image`() {
-        val (scaledWidth, scaledHeight) = reportIssueViewModel.calculateImageSize(2160, 2160)
+        val newSize = reportIssueViewModel.calculateImageSize(2160, 2160)
         // assert same ratio after conversion
-        assertEquals(1, scaledWidth/scaledHeight)
+        assertEquals(1, newSize.width/newSize.height)
         // assert correct size after conversion
-        assertEquals(720, scaledWidth)
-        assertEquals(720, scaledHeight)
+        assertEquals(720, newSize.width)
+        assertEquals(720, newSize.height)
     }
 
-    private fun calculateForSizes(imageSizes: List<Pair<Int, Int>>): List<Pair<Int, Int>> {
-        val result: MutableList<Pair<Int, Int>> = mutableListOf()
+    private fun calculateForSizes(imageSizes: List<Size>): List<Size> {
+        val result: MutableList<Size> = mutableListOf()
         for(p in imageSizes) {
-            val (scaledWidth, scaledHeight) = reportIssueViewModel.calculateImageSize(p.first, p.second)
+            val newSize = reportIssueViewModel.calculateImageSize(p.width, p.height)
             // assert same ratio after conversion
-            assertEquals(p.first/p.second, scaledWidth/scaledHeight)
-            result.add(Pair(scaledWidth, scaledHeight))
+            assertEquals(p.width/p.height, newSize.width/newSize.height)
+            result.add(Size(newSize.width, newSize.height))
         }
         return result
     }
