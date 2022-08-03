@@ -54,3 +54,4 @@ class OnboardingActivity : AppCompatActivity() {
         const val SHOW_LAST_ONBOARDING_STEP = "show_last_onboarding_step"
     }
 }
+

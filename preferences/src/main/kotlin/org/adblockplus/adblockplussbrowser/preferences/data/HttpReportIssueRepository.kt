@@ -23,16 +23,19 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
+import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
 import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData
 import org.xmlpull.v1.XmlSerializer
 import ru.gildor.coroutines.okhttp.await
 import timber.log.Timber
+import java.io.IOException
 import java.io.StringWriter
+import java.lang.Exception
+import java.net.HttpURLConnection.HTTP_OK
 import java.net.URL
 import java.util.Locale
 import java.util.UUID
 import javax.inject.Inject
-import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
 
 
 class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
@@ -79,7 +82,7 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
             return "Send error"
         }
 
-        return if (response.code == 200) {
+        return if (response.code == HTTP_OK) {
             ""
         } else {
             "HTTP returned ${response.code}"
@@ -89,6 +92,7 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
     private fun makeXML(data: ReportIssueData): String {
         val writer = StringWriter()
         val serializer: XmlSerializer = Xml.newSerializer()
+        var result: String
         try {
             serializer.setOutput(writer)
             serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true)
@@ -144,10 +148,21 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
             serializer.endTag(null, "report")
             serializer.endDocument()
             serializer.flush()
-        } catch (e: Exception) {
-            return ""
+            result = writer.toString()
+        } catch (e: IOException) {
+            result = handleSerializerError(e)
+        } catch (e: IllegalArgumentException) {
+            result =  handleSerializerError(e)
+        } catch (e: IllegalStateException) {
+            result = handleSerializerError(e)
         }
-        return writer.toString()
+
+        return result
+    }
+
+    private fun handleSerializerError(e: Exception): String {
+        Timber.e(e)
+        return ""
     }
 
     companion object {

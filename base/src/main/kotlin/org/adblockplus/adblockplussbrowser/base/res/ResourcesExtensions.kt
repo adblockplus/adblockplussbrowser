@@ -28,3 +28,4 @@ val Configuration.localeCompat: Locale
         @Suppress("DEPRECATION")
         this.locale
     }
+

@@ -21,3 +21,4 @@ class WorkerParameters(
     val tags: MutableList<String> = mutableListOf(),
     var runAttemptCount: Int = 1
 )
+

@@ -121,3 +121,4 @@ internal object CoreModule {
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class CorePreferences
+

@@ -60,3 +60,4 @@ internal fun WorkRequest.Builder<OneTimeWorkRequest.Builder, OneTimeWorkRequest>
     this.setBackoffCriteria(BackoffPolicy.EXPONENTIAL, duration.inWholeSeconds, TimeUnit.SECONDS)
     return this
 }
+

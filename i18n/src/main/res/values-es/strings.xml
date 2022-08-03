@@ -51,7 +51,7 @@
     <string name="onboarding_welcome_language_filters_title">Listas de filtros específicos según el idioma</string>
     <string name="onboarding_welcome_language_filters_description">Bloquea más anuncios optimizando ABP en los idiomas en los que navegas normalmente</string>
 
-    <string name="onboarding_acceptable_ads_header_title1">Participa</string>
+    <string name="onboarding_acceptable_ads_header_title1">Participa en</string>
     <string name="onboarding_acceptable_ads_header_title3">y ayuda a los creadores de contenido</string>
     <string name="onboarding_acceptable_ads_annoying_ads_title">Los anuncios molestos siempre se bloquean</string>
     <string name="onboarding_acceptable_ads_annoying_ads_description">Los anuncios molestos que te distraen del contenido que te interesa siempre se bloquearán</string>
@@ -96,6 +96,7 @@
     <string name="other_subscriptions_custom_category">Listas de filtros personalizadas activas</string>
     <string name="other_subscriptions_add_custom_title">Añadir lista de filtros personalizada</string>
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
+    <string name="file_manager_not_found_message">Instala un administrador de archivos</string>
     <string name="delete_dialog_title">Confirmar eliminación</string>
     <string name="other_subscriptions_remove_custom_message">¿Estás seguro de que quieres eliminar la lista de filtros personalizada de %s?</string>
     <string name="other_subscriptions_error_add_custom">Error al añadir la lista de filtros personalizada</string>
@@ -104,9 +105,11 @@
     <string name="allowlist_delete_dialog_message">¿Estás seguro/a de que lo quieres eliminar %s de la lista de elementos permitidos?</string>
     <string name="acceptable_ads_enabled_line2">Al mantener Anuncios Aceptables activado, estás ayudando a que los creadores de contenido publiquen su contenido gratuitamente</string>
     <string name="acceptable_ads_disabled">No. Me gustaría desactivar los Anuncios Aceptables</string>
-    <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
+    <string name="allow_updates_on_mobile_data_connection">Permitir las actualizaciones con la conexión de datos móviles</string>
+    <string name="automatic_update_checkbox_hint">Las actualizaciones automáticas utilizarán tus datos móviles \ncuando no estés conectado/a a una wifi</string>
     <string name="about_privacy_policy"><a href="https://adblockplus.org/privacy">Política de privacidad</a></string>
     <string name="about_terms_of_use"><a href="https://adblockplus.org/terms">Términos de uso</a></string>
+    <string name="no_browser_found">No se ha encontrado un navegador en este dispositivo</string>
     <string name="about_imprint">Pie de imprenta</string>
     <string name="open_source_licenses">Licencias de código abierto</string>
     <string name="version">Versión</string>
@@ -118,13 +121,14 @@
     <string name="languages_onboarding_option_add">Añadir otro idioma de bloqueo de anuncios.</string>
     <string name="languages_onboarding_option_skip">No, gracias. Solo navego en un idioma.</string>
     <string name="delete_swipe_hint">Para eliminar una entrada, deslízala hacia la izquierda.</string>
+    <string name="crystal_disabled_whitelist">Esta función se eliminará de Crystal en la próxima versión.\nSi deseas seguir usando esta función, pásate <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">a AdBlock para Internet de Samsung.</a>Mientras tanto, conservaremos la lista de elementos permitidos que hayas creado.</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">Símbolo de viñeta</string>
 
     <!-- settings -->
-    <string name="block_additional_tracking">Bloquear rastreo adicional</string>
-    <string name="block_social_media_tracking">Bloquear el rastreo de los iconos de redes sociales</string>
+    <string name="block_additional_tracking">Bloquear el seguimiento adicional</string>
+    <string name="block_social_media_tracking">Bloquear el seguimiento de los iconos de redes sociales</string>
     <!-- /settings -->
 
     <!-- Issue reporter -->

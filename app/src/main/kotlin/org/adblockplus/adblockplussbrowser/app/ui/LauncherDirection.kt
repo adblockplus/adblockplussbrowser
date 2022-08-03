@@ -42,3 +42,4 @@ internal fun Activity.navigate(direction: LauncherDirection, showLastStepOnboard
     this.startActivity(intent)
     this.finish()
 }
+

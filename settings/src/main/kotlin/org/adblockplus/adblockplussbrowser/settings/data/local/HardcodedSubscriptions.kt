@@ -17,10 +17,7 @@
 
 package org.adblockplus.adblockplussbrowser.settings.data.local
 
-import android.content.Context
-import org.adblockplus.adblockplussbrowser.settings.R
-
-internal class HardcodedSubscriptions(private val context: Context) {
+internal class HardcodedSubscriptions {
 
     val easylist = subscription {
         url = "https://easylist-downloads.adblockplus.org/easylist.txt"
@@ -30,6 +27,11 @@ internal class HardcodedSubscriptions(private val context: Context) {
     val acceptableAds = subscription {
         title = "Acceptable Ads"
         url = "https://easylist-downloads.adblockplus.org/exceptionrules.txt"
+    }
+
+    val testPages = subscription {
+        title = "Samsung Test Case ABP"
+        url = "https://testpages.adblockplus.org/en/abp-testcase-subscription.txt"
     }
 
     // Based on: https://gitlab.com/eyeo/adblockplus/adblockpluscore/-/blob/next/data/subscriptions.json
@@ -124,10 +126,12 @@ internal class HardcodedSubscriptions(private val context: Context) {
 
     val additionalTracking = subscription {
         url = "https://easylist-downloads.adblockplus.org/easyprivacy.txt"
+        title = "Additional Tracking Subscription"
     }
 
     val socialMediaTracking = subscription {
         url = "https://easylist-downloads.adblockplus.org/fanboy-social.txt"
+        title = "Social Media Tracking Subscription"
     }
     val defaultOtherSubscriptions = listOf(additionalTracking, socialMediaTracking)
 
@@ -219,3 +223,4 @@ internal class HardcodedSubscriptions(private val context: Context) {
         )
     }
 }
+

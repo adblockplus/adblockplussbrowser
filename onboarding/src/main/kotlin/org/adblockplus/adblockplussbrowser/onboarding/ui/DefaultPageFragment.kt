@@ -62,3 +62,4 @@ internal class DefaultPageFragment :
         }
     }
 }
+

@@ -33,25 +33,25 @@ import kotlin.math.max
 private fun Any.getAttribute(attr: String): String = (this as Node).attribute(attr).toString()
 
 // Xml features names
-private object xmlParserFeatures {
+private object XmlParserFeatures {
     const val DISALLOW_DOCTYPE_DECL = "http://apache.org/xml/features/disallow-doctype-decl"
     const val LOAD_EXTERNAL_DTD = "http://apache.org/xml/features/nonvalidating/load-external-dtd"
 }
 
 // JaCoCo reports strings
-private object jacocoReport {
+private object JacocoReport {
 
-    object tags {
+    object Tags {
         const val COUNTER = "counter"
     }
 
-    object attrNames {
+    object AttrNames {
         const val TYPE = "type"
         const val COVERED = "covered"
         const val MISSED = "missed"
     }
 
-    object attrValues {
+    object AttrValues {
         const val INSTRUCTION = "INSTRUCTION"
     }
 }
@@ -76,13 +76,13 @@ open class CheckCoverageTask: DefaultTask() {
      * The JaCoCo coverage report to parse
      */
     @InputFile
-    public lateinit var coverageFile: File
+    lateinit var coverageFile: File
 
     /**
      * The desired instructions coverage percentage expressed as a float between 0 and 1. Default 1
      */
     @Input
-    public var threshold: Float = 1F
+    var threshold: Float = 1F
 
     init {
         doLast {
@@ -94,20 +94,20 @@ open class CheckCoverageTask: DefaultTask() {
             }
 
             val parser = XmlParser()
-            parser.setFeature(xmlParserFeatures.DISALLOW_DOCTYPE_DECL, false)
-            parser.setFeature(xmlParserFeatures.LOAD_EXTERNAL_DTD, false);
+            parser.setFeature(XmlParserFeatures.DISALLOW_DOCTYPE_DECL, false)
+            parser.setFeature(XmlParserFeatures.LOAD_EXTERNAL_DTD, false)
             val coverageXml = parser.parse(coverageFile)
 
-            val counter = (coverageXml.get(jacocoReport.tags.COUNTER) as NodeList).find {
-                (it as Node).attribute(jacocoReport.attrNames.TYPE).equals(jacocoReport.attrValues.INSTRUCTION)
+            val counter = (coverageXml.get(JacocoReport.Tags.COUNTER) as NodeList).find {
+                (it as Node).attribute(JacocoReport.AttrNames.TYPE).equals(JacocoReport.AttrValues.INSTRUCTION)
             }
             if (counter == null) {
-                error(  "Can't find a <${jacocoReport.tags.COUNTER}> tag with " +
-                        "${jacocoReport.attrNames.TYPE} equal to \"${jacocoReport.attrValues.INSTRUCTION}\"")
+                error(  "Can't find a <${JacocoReport.Tags.COUNTER}> tag with " +
+                        "${JacocoReport.AttrNames.TYPE} equal to \"${JacocoReport.AttrValues.INSTRUCTION}\"")
             }
 
-            val missed = counter.getAttribute(jacocoReport.attrNames.MISSED).toFloat()
-            val covered = counter.getAttribute(jacocoReport.attrNames.COVERED).toFloat()
+            val missed = counter.getAttribute(JacocoReport.AttrNames.MISSED).toFloat()
+            val covered = counter.getAttribute(JacocoReport.AttrNames.COVERED).toFloat()
             val percentage = covered / max(1F, missed + covered)
 
             if (percentage < threshold) {

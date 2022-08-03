@@ -54,30 +54,7 @@ internal class ReportIssueFragment :
         binding.viewModel = viewModel
         val lifecycleOwner = this.viewLifecycleOwner
 
-        viewModel.returnedString.observe(this) {
-            hideProgressBar()
-            when (viewModel.returnedString.value) {
-                REPORT_ISSUE_FRAGMENT_SCREENSHOT_READ_SUCCESS -> {
-                    validateData()
-                    Timber.d("ReportIssue Screenshot read success")
-                }
-                REPORT_ISSUE_FRAGMENT_SEND_SUCCESS -> {
-                    val direction =
-                        ReportIssueFragmentDirections.actionReportIssueFragmentToMainPreferencesFragment()
-                    findNavController().navigate(direction)
-                    Toast.makeText(
-                        context,
-                        REPORT_ISSUE_FRAGMENT_SEND_SUCCESS_MESSAGE,
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-                else -> {
-                    Toast.makeText(context, viewModel.returnedString.value, Toast.LENGTH_LONG)
-                        .show()
-                    validateData()
-                }
-            }
-        }
+        handleReportStatus()
 
         viewModel.screenshot.observe(this){
             with(binding.screenshotPreview) {
@@ -141,6 +118,33 @@ internal class ReportIssueFragment :
         validateData()
     }
 
+    private fun handleReportStatus() {
+        viewModel.returnedString.observe(this) {
+            hideProgressBar()
+            when (viewModel.returnedString.value) {
+                REPORT_ISSUE_FRAGMENT_SCREENSHOT_READ_SUCCESS -> {
+                    validateData()
+                    Timber.d("ReportIssue Screenshot read success")
+                }
+                REPORT_ISSUE_FRAGMENT_SEND_SUCCESS -> {
+                    val direction =
+                        ReportIssueFragmentDirections.actionReportIssueFragmentToMainPreferencesFragment()
+                    findNavController().navigate(direction)
+                    Toast.makeText(
+                        context,
+                        REPORT_ISSUE_FRAGMENT_SEND_SUCCESS_MESSAGE,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                else -> {
+                    Toast.makeText(context, viewModel.returnedString.value, Toast.LENGTH_LONG)
+                        .show()
+                    validateData()
+                }
+            }
+        }
+    }
+
     private fun MaterialTextView.addMandatoryMark() {
         this.text = buildSpannedString { append(text).color(Color.RED) { append(MANDATORY_MARK) } }
     }
@@ -165,7 +169,7 @@ internal class ReportIssueFragment :
                 val unresolvedUri = intent?.data?.toString()
                 if (unresolvedUri != null) {
                     lifecycleScope.launch {
-                        viewModel.processImage(unresolvedUri)
+                        viewModel.processImage(unresolvedUri, activity)
                     }
                 } else {
                     viewModel.data.screenshot = ""
