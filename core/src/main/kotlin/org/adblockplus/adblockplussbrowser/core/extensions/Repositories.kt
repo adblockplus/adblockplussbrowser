@@ -33,3 +33,4 @@ internal suspend fun CoreRepository.currentData(): CoreData =
 
 internal suspend fun CoreRepository.currentSavedState(): SavedState =
     currentData().lastState
+

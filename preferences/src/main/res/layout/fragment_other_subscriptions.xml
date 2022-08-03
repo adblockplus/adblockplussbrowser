@@ -52,14 +52,14 @@
                     layout="@layout/other_subscriptions_additional_tracking_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:viewModel="@{viewModel}"/>
+                    app:viewModel="@{viewModel}" />
 
                 <include
                     android:id="@+id/social_media_tracking"
                     layout="@layout/other_subscriptions_social_media_tracking_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:viewModel="@{viewModel}"/>
+                    app:viewModel="@{viewModel}" />
 
                 <View
                     android:id="@+id/other_subscriptions_default_item_divider"
@@ -80,10 +80,10 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/other_subscriptions_list"
                     style="@style/PreferenceScreen"
-                    android:paddingTop="0dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
+                    android:paddingTop="0dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/other_subscriptions_custom_item" />
 
@@ -93,21 +93,32 @@
                     gone="@{viewModel.customSubscriptions.empty}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:layout_margin="32dp"
                     android:drawableStart="@drawable/outline_info_24"
                     android:drawablePadding="2dip"
-                    android:layout_gravity="center_horizontal"
                     android:text="@string/delete_swipe_hint" />
 
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
 
+        <com.leinardi.android.speeddial.SpeedDialView
+            android:id="@+id/speedDial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:visibility="gone"
+            android:backgroundTint="@color/ribbon"
+            app:layout_behavior="@string/speeddial_scrolling_view_snackbar_behavior"
+            app:sdMainFabClosedSrc="@drawable/ic_baseline_add_24" />
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/other_subscriptions_add_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
+            android:visibility="gone"
             android:layout_margin="16dp"
             android:backgroundTint="@color/ribbon"
             android:contentDescription="@string/other_subscriptions_add_custom_title"

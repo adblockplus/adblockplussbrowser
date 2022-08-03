@@ -32,7 +32,6 @@ buildscript {
         classpath(Deps.Firebase.GOOGLE_SERVICES)
         classpath(Deps.Firebase.CRASHLYTICS_GRADLE)
         classpath(Deps.JACOCO_CORE)
-        classpath(Deps.JACOBO_PLUGIN)
     }
 }
 
@@ -54,6 +53,7 @@ detekt {
         exclude(".gradle")
     })
     parallel = true
+    buildUponDefaultConfig = true
     config = files("${projectDir}/config/detekt/detekt.yml")
     baseline = file("${projectDir}/config/detekt/detekt-baseline.xml")
 
@@ -96,3 +96,4 @@ tasks.named<com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask>("
         }
     }
 }
+

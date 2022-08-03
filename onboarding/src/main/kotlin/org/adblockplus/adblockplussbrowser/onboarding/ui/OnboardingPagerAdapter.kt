@@ -46,3 +46,4 @@ internal class OnboardingPagerAdapter(fragment: Fragment) :
             oldItem == newItem
     }
 }
+

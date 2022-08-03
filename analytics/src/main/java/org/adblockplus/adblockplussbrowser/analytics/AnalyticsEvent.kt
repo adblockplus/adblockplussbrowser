@@ -50,9 +50,15 @@ enum class AnalyticsEvent(val eventName: String) {
     SOCIAL_MEDIA_BUTTONS_OFF("social_media_buttons_off"),
 
     /**
-     * The user adds manually a custom filter list.
+     * The user adds manually a custom filter list from url.
      */
-    CUSTOM_FILTER_LIST_ADDED("custom_filter_list_added"),
+    CUSTOM_FILTER_LIST_ADDED_FROM_URL("custom_filter_list_added_from_url"),
+
+
+    /**
+     * The user adds manually a custom filter list from file.
+     */
+    CUSTOM_FILTER_LIST_ADDED_FROM_FILE("custom_filter_list_added_from_file"),
 
     /**
      * The user removes a custom filter list.
@@ -143,5 +149,22 @@ enum class AnalyticsEvent(val eventName: String) {
      * Event sent when device device is not supported.
      * There is no play store, galaxy store and any browser.
      */
-    DEVICE_NOT_SUPPORTED("device_not_supported")
+    DEVICE_NOT_SUPPORTED("device_not_supported"),
+
+    /**
+     * The event is sent when the device file manager returns the wrong
+     * result when loading custom filters as a result of user canceling this operation
+     * or wrong result from file picker.
+     */
+    DEVICE_FILE_MANAGER_NOT_SUPPORTED_OR_CANCELED("device_file_manager_not_supported_or_canceled"),
+
+    /**
+     * The user has chosen to load custom filter list from url.
+     */
+    LOAD_CUSTOM_FILTER_LIST_FROM_URL("load_custom_filter_list_from_url"),
+
+    /**
+     * The user has chosen to load custom filter list from file.
+     */
+    LOAD_CUSTOM_FILTER_LIST_FROM_FILE("load_custom_filter_list_from_file")
 }

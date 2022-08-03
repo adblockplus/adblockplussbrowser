@@ -22,6 +22,7 @@ import android.content.SharedPreferences
 import androidx.datastore.core.DataMigration
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.adblockplus.adblockplussbrowser.base.data.model.CustomSubscriptionType
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.settings.data.local.SubscriptionsDataSource
 import org.adblockplus.adblockplussbrowser.settings.data.proto.ProtoSettings
@@ -106,7 +107,14 @@ internal class ProtoSettingsMigration(
                 if (otherSubscription != null) {
                     otherSubscriptions.add(otherSubscription.toProtoSubscription())
                 } else {
-                    otherSubscriptions.add(Subscription(url, url, 0L).toProtoSubscription())
+                    otherSubscriptions.add(
+                        Subscription(
+                            url,
+                            url,
+                            0L,
+                            CustomSubscriptionType.FROM_URL
+                        ).toProtoSubscription()
+                    )
                 }
             }
         }
@@ -133,7 +141,7 @@ internal class ProtoSettingsMigration(
             DataInputStream(BufferedInputStream(GZIPInputStream(FileInputStream(file)))).use { stream ->
                 val url = stream.readUTF()
                 val numEntries = stream.readInt()
-                for (i in 0 until numEntries) {
+                repeat(numEntries) {
                     val key = stream.readUTF()
                     val value = stream.readUTF()
                     if (key == "_enabled") {
@@ -152,24 +160,42 @@ internal class ProtoSettingsMigration(
         when (this) {
             // We are now using the language subscription lists without embedding easylist to save data, but there are
             // a few lists (liste_ar+liste_fr and ruadlist+easylist) that we still ship with easylist embedded
-            "https://easylist-downloads.adblockplus.org/abpindo+easylist.txt" -> "https://easylist-downloads.adblockplus.org/abpindo.txt"
-            "https://easylist-downloads.adblockplus.org/abpvn+easylist.txt" -> "https://easylist-downloads.adblockplus.org/abpvn.txt"
-            "https://easylist-downloads.adblockplus.org/bulgarian_list+easylist.txt" -> "https://easylist-downloads.adblockplus.org/bulgarian_list.txt"
-            "https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt" -> "https://easylist-downloads.adblockplus.org/easylistchina.txt"
-            "https://easylist-downloads.adblockplus.org/easylistczechslovak+easylist.txt" -> "https://easylist-downloads.adblockplus.org/easylistczechslovak.txt"
-            "https://easylist-downloads.adblockplus.org/easylistdutch+easylist.txt" -> "https://easylist-downloads.adblockplus.org/easylistdutch.txt"
-            "https://easylist-downloads.adblockplus.org/easylistgermany+easylist.txt" -> "https://easylist-downloads.adblockplus.org/easylistgermany.txt"
-            "https://easylist-downloads.adblockplus.org/israellist+easylist.txt" -> "https://easylist-downloads.adblockplus.org/israellist.txt"
-            "https://easylist-downloads.adblockplus.org/easylistitaly+easylist.txt" -> "https://easylist-downloads.adblockplus.org/easylistitaly.txt"
-            "https://easylist-downloads.adblockplus.org/easylistlithuania+easylist.txt" -> "https://easylist-downloads.adblockplus.org/easylistlithuania.txt"
-            "https://easylist-downloads.adblockplus.org/easylistpolish+easylist.txt" -> "https://easylist-downloads.adblockplus.org/easylistpolish.txt"
-            "https://easylist-downloads.adblockplus.org/easylistportuguese+easylist.txt" -> "https://easylist-downloads.adblockplus.org/easylistportuguese.txt"
-            "https://easylist-downloads.adblockplus.org/easylistspanish+easylist.txt" -> "https://easylist-downloads.adblockplus.org/easylistspanish.txt"
-            "https://easylist-downloads.adblockplus.org/indianlist+easylist.txt" -> "https://easylist-downloads.adblockplus.org/indianlist.txt"
-            "https://easylist-downloads.adblockplus.org/koreanlist+easylist.txt" -> "https://easylist-downloads.adblockplus.org/koreanlist.txt"
-            "https://easylist-downloads.adblockplus.org/latvianlist+easylist.txt" -> "https://easylist-downloads.adblockplus.org/latvianlist.txt"
-            "https://easylist-downloads.adblockplus.org/liste_fr+easylist.txt" -> "https://easylist-downloads.adblockplus.org/liste_fr.txt"
-            "https://easylist-downloads.adblockplus.org/rolist+easylist.txt" -> "https://easylist-downloads.adblockplus.org/rolist.txt"
+            "https://easylist-downloads.adblockplus.org/abpindo+easylist.txt" ->
+                "https://easylist-downloads.adblockplus.org/abpindo.txt"
+            "https://easylist-downloads.adblockplus.org/abpvn+easylist.txt" ->
+                "https://easylist-downloads.adblockplus.org/abpvn.txt"
+            "https://easylist-downloads.adblockplus.org/bulgarian_list+easylist.txt" ->
+                "https://easylist-downloads.adblockplus.org/bulgarian_list.txt"
+            "https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt" ->
+                "https://easylist-downloads.adblockplus.org/easylistchina.txt"
+            "https://easylist-downloads.adblockplus.org/easylistczechslovak+easylist.txt" ->
+                "https://easylist-downloads.adblockplus.org/easylistczechslovak.txt"
+            "https://easylist-downloads.adblockplus.org/easylistdutch+easylist.txt" ->
+                "https://easylist-downloads.adblockplus.org/easylistdutch.txt"
+            "https://easylist-downloads.adblockplus.org/easylistgermany+easylist.txt" ->
+                "https://easylist-downloads.adblockplus.org/easylistgermany.txt"
+            "https://easylist-downloads.adblockplus.org/israellist+easylist.txt" ->
+                "https://easylist-downloads.adblockplus.org/israellist.txt"
+            "https://easylist-downloads.adblockplus.org/easylistitaly+easylist.txt" ->
+                "https://easylist-downloads.adblockplus.org/easylistitaly.txt"
+            "https://easylist-downloads.adblockplus.org/easylistlithuania+easylist.txt" ->
+                "https://easylist-downloads.adblockplus.org/easylistlithuania.txt"
+            "https://easylist-downloads.adblockplus.org/easylistpolish+easylist.txt" ->
+                "https://easylist-downloads.adblockplus.org/easylistpolish.txt"
+            "https://easylist-downloads.adblockplus.org/easylistportuguese+easylist.txt" ->
+                "https://easylist-downloads.adblockplus.org/easylistportuguese.txt"
+            "https://easylist-downloads.adblockplus.org/easylistspanish+easylist.txt" ->
+                "https://easylist-downloads.adblockplus.org/easylistspanish.txt"
+            "https://easylist-downloads.adblockplus.org/indianlist+easylist.txt" ->
+                "https://easylist-downloads.adblockplus.org/indianlist.txt"
+            "https://easylist-downloads.adblockplus.org/koreanlist+easylist.txt" ->
+                "https://easylist-downloads.adblockplus.org/koreanlist.txt"
+            "https://easylist-downloads.adblockplus.org/latvianlist+easylist.txt" ->
+                "https://easylist-downloads.adblockplus.org/latvianlist.txt"
+            "https://easylist-downloads.adblockplus.org/liste_fr+easylist.txt" ->
+                "https://easylist-downloads.adblockplus.org/liste_fr.txt"
+            "https://easylist-downloads.adblockplus.org/rolist+easylist.txt" ->
+                "https://easylist-downloads.adblockplus.org/rolist.txt"
             // We don't migrate AA as a subscription. We have a special field for it
             "https://easylist-downloads.adblockplus.org/exceptionrules.txt" -> null
             // We don't migrate notification.json as a subscription
@@ -177,3 +203,4 @@ internal class ProtoSettingsMigration(
             else -> this
         }
 }
+

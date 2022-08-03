@@ -26,3 +26,4 @@ fun AppCompatActivity.navControllerFromFragmentContainerView(@IdRes viewId: Int)
     val navHostFragment = this.supportFragmentManager.findFragmentById(viewId) as NavHostFragment
     return navHostFragment.navController
 }
+

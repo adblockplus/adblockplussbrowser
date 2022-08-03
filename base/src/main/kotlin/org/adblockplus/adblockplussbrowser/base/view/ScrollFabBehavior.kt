@@ -64,3 +64,4 @@ class ScrollFabBehavior(context: Context, attrs: AttributeSet) : FloatingActionB
         }
     }
 }
+

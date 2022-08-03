@@ -30,6 +30,8 @@ interface SettingsRepository {
 
     suspend fun getAcceptableAdsSubscription(): Subscription
 
+    suspend fun getTestPagesSubscription(): Subscription
+
     suspend fun getDefaultPrimarySubscriptions(): List<Subscription>
 
     suspend fun getDefaultOtherSubscriptions(): List<Subscription>

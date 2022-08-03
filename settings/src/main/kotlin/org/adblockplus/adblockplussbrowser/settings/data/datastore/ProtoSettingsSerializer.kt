@@ -33,3 +33,4 @@ internal class ProtoSettingsSerializer: Serializer<ProtoSettings> {
     @Suppress("BlockingMethodInNonBlockingContext")
     override suspend fun writeTo(t: ProtoSettings, output: OutputStream) = t.writeTo(output)
 }
+

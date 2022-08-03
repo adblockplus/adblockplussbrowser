@@ -34,3 +34,4 @@ internal fun List<Any>.layoutForIndex(index: Int): GroupItemLayout =
             else -> GroupItemLayout.CENTER
         }
     }
+

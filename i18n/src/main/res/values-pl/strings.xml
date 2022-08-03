@@ -20,7 +20,7 @@
     <string name="app_name">ABP dla Samsung Internet</string>
     <string name="app_subtitle">dla Samsung Internet</string>
     <string name="samsung_internet_required_title">Wymagany Samsung Internet</string>
-    <string name="samsung_internet_required_description">ABP to aplikacja, która działa w tle Samsung Internet, aby filtrować reklamy podczas korzystania z przeglądarki. Aby ABP był skuteczny, musisz zainstalować na swoim urządzeniu przeglądarkę Samsung Internet 4.0 lub nowszą.\nMożesz pobrać przeglądarkę Samsung Internet, wciskając poniższy przycisk.</string>
+    <string name="samsung_internet_required_description">ABP to aplikacja, która działa w tle Samsung Internet oraz filtruje reklamy podczas korzystania z przeglądarki. Aby ABP była skuteczna, musisz zainstalować na swoim urządzeniu przeglądarkę Samsung Internet 4.0 lub nowszą.\nMożesz pobrać przeglądarkę Samsung Internet, wciskając poniższy przycisk.</string>
     <string name="download_samsung_internet">Pobierz Samsung Internet</string>
     <string name="update_status_progress_message">Pobieram aktualizacje list filtrów…</string>
     <string name="update_status_error_message">Błąd aktualizacji: Spróbuj ponownie</string>
@@ -47,7 +47,7 @@
     <string name="onboarding_welcome_tracking_protection_title">Ochrona przed śledzeniem</string>
     <string name="onboarding_welcome_tracking_protection_description">Przeglądaj bezpieczniej, uniemożliwiając witrynom śledzenie Cię w sieci</string>
     <string name="onboarding_welcome_security_privacy_title">Większe bezpieczeństwo i prywatność</string>
-    <string name="onboarding_welcome_security_privacy_description">Przeglądaj bez obaw dzięki ABP, który chroni Cię w tle</string>
+    <string name="onboarding_welcome_security_privacy_description">Przeglądaj bez obaw dzięki ABP, która chroni Cię w tle</string>
     <string name="onboarding_welcome_language_filters_title">Listy filtrów specyficzne dla języka</string>
     <string name="onboarding_welcome_language_filters_description">Blokuj więcej reklam, optymalizując ABP pod kątem języków, w których zwykle przeglądasz strony</string>
 
@@ -72,7 +72,7 @@
     <!-- preferences -->
     <string name="preferences_ad_blocking_category">Dodaj opcje blokowania</string>
     <string name="preferences_primary_subscriptions_title">Język</string>
-    <string name="preferences_primary_subscriptions_summary">Blokuj więcej reklam, optymalizując ABP pod kątem języka/języków, w których zwykle przeglądasz strony</string>
+    <string name="preferences_primary_subscriptions_summary">Blokuj więcej reklam, optymalizując ABP pod kątem języka(ów), w których zwykle przeglądasz strony</string>
     <string name="preferences_other_subscriptions_title">Więcej opcji blokowania</string>
     <string name="preferences_other_subscriptions_summary">Usuń śledzenie, przyciski mediów społecznościowych lub dodaj niestandardowe listy filtrów</string>
     <string name="preferences_allowlist_title">Dodaj witryny do listy dozwolonych</string>
@@ -96,6 +96,7 @@
     <string name="other_subscriptions_custom_category">Aktywne listy filtrów niestandardowych</string>
     <string name="other_subscriptions_add_custom_title">Dodaj niestandardową listę filtrów</string>
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
+    <string name="file_manager_not_found_message">Proszę zainstalować menedżera plików</string>
     <string name="delete_dialog_title">Potwierdź usunięcie</string>
     <string name="other_subscriptions_remove_custom_message">Czy na pewno chcesz usunąć listę filtrów niestandardowych z %s?</string>
     <string name="other_subscriptions_error_add_custom">Dodawanie niestandardowej listy filtrów</string>
@@ -104,27 +105,30 @@
     <string name="allowlist_delete_dialog_message">Czy na pewno chcesz usunąć %s z listy dozwolonych?</string>
     <string name="acceptable_ads_enabled_line2">Włączając opcję Akceptowalne reklamy, pomagasz twórcom publikować ich treści za darmo</string>
     <string name="acceptable_ads_disabled">Nie, chcę wyłączyć Akceptowalne reklamy</string>
-    <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
+    <string name="allow_updates_on_mobile_data_connection">Zezwalaj na aktualizacje przy użyciu danych komórkowych</string>
+    <string name="automatic_update_checkbox_hint">Aktualizacje automatyczne będą odbywać się \nprzy pomocy sieci komórkowych, nie Wi -Fi</string>
     <string name="about_privacy_policy"><a href="https://adblockplus.org/privacy">Zasady ochrony prywatności</a></string>
     <string name="about_terms_of_use"><a href="https://adblockplus.org/terms">Warunki użytkowania</a></string>
+    <string name="no_browser_found">Na tym urządzeniu nie znaleziono przeglądarki</string>
     <string name="about_imprint">Znak firmowy wydawcy</string>
     <string name="open_source_licenses">Licencje Open Source</string>
     <string name="version">Wersja</string>
-    <string name="share_events_header">Pomóż ulepszyć ABP</string>
+    <string name="share_events_header">Pomóż poprawić ABP</string>
     <string name="share_events_title">Udostępniaj anonimowe dane</string>
     <string name="share_events_description">Anonimowe dane pomagają nam ulepszyć ABP, zapewniając w ten sposób lepsze wrażenia z przeglądania.</string>
     <string name="share_events_consent">Tak, udostępnię niektóre anonimowe dane.</string>
     <string name="languages_onboarding_title">Przeglądasz w wielu językach?</string>
     <string name="languages_onboarding_option_add">Dodaj dodatkowy język blokowania reklam.</string>
     <string name="languages_onboarding_option_skip">Nie, dziękuję, przeglądam tylko w jednym języku.</string>
-    <string name="delete_swipe_hint">Aby usunąć wpis, przesuń go palcem w lewo.</string>
+    <string name="delete_swipe_hint">Aby usunąć wpis, przesuń go w lewo.</string>
+    <string name="crystal_disabled_whitelist">Ta funkcja zostanie usunięta z Crystal w następnej wersji.\nJeśli chcesz nadal korzystać z tej funkcji, przełącz się na używanie <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">AdBlock dla Samsung Internet</a>.Jednocześnie zachowujemy stworzoną przez Ciebie listę dozwolonych.</string>
 
     <!-- image descriptions -->
-    <string name="image_bullet">Symbol znacznika listy</string>
+    <string name="image_bullet">Symbol punktu</string>
 
     <!-- settings -->
-    <string name="block_additional_tracking">Blokowanie dodatkowych mechanizmów śledzenia</string>
-    <string name="block_social_media_tracking">Blokowanie śledzenia przez media społecznościowe</string>
+    <string name="block_additional_tracking">Zablokuj dodatkowe śledzenie</string>
+    <string name="block_social_media_tracking">Zablokuj ikony śledzenia w mediach społecznościowych</string>
     <!-- /settings -->
 
     <!-- Issue reporter -->

@@ -17,7 +17,7 @@
   -->
 
 <resources>
-    <string name="about_imprint_text" ><![CDATA[<br/>
+    <string name="about_imprint_text" translatable="false"><![CDATA[<br/>
         <p><strong>eyeo GmbH</strong>
             <br>Lichtstraße 25</br>
             <br>50825 Cologne</br>
@@ -34,7 +34,7 @@
         </p>
         <p>
             <b><strong>Managing Directors</strong></b>:
-            <br/>Till Faida
+            <br/>Frank Einecke
             <br/>Jutta Horstmann
         </p>]]></string>
 </resources>

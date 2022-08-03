@@ -17,10 +17,10 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">Samsung Internet 用 ABP</string>
+    <string name="app_name">Samsung Internet用ABP</string>
     <string name="app_subtitle">Samsung Internet 用</string>
     <string name="samsung_internet_required_title">Samsung Internet が必要です</string>
-    <string name="samsung_internet_required_description">ABP は、Samsung Internet で動作するアプリです。ABP を有効にするには、お使いのデバイスに Samsung Internet 4.0 以降がインストールされている必要があります。\nSamsung Internet ブラウザを入手するには、下のボタンをタップしてください。</string>
+    <string name="samsung_internet_required_description">ABP (Adblock Plus) は、Samsung Internet で動作するアプリです。ABP を有効にするには、お使いのデバイスに Samsung Internet 4.0 以降がインストールされている必要があります。\nSamsung Internet ブラウザを入手するには、下のボタンをタップしてください。</string>
     <string name="download_samsung_internet">Samsung Internet をダウンロード</string>
     <string name="update_status_progress_message">フィルターリストの更新を取得中…</string>
     <string name="update_status_error_message">更新エラー：もう一度お試しください</string>
@@ -47,9 +47,9 @@
     <string name="onboarding_welcome_tracking_protection_title">ラッキング保護</string>
     <string name="onboarding_welcome_tracking_protection_description">ウェブサイトによるユーザーの動きのトラッキングを防止し、より安全なブラウザ体験を提供</string>
     <string name="onboarding_welcome_security_privacy_title">セキュリティとプライバシーの向上</string>
-    <string name="onboarding_welcome_security_privacy_description">ABP がバックグラウンドで保護を提供するため、安心してブラウザ体験ができます</string>
+    <string name="onboarding_welcome_security_privacy_description">ABP のバックグラウンド処理による保護が、安心のブラウザ体験を提供します</string>
     <string name="onboarding_welcome_language_filters_title">言語特定フィルターリスト</string>
-    <string name="onboarding_welcome_language_filters_description">通常閲覧する言語に合わせて ABP を最適化することで、より多くの広告をブロックできます</string>
+    <string name="onboarding_welcome_language_filters_description">通常閲覧する言語に合わせて Adblock Plus を最適化することで、より多くの広告をブロックできます</string>
 
     <string name="onboarding_acceptable_ads_header_title1">コンテンツクリエーターに</string>
     <string name="onboarding_acceptable_ads_header_title3">協力し、サポートしましょう</string>
@@ -62,11 +62,12 @@
     <string name="onboarding_acceptable_ads_disable_description">\"一部の非侵入型の広告を許可する\"オプションをタップすることで、この設定を変更することができます</string>
 
     <string name="onboarding_enable_header_title1">その方法は次の通りです</string>
-    <string name="onboarding_enable_header_title2">ABP を有効にする</string>
+    <string name="onboarding_enable_header_title2">ABPを有効にする</string>
     <string name="onboarding_enable_one_step_title">あと１つのステップで完了です</string>
     <string name="onboarding_enable_one_step_description">Samsung Internet の Adblocker 設定で ABP を有効にする </string>
 
     <string name="open_samsung_internet">Samsung Internet を開く</string>
+
     <!-- /onboarding -->
 
     <!-- preferences -->
@@ -87,7 +88,7 @@
     <string name="preferences_acceptable_ads_title">一部の非侵入型の広告を許可する</string>
     <string name="preferences_acceptable_ads_summary">迷惑広告は常にブロックされますが、デフォルトでは一部の非侵入型の広告は表示されることで、コンテンツクリエーターはコンテンツを無料で公開できるようになります</string>
     <string name="preferences_acceptable_ads_action">はい。コンテンツクリエーターをサポートします</string>
-    <string name="preferences_about_title">ABP について</string>
+    <string name="preferences_about_title">Adblock Plus について</string>
     <string name="primary_subscriptions_active_category">次の言語でのブラウザ体験に最適化</string>
     <string name="primary_subscriptions_inactive_category">その他の言語</string>
     <string name="subscription_last_update">最終更新：%s</string>
@@ -96,7 +97,8 @@
     <string name="other_subscriptions_custom_category">有効カスタムフィルターリスト</string>
     <string name="other_subscriptions_add_custom_title">カスタムフィルターリストを追加</string>
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
-    <string name="delete_dialog_title">削除の確認</string>
+    <string name="file_manager_not_found_message">ファイルマネージャーをインストールしてください</string>
+    <string name="delete_dialog_title">削除を確認</string>
     <string name="other_subscriptions_remove_custom_message">%sからカスタムフィルターを削除しますか？</string>
     <string name="other_subscriptions_error_add_custom">カスタムフィルターリスト追加エラー</string>
     <string name="allowlist_add_title">ウェブサイトを許可リストに追加する</string>
@@ -104,27 +106,30 @@
     <string name="allowlist_delete_dialog_message">許可リストから%sを削除しますか？</string>
     <string name="acceptable_ads_enabled_line2">引き続き控えめな広告を有効にすることで、コンテンツクリエーターがコンテンツを無料で公開する支援をすることができます</string>
     <string name="acceptable_ads_disabled">いいえ。控えめな広告を無効にします</string>
-    <!-- Links to Privacy Policy and Terms are potentially translatable, so better to keep them here -->
+    <string name="allow_updates_on_mobile_data_connection">モバイルデータ接続での更新を許可する</string>
+    <string name="automatic_update_checkbox_hint">WiFiに接続されていないときは\nモバイルデータを使用して自動更新が行われます</string>
     <string name="about_privacy_policy"><a href="https://adblockplus.org/privacy">プライバシー方針</a></string>
     <string name="about_terms_of_use"><a href="https://adblockplus.org/terms">ご利用条件</a></string>
+    <string name="no_browser_found">このデバイスのブラウザが見つかりません</string>
     <string name="about_imprint">商標</string>
     <string name="open_source_licenses">オープンソースライセンス</string>
     <string name="version">バージョン</string>
-    <string name="share_events_header">ABP の改善にご協力ください</string>
+    <string name="share_events_header">ABP の品質改善に協力する</string>
     <string name="share_events_title">匿名化データを共有する</string>
-    <string name="share_events_description">匿名化データを共有してくださいますと、当社では ABP の改善に活用させてただき、皆様の良いブラウザ体験に貢献します。</string>
+    <string name="share_events_description">弊社とご共有いただいた匿名化データは、ABP の品質改善やブラウザ体験の向上に役立てさせていただきます。</string>
     <string name="share_events_consent">はい</string>
     <string name="languages_onboarding_title">複数の言語でウェブを閲覧しますか？</string>
     <string name="languages_onboarding_option_add">広告ブロック言語を追加する。</string>
     <string name="languages_onboarding_option_skip">いいえ。１つの言語だけで閲覧します。</string>
-    <string name="delete_swipe_hint">入力を消去するには、左へスワイプしてくだ さい。</string>
+    <string name="delete_swipe_hint">エントリーを削除するには、左にスワイプしてください。</string>
+    <string name="crystal_disabled_whitelist">新バージョンの Crystal ではこの機能が廃止予定となっています。\n引き続きこの機能の利用を希望される場合は <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">Samsung Internet用AdBlockに切り替えてください。</a>それまでは、ユーザー作成許可リストが保持されます。</string>
 
     <!-- image descriptions -->
-    <string name="image_bullet">項目記号</string>
+    <string name="image_bullet">ビュレット記号</string>
 
     <!-- settings -->
-    <string name="block_additional_tracking">追加のトラッキングをブロック</string>
-    <string name="block_social_media_tracking">ソーシャルメディア アイコン トラッキングのブロック</string>
+    <string name="block_additional_tracking">付加的な追跡をブロックする</string>
+    <string name="block_social_media_tracking">SNSアイコン追跡をブロックする</string>
     <!-- /settings -->
 
     <!-- Issue reporter -->
