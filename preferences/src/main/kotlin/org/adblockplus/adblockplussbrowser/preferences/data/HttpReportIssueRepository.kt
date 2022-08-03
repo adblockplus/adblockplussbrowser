@@ -23,21 +23,19 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
-import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
 import okhttp3.Response
+import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
 import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData
 import org.xmlpull.v1.XmlSerializer
 import ru.gildor.coroutines.okhttp.await
 import timber.log.Timber
 import java.io.IOException
 import java.io.StringWriter
-import java.lang.Exception
 import java.net.HttpURLConnection.HTTP_OK
 import java.net.URL
 import java.util.Locale
 import java.util.UUID
 import javax.inject.Inject
-import java.io.IOException
 
 
 class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
