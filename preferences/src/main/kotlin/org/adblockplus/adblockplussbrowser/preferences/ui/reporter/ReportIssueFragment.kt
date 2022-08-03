@@ -22,7 +22,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.provider.MediaStore
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.text.buildSpannedString
@@ -140,8 +139,7 @@ internal class ReportIssueFragment :
                     Timber.d("Send error")
                 }
                 else -> {
-                    Toast.makeText(context, viewModel.returnedString.value, Toast.LENGTH_LONG)
-                        .show()
+                    binding.screenshotPreview.processingImageBar.visibility = View.GONE
                     validateData()
                 }
             }

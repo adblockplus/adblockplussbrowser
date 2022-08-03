@@ -24,6 +24,7 @@ import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
+import android.os.ParcelFileDescriptor
 import android.provider.MediaStore
 import android.util.Base64
 import androidx.fragment.app.FragmentActivity
@@ -33,8 +34,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
@@ -84,7 +85,33 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
 
     internal suspend fun processImage(unresolvedUri: String, activity: FragmentActivity?) {
         withContext(Dispatchers.Default) {
-            data.screenshot = imageFileToBase64(unresolvedUri, activity)
+            val cr: ContentResolver? = getApplication<Application>().applicationContext.contentResolver
+            if (cr == null) {
+                returnedString.postValue("Internal error")
+                return@withContext
+            }
+            val pic: Uri = Uri.parse(unresolvedUri)
+
+            var fileLength = -1L;
+            try {
+                val pfd: ParcelFileDescriptor? = cr.openFileDescriptor(pic, "r")
+                fileLength = pfd?.statSize ?: -1L
+                pfd?.close()
+            } catch (ex: java.io.FileNotFoundException) {
+            }
+            if (fileLength == -1L) {
+                returnedString.postValue("Cannot open the image file")
+                return@withContext
+            }
+
+            Timber.i("ReportIssue: image size: $fileLength")
+
+            if (fileLength > REPORT_ISSUE_VIEW_MODEL_IMAGE_MAX_LENGTH) {
+                returnedString.postValue("The image file is too large. Please pick another one.")
+                return@withContext
+            }
+
+            data.screenshot = imageFileToBase64(unresolvedUri)
             val resultString = if (data.screenshot.isEmpty()) {
                 // Operation failed, show error message
                 "Failed to load image"
@@ -96,11 +123,9 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         }
     }
 
-    private fun imageFileToBase64(unresolvedUri: String, activity: FragmentActivity?): String {
-        Timber.d("ReportIssue: unresolvedUri: $unresolvedUri")
-        val context = getApplication<Application>().applicationContext
-        val cr: ContentResolver = context.contentResolver ?: return ""
-        val pic: Uri = Uri.parse(unresolvedUri)
+    private fun imageFileToBase64(unresolvedUri: String): String {
+        Timber.d("ReportIssue: unresolvedUri: ${pic.toString()}")
+        val cr: ContentResolver = contentResolver ?: return ""
 
         fileName = FileNameHelper.getFilename(activity, pic)
         Timber.d("ReportIssue: image path: $pic")
@@ -125,5 +150,6 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
 
     companion object {
         private const val REPORT_ISSUE_VIEW_MODEL_IMAGE_QUALITY = 100
+        private const val REPORT_ISSUE_VIEW_MODEL_IMAGE_MAX_LENGTH = 1 * 1024 * 1024
     }
 }
