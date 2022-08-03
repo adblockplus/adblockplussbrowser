@@ -40,7 +40,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.os.FileNameHelper
-import org.adblockplus.adblockplussbrowser.base.data.model.SubscriptionUpdateStatus
 import org.adblockplus.adblockplussbrowser.preferences.data.ReportIssueRepository
 import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData
 import org.adblockplus.adblockplussbrowser.preferences.ui.reporter.ReportIssueFragment.Companion.REPORT_ISSUE_FRAGMENT_SEND_ERROR
@@ -72,7 +71,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
 
     internal fun sendReport() {
         viewModelScope.launch {
-            val sendResult = reportIssueRepository.sendReport(data);
+            val sendResult = reportIssueRepository.sendReport(data)
             if (sendResult.isEmpty()) {
                 _status.value = "Thanks for reporting the issue!"
                 returnedString.value = REPORT_ISSUE_FRAGMENT_SEND_SUCCESS
@@ -83,21 +82,21 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         }
     }
 
-    internal suspend fun processImage(unresolvedUri: String, activity: FragmentActivity?) {
+    internal suspend fun processImage(unresolvedUri: Uri, activity: FragmentActivity?) {
         withContext(Dispatchers.Default) {
             val cr: ContentResolver? = getApplication<Application>().applicationContext.contentResolver
             if (cr == null) {
                 returnedString.postValue("Internal error")
                 return@withContext
             }
-            val pic: Uri = Uri.parse(unresolvedUri)
 
-            var fileLength = -1L;
-            try {
-                val pfd: ParcelFileDescriptor? = cr.openFileDescriptor(pic, "r")
-                fileLength = pfd?.statSize ?: -1L
-                pfd?.close()
-            } catch (ex: java.io.FileNotFoundException) {
+            var fileLength = -1L
+            withContext(Dispatchers.IO) {
+                runCatching {
+                    val pfd: ParcelFileDescriptor? = cr.openFileDescriptor(unresolvedUri, "r")
+                    fileLength = pfd?.statSize ?: -1L
+                    pfd?.close()
+                }
             }
             if (fileLength == -1L) {
                 returnedString.postValue("Cannot open the image file")
@@ -111,7 +110,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
                 return@withContext
             }
 
-            data.screenshot = imageFileToBase64(unresolvedUri)
+            data.screenshot = imageFileToBase64(unresolvedUri, activity, cr)
             val resultString = if (data.screenshot.isEmpty()) {
                 // Operation failed, show error message
                 "Failed to load image"
@@ -123,33 +122,36 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         }
     }
 
-    private fun imageFileToBase64(unresolvedUri: String): String {
-        Timber.d("ReportIssue: unresolvedUri: ${pic.toString()}")
-        val cr: ContentResolver = contentResolver ?: return ""
+    private fun imageFileToBase64(
+        unresolvedUri: Uri,
+        activity: FragmentActivity?,
+        contentResolver: ContentResolver
+    ): String {
+        Timber.d("ReportIssue: unresolvedUri: $unresolvedUri")
 
-        fileName = FileNameHelper.getFilename(activity, pic)
-        Timber.d("ReportIssue: image path: $pic")
+        fileName = FileNameHelper.getFilename(activity, unresolvedUri)
 
         val bs = ByteArrayOutputStream()
         return try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                ImageDecoder.decodeBitmap(ImageDecoder.createSource(cr, pic))
+                ImageDecoder.decodeBitmap(ImageDecoder.createSource(contentResolver, unresolvedUri))
                     .compress(Bitmap.CompressFormat.PNG, REPORT_ISSUE_VIEW_MODEL_IMAGE_QUALITY, bs)
             } else {
-                MediaStore.Images.Media.getBitmap(cr, pic)
+                @Suppress("DEPRECATION")
+                MediaStore.Images.Media.getBitmap(contentResolver, unresolvedUri)
                     .compress(Bitmap.CompressFormat.PNG, REPORT_ISSUE_VIEW_MODEL_IMAGE_QUALITY, bs)
             }
             val screenshotByteArray = bs.toByteArray()
             screenshot.postValue(BitmapFactory.decodeByteArray(screenshotByteArray, 0, screenshotByteArray.size))
             "data:image/png;base64," + Base64.encodeToString(screenshotByteArray, Base64.DEFAULT)
         } catch (e: OutOfMemoryError) {
-            Timber.e(e, "ReportIssue: Screenshot decode failed\n");
+            Timber.e(e, "ReportIssue: Screenshot decode failed\n")
             ""
         }
     }
 
     companion object {
         private const val REPORT_ISSUE_VIEW_MODEL_IMAGE_QUALITY = 100
-        private const val REPORT_ISSUE_VIEW_MODEL_IMAGE_MAX_LENGTH = 1 * 1024 * 1024
+        private const val REPORT_ISSUE_VIEW_MODEL_IMAGE_MAX_LENGTH = 5 * 1024 * 1024
     }
 }

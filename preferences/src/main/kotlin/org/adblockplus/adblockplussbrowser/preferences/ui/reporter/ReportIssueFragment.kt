@@ -129,17 +129,12 @@ internal class ReportIssueFragment :
                     val direction =
                         ReportIssueFragmentDirections.actionReportIssueFragmentToMainPreferencesFragment()
                     findNavController().navigate(direction)
-                    Toast.makeText(
-                        context,
-                        REPORT_ISSUE_FRAGMENT_SEND_SUCCESS_MESSAGE,
-                        Toast.LENGTH_LONG
-                    ).show()
                 }
                 REPORT_ISSUE_FRAGMENT_SEND_ERROR -> {
                     Timber.d("Send error")
                 }
                 else -> {
-                    binding.screenshotPreview.processingImageBar.visibility = View.GONE
+                    binding?.screenshotPreview?.processingImageBar?.visibility = View.GONE
                     validateData()
                 }
             }
@@ -167,7 +162,7 @@ internal class ReportIssueFragment :
             if (result.resultCode == Activity.RESULT_OK) {
                 binding?.screenshotPreview?.processingImageBar?.visibility = View.VISIBLE
                 val intent = result.data
-                val unresolvedUri = intent?.data?.toString()
+                val unresolvedUri = intent?.data
                 if (unresolvedUri != null) {
                     lifecycleScope.launch {
                         viewModel.processImage(unresolvedUri, activity)
@@ -209,7 +204,6 @@ internal class ReportIssueFragment :
         const val REPORT_ISSUE_FRAGMENT_SCREENSHOT_READ_SUCCESS = ""
         const val REPORT_ISSUE_FRAGMENT_SEND_SUCCESS = "SEND_SUCCESS"
         const val REPORT_ISSUE_FRAGMENT_SEND_ERROR = "SEND_ERROR"
-        const val REPORT_ISSUE_FRAGMENT_SEND_SUCCESS_MESSAGE = "Report sent"
         const val MANDATORY_MARK = " *"
     }
 }
