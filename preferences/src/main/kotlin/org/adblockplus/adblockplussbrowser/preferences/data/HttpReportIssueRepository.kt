@@ -28,6 +28,7 @@ import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueDat
 import org.xmlpull.v1.XmlSerializer
 import ru.gildor.coroutines.okhttp.await
 import timber.log.Timber
+import java.io.IOException
 import java.io.StringWriter
 import java.net.HttpURLConnection.HTTP_OK
 import java.util.Locale
