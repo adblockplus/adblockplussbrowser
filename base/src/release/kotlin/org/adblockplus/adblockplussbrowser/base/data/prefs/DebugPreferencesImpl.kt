@@ -22,9 +22,10 @@ import androidx.datastore.preferences.core.Preferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
-internal class DebugPreferencesImpl(@Suppress("UnusedPrivateMember") private val dataStore: DataStore<Preferences>) : DebugPreferences {
+internal class DebugPreferencesImpl(@Suppress("UnusedPrivateMember")
+                                    private val dataStore: DataStore<Preferences>) : DebugPreferences {
 
     override val shouldAddTestPages: Flow<Boolean> = flowOf(false)
 
-    override fun initialTestPagesConfigurationCompleted() {}
+    override fun initialTestPagesConfigurationCompleted() { return }
 }
