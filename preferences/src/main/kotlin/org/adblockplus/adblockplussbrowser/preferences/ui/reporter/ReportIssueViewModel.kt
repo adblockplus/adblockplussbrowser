@@ -37,7 +37,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
-import org.adblockplus.adblockplussbrowser.base.os.FileNameHelper
+import org.adblockplus.adblockplussbrowser.base.os.resolveFilename
 import org.adblockplus.adblockplussbrowser.preferences.data.ReportIssueRepository
 import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData
 import org.adblockplus.adblockplussbrowser.preferences.ui.reporter.ReportIssueFragment.Companion.REPORT_ISSUE_FRAGMENT_SEND_ERROR
@@ -88,7 +88,10 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         val cr: ContentResolver = context.contentResolver ?: return ""
         val pic: Uri = Uri.parse(unresolvedUri)
 
-        fileName = FileNameHelper.getFilename(activity, pic)
+        activity?.resolveFilename(pic)?.let { fileNameString ->
+            fileName = fileNameString
+        }
+
         Timber.d("ReportIssue: image path: $pic")
 
         val bs = ByteArrayOutputStream()
@@ -104,7 +107,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
             screenshot.postValue(BitmapFactory.decodeByteArray(screenshotByteArray, 0, screenshotByteArray.size))
             "data:image/png;base64," + Base64.encodeToString(screenshotByteArray, Base64.DEFAULT)
         } catch (e: OutOfMemoryError) {
-            Timber.e(e, "ReportIssue: Screenshot decode failed\n");
+            Timber.e(e, "ReportIssue: Screenshot decode failed\n")
             ""
         }
     }

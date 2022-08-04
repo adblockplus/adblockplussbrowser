@@ -37,7 +37,7 @@ import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.BuildConfig
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
-import org.adblockplus.adblockplussbrowser.base.os.FileNameHelper
+import org.adblockplus.adblockplussbrowser.base.os.resolveFilename
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentOtherSubscriptionsBinding
@@ -129,10 +129,12 @@ internal class OtherSubscriptionsFragment :
     private fun handleFilePickingResult(result: ActivityResult) {
         if (result.resultCode == Activity.RESULT_OK) {
             result.data?.data?.let { filePath ->
-                viewModel.addCustomFilterFile(
-                    filePath.toString(),
-                    FileNameHelper.getFilename(activity, filePath)
-                )
+                activity?.resolveFilename(filePath)?.let { filename ->
+                    viewModel.addCustomFilterFile(
+                        filePath.toString(),
+                        filename
+                    )
+                }
             }
         } else {
             analyticsProvider.logEvent(AnalyticsEvent.DEVICE_FILE_MANAGER_NOT_SUPPORTED_OR_CANCELED)
@@ -207,17 +209,4 @@ internal class OtherSubscriptionsFragment :
         }
     }
 
-    private fun getFilename(uri: Uri): String {
-        val cursor = activity?.contentResolver?.query(uri, null, null, null, null)
-        var filename: String = uri.path.toString()
-
-        cursor?.getColumnIndex(OpenableColumns.DISPLAY_NAME)?.let { nameIndex ->
-            cursor.moveToFirst()
-
-            filename = cursor.getString(nameIndex)
-            cursor.close()
-        }
-
-        return filename
-    }
 }

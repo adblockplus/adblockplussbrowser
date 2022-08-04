@@ -17,24 +17,26 @@
 
 package org.adblockplus.adblockplussbrowser.base.os
 
+import android.app.Activity
 import android.net.Uri
 import android.provider.OpenableColumns
-import androidx.fragment.app.FragmentActivity
 
-class FileNameHelper private constructor() {
-    companion object {
-        fun getFilename(activity: FragmentActivity?,uri: Uri): String {
-            val cursor = activity?.contentResolver?.query(uri, null, null, null, null)
-            var filename: String = uri.path.toString()
+/**
+ * Resolves file name from a given uri.
+ *
+ * @param uri Uri to local file
+ * @return filename extracted from a given uri
+ */
+fun Activity.resolveFilename(uri: Uri): String {
+    val cursor = contentResolver?.query(uri, null, null, null, null)
+    var filename: String = uri.path.toString()
 
-            cursor?.getColumnIndex(OpenableColumns.DISPLAY_NAME)?.let { nameIndex ->
-                cursor.moveToFirst()
+    cursor?.getColumnIndex(OpenableColumns.DISPLAY_NAME)?.let { nameIndex ->
+        cursor.moveToFirst()
 
-                filename = cursor.getString(nameIndex)
-                cursor.close()
-            }
-
-            return filename
-        }
+        filename = cursor.getString(nameIndex)
+        cursor.close()
     }
+
+    return filename
 }
