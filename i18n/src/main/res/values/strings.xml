@@ -169,5 +169,6 @@
     <string name="issueReporter_privacyPolicy"><a href="https://adblockplus.org/en/privacy#issue-reporter">Privacy Policy</a></string>
     <string name="tap_here_to_pick_screenshot" tools:ignore="MissingTranslation">Tap here to pick a screenshot</string>
     <string name="tap_here_to_change_screenshot" tools:ignore="MissingTranslation">Tap here again to change screenshot</string>
+    <string name="processing_issue_report_screenshot_description" tools:ignore="MissingTranslation">Loading…</string>
 
 </resources>

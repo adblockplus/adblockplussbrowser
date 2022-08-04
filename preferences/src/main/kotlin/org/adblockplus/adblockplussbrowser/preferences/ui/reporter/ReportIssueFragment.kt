@@ -83,7 +83,8 @@ internal class ReportIssueFragment :
             with(binding.screenshotPreview) {
                 screenshot.setImageBitmap(it)
                 screenshotName.text = viewModel.fileName
-                processingImageBar.visibility = View.GONE
+                processingImageContainer.visibility = View.GONE
+                imagePlaceholderContainer.visibility = View.VISIBLE
             }
         }
 
@@ -160,7 +161,8 @@ internal class ReportIssueFragment :
     private val pickImageFromGalleryForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
-                binding?.screenshotPreview?.processingImageBar?.visibility = View.VISIBLE
+                binding?.screenshotPreview?.processingImageContainer?.visibility = View.VISIBLE
+                binding?.screenshotPreview?.imagePlaceholderContainer?.visibility = View.GONE
                 val intent = result.data
                 val unresolvedUri = intent?.data?.toString()
                 if (unresolvedUri != null) {
