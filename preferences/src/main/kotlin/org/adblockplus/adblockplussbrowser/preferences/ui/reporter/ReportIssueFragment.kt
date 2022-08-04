@@ -82,9 +82,12 @@ internal class ReportIssueFragment :
         viewModel.screenshot.observe(this){
             with(binding.screenshotPreview) {
                 screenshot.setImageBitmap(it)
-                screenshotName.text = viewModel.fileName
+                selectedScreenshotName.text = viewModel.fileName
+                selectedScreenshotName.visibility = View.VISIBLE
                 processingImageContainer.visibility = View.GONE
+                screenshotSelectionDescription.visibility = View.GONE
                 imagePlaceholderContainer.visibility = View.VISIBLE
+                screenshotReselect.visibility = View.VISIBLE
             }
         }
 

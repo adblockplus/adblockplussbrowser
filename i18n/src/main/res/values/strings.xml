@@ -170,5 +170,6 @@
     <string name="tap_here_to_pick_screenshot" tools:ignore="MissingTranslation">Tap here to pick a screenshot</string>
     <string name="tap_here_to_change_screenshot" tools:ignore="MissingTranslation">Tap here again to change screenshot</string>
     <string name="processing_issue_report_screenshot_description" tools:ignore="MissingTranslation">Loading…</string>
+    <string name="screenshot_reselect_description" tools:ignore="MissingTranslation">Tap here to pick a different screenshot</string>
 
 </resources>
