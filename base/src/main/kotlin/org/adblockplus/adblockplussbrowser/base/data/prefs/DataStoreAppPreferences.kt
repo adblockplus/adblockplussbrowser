@@ -27,8 +27,9 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 
-class DataStoreAppPreferences(private val dataStore: DataStore<Preferences>) :
-    AppPreferences {
+class DataStoreAppPreferences(private val dataStore: DataStore<Preferences>,
+                              private val debugPrefs: DebugPreferences = DebugPreferencesImpl(dataStore)) :
+    AppPreferences, DebugPreferences by debugPrefs {
 
     companion object {
         const val PREFS_NAME = "abp_app_prefs"
@@ -38,7 +39,6 @@ class DataStoreAppPreferences(private val dataStore: DataStore<Preferences>) :
         val ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
         val LAST_FILTER_REQUEST = longPreferencesKey("last_filter_request")
         val REFERRER_CHECKED = booleanPreferencesKey("referrer_checked")
-        val SHOULD_ADD_TEST_PAGES = booleanPreferencesKey("should_add_test_pages")
     }
 
     override val referrerAlreadyChecked: Boolean =
@@ -70,19 +70,6 @@ class DataStoreAppPreferences(private val dataStore: DataStore<Preferences>) :
     override suspend fun updateLastFilterRequest(lastFilterListRequest: Long) {
         dataStore.edit { preferences ->
             preferences[Keys.LAST_FILTER_REQUEST] = lastFilterListRequest
-        }
-    }
-
-    override val shouldAddTestPages: Flow<Boolean> =
-        runBlocking {
-            dataStore.data.map { it[Keys.SHOULD_ADD_TEST_PAGES] ?: true}
-        }
-
-    override fun initialTestPagesConfigurationCompleted() {
-        runBlocking {
-            dataStore.edit { preferences ->
-                preferences[Keys.SHOULD_ADD_TEST_PAGES] = false
-            }
         }
     }
 }

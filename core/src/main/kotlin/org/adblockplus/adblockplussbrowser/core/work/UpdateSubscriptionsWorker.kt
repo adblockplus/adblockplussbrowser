@@ -139,7 +139,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
                 tags.isPeriodic()
             )
 
-            if (BuildConfig.DEBUG && debugPreferences.shouldAddTestPages.firstOrNull() == true) {
+            if (debugPreferences.shouldAddTestPages.firstOrNull() == true) {
                 // For debug build, add testPages list and remove easylist from active subscriptions
                 settingsRepository.addActiveOtherSubscription(settingsRepository.getTestPagesSubscription())
                 settingsRepository.removeActivePrimarySubscription(settingsRepository.getEasylistSubscription())
