@@ -31,13 +31,12 @@ import timber.log.Timber
 import java.io.IOException
 import java.io.StringWriter
 import java.net.HttpURLConnection.HTTP_OK
-import java.net.URL
 import java.util.Locale
 import java.util.UUID
 import javax.inject.Inject
 
 /**
- * Contains logic of report data conversion into Xml and posting it to the backend.
+ * Contains logic of report data conversion into Xml and performing and HTTP post request to the backend.
  */
 class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
 
@@ -60,13 +59,10 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
     }
 
     private suspend fun makeHttpPost(xml: String): String {
-        val query = Uri.Builder()
+        val url = Uri.parse(DEFAULT_URL).buildUpon()
             .appendQueryParameter("version", "1")
             .appendQueryParameter("guid", UUID.randomUUID().toString()) // version 4, variant 1
             .appendQueryParameter("lang", locale.language).build().toString()
-
-        var url = ""
-        runCatching { url = URL(DEFAULT_URL + query).toString() }
 
         val request = Request.Builder()
             .url(url)

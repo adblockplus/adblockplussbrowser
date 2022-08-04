@@ -44,7 +44,9 @@ import org.adblockplus.adblockplussbrowser.preferences.ui.reporter.ReportIssueFr
 import org.adblockplus.adblockplussbrowser.preferences.ui.reporter.ReportIssueFragment.Companion.REPORT_ISSUE_FRAGMENT_SEND_SUCCESS
 import timber.log.Timber
 
-
+/**
+ * Contains logic used for issue report screenshot conversion and sending report.
+ */
 @HiltViewModel
 internal class ReportIssueViewModel @Inject constructor(application: Application) :
     AndroidViewModel(application) {

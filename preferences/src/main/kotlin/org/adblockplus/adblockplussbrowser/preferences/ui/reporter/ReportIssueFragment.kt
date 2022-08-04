@@ -43,7 +43,9 @@ import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueDat
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentReportIssueBinding
 import timber.log.Timber
 
-
+/**
+ * Contains UI for issue report and handling of issue screenshot picking.
+ */
 @AndroidEntryPoint
 internal class ReportIssueFragment :
     DataBindingFragment<FragmentReportIssueBinding>(R.layout.fragment_report_issue) {
