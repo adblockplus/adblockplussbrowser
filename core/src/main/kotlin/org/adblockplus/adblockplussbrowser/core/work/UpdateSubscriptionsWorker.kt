@@ -59,9 +59,7 @@ import java.lang.RuntimeException
 import java.util.Objects
 import javax.inject.Inject
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
 import org.adblockplus.adblockplussbrowser.base.data.prefs.DebugPreferences
-import org.adblockplus.adblockplussbrowser.core.BuildConfig
 
 
 @HiltWorker

@@ -19,6 +19,7 @@ package org.adblockplus.adblockplussbrowser.core.helpers
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
@@ -244,7 +245,7 @@ class Fakes {
 
     class FakeActivationPreferences : ActivationPreferences {
         override val lastFilterListRequest: Flow<Long>
-            get() = flow { System.currentTimeMillis() }
+            get() = flowOf(System.currentTimeMillis())
 
         override suspend fun updateLastFilterRequest(lastFilterListRequest: Long) {
             lastFilterListRequest
@@ -253,7 +254,7 @@ class Fakes {
 
     class FakeDebugPreferences: DebugPreferences {
         override val shouldAddTestPages: Flow<Boolean>
-            get() = flow { false }
+            get() = flowOf(false)
 
         override fun initialTestPagesConfigurationCompleted() {
             TODO("Not yet implemented")
