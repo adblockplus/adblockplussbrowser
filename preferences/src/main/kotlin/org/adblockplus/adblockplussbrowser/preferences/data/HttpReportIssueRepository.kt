@@ -52,7 +52,6 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
      * @return string with state code of the operation
      */
     override suspend fun sendReport(data: ReportIssueData): String {
-
         val xml = makeXML(data)
         return if (xml.isEmpty()) {
             XML_ERROR
