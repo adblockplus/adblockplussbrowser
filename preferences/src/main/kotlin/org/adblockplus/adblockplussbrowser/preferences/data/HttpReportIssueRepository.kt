@@ -30,7 +30,6 @@ import ru.gildor.coroutines.okhttp.await
 import timber.log.Timber
 import java.io.IOException
 import java.io.StringWriter
-import java.lang.Exception
 import java.net.HttpURLConnection.HTTP_OK
 import java.net.URL
 import java.util.Locale
@@ -159,7 +158,7 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
         } catch (e: IOException) {
             result = handleSerializerError(e)
         } catch (e: IllegalArgumentException) {
-            result =  handleSerializerError(e)
+            result = handleSerializerError(e)
         } catch (e: IllegalStateException) {
             result = handleSerializerError(e)
         }
