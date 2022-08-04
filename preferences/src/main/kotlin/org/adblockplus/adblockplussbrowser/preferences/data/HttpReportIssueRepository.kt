@@ -28,7 +28,6 @@ import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueDat
 import org.xmlpull.v1.XmlSerializer
 import ru.gildor.coroutines.okhttp.await
 import timber.log.Timber
-import java.io.IOException
 import java.io.StringWriter
 import java.net.HttpURLConnection.HTTP_OK
 import java.util.Locale
@@ -94,77 +93,71 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
     private fun makeXML(data: ReportIssueData): String {
         val writer = StringWriter()
         val serializer: XmlSerializer = Xml.newSerializer()
-        var result: String
-        try {
+        // As there are only 3 possible exceptions thrown in this code that are handled the same way, we just
+        // suppress the Detekt warning.
+        @Suppress("TooGenericExceptionCaught")
+        return try {
             serializer.setOutput(writer)
             serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true)
-            serializer.startTag(null, "report")
-            serializer.attribute(null, "type", data.type)
+            with(serializer) {
+                startTag(null, "report")
+                attribute(null, "type", data.type)
 
-            serializer.startTag(null, "requests")
-            serializer.endTag(null, "requests")
+                startTag(null, "requests")
+                endTag(null, "requests")
 
-            serializer.startTag(null, "filters")
-            serializer.endTag(null, "filters")
+                startTag(null, "filters")
+                endTag(null, "filters")
 
-            serializer.startTag(null, "platform")
-            serializer.attribute(null, "build", BuildConfig.BUILD_TYPE)
-            serializer.attribute(null, "name", "ABP")
-            serializer.attribute(null, "version", BuildConfig.APPLICATION_VERSION)
-            serializer.endTag(null, "platform")
+                startTag(null, "platform")
+                attribute(null, "build", BuildConfig.BUILD_TYPE)
+                attribute(null, "name", "ABP")
+                attribute(null, "version", BuildConfig.APPLICATION_VERSION)
+                endTag(null, "platform")
 
-            serializer.startTag(null, "window")
-            if (data.url.isNotEmpty()) {
-                serializer.attribute(null, "url", data.url)
+                startTag(null, "window")
+                if (data.url.isNotEmpty()) {
+                    serializer.attribute(null, "url", data.url)
+                }
+                endTag(null, "window")
+
+                startTag(null, "subscriptions")
+                endTag(null, "subscriptions")
+
+                startTag(null, "adblock-plus")
+                attribute(null, "version", "Build")
+                attribute(null, "locale", locale.toString())
+                endTag(null, "adblock-plus")
+
+                startTag(null, "application")
+                attribute(null, "name", "Samsung Internet")
+                attribute(null, "version", "unknown")
+                attribute(null, "vendor", "Samsung Electronics Co.")
+                attribute(null, "userAgent", "")
+                endTag(null, "application")
+
+                startTag(null, "comment")
+                text(data.comment)
+                endTag(null, "comment")
+
+                startTag(null, "email")
+                text(data.email)
+                endTag(null, "email")
+
+                startTag(null, "screenshot")
+                attribute(null, "edited", "false")
+                text(data.screenshot)
+                endTag(null, "screenshot")
+
+                endTag(null, "report")
+                endDocument()
+                flush()
             }
-            serializer.endTag(null, "window")
-
-            serializer.startTag(null, "subscriptions")
-            serializer.endTag(null, "subscriptions")
-
-            serializer.startTag(null, "adblock-plus")
-            serializer.attribute(null, "version", "Build")
-            serializer.attribute(null, "locale", locale.toString())
-            serializer.endTag(null, "adblock-plus")
-
-            serializer.startTag(null, "application")
-            serializer.attribute(null, "name", "Samsung Internet")
-            serializer.attribute(null, "version", "unknown")
-            serializer.attribute(null, "vendor", "Samsung Electronics Co.")
-            serializer.attribute(null, "userAgent", "")
-            serializer.endTag(null, "application")
-
-            serializer.startTag(null, "comment")
-            serializer.text(data.comment)
-            serializer.endTag(null, "comment")
-
-            serializer.startTag(null, "email")
-            serializer.text(data.email)
-            serializer.endTag(null, "email")
-
-            serializer.startTag(null, "screenshot")
-            serializer.attribute(null, "edited", "false")
-            serializer.text(data.screenshot)
-            serializer.endTag(null, "screenshot")
-
-            serializer.endTag(null, "report")
-            serializer.endDocument()
-            serializer.flush()
-            result = writer.toString()
-        } catch (e: IOException) {
-            result = handleSerializerError(e)
-        } catch (e: IllegalArgumentException) {
-            result = handleSerializerError(e)
-        } catch (e: IllegalStateException) {
-            result = handleSerializerError(e)
+            writer.toString()
+        } catch (e: Exception) {
+            Timber.e(e)
+            ""
         }
-
-        return result
-    }
-
-    private fun handleSerializerError(e: Exception): String {
-        Timber.e(e)
-        return ""
     }
 
     companion object {
