@@ -31,16 +31,7 @@ internal class DebugPreferencesImpl(private val dataStore: DataStore<Preferences
         val SHOULD_ADD_TEST_PAGES = booleanPreferencesKey("should_add_test_pages")
     }
 
-    override val shouldAddTestPages: Flow<Boolean> =
-        runBlocking {
-            dataStore.data.map { it[Keys.SHOULD_ADD_TEST_PAGES] ?: false}
-        }
+    override val shouldAddTestPages: Flow<Boolean> = flow { false }
 
-    override fun initialTestPagesConfigurationCompleted() {
-        runBlocking {
-            dataStore.edit { preferences ->
-                preferences[Keys.SHOULD_ADD_TEST_PAGES] = false
-            }
-        }
-    }
+    override fun initialTestPagesConfigurationCompleted() {}
 }
