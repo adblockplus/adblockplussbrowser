@@ -28,15 +28,15 @@ import android.provider.OpenableColumns
  * @return filename extracted from a given uri
  */
 fun Activity.resolveFilename(uri: Uri): String {
-    val cursor = contentResolver?.query(uri, null, null, null, null)
-    var filename: String = uri.path.toString()
-
-    cursor?.getColumnIndex(OpenableColumns.DISPLAY_NAME)?.let { nameIndex ->
-        cursor.moveToFirst()
-
-        filename = cursor.getString(nameIndex)
-        cursor.close()
-    }
-
-    return filename
+    return this.contentResolver?.query(
+        uri, null, null, null, null
+    )?.use {
+        val index = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+        if (index >= 0) {
+            it.moveToFirst()
+            it.getString(index)
+        } else {
+            null
+        }
+    } ?: uri.path.toString()
 }

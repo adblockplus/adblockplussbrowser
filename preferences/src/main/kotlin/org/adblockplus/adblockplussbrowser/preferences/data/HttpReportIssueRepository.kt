@@ -37,12 +37,20 @@ import java.util.Locale
 import java.util.UUID
 import javax.inject.Inject
 
-
+/**
+ * Contains logic of report data conversion into Xml and posting it to the backend.
+ */
 class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
 
     private val okHttpClient = OkHttpClient()
     private val locale = Locale.getDefault()
 
+    /**
+     * Convert report issue data and send it to the backend.
+     *
+     * @param data ReportIssueData instance
+     * @return string with state code of the operation
+     */
     override suspend fun sendReport(data: ReportIssueData): String {
 
         val xml = makeXML(data)
