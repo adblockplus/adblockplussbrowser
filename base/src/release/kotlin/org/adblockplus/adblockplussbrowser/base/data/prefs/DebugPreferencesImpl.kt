@@ -17,12 +17,10 @@
 
 package org.adblockplus.adblockplussbrowser.base.data.prefs
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
-internal class DebugPreferencesImpl(private val dataStore: DataStore<Preferences>) : DebugPreferences {
+internal class DebugPreferencesImpl : DebugPreferences {
 
     override val shouldAddTestPages: Flow<Boolean> = flowOf(false)
 
