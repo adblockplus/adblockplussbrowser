@@ -19,17 +19,10 @@ package org.adblockplus.adblockplussbrowser.base.data.prefs
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.flow.flow
 
 internal class DebugPreferencesImpl(private val dataStore: DataStore<Preferences>) : DebugPreferences {
-
-    private object Keys {
-        val SHOULD_ADD_TEST_PAGES = booleanPreferencesKey("should_add_test_pages")
-    }
 
     override val shouldAddTestPages: Flow<Boolean> = flow { false }
 
