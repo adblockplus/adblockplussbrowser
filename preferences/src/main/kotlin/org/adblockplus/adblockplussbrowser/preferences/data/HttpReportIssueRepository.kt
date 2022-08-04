@@ -54,10 +54,16 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
         return if (xml.isEmpty()) {
             XML_ERROR
         } else {
-            makeHttpPost(xml)
+            try {
+                makeHttpPost(xml)
+            } catch (e: IOException) {
+                Timber.e(e)
+                IO_ERROR
+            }
         }
     }
 
+    @Throws(IOException::class)
     private suspend fun makeHttpPost(xml: String): String {
         val url = Uri.parse(DEFAULT_URL).buildUpon()
             .appendQueryParameter("version", "1")
@@ -72,9 +78,6 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
             .build()
 
         val response = okHttpClient.newCall(request).await()
-
-
-        // TODO remove the URL parsing if it's not needed
         val responseBody = kotlin.runCatching { response.body?.string() }
         val responseUrls = Regex(A_PATTERN).findAll(responseBody.toString()).map { it.value }
         if (responseUrls.any()) {
@@ -87,7 +90,7 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
         return if (response.code == HTTP_OK) {
             ""
         } else {
-            "HTTP returned ${response.code}"
+            throw IOException()
         }
     }
 
@@ -170,6 +173,7 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
     companion object {
         const val DEFAULT_URL = """https://reports.adblockplus.org/submitReport"""
         const val XML_ERROR = "Error creating XML"
+        const val IO_ERROR = "Error sending report"
         const val A_PATTERN = """<a.+</a>"""
     }
 }
