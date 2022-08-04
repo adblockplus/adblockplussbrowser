@@ -24,5 +24,11 @@ import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueDat
  */
 interface ReportIssueRepository {
 
+    /**
+     * Sends report issue data to repository.
+     *
+     * @param data Report issue data
+     * @return String that contains status of the operation
+     */
     suspend fun sendReport(data: ReportIssueData): String
 }
