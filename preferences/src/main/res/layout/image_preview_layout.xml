@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/image_placeholder_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -17,12 +17,16 @@
 
             <ImageView
                 android:id="@+id/screenshot"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="6dp"
-                android:layout_weight="0.3"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:contentDescription="@string/issueReporter_attached_image_thumbnail"
-                android:src="@drawable/ic_baseline_image_placeholder_24" />
+                android:src="@drawable/ic_baseline_image_placeholder_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/screenshot_name"
@@ -30,13 +34,16 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="6dp"
-                android:layout_weight="0.7"
+                android:layout_marginStart="32dp"
                 android:text="@string/tap_here_to_pick_screenshot"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textSize="16sp"
-                android:textStyle="italic" />
+                android:textStyle="italic"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/screenshot"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:id="@+id/processing_image_container"
@@ -50,11 +57,13 @@
 
             <com.google.android.material.progressindicator.CircularProgressIndicator
                 android:id="@+id/processing_image_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="32dp"
-                android:indeterminate="true"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:indeterminate="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/image_placeholder_container" />
 
@@ -63,7 +72,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="24dp"
+                android:layout_margin="16dp"
                 android:layout_weight="0.7"
                 android:text="@string/processing_issue_report_screenshot_description"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
