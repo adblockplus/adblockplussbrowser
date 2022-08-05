@@ -131,4 +131,18 @@
     <string name="block_social_media_tracking">Блокировать слежение за иконками социальных сетей</string>
     <!-- /settings -->
 
+    <!-- Issue reporter -->
+    <string name="issueReporter_page_title">Сообщить о проблеме</string>
+    <string name="issueReporter_typeSelector_heading">С какой проблемой вы столкнулись?</string>
+    <string name="issueReporter_typeSelector_description">Выберите проблему:</string>
+    <string name="issueReporter_falsePositive_label">Страница, которую я пытаюсь открыть, не работает</string>
+    <string name="issueReporter_falseNegative_label">Я всё ещё вижу рекламу</string>
+
+    <string name="issueReporter_email_description">Рекомендуется указать действующий адрес электронной почты. Мы сможем связаться с вами для решения сложных проблем, таких как вредоносные программы. Помните, что указывать адрес электронной почты необязательно, и он не будет передан другим лицам.</string>
+    <string name="issueReporter_comment_description">Помогите нам лучше понять проблему, оставив комментарий ниже.</string>
+    <string name="issueReporter_anonymousSubmission_label">Отправить анонимно</string>
+    <string name="issueReporter_anonymousSubmission_warning">Мы не сможем связаться с вами и, вероятно, уделим меньше внимания Вашему сообщению.</string>
+    <string name="issueReporter_sendButton_label">Отправить сообщение</string>
+    <string name="issueReporter_email_label">E-mail:</string>
+    <string name="issueReporter_privacyPolicy"><a href="https://adblockplus.org/en/privacy#issue-reporter">Политика конфиденциальности</a></string>
 </resources>

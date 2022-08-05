@@ -131,4 +131,18 @@
     <string name="block_social_media_tracking">Blokkeer tracking van sociale media pictogrammen</string>
     <!-- /settings -->
 
+    <!-- Issue reporter -->
+    <string name="issueReporter_page_title">Probleemrapportage</string>
+    <string name="issueReporter_typeSelector_heading">Welk type probleem ondervindt u?</string>
+    <string name="issueReporter_typeSelector_description">Selecteer een probleem:</string>
+    <string name="issueReporter_falsePositive_label">De pagina die ik probeer te bekijken werkt niet</string>
+    <string name="issueReporter_falseNegative_label">Ik zie nog steeds advertenties</string>
+    <string name="issueReporter_email_description">Het is handig om een geldig e-mailadres in te voeren. Hierdoor kunnen we contact met u opnemen om moeilijke problemen zoals malware op te lossen. Houd in gedachten dat het niet verplicht is om een e-mailadres in te voeren, en dat uw adres nooit zal worden gedeeld.</string>
+    <string name="issueReporter_comment_description">Help ons het probleem beter te begrijpen door hieronder een opmerking toe te voegen.</string>
+    <string name="issueReporter_anonymousSubmission_label">Anonieme bijdrage</string>
+    <string name="issueReporter_anonymousSubmission_warning">We zullen geen contact met u kunnen opnemen en het rapport waarschijnlijk een lagere prioriteit geven.</string>
+    <string name="issueReporter_sendButton_label">Rapport verzenden</string>
+    <string name="issueReporter_email_label">E-mail:</string>
+    <string name="issueReporter_privacyPolicy"><a href="https://adblockplus.org/en/privacy#issue-reporter">Privacybeleid</a></string>
+
 </resources>

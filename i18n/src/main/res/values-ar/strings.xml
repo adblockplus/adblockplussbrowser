@@ -132,4 +132,19 @@
     <string name="block_social_media_tracking">حجب تعقب أيقونات وسائل التواصل الاجتماعي</string>
     <!-- /settings -->
 
+    <!-- Issue reporter -->
+    <string name="issueReporter_page_title">مُبَلِغ المشاكل</string>
+    <string name="issueReporter_typeSelector_heading">إختر نوع المشكلة</string>
+    <string name="issueReporter_typeSelector_description">هذه النافذة ستقودك خلال الخطوات المطلوبة لإرسال تبليغ بمشكلة في آدبلوك بلس. في البداية عليك إختيار نوع المشكلة التي تواجهها من هذه الصفحة:</string>
+    <string name="issueReporter_falsePositive_label">آدبلوك بلس يحجب أكثر من اللازم</string>
+    <string name="issueReporter_falseNegative_label">.إستخدم الأدوات لتظليل كل إعلان أو إخفاء معلومات حساسة على لقطة الشاشة. تظليل الإعلانات سيساعدنا في حل المشكلة بشكل أسرع</string>
+
+    <string name="issueReporter_email_description">نحن نشجعك لإدخال بريد إلكتروني صحيح لكي نتمكن من الاتصال بك بخصوص تقريرك إذا كانت هناك أسئلة. أيضا يسمح لنا بالتعرف على مساهمتك و إعطائها أولوية.</string>
+    <string name="issueReporter_comment_description">يسمح لك الحقل التالي بإدخال تعليق ليساعدنا في فهم المشكلة. هذه الخطوة إختيارية ولكننا نصح بها إن لم تكن المشكلة واضحة. تستطيع أيضا مراجعة بيانات التقرير قبل إرساله.</string>
+    <string name="issueReporter_anonymousSubmission_label">تقرير بدون هوية</string>
+    <string name="issueReporter_anonymousSubmission_warning">لن نكون قادرين على الرجوع إليك و لن نعطي للتقرير أهمية كبيرة.</string>
+    <string name="issueReporter_sendButton_label">إرسال التقرير</string>
+    <string name="issueReporter_email_label">البريد الإلكتروني:</string>
+    <string name="issueReporter_privacyPolicy"><a href="https://adblockplus.org/en/privacy#issue-reporter">سياسة الخصوصية</a></string>
+
 </resources>

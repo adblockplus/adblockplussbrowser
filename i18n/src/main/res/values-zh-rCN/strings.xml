@@ -131,4 +131,19 @@
     <string name="block_social_media_tracking">拦截社交媒体图标跟踪</string>
     <!-- /settings -->
 
+    <!-- Issue reporter -->
+    <string name="issueReporter_page_title">问题报告</string>
+    <string name="issueReporter_typeSelector_heading">您遇到了什么类型的问题？</string>
+    <string name="issueReporter_typeSelector_description">请选择一个问题：</string>
+    <string name="issueReporter_falsePositive_label">我正在尝试查看的页面已损坏</string>
+    <string name="issueReporter_falseNegative_label">我还是看到了广告</string>
+
+    <string name="issueReporter_email_description">输入有效的电子邮件地址很有帮助。这让我们能够与您联系以解决恶意软件等棘手问题。请注意，输入电子邮件地址并非强制要求，我们绝不会与他人共享您的地址。</string>
+    <string name="issueReporter_comment_description">请在下面发表评论，以帮助我们更好地理解这个问题。</string>
+    <string name="issueReporter_anonymousSubmission_label">匿名提交</string>
+    <string name="issueReporter_anonymousSubmission_warning">我们将无法回复你，并且报告可能被放在较低的优先级次序。</string>
+    <string name="issueReporter_sendButton_label">发送报告</string>
+    <string name="issueReporter_email_label">电子邮件：</string>
+    <string name="issueReporter_privacyPolicy"><a href="https://adblockplus.org/en/privacy#issue-reporter">隐私政策</a></string>
+
 </resources>

@@ -134,4 +134,44 @@
     <string name="block_social_media_tracking">Block social media icons tracking</string>
     <!-- /settings -->
 
+    <!-- Issue reporter -->
+    <string name="issueReporter_page_title">Issue reporter</string>
+    <string name="issueReporter_page_description" tools:ignore="MissingTranslation">Share issues when they happen.</string>
+    <string name="issueReporter_typeSelector_heading">Select issue type</string>
+    <string name="issueReporter_typeSelector_description">This window will guide you through the steps required for the
+        submission of an Adblock Plus issue report. First, please select the type of issue that you are experiencing on
+        this page:
+    </string>
+    <string name="issueReporter_falsePositive_label">Adblock Plus is blocking too much</string>
+    <string name="issueReporter_falseNegative_label">Adblock Plus doesn\'t block an advertisement</string>
+
+    <string name="pick_samsung_internet_screenshot" tools:ignore="MissingTranslation">Pick Samsung Internet screenshot</string>
+    <string name="comment_title" tools:ignore="MissingTranslation">Comment (optional):</string>
+    <string name="make_screenshot_of_samsung_internet" tools:ignore="MissingTranslation">Make screenshot of Samsung Internet</string>
+    <string name="cancel" tools:ignore="MissingTranslation">Cancel</string>
+    <string name="report_issue_enter_email_hint" tools:ignore="MissingTranslation">Enter email</string>
+    <string name="report_issue_enter_url_hint" tools:ignore="MissingTranslation">Enter URL</string>
+    <string name="report_issue_enter_comment_hint" tools:ignore="MissingTranslation">Enter comment</string>
+
+    <string name="issueReporter_email_description">We encourage you to enter a valid email address so that we can contact you if
+        there are questions about your report. It will also allow us to recognize your contributions and to prioritize
+        them higher.
+    </string>
+    <string name="issueReporter_url_description" tools:ignore="MissingTranslation"> We encourage you to enter the URL where you found
+        the issue. Just think of copying and pasting the link of the page.
+    </string>
+    <string name="issueReporter_comment_description">The text field below allows you to enter a comment to help us understand the
+        issue. This step is optional but recommended if the problem isn\'t obvious. You can also review the report data
+        before it is sent.
+    </string>
+    <string name="issueReporter_anonymousSubmission_label">Anonymous submission</string>
+    <string name="issueReporter_anonymousSubmission_warning">We won\'t be able to come back to you and will likely prioritize the
+        report lower.
+    </string>
+    <string name="issueReporter_sendButton_label">Send Report</string>
+    <string name="issueReporter_email_label">Email:</string>
+    <string name="issueReporter_url_label" tools:ignore="MissingTranslation">URL (optional):</string>
+    <string name="issueReporter_attached_image_thumbnail" tools:ignore="MissingTranslation">attached image thumbnail</string>
+    <string name="issueReporter_privacyPolicy"><a href="https://adblockplus.org/en/privacy#issue-reporter">Privacy Policy</a></string>
+
 </resources>
