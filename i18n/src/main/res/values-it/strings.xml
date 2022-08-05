@@ -128,4 +128,19 @@
     <string name="block_social_media_tracking">Blocca il tracciamento delle icone dei social media</string>
     <!-- /settings -->
 
+    <!-- Issue reporter -->
+    <string name="issueReporter_page_title">Segnalazione problemi</string>
+    <string name="issueReporter_typeSelector_heading">Quale tipo di problema hai riscontrato?</string>
+    <string name="issueReporter_typeSelector_description">Seleziona un problema:</string>
+    <string name="issueReporter_falsePositive_label">La pagina che sto cercando di visualizzare è danneggiata</string>
+    <string name="issueReporter_falseNegative_label">Continuo a visualizzare gli annunci</string>
+
+    <string name="issueReporter_email_description">È consigliabile inserire un indirizzo e-mail valido. In questo modo possiamo contattarti per risolvere problemi complessi come ad esempio il malware. Ricorda: non è fondamentale inserire un indirizzo e-mail, che non condivideremo mai.</string>
+    <string name="issueReporter_comment_description">Aiutaci a comprendere meglio il problema lasciando un commento qui sotto.</string>
+    <string name="issueReporter_anonymousSubmission_label">Segnalazione anonima</string>
+    <string name="issueReporter_anonymousSubmission_warning">Nota: è impossibile rispondere a segnalazioni anonime alle quali viene probabilmente dato un ordine di priorità inferiore</string>
+    <string name="issueReporter_sendButton_label">Invia la segnalazione</string>
+    <string name="issueReporter_email_label">Indirizzo e-mail:</string>
+    <string name="issueReporter_privacyPolicy"><a href="https://adblockplus.org/en/privacy#issue-reporter">Informativa sulla privacy</a></string>
+
 </resources>

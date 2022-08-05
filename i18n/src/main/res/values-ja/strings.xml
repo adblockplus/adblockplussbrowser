@@ -132,4 +132,19 @@
     <string name="block_social_media_tracking">SNSアイコン追跡をブロックする</string>
     <!-- /settings -->
 
+    <!-- Issue reporter -->
+    <string name="issueReporter_page_title">不具合報告</string>
+    <string name="issueReporter_typeSelector_heading">不具合種別を選択</string>
+    <string name="issueReporter_typeSelector_description">このウィンドウで不具合の報告に必要なステップをご案内します。まず最初に、遭遇した不具合の種別を選択してください:</string>
+    <string name="issueReporter_falsePositive_label">Adblock Plus のブロックが過剰</string>
+    <string name="issueReporter_falseNegative_label">Adblock Plus が広告をブロックしていない</string>
+
+    <string name="issueReporter_email_description">メールアドレスを入力すると調査中の不明な点を問い合わせたり、報告者毎に優先度に上げた対応が可能になります。</string>
+    <string name="issueReporter_comment_description">以下のテキストフィールドに、私たちが問題を理解するのを助けるためのコメントを入力できます。この手順は省略できますが、問題が明らかではない場合には推奨されます。また送信前にレポートデータを確認できます。</string>
+    <string name="issueReporter_anonymousSubmission_label">匿名で報告</string>
+    <string name="issueReporter_anonymousSubmission_warning">匿名で報告の際は報告者を個別に識別できないので優先度が下がります。</string>
+    <string name="issueReporter_sendButton_label">不具合報告を送信</string>
+    <string name="issueReporter_email_label">メール:</string>
+    <string name="issueReporter_privacyPolicy"><a href="https://adblockplus.org/en/privacy#issue-reporter">プライバシー ポリシー</a></string>
+
 </resources>
