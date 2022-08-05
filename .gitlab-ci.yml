@@ -295,7 +295,7 @@ samsung_filter_tests:
     - export OTHER_TEST_APK
     - export TEST_APK
     #- echo other apk $OTHER_TEST_APK
-    - echo test apk $TEST_APK
+    - echo OTHER_TEST_APK $OTHER_TEST_APK
     - pwd
     # Launch an instance of gradle for each bunch of tags we want to test
     - set +e
