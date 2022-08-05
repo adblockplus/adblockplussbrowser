@@ -202,3 +202,4 @@ private class SnackbarConfig {
     var actionVisibility: Int = View.GONE
     var actionListener: View.OnClickListener? = null
 }
+

@@ -76,3 +76,4 @@ private fun Settings.removedSubscriptions(savedState: SavedState): List<String> 
 
     return savedSubscriptions.filterNot { subscriptions.contains(it) }
 }
+

@@ -73,3 +73,4 @@ class HyperlinkTextView(context: Context, attrs: AttributeSet?) :
         fun doesContainExtendedHtml(text: String) = text.contains(HTML_EXTENDED_TAGS)
     }
 }
+

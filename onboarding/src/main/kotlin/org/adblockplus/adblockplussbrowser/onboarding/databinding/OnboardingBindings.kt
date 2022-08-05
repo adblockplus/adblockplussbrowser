@@ -152,3 +152,4 @@ private fun ViewPager2.updateOnPageChangeCallback(newListener: ViewPager2.OnPage
 internal interface OnPageScrollSelectedListener {
     fun onPageScrollSelected(position: Int)
 }
+

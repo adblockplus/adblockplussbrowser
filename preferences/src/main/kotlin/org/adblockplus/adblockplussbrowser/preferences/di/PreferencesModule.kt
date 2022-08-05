@@ -25,10 +25,17 @@ import org.adblockplus.adblockplussbrowser.preferences.data.HttpReportIssueRepos
 import org.adblockplus.adblockplussbrowser.preferences.data.ReportIssueRepository
 import javax.inject.Singleton
 
+/**
+ * Contains module for providing instance of Report Issue repository.
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 internal object PreferencesModule {
 
+    /**
+     * Provides and instance of ReportIssueRepository
+     * @return ReportIssueRepository
+     */
     @Singleton
     @Provides
     fun provideReportIssueRepository(): ReportIssueRepository =

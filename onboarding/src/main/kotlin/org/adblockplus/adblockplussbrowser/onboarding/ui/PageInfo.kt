@@ -34,3 +34,4 @@ internal sealed class PageInfo {
     object Enable : PageInfo()
 
 }
+

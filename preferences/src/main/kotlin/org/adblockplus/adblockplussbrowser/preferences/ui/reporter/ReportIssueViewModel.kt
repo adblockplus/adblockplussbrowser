@@ -27,6 +27,7 @@ import android.os.Build
 import android.provider.MediaStore
 import android.util.Base64
 import android.util.Size
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -37,13 +38,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
+import org.adblockplus.adblockplussbrowser.base.os.resolveFilename
 import org.adblockplus.adblockplussbrowser.preferences.data.ReportIssueRepository
 import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData
 import org.adblockplus.adblockplussbrowser.preferences.ui.reporter.ReportIssueFragment.Companion.REPORT_ISSUE_FRAGMENT_SEND_ERROR
 import org.adblockplus.adblockplussbrowser.preferences.ui.reporter.ReportIssueFragment.Companion.REPORT_ISSUE_FRAGMENT_SEND_SUCCESS
 import timber.log.Timber
 
-
+/**
+ * Contains logic used for issue report screenshot conversion and sending report.
+ */
 @HiltViewModel
 internal class ReportIssueViewModel @Inject constructor(application: Application) :
     AndroidViewModel(application) {
@@ -67,14 +71,13 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         }
     }
 
-    internal suspend fun processImage(unresolvedUri: String) {
+    internal suspend fun processImage(unresolvedUri: String, activity: FragmentActivity?) {
         withContext(Dispatchers.Default) {
-            data.screenshot = imageFileToBase64(unresolvedUri)
+            data.screenshot = imageFileToBase64(unresolvedUri, activity)
             val resultString = if (data.screenshot.isEmpty()) {
                 // Operation failed, show error message
                 "Failed to load image"
             } else {
-                Timber.i("ReportIssue: base64 image: ${data.screenshot.subSequence(0, 20)}")
                 // Operation successful, validate data
                 ""
             }
@@ -82,13 +85,17 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         }
     }
 
-    private fun imageFileToBase64(unresolvedUri: String): String {
+    private fun imageFileToBase64(unresolvedUri: String, activity: FragmentActivity?): String {
         Timber.d("ReportIssue: unresolvedUri: $unresolvedUri")
         val context = getApplication<Application>().applicationContext
         val cr: ContentResolver = context.contentResolver ?: return ""
         val pic: Uri = Uri.parse(unresolvedUri)
+
+        activity?.resolveFilename(pic)?.let { fileNameString ->
+            fileName = fileNameString
+        }
+
         Timber.d("ReportIssue: image path: $pic")
-        fileName = getFileNameFromUri(pic)
 
         val bs = ByteArrayOutputStream()
         return try {
@@ -100,8 +107,8 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
             processBitmap(imageBitmap).compress(Bitmap.CompressFormat.PNG, 0, bs)
             makePreviewForScreenshot(bs)
             "data:image/png;base64," + Base64.encodeToString(bs.toByteArray(), Base64.DEFAULT)
-        } catch (e: Exception) {
-            Timber.e("ReportIssue: Screenshot decode failed\n" + e.printStackTrace())
+        } catch (e: OutOfMemoryError) {
+            Timber.e(e, "ReportIssue: Screenshot decode failed\n")
             ""
         }
     }
@@ -109,11 +116,6 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
     private fun makePreviewForScreenshot(bs: ByteArrayOutputStream) {
         val byteArray = bs.toByteArray()
         screenshot.postValue(BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size))
-    }
-
-    private fun getFileNameFromUri(pic: Uri): String{
-        // Replace when solving https://jira.eyeo.com/browse/DPC-926
-        return "${pic.lastPathSegment.toString()}.png"
     }
 
     /**

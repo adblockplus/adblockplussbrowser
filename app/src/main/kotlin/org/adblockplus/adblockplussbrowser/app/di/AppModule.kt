@@ -76,3 +76,4 @@ internal object AppModule {
     fun provideAnalytics(@ApplicationContext context: Context): AnalyticsProvider =
         AnalyticsManager(listOf((FirebaseAnalyticsProvider(context))))
 }
+

@@ -88,7 +88,6 @@ internal class OnboardingViewModel @Inject constructor(
 
         pageList.add(PageInfo.AcceptableAds)
 
-        val lastFilterRequestFlow = appPreferences.lastFilterListRequest
         viewModelScope.launch {
             appPreferences.isAdblockEnabled().collect {
                 if (!it) {
@@ -111,3 +110,4 @@ internal class OnboardingViewModel @Inject constructor(
     }
 
 }
+

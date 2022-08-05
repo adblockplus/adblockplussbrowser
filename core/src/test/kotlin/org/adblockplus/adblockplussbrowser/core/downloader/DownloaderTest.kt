@@ -41,6 +41,7 @@ import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import java.io.File
+import org.adblockplus.adblockplussbrowser.base.data.model.CustomSubscriptionType
 
 @RunWith(MockitoJUnitRunner::class)
 @ExperimentalTime
@@ -99,7 +100,7 @@ class DownloaderTest {
         assertEquals(0, mockWebServer.requestCount)
         runBlocking {
             var downloadResult = downloader.download(
-                Subscription(fakeCoreRepository.AA_URL, "", 0L),false, true, true)
+                Subscription(fakeCoreRepository.AA_URL, "", 0L, CustomSubscriptionType.FROM_URL),false, true, true)
             assertTrue(downloadResult is DownloadResult.Success)
             assertEquals(version, downloadResult.subscription?.version)
             assertEquals(etag, downloadResult.subscription?.etag)
@@ -108,7 +109,7 @@ class DownloaderTest {
             // We cannot test more that download status because saving subscription from
             // a previous download is done by the caller - UpdateSubscriptionsWorker.
             downloadResult = downloader.download(
-                Subscription(fakeCoreRepository.AA_URL, "", 0L),false, true, true)
+                Subscription(fakeCoreRepository.AA_URL, "", 0L, CustomSubscriptionType.FROM_URL),false, true, true)
             assertTrue(downloadResult is DownloadResult.NotModified)
         }
         assertEquals(2, mockWebServer.requestCount)
@@ -132,7 +133,7 @@ class DownloaderTest {
         assertEquals(0, mockWebServer.requestCount)
         runBlocking {
             val downloadResult = downloader.download(
-                Subscription(fakeCoreRepository.AA_URL, "", 0L),false, true, true)
+                Subscription(fakeCoreRepository.AA_URL, "", 0L, CustomSubscriptionType.FROM_URL),false, true, true)
             assertTrue(downloadResult is DownloadResult.Failed)
             assertNull(downloadResult.subscription)
         }

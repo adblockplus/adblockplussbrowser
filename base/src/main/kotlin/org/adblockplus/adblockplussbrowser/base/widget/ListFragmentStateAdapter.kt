@@ -61,3 +61,4 @@ abstract class ListFragmentStateAdapter<T>(
         differ.submitList(list)
     }
 }
+

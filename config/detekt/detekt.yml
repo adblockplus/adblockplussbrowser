@@ -3,4 +3,7 @@ comments:
   excludes: ['**/build/**']
   AbsentOrWrongFileLicense:
     active: true
-    
+
+style:
+  WildcardImport:
+    excludes: ['**/build.gradle.kts']

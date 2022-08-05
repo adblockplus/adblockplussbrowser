@@ -29,10 +29,6 @@ object Deps {
 
     val JUNIT = "junit:junit" version "4.13.2"
 
-    val JACOBO_PLUGIN = "gradle.plugin.com.kageiit:jacobo-plugin" version "2.0.5"
-
-    val JACOBO = "com.kageiit.jacobo"
-
     val JACOCO_CORE = "org.jacoco:org.jacoco.core" version "0.8.7"
 
     const val JACOCO = "jacoco"
@@ -44,6 +40,8 @@ object Deps {
     val OKIO = "com.squareup.okio:okio" version "3.0.0-alpha.6"
 
     val TIMBER = "com.jakewharton.timber:timber" version "4.7.1"
+
+    val SPEED_DIAL = "com.leinardi.android:speed-dial" version "3.3.0"
 
     object Gms: DependencyGroup("com.google.android") {
         val OSS_LICENSES_PLUGIN = dependency {
@@ -96,7 +94,7 @@ object Deps {
 
         val CORE = dependency {
             groupName("core:core-ktx")
-            version("1.5.0")
+            version("1.8.0")
         }
 
         val CONSTRAINT_LAYOUT = dependency {
@@ -157,7 +155,7 @@ object Deps {
             }
         }
 
-        object Work : DependencyGroup("androidx.work", "2.5.0") {
+        object Work : DependencyGroup("androidx.work", "2.7.0") {
             val RUNTIME = dependency { name("work-runtime-ktx") }
             val TESTING = dependency { name("work-testing") }
         }
@@ -171,6 +169,7 @@ object Deps {
         val ANDROID = dependency { name("hilt-android") }
         val ANDROID_COMPILER = dependency { name("hilt-android-compiler") }
         val ANDROID_GRADLE_PLUGIN = dependency { name("hilt-android-gradle-plugin") }
+        val ANDROID_TESTING = dependency { name("hilt-android-testing") }
     }
 
     object Kotlin : DependencyGroup("org.jetbrains.kotlin", "1.5.31") {

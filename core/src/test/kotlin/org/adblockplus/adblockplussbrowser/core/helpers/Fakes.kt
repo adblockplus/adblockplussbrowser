@@ -22,7 +22,9 @@ import kotlinx.coroutines.flow.flow
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
+import org.adblockplus.adblockplussbrowser.base.data.model.CustomSubscriptionType
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
+import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.data.model.CoreData
 import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscription
@@ -104,8 +106,8 @@ class Fakes {
                         listOf(""),
                         listOf(""),
                         listOf(
-                            Subscription("$serverUrl/easylist.txt", "", 0L),
-                            Subscription("$serverUrl/exceptionrules.txt", "", 0L)
+                            Subscription("$serverUrl/easylist.txt", "", 0L, CustomSubscriptionType.FROM_URL),
+                            Subscription("$serverUrl/exceptionrules.txt", "", 0L, CustomSubscriptionType.FROM_URL)
                         ),
                         listOf(),
                         true,
@@ -115,17 +117,21 @@ class Fakes {
             }
 
         override suspend fun getEasylistSubscription(): Subscription {
-            return Subscription("$serverUrl/easylist.txt", "", 0L)
+            return Subscription("$serverUrl/easylist.txt", "", 0L, CustomSubscriptionType.FROM_URL)
         }
 
         override suspend fun getAcceptableAdsSubscription(): Subscription {
-            return Subscription("$serverUrl/exceptionrules.txt", "", 0L)
+            return Subscription("$serverUrl/exceptionrules.txt", "", 0L, CustomSubscriptionType.FROM_URL)
+        }
+
+        override suspend fun getTestPagesSubscription(): Subscription {
+            return Subscription("$serverUrl/exceptionrules.txt", "", 0L, CustomSubscriptionType.FROM_URL)
         }
 
         override suspend fun getDefaultPrimarySubscriptions(): List<Subscription> {
             return listOf(
-                Subscription("$serverUrl/easylist.txt", "", 0L),
-                Subscription("$serverUrl/exceptionrules.txt", "", 0L)
+                Subscription("$serverUrl/easylist.txt", "", 0L, CustomSubscriptionType.FROM_URL),
+                Subscription("$serverUrl/exceptionrules.txt", "", 0L, CustomSubscriptionType.FROM_URL)
             )
         }
 
@@ -226,12 +232,22 @@ class Fakes {
                         UpdateConfig.ALWAYS,
                         listOf(""),
                         listOf(""),
-                        listOf(Subscription("", "", 0L)),
-                        listOf(Subscription("", "", 0L)),
+                        listOf(Subscription("", "", 0L, CustomSubscriptionType.FROM_URL)),
+                        listOf(Subscription("", "", 0L, CustomSubscriptionType.FROM_URL)),
                         true,
                         true
                     )
                 )
             }
     }
+
+    class FakeActivationPreferences : ActivationPreferences {
+        override val lastFilterListRequest: Flow<Long>
+            get() = flow { System.currentTimeMillis() }
+
+        override suspend fun updateLastFilterRequest(lastFilterListRequest: Long) {
+            lastFilterListRequest
+        }
+    }
 }
+

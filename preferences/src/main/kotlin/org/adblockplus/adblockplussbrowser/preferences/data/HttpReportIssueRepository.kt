@@ -23,41 +23,52 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
+import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
 import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData
 import org.xmlpull.v1.XmlSerializer
 import ru.gildor.coroutines.okhttp.await
 import timber.log.Timber
+import java.io.IOException
 import java.io.StringWriter
-import java.net.URL
+import java.net.HttpURLConnection.HTTP_OK
 import java.util.Locale
 import java.util.UUID
 import javax.inject.Inject
-import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
 
-
+/**
+ * Contains logic of report data conversion into Xml and performing and HTTP post request to the backend.
+ */
 class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
 
     private val okHttpClient = OkHttpClient()
     private val locale = Locale.getDefault()
 
+    /**
+     * Convert report issue data and send it to the backend.
+     *
+     * @param data ReportIssueData instance
+     * @return string with state code of the operation
+     */
     override suspend fun sendReport(data: ReportIssueData): String {
-
         val xml = makeXML(data)
         return if (xml.isEmpty()) {
             XML_ERROR
         } else {
-            makeHttpPost(xml)
+            try {
+                makeHttpPost(xml)
+            } catch (e: IOException) {
+                Timber.e(e)
+                IO_ERROR
+            }
         }
     }
 
+    @Throws(IOException::class)
     private suspend fun makeHttpPost(xml: String): String {
-        val query = Uri.Builder()
+        val url = Uri.parse(DEFAULT_URL).buildUpon()
             .appendQueryParameter("version", "1")
             .appendQueryParameter("guid", UUID.randomUUID().toString()) // version 4, variant 1
             .appendQueryParameter("lang", locale.language).build().toString()
-
-        var url = ""
-        runCatching { url = URL(DEFAULT_URL + query).toString() }
 
         val request = Request.Builder()
             .url(url)
@@ -67,9 +78,6 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
             .build()
 
         val response = okHttpClient.newCall(request).await()
-
-
-        // TODO remove the URL parsing if it's not needed
         val responseBody = kotlin.runCatching { response.body?.string() }
         val responseUrls = Regex(A_PATTERN).findAll(responseBody.toString()).map { it.value }
         if (responseUrls.any()) {
@@ -79,80 +87,87 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
             return "Send error"
         }
 
-        return if (response.code == 200) {
+        return if (response.code == HTTP_OK) {
             ""
         } else {
-            "HTTP returned ${response.code}"
+            throw IOException()
         }
     }
 
     private fun makeXML(data: ReportIssueData): String {
         val writer = StringWriter()
         val serializer: XmlSerializer = Xml.newSerializer()
-        try {
+        // As there are only 3 possible exceptions thrown in this code that are handled the same way, we just
+        // suppress the Detekt warning.
+        @Suppress("TooGenericExceptionCaught")
+        return try {
             serializer.setOutput(writer)
             serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true)
-            serializer.startTag(null, "report")
-            serializer.attribute(null, "type", data.type)
+            with(serializer) {
+                startTag(null, "report")
+                attribute(null, "type", data.type)
 
-            serializer.startTag(null, "requests")
-            serializer.endTag(null, "requests")
+                startTag(null, "requests")
+                endTag(null, "requests")
 
-            serializer.startTag(null, "filters")
-            serializer.endTag(null, "filters")
+                startTag(null, "filters")
+                endTag(null, "filters")
 
-            serializer.startTag(null, "platform")
-            serializer.attribute(null, "build", BuildConfig.BUILD_TYPE)
-            serializer.attribute(null, "name", "ABP")
-            serializer.attribute(null, "version", BuildConfig.APPLICATION_VERSION)
-            serializer.endTag(null, "platform")
+                startTag(null, "platform")
+                attribute(null, "build", BuildConfig.BUILD_TYPE)
+                attribute(null, "name", "ABP")
+                attribute(null, "version", BuildConfig.APPLICATION_VERSION)
+                endTag(null, "platform")
 
-            serializer.startTag(null, "window")
-            if (data.url.isNotEmpty()) {
-                serializer.attribute(null, "url", data.url)
+                startTag(null, "window")
+                if (data.url.isNotEmpty()) {
+                    serializer.attribute(null, "url", data.url)
+                }
+                endTag(null, "window")
+
+                startTag(null, "subscriptions")
+                endTag(null, "subscriptions")
+
+                startTag(null, "adblock-plus")
+                attribute(null, "version", "Build")
+                attribute(null, "locale", locale.toString())
+                endTag(null, "adblock-plus")
+
+                startTag(null, "application")
+                attribute(null, "name", "Samsung Internet")
+                attribute(null, "version", "unknown")
+                attribute(null, "vendor", "Samsung Electronics Co.")
+                attribute(null, "userAgent", "")
+                endTag(null, "application")
+
+                startTag(null, "comment")
+                text(data.comment)
+                endTag(null, "comment")
+
+                startTag(null, "email")
+                text(data.email)
+                endTag(null, "email")
+
+                startTag(null, "screenshot")
+                attribute(null, "edited", "false")
+                text(data.screenshot)
+                endTag(null, "screenshot")
+
+                endTag(null, "report")
+                endDocument()
+                flush()
             }
-            serializer.endTag(null, "window")
-
-            serializer.startTag(null, "subscriptions")
-            serializer.endTag(null, "subscriptions")
-
-            serializer.startTag(null, "adblock-plus")
-            serializer.attribute(null, "version", "Build")
-            serializer.attribute(null, "locale", locale.toString())
-            serializer.endTag(null, "adblock-plus")
-
-            serializer.startTag(null, "application")
-            serializer.attribute(null, "name", "Samsung Internet")
-            serializer.attribute(null, "version", "unknown")
-            serializer.attribute(null, "vendor", "Samsung Electronics Co.")
-            serializer.attribute(null, "userAgent", "")
-            serializer.endTag(null, "application")
-
-            serializer.startTag(null, "comment")
-            serializer.text(data.comment)
-            serializer.endTag(null, "comment")
-
-            serializer.startTag(null, "email")
-            serializer.text(data.email)
-            serializer.endTag(null, "email")
-
-            serializer.startTag(null, "screenshot")
-            serializer.attribute(null, "edited", "false")
-            serializer.text(data.screenshot)
-            serializer.endTag(null, "screenshot")
-
-            serializer.endTag(null, "report")
-            serializer.endDocument()
-            serializer.flush()
+            writer.toString()
         } catch (e: Exception) {
-            return ""
+            Timber.e(e)
+            ""
         }
-        return writer.toString()
     }
 
     companion object {
         const val DEFAULT_URL = """https://reports.adblockplus.org/submitReport"""
         const val XML_ERROR = "Error creating XML"
+        const val IO_ERROR = "Error sending report"
         const val A_PATTERN = """<a.+</a>"""
     }
 }
