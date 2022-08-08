@@ -31,8 +31,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.io.ByteArrayOutputStream
-import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -43,6 +41,8 @@ import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueDat
 import org.adblockplus.adblockplussbrowser.preferences.ui.reporter.ReportIssueFragment.Companion.REPORT_ISSUE_FRAGMENT_SEND_ERROR
 import org.adblockplus.adblockplussbrowser.preferences.ui.reporter.ReportIssueFragment.Companion.REPORT_ISSUE_FRAGMENT_SEND_SUCCESS
 import timber.log.Timber
+import java.io.ByteArrayOutputStream
+import javax.inject.Inject
 
 /**
  * Contains logic used for issue report screenshot conversion and sending report.
@@ -64,9 +64,11 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
 
     internal fun sendReport() {
         viewModelScope.launch {
-            returnedString.value = if (reportIssueRepository.sendReport(data).isEmpty())
+            returnedString.value = if (reportIssueRepository.sendReport(data).isSuccess) {
                 REPORT_ISSUE_FRAGMENT_SEND_SUCCESS
-            else REPORT_ISSUE_FRAGMENT_SEND_ERROR
+            } else {
+                REPORT_ISSUE_FRAGMENT_SEND_ERROR
+            }
         }
     }
 
