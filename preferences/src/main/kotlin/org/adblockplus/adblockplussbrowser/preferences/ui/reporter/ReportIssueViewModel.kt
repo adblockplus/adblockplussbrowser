@@ -26,6 +26,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.util.Base64
+import android.util.Size
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -96,25 +97,85 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
 
         Timber.d("ReportIssue: image path: $pic")
 
-        val bs = ByteArrayOutputStream()
+        val screenshotByteStream = ByteArrayOutputStream()
         return try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val imageBitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 ImageDecoder.decodeBitmap(ImageDecoder.createSource(cr, pic))
-                    .compress(Bitmap.CompressFormat.PNG, REPORT_ISSUE_VIEW_MODEL_IMAGE_QUALITY, bs)
             } else {
                 MediaStore.Images.Media.getBitmap(cr, pic)
-                    .compress(Bitmap.CompressFormat.PNG, REPORT_ISSUE_VIEW_MODEL_IMAGE_QUALITY, bs)
             }
-            val screenshotByteArray = bs.toByteArray()
-            screenshot.postValue(BitmapFactory.decodeByteArray(screenshotByteArray, 0, screenshotByteArray.size))
-            "data:image/png;base64," + Base64.encodeToString(screenshotByteArray, Base64.DEFAULT)
+            processBitmap(imageBitmap).compress(Bitmap.CompressFormat.PNG, 0, screenshotByteStream)
+            makePreviewForScreenshot(screenshotByteStream)
+            "data:image/png;base64," + Base64.encodeToString(screenshotByteStream.toByteArray(), Base64.DEFAULT)
         } catch (e: OutOfMemoryError) {
             Timber.e(e, "ReportIssue: Screenshot decode failed\n")
             ""
         }
     }
 
+    private fun makePreviewForScreenshot(bs: ByteArrayOutputStream) {
+        val byteArray = bs.toByteArray()
+        screenshot.postValue(BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size))
+    }
+
+    /**
+     * Process bitmap to the desired configuration
+     *
+     * @param imageBitmap original decoded bitmap
+     * @return bitmap configured to 16bit and max HD size
+     */
+    private fun processBitmap(imageBitmap: Bitmap): Bitmap {
+        // Calculate smaller size for the sides
+        val newSize = calculateImageSize(imageBitmap.width, imageBitmap.height)
+
+        return Bitmap.createScaledBitmap(imageBitmap, newSize.width, newSize.height, true)
+    }
+
+    /**
+     * Check if the image size is bigger than the max target and reduce it if necessary
+     *
+     * @param imageWidth
+     * @param imageHeight
+     * @return a pair containing the new width and height Pair(width, height)
+     */
+    internal fun calculateImageSize(imageWidth: Int, imageHeight: Int): Size {
+        // Determine if image is portrait or landscape and assign "shorter side" and "longer side"
+        var orientation = Orientation.PORTRAIT
+        var scaledLongerSide = imageHeight
+        var scaledShorterSide = imageWidth
+        if (imageHeight < imageWidth) {
+            orientation = Orientation.LANDSCAPE
+            scaledLongerSide = imageWidth
+            scaledShorterSide = imageHeight
+        }
+
+        // Check if the sizes need conversion and scale them accordingly
+        if (scaledShorterSide > REPORT_ISSUE_VIEW_MODEL_IMAGE_MAX_SHORTER_SIDE) {
+            val ratio = REPORT_ISSUE_VIEW_MODEL_IMAGE_MAX_SHORTER_SIDE / scaledShorterSide
+            scaledShorterSide = (scaledShorterSide * ratio).toInt()
+            scaledLongerSide = (scaledLongerSide * ratio).toInt()
+        }
+        if (scaledLongerSide > REPORT_ISSUE_VIEW_MODEL_IMAGE_MAX_LONGER_SIDE) {
+            val ratio = REPORT_ISSUE_VIEW_MODEL_IMAGE_MAX_LONGER_SIDE / scaledLongerSide
+            scaledShorterSide = (scaledShorterSide * ratio).toInt()
+            scaledLongerSide = (scaledLongerSide * ratio).toInt()
+        }
+
+        return if (orientation == Orientation.PORTRAIT) {
+            Size(scaledShorterSide, scaledLongerSide)
+        } else {
+            Size(scaledLongerSide, scaledShorterSide)
+        }
+    }
+
     companion object {
-        private const val REPORT_ISSUE_VIEW_MODEL_IMAGE_QUALITY = 100
+        // HD max size
+        private const val REPORT_ISSUE_VIEW_MODEL_IMAGE_MAX_LONGER_SIDE = 1280f
+        private const val REPORT_ISSUE_VIEW_MODEL_IMAGE_MAX_SHORTER_SIDE = 720f
+    }
+
+    private enum class Orientation {
+        PORTRAIT,
+        LANDSCAPE
     }
 }
