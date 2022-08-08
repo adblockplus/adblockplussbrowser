@@ -57,7 +57,7 @@ internal class ReportIssueFragment :
 
         handleReportStatus()
 
-        viewModel.screenshot.observe(this){
+        viewModel.screenshot.observe(this) {
             with(binding.screenshotPreview) {
                 screenshot.setImageBitmap(it)
                 screenshotName.text = viewModel.fileName
@@ -139,7 +139,8 @@ internal class ReportIssueFragment :
                     Timber.d("ReportIssueFragment: Send success")
                 }
                 BackgroundOperationOutcome.SEND_ERROR -> {
-                    viewModel.displaySnackbarMessage.value = context?.getString(R.string.issueReporter_report_send_error)
+                    viewModel.displaySnackbarMessage.value =
+                        context?.getString(R.string.issueReporter_report_send_error)
                     Timber.d("ReportIssueFragment: Send error")
                 }
             }
