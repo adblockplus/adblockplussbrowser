@@ -97,16 +97,16 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
 
         Timber.d("ReportIssue: image path: $pic")
 
-        val bs = ByteArrayOutputStream()
+        val screenshotByteStream = ByteArrayOutputStream()
         return try {
             val imageBitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 ImageDecoder.decodeBitmap(ImageDecoder.createSource(cr, pic))
             } else {
                 MediaStore.Images.Media.getBitmap(cr, pic)
             }
-            processBitmap(imageBitmap).compress(Bitmap.CompressFormat.PNG, 0, bs)
-            makePreviewForScreenshot(bs)
-            "data:image/png;base64," + Base64.encodeToString(bs.toByteArray(), Base64.DEFAULT)
+            processBitmap(imageBitmap).compress(Bitmap.CompressFormat.PNG, 0, screenshotByteStream)
+            makePreviewForScreenshot(screenshotByteStream)
+            "data:image/png;base64," + Base64.encodeToString(screenshotByteStream.toByteArray(), Base64.DEFAULT)
         } catch (e: OutOfMemoryError) {
             Timber.e(e, "ReportIssue: Screenshot decode failed\n")
             ""
