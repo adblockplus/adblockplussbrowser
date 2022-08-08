@@ -132,12 +132,14 @@ internal class ReportIssueFragment :
                     Timber.d("ReportIssue Screenshot read error")
                 }
                 BackgroundOperationOutcome.SEND_SUCCESS -> {
+                    viewModel.displaySnackbarMessage.value = context?.getString(R.string.issueReporter_report_sent)
                     val direction =
                         ReportIssueFragmentDirections.actionReportIssueFragmentToMainPreferencesFragment()
                     findNavController().navigate(direction)
                     Timber.d("ReportIssueFragment: Send success")
                 }
                 BackgroundOperationOutcome.SEND_ERROR -> {
+                    viewModel.displaySnackbarMessage.value = context?.getString(R.string.issueReporter_report_send_error)
                     Timber.d("ReportIssueFragment: Send error")
                 }
             }
@@ -201,6 +203,7 @@ internal class ReportIssueFragment :
 
     private fun hideProgressBar() {
         binding?.indeterminateBar?.visibility = View.GONE
+        binding?.screenshotPreview?.processingImageBar?.visibility = View.GONE
     }
 
     companion object {

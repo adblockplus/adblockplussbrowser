@@ -37,11 +37,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.os.resolveFilename
-import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.data.ReportIssueRepository
 import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
+import java.io.IOException
 import javax.inject.Inject
 
 
@@ -74,20 +74,19 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
 
     internal fun sendReport() {
         viewModelScope.launch {
-            val context = getApplication<Application>().applicationContext
-            if (reportIssueRepository.sendReport(data).isSuccess) {
-                displaySnackbarMessage.value = context.getString(R.string.issueReporter_report_sent)
-                backgroundOperationOutcome.value = BackgroundOperationOutcome.SEND_SUCCESS
-            } else {
-                displaySnackbarMessage.value = context.getString(R.string.issueReporter_report_send_error)
-                backgroundOperationOutcome.value = BackgroundOperationOutcome.SEND_ERROR
-            }
+            backgroundOperationOutcome.postValue(
+                if (reportIssueRepository.sendReport(data).isSuccess) {
+                    BackgroundOperationOutcome.SEND_SUCCESS
+                } else {
+                    BackgroundOperationOutcome.SEND_ERROR
+                }
+            )
         }
     }
 
     internal suspend fun processImage(unresolvedUri: Uri, activity: FragmentActivity?) {
         withContext(Dispatchers.Default) {
-            data.screenshot = imageFileToBase64(unresolvedUri, activity)
+            data.screenshot = imageFileToBase64(unresolvedUri, activity).getOrDefault("")
             backgroundOperationOutcome.postValue(
                 if (data.screenshot.isEmpty()) BackgroundOperationOutcome.SCREENSHOT_READ_ERROR
                 else BackgroundOperationOutcome.SCREENSHOT_READ_SUCCESS
@@ -95,29 +94,27 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         }
     }
 
-    private fun imageFileToBase64(unresolvedUri: Uri, activity: FragmentActivity?): String {
+    private fun imageFileToBase64(unresolvedUri: Uri, activity: FragmentActivity?): Result<String> {
         Timber.d("ReportIssue: unresolvedUri: $unresolvedUri")
         val context = getApplication<Application>().applicationContext
-        val cr: ContentResolver = context.contentResolver ?: return ""
+        val cr: ContentResolver = context.contentResolver ?: return Result.failure(IOException("Can't obtain context"))
 
         activity?.resolveFilename(unresolvedUri)?.let { fileNameString ->
             fileName = fileNameString
             Timber.d("ReportIssue: filename: $fileName")
         }
 
-        val screenshotByteStream = ByteArrayOutputStream()
-        return try {
+        return runCatching {
+            val screenshotByteStream = ByteArrayOutputStream()
             val imageBitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 ImageDecoder.decodeBitmap(ImageDecoder.createSource(cr, unresolvedUri))
             } else {
+                @Suppress("DEPRECATION")
                 MediaStore.Images.Media.getBitmap(cr, unresolvedUri)
             }
             processBitmap(imageBitmap).compress(Bitmap.CompressFormat.PNG, 0, screenshotByteStream)
             makePreviewForScreenshot(screenshotByteStream)
             "data:image/png;base64," + Base64.encodeToString(screenshotByteStream.toByteArray(), Base64.DEFAULT)
-        } catch (e: OutOfMemoryError) {
-            Timber.e(e, "ReportIssue: Screenshot decode failed\n")
-            ""
         }
     }
 
