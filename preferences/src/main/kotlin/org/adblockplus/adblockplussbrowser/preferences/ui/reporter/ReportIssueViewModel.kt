@@ -75,9 +75,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
     internal fun sendReport() {
         viewModelScope.launch {
             val context = getApplication<Application>().applicationContext
-            val sendResult = reportIssueRepository.sendReport(data)
-            Timber.d("ReportIssueViewModel: sendReport result $sendResult")
-            if (sendResult) {
+            if (reportIssueRepository.sendReport(data).isSuccess) {
                 displaySnackbarMessage.value = context.getString(R.string.issueReporter_report_sent)
                 backgroundOperationOutcome.value = BackgroundOperationOutcome.SEND_SUCCESS
             } else {

@@ -28,7 +28,7 @@ interface ReportIssueRepository {
      * Sends report issue data to repository.
      *
      * @param data Report issue data
-     * @return String that contains status of the operation
+     * @return the operation result
      */
-    suspend fun sendReport(data: ReportIssueData): Boolean
+    suspend fun sendReport(data: ReportIssueData): Result<Unit>
 }
