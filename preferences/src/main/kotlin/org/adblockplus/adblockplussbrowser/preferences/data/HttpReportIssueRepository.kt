@@ -97,10 +97,7 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
     private fun makeXML(data: ReportIssueData): String {
         val writer = StringWriter()
         val serializer: XmlSerializer = Xml.newSerializer()
-        // As there are only 3 possible exceptions thrown in this code that are handled the same way, we just
-        // suppress the Detekt warning.
-        @Suppress("TooGenericExceptionCaught")
-        return try {
+        val result = runCatching {
             serializer.setOutput(writer)
             serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true)
             with(serializer) {
@@ -158,8 +155,9 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
                 flush()
             }
             writer.toString()
-        } catch (e: Exception) {
-            Timber.e(e)
+        }
+        return result.getOrElse {
+            Timber.e(it)
             ""
         }
     }
