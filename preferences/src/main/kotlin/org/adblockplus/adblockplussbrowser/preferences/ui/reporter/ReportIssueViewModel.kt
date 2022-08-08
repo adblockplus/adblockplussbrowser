@@ -107,7 +107,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
             Timber.d("ReportIssue: filename: $fileName")
         }
 
-        val bs = ByteArrayOutputStream()
+        val screenshotByteStream = ByteArrayOutputStream()
         return try {
             val imageBitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 ImageDecoder.decodeBitmap(ImageDecoder.createSource(cr, unresolvedUri))
