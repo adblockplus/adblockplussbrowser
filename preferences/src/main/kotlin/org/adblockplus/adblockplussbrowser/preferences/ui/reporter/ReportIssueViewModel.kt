@@ -42,6 +42,8 @@ import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueDat
 import org.adblockplus.adblockplussbrowser.preferences.ui.reporter.ReportIssueFragment.Companion.REPORT_ISSUE_FRAGMENT_SEND_ERROR
 import org.adblockplus.adblockplussbrowser.preferences.ui.reporter.ReportIssueFragment.Companion.REPORT_ISSUE_FRAGMENT_SEND_SUCCESS
 import timber.log.Timber
+import java.io.ByteArrayOutputStream
+import javax.inject.Inject
 
 /**
  * Contains logic used for issue report screenshot conversion and sending report.
