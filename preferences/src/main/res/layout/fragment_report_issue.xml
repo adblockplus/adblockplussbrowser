@@ -314,7 +314,7 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:issueReporterResult="@{viewModel.sendReportStatus}" />
+                    app:issueReporterResult="@{viewModel.displaySnackbarMessage}" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

@@ -19,10 +19,13 @@ package org.adblockplus.adblockplussbrowser.preferences.data
 
 import android.net.Uri
 import android.util.Xml
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
 import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
 import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData
 import org.xmlpull.v1.XmlSerializer
@@ -49,14 +52,16 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
      * @param data ReportIssueData instance
      * @return string with state code of the operation
      */
-    override suspend fun sendReport(data: ReportIssueData): String {
+    override suspend fun sendReport(data: ReportIssueData): Boolean {
         val xml = makeXML(data)
         return if (xml.isEmpty()) {
             Timber.d("ReportIssue: Error creating XML")
             false
         } else {
             try {
-                makeHttpPost(xml)
+                withContext(Dispatchers.IO) {
+                    makeHttpPost(xml)
+                }
             } catch (e: IOException) {
                 Timber.e(e)
                 false

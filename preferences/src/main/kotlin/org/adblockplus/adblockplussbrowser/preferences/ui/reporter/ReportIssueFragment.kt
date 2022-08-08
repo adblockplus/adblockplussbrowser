@@ -120,24 +120,25 @@ internal class ReportIssueFragment :
     }
 
     private fun handleReportStatus() {
-        viewModel.returnedString.observe(this) {
+        viewModel.backgroundOperationOutcome.observe(this) {
             hideProgressBar()
-            when (viewModel.returnedString.value) {
-                REPORT_ISSUE_FRAGMENT_SCREENSHOT_READ_SUCCESS -> {
+            when (viewModel.backgroundOperationOutcome.value) {
+                BackgroundOperationOutcome.SCREENSHOT_READ_SUCCESS -> {
                     validateData()
                     Timber.d("ReportIssue Screenshot read success")
                 }
-                REPORT_ISSUE_FRAGMENT_SEND_SUCCESS -> {
+                BackgroundOperationOutcome.SCREENSHOT_READ_ERROR -> {
+                    validateData()
+                    Timber.d("ReportIssue Screenshot read error")
+                }
+                BackgroundOperationOutcome.SEND_SUCCESS -> {
                     val direction =
                         ReportIssueFragmentDirections.actionReportIssueFragmentToMainPreferencesFragment()
                     findNavController().navigate(direction)
                     Timber.d("ReportIssueFragment: Send success")
                 }
-                REPORT_ISSUE_FRAGMENT_SEND_ERROR -> {
+                BackgroundOperationOutcome.SEND_ERROR -> {
                     Timber.d("ReportIssueFragment: Send error")
-                }
-                else -> {
-                    validateData()
                 }
             }
         }
@@ -164,7 +165,7 @@ internal class ReportIssueFragment :
             if (result.resultCode == Activity.RESULT_OK) {
                 binding?.screenshotPreview?.processingImageBar?.visibility = View.VISIBLE
                 val intent = result.data
-                val unresolvedUri = intent?.data?.toString()
+                val unresolvedUri = intent?.data
                 if (unresolvedUri != null) {
                     lifecycleScope.launch {
                         viewModel.processImage(unresolvedUri, activity)
@@ -203,10 +204,6 @@ internal class ReportIssueFragment :
     }
 
     companion object {
-        const val REPORT_ISSUE_FRAGMENT_SCREENSHOT_READ_SUCCESS = ""
-        const val REPORT_ISSUE_FRAGMENT_SEND_SUCCESS = "SEND_SUCCESS"
-        const val REPORT_ISSUE_FRAGMENT_SEND_ERROR = "SEND_ERROR"
-        const val REPORT_ISSUE_FRAGMENT_SEND_SUCCESS_MESSAGE = "Report sent"
         const val MANDATORY_MARK = " *"
     }
 }
