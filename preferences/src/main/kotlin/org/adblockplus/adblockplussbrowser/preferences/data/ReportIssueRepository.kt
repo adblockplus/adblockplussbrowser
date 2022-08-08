@@ -30,5 +30,5 @@ interface ReportIssueRepository {
      * @param data Report issue data
      * @return String that contains status of the operation
      */
-    suspend fun sendReport(data: ReportIssueData): String
+    suspend fun sendReport(data: ReportIssueData): Boolean
 }

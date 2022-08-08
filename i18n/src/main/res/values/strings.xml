@@ -173,5 +173,7 @@
     <string name="issueReporter_url_label" tools:ignore="MissingTranslation">URL (optional):</string>
     <string name="issueReporter_attached_image_thumbnail" tools:ignore="MissingTranslation">attached image thumbnail</string>
     <string name="issueReporter_privacyPolicy"><a href="https://adblockplus.org/en/privacy#issue-reporter">Privacy Policy</a></string>
+    <string name="issueReporter_report_sent" tools:ignore="MissingTranslation">Thanks for reporting the issue!</string>
+    <string name="issueReporter_report_send_error" tools:ignore="MissingTranslation">"Unable to process your request. Please try again later."</string>
 
 </resources>

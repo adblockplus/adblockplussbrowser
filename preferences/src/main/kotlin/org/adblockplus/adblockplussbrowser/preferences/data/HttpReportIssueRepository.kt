@@ -52,19 +52,20 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
     override suspend fun sendReport(data: ReportIssueData): String {
         val xml = makeXML(data)
         return if (xml.isEmpty()) {
-            XML_ERROR
+            Timber.d("ReportIssue: Error creating XML")
+            false
         } else {
             try {
                 makeHttpPost(xml)
             } catch (e: IOException) {
                 Timber.e(e)
-                IO_ERROR
+                false
             }
         }
     }
 
     @Throws(IOException::class)
-    private suspend fun makeHttpPost(xml: String): String {
+    private suspend fun makeHttpPost(xml: String): Boolean {
         val url = Uri.parse(DEFAULT_URL).buildUpon()
             .appendQueryParameter("version", "1")
             .appendQueryParameter("guid", UUID.randomUUID().toString()) // version 4, variant 1
@@ -77,21 +78,27 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
             .post(xml.toRequestBody("text/xml".toMediaTypeOrNull()))
             .build()
 
-        val response = okHttpClient.newCall(request).await()
-        val responseBody = kotlin.runCatching { response.body?.string() }
-        val responseUrls = Regex(A_PATTERN).findAll(responseBody.toString()).map { it.value }
-        if (responseUrls.any()) {
-            Timber.d("ReportIssue report sent: ${responseUrls.last()}")
-        } else {
-            Timber.d("ReportIssue report sent, but no URL received: $responseBody")
-            return "Send error"
+        var response: Response? = null
+        try {
+            response = okHttpClient.newCall(request).await()
+        } catch (ex: IOException) {
+            Timber.d("ReportIssue: HTTP request failed: ${ex.localizedMessage}")
         }
 
-        return if (response.code == HTTP_OK) {
-            ""
-        } else {
-            throw IOException()
+        if (response != null) {
+            if (response.code != HTTP_OK) {
+                Timber.d("ReportIssue: HTTP request returned ${response.code}")
+            } else {
+                val responseBody = kotlin.runCatching { response.body?.string() }
+                val responseUrls = Regex(A_PATTERN).findAll(responseBody.toString()).map { it.value }
+                if (responseUrls.any()) {
+                    Timber.d("ReportIssue: report sent: ${responseUrls.last()}")
+                    return true
+                }
+                Timber.d("ReportIssue: report sent, but no URL received: $responseBody")
+            }
         }
+        return false
     }
 
     private fun makeXML(data: ReportIssueData): String {
@@ -164,8 +171,7 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
 
     companion object {
         const val DEFAULT_URL = """https://reports.adblockplus.org/submitReport"""
-        const val XML_ERROR = "Error creating XML"
-        const val IO_ERROR = "Error sending report"
         const val A_PATTERN = """<a.+</a>"""
     }
 }
+

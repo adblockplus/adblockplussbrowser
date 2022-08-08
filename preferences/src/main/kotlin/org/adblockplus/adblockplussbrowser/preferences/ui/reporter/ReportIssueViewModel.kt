@@ -32,8 +32,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.io.ByteArrayOutputStream
-import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -65,7 +63,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
 
     internal fun sendReport() {
         viewModelScope.launch {
-            returnedString.value = if (reportIssueRepository.sendReport(data).isEmpty())
+            returnedString.value = if (reportIssueRepository.sendReport(data))
                 REPORT_ISSUE_FRAGMENT_SEND_SUCCESS
             else REPORT_ISSUE_FRAGMENT_SEND_ERROR
         }

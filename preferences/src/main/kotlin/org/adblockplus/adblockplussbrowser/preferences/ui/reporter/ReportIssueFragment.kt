@@ -22,7 +22,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.provider.MediaStore
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.text.buildSpannedString
@@ -132,15 +131,12 @@ internal class ReportIssueFragment :
                     val direction =
                         ReportIssueFragmentDirections.actionReportIssueFragmentToMainPreferencesFragment()
                     findNavController().navigate(direction)
-                    Toast.makeText(
-                        context,
-                        REPORT_ISSUE_FRAGMENT_SEND_SUCCESS_MESSAGE,
-                        Toast.LENGTH_LONG
-                    ).show()
+                    Timber.d("ReportIssueFragment: Send success")
+                }
+                REPORT_ISSUE_FRAGMENT_SEND_ERROR -> {
+                    Timber.d("ReportIssueFragment: Send error")
                 }
                 else -> {
-                    Toast.makeText(context, viewModel.returnedString.value, Toast.LENGTH_LONG)
-                        .show()
                     validateData()
                 }
             }
