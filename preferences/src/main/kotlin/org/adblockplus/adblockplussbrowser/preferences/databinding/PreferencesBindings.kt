@@ -20,6 +20,7 @@ package org.adblockplus.adblockplussbrowser.preferences.databinding
 import android.text.format.DateUtils
 import android.view.View
 import android.widget.TextView
+import androidx.annotation.StringRes
 import androidx.databinding.BindingAdapter
 import org.adblockplus.adblockplussbrowser.base.widget.SnackbarContainer
 import org.adblockplus.adblockplussbrowser.preferences.R
@@ -57,12 +58,12 @@ internal fun bindGroupItemDivider(view: View, groupItemLayout: GroupItemLayout) 
 }
 
 @BindingAdapter("issueReporterResult")
-internal fun bindReporterResult(snackbarContainer: SnackbarContainer, status: String) {
+internal fun bindReporterResult(snackbarContainer: SnackbarContainer, @StringRes status: Int) {
     with(snackbarContainer) {
-        if (status.isEmpty()) {
+        if (status == 0) {
             dismiss()
         } else {
-            text = status
+            text = context.getText(status)
             setTextDrawableStart(R.drawable.outline_info_24)
             showAction()
             show()

@@ -15,9 +15,8 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.adblockplus.adblockplussbrowser.preferences.ui.reporter
+package org.adblockplus.adblockplussbrowser.base.os
 
-import android.app.Application
 import android.util.Size
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -27,19 +26,17 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(sdk = [21])
-class ReportIssueViewModelTest {
-
-    private val reportIssueViewModel = ReportIssueViewModel(Application())
+@Config(shadows = [SizeShadow::class])
+class SizeExtensionsTest {
 
     @Test
-    fun `test validateImageSize Portrait`() {
+    fun `should correctly downscale portrait sizes`() {
         // Pair(Width, Height)
-        val scaledSizes = calculateForSizes(listOf(
+        val scaledSizes = listOf(
             Size(720, 1280), // HD
             Size(960, 1280), // Portrait
             Size(2160, 3840), //UHD
-        ))
+        ).map { it.downScaleTo(1280, 720)}
         // assert correct size after conversion
         assertTrue(scaledSizes.all {
             it.width <= 720 && it.height <= 1280
@@ -47,14 +44,14 @@ class ReportIssueViewModelTest {
     }
 
     @Test
-    fun `test validateImageSize Landscape`() {
+    fun `should correctly downscale landscape sizes`() {
         // Pair(Width, Height)
-        val scaledSizes = calculateForSizes(listOf(
+        val scaledSizes = listOf(
             Size(1280, 720), // HD
             Size(1280, 960), // Landscape
             Size(3840, 2160), //UHD
             Size(3840, 2130)
-        ))
+        ).map { it.downScaleTo(1280, 720) }
         // assert correct size after conversion
         assertTrue(scaledSizes.all {
             it.width <= 1280 && it.height <= 720
@@ -62,8 +59,8 @@ class ReportIssueViewModelTest {
     }
 
     @Test
-    fun `test validateImageSize SD`() {
-        val newSize = reportIssueViewModel.calculateImageSize(480, 640)
+    fun `should keep small portrait sizes (480x640) as they are`() {
+        val newSize = Size(480, 640).downScaleTo(1280, 720)
         // assert same ratio after conversion
         assertEquals(3/4, newSize.width/newSize.height)
         // assert correct size after conversion
@@ -72,23 +69,20 @@ class ReportIssueViewModelTest {
     }
 
     @Test
-    fun `test validateImageSize square image`() {
-        val newSize = reportIssueViewModel.calculateImageSize(2160, 2160)
-        // assert same ratio after conversion
-        assertEquals(1, newSize.width/newSize.height)
-        // assert correct size after conversion
-        assertEquals(720, newSize.width)
-        assertEquals(720, newSize.height)
-    }
-
-    private fun calculateForSizes(imageSizes: List<Size>): List<Size> {
-        val result: MutableList<Size> = mutableListOf()
-        for(p in imageSizes) {
-            val newSize = reportIssueViewModel.calculateImageSize(p.width, p.height)
+    fun `should downscale square sized to square`() {
+        Size(2160, 2160).downScaleTo(1280, 720).run {
             // assert same ratio after conversion
-            assertEquals(p.width/p.height, newSize.width/newSize.height)
-            result.add(Size(newSize.width, newSize.height))
+            assertEquals(1, width/height)
+            // assert correct size after conversion
+            assertEquals(720, width)
+            assertEquals(720, height)
         }
-        return result
+        Size(640, 640).downScaleTo(1280, 720).run {
+            // assert same ratio after conversion
+            assertEquals(1, width/height)
+            // assert correct size after conversion
+            assertEquals(640, width)
+            assertEquals(640, height)
+        }
     }
 }
