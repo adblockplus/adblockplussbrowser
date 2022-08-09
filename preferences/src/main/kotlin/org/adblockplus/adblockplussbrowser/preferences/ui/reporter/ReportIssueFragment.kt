@@ -20,9 +20,13 @@ package org.adblockplus.adblockplussbrowser.preferences.ui.reporter
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
+import android.os.Bundle
 import android.provider.MediaStore
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.text.buildSpannedString
@@ -33,7 +37,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textview.MaterialTextView
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import kotlinx.coroutines.launch
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
 import org.adblockplus.adblockplussbrowser.preferences.R
@@ -51,6 +58,16 @@ internal class ReportIssueFragment :
     DataBindingFragment<FragmentReportIssueBinding>(R.layout.fragment_report_issue) {
 
     private val viewModel: ReportIssueViewModel by viewModels()
+
+    @Inject
+    lateinit var analyticsProvider: AnalyticsProvider
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            viewModel.logCancelIssueReporter()
+        }
+    }
 
     override fun onBindView(binding: FragmentReportIssueBinding) {
         binding.viewModel = viewModel
@@ -107,6 +124,7 @@ internal class ReportIssueFragment :
         }
 
         binding.cancel.setDebounceOnClickListener({
+            viewModel.logCancelIssueReporter()
             val direction = ReportIssueFragmentDirections.actionReportIssueFragmentToMainPreferencesFragment()
             findNavController().navigate(direction)
         }, lifecycleOwner)

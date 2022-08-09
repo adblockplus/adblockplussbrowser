@@ -37,6 +37,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.os.resolveFilename
 import org.adblockplus.adblockplussbrowser.preferences.data.ReportIssueRepository
@@ -64,10 +65,18 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
     lateinit var analyticsProvider: AnalyticsProvider
 
     internal fun sendReport() {
+        if (data.email.isEmpty()) {
+            analyticsProvider.logEvent(AnalyticsEvent.SEND_ANONYMOUS_REPORT)
+        }
         viewModelScope.launch {
-            returnedString.value = if (reportIssueRepository.sendReport(data).isEmpty())
+            returnedString.value = if (reportIssueRepository.sendReport(data).isEmpty()) {
+                analyticsProvider.logEvent(AnalyticsEvent.SEND_ISSUE_REPORT_SUCCESS)
                 REPORT_ISSUE_FRAGMENT_SEND_SUCCESS
-            else REPORT_ISSUE_FRAGMENT_SEND_ERROR
+            }
+            else {
+                analyticsProvider.logEvent(AnalyticsEvent.SEND_ISSUE_REPORT_ERROR)
+                REPORT_ISSUE_FRAGMENT_SEND_ERROR
+            }
         }
     }
 
@@ -167,6 +176,8 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
             Size(scaledLongerSide, scaledShorterSide)
         }
     }
+
+    internal fun logCancelIssueReporter() = analyticsProvider.logEvent(AnalyticsEvent.CANCEL_ISSUE_REPORTER)
 
     companion object {
         // HD max size

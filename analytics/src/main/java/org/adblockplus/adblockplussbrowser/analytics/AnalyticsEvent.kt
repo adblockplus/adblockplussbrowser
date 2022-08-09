@@ -166,5 +166,30 @@ enum class AnalyticsEvent(val eventName: String) {
     /**
      * The user has chosen to load custom filter list from file.
      */
-    LOAD_CUSTOM_FILTER_LIST_FROM_FILE("load_custom_filter_list_from_file")
+    LOAD_CUSTOM_FILTER_LIST_FROM_FILE("load_custom_filter_list_from_file"),
+
+    /**
+     * The user has tapped on the issue reporter option
+     */
+    OPEN_ISSUE_REPORTER("open_issue_reporter"),
+
+    /**
+     * The user has tapped on the cancel button or on the back button inside the issue reporter
+     */
+    CANCEL_ISSUE_REPORTER("cancel_issue_reporter"),
+
+    /**
+     * The user has tapped on the send report without the entered email
+     */
+    SEND_ANONYMOUS_REPORT("send_anonymous_report"),
+
+    /**
+     * The issue report has been successfully sent
+     */
+    SEND_ISSUE_REPORT_ERROR("send_issue_report_error"),
+
+    /**
+     * Sending the issue report finished with error
+     */
+    SEND_ISSUE_REPORT_SUCCESS("send_issue_report_success")
 }

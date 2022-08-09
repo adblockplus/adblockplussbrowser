@@ -29,6 +29,9 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.google.android.material.checkbox.MaterialCheckBox
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
 import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
@@ -44,6 +47,9 @@ internal class MainPreferencesFragment :
 
     // Lazy loading the UpdateSubscriptionsViewModel so it will only be used for crystal flavor here
     private val updateViewModel: UpdateSubscriptionsViewModel by activityViewModels()
+
+    @Inject
+    lateinit var analyticsProvider: AnalyticsProvider
 
     override fun onBindView(binding: FragmentMainPreferencesBinding) {
         binding.viewModel = viewModel
@@ -69,6 +75,7 @@ internal class MainPreferencesFragment :
 
         if (BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_ABP) {
             binding.mainPreferencesShareEventsInclude.mainPreferencesIssueReporterCategory.setDebounceOnClickListener({
+                analyticsProvider.logEvent(AnalyticsEvent.OPEN_ISSUE_REPORTER)
                 supportActionBar?.subtitle = null
                 val direction = MainPreferencesFragmentDirections
                     .actionMainPreferencesFragmentToReportIssueFragment()
