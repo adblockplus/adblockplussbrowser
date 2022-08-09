@@ -17,9 +17,15 @@
 
 package org.adblockplus.adblockplussbrowser.base.data.prefs
 
-interface AppPreferences : OnboardingPreferences, ActivationPreferences, DebugPreferences {
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
-    val referrerAlreadyChecked: Boolean
+internal class DebugPreferencesImpl(@Suppress("UnusedPrivateMember")
+                                    private val dataStore: DataStore<Preferences>) : DebugPreferences {
 
-    fun referrerChecked()
+    override val shouldAddTestPages: Flow<Boolean> = flowOf(false)
+
+    override fun initialTestPagesConfigurationCompleted() { return }
 }
