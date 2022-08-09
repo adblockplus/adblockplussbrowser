@@ -76,6 +76,7 @@ class UpdateSubscriptionsWorkerTest {
         worker.coreRepository = Fakes.FakeCoreRepository("")
         worker.downloader = downloader
         worker.settingsRepository = Fakes.FakeSettingsRepository("")
+        worker.debugPreferences = Fakes.FakeDebugPreferences()
         return worker
     }
 
