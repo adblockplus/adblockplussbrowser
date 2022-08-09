@@ -65,8 +65,8 @@
                 android:textStyle="italic"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/screenshot"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/screenshot"
                 app:layout_constraintTop_toBottomOf="@+id/selected_screenshot_name" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -89,9 +89,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:indeterminate="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/image_placeholder_container" />
+                android:indeterminate="true" />
 
             <TextView
                 android:id="@+id/loading"
