@@ -60,12 +60,16 @@ internal class ReportIssueFragment :
         viewModel.screenshot.observe(this) {
             with(binding.screenshotPreview) {
                 screenshot.setImageBitmap(it)
-                screenshotName.text = viewModel.fileName
-                processingImageBar.visibility = View.GONE
+                selectedScreenshotName.text = viewModel.fileName
+                selectedScreenshotName.visibility = View.VISIBLE
+                processingImageContainer.visibility = View.GONE
+                screenshotSelectionDescription.visibility = View.GONE
+                imagePlaceholderContainer.visibility = View.VISIBLE
+                screenshotReselect.visibility = View.VISIBLE
             }
         }
 
-        binding.pickScreenshot.setDebounceOnClickListener({
+        binding.screenshotPreview.imagePlaceholderContainer.setDebounceOnClickListener({
             pickImageFromGallery()
         }, lifecycleOwner)
 
@@ -166,7 +170,8 @@ internal class ReportIssueFragment :
     private val pickImageFromGalleryForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
-                binding?.screenshotPreview?.processingImageBar?.visibility = View.VISIBLE
+                binding?.screenshotPreview?.processingImageContainer?.visibility = View.VISIBLE
+                binding?.screenshotPreview?.imagePlaceholderContainer?.visibility = View.GONE
                 val intent = result.data
                 val unresolvedUri = intent?.data
                 if (unresolvedUri != null) {
