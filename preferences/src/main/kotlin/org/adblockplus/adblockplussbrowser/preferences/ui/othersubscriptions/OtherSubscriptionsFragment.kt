@@ -20,8 +20,6 @@ package org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.net.Uri
-import android.provider.OpenableColumns
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResult

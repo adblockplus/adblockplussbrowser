@@ -47,6 +47,10 @@ class SnackbarContainer @JvmOverloads constructor(
         }
     }
 
+    private val forcedDismissRunnable: Runnable = Runnable {
+        snackbar?.dismiss()
+    }
+
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         // This is just a container, we don't want do display anything
         setMeasuredDimension(0, 0)
@@ -62,6 +66,15 @@ class SnackbarContainer @JvmOverloads constructor(
             binding = SnackbarLayoutBinding.inflate(layoutInflater, root, true)
             adjustAll()
         }
+    }
+
+    override fun onDetachedFromWindow() {
+        snackbar?.let {
+            if (it.isShown) {
+                it.view.postDelayed(forcedDismissRunnable, config.dismissDelay)
+            }
+        }
+        super.onDetachedFromWindow()
     }
 
     private fun adjustAll() {
