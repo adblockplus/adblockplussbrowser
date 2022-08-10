@@ -287,14 +287,14 @@ samsung_filter_tests:
     - adb devices
     - adb shell getprop | egrep "ro.product.manufacturer|ro.product.model|ro.build.version.release|ro.vendor.build.version.sdk"
   script:
-    - CHROMEDRIVER_AUTODOWNLOAD=true /root/entry_point.sh &> appium.log &
+    - /root/entry_point.sh &> appium.log &
     - echo $! > appium_pid
     - git clone $GIT_AUTOMATION_REPO si_automation
     - cd si_automation
     - git checkout ${GIT_AUTOMATION_BRANCH:-main}
     #- TEST_APK=$(find / -name "*samsungInternetBrowser.apk")
     - export OTHER_TEST_APK
-    - export TEST_APK
+    #- export TEST_APK
     #- echo other apk $OTHER_TEST_APK
     - echo OTHER_TEST_APK $OTHER_TEST_APK
     - pwd
