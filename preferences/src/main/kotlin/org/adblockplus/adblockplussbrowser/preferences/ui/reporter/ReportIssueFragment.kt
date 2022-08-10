@@ -62,7 +62,7 @@ internal class ReportIssueFragment :
                 screenshot.setImageBitmap(it)
                 selectedScreenshotName.text = viewModel.fileName
                 selectedScreenshotName.visibility = View.VISIBLE
-                processingImageContainer.visibility = View.GONE
+                processingImageIndicator.visibility = View.GONE
                 screenshotSelectionDescription.visibility = View.GONE
                 imagePlaceholderContainer.visibility = View.VISIBLE
                 screenshotReselect.visibility = View.VISIBLE
@@ -170,7 +170,7 @@ internal class ReportIssueFragment :
     private val pickImageFromGalleryForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
-                binding?.screenshotPreview?.processingImageContainer?.visibility = View.VISIBLE
+                binding?.screenshotPreview?.processingImageIndicator?.visibility = View.VISIBLE
                 binding?.screenshotPreview?.imagePlaceholderContainer?.visibility = View.GONE
                 val intent = result.data
                 val unresolvedUri = intent?.data

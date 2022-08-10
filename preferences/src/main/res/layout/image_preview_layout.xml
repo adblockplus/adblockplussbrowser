@@ -72,7 +72,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
-            android:id="@+id/processing_image_container"
+            android:id="@+id/processing_image_indicator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/background_secondary"
