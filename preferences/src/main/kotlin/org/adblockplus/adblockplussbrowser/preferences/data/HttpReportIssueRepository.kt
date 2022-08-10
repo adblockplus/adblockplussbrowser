@@ -19,10 +19,13 @@ package org.adblockplus.adblockplussbrowser.preferences.data
 
 import android.net.Uri
 import android.util.Xml
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
 import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
 import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData
 import org.xmlpull.v1.XmlSerializer
@@ -47,24 +50,12 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
      * Convert report issue data and send it to the backend.
      *
      * @param data ReportIssueData instance
-     * @return string with state code of the operation
+     * @return the result of the operation
      */
-    override suspend fun sendReport(data: ReportIssueData): String {
-        val xml = makeXML(data)
-        return if (xml.isEmpty()) {
-            XML_ERROR
-        } else {
-            try {
-                makeHttpPost(xml)
-            } catch (e: IOException) {
-                Timber.e(e)
-                IO_ERROR
-            }
-        }
-    }
+    override suspend fun sendReport(data: ReportIssueData): Result<Unit> =
+        makeXML(data).mapCatching { makeHttpPost(it).getOrThrow() }
 
-    @Throws(IOException::class)
-    private suspend fun makeHttpPost(xml: String): String {
+    private suspend fun makeHttpPost(xml: String): Result<Unit> {
         val url = Uri.parse(DEFAULT_URL).buildUpon()
             .appendQueryParameter("version", "1")
             .appendQueryParameter("guid", UUID.randomUUID().toString()) // version 4, variant 1
@@ -78,26 +69,28 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
             .build()
 
         val response = okHttpClient.newCall(request).await()
-        val responseBody = kotlin.runCatching { response.body?.string() }
-        val responseUrls = Regex(A_PATTERN).findAll(responseBody.toString()).map { it.value }
-        if (responseUrls.any()) {
-            Timber.d("ReportIssue report sent: ${responseUrls.last()}")
-        } else {
-            Timber.d("ReportIssue report sent, but no URL received: $responseBody")
-            return "Send error"
+        if (response.code != HTTP_OK) {
+            return Result.failure(IOException("Server replied with ${response.code}"))
         }
 
-        return if (response.code == HTTP_OK) {
-            ""
-        } else {
-            throw IOException()
-        }
+        return runCatching { response.body!!.string() }
+            .mapCatching { body ->
+                val responseUrls = Regex(A_PATTERN).findAll(body).map { it.value }
+                if (responseUrls.any()) {
+                    // Just log the result will contain just Unit
+                    Timber.d("ReportIssue report sent: ${responseUrls.last()}")
+                } else {
+                    Timber.d("ReportIssue report sent, but no URL received: $body")
+                    // We throw in order to have a failure
+                    throw IOException("Invalid response: $body.")
+                }
+            }
     }
 
-    private fun makeXML(data: ReportIssueData): String {
+    private fun makeXML(data: ReportIssueData): Result<String> {
         val writer = StringWriter()
         val serializer: XmlSerializer = Xml.newSerializer()
-        val result = runCatching {
+        return runCatching {
             serializer.setOutput(writer)
             serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true)
             with(serializer) {
@@ -156,16 +149,11 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
             }
             writer.toString()
         }
-        return result.getOrElse {
-            Timber.e(it)
-            ""
-        }
     }
 
     companion object {
         const val DEFAULT_URL = """https://reports.adblockplus.org/submitReport"""
-        const val XML_ERROR = "Error creating XML"
-        const val IO_ERROR = "Error sending report"
         const val A_PATTERN = """<a.+</a>"""
     }
 }
+

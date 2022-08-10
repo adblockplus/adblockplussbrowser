@@ -22,7 +22,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.base.view.layoutInflater
-import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.OtherSubscriptionsCustomItemBinding
 
 internal class OtherSubscriptionsAdapter(
