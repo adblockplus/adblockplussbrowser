@@ -123,24 +123,16 @@ internal class ReportIssueFragment :
         viewModel.backgroundOperationOutcome.observe(this) {
             hideProgressBar()
             when (viewModel.backgroundOperationOutcome.value) {
-                BackgroundOperationOutcome.SCREENSHOT_READ_SUCCESS -> {
+                BackgroundOperationOutcome.SCREENSHOT_PROCESSING_FINISHED -> {
                     validateData()
-                    Timber.d("ReportIssue Screenshot read success")
                 }
-                BackgroundOperationOutcome.SCREENSHOT_READ_ERROR -> {
-                    validateData()
-                    Timber.d("ReportIssue Screenshot read error")
-                }
-                BackgroundOperationOutcome.SEND_SUCCESS -> {
-                    viewModel.displaySnackbarMessage.value = context?.getString(R.string.issueReporter_report_sent)
+                BackgroundOperationOutcome.REPORT_SEND_SUCCESS -> {
                     val direction =
                         ReportIssueFragmentDirections.actionReportIssueFragmentToMainPreferencesFragment()
                     findNavController().navigate(direction)
                     Timber.d("ReportIssueFragment: Send success")
                 }
-                BackgroundOperationOutcome.SEND_ERROR -> {
-                    viewModel.displaySnackbarMessage.value =
-                        context?.getString(R.string.issueReporter_report_send_error)
+                BackgroundOperationOutcome.REPORT_SEND_ERROR -> {
                     Timber.d("ReportIssueFragment: Send error")
                 }
             }
