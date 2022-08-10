@@ -146,8 +146,6 @@ class DownloaderTest {
             }
         }
         assertEquals(0, filesCount)
-        assertEquals(analyticsProvider.userPropertyName,
-            AnalyticsUserProperty.DOWNLOAD_HTTP_ERROR)
         assertEquals(analyticsProvider.userPropertyValue, HTTP_INTERNAL_ERROR.toString())
     }
 }
