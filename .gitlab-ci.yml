@@ -282,6 +282,7 @@ samsung_filter_tests:
   before_script:
     - apt-get -y update
     - apt-get -y install openjdk-8-jdk git
+    - apt-get -y install net-tools
     - echo "Using android device with serial ${ANDROID_SERIAL}"
     - adb devices
     - adb shell getprop | egrep "ro.product.manufacturer|ro.product.model|ro.build.version.release|ro.vendor.build.version.sdk"
@@ -298,12 +299,13 @@ samsung_filter_tests:
     - echo OTHER_TEST_APK $OTHER_TEST_APK
     - pwd
     # Launch an instance of gradle for each bunch of tags we want to test
+    - netstat -tulpn
     - set +e
     - |
       for PLATFORM_VERSION in $PLATFORM_VERSIONS
         do export PLATFORM_VERSION
         echo Starting job for version ${PLATFORM_VERSION}
-        (APPIUM_HOST="localhost:4723" ./gradlew filterTests &> platform_version-${PLATFORM_VERSION}.log ; echo $? > result_${PLATFORM_VERSION}) &
+        (APPIUM_HOST="127.0.0.1:4723" ./gradlew filterTests &> platform_version-${PLATFORM_VERSION}.log ; echo $? > result_${PLATFORM_VERSION}) &
         pids="$pids $!"
       done
     - wait $pids
