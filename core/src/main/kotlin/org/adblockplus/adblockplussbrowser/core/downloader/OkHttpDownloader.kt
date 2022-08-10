@@ -29,7 +29,6 @@ import okio.BufferedSource
 import okio.buffer
 import okio.sink
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
-import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.core.AppInfo
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
@@ -109,9 +108,7 @@ internal class OkHttpDownloader(
                 }
                 else -> {
                     Timber.e("Error downloading $url, response code: ${response.code}")
-                    analyticsProvider.setUserProperty(
-                        AnalyticsUserProperty.DOWNLOAD_HTTP_ERROR,
-                        response.code.toString())
+                    analyticsProvider.logError(response.code.toString())
                     DownloadResult.Failed(previousDownload.ifExists())
                 }
             }

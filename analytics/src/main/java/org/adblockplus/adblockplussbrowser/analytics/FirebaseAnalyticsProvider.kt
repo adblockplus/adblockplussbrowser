@@ -41,6 +41,10 @@ class FirebaseAnalyticsProvider(appContext: Context) : AnalyticsProvider {
         Firebase.crashlytics.recordException(exception)
     }
 
+    override fun logError(error: String) {
+        Firebase.crashlytics.log(error)
+    }
+
     override fun setUserProperty(analyticsProperty: AnalyticsUserProperty, analyticsPropertyValue: String) {
         Timber.i("set user property $analyticsProperty to $analyticsPropertyValue")
         firebaseAnalytics.setUserProperty(analyticsProperty.propertyName, analyticsPropertyValue)
