@@ -33,6 +33,12 @@ class AnalyticsManager(private val providers: List<AnalyticsProvider>) : Analyti
         }
     }
 
+    override fun logError(error: String) {
+        for (provider in providers) {
+            provider.logError(error)
+        }
+    }
+
     override fun setUserProperty(analyticsProperty: AnalyticsUserProperty, analyticsPropertyValue: String) {
         for (provider in providers) {
             provider.setUserProperty(analyticsProperty, analyticsPropertyValue)

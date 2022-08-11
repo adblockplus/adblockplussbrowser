@@ -32,8 +32,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.io.ByteArrayOutputStream
-import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -42,9 +40,18 @@ import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.os.resolveFilename
 import org.adblockplus.adblockplussbrowser.preferences.data.ReportIssueRepository
 import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData
-import org.adblockplus.adblockplussbrowser.preferences.ui.reporter.ReportIssueFragment.Companion.REPORT_ISSUE_FRAGMENT_SEND_ERROR
-import org.adblockplus.adblockplussbrowser.preferences.ui.reporter.ReportIssueFragment.Companion.REPORT_ISSUE_FRAGMENT_SEND_SUCCESS
 import timber.log.Timber
+import java.io.ByteArrayOutputStream
+import java.io.IOException
+import javax.inject.Inject
+
+
+enum class BackgroundOperationOutcome {
+    SCREENSHOT_READ_SUCCESS,
+    SCREENSHOT_READ_ERROR,
+    SEND_SUCCESS,
+    SEND_ERROR
+}
 
 /**
  * Contains logic used for issue report screenshot conversion and sending report.
@@ -53,10 +60,12 @@ import timber.log.Timber
 internal class ReportIssueViewModel @Inject constructor(application: Application) :
     AndroidViewModel(application) {
 
-    val returnedString = MutableLiveData<String>()
+    val backgroundOperationOutcome = MutableLiveData<BackgroundOperationOutcome>()
     val screenshot = MutableLiveData<Bitmap>()
     var fileName: String = ""
     var data: ReportIssueData = ReportIssueData()
+
+    val displaySnackbarMessage: MutableLiveData<String> = MutableLiveData<String>("")
 
     @Inject
     lateinit var reportIssueRepository: ReportIssueRepository
@@ -69,56 +78,49 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
             analyticsProvider.logEvent(AnalyticsEvent.SEND_ANONYMOUS_REPORT)
         }
         viewModelScope.launch {
-            returnedString.value = if (reportIssueRepository.sendReport(data).isEmpty()) {
-                analyticsProvider.logEvent(AnalyticsEvent.SEND_ISSUE_REPORT_SUCCESS)
-                REPORT_ISSUE_FRAGMENT_SEND_SUCCESS
-            }
-            else {
-                analyticsProvider.logEvent(AnalyticsEvent.SEND_ISSUE_REPORT_ERROR)
-                REPORT_ISSUE_FRAGMENT_SEND_ERROR
-            }
+            backgroundOperationOutcome.postValue(
+                if (reportIssueRepository.sendReport(data).isSuccess) {
+                    analyticsProvider.logEvent(AnalyticsEvent.SEND_ISSUE_REPORT_SUCCESS)
+                    BackgroundOperationOutcome.SEND_SUCCESS
+                } else {
+                    analyticsProvider.logEvent(AnalyticsEvent.SEND_ISSUE_REPORT_ERROR)
+                    BackgroundOperationOutcome.SEND_ERROR
+                }
+            )
         }
     }
 
-    internal suspend fun processImage(unresolvedUri: String, activity: FragmentActivity?) {
+    internal suspend fun processImage(unresolvedUri: Uri, activity: FragmentActivity?) {
         withContext(Dispatchers.Default) {
-            data.screenshot = imageFileToBase64(unresolvedUri, activity)
-            val resultString = if (data.screenshot.isEmpty()) {
-                // Operation failed, show error message
-                "Failed to load image"
-            } else {
-                // Operation successful, validate data
-                ""
-            }
-            returnedString.postValue(resultString)
+            data.screenshot = imageFileToBase64(unresolvedUri, activity).getOrDefault("")
+            backgroundOperationOutcome.postValue(
+                if (data.screenshot.isEmpty()) BackgroundOperationOutcome.SCREENSHOT_READ_ERROR
+                else BackgroundOperationOutcome.SCREENSHOT_READ_SUCCESS
+            )
         }
     }
 
-    private fun imageFileToBase64(unresolvedUri: String, activity: FragmentActivity?): String {
+    private fun imageFileToBase64(unresolvedUri: Uri, activity: FragmentActivity?): Result<String> {
         Timber.d("ReportIssue: unresolvedUri: $unresolvedUri")
         val context = getApplication<Application>().applicationContext
-        val cr: ContentResolver = context.contentResolver ?: return ""
-        val pic: Uri = Uri.parse(unresolvedUri)
+        val cr: ContentResolver = context.contentResolver ?: return Result.failure(IOException("Can't obtain context"))
 
-        activity?.resolveFilename(pic)?.let { fileNameString ->
+        activity?.resolveFilename(unresolvedUri)?.let { fileNameString ->
             fileName = fileNameString
+            Timber.d("ReportIssue: filename: $fileName")
         }
 
-        Timber.d("ReportIssue: image path: $pic")
-
-        val screenshotByteStream = ByteArrayOutputStream()
-        return try {
+        return runCatching {
+            val screenshotByteStream = ByteArrayOutputStream()
             val imageBitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                ImageDecoder.decodeBitmap(ImageDecoder.createSource(cr, pic))
+                ImageDecoder.decodeBitmap(ImageDecoder.createSource(cr, unresolvedUri))
             } else {
-                MediaStore.Images.Media.getBitmap(cr, pic)
+                @Suppress("DEPRECATION")
+                MediaStore.Images.Media.getBitmap(cr, unresolvedUri)
             }
             processBitmap(imageBitmap).compress(Bitmap.CompressFormat.PNG, 0, screenshotByteStream)
             makePreviewForScreenshot(screenshotByteStream)
             "data:image/png;base64," + Base64.encodeToString(screenshotByteStream.toByteArray(), Base64.DEFAULT)
-        } catch (e: OutOfMemoryError) {
-            Timber.e(e, "ReportIssue: Screenshot decode failed\n")
-            ""
         }
     }
 

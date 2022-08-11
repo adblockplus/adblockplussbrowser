@@ -145,7 +145,6 @@
     <string name="issueReporter_falsePositive_label">Adblock Plus is blocking too much</string>
     <string name="issueReporter_falseNegative_label">Adblock Plus doesn\'t block an advertisement</string>
 
-    <string name="pick_samsung_internet_screenshot" tools:ignore="MissingTranslation">Pick Samsung Internet screenshot</string>
     <string name="comment_title" tools:ignore="MissingTranslation">Comment (optional):</string>
     <string name="make_screenshot_of_samsung_internet" tools:ignore="MissingTranslation">Make screenshot of Samsung Internet</string>
     <string name="cancel" tools:ignore="MissingTranslation">Cancel</string>
@@ -173,5 +172,10 @@
     <string name="issueReporter_url_label" tools:ignore="MissingTranslation">URL (optional):</string>
     <string name="issueReporter_attached_image_thumbnail" tools:ignore="MissingTranslation">attached image thumbnail</string>
     <string name="issueReporter_privacyPolicy"><a href="https://adblockplus.org/en/privacy#issue-reporter">Privacy Policy</a></string>
+    <string name="tap_here_to_pick_screenshot" tools:ignore="MissingTranslation">Tap here to pick a screenshot</string>
+    <string name="processing_issue_report_screenshot_description" tools:ignore="MissingTranslation">Loading…</string>
+    <string name="screenshot_reselect_description" tools:ignore="MissingTranslation">Tap here to pick a different screenshot</string>
+    <string name="issueReporter_report_sent" tools:ignore="MissingTranslation">Thanks for reporting the issue!</string>
+    <string name="issueReporter_report_send_error" tools:ignore="MissingTranslation">"Unable to process your request. Please try again later."</string>
 
 </resources>

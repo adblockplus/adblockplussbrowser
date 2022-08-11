@@ -21,6 +21,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.opengl.Visibility
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
@@ -48,6 +49,7 @@ import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueDat
 import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData.Companion.REPORT_ISSUE_DATA_TYPE_MISSED_AD
 import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData.Companion.REPORT_ISSUE_DATA_VALID_BLANK
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentReportIssueBinding
+import org.adblockplus.adblockplussbrowser.preferences.databinding.ImagePreviewLayoutBinding
 import timber.log.Timber
 
 /**
@@ -75,15 +77,19 @@ internal class ReportIssueFragment :
 
         handleReportStatus()
 
-        viewModel.screenshot.observe(this){
+        viewModel.screenshot.observe(this) {
             with(binding.screenshotPreview) {
                 screenshot.setImageBitmap(it)
-                screenshotName.text = viewModel.fileName
-                processingImageBar.visibility = View.GONE
+                selectedScreenshotName.text = viewModel.fileName
+                selectedScreenshotName.visibility = View.VISIBLE
+                setProcessingImageIndicatorVisibility(View.GONE)
+                screenshotSelectionDescription.visibility = View.GONE
+                imagePlaceholderContainer.visibility = View.VISIBLE
+                screenshotReselect.visibility = View.VISIBLE
             }
         }
 
-        binding.pickScreenshot.setDebounceOnClickListener({
+        binding.screenshotPreview.imagePlaceholderContainer.setDebounceOnClickListener({
             pickImageFromGallery()
         }, lifecycleOwner)
 
@@ -138,28 +144,35 @@ internal class ReportIssueFragment :
         validateData()
     }
 
+    private fun ImagePreviewLayoutBinding.setProcessingImageIndicatorVisibility(visibility: Int) {
+        processingImageIndicator.visibility = visibility
+        processingImageBar.visibility = visibility
+        loading.visibility = visibility
+    }
+
     private fun handleReportStatus() {
-        viewModel.returnedString.observe(this) {
+        viewModel.backgroundOperationOutcome.observe(this) {
             hideProgressBar()
-            when (viewModel.returnedString.value) {
-                REPORT_ISSUE_FRAGMENT_SCREENSHOT_READ_SUCCESS -> {
+            when (viewModel.backgroundOperationOutcome.value) {
+                BackgroundOperationOutcome.SCREENSHOT_READ_SUCCESS -> {
                     validateData()
                     Timber.d("ReportIssue Screenshot read success")
                 }
-                REPORT_ISSUE_FRAGMENT_SEND_SUCCESS -> {
+                BackgroundOperationOutcome.SCREENSHOT_READ_ERROR -> {
+                    validateData()
+                    Timber.d("ReportIssue Screenshot read error")
+                }
+                BackgroundOperationOutcome.SEND_SUCCESS -> {
+                    viewModel.displaySnackbarMessage.value = context?.getString(R.string.issueReporter_report_sent)
                     val direction =
                         ReportIssueFragmentDirections.actionReportIssueFragmentToMainPreferencesFragment()
                     findNavController().navigate(direction)
-                    Toast.makeText(
-                        context,
-                        REPORT_ISSUE_FRAGMENT_SEND_SUCCESS_MESSAGE,
-                        Toast.LENGTH_LONG
-                    ).show()
+                    Timber.d("ReportIssueFragment: Send success")
                 }
-                else -> {
-                    Toast.makeText(context, viewModel.returnedString.value, Toast.LENGTH_LONG)
-                        .show()
-                    validateData()
+                BackgroundOperationOutcome.SEND_ERROR -> {
+                    viewModel.displaySnackbarMessage.value =
+                        context?.getString(R.string.issueReporter_report_send_error)
+                    Timber.d("ReportIssueFragment: Send error")
                 }
             }
         }
@@ -184,9 +197,10 @@ internal class ReportIssueFragment :
     private val pickImageFromGalleryForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
-                binding?.screenshotPreview?.processingImageBar?.visibility = View.VISIBLE
+                binding?.screenshotPreview?.setProcessingImageIndicatorVisibility(View.VISIBLE)
+                binding?.screenshotPreview?.imagePlaceholderContainer?.visibility = View.GONE
                 val intent = result.data
-                val unresolvedUri = intent?.data?.toString()
+                val unresolvedUri = intent?.data
                 if (unresolvedUri != null) {
                     lifecycleScope.launch {
                         viewModel.processImage(unresolvedUri, activity)
@@ -222,13 +236,10 @@ internal class ReportIssueFragment :
 
     private fun hideProgressBar() {
         binding?.indeterminateBar?.visibility = View.GONE
+        binding?.screenshotPreview?.processingImageBar?.visibility = View.GONE
     }
 
     companion object {
-        const val REPORT_ISSUE_FRAGMENT_SCREENSHOT_READ_SUCCESS = ""
-        const val REPORT_ISSUE_FRAGMENT_SEND_SUCCESS = "SEND_SUCCESS"
-        const val REPORT_ISSUE_FRAGMENT_SEND_ERROR = "SEND_ERROR"
-        const val REPORT_ISSUE_FRAGMENT_SEND_SUCCESS_MESSAGE = "Report sent"
         const val MANDATORY_MARK = " *"
     }
 }
