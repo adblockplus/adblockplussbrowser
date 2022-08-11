@@ -345,3 +345,4 @@ samsung_filter_tests:
       - "si_automation/platform_version-*.log"
       - "si_automation/result_*"
       - "si_automation/target/"
+      - "/"
