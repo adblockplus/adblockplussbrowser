@@ -292,7 +292,6 @@ samsung_filter_tests:
     - git clone $GIT_AUTOMATION_REPO si_automation
     - cd si_automation
     - git checkout ${GIT_AUTOMATION_BRANCH:-main}
-    #- TEST_APK=$(find / -name "*samsungInternetBrowser.apk")
     - OTHER_TEST_APK=$(find / -name "*app-world-abp-debug.apk")
     - CHROMEDRIVER_EXECUTABLE=$(find / -name "*chromedriver96")
     - export OTHER_TEST_APK
