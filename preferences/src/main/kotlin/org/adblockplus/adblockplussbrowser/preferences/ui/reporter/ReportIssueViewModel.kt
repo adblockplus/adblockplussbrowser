@@ -93,17 +93,13 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
             val context: Context = getApplication<Application>().applicationContext
             val cr: ContentResolver = context.contentResolver
 
-            val fileSizeGood = checkFileSize(unresolvedUri, cr)
-            data.screenshot = if (fileSizeGood) {
-                imageFileToBase64(unresolvedUri, activity, cr).getOrDefault("")
+            if (isFileSizeOk(unresolvedUri, cr)) {
+                data.screenshot = imageFileToBase64(unresolvedUri, activity, cr).getOrDefault("")
+                if (data.screenshot.isEmpty()) {
+                    displaySnackbarMessage.postValue(context.getString(R.string.issueReporter_report_screenshot_invalid))
+                }
             } else {
-                ""
-            }
-
-            if (!fileSizeGood) {
                 displaySnackbarMessage.postValue(context.getString(R.string.issueReporter_report_screenshot_too_large))
-            } else if (data.screenshot.isEmpty()) {
-                displaySnackbarMessage.postValue(context.getString(R.string.issueReporter_report_screenshot_invalid))
             }
 
             backgroundOperationOutcome.postValue(BackgroundOperationOutcome.SCREENSHOT_PROCESSING_FINISHED)
