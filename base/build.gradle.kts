@@ -49,4 +49,5 @@ dependencies {
 
     testImplementation(Deps.JUNIT)
     testImplementation(Deps.ROBOLECTRIC)
+    testImplementation(Deps.Mockito.Kotlin)
 }
