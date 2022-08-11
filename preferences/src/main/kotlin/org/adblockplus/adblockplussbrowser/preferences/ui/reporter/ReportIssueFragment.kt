@@ -20,6 +20,7 @@ package org.adblockplus.adblockplussbrowser.preferences.ui.reporter
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
+import android.opengl.Visibility
 import android.provider.MediaStore
 import android.view.View
 import androidx.activity.result.ActivityResult
@@ -40,6 +41,7 @@ import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueDat
 import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData.Companion.REPORT_ISSUE_DATA_TYPE_MISSED_AD
 import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData.Companion.REPORT_ISSUE_DATA_VALID_BLANK
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentReportIssueBinding
+import org.adblockplus.adblockplussbrowser.preferences.databinding.ImagePreviewLayoutBinding
 import timber.log.Timber
 
 /**
@@ -60,12 +62,16 @@ internal class ReportIssueFragment :
         viewModel.screenshot.observe(this) {
             with(binding.screenshotPreview) {
                 screenshot.setImageBitmap(it)
-                screenshotName.text = viewModel.fileName
-                processingImageBar.visibility = View.GONE
+                selectedScreenshotName.text = viewModel.fileName
+                selectedScreenshotName.visibility = View.VISIBLE
+                setProcessingImageIndicatorVisibility(View.GONE)
+                screenshotSelectionDescription.visibility = View.GONE
+                imagePlaceholderContainer.visibility = View.VISIBLE
+                screenshotReselect.visibility = View.VISIBLE
             }
         }
 
-        binding.pickScreenshot.setDebounceOnClickListener({
+        binding.screenshotPreview.imagePlaceholderContainer.setDebounceOnClickListener({
             pickImageFromGallery()
         }, lifecycleOwner)
 
@@ -119,6 +125,12 @@ internal class ReportIssueFragment :
         validateData()
     }
 
+    private fun ImagePreviewLayoutBinding.setProcessingImageIndicatorVisibility(visibility: Int) {
+        processingImageIndicator.visibility = visibility
+        processingImageBar.visibility = visibility
+        loading.visibility = visibility
+    }
+
     private fun handleReportStatus() {
         viewModel.backgroundOperationOutcome.observe(this) {
             hideProgressBar()
@@ -166,7 +178,8 @@ internal class ReportIssueFragment :
     private val pickImageFromGalleryForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
-                binding?.screenshotPreview?.processingImageBar?.visibility = View.VISIBLE
+                binding?.screenshotPreview?.setProcessingImageIndicatorVisibility(View.VISIBLE)
+                binding?.screenshotPreview?.imagePlaceholderContainer?.visibility = View.GONE
                 val intent = result.data
                 val unresolvedUri = intent?.data
                 if (unresolvedUri != null) {
