@@ -56,6 +56,7 @@ import timber.log.Timber
  * Contains UI for issue report and handling of issue screenshot picking.
  */
 @AndroidEntryPoint
+@Suppress("TooManyFunctions")
 internal class ReportIssueFragment :
     DataBindingFragment<FragmentReportIssueBinding>(R.layout.fragment_report_issue) {
 
@@ -71,6 +72,7 @@ internal class ReportIssueFragment :
         }
     }
 
+    @Suppress("LongMethod")
     override fun onBindView(binding: FragmentReportIssueBinding) {
         binding.viewModel = viewModel
         val lifecycleOwner = this.viewLifecycleOwner
