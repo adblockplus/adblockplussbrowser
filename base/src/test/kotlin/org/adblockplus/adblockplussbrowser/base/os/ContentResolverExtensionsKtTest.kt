@@ -22,6 +22,7 @@ import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.pm.ProviderInfo
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.OpenableColumns
 import org.hamcrest.CustomMatcher
@@ -40,6 +41,7 @@ import org.robolectric.annotation.Config
 import org.robolectric.shadow.api.Shadow
 import org.robolectric.shadows.ShadowContentResolver
 import java.io.File
+import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 
@@ -47,7 +49,12 @@ private const val MEDIA_AUTHORITY = "media"
 private const val TEST_FILENAME = "test"
 private const val TEST_DISPLAY_NAME = "test.png"
 private val TEST_URI = Uri.parse("content://media/screenshot/20")
+private const val IMG_3680_X_2070 = "3680x2070.jpg"
+private const val IMG_2070_X_3680 = "2070x3680.jpg"
+private const val IMG_640_X_480 = "640x480.jpg"
+private const val IMG_1280_X_960 = "1280x960.jpg"
 
+private const val MAX_RATIO_DELTA = 0.001f
 
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowSize::class, ShadowImageDecoder::class])
@@ -96,37 +103,36 @@ class ContentResolverExtensionsKtTest {
 
     @Test
     fun `the legacy loader should scale landscape image`() =
-        loadImageTest(resolver::legacyLoadImage, "3680x2070.jpg", 1280, 720)
+        loadImageTest(resolver::legacyLoadImage, IMG_3680_X_2070, 1280, 720)
 
     @Test
     fun `the legacy loader should scale portrait image`()  =
-        loadImageTest(resolver::legacyLoadImage, "2070x3680.jpg", 1280, 720)
+        loadImageTest(resolver::legacyLoadImage, IMG_2070_X_3680, 1280, 720)
 
     @Test
-    fun `the legacy loader should not scale small images`() {
-        resolver.mapUriToResource(TEST_URI, "640x480.jpg")
+    fun `the legacy loader should keep the same ratio even if the original one is not 16 over 9`() =
+        loadImageTest(resolver::legacyLoadImage, IMG_1280_X_960, 1280, 720)
 
-        val bitmap = resolver.legacyLoadImage(TEST_URI, 1280, 720)
-        assertEquals(640, bitmap.width)
-        assertEquals(480, bitmap.height)
-    }
+    @Test
+    fun `the legacy loader should not scale small images`() = smallImageTest(resolver::legacyLoadImage)
 
     @Test
     fun `the ImageDecoder loader should scale landscape image`() =
-        loadImageTest(resolver::loadViaImageDecoder, "3680x2070.jpg", 1280, 720)
+        loadImageTest(resolver::loadViaImageDecoder, IMG_3680_X_2070, 1280, 720)
 
     @Test
     fun `the ImageDecoder loader should scale portrait image`() =
-        loadImageTest(resolver::loadViaImageDecoder, "2070x3680.jpg", 1280, 720)
+        loadImageTest(resolver::loadViaImageDecoder, IMG_2070_X_3680, 1280, 720)
 
     @Test
-    fun `the ImageDecoder loader should not scale small images`() {
-        resolver.mapUriToResource(TEST_URI, "640x480.jpg")
+    fun `the ImageDecoder loader should keep the same ratio even if the original one is not 16 over 9`() =
+        loadImageTest(resolver::loadViaImageDecoder, IMG_1280_X_960, 1280, 720)
 
-        val bitmap = resolver.loadViaImageDecoder(TEST_URI, 1280, 720)
-        assertEquals(640, bitmap.width)
-        assertEquals(480, bitmap.height)
-    }
+    @Test
+    fun `the ImageDecoder loader should not scale small images`() = smallImageTest(resolver::loadViaImageDecoder)
+
+    private fun smallImageTest(method: (Uri, Int, Int) -> Bitmap) =
+        loadImageTest(method, IMG_640_X_480, 1280, 720)
 
     @Suppress("SameParameterValue")
     private fun loadImageTest(
@@ -135,6 +141,8 @@ class ContentResolverExtensionsKtTest {
         targetSide1: Int,
         targetSide2: Int
     ) {
+        val originalRatio = originalRatio(resourceName)
+
         resolver.mapUriToResource(TEST_URI, resourceName)
 
         val targetLongSide = max(targetSide1, targetSide2)
@@ -144,11 +152,19 @@ class ContentResolverExtensionsKtTest {
         val longSide = max(bitmap.width, bitmap.height)
         val shortSide = min(bitmap.width, bitmap.height)
 
+        val newRatio = bitmap.width / bitmap.height.toFloat()
+        val deltaRatio = abs(originalRatio - newRatio)
+
         assertThat(longSide, isEqualOrLess(targetLongSide))
         assertThat(shortSide, isEqualOrLess(targetShortSide))
+        assertThat(deltaRatio, isEqualOrLess(MAX_RATIO_DELTA))
     }
 
-
+    private fun originalRatio(resourceName: String) = javaClass.classLoader!!.getResourceAsStream(resourceName).use {
+        val options = BitmapFactory.Options().also { it.inJustDecodeBounds = true }
+        BitmapFactory.decodeStream(it, null, options)
+        options.outWidth / options.outHeight.toFloat()
+    }
 }
 
 private fun ContentResolver.mapUriToResource(uri: Uri, resourceName: String) =
