@@ -93,44 +93,23 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
             val context: Context = getApplication<Application>().applicationContext
             val cr: ContentResolver = context.contentResolver
 
-            if (checkFileSize(unresolvedUri, cr)) {
-                data.screenshot = imageFileToBase64(unresolvedUri, activity, cr).getOrDefault("")
-                if (data.screenshot.isEmpty()) {
-                    displaySnackbarMessage.postValue(
-                        context.getString(R.string.issueReporter_report_screenshot_invalid))
-                }
-            } else {
-                displaySnackbarMessage.postValue(context.getString(R.string.issueReporter_report_screenshot_too_large))
-            }
+            data.screenshot = imageFileToBase64(unresolvedUri, activity, cr).getOrDefault("")
+            validateScreenshot(context)
 
             backgroundOperationOutcome.postValue(BackgroundOperationOutcome.SCREENSHOT_PROCESSING_FINISHED)
         }
     }
 
-    private suspend fun checkFileSize(unresolvedUri: Uri, cr: ContentResolver): Boolean {
-        var fileLength = -1L
-        withContext(Dispatchers.IO) {
-            runCatching {
-                val pfd: ParcelFileDescriptor? = cr.openFileDescriptor(unresolvedUri, "r")
-                fileLength = pfd?.statSize ?: -1L
-                pfd?.close()
+    private fun validateScreenshot(context: Context) {
+        when {
+            data.screenshot.isEmpty() ->  {
+                displaySnackbarMessage.postValue(
+                    context.getString(R.string.issueReporter_report_screenshot_invalid))
             }
-        }
-
-        return when {
-            fileLength < 0L -> {
-                // Could happen when the file descriptor is not obtained hence skip the check
-                Timber.e("ReportIssue: can't get the file size: $unresolvedUri")
-                true
+            data.screenshot.length > IMAGE_MAX_LENGTH -> {
+                displaySnackbarMessage.postValue(context.getString(R.string.issueReporter_report_screenshot_too_large))
             }
-            fileLength > IMAGE_MAX_LENGTH -> {
-                Timber.e("The image file is too large: $unresolvedUri ")
-                false
-            }
-            else -> {
-                Timber.d("ReportIssue: image size: $fileLength")
-                true
-            }
+            else -> makePreviewForScreenshot()
         }
     }
 
@@ -154,13 +133,13 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
                 MediaStore.Images.Media.getBitmap(cr, unresolvedUri)
             }
             processBitmap(imageBitmap).compress(Bitmap.CompressFormat.PNG, 0, screenshotByteStream)
-            makePreviewForScreenshot(screenshotByteStream)
             "data:image/png;base64," + Base64.encodeToString(screenshotByteStream.toByteArray(), Base64.DEFAULT)
         }
     }
 
-    private fun makePreviewForScreenshot(bs: ByteArrayOutputStream) {
-        val byteArray = bs.toByteArray()
+    private fun makePreviewForScreenshot() {
+        val base64String = data.screenshot.removePrefix("data:image/png;base64,")
+        val byteArray = Base64.decode(base64String, Base64.DEFAULT)
         screenshot.postValue(BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size))
     }
 
@@ -218,7 +197,11 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         // HD max size
         private const val IMAGE_MAX_LONGER_SIDE = 1280f
         private const val IMAGE_MAX_SHORTER_SIDE = 720f
-        private const val IMAGE_MAX_LENGTH = 5 * 1024 * 1024
+        /* Max length of the base64 encoded string that carries the screenshot data.
+           This value is defined in the issue reporter BE
+           https://gitlab.com/eyeo/devops/legacy/sitescripts/-/tree/master/sitescripts/reports
+         */
+        private const val IMAGE_MAX_LENGTH = 1280 * 1280 * 4 + 4096
     }
 
     private enum class Orientation {
