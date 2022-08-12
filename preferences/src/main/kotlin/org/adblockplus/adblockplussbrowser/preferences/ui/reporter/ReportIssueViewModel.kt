@@ -60,7 +60,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
     AndroidViewModel(application) {
 
     val backgroundOperationOutcome = MutableLiveData<BackgroundOperationOutcome>()
-    val screenshot = MutableLiveData<Bitmap>()
+    val screenshotLiveData = MutableLiveData<Bitmap>()
     var fileName: String = ""
     var data: ReportIssueData = ReportIssueData()
 
@@ -92,31 +92,39 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
             val context: Context = getApplication<Application>().applicationContext
             val cr: ContentResolver = context.contentResolver
 
-            data.screenshot = imageFileToBase64(unresolvedUri, activity, cr).getOrDefault("")
-            validateScreenshot(context)
+            val screenshot: Bitmap? = resolveImageFile(unresolvedUri, activity, cr).getOrNull()
+            validateAndLoadScreenshot(screenshot, context)
 
             backgroundOperationOutcome.postValue(BackgroundOperationOutcome.SCREENSHOT_PROCESSING_FINISHED)
         }
     }
 
-    private fun validateScreenshot(context: Context) {
-        when {
-            data.screenshot.isEmpty() ->  {
-                displaySnackbarMessage.postValue(
-                    context.getString(R.string.issueReporter_report_screenshot_invalid))
-            }
-            data.screenshot.length > IMAGE_MAX_LENGTH -> {
-                displaySnackbarMessage.postValue(context.getString(R.string.issueReporter_report_screenshot_too_large))
-            }
-            else -> makePreviewForScreenshot()
-        }
+    private fun encodeBase64(screenshot: Bitmap): String {
+        val screenshotByteStream = ByteArrayOutputStream()
+        screenshot.compress(Bitmap.CompressFormat.PNG, 0, screenshotByteStream)
+        return "data:image/png;base64," + Base64.encodeToString(screenshotByteStream.toByteArray(), Base64.DEFAULT)
     }
 
-    private fun imageFileToBase64(
+    private fun validateAndLoadScreenshot(screenshot: Bitmap?, context: Context) {
+        if (screenshot == null) {
+            displaySnackbarMessage.postValue(
+                context.getString(R.string.issueReporter_report_screenshot_invalid))
+            return
+        }
+        val screenshotBase64 = encodeBase64(screenshot)
+        if (screenshotBase64.length > IMAGE_MAX_LENGTH) {
+            displaySnackbarMessage.postValue(context.getString(R.string.issueReporter_report_screenshot_too_large))
+            return
+        }
+        data.screenshot = screenshotBase64
+        screenshotLiveData.postValue(screenshot)
+    }
+
+    private fun resolveImageFile(
         unresolvedUri: Uri,
         activity: FragmentActivity?,
         cr: ContentResolver
-    ): Result<String> {
+    ): Result<Bitmap> {
         Timber.d("ReportIssue: unresolvedUri: $unresolvedUri")
 
         activity?.resolveFilename(unresolvedUri)?.let { fileNameString ->
@@ -124,22 +132,14 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         }
 
         return runCatching {
-            val screenshotByteStream = ByteArrayOutputStream()
             val imageBitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 ImageDecoder.decodeBitmap(ImageDecoder.createSource(cr, unresolvedUri))
             } else {
                 @Suppress("DEPRECATION")
                 MediaStore.Images.Media.getBitmap(cr, unresolvedUri)
             }
-            processBitmap(imageBitmap).compress(Bitmap.CompressFormat.PNG, 0, screenshotByteStream)
-            "data:image/png;base64," + Base64.encodeToString(screenshotByteStream.toByteArray(), Base64.DEFAULT)
+            processBitmap(imageBitmap)
         }
-    }
-
-    private fun makePreviewForScreenshot() {
-        val base64String = data.screenshot.removePrefix("data:image/png;base64,")
-        val byteArray = Base64.decode(base64String, Base64.DEFAULT)
-        screenshot.postValue(BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size))
     }
 
     /**

@@ -57,7 +57,7 @@ internal class ReportIssueFragment :
 
         handleReportStatus()
 
-        viewModel.screenshot.observe(this) {
+        viewModel.screenshotLiveData.observe(this) {
             with(binding.screenshotPreview) {
                 screenshot.setImageBitmap(it)
                 screenshotName.text = viewModel.fileName
