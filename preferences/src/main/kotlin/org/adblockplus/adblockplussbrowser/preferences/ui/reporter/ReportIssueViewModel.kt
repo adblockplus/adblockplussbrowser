@@ -117,7 +117,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
             return
         }
         data.screenshot = screenshotBase64
-        screenshotLiveData.postValue(screenshot)
+        screenshotLiveData.postValue(screenshot!!)
     }
 
     private fun resolveImageFile(
