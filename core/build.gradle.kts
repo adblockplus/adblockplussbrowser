@@ -25,7 +25,7 @@ plugins {
     id("com.google.protobuf")
     id("dagger.hilt.android.plugin")
     id("de.undercouch.download")
-    id(Deps.JACOCO)
+    id("coverage")
 }
 
 applyCommonConfig()
@@ -151,49 +151,4 @@ tasks.register("downloadSubscriptions") {
     tasks.getByName("downloadEasyList").mustRunAfter("downloadExceptionRules")
     tasks.getByName("packSubscriptionsFiles").mustRunAfter("downloadEasyList")
     tasks.getByName("checkSubscriptionsFiles").mustRunAfter("packSubscriptionsFiles")
-}
-
-tasks.withType(Test::class.java) {
-    // We want coverage only for the worldAbp flavor
-    if (name != "testWorldAbpDebugUnitTest")
-        return@withType
-
-    configure<JacocoTaskExtension> {
-        isIncludeNoLocationClasses = true
-        excludes = listOf("jdk.internal.*")
-    }
-    finalizedBy(tasks.getByName("jacocoTestReport"))
-}
-
-tasks.register("jacocoTestReport", JacocoReport::class.java) {
-    val coverageSourceDirs = listOf("src/main/kotlin")
-    val fileFilter = listOf(
-        "**/R.class",
-        "**/R$*.class",
-        "**/BuildConfig.*",
-        "**/Manifest*.*",
-        "**/*Test*.*",
-        "android/**/*.*",
-        "**/_*.class"
-    )
-
-    val javaClasses = fileTree("$buildDir/intermediates/javac/worldAbpDebug/classes").setExcludes(fileFilter)
-    val kotlinClasses = fileTree("$buildDir/tmp/kotlin-classes/worldAbpDebug").setExcludes(fileFilter)
-    classDirectories.setFrom(files(javaClasses, kotlinClasses))
-    additionalSourceDirs.setFrom(files(coverageSourceDirs))
-    sourceDirectories.setFrom(files(coverageSourceDirs))
-    executionData.setFrom(
-        fileTree("$buildDir").setIncludes(listOf("jacoco/testWorldAbpDebugUnitTest.exec"))
-    )
-
-    reports {
-        html.required.set(true)
-        xml.required.set(true)
-    }
-}
-
-tasks.register("checkCoverage", CheckCoverageTask::class.java) {
-    coverageFile = file("$buildDir/reports/jacoco/jacocoTestReport/jacocoTestReport.xml")
-    threshold = 0.4F
-    dependsOn("testWorldAbpDebugUnitTest")
 }

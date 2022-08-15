@@ -42,6 +42,7 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
 
     private val okHttpClient = OkHttpClient()
     private val locale = Locale.getDefault()
+    internal var serializer: XmlSerializer = Xml.newSerializer()
 
     /**
      * Convert report issue data and send it to the backend.
@@ -84,9 +85,8 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
             }
     }
 
-    private fun makeXML(data: ReportIssueData): Result<String> {
+    internal fun makeXML(data: ReportIssueData): Result<String> {
         val writer = StringWriter()
-        val serializer: XmlSerializer = Xml.newSerializer()
         return runCatching {
             serializer.setOutput(writer)
             serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true)
@@ -148,9 +148,12 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
         }
     }
 
+    internal fun setDefaultURL(serverUrl: String) {
+        DEFAULT_URL = serverUrl
+    }
+
     companion object {
-        const val DEFAULT_URL = """https://reports.adblockplus.org/submitReport"""
+        private var DEFAULT_URL = """https://reports.adblockplus.org/submitReport"""
         const val A_PATTERN = """<a.+</a>"""
     }
 }
-
