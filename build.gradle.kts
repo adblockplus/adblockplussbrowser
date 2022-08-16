@@ -59,7 +59,7 @@ allprojects {
         finalizedBy(tasks.getByName("jacoco${project.name.capitalize()}TestReport"))
     }
     tasks.register("jacoco${project.name.capitalize()}TestReport", JacocoReport::class.java) {
-        val coverageSourceDirs = listOf("${project.projectDir.absolutePath}/src/main/kotlin")
+        val coverageSourceDirs = listOf("$projectDir/src/main/kotlin")
         val fileFilter = listOf(
             "**/R.class",
             "**/R$*.class",
@@ -70,16 +70,16 @@ allprojects {
             "**/_*.class"
         )
         val javaClasses = fileTree(
-            "${project.buildDir.absolutePath}/intermediates/javac/worldAbpDebug/classes"
+            "$buildDir/intermediates/javac/worldAbpDebug/classes"
         ).setExcludes(fileFilter)
         val kotlinClasses = fileTree(
-            "${project.buildDir.absolutePath}/tmp/kotlin-classes/worldAbpDebug"
+            "$buildDir/tmp/kotlin-classes/worldAbpDebug"
         ).setExcludes(fileFilter)
         classDirectories.setFrom(files(javaClasses, kotlinClasses))
         additionalSourceDirs.setFrom(files(coverageSourceDirs))
         sourceDirectories.setFrom(files(coverageSourceDirs))
         executionData.setFrom(
-            fileTree(project.buildDir.absolutePath).setIncludes(listOf("jacoco/testWorldAbpDebugUnitTest.exec"))
+            fileTree(buildDir).setIncludes(listOf("jacoco/testWorldAbpDebugUnitTest.exec"))
         )
         reports {
             html.required.set(true)
@@ -87,7 +87,9 @@ allprojects {
         }
     }
     tasks.register("checkCoverage", CheckCoverageTask::class.java) {
-        coverageFile = file("$buildDir/reports/jacoco/jacocoTestReport/jacocoTestReport.xml")
+        val projectName = project.name.capitalize()
+        coverageFile = file(
+            "$buildDir/reports/jacoco/jacoco${projectName}TestReport/jacoco${projectName}TestReport.xml")
         threshold = 0.4F
         dependsOn("testWorldAbpDebugUnitTest")
     }
