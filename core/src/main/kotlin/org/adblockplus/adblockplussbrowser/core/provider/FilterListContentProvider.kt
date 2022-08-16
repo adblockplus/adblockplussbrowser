@@ -205,8 +205,10 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             acceptableAdsEnabled = settingsRepository.currentSettings().acceptableAdsEnabled
             if (BuildConfig.FLAVOR_product != BuildConfig.FLAVOR_CRYSTAL) {
                 allowedDomains = settingsRepository.currentSettings().allowedDomains
+                Timber.d("Adding allowedDomains (not Crystal): $allowedDomains")
             }
         }
+        Timber.d("AllowedDomains: $allowedDomains")
         Timber.i("Is AA enabled: $acceptableAdsEnabled")
 
         try {
@@ -253,7 +255,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         }
 
         allowedDomains.forEach { domain ->
-            Timber.d("domain: $domain")
+            Timber.d("allowedDomain: $domain")
             temp.sink(append = true).buffer().use { sink ->
                 sink.writeUtf8("\n")
                 sink.writeUtf8(domain.toAllowRule())
