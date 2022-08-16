@@ -88,7 +88,6 @@ checks:coverage:
   image: spacifici/jacoco2cobertura:latest
   script:
     - /app/cover2cover.py core/build/reports/jacoco/jacocoCoreTestReport/jacocoCoreTestReport.xml core/src/main/kotlin > core/build/reports/cobertura.xml
-    - /app/cover2cover.py preferences/build/reports/jacoco/jacocoPreferencesTestReport/jacocoPreferencesTestReport.xml preferences/src/main/kotlin > preferences/build/reports/cobertura.xml
   artifacts:
     when: always
     reports:
