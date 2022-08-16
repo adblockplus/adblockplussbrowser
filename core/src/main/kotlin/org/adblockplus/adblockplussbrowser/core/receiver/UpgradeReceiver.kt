@@ -20,6 +20,7 @@ package org.adblockplus.adblockplussbrowser.core.receiver
 import android.content.Context
 import android.content.Intent
 import dagger.hilt.android.AndroidEntryPoint
+import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import timber.log.Timber
 import java.io.File
@@ -29,12 +30,21 @@ import javax.inject.Inject
 class UpgradeReceiver : HiltBroadcastReceiver() {
     @Inject
     internal lateinit var coreRepository: CoreRepository
+    @Inject
+    internal lateinit var subscriptionsManager: SubscriptionsManager
+
 
     override fun onReceive(context: Context, intent: Intent?) {
         super.onReceive(context, intent)
         val path = coreRepository.subscriptionsPath
-        Timber.d("UpgradeReceiver: path=$path path.exists=${!path.isNullOrEmpty()} exists=${File(path).exists()}, deleting...")
-        !path.isNullOrEmpty() && File(path).exists() && File(path).delete()
-        Timber.d("UpgradeReceiver after delete: exists=${File(path).exists()}")
+        if (!path.isNullOrEmpty()) {
+            File(path).let {
+                Timber.d("UpgradeReceiver: path=$path exists=${it.exists()}, deleting...")
+                it.exists() && it.delete()
+                Timber.d("UpgradeReceiver after delete: exists=${it.exists()}")
+            }
+        }
+        subscriptionsManager.scheduleImmediate(force = true)
+        Timber.d("UpgradeReceiver scheduleImmediate done")
     }
 }
