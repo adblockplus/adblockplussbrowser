@@ -311,16 +311,16 @@ samsung_filter_tests:
       done
     - wait $pids
     # Check for any failures and re-run them
-#    - |
-#      for PLATFORM_VERSION in $PLATFORM_VERSIONS
-#        do if [ -s target/rerun${PLATFORM_VERSION}.txt ] ; then
-#          echo "Rerunning failed test cases for platform version ${PLATFORM_VERSION}"
-#          mv target/rerun${PLATFORM_VERSION}.txt target/rerun.txt
-#          ./gradlew rerunFailed
-#          echo $? > result_${PLATFORM_VERSION}
-#          rm -f target/rerun.txt
-#        fi
-#      done
+    - |
+      for PLATFORM_VERSION in $PLATFORM_VERSIONS
+        do if [ -s target/rerun${PLATFORM_VERSION}.txt ] ; then
+          echo "Rerunning failed test cases for platform version ${PLATFORM_VERSION}"
+          mv target/rerun${PLATFORM_VERSION}.txt target/rerun.txt
+          ./gradlew rerunFailed
+          echo $? > result_${PLATFORM_VERSION}
+          rm -f target/rerun.txt
+        fi
+      done
     # check the exit codes of all processes were 0
     - |
       for PLATFORM_VERSION in $PLATFORM_VERSIONS
