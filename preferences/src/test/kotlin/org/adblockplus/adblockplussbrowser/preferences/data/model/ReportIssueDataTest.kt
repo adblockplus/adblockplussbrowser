@@ -55,5 +55,4 @@ class ReportIssueDataTest {
         fakeReportIssueData.type = "wrong type"
         assertFalse(fakeReportIssueData.validateType())
     }
-
 }

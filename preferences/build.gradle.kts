@@ -23,7 +23,6 @@ plugins {
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
     id("androidx.navigation.safeargs.kotlin")
-    id("coverage")
 }
 
 applyCommonConfig()

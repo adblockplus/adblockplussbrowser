@@ -45,6 +45,52 @@ allprojects {
         google()
         mavenCentral()
     }
+
+    plugins.apply(Deps.JACOCO)
+
+    tasks.withType(Test::class.java) {
+        // We want coverage only for the worldAbp flavor
+        if (name != "testWorldAbpDebugUnitTest")
+            return@withType
+        configure<JacocoTaskExtension> {
+            isIncludeNoLocationClasses = true
+            excludes = listOf("jdk.internal.*")
+        }
+        finalizedBy(tasks.getByName("jacoco${project.name.capitalize()}TestReport"))
+    }
+    tasks.register("jacoco${project.name.capitalize()}TestReport", JacocoReport::class.java) {
+        val coverageSourceDirs = listOf("${project.projectDir.absolutePath}/src/main/kotlin")
+        val fileFilter = listOf(
+            "**/R.class",
+            "**/R$*.class",
+            "**/BuildConfig.*",
+            "**/Manifest*.*",
+            "**/*Test*.*",
+            "android/**/*.*",
+            "**/_*.class"
+        )
+        val javaClasses = fileTree(
+            "${project.buildDir.absolutePath}/intermediates/javac/worldAbpDebug/classes"
+        ).setExcludes(fileFilter)
+        val kotlinClasses = fileTree(
+            "${project.buildDir.absolutePath}/tmp/kotlin-classes/worldAbpDebug"
+        ).setExcludes(fileFilter)
+        classDirectories.setFrom(files(javaClasses, kotlinClasses))
+        additionalSourceDirs.setFrom(files(coverageSourceDirs))
+        sourceDirectories.setFrom(files(coverageSourceDirs))
+        executionData.setFrom(
+            fileTree(project.buildDir.absolutePath).setIncludes(listOf("jacoco/testWorldAbpDebugUnitTest.exec"))
+        )
+        reports {
+            html.required.set(true)
+            xml.required.set(true)
+        }
+    }
+    tasks.register("checkCoverage", CheckCoverageTask::class.java) {
+        coverageFile = file("$buildDir/reports/jacoco/jacocoTestReport/jacocoTestReport.xml")
+        threshold = 0.4F
+        dependsOn("testWorldAbpDebugUnitTest")
+    }
 }
 
 detekt {

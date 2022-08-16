@@ -25,7 +25,6 @@ plugins {
     id("com.google.protobuf")
     id("dagger.hilt.android.plugin")
     id("de.undercouch.download")
-    id("coverage")
 }
 
 applyCommonConfig()
