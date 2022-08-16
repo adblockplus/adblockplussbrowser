@@ -44,7 +44,8 @@ class ReportIssueViewModelTest {
     private val reportIssueViewModel = ReportIssueViewModel(getApplication())
     private val mockReportIssueRepository = Mockito.mock(ReportIssueRepository::class.java)
 
-    // This rule is used to be able to listen to the changes of mutable live data
+    // This rule is used to be able to listen to the changes of mutable live data as it
+    // runs tasks synchronously
     @get:Rule
     val instantTaskExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()
 
