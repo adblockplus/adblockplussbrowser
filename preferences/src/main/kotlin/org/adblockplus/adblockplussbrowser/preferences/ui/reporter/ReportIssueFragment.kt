@@ -43,6 +43,7 @@ import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueDat
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentReportIssueBinding
 import timber.log.Timber
 
+// TODO: Refactor long methods, extract methods or extension methods from the class
 /**
  * Contains UI for issue report and handling of issue screenshot picking.
  */

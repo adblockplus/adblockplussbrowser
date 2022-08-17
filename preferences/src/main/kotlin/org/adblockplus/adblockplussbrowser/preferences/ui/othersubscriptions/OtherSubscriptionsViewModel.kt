@@ -36,6 +36,7 @@ import org.adblockplus.adblockplussbrowser.preferences.ui.layoutForIndex
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import javax.inject.Inject
 
+// TODO: Add documentation
 @HiltViewModel
 internal class OtherSubscriptionsViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository,

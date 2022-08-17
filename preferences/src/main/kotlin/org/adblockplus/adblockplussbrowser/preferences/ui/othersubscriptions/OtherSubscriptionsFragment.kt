@@ -44,7 +44,7 @@ import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentOther
 import org.adblockplus.adblockplussbrowser.preferences.ui.SwipeToDeleteCallback
 import javax.inject.Inject
 
-
+// TODO: Add documentation, refactor long methods
 @AndroidEntryPoint
 internal class OtherSubscriptionsFragment :
     DataBindingFragment<FragmentOtherSubscriptionsBinding>(R.layout.fragment_other_subscriptions) {

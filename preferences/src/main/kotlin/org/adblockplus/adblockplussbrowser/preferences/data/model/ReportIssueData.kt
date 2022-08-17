@@ -19,6 +19,7 @@ package org.adblockplus.adblockplussbrowser.preferences.data.model
 
 import android.util.Patterns
 
+// TODO: Add documentation to this class
 data class ReportIssueData(
     var type: String = "",
     var screenshot: String = "",
