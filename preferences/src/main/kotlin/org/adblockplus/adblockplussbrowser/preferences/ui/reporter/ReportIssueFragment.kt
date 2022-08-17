@@ -20,9 +20,12 @@ package org.adblockplus.adblockplussbrowser.preferences.ui.reporter
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
-import android.opengl.Visibility
+import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.text.buildSpannedString
@@ -41,7 +44,6 @@ import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueDat
 import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData.Companion.REPORT_ISSUE_DATA_TYPE_MISSED_AD
 import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData.Companion.REPORT_ISSUE_DATA_VALID_BLANK
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentReportIssueBinding
-import org.adblockplus.adblockplussbrowser.preferences.databinding.ImagePreviewLayoutBinding
 import timber.log.Timber
 
 /**
@@ -52,6 +54,12 @@ internal class ReportIssueFragment :
     DataBindingFragment<FragmentReportIssueBinding>(R.layout.fragment_report_issue) {
 
     private val viewModel: ReportIssueViewModel by viewModels()
+    private lateinit var screenshotPreviewViewGroup: ViewGroup
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        screenshotPreviewViewGroup = view.findViewById(R.id.screenshot_preview)
+    }
 
     override fun onBindView(binding: FragmentReportIssueBinding) {
         binding.viewModel = viewModel
@@ -59,19 +67,19 @@ internal class ReportIssueFragment :
 
         handleReportStatus()
 
-        viewModel.screenshotLiveData.observe(this) {
-            with(binding.screenshotPreview) {
-                screenshot.setImageBitmap(it)
-                selectedScreenshotName.text = viewModel.fileName
-                selectedScreenshotName.visibility = View.VISIBLE
-                setProcessingImageIndicatorVisibility(View.GONE)
-                screenshotSelectionDescription.visibility = View.GONE
-                imagePlaceholderContainer.visibility = View.VISIBLE
-                screenshotReselect.visibility = View.VISIBLE
+        viewModel.screenshotLiveData.observe(this) { screenshotBitmap ->
+            screenshotPreviewViewGroup.removeAllViews()
+            if (screenshotBitmap != null) {
+                layoutInflater.inflate(R.layout.image_preview_layout, screenshotPreviewViewGroup)
+                screenshotPreviewViewGroup.findViewById<ImageView>(R.id.selected_screenshot_preview).setImageBitmap(screenshotBitmap)
+                screenshotPreviewViewGroup.findViewById<TextView>(R.id.selected_screenshot_name).text = viewModel.fileName
+            } else {
+                layoutInflater.inflate(R.layout.image_placeholder_layout, screenshotPreviewViewGroup)
+                validateData()
             }
         }
 
-        binding.screenshotPreview.imagePlaceholderContainer.setDebounceOnClickListener({
+        binding.screenshotPreview.root.setDebounceOnClickListener({
             pickImageFromGallery()
         }, lifecycleOwner)
 
@@ -125,12 +133,6 @@ internal class ReportIssueFragment :
         validateData()
     }
 
-    private fun ImagePreviewLayoutBinding.setProcessingImageIndicatorVisibility(visibility: Int) {
-        processingImageIndicator.visibility = visibility
-        processingImageBar.visibility = visibility
-        loading.visibility = visibility
-    }
-
     private fun handleReportStatus() {
         viewModel.backgroundOperationOutcome.observe(this) {
             hideProgressBar()
@@ -170,8 +172,7 @@ internal class ReportIssueFragment :
     private val pickImageFromGalleryForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
-                binding?.screenshotPreview?.setProcessingImageIndicatorVisibility(View.VISIBLE)
-                binding?.screenshotPreview?.imagePlaceholderContainer?.visibility = View.GONE
+                layoutInflater.inflate(R.layout.loading_image_ayout, screenshotPreviewViewGroup)
                 val intent = result.data
                 val unresolvedUri = intent?.data
                 if (unresolvedUri != null) {
@@ -209,7 +210,6 @@ internal class ReportIssueFragment :
 
     private fun hideProgressBar() {
         binding?.indeterminateBar?.visibility = View.GONE
-        binding?.screenshotPreview?.processingImageBar?.visibility = View.GONE
     }
 
     companion object {

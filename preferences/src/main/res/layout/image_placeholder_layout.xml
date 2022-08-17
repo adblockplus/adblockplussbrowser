@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
  This file is part of Adblock Plus <https://adblockplus.org/>,
  Copyright (C) 2006-present eyeo GmbH
 
@@ -16,11 +17,10 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/image_preview_container"
+            android:id="@+id/image_placeholder_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/background_secondary"
@@ -29,7 +29,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/selected_screenshot_preview"
+                android:id="@+id/screenshot_placeholder"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginStart="16dp"
@@ -42,31 +42,17 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/selected_screenshot_name"
+                android:id="@+id/screenshot_selection_description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                tools:text="testImage.jpg"
+                android:text="@string/tap_here_to_pick_screenshot"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textSize="16sp"
                 android:textStyle="italic"
-                android:layout_marginTop="16dp"
-                app:layout_constraintStart_toEndOf="@+id/selected_screenshot_preview"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/screenshot_reselect"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginBottom="16dp"
-                android:text="@string/screenshot_reselect_description"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textStyle="italic"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/selected_screenshot_preview"
-                app:layout_constraintTop_toBottomOf="@+id/selected_screenshot_name" />
+                app:layout_constraintStart_toEndOf="@+id/screenshot_placeholder"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -21,7 +21,6 @@ import android.app.Application
 import android.content.ContentResolver
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
@@ -99,6 +98,11 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         }
     }
 
+    private fun cleanScreenshotPreview() {
+        screenshotLiveData.postValue(null)
+        data.screenshot = ""
+    }
+
     private fun encodeBase64(screenshot: Bitmap): String {
         val screenshotByteStream = ByteArrayOutputStream()
         screenshot.compress(Bitmap.CompressFormat.PNG, 0, screenshotByteStream)
@@ -107,12 +111,14 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
 
     private fun validateAndLoadScreenshot(screenshot: Bitmap?, context: Context) {
         if (screenshot == null) {
+            cleanScreenshotPreview()
             displaySnackbarMessage.postValue(
                 context.getString(R.string.issueReporter_report_screenshot_invalid))
             return
         }
         val screenshotBase64 = encodeBase64(screenshot)
         if (screenshotBase64.length > IMAGE_MAX_LENGTH) {
+            cleanScreenshotPreview()
             displaySnackbarMessage.postValue(context.getString(R.string.issueReporter_report_screenshot_too_large))
             return
         }
