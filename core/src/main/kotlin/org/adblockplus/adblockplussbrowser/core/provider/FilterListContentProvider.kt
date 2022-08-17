@@ -208,7 +208,6 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
                 Timber.d("Adding allowedDomains (not Crystal): $allowedDomains")
             }
         }
-        Timber.d("AllowedDomains: $allowedDomains")
         Timber.i("Is AA enabled: $acceptableAdsEnabled")
 
         try {

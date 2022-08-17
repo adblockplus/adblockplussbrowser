@@ -27,6 +27,10 @@ import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
 
+/**
+ * This receiver ensures that the Crystal flavor clears the cached filter list on upgrade of the app.
+ * The subscription update is triggered immediately to ensure best user experience.
+ */
 @AndroidEntryPoint
 class UpgradeReceiver : HiltBroadcastReceiver() {
     @Inject

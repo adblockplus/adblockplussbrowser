@@ -22,6 +22,11 @@ import android.content.Context
 import android.content.Intent
 import androidx.annotation.CallSuper
 
+/**
+ *  This is a simple wrapper class that fixes the problem with Hilt injection failing
+ *  because it actually happens inside onReceive() method of the generated parent class.
+ *  The problem is that you cannot call the super method since it's abstract.
+ */
 abstract class HiltBroadcastReceiver : BroadcastReceiver() {
     @CallSuper
     override fun onReceive(context: Context, intent: Intent?) = Unit
