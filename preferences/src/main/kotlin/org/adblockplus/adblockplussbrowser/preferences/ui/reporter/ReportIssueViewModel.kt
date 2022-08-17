@@ -19,6 +19,7 @@ package org.adblockplus.adblockplussbrowser.preferences.ui.reporter
 
 import android.app.Application
 import android.content.ContentResolver
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
@@ -37,19 +38,18 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.os.resolveFilename
+import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.data.ReportIssueRepository
 import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
-import java.io.IOException
 import javax.inject.Inject
 
 
 enum class BackgroundOperationOutcome {
-    SCREENSHOT_READ_SUCCESS,
-    SCREENSHOT_READ_ERROR,
-    SEND_SUCCESS,
-    SEND_ERROR
+    SCREENSHOT_PROCESSING_FINISHED,
+    REPORT_SEND_SUCCESS,
+    REPORT_SEND_ERROR
 }
 
 /**
@@ -60,7 +60,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
     AndroidViewModel(application) {
 
     val backgroundOperationOutcome = MutableLiveData<BackgroundOperationOutcome>()
-    val screenshot = MutableLiveData<Bitmap>()
+    val screenshotLiveData = MutableLiveData<Bitmap>()
     var fileName: String = ""
     var data: ReportIssueData = ReportIssueData()
 
@@ -74,11 +74,14 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
 
     internal fun sendReport() {
         viewModelScope.launch {
+            val context: Context = getApplication<Application>().applicationContext
             backgroundOperationOutcome.postValue(
                 if (reportIssueRepository.sendReport(data).isSuccess) {
-                    BackgroundOperationOutcome.SEND_SUCCESS
+                    displaySnackbarMessage.postValue(context.getString(R.string.issueReporter_report_sent))
+                    BackgroundOperationOutcome.REPORT_SEND_SUCCESS
                 } else {
-                    BackgroundOperationOutcome.SEND_ERROR
+                    displaySnackbarMessage.postValue(context.getString(R.string.issueReporter_report_send_error))
+                    BackgroundOperationOutcome.REPORT_SEND_ERROR
                 }
             )
         }
@@ -86,41 +89,57 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
 
     internal suspend fun processImage(unresolvedUri: Uri, activity: FragmentActivity?) {
         withContext(Dispatchers.Default) {
-            data.screenshot = imageFileToBase64(unresolvedUri, activity).getOrDefault("")
-            backgroundOperationOutcome.postValue(
-                if (data.screenshot.isEmpty()) BackgroundOperationOutcome.SCREENSHOT_READ_ERROR
-                else BackgroundOperationOutcome.SCREENSHOT_READ_SUCCESS
-            )
+            val context: Context = getApplication<Application>().applicationContext
+            val cr: ContentResolver = context.contentResolver
+
+            val screenshot: Bitmap? = resolveImageFile(unresolvedUri, activity, cr).getOrNull()
+            validateAndLoadScreenshot(screenshot, context)
+
+            backgroundOperationOutcome.postValue(BackgroundOperationOutcome.SCREENSHOT_PROCESSING_FINISHED)
         }
     }
 
-    private fun imageFileToBase64(unresolvedUri: Uri, activity: FragmentActivity?): Result<String> {
+    private fun encodeBase64(screenshot: Bitmap): String {
+        val screenshotByteStream = ByteArrayOutputStream()
+        screenshot.compress(Bitmap.CompressFormat.PNG, 0, screenshotByteStream)
+        return "data:image/png;base64," + Base64.encodeToString(screenshotByteStream.toByteArray(), Base64.DEFAULT)
+    }
+
+    private fun validateAndLoadScreenshot(screenshot: Bitmap?, context: Context) {
+        if (screenshot == null) {
+            displaySnackbarMessage.postValue(
+                context.getString(R.string.issueReporter_report_screenshot_invalid))
+            return
+        }
+        val screenshotBase64 = encodeBase64(screenshot)
+        if (screenshotBase64.length > IMAGE_MAX_LENGTH) {
+            displaySnackbarMessage.postValue(context.getString(R.string.issueReporter_report_screenshot_too_large))
+            return
+        }
+        data.screenshot = screenshotBase64
+        screenshotLiveData.postValue(screenshot!!)
+    }
+
+    private fun resolveImageFile(
+        unresolvedUri: Uri,
+        activity: FragmentActivity?,
+        cr: ContentResolver
+    ): Result<Bitmap> {
         Timber.d("ReportIssue: unresolvedUri: $unresolvedUri")
-        val context = getApplication<Application>().applicationContext
-        val cr: ContentResolver = context.contentResolver ?: return Result.failure(IOException("Can't obtain context"))
 
         activity?.resolveFilename(unresolvedUri)?.let { fileNameString ->
             fileName = fileNameString
-            Timber.d("ReportIssue: filename: $fileName")
         }
 
         return runCatching {
-            val screenshotByteStream = ByteArrayOutputStream()
             val imageBitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 ImageDecoder.decodeBitmap(ImageDecoder.createSource(cr, unresolvedUri))
             } else {
                 @Suppress("DEPRECATION")
                 MediaStore.Images.Media.getBitmap(cr, unresolvedUri)
             }
-            processBitmap(imageBitmap).compress(Bitmap.CompressFormat.PNG, 0, screenshotByteStream)
-            makePreviewForScreenshot(screenshotByteStream)
-            "data:image/png;base64," + Base64.encodeToString(screenshotByteStream.toByteArray(), Base64.DEFAULT)
+            processBitmap(imageBitmap)
         }
-    }
-
-    private fun makePreviewForScreenshot(bs: ByteArrayOutputStream) {
-        val byteArray = bs.toByteArray()
-        screenshot.postValue(BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size))
     }
 
     /**
@@ -155,13 +174,13 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         }
 
         // Check if the sizes need conversion and scale them accordingly
-        if (scaledShorterSide > REPORT_ISSUE_VIEW_MODEL_IMAGE_MAX_SHORTER_SIDE) {
-            val ratio = REPORT_ISSUE_VIEW_MODEL_IMAGE_MAX_SHORTER_SIDE / scaledShorterSide
+        if (scaledShorterSide > IMAGE_MAX_SHORTER_SIDE) {
+            val ratio = IMAGE_MAX_SHORTER_SIDE / scaledShorterSide
             scaledShorterSide = (scaledShorterSide * ratio).toInt()
             scaledLongerSide = (scaledLongerSide * ratio).toInt()
         }
-        if (scaledLongerSide > REPORT_ISSUE_VIEW_MODEL_IMAGE_MAX_LONGER_SIDE) {
-            val ratio = REPORT_ISSUE_VIEW_MODEL_IMAGE_MAX_LONGER_SIDE / scaledLongerSide
+        if (scaledLongerSide > IMAGE_MAX_LONGER_SIDE) {
+            val ratio = IMAGE_MAX_LONGER_SIDE / scaledLongerSide
             scaledShorterSide = (scaledShorterSide * ratio).toInt()
             scaledLongerSide = (scaledLongerSide * ratio).toInt()
         }
@@ -175,8 +194,13 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
 
     companion object {
         // HD max size
-        private const val REPORT_ISSUE_VIEW_MODEL_IMAGE_MAX_LONGER_SIDE = 1280f
-        private const val REPORT_ISSUE_VIEW_MODEL_IMAGE_MAX_SHORTER_SIDE = 720f
+        private const val IMAGE_MAX_LONGER_SIDE = 1280f
+        private const val IMAGE_MAX_SHORTER_SIDE = 720f
+        /* Max length of the base64 encoded string that carries the screenshot data.
+           This value is defined in the issue reporter BE
+           https://gitlab.com/eyeo/devops/legacy/sitescripts/-/tree/master/sitescripts/reports
+         */
+        private const val IMAGE_MAX_LENGTH = 1280 * 1280 * 4 + 4096
     }
 
     private enum class Orientation {
