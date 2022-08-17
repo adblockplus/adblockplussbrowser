@@ -21,6 +21,7 @@ import android.content.Context
 import android.content.Intent
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
+import org.adblockplus.adblockplussbrowser.core.BuildConfig
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import timber.log.Timber
 import java.io.File
@@ -35,15 +36,17 @@ class UpgradeReceiver : HiltBroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent?) {
         super.onReceive(context, intent)
-        val path = coreRepository.subscriptionsPath
-        if (!path.isNullOrEmpty()) {
-            File(path).let {
-                Timber.d("UpgradeReceiver: path=$path exists=${it.exists()}, deleting...")
-                it.exists() && it.delete()
-                Timber.d("UpgradeReceiver after delete: exists=${it.exists()}")
+        if (BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_CRYSTAL) {
+            val path = coreRepository.subscriptionsPath
+            if (!path.isNullOrEmpty()) {
+                File(path).let {
+                    Timber.d("UpgradeReceiver: path=$path exists=${it.exists()}, deleting...")
+                    it.exists() && it.delete()
+                    Timber.d("UpgradeReceiver after delete: exists=${it.exists()}")
+                }
             }
+            subscriptionsManager.scheduleImmediate(force = true)
+            Timber.d("UpgradeReceiver scheduleImmediate done")
         }
-        subscriptionsManager.scheduleImmediate(force = true)
-        Timber.d("UpgradeReceiver scheduleImmediate done")
     }
 }
