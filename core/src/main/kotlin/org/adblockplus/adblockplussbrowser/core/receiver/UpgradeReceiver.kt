@@ -33,7 +33,6 @@ class UpgradeReceiver : HiltBroadcastReceiver() {
     @Inject
     internal lateinit var subscriptionsManager: SubscriptionsManager
 
-
     override fun onReceive(context: Context, intent: Intent?) {
         super.onReceive(context, intent)
         val path = coreRepository.subscriptionsPath
