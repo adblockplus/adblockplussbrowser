@@ -177,5 +177,7 @@
     <string name="screenshot_reselect_description" tools:ignore="MissingTranslation">Tap here to pick a different screenshot</string>
     <string name="issueReporter_report_sent" tools:ignore="MissingTranslation">Thanks for reporting the issue!</string>
     <string name="issueReporter_report_send_error" tools:ignore="MissingTranslation">"Unable to process your request. Please try again later."</string>
+    <string name="issueReporter_report_screenshot_too_large" tools:ignore="MissingTranslation">The image file is too large. Please pick another one.</string>
+    <string name="issueReporter_report_screenshot_invalid" tools:ignore="MissingTranslation">The screenshot file is invalid. Please pick another one.</string>
 
 </resources>

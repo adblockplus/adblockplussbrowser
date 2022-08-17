@@ -23,9 +23,6 @@ import java.io.Serializable
 
 internal sealed class OtherSubscriptionsItem(val id: String) {
 
-    data class DefaultItem(val subscription: Subscription, val layout: GroupItemLayout, val active: Boolean) :
-        OtherSubscriptionsItem(subscription.url)
-
     data class CustomItem(val subscription: Subscription, val layout: GroupItemLayout) :
         OtherSubscriptionsItem(subscription.url), Serializable {
         companion object {
