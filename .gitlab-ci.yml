@@ -1,7 +1,12 @@
+include:
+  - template: Security/SAST.gitlab-ci.yml
+  - template: Security/Secret-Detection.gitlab-ci.yml
+
 stages:
   - dependencies
   - checks
   - build
+  - test
   - sign_builds
   - automated_tests
 
@@ -68,9 +73,9 @@ checks:detekt:
   rules:
     - when: on_success
 
-checks:unit-tests:
+test:unit-tests:
   extends: .template:environment
-  stage: checks
+  stage: test
   script:
     - ./gradlew test core:checkCoverage
   artifacts:
