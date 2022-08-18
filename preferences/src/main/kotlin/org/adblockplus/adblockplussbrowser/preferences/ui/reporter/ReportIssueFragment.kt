@@ -38,6 +38,7 @@ import com.google.android.material.textview.MaterialTextView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
+import org.adblockplus.adblockplussbrowser.base.view.layoutInflater
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData.Companion.REPORT_ISSUE_DATA_TYPE_FALSE_POSITIVE
@@ -67,15 +68,14 @@ internal class ReportIssueFragment :
 
         handleReportStatus()
 
-        viewModel.screenshotLiveData.observe(this) { screenshotBitmap ->
+        viewModel.screenshotLiveData.observe(this) { bitmap ->
             screenshotPreviewViewGroup.removeAllViews()
-            if (screenshotBitmap != null) {
-                layoutInflater.inflate(R.layout.image_preview_layout, screenshotPreviewViewGroup)
-                screenshotPreviewViewGroup.findViewById<ImageView>(R.id.selected_screenshot_preview).setImageBitmap(screenshotBitmap)
-                screenshotPreviewViewGroup.findViewById<TextView>(R.id.selected_screenshot_name).text = viewModel.fileName
+            if (bitmap != null) {
+                screenshotPreviewViewGroup.inflate(R.layout.image_preview_layout)
+                screenshotPreviewViewGroup.getImageView(R.id.selected_screenshot_preview).setImageBitmap(bitmap)
+                screenshotPreviewViewGroup.getTextView(R.id.selected_screenshot_name).text = viewModel.fileName
             } else {
-                layoutInflater.inflate(R.layout.image_placeholder_layout, screenshotPreviewViewGroup)
-                validateData()
+                screenshotPreviewViewGroup.inflate(R.layout.image_placeholder_layout)
             }
         }
 
@@ -172,7 +172,7 @@ internal class ReportIssueFragment :
     private val pickImageFromGalleryForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
-                layoutInflater.inflate(R.layout.loading_image_ayout, screenshotPreviewViewGroup)
+                screenshotPreviewViewGroup.inflate(R.layout.loading_image_ayout)
                 val intent = result.data
                 val unresolvedUri = intent?.data
                 if (unresolvedUri != null) {
@@ -216,3 +216,7 @@ internal class ReportIssueFragment :
         const val MANDATORY_MARK = " *"
     }
 }
+
+private fun ViewGroup.inflate(layout: Int) = layoutInflater.inflate(layout, this)
+private fun ViewGroup.getImageView(id: Int) = this.findViewById<ImageView>(id)
+private fun ViewGroup.getTextView(id: Int) = this.findViewById<TextView>(id)
