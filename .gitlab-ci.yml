@@ -87,9 +87,9 @@ test:unit-tests:
   rules:
     - when: on_success
 
-checks:coverage:
-  stage: checks
-  needs: ["checks:unit-tests"]
+test:coverage:
+  stage: test
+  needs: ["test:unit-tests"]
   image: spacifici/jacoco2cobertura:latest
   script:
     - /app/cover2cover.py core/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml core/src/main/kotlin > core/build/reports/cobertura.xml
