@@ -68,16 +68,7 @@ internal class ReportIssueFragment :
 
         handleReportStatus()
 
-        viewModel.screenshotLiveData.observe(this) { bitmap ->
-            screenshotPreviewViewGroup.removeAllViews()
-            if (bitmap != null) {
-                screenshotPreviewViewGroup.inflate(R.layout.image_preview_layout)
-                screenshotPreviewViewGroup.getImageView(R.id.selected_screenshot_preview).setImageBitmap(bitmap)
-                screenshotPreviewViewGroup.getTextView(R.id.selected_screenshot_name).text = viewModel.fileName
-            } else {
-                screenshotPreviewViewGroup.inflate(R.layout.image_placeholder_layout)
-            }
-        }
+        handleScreenshot()
 
         binding.screenshotPreview.root.setDebounceOnClickListener({
             pickImageFromGallery()
@@ -153,12 +144,19 @@ internal class ReportIssueFragment :
         }
     }
 
-    private fun MaterialTextView.addMandatoryMark() {
-        this.text = buildSpannedString { append(text).color(Color.RED) { append(MANDATORY_MARK) } }
-    }
-
-    private fun MaterialTextView.removeMandatoryMark() {
-        this.text = this.text.removeSuffix(MANDATORY_MARK)
+    private fun handleScreenshot() {
+        viewModel.screenshotLiveData.observe(this) { screenshotBitmap ->
+            with(screenshotPreviewViewGroup) {
+                removeAllViews()
+                if (screenshotBitmap != null) {
+                    inflate(R.layout.image_preview_layout)
+                    getImageView(R.id.selected_screenshot_preview).setImageBitmap(screenshotBitmap)
+                    getTextView(R.id.selected_screenshot_name).text = viewModel.fileName
+                } else {
+                    inflate(R.layout.image_placeholder_layout)
+                }
+            }
+        }
     }
 
     private fun markMandatoryField(textView: MaterialTextView, enabled: Boolean) {
@@ -220,3 +218,9 @@ internal class ReportIssueFragment :
 private fun ViewGroup.inflate(layout: Int) = layoutInflater.inflate(layout, this)
 private fun ViewGroup.getImageView(id: Int) = this.findViewById<ImageView>(id)
 private fun ViewGroup.getTextView(id: Int) = this.findViewById<TextView>(id)
+private fun MaterialTextView.addMandatoryMark() {
+    this.text = buildSpannedString { append(text).color(Color.RED) { append(ReportIssueFragment.MANDATORY_MARK) } }
+}
+private fun MaterialTextView.removeMandatoryMark() {
+    this.text = this.text.removeSuffix(ReportIssueFragment.MANDATORY_MARK)
+}
