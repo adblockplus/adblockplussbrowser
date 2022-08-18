@@ -122,7 +122,6 @@
     <string name="languages_onboarding_option_add">Adicione outro idioma ao bloqueio de anúncios.</string>
     <string name="languages_onboarding_option_skip">Não, agradeço, mas navego em apenas um idioma.</string>
     <string name="delete_swipe_hint">Para excluir um registro, deslize-o para a esquerda.</string>
-    <string name="crystal_disabled_whitelist">Este recurso será removido do Crystal na próxima versão.\nSe desejar continuar a usá-lo, troque pelo <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">AdBlock para Samsung Internet</a>Enquanto isso, manteremos a lista de permitidos que você criou.</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">Símbolo de marcador</string>

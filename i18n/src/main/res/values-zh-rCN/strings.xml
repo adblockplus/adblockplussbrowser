@@ -121,7 +121,6 @@
     <string name="languages_onboarding_option_add">添加其他拦截广告的语言。</string>
     <string name="languages_onboarding_option_skip">不了，谢谢，我只浏览一种语言的内容。</string>
     <string name="delete_swipe_hint">要删除输入，请向左轻扫。</string>
-    <string name="crystal_disabled_whitelist">在下个版本中将从 Crystal 移除此功能。\n如果您想继续使用此功能，请换用 <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">三星浏览器专用 AdBlock</a>。与此同时，我们将保留您创建的允许列表。</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">项目符号</string>

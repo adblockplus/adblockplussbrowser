@@ -122,7 +122,6 @@
     <string name="languages_onboarding_option_add">広告ブロック言語を追加する。</string>
     <string name="languages_onboarding_option_skip">いいえ。１つの言語だけで閲覧します。</string>
     <string name="delete_swipe_hint">エントリーを削除するには、左にスワイプしてください。</string>
-    <string name="crystal_disabled_whitelist">新バージョンの Crystal ではこの機能が廃止予定となっています。\n引き続きこの機能の利用を希望される場合は <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">Samsung Internet用AdBlockに切り替えてください。</a>それまでは、ユーザー作成許可リストが保持されます。</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">ビュレット記号</string>

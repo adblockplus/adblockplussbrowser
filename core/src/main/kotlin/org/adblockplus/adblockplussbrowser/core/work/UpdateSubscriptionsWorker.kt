@@ -60,6 +60,7 @@ import java.util.Objects
 import javax.inject.Inject
 import kotlinx.coroutines.flow.first
 import org.adblockplus.adblockplussbrowser.base.data.prefs.DebugPreferences
+import org.adblockplus.adblockplussbrowser.core.BuildConfig
 
 
 @HiltWorker
@@ -314,10 +315,12 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
                 }
             }
 
-            allowedDomains.forEach { domain ->
-                sink.writeUtf8(domain.toAllowRule())
-                sink.writeUtf8("\n")
-                customRules++
+            if (BuildConfig.FLAVOR_product != BuildConfig.FLAVOR_CRYSTAL) {
+                allowedDomains.forEach { domain ->
+                    sink.writeUtf8(domain.toAllowRule())
+                    sink.writeUtf8("\n")
+                    customRules++
+                }
             }
 
             blockedDomains.forEach { domain ->
