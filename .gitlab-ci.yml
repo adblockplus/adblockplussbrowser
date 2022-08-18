@@ -294,11 +294,11 @@ samsung_filter_tests:
     - git checkout ${GIT_AUTOMATION_BRANCH:-main}
     - OTHER_TEST_APK=$(find / -name "*app-world-abp-debug.apk")
     - CHROMEDRIVER_EXECUTABLE=$(find / -name "*chrdlin99")
-    - export OTHER_TEST_APK
-    - export CHROMEDRIVER_EXECUTABLE
-    - echo CHROMEDRIVER_EXECUTABLE $CHROMEDRIVER_EXECUTABLE
-    - echo OTHER_TEST_APK $OTHER_TEST_APK
-    - pwd
+#    - export OTHER_TEST_APK
+#    - export CHROMEDRIVER_EXECUTABLE
+#    - echo CHROMEDRIVER_EXECUTABLE $CHROMEDRIVER_EXECUTABLE
+#    - echo OTHER_TEST_APK $OTHER_TEST_APK
+#    - pwd
     # Launch an instance of gradle for each bunch of tags we want to test
     - netstat -tulpn
     - set +e
