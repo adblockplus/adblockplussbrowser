@@ -289,7 +289,7 @@ samsung_filter_tests:
     - mkdir appium
     - /root/entry_point.sh &> appium/appium.log &
     - echo $! > appium_pid
-    - git clone $GIT_AUTOMATION_REPO si_automation
+    - git clone --depth=1 $GIT_AUTOMATION_REPO si_automation
     - cd si_automation
     - git checkout ${GIT_AUTOMATION_BRANCH:-main}
     - OTHER_TEST_APK=$(find / -name "*app-world-abp-debug.apk")
