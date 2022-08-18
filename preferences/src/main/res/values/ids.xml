@@ -17,8 +17,9 @@
   -->
 
 <resources>
-    <item name="dialog_disabled_whitelist" type="id" />
-    <item name="install_si_dialog_summary" type="id" />
+    <item name="crystal_main_preferences_update_subscriptions" type="id" />
+    <item name="wifi_only_checkbox" type="id" />
+    <item name="main_preferences_allowlist" type="id" />
     <item name="other_subscriptions_add_from_url_button" type="id" />
     <item name="other_subscriptions_add_from_local_button" type="id" />
 </resources>

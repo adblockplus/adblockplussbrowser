@@ -121,7 +121,6 @@
     <string name="languages_onboarding_option_add">광고 차단 언어를 추가합니다.</string>
     <string name="languages_onboarding_option_skip">아니요, 한 가지 언어만 이용합니다.</string>
     <string name="delete_swipe_hint">등록을 삭제하려면 왼쪽으로 스와이프하십시오.</string>
-    <string name="crystal_disabled_whitelist">이 기능은 다음 버전의 크리스탈에서 삭제됩니다.\n이 기능을 계속 사용하려면 사용으로 전환해 주십시오 <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">삼성 인터넷용 AdBlock</a>그 동안 저희는 귀하가 생성한 허용 목록을 유지합니다.</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">표시 항목 심볼</string>

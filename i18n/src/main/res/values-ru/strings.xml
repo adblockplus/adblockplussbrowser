@@ -121,7 +121,6 @@
     <string name="languages_onboarding_option_add">Добавить дополнительный язык для блокировки рекламы.</string>
     <string name="languages_onboarding_option_skip">Нет, спасибо, я использую только один язык.</string>
     <string name="delete_swipe_hint">Для удаления записи проведите по ней влево.</string>
-    <string name="crystal_disabled_whitelist">Эта функция будет удалена из следующей версии Crystal.\nЕсли вы хотите продолжить ее использование, переходите на <a href="https://play.google.com/store/apps/details?id=com.betafish.adblocksbrowser">AdBlock для Samsung Internet</a>.При этом мы сохраним созданный вами список разрешенных сайтов.</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">Значок пункта маркированного списка</string>
