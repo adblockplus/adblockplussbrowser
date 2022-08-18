@@ -280,8 +280,7 @@ samsung_filter_tests:
     GIT_AUTOMATION_BRANCH: "main"
   before_script:
     - apt-get -y update
-    - apt-get -y install openjdk-8-jdk git
-    - apt-get -y install net-tools
+    - apt-get -y install openjdk-8-jdk git net-tools
     - echo "Using android device with serial ${ANDROID_SERIAL}"
     - adb devices
     - adb shell getprop | egrep "ro.product.manufacturer|ro.product.model|ro.build.version.release|ro.vendor.build.version.sdk"
