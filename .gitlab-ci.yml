@@ -108,7 +108,7 @@ spotbugs-sast:
     ANDROID_SDK_ROOT: /builds/eyeo/distpartners/adblockplussbrowser/.android-sdk
     GRADLE_HOME: /builds/eyeo/distpartners/adblockplussbrowser/.gradle
     JAVA_OPTS: -Xmx3g
-    SECURE_LOG_LEVEL: debug
+    SAST_EXCLUDED_PATHS: .android-sdk,.gradle
 
 build:
   extends: .template:environment
