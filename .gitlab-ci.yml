@@ -102,6 +102,10 @@ test:coverage:
   rules:
     - when: on_success
 
+spotbugs-sast:
+  variables:
+    SAST_JAVA_VERSION: 11
+
 build:
   extends: .template:environment
   stage: build
