@@ -74,13 +74,13 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
     lateinit var analyticsProvider: AnalyticsProvider
 
     internal fun sendReport() {
-        if (data.email.isEmpty()) {
-            analyticsProvider.logEvent(AnalyticsEvent.SEND_ANONYMOUS_REPORT)
-        }
         viewModelScope.launch {
             val context: Context = getApplication<Application>().applicationContext
             backgroundOperationOutcome.postValue(
                 if (reportIssueRepository.sendReport(data).isSuccess) {
+                    if (data.email.isEmpty()) {
+                        analyticsProvider.logEvent(AnalyticsEvent.SEND_ANONYMOUS_REPORT)
+                    }
                     displaySnackbarMessage.postValue(context.getString(R.string.issueReporter_report_sent))
                     analyticsProvider.logEvent(AnalyticsEvent.SEND_ISSUE_REPORT_SUCCESS)
                     BackgroundOperationOutcome.REPORT_SEND_SUCCESS
@@ -199,6 +199,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
     }
 
     internal fun logCancelIssueReporter() = analyticsProvider.logEvent(AnalyticsEvent.CANCEL_ISSUE_REPORTER)
+    internal fun logOpenIssueReporter() = analyticsProvider.logEvent(AnalyticsEvent.OPEN_ISSUE_REPORTER)
 
     companion object {
         // HD max size

@@ -48,9 +48,6 @@ internal class MainPreferencesFragment :
     // Lazy loading the UpdateSubscriptionsViewModel so it will only be used for crystal flavor here
     private val updateViewModel: UpdateSubscriptionsViewModel by activityViewModels()
 
-    @Inject
-    lateinit var analyticsProvider: AnalyticsProvider
-
     override fun onBindView(binding: FragmentMainPreferencesBinding) {
         binding.viewModel = viewModel
         val supportActionBar = (activity as AppCompatActivity).supportActionBar
@@ -75,7 +72,6 @@ internal class MainPreferencesFragment :
 
         if (BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_ABP) {
             binding.mainPreferencesShareEventsInclude.mainPreferencesIssueReporterCategory.setDebounceOnClickListener({
-                analyticsProvider.logEvent(AnalyticsEvent.OPEN_ISSUE_REPORTER)
                 supportActionBar?.subtitle = null
                 val direction = MainPreferencesFragmentDirections
                     .actionMainPreferencesFragmentToReportIssueFragment()

@@ -21,12 +21,8 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.opengl.Visibility
 import android.provider.MediaStore
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -36,12 +32,10 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.textview.MaterialTextView
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 import kotlinx.coroutines.launch
-import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
-import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
 import org.adblockplus.adblockplussbrowser.preferences.R
@@ -62,14 +56,16 @@ internal class ReportIssueFragment :
 
     private val viewModel: ReportIssueViewModel by viewModels()
 
-    @Inject
-    lateinit var analyticsProvider: AnalyticsProvider
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(this) {
-            viewModel.logCancelIssueReporter()
-        }
+        // log issue reporter was opened
+        viewModel.logOpenIssueReporter()
+        // log issue reporter was canceled
+        // Back press on toolbar
+        val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.toolbar)
+        toolbar.setNavigationOnClickListener { cancelIssueReporter() }
+        // Back press from phone
+        requireActivity().onBackPressedDispatcher.addCallback(this) { cancelIssueReporter() }
     }
 
     @Suppress("LongMethod")
@@ -231,6 +227,11 @@ internal class ReportIssueFragment :
     private fun hideProgressBar() {
         binding?.indeterminateBar?.visibility = View.GONE
         binding?.screenshotPreview?.processingImageBar?.visibility = View.GONE
+    }
+
+    private fun cancelIssueReporter() {
+        viewModel.logCancelIssueReporter()
+        findNavController().popBackStack()
     }
 
     companion object {
