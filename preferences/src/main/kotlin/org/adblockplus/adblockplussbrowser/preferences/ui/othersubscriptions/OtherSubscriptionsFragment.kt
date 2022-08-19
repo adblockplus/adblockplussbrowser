@@ -127,7 +127,7 @@ internal class OtherSubscriptionsFragment :
     private fun handleFilePickingResult(result: ActivityResult) {
         if (result.resultCode == Activity.RESULT_OK) {
             result.data?.data?.let { filePath ->
-                activity?.resolveFilename(filePath)?.let { filename ->
+                activity?.contentResolver?.resolveFilename(filePath)?.let { filename ->
                     viewModel.addCustomFilterFile(
                         filePath.toString(),
                         filename
