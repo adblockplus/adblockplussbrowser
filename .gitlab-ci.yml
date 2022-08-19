@@ -105,6 +105,8 @@ test:coverage:
 spotbugs-sast:
   variables:
     SAST_JAVA_VERSION: 11
+    ANDROID_SDK_ROOT: /builds/eyeo/distpartners/adblockplussbrowser/.android-sdk
+    GRADLE_HOME: /builds/eyeo/distpartners/adblockplussbrowser/.gradle
 
 build:
   extends: .template:environment
