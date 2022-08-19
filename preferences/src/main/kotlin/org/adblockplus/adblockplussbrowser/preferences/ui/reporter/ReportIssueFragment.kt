@@ -20,7 +20,6 @@ package org.adblockplus.adblockplussbrowser.preferences.ui.reporter
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
-import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import android.view.ViewGroup
@@ -57,20 +56,17 @@ internal class ReportIssueFragment :
     private val viewModel: ReportIssueViewModel by viewModels()
     private lateinit var screenshotPreviewViewGroup: ViewGroup
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        screenshotPreviewViewGroup = view.findViewById(R.id.screenshot_preview)
-    }
-
     override fun onBindView(binding: FragmentReportIssueBinding) {
         binding.viewModel = viewModel
         val lifecycleOwner = this.viewLifecycleOwner
+
+        screenshotPreviewViewGroup = binding.screenshotPreview.root as ViewGroup
 
         handleReportStatus()
 
         handleScreenshot()
 
-        binding.screenshotPreview.root.setDebounceOnClickListener({
+        screenshotPreviewViewGroup.setDebounceOnClickListener({
             pickImageFromGallery()
         }, lifecycleOwner)
 
@@ -216,11 +212,15 @@ internal class ReportIssueFragment :
 }
 
 private fun ViewGroup.inflate(layout: Int) = layoutInflater.inflate(layout, this)
+
 private fun ViewGroup.getImageView(id: Int) = this.findViewById<ImageView>(id)
+
 private fun ViewGroup.getTextView(id: Int) = this.findViewById<TextView>(id)
+
 private fun MaterialTextView.addMandatoryMark() {
     this.text = buildSpannedString { append(text).color(Color.RED) { append(ReportIssueFragment.MANDATORY_MARK) } }
 }
+
 private fun MaterialTextView.removeMandatoryMark() {
     this.text = this.text.removeSuffix(ReportIssueFragment.MANDATORY_MARK)
 }

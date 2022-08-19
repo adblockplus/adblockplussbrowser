@@ -43,6 +43,8 @@ import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueDat
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 
 
 enum class BackgroundOperationOutcome {
@@ -98,7 +100,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         }
     }
 
-    private fun cleanScreenshotPreview() {
+    private fun clearScreenshot() {
         screenshotLiveData.postValue(null)
         data.screenshot = ""
     }
@@ -111,14 +113,14 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
 
     private fun validateAndLoadScreenshot(screenshot: Bitmap?, context: Context) {
         if (screenshot == null) {
-            cleanScreenshotPreview()
+            clearScreenshot()
             displaySnackbarMessage.postValue(
                 context.getString(R.string.issueReporter_report_screenshot_invalid))
             return
         }
         val screenshotBase64 = encodeBase64(screenshot)
         if (screenshotBase64.length > IMAGE_MAX_LENGTH) {
-            cleanScreenshotPreview()
+            clearScreenshot()
             displaySnackbarMessage.postValue(context.getString(R.string.issueReporter_report_screenshot_too_large))
             return
         }
