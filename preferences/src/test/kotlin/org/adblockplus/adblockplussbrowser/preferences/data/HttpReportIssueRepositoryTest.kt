@@ -28,10 +28,14 @@ import org.mockito.Mockito.anyString
 import kotlinx.coroutines.test.runTest
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
+import org.adblockplus.adblockplussbrowser.preferences.helpers.DOMParser
+import org.adblockplus.adblockplussbrowser.preferences.helpers.getAttribute
+import org.adblockplus.adblockplussbrowser.preferences.helpers.getTagContent
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.runner.RunWith
 import org.mockito.Mockito.any
@@ -111,18 +115,19 @@ class HttpReportIssueRepositoryTest {
 
     @Test
     fun `test makeXML success`() {
-        val resultXml = httpReportIssueRepository.makeXML(fakeReportIssueData)
-        assert(resultXml.getOrElse{""}.contains(fakeReportIssueData.type))
-        assert(resultXml.getOrElse{""}.contains(fakeReportIssueData.email))
-        assert(resultXml.getOrElse{""}.contains(fakeReportIssueData.comment))
-        assert(resultXml.getOrElse{""}.contains(fakeReportIssueData.url))
+        val resultXml = httpReportIssueRepository.makeXML(fakeReportIssueData).getOrThrow()
+        val document = DOMParser.parse(resultXml)
+        assertEquals(fakeReportIssueData.type, document.getAttribute("type"))
+        assertEquals(fakeReportIssueData.url, document.getAttribute("url", "window"))
+        assertEquals(fakeReportIssueData.comment, document.getTagContent("comment"))
+        assertEquals(fakeReportIssueData.email, document.getTagContent("email"))
     }
 
     @Test
     fun `test makeXML without url`() {
         fakeReportIssueData.url = ""
         val resultXml = httpReportIssueRepository.makeXML(fakeReportIssueData)
-        assertFalse(resultXml.getOrElse{""}.contains("www.example.com"))
+        assertFalse(resultXml.getOrThrow().contains("www.example.com"))
     }
 
     @Test
@@ -130,6 +135,6 @@ class HttpReportIssueRepositoryTest {
         val xmlSerializerMock = mock(Xml.newSerializer()::class.java)
         `when`(xmlSerializerMock.startTag(anyString(), anyString())).thenThrow(RuntimeException("Exception"))
         httpReportIssueRepository.serializer = xmlSerializerMock
-        assert(httpReportIssueRepository.makeXML(fakeReportIssueData).getOrElse{""}.isEmpty())
+        assertTrue(httpReportIssueRepository.makeXML(fakeReportIssueData).getOrThrow().isEmpty())
     }
 }

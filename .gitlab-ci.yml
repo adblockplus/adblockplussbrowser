@@ -87,7 +87,7 @@ checks:coverage:
   needs: ["checks:unit-tests"]
   image: spacifici/jacoco2cobertura:latest
   script:
-    - /app/cover2cover.py core/build/reports/jacoco/jacocoCoreTestReport/jacocoCoreTestReport.xml core/src/main/kotlin > core/build/reports/cobertura.xml
+    - /app/cover2cover.py core/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml core/src/main/kotlin > core/build/reports/cobertura.xml
   artifacts:
     when: always
     reports:

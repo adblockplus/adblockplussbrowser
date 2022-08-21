@@ -108,7 +108,7 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
 
                 startTag(null, "window")
                 if (data.url.isNotEmpty()) {
-                    serializer.attribute(null, "url", data.url)
+                    attribute(null, "url", data.url)
                 }
                 endTag(null, "window")
 

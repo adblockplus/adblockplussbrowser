@@ -25,6 +25,6 @@ object Fakes {
         type = "false positive",
         email = "test@email.com",
         comment = "test request",
-        url = "www.example.com"
+        url = "http://www.example.com"
     )
 }
