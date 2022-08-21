@@ -18,6 +18,7 @@
 package org.adblockplus.adblockplussbrowser.preferences.helpers
 
 import java.io.StringReader
+import java.lang.IllegalArgumentException
 import java.lang.RuntimeException
 import javax.xml.parsers.DocumentBuilder
 import javax.xml.parsers.DocumentBuilderFactory
@@ -47,7 +48,7 @@ fun Document.getAttribute(attribute: String, tag: String = ""): String {
             // In our case there is only one element per tag so we can fetch the first Item
             (nodeList.item(0) as Element).getAttribute(attribute)
         } else {
-            throw RuntimeException("No nodes with given tag")
+            throw IllegalArgumentException("No nodes with given tag")
         }
     }
 }
