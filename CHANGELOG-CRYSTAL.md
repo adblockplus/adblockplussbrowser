@@ -4,6 +4,17 @@ All notable changes to Crystal Adblock for Samsung will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.5.0] - 2022-08-22
+### Fixed
+- Remove artificial delay when adding custom subscriptions via url
+
+### Changed
+- Remove Allowlisting feature
+
+### Added
+- Custom subscription for test pages in debug version
+- Automation Stage for SI filter tests
+
 ## [2.4.0] - 2022-07-01
 ### Fixed
 - Overlapping texts for verbose translations
