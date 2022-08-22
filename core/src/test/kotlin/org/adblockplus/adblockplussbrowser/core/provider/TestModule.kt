@@ -27,6 +27,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.analytics.BuildConfig
+import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
@@ -52,6 +53,10 @@ internal class TestModule {
     fun getSettingsRepository(): SettingsRepository {
         return Fakes.FakeSettingsRepository("")
     }
+
+    @Provides
+    @Singleton
+    fun provideSubscriptionManager(): SubscriptionsManager = Mockito.mock(SubscriptionsManager::class.java)
 
     @Provides
     @Singleton

@@ -81,7 +81,7 @@ internal class ReportIssueFragment :
                 binding.editTextBoxEmailAddress.isEnabled = true
                 viewModel.data.email = binding.editTextBoxEmailAddress.text.toString()
             }
-            validateData()
+            binding.validateData()
         }
 
         binding.issueTypeRadioGroup.setOnCheckedChangeListener { _, checkedId ->
@@ -90,7 +90,7 @@ internal class ReportIssueFragment :
                     REPORT_ISSUE_DATA_TYPE_FALSE_POSITIVE
                 binding.blockingTooLow.id -> viewModel.data.type = REPORT_ISSUE_DATA_TYPE_MISSED_AD
             }
-            validateData()
+            binding.validateData()
         }
 
         binding.editTextBoxComment.addTextChangedListener {
@@ -99,7 +99,7 @@ internal class ReportIssueFragment :
 
         binding.editTextBoxEmailAddress.addTextChangedListener {
             viewModel.data.email = binding.editTextBoxEmailAddress.text.toString()
-            validateData()
+            binding.validateData()
         }
 
         binding.editTextBoxUrl.addTextChangedListener {
@@ -112,20 +112,23 @@ internal class ReportIssueFragment :
         }, lifecycleOwner)
 
         binding.sendReport.setDebounceOnClickListener({
-            showProgressBar()
+            // Show progress bar
+            binding.indeterminateBar.visibility = View.VISIBLE
             viewModel.sendReport()
         }, lifecycleOwner)
 
         // Sets the Mandatory Marks for empty default field values
-        validateData()
+        binding.validateData()
     }
 
     private fun handleReportStatus() {
         viewModel.backgroundOperationOutcome.observe(this) {
-            hideProgressBar()
+            // Hide the progress bar
+            binding?.indeterminateBar?.visibility = View.GONE
+
             when (viewModel.backgroundOperationOutcome.value) {
                 BackgroundOperationOutcome.SCREENSHOT_PROCESSING_FINISHED -> {
-                    validateData()
+                    binding.validateData()
                 }
                 BackgroundOperationOutcome.REPORT_SEND_SUCCESS -> {
                     val direction =
@@ -141,7 +144,7 @@ internal class ReportIssueFragment :
     }
 
     private fun handleScreenshot() {
-        viewModel.screenshotLiveData.observe(this) { screenshotBitmap ->
+        viewModel.screenshot.observe(this) { screenshotBitmap ->
             with(screenshotPreviewViewGroup) {
                 removeAllViews()
                 if (screenshotBitmap != null) {
@@ -155,14 +158,6 @@ internal class ReportIssueFragment :
         }
     }
 
-    private fun markMandatoryField(textView: MaterialTextView, enabled: Boolean) {
-        val hasAsterisk = textView.text.endsWith(MANDATORY_MARK)
-        when {
-            !hasAsterisk && enabled -> textView.addMandatoryMark()
-            hasAsterisk && !enabled -> textView.removeMandatoryMark()
-        }
-    }
-
     private val pickImageFromGalleryForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -171,11 +166,11 @@ internal class ReportIssueFragment :
                 val unresolvedUri = intent?.data
                 if (unresolvedUri != null) {
                     lifecycleScope.launch {
-                        viewModel.processImage(unresolvedUri, activity)
+                        viewModel.processImage(unresolvedUri)
                     }
                 } else {
                     viewModel.data.screenshot = ""
-                    validateData()
+                    binding.validateData()
                 }
             }
         }
@@ -189,26 +184,36 @@ internal class ReportIssueFragment :
         pickImageFromGalleryForResult.launch(pickIntent)
     }
 
-    private fun validateData() {
-        binding?.let {
-            it.sendReport.isEnabled = viewModel.data.validate()
-            markMandatoryField(it.enterEmailTitle, !viewModel.data.validateEmail())
-            markMandatoryField(it.selectIssueType, !viewModel.data.validateType())
-            markMandatoryField(it.pickScreenshotDescription, !viewModel.data.validateScreenshot())
-        }
-    }
-
-    private fun showProgressBar() {
-        binding?.indeterminateBar?.visibility = View.VISIBLE
-    }
-
-    private fun hideProgressBar() {
-        binding?.indeterminateBar?.visibility = View.GONE
-    }
-
     companion object {
         const val MANDATORY_MARK = " *"
     }
+}
+
+private fun FragmentReportIssueBinding?.validateData() {
+    this?.run {
+        viewModel?.data?.let { data ->
+            sendReport.isEnabled = data.validate()
+            enterEmailTitle.markMandatoryField(!data.validateEmail())
+            selectIssueType.markMandatoryField(!data.validateType())
+            pickScreenshotDescription.markMandatoryField(!data.validateScreenshot())
+        }
+    }
+}
+
+private fun MaterialTextView.markMandatoryField(enabled: Boolean) {
+    val hasAsterisk = text.endsWith(ReportIssueFragment.MANDATORY_MARK)
+    when {
+        !hasAsterisk && enabled -> this.addMandatoryMark()
+        hasAsterisk && !enabled -> this.removeMandatoryMark()
+    }
+}
+
+private fun MaterialTextView.addMandatoryMark() {
+    text = buildSpannedString { append(text).color(Color.RED) { append(ReportIssueFragment.MANDATORY_MARK) } }
+}
+
+private fun MaterialTextView.removeMandatoryMark() {
+    text = text.removeSuffix(ReportIssueFragment.MANDATORY_MARK)
 }
 
 private fun ViewGroup.inflate(layout: Int) = layoutInflater.inflate(layout, this)
@@ -216,11 +221,3 @@ private fun ViewGroup.inflate(layout: Int) = layoutInflater.inflate(layout, this
 private fun ViewGroup.getImageView(id: Int) = this.findViewById<ImageView>(id)
 
 private fun ViewGroup.getTextView(id: Int) = this.findViewById<TextView>(id)
-
-private fun MaterialTextView.addMandatoryMark() {
-    this.text = buildSpannedString { append(text).color(Color.RED) { append(ReportIssueFragment.MANDATORY_MARK) } }
-}
-
-private fun MaterialTextView.removeMandatoryMark() {
-    this.text = this.text.removeSuffix(ReportIssueFragment.MANDATORY_MARK)
-}

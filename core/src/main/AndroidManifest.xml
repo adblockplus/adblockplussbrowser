@@ -26,6 +26,12 @@
             android:authorities="${applicationId}.contentBlocker.contentProvider"
             android:enabled="true"
             android:exported="true" />
+        <receiver android:name=".receiver.UpgradeReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

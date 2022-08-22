@@ -15,28 +15,19 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.adblockplus.adblockplussbrowser.base.os
+package org.adblockplus.adblockplussbrowser.core.receiver
 
-import android.app.Activity
-import android.net.Uri
-import android.provider.OpenableColumns
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import androidx.annotation.CallSuper
 
 /**
- * Resolves file name from a given uri.
- *
- * @param uri Uri to local file
- * @return filename extracted from a given uri
+ *  This is a simple wrapper class that fixes the problem with Hilt injection failing
+ *  because it actually happens inside onReceive() method of the generated parent class.
+ *  The problem is that you cannot call the super method since it's abstract.
  */
-fun Activity.resolveFilename(uri: Uri): String {
-    return this.contentResolver?.query(
-        uri, null, null, null, null
-    )?.use {
-        val index = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-        if (index >= 0) {
-            it.moveToFirst()
-            it.getString(index)
-        } else {
-            null
-        }
-    } ?: uri.path.toString()
+abstract class HiltBroadcastReceiver : BroadcastReceiver() {
+    @CallSuper
+    override fun onReceive(context: Context, intent: Intent?) = Unit
 }

@@ -34,6 +34,8 @@ android {
 }
 
 createFlavorsConfig()
+addFeature("allowlisting", "abp")
+addFeature("allowlisting", "adblock")
 
 configurations {
     all {
