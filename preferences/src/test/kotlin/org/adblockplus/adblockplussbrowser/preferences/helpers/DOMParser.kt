@@ -19,7 +19,6 @@ package org.adblockplus.adblockplussbrowser.preferences.helpers
 
 import java.io.StringReader
 import java.lang.IllegalArgumentException
-import java.lang.RuntimeException
 import javax.xml.parsers.DocumentBuilder
 import javax.xml.parsers.DocumentBuilderFactory
 import org.w3c.dom.Document
