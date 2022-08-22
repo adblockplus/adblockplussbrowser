@@ -17,16 +17,14 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui
 
-import android.text.method.LinkMovementMethod
 import android.view.View
-import android.widget.TextView
+import android.widget.LinearLayout
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.customview.customView
 import com.google.android.material.checkbox.MaterialCheckBox
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -144,13 +142,17 @@ internal class MainPreferencesFragment :
     }
 
     private fun bindCrystalUpdateTypeSettings(binding: FragmentMainPreferencesBinding) {
-        binding.mainPreferencesAdBlockingInclude.crystalMainPreferencesUpdateSubscriptions.visibility =
+        val rootView = binding.mainPreferencesAdBlockingInclude.root
+        val wifiOnlyCheckbox: MaterialCheckBox? = rootView.findViewById(R.id.wifi_only_checkbox)
+        val crystalMainPreferencesUpdateSubscriptions =
+            rootView.findViewById<ConstraintLayout>(R.id.crystal_main_preferences_update_subscriptions)
+        crystalMainPreferencesUpdateSubscriptions?.visibility =
             View.VISIBLE
-        val wifiOnlyCheckbox: MaterialCheckBox =
-            binding.mainPreferencesAdBlockingInclude.wifiOnlyCheckbox
-        binding.mainPreferencesAdBlockingInclude.crystalMainPreferencesUpdateSubscriptions.setOnClickListener {
-            wifiOnlyCheckbox.isChecked = !wifiOnlyCheckbox.isChecked
-            val updateConfigType = if (wifiOnlyCheckbox.isChecked) {
+        crystalMainPreferencesUpdateSubscriptions?.setOnClickListener {
+            if (wifiOnlyCheckbox != null) {
+                wifiOnlyCheckbox.isChecked = !wifiOnlyCheckbox.isChecked
+            }
+            val updateConfigType = if (wifiOnlyCheckbox?.isChecked == true) {
                 UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_ALWAYS
             } else {
                 UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_WIFI_ONLY
@@ -159,8 +161,10 @@ internal class MainPreferencesFragment :
         }
 
         updateViewModel.updateType.observe(this) { updateType ->
-            wifiOnlyCheckbox.isChecked =
-                updateType.name == UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_ALWAYS.name
+            if (wifiOnlyCheckbox != null) {
+                wifiOnlyCheckbox.isChecked =
+                    updateType.name == UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_ALWAYS.name
+            }
         }
     }
 
@@ -203,23 +207,18 @@ internal class MainPreferencesFragment :
         supportActionBar: ActionBar?,
         lifecycleOwner: LifecycleOwner
     ) {
-        binding.mainPreferencesAdBlockingInclude.mainPreferencesAllowlist.setDebounceOnClickListener(
-            {
-                supportActionBar?.subtitle = null
-                val direction = MainPreferencesFragmentDirections
-                    .actionMainPreferencesFragmentToAllowlistFragment()
-                findNavController().navigate(direction)
-                if (BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_CRYSTAL) {
-                    MaterialDialog((activity as AppCompatActivity).window.context).show {
-                        cancelable(true)
-                        customView(R.layout.dialog_disabled_whitelist, scrollable = true)
-                        val textView: TextView = findViewById(R.id.install_si_dialog_summary)
-                        textView.movementMethod = LinkMovementMethod.getInstance()
-                    }
-                }
-            },
-            lifecycleOwner
-        )
+        if (BuildConfig.FLAVOR_product != BuildConfig.FLAVOR_CRYSTAL) {
+            binding.mainPreferencesAdBlockingInclude.root.findViewById<LinearLayout>(R.id.main_preferences_allowlist)
+                ?.setDebounceOnClickListener(
+                    {
+                        supportActionBar?.subtitle = null
+                        val direction = MainPreferencesFragmentDirections
+                            .actionMainPreferencesFragmentToAllowlistFragment()
+                        findNavController().navigate(direction)
+                    },
+                    lifecycleOwner
+                )
+        }
     }
 
     private fun bindPrimarySubscriptions(

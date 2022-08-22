@@ -46,4 +46,7 @@ dependencies {
     implementation(Deps.AndroidX.DataStore.PREFERENCES)
     implementation(Deps.AndroidX.Hilt.WORK)
     implementation(Deps.TIMBER)
+
+    testImplementation(Deps.JUNIT)
+    testImplementation(Deps.ROBOLECTRIC)
 }

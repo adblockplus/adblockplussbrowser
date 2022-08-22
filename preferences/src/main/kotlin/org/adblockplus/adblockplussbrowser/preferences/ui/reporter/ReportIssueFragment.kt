@@ -50,7 +50,6 @@ import timber.log.Timber
  * Contains UI for issue report and handling of issue screenshot picking.
  */
 @AndroidEntryPoint
-@Suppress("TooManyFunctions")
 internal class ReportIssueFragment :
     DataBindingFragment<FragmentReportIssueBinding>(R.layout.fragment_report_issue) {
 
@@ -68,16 +67,15 @@ internal class ReportIssueFragment :
         requireActivity().onBackPressedDispatcher.addCallback(this) { cancelIssueReporter() }
     }
 
-    @Suppress("LongMethod")
     override fun onBindView(binding: FragmentReportIssueBinding) {
         binding.viewModel = viewModel
         val lifecycleOwner = this.viewLifecycleOwner
 
         handleReportStatus()
 
-        viewModel.screenshotLiveData.observe(this) {
+        viewModel.screenshot.observe(this) { bitmap ->
             with(binding.screenshotPreview) {
-                screenshot.setImageBitmap(it)
+                screenshot.setImageBitmap(bitmap)
                 selectedScreenshotName.text = viewModel.fileName
                 selectedScreenshotName.visibility = View.VISIBLE
                 setProcessingImageIndicatorVisibility(View.GONE)
@@ -102,7 +100,7 @@ internal class ReportIssueFragment :
                 binding.editTextBoxEmailAddress.isEnabled = true
                 viewModel.data.email = binding.editTextBoxEmailAddress.text.toString()
             }
-            validateData()
+            binding.validateData()
         }
 
         binding.issueTypeRadioGroup.setOnCheckedChangeListener { _, checkedId ->
@@ -111,7 +109,7 @@ internal class ReportIssueFragment :
                     REPORT_ISSUE_DATA_TYPE_FALSE_POSITIVE
                 binding.blockingTooLow.id -> viewModel.data.type = REPORT_ISSUE_DATA_TYPE_MISSED_AD
             }
-            validateData()
+            binding.validateData()
         }
 
         binding.editTextBoxComment.addTextChangedListener {
@@ -120,7 +118,7 @@ internal class ReportIssueFragment :
 
         binding.editTextBoxEmailAddress.addTextChangedListener {
             viewModel.data.email = binding.editTextBoxEmailAddress.text.toString()
-            validateData()
+            binding.validateData()
         }
 
         binding.editTextBoxUrl.addTextChangedListener {
@@ -134,12 +132,13 @@ internal class ReportIssueFragment :
         }, lifecycleOwner)
 
         binding.sendReport.setDebounceOnClickListener({
-            showProgressBar()
+            // Show progress bar
+            binding.indeterminateBar.visibility = View.VISIBLE
             viewModel.sendReport()
         }, lifecycleOwner)
 
         // Sets the Mandatory Marks for empty default field values
-        validateData()
+        binding.validateData()
     }
 
     private fun ImagePreviewLayoutBinding.setProcessingImageIndicatorVisibility(visibility: Int) {
@@ -150,10 +149,13 @@ internal class ReportIssueFragment :
 
     private fun handleReportStatus() {
         viewModel.backgroundOperationOutcome.observe(this) {
-            hideProgressBar()
+            // Hide the progress bar
+            binding?.indeterminateBar?.visibility = View.GONE
+            binding?.screenshotPreview?.processingImageBar?.visibility = View.GONE
+
             when (viewModel.backgroundOperationOutcome.value) {
                 BackgroundOperationOutcome.SCREENSHOT_PROCESSING_FINISHED -> {
-                    validateData()
+                    binding.validateData()
                 }
                 BackgroundOperationOutcome.REPORT_SEND_SUCCESS -> {
                     val direction =
@@ -168,22 +170,6 @@ internal class ReportIssueFragment :
         }
     }
 
-    private fun MaterialTextView.addMandatoryMark() {
-        this.text = buildSpannedString { append(text).color(Color.RED) { append(MANDATORY_MARK) } }
-    }
-
-    private fun MaterialTextView.removeMandatoryMark() {
-        this.text = this.text.removeSuffix(MANDATORY_MARK)
-    }
-
-    private fun markMandatoryField(textView: MaterialTextView, enabled: Boolean) {
-        val hasAsterisk = textView.text.endsWith(MANDATORY_MARK)
-        when {
-            !hasAsterisk && enabled -> textView.addMandatoryMark()
-            hasAsterisk && !enabled -> textView.removeMandatoryMark()
-        }
-    }
-
     private val pickImageFromGalleryForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -193,11 +179,11 @@ internal class ReportIssueFragment :
                 val unresolvedUri = intent?.data
                 if (unresolvedUri != null) {
                     lifecycleScope.launch {
-                        viewModel.processImage(unresolvedUri, activity)
+                        viewModel.processImage(unresolvedUri)
                     }
                 } else {
                     viewModel.data.screenshot = ""
-                    validateData()
+                    binding.validateData()
                 }
             }
         }
@@ -211,24 +197,6 @@ internal class ReportIssueFragment :
         pickImageFromGalleryForResult.launch(pickIntent)
     }
 
-    private fun validateData() {
-        binding?.let {
-            it.sendReport.isEnabled = viewModel.data.validate()
-            markMandatoryField(it.enterEmailTitle, !viewModel.data.validateEmail())
-            markMandatoryField(it.selectIssueType, !viewModel.data.validateType())
-            markMandatoryField(it.pickScreenshotDescription, !viewModel.data.validateScreenshot())
-        }
-    }
-
-    private fun showProgressBar() {
-        binding?.indeterminateBar?.visibility = View.VISIBLE
-    }
-
-    private fun hideProgressBar() {
-        binding?.indeterminateBar?.visibility = View.GONE
-        binding?.screenshotPreview?.processingImageBar?.visibility = View.GONE
-    }
-
     private fun cancelIssueReporter() {
         viewModel.logCancelIssueReporter()
         findNavController().popBackStack()
@@ -238,3 +206,31 @@ internal class ReportIssueFragment :
         const val MANDATORY_MARK = " *"
     }
 }
+
+private fun FragmentReportIssueBinding?.validateData() {
+    this?.run {
+        viewModel?.data?.let { data ->
+            sendReport.isEnabled = data.validate()
+            enterEmailTitle.markMandatoryField(!data.validateEmail())
+            selectIssueType.markMandatoryField(!data.validateType())
+            pickScreenshotDescription.markMandatoryField(!data.validateScreenshot())
+        }
+    }
+}
+
+private fun MaterialTextView.markMandatoryField(enabled: Boolean) {
+    val hasAsterisk = text.endsWith(ReportIssueFragment.MANDATORY_MARK)
+    when {
+        !hasAsterisk && enabled -> this.addMandatoryMark()
+        hasAsterisk && !enabled -> this.removeMandatoryMark()
+    }
+}
+
+private fun MaterialTextView.addMandatoryMark() {
+    text = buildSpannedString { append(text).color(Color.RED) { append(ReportIssueFragment.MANDATORY_MARK) } }
+}
+
+private fun MaterialTextView.removeMandatoryMark() {
+    text = text.removeSuffix(ReportIssueFragment.MANDATORY_MARK)
+}
+
