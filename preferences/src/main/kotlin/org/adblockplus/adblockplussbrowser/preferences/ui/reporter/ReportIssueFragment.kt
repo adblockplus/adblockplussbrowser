@@ -67,6 +67,7 @@ internal class ReportIssueFragment :
         requireActivity().onBackPressedDispatcher.addCallback(this) { cancelIssueReporter() }
     }
 
+    @Suppress("LongMethod")
     override fun onBindView(binding: FragmentReportIssueBinding) {
         binding.viewModel = viewModel
         val lifecycleOwner = this.viewLifecycleOwner
