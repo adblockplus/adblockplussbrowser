@@ -277,7 +277,7 @@ functional_tests:
     GRADLE_TASK: "functional"
   rules:
     - if: '$FORCE_FUNCTIONAL == "true"'
-    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+    - if: '$CI_PIPELINE_SOURCE == "schedule" && $SCHEDULE_TYPE == "functional_tests"'
 
 samsung_filter_tests:
   stage: automated_tests
@@ -353,7 +353,7 @@ samsung_filter_tests:
       done
   rules:
     - if: '$FORCE_SAMSUNG == "true"'
-    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+    - if: '$CI_PIPELINE_SOURCE == "schedule" && $SCHEDULE_TYPE == "samsung_test_filters"'
   artifacts:
     when: always
     expire_in: "1 day"
