@@ -52,7 +52,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
     AndroidViewModel(application) {
 
     val backgroundOperationOutcome = MutableLiveData<BackgroundOperationOutcome>()
-    val screenshot = MutableLiveData<Bitmap>()
+    val screenshot = MutableLiveData<Bitmap?>()
     var fileName: String = ""
     var data: ReportIssueData = ReportIssueData()
 
@@ -86,6 +86,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
             }.onSuccess { bitmap ->
                 val base64Bitmap = bitmap.toBase64EncodedPng()
                 if (base64Bitmap.length > IMAGE_MAX_LENGTH) {
+                    clearScreenshot()
                     displaySnackbarMessage.postValue(R.string.issueReporter_report_screenshot_too_large)
                 } else {
                     fileName = cr.resolveFilename(uri)
@@ -93,10 +94,16 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
                     screenshot.postValue(bitmap)
                 }
             }.onFailure {
+                clearScreenshot()
                 displaySnackbarMessage.postValue(R.string.issueReporter_report_screenshot_invalid)
             }
             backgroundOperationOutcome.postValue(BackgroundOperationOutcome.SCREENSHOT_PROCESSING_FINISHED)
         }
+    }
+
+    private fun clearScreenshot() {
+        screenshot.postValue(null)
+        data.screenshot = ""
     }
 
     companion object {
