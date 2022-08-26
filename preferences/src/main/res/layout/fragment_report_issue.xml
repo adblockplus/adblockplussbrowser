@@ -113,7 +113,7 @@
 
                 <include
                     android:id="@+id/screenshot_preview"
-                    layout="@layout/image_preview_layout"
+                    layout="@layout/image_placeholder_layout"
                     android:layout_width="0dp"
                     android:layout_height="80dp"
                     android:layout_marginTop="16dp"
