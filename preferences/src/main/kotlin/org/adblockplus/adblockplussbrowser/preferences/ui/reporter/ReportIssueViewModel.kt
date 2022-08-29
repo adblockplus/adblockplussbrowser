@@ -71,9 +71,10 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
                 if (reportIssueRepository.sendReport(data).isSuccess) {
                     if (data.email.isBlank()) {
                         analyticsProvider.logEvent(AnalyticsEvent.SEND_ANONYMOUS_REPORT)
+                    } else {
+                        analyticsProvider.logEvent(AnalyticsEvent.SEND_ISSUE_REPORT_SUCCESS)
                     }
                     displaySnackbarMessage.postValue(R.string.issueReporter_report_sent)
-                    analyticsProvider.logEvent(AnalyticsEvent.SEND_ISSUE_REPORT_SUCCESS)
                     BackgroundOperationOutcome.REPORT_SEND_SUCCESS
                 } else {
                     displaySnackbarMessage.postValue(R.string.issueReporter_report_send_error)
