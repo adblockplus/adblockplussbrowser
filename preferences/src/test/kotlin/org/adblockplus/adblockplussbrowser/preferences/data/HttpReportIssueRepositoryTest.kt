@@ -54,7 +54,7 @@ class HttpReportIssueRepositoryTest {
     @Before
     fun setUp() {
         mockWebServer.start()
-        httpReportIssueRepository.setDefaultURL("http://${mockWebServer.hostName}:${mockWebServer.port}")
+        httpReportIssueRepository.serverUrl = "http://${mockWebServer.hostName}:${mockWebServer.port}"
     }
 
     @After

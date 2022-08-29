@@ -43,6 +43,8 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
     private val okHttpClient = OkHttpClient()
     private val locale = Locale.getDefault()
     internal var serializer: XmlSerializer = Xml.newSerializer()
+    var serverUrl: String = DEFAULT_URL
+        internal set
 
     /**
      * Convert report issue data and send it to the backend.
@@ -54,7 +56,7 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
         makeXML(data).mapCatching { makeHttpPost(it).getOrThrow() }
 
     private suspend fun makeHttpPost(xml: String): Result<Unit> {
-        val url = Uri.parse(DEFAULT_URL).buildUpon()
+        val url = Uri.parse(serverUrl).buildUpon()
             .appendQueryParameter("version", "1")
             .appendQueryParameter("guid", UUID.randomUUID().toString()) // version 4, variant 1
             .appendQueryParameter("lang", locale.language).build().toString()
@@ -148,12 +150,8 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
         }
     }
 
-    internal fun setDefaultURL(serverUrl: String) {
-        DEFAULT_URL = serverUrl
-    }
-
     companion object {
-        private var DEFAULT_URL = """https://reports.adblockplus.org/submitReport"""
+        const val DEFAULT_URL = """https://reports.adblockplus.org/submitReport"""
         const val A_PATTERN = """<a.+</a>"""
     }
 }
