@@ -218,7 +218,7 @@ smoke_tests:
   variables:
     APK_NAME: "app-world-abp-debug.apk"
     CURL_APK_NAME: 'name=$APK_NAME'
-    CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldAbp/debug/app-world-abp-debug.apk"'
+    CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldAbp/debug/$APK_NAME"'
     PLATFORM_VERSIONS: "7 8 9 11"
     GRADLE_TASK: "multiAPI"
   rules:
@@ -234,7 +234,7 @@ abp_regression:
   variables:
     APK_NAME: "app-world-abp-debug.apk"
     CURL_APK_NAME: 'name=$APK_NAME'
-    CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldAbp/debug/app-world-abp-debug.apk"'
+    CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldAbp/debug/$APK_NAME"'
     PLATFORM_VERSIONS: "10"
     GRADLE_TASK: "regression"
   rules:
@@ -249,7 +249,7 @@ ab_regression:
   variables:
     APK_NAME: "app-world-adblock-debug.apk"
     CURL_APK_NAME: 'name=$APK_NAME'
-    CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldAdblock/debug/app-world-adblock-debug.apk"'
+    CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldAdblock/debug/$APK_NAME"'
     PLATFORM_VERSIONS: "10"
     GRADLE_TASK: "regression"
   rules:
@@ -264,7 +264,7 @@ crystal_regression:
   variables:
     APK_NAME: "app-world-crystal-debug.apk"
     CURL_APK_NAME: 'name=$APK_NAME'
-    CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldCrystal/debug/app-world-crystal-debug.apk"'
+    CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldCrystal/debug/$APK_NAME"'
     PLATFORM_VERSIONS: "10"
     GRADLE_TASK: "regression"
   rules:
@@ -278,7 +278,7 @@ functional_tests:
   variables:
     APK_NAME: "app-world-abp-debug.apk"
     CURL_APK_NAME: 'name=$APK_NAME'
-    CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldAbp/debug/app-world-abp-debug.apk"'
+    CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldAbp/debug/$APK_NAME"'
     PLATFORM_VERSIONS: "10"
     GRADLE_TASK: "functional"
   rules:
