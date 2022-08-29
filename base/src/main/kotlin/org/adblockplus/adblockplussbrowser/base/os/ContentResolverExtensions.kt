@@ -56,7 +56,7 @@ fun ContentResolver.resolveFilename(uri: Uri): String {
  * @param shortSide the maximum size of the short side
  * @return the decoded and scaled [Bitmap]
  */
-fun ContentResolver.loadImage(uri: Uri, longSide: Int, shortSide: Int): Bitmap =
+fun ContentResolver.loadImage(uri: Uri, longSide: Int, shortSide: Int): Bitmap? =
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
         loadViaImageDecoder(uri, longSide, shortSide)
     else
@@ -71,31 +71,33 @@ fun ContentResolver.loadImage(uri: Uri, longSide: Int, shortSide: Int): Bitmap =
  * @param shortSide the maximum size of the short side
  * @return the decoded and scaled [Bitmap]
  */
-fun ContentResolver.legacyLoadImage(uri: Uri, longSide: Int, shortSide: Int): Bitmap {
-    val boundsDecodingOptions = BitmapFactory.Options().also { it.inJustDecodeBounds = true }
-    openInputStream(uri)!!.use { stream ->
-        BitmapFactory.decodeStream(stream, null, boundsDecodingOptions)
+fun ContentResolver.legacyLoadImage(uri: Uri, longSide: Int, shortSide: Int): Bitmap? {
+    kotlin.runCatching {
+        val boundsDecodingOptions = BitmapFactory.Options().also { it.inJustDecodeBounds = true }
+        val origSize = Size(boundsDecodingOptions.outWidth, boundsDecodingOptions.outHeight)
+        // This is a complex logic. There is a full article by google explaining why it must be done this way.
+        // See https://developer.android.com/topic/performance/graphics/load-bitmap
+        val decodingOptions = BitmapFactory.Options().also {
+            @Suppress("MagicNumber") // As the explanation is on the same line
+            it.inSampleSize = generateSequence(2) { n -> n * 2}
+                .take(9) // Just take the first 9 elements, the max value will be 1024
+                .find { n -> origSize.longSide / n < longSide && origSize.shortSide / n < shortSide }!!
+                .let { n -> n / 2 } // divide by 2, otherwise the Bitmap will be too small
+        }
+        // This can be still bigger than the required maximum size, in that case we scale
+        val decodedBitmap = openInputStream(uri)?.use { stream ->
+            BitmapFactory.decodeStream(stream, null, decodingOptions)
+        }!!
+        val decodedSize = Size(decodedBitmap.width, decodedBitmap.height)
+        return if (decodedSize.isContainedIn(longSide, shortSide)) {
+            decodedBitmap
+        } else decodedSize.downScaleTo(longSide, shortSide).let { (w, h) ->
+            Bitmap.createScaledBitmap(decodedBitmap, w, h, true).also { decodedBitmap.recycle() }
+        }
+    }.onFailure {
+        throw it
     }
-    val origSize = Size(boundsDecodingOptions.outWidth, boundsDecodingOptions.outHeight)
-    // This is a complex logic. There is a full article by google explaining why it must be done this way.
-    // See https://developer.android.com/topic/performance/graphics/load-bitmap
-    val decodingOptions = BitmapFactory.Options().also {
-        @Suppress("MagicNumber") // As the explanation is on the same line
-        it.inSampleSize = generateSequence(2) { n -> n * 2}
-            .take(9) // Just take the first 9 elements, the max value will be 1024
-            .find { n -> origSize.longSide / n < longSide && origSize.shortSide / n < shortSide }!!
-            .let { n -> n / 2 } // divide by 2, otherwise the Bitmap will be too small
-    }
-    // This can be still bigger than the required maximum size, in that case we scale
-    val decodedBitmap = openInputStream(uri)?.use { stream ->
-        BitmapFactory.decodeStream(stream, null, decodingOptions)
-    }!!
-    val decodedSize = Size(decodedBitmap.width, decodedBitmap.height)
-    return if (decodedSize.isContainedIn(longSide, shortSide)) {
-        decodedBitmap
-    } else decodedSize.downScaleTo(longSide, shortSide).let { (w, h) ->
-        Bitmap.createScaledBitmap(decodedBitmap, w, h, true).also { decodedBitmap.recycle() }
-    }
+    return null
 }
 
 /**

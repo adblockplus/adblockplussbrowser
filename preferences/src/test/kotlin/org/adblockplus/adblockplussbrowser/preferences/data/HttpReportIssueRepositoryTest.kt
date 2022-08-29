@@ -48,7 +48,7 @@ import org.robolectric.RobolectricTestRunner
 class HttpReportIssueRepositoryTest {
 
     private val httpReportIssueRepository = HttpReportIssueRepository()
-    private val fakeReportIssueData = Fakes.fakeReportIssueData
+    private val fakeData = Fakes.fakeReportIssueData.copy()
     private var mockWebServer = MockWebServer()
 
     @Before
@@ -71,7 +71,7 @@ class HttpReportIssueRepositoryTest {
         runTest {
             assertEquals(
                 Result.success(Unit),
-                httpReportIssueRepository.sendReport(fakeReportIssueData)
+                httpReportIssueRepository.sendReport(fakeData)
             )
         }
     }
@@ -83,7 +83,7 @@ class HttpReportIssueRepositoryTest {
             .setBody("some invalid body")
         mockWebServer.enqueue(response)
         runTest {
-            val exception = httpReportIssueRepository.sendReport(fakeReportIssueData).exceptionOrNull()
+            val exception = httpReportIssueRepository.sendReport(fakeData).exceptionOrNull()
             assertNotNull(exception)
             assertEquals("Invalid response: some invalid body.", exception?.message)
         }
@@ -95,7 +95,7 @@ class HttpReportIssueRepositoryTest {
             val response = MockResponse()
                 .setResponseCode(HTTP_INTERNAL_ERROR)
             mockWebServer.enqueue(response)
-            val exception = httpReportIssueRepository.sendReport(fakeReportIssueData).exceptionOrNull()
+            val exception = httpReportIssueRepository.sendReport(fakeData).exceptionOrNull()
             assertNotNull(exception)
             assertEquals("Server replied with 500", exception?.message)
         }
@@ -107,7 +107,7 @@ class HttpReportIssueRepositoryTest {
         doThrow(RuntimeException("Exception")).`when`(xmlSerializerMock).setOutput(any())
         runTest {
             httpReportIssueRepository.serializer = xmlSerializerMock
-            val exception = httpReportIssueRepository.sendReport(fakeReportIssueData).exceptionOrNull()
+            val exception = httpReportIssueRepository.sendReport(fakeData).exceptionOrNull()
             assertNotNull(exception)
             assertEquals("Exception", exception?.message)
         }
@@ -115,19 +115,20 @@ class HttpReportIssueRepositoryTest {
 
     @Test
     fun `test makeXML success`() {
-        val resultXml = httpReportIssueRepository.makeXML(fakeReportIssueData).getOrThrow()
+        val resultXml = httpReportIssueRepository.makeXML(fakeData).getOrThrow()
         val document = DOMParser.parse(resultXml)
-        assertEquals(fakeReportIssueData.type, document.getAttribute("type"))
-        assertEquals(fakeReportIssueData.url, document.getAttribute("url", "window"))
-        assertEquals(fakeReportIssueData.comment, document.getTagContent("comment"))
-        assertEquals(fakeReportIssueData.email, document.getTagContent("email"))
+        assertEquals(fakeData.type, document.getAttribute("type"))
+        assertEquals(fakeData.url, document.getAttribute("url", "window"))
+        assertEquals(fakeData.comment, document.getTagContent("comment"))
+        assertEquals(fakeData.email, document.getTagContent("email"))
     }
 
     @Test
     fun `test makeXML without url`() {
-        fakeReportIssueData.url = ""
-        val resultXml = httpReportIssueRepository.makeXML(fakeReportIssueData)
-        assertFalse(resultXml.getOrThrow().contains("www.example.com"))
+        fakeData.url = ""
+        val resultXml = httpReportIssueRepository.makeXML(fakeData).getOrThrow()
+        val document = DOMParser.parse(resultXml)
+        assertFalse(document.getAttribute("url", "window") == Fakes.fakeReportIssueData.url)
     }
 
     @Test
@@ -135,6 +136,6 @@ class HttpReportIssueRepositoryTest {
         val xmlSerializerMock = mock(Xml.newSerializer()::class.java)
         `when`(xmlSerializerMock.startTag(anyString(), anyString())).thenThrow(RuntimeException("Exception"))
         httpReportIssueRepository.serializer = xmlSerializerMock
-        assertTrue(httpReportIssueRepository.makeXML(fakeReportIssueData).getOrThrow().isEmpty())
+        assertTrue(httpReportIssueRepository.makeXML(fakeData).getOrThrow().isEmpty())
     }
 }

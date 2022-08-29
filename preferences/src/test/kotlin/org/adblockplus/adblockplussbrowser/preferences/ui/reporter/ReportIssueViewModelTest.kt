@@ -17,10 +17,9 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui.reporter
 
-import android.app.Application
+import android.content.ContentResolver
 import android.net.Uri
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import java.lang.RuntimeException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.adblockplus.adblockplussbrowser.preferences.data.ReportIssueRepository
@@ -63,7 +62,7 @@ class ReportIssueViewModelTest {
             reportIssueViewModel.processImage(TEST_URI)
             assertTrue(reportIssueViewModel.data.screenshot.isNotEmpty())
             assertEquals(
-                BackgroundOperationOutcome.SCREENSHOT_READ_SUCCESS,
+                BackgroundOperationOutcome.SCREENSHOT_PROCESSING_FINISHED,
                 reportIssueViewModel.backgroundOperationOutcome.value
             )
         }
@@ -71,13 +70,18 @@ class ReportIssueViewModelTest {
 
     @Test
     fun `test image failed to load`() {
-        // This will make the fetching of contentResolver fail
-        val reportIssueViewModel = ReportIssueViewModel(Application())
+        // Prepare mocks to raise exception when loading image
+        val application = Mockito.mock(getApplication()::class.java)
+        val contentResolver = Mockito.mock(ContentResolver::class.java)
+        val fakeUri = Uri.parse("content://empty")
+        Mockito.`when`(application.contentResolver).thenReturn(contentResolver)
+        // Run
+        val reportIssueViewModel = ReportIssueViewModel(application)
         runTest {
-            reportIssueViewModel.processImage(Uri.parse(""))
+            reportIssueViewModel.processImage(fakeUri)
             assertTrue(reportIssueViewModel.data.screenshot.isEmpty())
             assertEquals(
-                BackgroundOperationOutcome.SCREENSHOT_READ_ERROR,
+                BackgroundOperationOutcome.SCREENSHOT_PROCESSING_FINISHED,
                 reportIssueViewModel.backgroundOperationOutcome.value
             )
         }
@@ -90,7 +94,7 @@ class ReportIssueViewModelTest {
             reportIssueViewModel.data = Fakes.fakeReportIssueData
             reportIssueViewModel.sendReport()
             assertEquals(
-                BackgroundOperationOutcome.SEND_SUCCESS,
+                BackgroundOperationOutcome.REPORT_SEND_SUCCESS,
                 reportIssueViewModel.backgroundOperationOutcome.value
             )
         }
@@ -103,7 +107,7 @@ class ReportIssueViewModelTest {
             reportIssueViewModel.data = Fakes.fakeReportIssueData
             reportIssueViewModel.sendReport()
             assertEquals(
-                BackgroundOperationOutcome.SEND_ERROR,
+                BackgroundOperationOutcome.REPORT_SEND_ERROR,
                 reportIssueViewModel.backgroundOperationOutcome.value
             )
         }
