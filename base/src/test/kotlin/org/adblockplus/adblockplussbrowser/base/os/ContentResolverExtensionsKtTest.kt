@@ -96,7 +96,7 @@ class ContentResolverExtensionsKtTest {
 
     @Test
     fun `the legacy loader should be able to load the default bitmap`() {
-        val bitmap = resolver.legacyLoadImage(TEST_URI, 1280, 720)!!
+        val bitmap = resolver.legacyLoadImage(TEST_URI, 1280, 720)
         assertEquals(100, bitmap.width)
         assertEquals(100, bitmap.height)
     }
@@ -131,12 +131,12 @@ class ContentResolverExtensionsKtTest {
     @Test
     fun `the ImageDecoder loader should not scale small images`() = smallImageTest(resolver::loadViaImageDecoder)
 
-    private fun smallImageTest(method: (Uri, Int, Int) -> Bitmap?) =
+    private fun smallImageTest(method: (Uri, Int, Int) -> Bitmap) =
         loadImageTest(method, IMG_640_X_480, 1280, 720)
 
     @Suppress("SameParameterValue")
     private fun loadImageTest(
-        method: (Uri, Int, Int) -> Bitmap?,
+        method: (Uri, Int, Int) -> Bitmap,
         resourceName: String,
         targetSide1: Int,
         targetSide2: Int
@@ -147,7 +147,7 @@ class ContentResolverExtensionsKtTest {
 
         val targetLongSide = max(targetSide1, targetSide2)
         val targetShortSide = min(targetSide1, targetSide2)
-        val bitmap = method(TEST_URI, targetLongSide, targetShortSide)!!
+        val bitmap = method(TEST_URI, targetLongSide, targetShortSide)
 
         val longSide = max(bitmap.width, bitmap.height)
         val shortSide = min(bitmap.width, bitmap.height)

@@ -84,16 +84,14 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
             runCatching {
                 cr.loadImage(uri, IMAGE_MAX_LONGER_SIDE, IMAGE_MAX_SHORTER_SIDE)
             }.onSuccess { bitmap ->
-                if(bitmap != null) {
-                    val base64Bitmap = bitmap.toBase64EncodedPng()
-                    if (base64Bitmap.length > IMAGE_MAX_LENGTH) {
-                        clearScreenshot()
-                        displaySnackbarMessage.postValue(R.string.issueReporter_report_screenshot_too_large)
-                    } else {
-                        fileName = cr.resolveFilename(uri)
-                        data.screenshot = base64Bitmap
-                        screenshot.postValue(bitmap)
-                    }
+                val base64Bitmap = bitmap.toBase64EncodedPng()
+                if (base64Bitmap.length > IMAGE_MAX_LENGTH) {
+                    clearScreenshot()
+                    displaySnackbarMessage.postValue(R.string.issueReporter_report_screenshot_too_large)
+                } else {
+                    fileName = cr.resolveFilename(uri)
+                    data.screenshot = base64Bitmap
+                    screenshot.postValue(bitmap)
                 }
             }.onFailure {
                 clearScreenshot()
