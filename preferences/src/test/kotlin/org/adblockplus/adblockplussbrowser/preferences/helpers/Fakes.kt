@@ -60,7 +60,7 @@ class FakeAnalyticsProvider : AnalyticsProvider {
         userPropertyValue = analyticsPropertyValue
     }
 
-    override fun enable() {}
+    override fun enable() { return }
 
-    override fun disable() {}
+    override fun disable() { return }
 }
