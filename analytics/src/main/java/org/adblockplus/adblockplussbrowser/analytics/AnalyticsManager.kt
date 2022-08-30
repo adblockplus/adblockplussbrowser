@@ -21,44 +21,23 @@ import java.lang.Exception
 
 class AnalyticsManager(private val providers: List<AnalyticsProvider>) : AnalyticsProvider {
 
-    override fun logEvent(analyticsEvent: AnalyticsEvent) {
-        for (provider in providers) {
-            provider.logEvent(analyticsEvent)
-        }
+    private inline fun providersApply(f: AnalyticsProvider.() -> Unit) = providers.forEach { it.apply(f) }
+
+    private inline fun providersApplyAndLog(log: AnalyticsEvent, f: AnalyticsProvider.() -> Unit) {
+        providersApply(f)
+        logEvent(log)
     }
 
-    override fun logException(exception: Exception) {
-        for (provider in providers) {
-            provider.logException(exception)
-        }
-    }
+    override fun logEvent(analyticsEvent: AnalyticsEvent) = providersApply { logEvent(analyticsEvent) }
 
-    override fun logError(error: String) {
-        for (provider in providers) {
-            provider.logError(error)
-        }
-    }
+    override fun logException(exception: Exception) = providersApply { logException(exception) }
 
-    override fun setUserProperty(analyticsProperty: AnalyticsUserProperty, analyticsPropertyValue: String) {
-        for (provider in providers) {
-            provider.setUserProperty(analyticsProperty, analyticsPropertyValue)
-        }
-    }
+    override fun logError(error: String) = providersApply { logError(error) }
 
-    override fun enable() {
-        for (provider in providers) {
-            provider.enable()
-        }
+    override fun setUserProperty(analyticsProperty: AnalyticsUserProperty, analyticsPropertyValue: String) =
+        providersApply { setUserProperty(analyticsProperty, analyticsPropertyValue) }
 
-        logEvent(AnalyticsEvent.SHARE_EVENTS_ON)
-    }
+    override fun enable() = providersApplyAndLog(AnalyticsEvent.SHARE_EVENTS_ON) { enable() }
 
-    override fun disable() {
-        logEvent(AnalyticsEvent.SHARE_EVENTS_OFF)
-
-        for (provider in providers) {
-            provider.disable()
-        }
-    }
-
+    override fun disable() = providersApplyAndLog(AnalyticsEvent.SHARE_EVENTS_OFF) { disable() }
 }
