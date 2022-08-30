@@ -159,7 +159,7 @@ sign_apks:
     GIT_STRATEGY: "none"
     # overridable automation repo; url uses CI_JOB_TOKEN for temporary authorization
     GIT_AUTOMATION_REPO: "https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/eyeo/distpartners/abp_si_automation"
-    GIT_AUTOMATION_BRANCH: "test-fix-regression-error"
+    GIT_AUTOMATION_BRANCH: "DPC-979_Fix_Crystal_Automated_regression"
     # demo app debug apk
   before_script:
     - test -z ${SAUCE_USERNAME} && echo "echo SAUCE_USERNAME not set. Unable to run tests." && exit 1
