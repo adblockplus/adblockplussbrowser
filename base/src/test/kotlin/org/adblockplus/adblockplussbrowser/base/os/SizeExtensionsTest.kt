@@ -26,7 +26,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [SizeShadow::class])
+@Config(shadows = [ShadowSize::class])
 class SizeExtensionsTest {
 
     @Test

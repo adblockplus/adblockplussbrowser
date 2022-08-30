@@ -92,6 +92,11 @@ object Deps {
             version("1.3.0")
         }
 
+        val ARCH_CORE = dependency {
+            groupName("arch.core:core-testing")
+            version("2.1.0")
+        }
+
         val CORE = dependency {
             groupName("core:core-ktx")
             version("1.8.0")
