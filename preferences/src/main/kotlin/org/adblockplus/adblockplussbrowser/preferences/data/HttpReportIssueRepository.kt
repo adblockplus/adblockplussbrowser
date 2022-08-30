@@ -42,6 +42,9 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
 
     private val okHttpClient = OkHttpClient()
     private val locale = Locale.getDefault()
+    internal var serializer: XmlSerializer = Xml.newSerializer()
+    var serverUrl: String = DEFAULT_URL
+        internal set
 
     /**
      * Convert report issue data and send it to the backend.
@@ -53,7 +56,7 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
         makeXML(data).mapCatching { makeHttpPost(it).getOrThrow() }
 
     private suspend fun makeHttpPost(xml: String): Result<Unit> {
-        val url = Uri.parse(DEFAULT_URL).buildUpon()
+        val url = Uri.parse(serverUrl).buildUpon()
             .appendQueryParameter("version", "1")
             .appendQueryParameter("guid", UUID.randomUUID().toString()) // version 4, variant 1
             .appendQueryParameter("lang", locale.language).build().toString()
@@ -84,9 +87,8 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
             }
     }
 
-    private fun makeXML(data: ReportIssueData): Result<String> {
+    internal fun makeXML(data: ReportIssueData): Result<String> {
         val writer = StringWriter()
-        val serializer: XmlSerializer = Xml.newSerializer()
         return runCatching {
             serializer.setOutput(writer)
             serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true)
@@ -108,7 +110,7 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
 
                 startTag(null, "window")
                 if (data.url.isNotEmpty()) {
-                    serializer.attribute(null, "url", data.url)
+                    attribute(null, "url", data.url)
                 }
                 endTag(null, "window")
 
@@ -153,4 +155,3 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
         const val A_PATTERN = """<a.+</a>"""
     }
 }
-
