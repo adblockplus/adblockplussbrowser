@@ -19,7 +19,6 @@ package org.adblockplus.adblockplussbrowser.base.os;
 
 import android.content.ContentResolver;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.ImageDecoder;
 import android.graphics.ImageDecoder.ImageInfo;
 import android.graphics.ImageDecoder.Source;
@@ -28,14 +27,11 @@ import android.util.Size;
 
 import androidx.annotation.NonNull;
 
-import org.mockito.ArgumentCaptor;
 import org.mockito.MockSettings;
 import org.robolectric.annotation.Implementation;
 import org.robolectric.annotation.Implements;
-import org.robolectric.annotation.RealObject;
 
 import java.io.IOException;
-import java.util.List;
 
 import static android.graphics.Bitmap.createScaledBitmap;
 import static android.graphics.BitmapFactory.decodeStream;
