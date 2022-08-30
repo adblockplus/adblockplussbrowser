@@ -22,6 +22,7 @@ import androidx.datastore.preferences.core.Preferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
+// TODO: Documentation
 internal class DebugPreferencesImpl(@Suppress("UnusedPrivateMember")
                                     private val dataStore: DataStore<Preferences>) : DebugPreferences {
 

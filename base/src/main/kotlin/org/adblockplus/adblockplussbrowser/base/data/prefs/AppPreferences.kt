@@ -17,6 +17,7 @@
 
 package org.adblockplus.adblockplussbrowser.base.data.prefs
 
+// TODO: Documentation
 interface AppPreferences : OnboardingPreferences, ActivationPreferences, DebugPreferences {
 
     val referrerAlreadyChecked: Boolean

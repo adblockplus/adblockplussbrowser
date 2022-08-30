@@ -26,6 +26,7 @@ import com.google.firebase.ktx.Firebase
 import timber.log.Timber
 import java.lang.Exception
 
+// TODO: Document this, please
 class FirebaseAnalyticsProvider(appContext: Context) : AnalyticsProvider {
 
     private var firebaseAnalytics = FirebaseAnalytics.getInstance(appContext)

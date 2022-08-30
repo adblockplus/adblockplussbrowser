@@ -15,6 +15,7 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+// TODO: unused import
 import com.android.build.api.dsl.AndroidSourceSet
 import com.android.build.gradle.AppExtension
 import org.gradle.api.JavaVersion

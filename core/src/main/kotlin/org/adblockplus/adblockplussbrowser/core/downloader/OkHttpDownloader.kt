@@ -47,6 +47,7 @@ import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
 
+// TODO: Documentation
 @ExperimentalTime
 internal class OkHttpDownloader(
     private val context: Context,

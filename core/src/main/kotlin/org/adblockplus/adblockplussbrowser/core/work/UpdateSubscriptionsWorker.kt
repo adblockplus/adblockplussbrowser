@@ -63,6 +63,7 @@ import org.adblockplus.adblockplussbrowser.base.data.prefs.DebugPreferences
 import org.adblockplus.adblockplussbrowser.core.BuildConfig
 
 
+// TODO: Documentation
 @HiltWorker
 internal class UpdateSubscriptionsWorker @AssistedInject constructor(
     @Assisted private val appContext: Context,
@@ -206,6 +207,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
         subscriptionsManager.updateStatus(progress)
     }
 
+    // TODO: Remove the redundant suppression
     @Suppress("BlockingMethodInNonBlockingContext")
     private suspend fun downloadSubscriptions(
         settings: Settings,

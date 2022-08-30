@@ -19,6 +19,7 @@ package org.adblockplus.adblockplussbrowser.analytics
 
 import java.lang.Exception
 
+// TODO: Document this stuff, why do we need this interface? What is it supposed to represent?
 interface AnalyticsProvider {
     fun logEvent(analyticsEvent: AnalyticsEvent)
     fun logException(exception: Exception)

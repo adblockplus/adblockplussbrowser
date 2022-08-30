@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 
+// TODO: Documentation
 class DataStoreAppPreferences(private val dataStore: DataStore<Preferences>,
                               private val debugPrefs: DebugPreferences = DebugPreferencesImpl(dataStore)) :
     AppPreferences, DebugPreferences by debugPrefs {

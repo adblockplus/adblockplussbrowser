@@ -17,6 +17,7 @@
 
 package org.adblockplus.adblockplussbrowser.analytics
 
+// TODO: Lack of documentation, at least we have inner ones for the values
 enum class AnalyticsUserProperty(val propertyName: String) {
     /**
      * User property used for an audience based on AA status.

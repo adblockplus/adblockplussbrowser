@@ -20,7 +20,8 @@ package org.adblockplus.adblockplussbrowser.base.data.prefs
 import kotlinx.coroutines.flow.Flow
 
 /**
- *  This interface contains the configuration preferences in debug mode
+ *  This interface contains the configuration preferences for debug mode
+ *  TODO: explain how this works; why do we have an interface and two different implementations
  */
 interface DebugPreferences {
 

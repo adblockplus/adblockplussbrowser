@@ -72,6 +72,7 @@ import java.util.concurrent.TimeUnit
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
+// TODO: Documentation
 @ExperimentalTime
 internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
 
@@ -308,6 +309,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
 
         private fun convertToTimestamp(stringToFormat: String): Long {
             return try {
+                // TODO: Solve this warning, maybe a runCatching?
                 val date: Date = OkHttpUserCounter.lastUserCountingResponseFormat.parse(stringToFormat)
                 date.time
             } catch (e: ParseException) {
