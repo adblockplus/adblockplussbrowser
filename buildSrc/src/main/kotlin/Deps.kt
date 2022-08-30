@@ -43,6 +43,8 @@ object Deps {
 
     val SPEED_DIAL = "com.leinardi.android:speed-dial" version "3.3.0"
 
+    val TAP_TARGET_VIEW = "com.getkeepsafe.taptargetview:taptargetview" version "1.13.3"
+
     object Gms: DependencyGroup("com.google.android") {
         val OSS_LICENSES_PLUGIN = dependency {
             groupName("gms:oss-licenses-plugin")
