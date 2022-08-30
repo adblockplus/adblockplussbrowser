@@ -71,5 +71,11 @@ dependencies {
 
     testImplementation(Deps.ROBOLECTRIC)
     testImplementation(Deps.JUNIT)
+    testImplementation(Deps.Mockito.Core)
+    testImplementation(Deps.Mockito.Kotlin)
+    testImplementation(Deps.KotlinXTest.COROUTINES_TEST )
+    testAnnotationProcessor(Deps.Hilt.ANDROID_COMPILER)
+    testImplementation(Deps.OkHttp.MOCK_WEB_SERVER)
+    testImplementation(Deps.AndroidX.ARCH_CORE)
 }
 

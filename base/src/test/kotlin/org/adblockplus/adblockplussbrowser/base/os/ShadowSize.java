@@ -30,7 +30,7 @@ import org.robolectric.shadow.api.Shadow;
 // Suppressing the unused warning because all these methods are used via reflection by Robolectric only
 @SuppressWarnings("unused")
 @Implements(Size.class)
-public class SizeShadow extends Shadow {
+public class ShadowSize extends Shadow {
 
   private int height;
   private int width;
