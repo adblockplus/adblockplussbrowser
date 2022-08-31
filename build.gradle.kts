@@ -31,19 +31,57 @@ buildscript {
         classpath(Deps.Gms.OSS_LICENSES_PLUGIN)
         classpath(Deps.Firebase.GOOGLE_SERVICES)
         classpath(Deps.Firebase.CRASHLYTICS_GRADLE)
-        classpath(Deps.JACOCO_CORE)
     }
 }
 
 plugins {
     id(Deps.GRADLE_VERSIONS_PLUGIN_ID).version(Deps.GRADLE_VERSIONS_PLUGIN_VERSION)
     id(Deps.DETEKT_PLUGIN_ID).version(Deps.DETEKT_PLUGIN_VERSION)
+    id(Deps.KOVER_PLUGIN_ID).version(Deps.KOVER_PLUGIN_VERSION)
 }
 
 allprojects {
     repositories {
         google()
         mavenCentral()
+    }
+    apply(plugin = Deps.KOVER_PLUGIN_ID)
+}
+
+kover {
+    koverMerged {
+        enable() // create Kover merged reports
+
+        filters { // common filters for all default Kover merged tasks
+           classes {
+                excludes += listOf("**/R.class", "**/R$*.class", "**/BuildConfig.*", "**/Manifest*.*",
+                    "**/*Test*.*", "android/**/*.*", "**/_*.class")
+            }
+            projects {
+                /* Specifies the projects excluded from the merged tasks. If tests are added to any
+                of the projects listed below, it should be removed from this list */
+                excludes += listOf(":app", ":analytics", ":i18n", ":onboarding", ":settings")
+            }
+        }
+
+        htmlReport {
+            // change report directory
+            reportDir.set(layout.buildDirectory.dir("reports/coverage/html"))
+        }
+
+        xmlReport {
+            // change report file name
+            reportFile.set(layout.buildDirectory.file("reports/coverage/xml/coverage_report.xml"))
+        }
+
+        verify {
+            rule {
+                name = "Minimal line coverage rate in percents"
+                bound {
+                    minValue = 10
+                }
+            }
+        }
     }
 }
 

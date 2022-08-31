@@ -29,9 +29,8 @@ object Deps {
 
     val JUNIT = "junit:junit" version "4.13.2"
 
-    val JACOCO_CORE = "org.jacoco:org.jacoco.core" version "0.8.7"
-
-    const val JACOCO = "jacoco"
+    val KOVER_PLUGIN_ID = "org.jetbrains.kotlinx.kover"
+    val KOVER_PLUGIN_VERSION = "0.6.0"
 
     val DOTS_INDICATOR = "com.tbuonomo:dotsindicator" version "4.2"
 
