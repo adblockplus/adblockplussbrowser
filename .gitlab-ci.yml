@@ -71,6 +71,7 @@ checks:detekt:
 checks:unit-tests:
   extends: .template:environment
   stage: checks
+  coverage: '/Total.*?([0-9]{1,3})%/'
   script:
     - ./gradlew test core:checkCoverage
   artifacts:
