@@ -90,6 +90,8 @@ checks:coverage:
     - /app/cover2cover.py core/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml core/src/main/kotlin > core/build/reports/cobertura.xml
   artifacts:
     when: always
+    paths:
+      - core/build/reports/cobertura.xml
     reports:
       coverage_report:
         coverage_format: cobertura
