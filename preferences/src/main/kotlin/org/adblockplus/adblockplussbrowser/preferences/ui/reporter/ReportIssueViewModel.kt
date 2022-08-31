@@ -29,6 +29,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.os.loadImage
 import org.adblockplus.adblockplussbrowser.base.os.resolveFilename
@@ -68,10 +69,16 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         viewModelScope.launch {
             backgroundOperationOutcome.postValue(
                 if (reportIssueRepository.sendReport(data).isSuccess) {
+                    if (data.email.isBlank()) {
+                        analyticsProvider.logEvent(AnalyticsEvent.SEND_ANONYMOUS_REPORT)
+                    } else {
+                        analyticsProvider.logEvent(AnalyticsEvent.SEND_ISSUE_REPORT_SUCCESS)
+                    }
                     displaySnackbarMessage.postValue(R.string.issueReporter_report_sent)
                     BackgroundOperationOutcome.REPORT_SEND_SUCCESS
                 } else {
                     displaySnackbarMessage.postValue(R.string.issueReporter_report_send_error)
+                    analyticsProvider.logEvent(AnalyticsEvent.SEND_ISSUE_REPORT_ERROR)
                     BackgroundOperationOutcome.REPORT_SEND_ERROR
                 }
             )
@@ -100,6 +107,9 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
             backgroundOperationOutcome.postValue(BackgroundOperationOutcome.SCREENSHOT_PROCESSING_FINISHED)
         }
     }
+
+    internal fun logCancelIssueReporter() = analyticsProvider.logEvent(AnalyticsEvent.CANCEL_ISSUE_REPORTER)
+    internal fun logOpenIssueReporter() = analyticsProvider.logEvent(AnalyticsEvent.OPEN_ISSUE_REPORTER)
 
     private fun clearScreenshot() {
         screenshot.postValue(null)

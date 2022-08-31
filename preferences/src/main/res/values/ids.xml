@@ -22,4 +22,5 @@
     <item name="main_preferences_allowlist" type="id" />
     <item name="other_subscriptions_add_from_url_button" type="id" />
     <item name="other_subscriptions_add_from_local_button" type="id" />
+    <item name="toolbar" type="id"/>
 </resources>
