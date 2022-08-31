@@ -230,7 +230,7 @@ object Deps {
     }
 }
 
-abstract class DependencyGroup(
+open class DependencyGroup(
     private val groupPrefix: String = "",
     private val defaultVersion: String = ""
 ) {

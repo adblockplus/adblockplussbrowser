@@ -92,9 +92,12 @@ tasks.register("downloadExceptionRules", de.undercouch.gradle.tasks.download.Dow
     val baseDir = if (flavor == "abp") "src/main/assets" else "src/$flavor/assets"
 
     val source = when (flavor) {
-        "abp" -> "https://0.samsung-internet.filter-list-downloads.eyeo.com/aa-variants/samsung_internet_browser-adblock_plus.txt"
-        "adblock" -> "https://0.samsung-internet.filter-list-downloads.getadblock.com/aa-variants/samsung_internet_browser-adblock.txt"
-        "crystal" -> "https://0.samsung-internet.filter-list-downloads.eyeo.com/aa-variants/samsung_internet_browser-crystal.txt"
+        "abp" ->     "https://0.samsung-internet.filter-list-downloads.eyeo.com/" +
+                "aa-variants/samsung_internet_browser-adblock_plus.txt"
+        "adblock" -> "https://0.samsung-internet.filter-list-downloads.getadblock.com/" +
+                "aa-variants/samsung_internet_browser-adblock.txt"
+        "crystal" -> "https://0.samsung-internet.filter-list-downloads.eyeo.com/" +
+                "aa-variants/samsung_internet_browser-crystal.txt"
         else -> throw GradleException("Given flavor <$flavor> not supported")
     }
     src(source)
