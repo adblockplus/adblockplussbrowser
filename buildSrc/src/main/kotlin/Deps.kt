@@ -29,8 +29,8 @@ object Deps {
 
     val JUNIT = "junit:junit" version "4.13.2"
 
-    val KOVER_PLUGIN_ID = "org.jetbrains.kotlinx.kover"
-    val KOVER_PLUGIN_VERSION = "0.6.0"
+    const val KOVER_PLUGIN_ID = "org.jetbrains.kotlinx.kover"
+    const val KOVER_PLUGIN_VERSION = "0.6.0"
 
     val DOTS_INDICATOR = "com.tbuonomo:dotsindicator" version "4.2"
 

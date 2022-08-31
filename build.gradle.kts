@@ -78,6 +78,7 @@ kover {
             rule {
                 name = "Minimal line coverage rate in percents"
                 bound {
+                    @Suppress("MagicNumber")
                     minValue = 10
                 }
             }
