@@ -180,11 +180,11 @@
     <string name="issueReporter_report_screenshot_invalid" tools:ignore="MissingTranslation">The screenshot file is invalid. Please pick another one.</string>
 
     <!-- Start guide -->
-    <string name="guide_header" tools:ignore="MissingTranslation">Guide</string>
+    <string name="tour_header" tools:ignore="MissingTranslation">Guide</string>
     <string name="take_tour_title" tools:ignore="MissingTranslation">Take a tour</string>
     <string name="take_tour_description" tools:ignore="MissingTranslation">Learn how to use adblock for a more enjoyable browsing experience</string>
     <string name="tour_dialog_text" tools:ignore="MissingTranslation">For optimized browsing experience,\nThink of adjusting these parameters</string>
-    <string name="tour_dialog_skip_button_text" tools:ignore="MissingTranslation">Skip it</string>
-    <string name="tour_dialog_next_button_text" tools:ignore="MissingTranslation">Next</string>
+    <string name="tour_add_languages" tools:ignore="MissingTranslation">Add the languages you usually browse in</string>
+    <string name="tour_disable_social_media_tracking" tools:ignore="MissingTranslation">Disable social media tracking while browsing</string>
 
 </resources>

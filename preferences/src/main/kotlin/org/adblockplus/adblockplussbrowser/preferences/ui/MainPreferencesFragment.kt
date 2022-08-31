@@ -25,6 +25,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
+import com.getkeepsafe.taptargetview.TapTarget
+import com.getkeepsafe.taptargetview.TapTargetSequence
 import com.google.android.material.checkbox.MaterialCheckBox
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
@@ -33,6 +35,7 @@ import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentMainPreferencesBinding
 import org.adblockplus.adblockplussbrowser.preferences.ui.updates.UpdateSubscriptionsViewModel
+import timber.log.Timber
 
 @AndroidEntryPoint
 internal class MainPreferencesFragment :
@@ -63,6 +66,7 @@ internal class MainPreferencesFragment :
         bindAdditionalLanguage(binding, supportActionBar, lifecycleOwner)
         bindOnboardingLanguages(binding, lifecycleOwner)
         bindAcceptableAds(binding, supportActionBar, lifecycleOwner)
+        bindGuide(binding, lifecycleOwner)
         bindAbout(binding, supportActionBar, lifecycleOwner)
 
         if (BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_ABP) {
@@ -229,6 +233,43 @@ internal class MainPreferencesFragment :
                 val direction = MainPreferencesFragmentDirections
                     .actionMainPreferencesFragmentToPrimarySubscriptionsFragment()
                 findNavController().navigate(direction)
+            },
+            lifecycleOwner
+        )
+    }
+
+    private fun bindGuide(
+        binding: FragmentMainPreferencesBinding,
+        lifecycleOwner: LifecycleOwner
+    ) {
+        binding.mainPreferencesGuideInclude.mainPreferencesGuideInclude.setDebounceOnClickListener(
+            {
+                Timber.i("start guide")
+                TapTargetSequence(requireActivity()).targets(
+                    TapTarget.forView(
+                        binding.mainPreferencesLanguagesOnboardingInclude.mainPreferencesLanguagesOnboardingOptionAdd,
+                        getString(R.string.tour_add_languages)
+                    ),
+                    //main_preferences_ad_blocking_include
+                    TapTarget.forView(
+                        binding.mainPreferencesAdBlockingInclude.mainPreferencesOtherSubscriptions,
+                        getString(R.string.tour_disable_social_media_tracking)
+                    )
+                )
+                    .listener(object : TapTargetSequence.Listener {
+                        override fun onSequenceStep(lastTarget: TapTarget?, targetClicked: Boolean) {
+                            Timber.i("next step")
+                        }
+
+                        override fun onSequenceFinish() {
+                            Timber.i("tour completed")
+                        }
+
+                        override fun onSequenceCanceled(lastTarget: TapTarget) {
+                            Timber.i("tour canceled")
+                        }
+                    })
+                    .start()
             },
             lifecycleOwner
         )
