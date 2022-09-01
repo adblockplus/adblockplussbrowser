@@ -20,8 +20,10 @@ package org.adblockplus.adblockplussbrowser.preferences.ui.reporter
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
+import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
+import androidx.activity.addCallback
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -33,6 +35,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.textview.MaterialTextView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -56,6 +59,19 @@ internal class ReportIssueFragment :
     private val viewModel: ReportIssueViewModel by viewModels()
     private lateinit var screenshotPreviewViewGroup: ViewGroup
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // log issue reporter was opened
+        viewModel.logOpenIssueReporter()
+        // log issue reporter was canceled
+        // Back press on toolbar
+        val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.toolbar)
+        toolbar.setNavigationOnClickListener { cancelIssueReporter() }
+        // Back press from phone
+        requireActivity().onBackPressedDispatcher.addCallback(this) { cancelIssueReporter() }
+    }
+
+    @Suppress("LongMethod")
     override fun onBindView(binding: FragmentReportIssueBinding) {
         binding.viewModel = viewModel
         val lifecycleOwner = this.viewLifecycleOwner
@@ -107,6 +123,7 @@ internal class ReportIssueFragment :
         }
 
         binding.cancel.setDebounceOnClickListener({
+            viewModel.logCancelIssueReporter()
             val direction = ReportIssueFragmentDirections.actionReportIssueFragmentToMainPreferencesFragment()
             findNavController().navigate(direction)
         }, lifecycleOwner)
@@ -182,6 +199,11 @@ internal class ReportIssueFragment :
             "image/*"
         )
         pickImageFromGalleryForResult.launch(pickIntent)
+    }
+
+    private fun cancelIssueReporter() {
+        viewModel.logCancelIssueReporter()
+        findNavController().popBackStack()
     }
 
     companion object {

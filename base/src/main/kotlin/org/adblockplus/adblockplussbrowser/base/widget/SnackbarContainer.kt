@@ -26,7 +26,7 @@ import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.content.res.AppCompatResources
-import com.google.android.material.snackbar.BaseTransientBottomBar
+import androidx.core.view.postDelayed
 import com.google.android.material.snackbar.Snackbar
 import org.adblockplus.adblockplussbrowser.base.databinding.SnackbarLayoutBinding
 import org.adblockplus.adblockplussbrowser.base.view.layoutInflater
@@ -47,12 +47,8 @@ class SnackbarContainer @JvmOverloads constructor(
         }
     }
 
-    private val forcedDismissRunnable: Runnable = Runnable {
-        snackbar?.dismiss()
-    }
-
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        // This is just a container, we don't want do display anything
+        // This is just a container, we don't want to display anything
         setMeasuredDimension(0, 0)
     }
 
@@ -71,7 +67,7 @@ class SnackbarContainer @JvmOverloads constructor(
     override fun onDetachedFromWindow() {
         snackbar?.let {
             if (it.isShown) {
-                it.view.postDelayed(forcedDismissRunnable, config.dismissDelay)
+                it.view.postDelayed(config.dismissDelay) { it.dismiss() }
             }
         }
         super.onDetachedFromWindow()
@@ -149,14 +145,6 @@ class SnackbarContainer @JvmOverloads constructor(
         )
     }
 
-    @BaseTransientBottomBar.Duration
-    var duration: Int
-        get() = config.duration
-        set(value) {
-            snackbar?.duration = value
-            adjustDuration()
-        }
-
     private fun adjustDuration() {
         snackbar?.duration = config.duration
     }
@@ -180,12 +168,7 @@ class SnackbarContainer @JvmOverloads constructor(
         config.actionVisibility = VISIBLE
         adjustActionVisibility()
     }
-
-    fun hideAction() {
-        config.actionVisibility = GONE
-        adjustActionVisibility()
-    }
-
+    
     private fun adjustActionVisibility() {
         binding?.snackbarAction?.visibility = config.actionVisibility
     }
@@ -200,7 +183,6 @@ class SnackbarContainer @JvmOverloads constructor(
     }
 
     companion object {
-        const val HIDE_DELAY_DEFAULT = 2000L
         const val HIDE_DELAY_LONG = 5000L
     }
 }
