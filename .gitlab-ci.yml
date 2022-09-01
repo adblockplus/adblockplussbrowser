@@ -84,7 +84,7 @@ checks:unit-tests:
 
 checks:coverage:
   stage: checks
-  image: "registry.gitlab.com/eyeo/docker/jacoco-to-cobertura:latest"
+  image: "registry.gitlab.com/eyeo/docker/jacoco-to-cobertura:202207.1"
   script:
     # Calculate the coverage for all projects
     - | # we just want coverage for testWorldAbpDebugUnitTest so we skip all the other tasks
