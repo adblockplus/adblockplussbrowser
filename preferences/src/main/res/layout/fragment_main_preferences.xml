@@ -27,6 +27,7 @@
 
     <ScrollView
         style="@style/PreferenceScreen"
+        android:id="@+id/main_preferences_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
