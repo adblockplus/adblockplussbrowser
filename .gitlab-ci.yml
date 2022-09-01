@@ -72,10 +72,7 @@ checks:unit-tests:
   extends: .template:environment
   stage: checks
   script:
-    - ./gradlew test
-    - | # we just want coverage for testWorldAbpDebugUnitTest so we skip all the other tasks
-      ./gradlew koverMergedReport -x testWorldAbpReleaseUnitTest -x testWorldAdblockDebugUnitTest \
-      -x testWorldAdblockReleaseUnitTest -x testWorldCrystalDebugUnitTest -x testWorldCrystalReleaseUnitTest
+    - ./gradlew testWorldAbpDebugUnitTest
   artifacts:
     when: always
     paths:
@@ -87,16 +84,20 @@ checks:unit-tests:
 
 checks:coverage:
   stage: checks
-  needs: ["checks:unit-tests"]
   image: spacifici/jacoco2cobertura:latest
   script:
-    - /app/cover2cover.py core/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml core/src/main/kotlin > core/build/reports/cobertura.xml
+    # Calculate the coverage for all projects
+    - | # we just want coverage for testWorldAbpDebugUnitTest so we skip all the other tasks
+      ./gradlew koverMergedReport -x testWorldAbpReleaseUnitTest -x testWorldAdblockDebugUnitTest \
+      -x testWorldAdblockReleaseUnitTest -x testWorldCrystalDebugUnitTest -x testWorldCrystalReleaseUnitTest
+    # Convert coverage xml report to cobertura format
+    - /app/cover2cover.py ./build/reports/coverage/xml/coverage_report.xml core/src/main/kotlin base/src/main/kotlin preferences/src/main/kotlin > ./build/reports/coverage/xml/cobertura.xml
   artifacts:
     when: always
     reports:
       coverage_report:
         coverage_format: cobertura
-        path: core/build/reports/cobertura.xml
+        path: ./build/reports/coverage/xml/cobertura.xml
   rules:
     - when: on_success
 
