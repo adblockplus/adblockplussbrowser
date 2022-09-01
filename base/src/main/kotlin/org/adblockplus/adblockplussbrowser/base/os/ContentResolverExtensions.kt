@@ -49,12 +49,13 @@ fun ContentResolver.resolveFilename(uri: Uri): String {
 
 /**
  * Load an image from the given [Uri] and scale it to a given size given as long side and short side values keeping
- * the aspect ratio.
+ * the aspect ratio. It is suggested to run this in a `runCatching { ... }` block.
  *
  * @param uri the Uri from which we want to load the image
  * @param longSide the maximum size of the long side
  * @param shortSide the maximum size of the short side
  * @return the decoded and scaled [Bitmap]
+ * @throws NullPointerException
  */
 fun ContentResolver.loadImage(uri: Uri, longSide: Int, shortSide: Int): Bitmap =
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
@@ -64,15 +65,18 @@ fun ContentResolver.loadImage(uri: Uri, longSide: Int, shortSide: Int): Bitmap =
 
 /**
  * Load an image from the given [Uri] and scale it to a given size given as long side and short side values keeping
- * the aspect ratio. This method uses a [BitmapFactory] to decode an InputStream.
+ * the aspect ratio. This method uses a [BitmapFactory] to decode an InputStream. It is suggested to run this method
+ * inside a `runCatching { ... }` block.
  *
  * @param uri the Uri from which we want to load the image
  * @param longSide the maximum size of the long side
  * @param shortSide the maximum size of the short side
  * @return the decoded and scaled [Bitmap]
+ * @throws NullPointerException
  */
 fun ContentResolver.legacyLoadImage(uri: Uri, longSide: Int, shortSide: Int): Bitmap {
     val boundsDecodingOptions = BitmapFactory.Options().also { it.inJustDecodeBounds = true }
+    // Just decoding the bitmap size, we may throw a NullPointerException here if openInputStream fails for some reason
     openInputStream(uri)!!.use { stream ->
         BitmapFactory.decodeStream(stream, null, boundsDecodingOptions)
     }

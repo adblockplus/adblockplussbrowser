@@ -17,7 +17,6 @@
 
 package org.adblockplus.adblockplussbrowser.app.ui
 
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -109,11 +108,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun installSamsungInternet(dialog: MaterialDialog) {
         listOf(PLAY_STORE_PREFIX, SAMSUNG_STORE_PREFIX, PLAY_STORE_WEB_PREFIX).forEach {
-            try {
+            runCatching {
                 startStore(it)
                 dialog.dismiss()
                 return
-            } catch (exception: ActivityNotFoundException) {}
+            }
         }
         // A device without Play Store, Galaxy store, and a browser
         Timber.e("This device is not supported")
