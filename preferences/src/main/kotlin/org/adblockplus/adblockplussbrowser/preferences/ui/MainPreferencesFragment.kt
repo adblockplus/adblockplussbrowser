@@ -26,7 +26,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import com.getkeepsafe.taptargetview.TapTarget
-import com.getkeepsafe.taptargetview.TapTargetSequence
 import com.google.android.material.checkbox.MaterialCheckBox
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
@@ -250,68 +249,10 @@ internal class MainPreferencesFragment :
         binding.mainPreferencesGuideInclude.mainPreferencesGuideInclude.setDebounceOnClickListener(
             {
                 Timber.i("start guide")
-                val adBlockingOptions = binding.mainPreferencesAdBlockingInclude.mainPreferencesAdBlockingCategory
-                binding.mainPreferencesScroll.scrollTo(0, adBlockingOptions.y.toInt())
-                val addLanguagesView = binding.mainPreferencesAdBlockingInclude.preferencesPrimarySubscriptionsTitleText
-                val otherSubscriptionsView =
-                    binding.mainPreferencesAdBlockingInclude.preferencesOtherSubscriptionsTitleText
-
-                val allowlistView = binding.mainPreferencesAdBlockingInclude.preferencesAllowlistTitleText
-
-                TapTargetSequence(requireActivity()).targets(
-                    createTapTarget(
-                        adBlockingOptions,
-                        getString(R.string.tour_dialog_text)
-                    ).id(OPTIMIZE_AD_BLOCKING_TARGET_ID),
-                    createTapTarget(
-                        addLanguagesView,
-                        getString(R.string.tour_add_languages)
-                    ).id(ADD_LANGUAGES_TARGET_ID),
-                    createTapTarget(
-                        otherSubscriptionsView,
-                        getString(R.string.tour_disable_social_media_tracking)
-                    ).id(OTHER_SUBSCRIPTIONS_TARGET_ID),
-                    createTapTarget(
-                        allowlistView,
-                        getString(R.string.tour_allowlist)
-                    ).id(ALLOWLIST_TARGET_ID),
-                    createTapTarget(allowlistView,getString(R.string.tour_last_step))
-                ).listener(object : TapTargetSequence.Listener {
-                    override fun onSequenceStep(lastTarget: TapTarget?, targetClicked: Boolean) {
-                        when (lastTarget?.id()) {
-                            OPTIMIZE_AD_BLOCKING_TARGET_ID -> binding.mainPreferencesScroll.scrollTo(
-                                0,
-                                addLanguagesView.y.toInt()
-                            )
-                            ADD_LANGUAGES_TARGET_ID -> binding.mainPreferencesScroll.scrollTo(
-                                0,
-                                otherSubscriptionsView.y.toInt()
-                            )
-                            OTHER_SUBSCRIPTIONS_TARGET_ID -> binding.mainPreferencesScroll.scrollTo(
-                                0,
-                                allowlistView.y.toInt()
-                            )
-                        }
-                    }
-
-                    override fun onSequenceFinish() {
-                        Timber.i("tour completed")
-                    }
-
-                    override fun onSequenceCanceled(lastTarget: TapTarget) {
-                        Timber.i("tour canceled")
-                    }
-                })
-                    .start()
             },
             lifecycleOwner
         )
     }
-
-    private fun createTapTarget(addLanguagesView: View, message: String) = TapTarget.forView(
-        addLanguagesView,
-        message
-    ).targetRadius(TARGET_RADIUS).outerCircleAlpha(OUTER_CIRCLE_ALPHA)
 
     override fun onResume() {
         super.onResume()
@@ -319,8 +260,6 @@ internal class MainPreferencesFragment :
     }
 
     private companion object {
-        private const val TARGET_RADIUS = 70
-        private const val OUTER_CIRCLE_ALPHA = 0.85f
         private const val OPTIMIZE_AD_BLOCKING_TARGET_ID = 1
         private const val ADD_LANGUAGES_TARGET_ID = 2
         private const val OTHER_SUBSCRIPTIONS_TARGET_ID = 3
