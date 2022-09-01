@@ -72,13 +72,16 @@ checks:unit-tests:
   extends: .template:environment
   stage: checks
   script:
-    - ./gradlew test core:checkCoverage
+    - ./gradlew test
+    - | # we just want coverage for testWorldAbpDebugUnitTest so we skip all the other tasks
+      ./gradlew koverMergedReport -x testWorldAbpReleaseUnitTest -x testWorldAdblockDebugUnitTest \
+      -x testWorldAdblockReleaseUnitTest -x testWorldCrystalDebugUnitTest -x testWorldCrystalReleaseUnitTest
   artifacts:
     when: always
     paths:
-      - core/build/reports/
+      - ./*/build/reports/
     reports:
-      junit: core/build/test-results/**/TEST*.xml
+      junit: ./*/build/test-results/**/TEST*.xml
   rules:
     - when: on_success
 
