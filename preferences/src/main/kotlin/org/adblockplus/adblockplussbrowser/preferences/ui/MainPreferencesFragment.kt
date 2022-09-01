@@ -257,11 +257,4 @@ internal class MainPreferencesFragment :
         super.onResume()
         viewModel.checkLanguagesOnboarding()
     }
-
-    private companion object {
-        private const val OPTIMIZE_AD_BLOCKING_TARGET_ID = 1
-        private const val ADD_LANGUAGES_TARGET_ID = 2
-        private const val OTHER_SUBSCRIPTIONS_TARGET_ID = 3
-        private const val ALLOWLIST_TARGET_ID = 4
-    }
 }
