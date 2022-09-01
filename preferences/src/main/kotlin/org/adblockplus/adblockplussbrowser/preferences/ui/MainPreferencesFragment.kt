@@ -18,7 +18,10 @@
 package org.adblockplus.adblockplussbrowser.preferences.ui
 
 import android.view.View
+import android.view.animation.DecelerateInterpolator
+import android.widget.FrameLayout
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -26,6 +29,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.checkbox.MaterialCheckBox
+import com.takusemba.spotlight.OnSpotlightListener
+import com.takusemba.spotlight.OnTargetListener
+import com.takusemba.spotlight.Spotlight
+import com.takusemba.spotlight.Target
+import com.takusemba.spotlight.shape.RoundedRectangle
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
@@ -248,6 +256,73 @@ internal class MainPreferencesFragment :
         binding.mainPreferencesGuideInclude.mainPreferencesGuideInclude.setDebounceOnClickListener(
             {
                 Timber.i("start guide")
+                val targets = ArrayList<Target>()
+                val adBlockingOptions = binding.mainPreferencesAdBlockingInclude.mainPreferencesAdBlockingCategory
+                binding.mainPreferencesScroll.scrollTo(0, adBlockingOptions.y.toInt())
+                val firstRoot = FrameLayout(requireContext())
+                val first = layoutInflater.inflate(R.layout.tour_dialog, firstRoot)
+
+                val firstTarget = Target.Builder()
+                    .setAnchor(adBlockingOptions)
+                    .setShape(
+                        RoundedRectangle(
+                            adBlockingOptions.height.toFloat(),
+                            adBlockingOptions.width.toFloat(),
+                            TARGET_CORNER_RADIUS
+                        )
+                    ).setOverlay(first)
+                    .setOnTargetListener(object : OnTargetListener {
+                        override fun onStarted() {
+                            Toast.makeText(
+                                requireContext(),
+                                "first target is started",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                        override fun onEnded() {
+                            Toast.makeText(
+                                requireContext(),
+                                "first target is started",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    })
+                    .build()
+                targets.add(firstTarget)
+                // create spotlight
+                val spotlight = Spotlight.Builder(requireActivity())
+                    .setTargets(targets)
+                    .setBackgroundColorRes(R.color.spotlightBackground)
+                    .setDuration(TOUR_ANIMATION_DURATION)
+                    .setAnimation(DecelerateInterpolator(TOUR_ANIMATION_DECELERATE_FACTOR))
+                    .setOnSpotlightListener(object : OnSpotlightListener {
+                        override fun onStarted() {
+                            Toast.makeText(
+                                requireContext(),
+                                "spotlight is started",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                        override fun onEnded() {
+                            Toast.makeText(
+                                requireContext(),
+                                "spotlight is ended",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    })
+                    .build()
+
+                spotlight.start()
+
+                val nextTarget = View.OnClickListener { spotlight.next() }
+
+                val closeSpotlight = View.OnClickListener { spotlight.finish() }
+                first.findViewById<View>(R.id.tour_next_button).setOnClickListener(nextTarget)
+                first.findViewById<View>(R.id.tour_skip_button).setOnClickListener(closeSpotlight)
+
             },
             lifecycleOwner
         )
@@ -256,5 +331,11 @@ internal class MainPreferencesFragment :
     override fun onResume() {
         super.onResume()
         viewModel.checkLanguagesOnboarding()
+    }
+
+    private companion object {
+        private const val TARGET_CORNER_RADIUS = 2f
+        private const val TOUR_ANIMATION_DECELERATE_FACTOR = 2F
+        private const val TOUR_ANIMATION_DURATION = 1000L
     }
 }
