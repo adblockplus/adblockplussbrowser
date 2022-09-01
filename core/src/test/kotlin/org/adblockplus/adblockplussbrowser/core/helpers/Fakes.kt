@@ -37,21 +37,24 @@ import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig
 
 class Fakes {
 
+    internal companion object {
+        const val INITIAL_TIMESTAMP = -1L
+        const val INITIAL_COUNT = -1
+    }
+
     internal class FakeCoreRepository(serverUrl: String) : CoreRepository {
 
-        val INITIAL_TIMESTAMP = -1L
-        val INITIAL_COUNT = -1
         var lastUserCountingResponse = INITIAL_TIMESTAMP
         var userCountingCount = INITIAL_COUNT
 
-        val AA_URL : String
-        val EASYLIST_URL : String
+        val aaUrl : String
+        val easylistUrl : String
 
         private val coreData : CoreData
 
         init {
-            AA_URL = "$serverUrl/exceptionrules.txt"
-            EASYLIST_URL = "$serverUrl/easylist.txt"
+            aaUrl = "$serverUrl/exceptionrules.txt"
+            easylistUrl = "$serverUrl/easylist.txt"
             coreData = CoreData(
                 true,
                 0L,
@@ -112,8 +115,8 @@ class Fakes {
                             Subscription("$serverUrl/exceptionrules.txt", "", 0L, CustomSubscriptionType.FROM_URL)
                         ),
                         listOf(),
-                        true,
-                        true
+                        analyticsEnabled = true,
+                        languagesOnboardingCompleted = true
                     )
                 )
             }
@@ -241,8 +244,8 @@ class Fakes {
                         listOf(""),
                         listOf(Subscription("", "", 0L, CustomSubscriptionType.FROM_URL)),
                         listOf(Subscription("", "", 0L, CustomSubscriptionType.FROM_URL)),
-                        true,
-                        true
+                        analyticsEnabled = true,
+                        languagesOnboardingCompleted = true
                     )
                 )
             }
@@ -253,7 +256,7 @@ class Fakes {
             get() = flowOf(System.currentTimeMillis())
 
         override suspend fun updateLastFilterRequest(lastFilterListRequest: Long) {
-            lastFilterListRequest
+            // NOP
         }
     }
 
