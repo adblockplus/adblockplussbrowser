@@ -84,14 +84,14 @@ checks:unit-tests:
 
 checks:coverage:
   stage: checks
-  image: spacifici/jacoco2cobertura:latest
+  image: "registry.gitlab.com/eyeo/docker/jacoco-to-cobertura:latest"
   script:
     # Calculate the coverage for all projects
     - | # we just want coverage for testWorldAbpDebugUnitTest so we skip all the other tasks
       ./gradlew koverMergedReport -x testWorldAbpReleaseUnitTest -x testWorldAdblockDebugUnitTest \
       -x testWorldAdblockReleaseUnitTest -x testWorldCrystalDebugUnitTest -x testWorldCrystalReleaseUnitTest
     # Convert coverage xml report to cobertura format
-    - /app/cover2cover.py ./build/reports/coverage/xml/coverage_report.xml core/src/main/kotlin base/src/main/kotlin preferences/src/main/kotlin > ./build/reports/coverage/xml/cobertura.xml
+    - /app/cover2cover.py ./build/reports/coverage/xml/coverage_report.xml core/src/main/kotlin > ./build/reports/coverage/xml/cobertura.xml
   artifacts:
     when: always
     reports:
