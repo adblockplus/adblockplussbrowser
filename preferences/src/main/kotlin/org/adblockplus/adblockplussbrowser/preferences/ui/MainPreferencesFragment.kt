@@ -330,7 +330,7 @@ internal class MainPreferencesFragment :
     }
 
     private companion object {
-        private const val TARGET_CORNER_RADIUS = 2f
+        private const val TARGET_CORNER_RADIUS = 6f
         private const val TOUR_ANIMATION_DECELERATE_FACTOR = 2F
         private const val TOUR_ANIMATION_DURATION = 500L
     }
