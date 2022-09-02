@@ -26,6 +26,6 @@
     <color name="onboarding_dot_indicator_background">@color/lynch_opacity_40</color>
     <color name="onboarding_circular_indicator_background">@color/lynch_opacity_30</color>
     <color name="hint_color">#546E7A</color>
-    <color name="spotlightBackground">#BF000000</color>
+    <color name="spotlight_background">#BF000000</color>
 
 </resources>

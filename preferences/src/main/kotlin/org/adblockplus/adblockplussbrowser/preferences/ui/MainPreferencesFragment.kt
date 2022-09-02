@@ -293,7 +293,7 @@ internal class MainPreferencesFragment :
                 // create spotlight
                 val spotlight = Spotlight.Builder(requireActivity())
                     .setTargets(targets)
-                    .setBackgroundColorRes(R.color.spotlightBackground)
+                    .setBackgroundColorRes(R.color.spotlight_background)
                     .setDuration(TOUR_ANIMATION_DURATION)
                     .setAnimation(DecelerateInterpolator(TOUR_ANIMATION_DECELERATE_FACTOR))
                     .setOnSpotlightListener(object : OnSpotlightListener {
@@ -336,6 +336,6 @@ internal class MainPreferencesFragment :
     private companion object {
         private const val TARGET_CORNER_RADIUS = 2f
         private const val TOUR_ANIMATION_DECELERATE_FACTOR = 2F
-        private const val TOUR_ANIMATION_DURATION = 1000L
+        private const val TOUR_ANIMATION_DURATION = 2000L
     }
 }
