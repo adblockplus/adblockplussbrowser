@@ -275,7 +275,7 @@ internal class MainPreferencesFragment :
                         override fun onStarted() {
                             Toast.makeText(
                                 requireContext(),
-                                "first target is started",
+                                "first target is highlighted",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
@@ -283,7 +283,7 @@ internal class MainPreferencesFragment :
                         override fun onEnded() {
                             Toast.makeText(
                                 requireContext(),
-                                "first target is started",
+                                "first target is passed",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
@@ -298,17 +298,13 @@ internal class MainPreferencesFragment :
                     .setAnimation(DecelerateInterpolator(TOUR_ANIMATION_DECELERATE_FACTOR))
                     .setOnSpotlightListener(object : OnSpotlightListener {
                         override fun onStarted() {
-                            Toast.makeText(
-                                requireContext(),
-                                "spotlight is started",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Timber.i("Spotlight started")
                         }
 
                         override fun onEnded() {
                             Toast.makeText(
                                 requireContext(),
-                                "spotlight is ended",
+                                "Tour ended",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
@@ -336,6 +332,6 @@ internal class MainPreferencesFragment :
     private companion object {
         private const val TARGET_CORNER_RADIUS = 2f
         private const val TOUR_ANIMATION_DECELERATE_FACTOR = 2F
-        private const val TOUR_ANIMATION_DURATION = 2000L
+        private const val TOUR_ANIMATION_DURATION = 500L
     }
 }
