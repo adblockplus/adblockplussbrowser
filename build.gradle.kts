@@ -46,16 +46,19 @@ allprojects {
         mavenCentral()
     }
     apply(plugin = Deps.KOVER_PLUGIN_ID)
+//    kover {
+//        engine.set(kotlinx.kover.api.DefaultJacocoEngine)
+//    }
 }
 
 kover {
+//    engine.set(kotlinx.kover.api.DefaultJacocoEngine)
     koverMerged {
         enable() // create Kover merged reports
 
         filters { // common filters for all default Kover merged tasks
-           classes {
-                excludes += listOf("**/R.class", "**/R$*.class", "**/BuildConfig.*", "**/Manifest*.*",
-                    "**/*Test*.*", "android/**/*.*", "**/_*.class")
+            classes {
+                excludes += listOf("hilt_aggregated_deps.*", "androidx.*")
             }
             projects {
                 /* Specifies the projects excluded from the merged tasks. If tests are added to any
