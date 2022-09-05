@@ -21,6 +21,7 @@ import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
@@ -29,6 +30,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.checkbox.MaterialCheckBox
+import com.google.android.material.textview.MaterialTextView
 import com.takusemba.spotlight.OnSpotlightListener
 import com.takusemba.spotlight.OnTargetListener
 import com.takusemba.spotlight.Spotlight
@@ -259,36 +261,10 @@ internal class MainPreferencesFragment :
                 val targets = ArrayList<Target>()
                 val adBlockingOptions = binding.mainPreferencesAdBlockingInclude.mainPreferencesAdBlockingCategory
                 binding.mainPreferencesScroll.scrollTo(0, adBlockingOptions.y.toInt())
-                val firstRoot = FrameLayout(requireContext())
-                val first = layoutInflater.inflate(R.layout.tour_dialog, firstRoot)
+                val tourDialogLayout = layoutInflater.inflate(R.layout.tour_dialog, FrameLayout(requireContext()))
 
-                val firstTarget = Target.Builder()
-                    .setAnchor(adBlockingOptions)
-                    .setShape(
-                        RoundedRectangle(
-                            adBlockingOptions.height.toFloat(),
-                            adBlockingOptions.width.toFloat(),
-                            TARGET_CORNER_RADIUS
-                        )
-                    ).setOverlay(first)
-                    .setOnTargetListener(object : OnTargetListener {
-                        override fun onStarted() {
-                            Toast.makeText(
-                                requireContext(),
-                                "first target is highlighted",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-
-                        override fun onEnded() {
-                            Toast.makeText(
-                                requireContext(),
-                                "first target is passed",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    })
-                    .build()
+                val firstTarget =
+                    createTourTarget(adBlockingOptions, tourDialogLayout, R.string.tour_dialog_ad_blocking_options_text)
                 targets.add(firstTarget)
                 // create spotlight
                 val spotlight = Spotlight.Builder(requireActivity())
@@ -316,12 +292,43 @@ internal class MainPreferencesFragment :
                 val nextTarget = View.OnClickListener { spotlight.next() }
 
                 val closeSpotlight = View.OnClickListener { spotlight.finish() }
-                first.findViewById<View>(R.id.tour_next_button).setOnClickListener(nextTarget)
-                first.findViewById<View>(R.id.tour_skip_button).setOnClickListener(closeSpotlight)
+                tourDialogLayout.findViewById<View>(R.id.tour_next_button).setOnClickListener(nextTarget)
+                tourDialogLayout.findViewById<View>(R.id.tour_skip_button).setOnClickListener(closeSpotlight)
 
             },
             lifecycleOwner
         )
+    }
+
+    private fun createTourTarget(
+        adBlockingOptions: MaterialTextView,
+        tourDialogLayout: View,
+        resId: Int
+    ): Target {
+        val firstTarget = Target.Builder()
+            .setAnchor(adBlockingOptions)
+            .setShape(
+                RoundedRectangle(
+                    adBlockingOptions.height.toFloat(),
+                    adBlockingOptions.width.toFloat(),
+                    TARGET_CORNER_RADIUS
+                )
+            ).setOverlay(tourDialogLayout)
+            .setOnTargetListener(object : OnTargetListener {
+                override fun onStarted() {
+                    tourDialogLayout.findViewById<TextView>(R.id.tour_dialog_text).setText(resId)
+                }
+
+                override fun onEnded() {
+                    Toast.makeText(
+                        requireContext(),
+                        "first target is passed",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            })
+            .build()
+        return firstTarget
     }
 
     override fun onResume() {
