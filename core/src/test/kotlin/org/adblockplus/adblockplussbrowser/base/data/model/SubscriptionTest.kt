@@ -26,9 +26,9 @@ class SubscriptionTest {
 
     private fun runTestUpdateUrl(flavor: String) {
         val expectedRegex = when (flavor) {
-            BuildConfig.FLAVOR_ABP -> """https://([0-9])\.samsung-internet\.filter-list-downloads\.eyeo\.com/aa-variants/samsung_internet_browser-adblock_plus\.txt""".toRegex()
-            BuildConfig.FLAVOR_ADBLOCK -> """https://([0-9])\.samsung-internet\.filter-list-downloads\.getadblock\.com/aa-variants/samsung_internet_browser-adblock\.txt""".toRegex()
-            BuildConfig.FLAVOR_CRYSTAL -> """https://([0-9])\.samsung-internet\.filter-list-downloads\.eyeo\.com/aa-variants/samsung_internet_browser-crystal\.txt""".toRegex()
+            BuildConfig.FLAVOR_ABP      -> ABP_URL_REGEX
+            BuildConfig.FLAVOR_ADBLOCK  -> ADBLOCK_URL_REGEX
+            BuildConfig.FLAVOR_CRYSTAL  -> CRYSTAL_URL_REGEX
             else -> throw NotImplementedError("You forgot to specify a URL override for the " +
                     "flavor you have added")
         }
@@ -70,5 +70,14 @@ class SubscriptionTest {
     @Test
     fun testCrystalUpdateUrl() {
         runTestUpdateUrl(BuildConfig.FLAVOR_CRYSTAL)
+    }
+
+    companion object {
+        private const val URL_REGEX_PREFIX = "https://([0-9])\\.samsung-internet\\.filter-list-downloads\\."
+        private const val URL_REGEX_MIDDLE = "\\.com/aa-variants/samsung_internet_browser-"
+
+        val ABP_URL_REGEX     = "${URL_REGEX_PREFIX}eyeo${URL_REGEX_MIDDLE}adblock_plus\\.txt".toRegex()
+        val ADBLOCK_URL_REGEX = "${URL_REGEX_PREFIX}getadblock${URL_REGEX_MIDDLE}adblock\\.txt".toRegex()
+        val CRYSTAL_URL_REGEX = "${URL_REGEX_PREFIX}eyeo${URL_REGEX_MIDDLE}crystal\\.txt".toRegex()
     }
 }

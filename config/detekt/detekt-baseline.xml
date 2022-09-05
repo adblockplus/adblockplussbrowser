@@ -5,22 +5,12 @@
     <ID>ComplexCondition:UpdateSubscriptionsWorker.kt$UpdateSubscriptionsWorker$!changes.hasChanges() &amp;&amp; !tags.isForceRefresh() &amp;&amp; !tags.isPeriodic() &amp;&amp; runAttemptCount == 0</ID>
     <ID>ComplexMethod:ProtoSettingsMigration.kt$ProtoSettingsMigration$private fun String?.adjustUrl(): String?</ID>
     <ID>EmptyCatchBlock:MainActivity.kt$MainActivity${}</ID>
-    <ID>EmptyFunctionBlock:Fakes.kt$Fakes.FakeAnalyticsProvider${}</ID>
-    <ID>EmptyFunctionBlock:Fakes.kt$Fakes.FakeCoreRepository${ }</ID>
-    <ID>EmptyFunctionBlock:Fakes.kt$Fakes.FakeCoreRepository${}</ID>
-    <ID>EmptyFunctionBlock:Fakes.kt$Fakes.FakeSettingsRepository${}</ID>
     <ID>EmptyFunctionBlock:LocalMediaPlayer.kt$LocalMediaPlayer${ }</ID>
     <ID>LongParameterList:IO.kt$( description: String = "&lt;missing description&gt;", times: Int = DEFAULT_RETRY, initialDelay: Long = 200, // 0.2 second maxDelay: Long = 2000, // 2 second factor: Double = 2.0, dispatcher: CoroutineDispatcher = Dispatchers.IO, block: suspend () -&gt; T )</ID>
     <ID>MagicNumber:Subscription.kt$Subscription$9</ID>
     <ID>MagicNumber:build.gradle.kts$0.4F</ID>
     <ID>MagicNumber:build.gradle.kts$1024</ID>
     <ID>MatchingDeclarationName:DiffUtil.kt$Changes</ID>
-    <ID>MaxLineLength:SubscriptionTest.kt$SubscriptionTest$BuildConfig.FLAVOR_ABP -&gt; """https://([0-9])\.samsung-internet\.filter-list-downloads\.eyeo\.com/aa-variants/samsung_internet_browser-adblock_plus\.txt""".toRegex()</ID>
-    <ID>MaxLineLength:SubscriptionTest.kt$SubscriptionTest$BuildConfig.FLAVOR_ADBLOCK -&gt; """https://([0-9])\.samsung-internet\.filter-list-downloads\.getadblock\.com/aa-variants/samsung_internet_browser-adblock\.txt""".toRegex()</ID>
-    <ID>MaxLineLength:SubscriptionTest.kt$SubscriptionTest$BuildConfig.FLAVOR_CRYSTAL -&gt; """https://([0-9])\.samsung-internet\.filter-list-downloads\.eyeo\.com/aa-variants/samsung_internet_browser-crystal\.txt""".toRegex()</ID>
-    <ID>MaxLineLength:build.gradle.kts$"abp" -&gt; "https://0.samsung-internet.filter-list-downloads.eyeo.com/aa-variants/samsung_internet_browser-adblock_plus.txt"</ID>
-    <ID>MaxLineLength:build.gradle.kts$"adblock" -&gt; "https://0.samsung-internet.filter-list-downloads.getadblock.com/aa-variants/samsung_internet_browser-adblock.txt"</ID>
-    <ID>MaxLineLength:build.gradle.kts$"crystal" -&gt; "https://0.samsung-internet.filter-list-downloads.eyeo.com/aa-variants/samsung_internet_browser-crystal.txt"</ID>
     <ID>MemberNameEqualsClassName:Deps.kt$Deps.AndroidX.DataStore$val DATASTORE = dependency { name("datastore") }</ID>
     <ID>MemberNameEqualsClassName:Deps.kt$Deps.OkHttp$val OKHTTP = dependency { name("okhttp") }</ID>
     <ID>TooManyFunctions:CoreSubscriptionsManager.kt$CoreSubscriptionsManager : SubscriptionsManagerCoroutineScope</ID>
@@ -30,7 +20,6 @@
     <ID>TooManyFunctions:SettingsRepository.kt$SettingsRepository</ID>
     <ID>TooManyFunctions:SnackbarContainer.kt$SnackbarContainer : View</ID>
     <ID>TooManyFunctions:UpdateSubscriptionsWorker.kt$UpdateSubscriptionsWorker : CoroutineWorker</ID>
-    <ID>UnnecessaryAbstractClass:Deps.kt$DependencyGroup</ID>
     <ID>NestedBlockDepth:ProtoSettingsMigration.kt$ProtoSettingsMigration$private fun loadActiveUrls(): List&lt;String&gt;</ID>
     <ID>NestedBlockDepth:ProtoSettingsMigration.kt$ProtoSettingsMigration$private fun retrieveUrlIfActive(file: File): String?</ID>
     <ID>ReturnCount:ProtoSettingsMigration.kt$ProtoSettingsMigration$private fun retrieveUrlIfActive(file: File): String?</ID>

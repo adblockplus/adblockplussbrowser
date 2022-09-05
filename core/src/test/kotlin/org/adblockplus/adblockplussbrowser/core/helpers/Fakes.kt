@@ -15,6 +15,10 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+// This file contains fake implementations used in tests (unit tests), it's fine if the functions are not implemented
+// and kept empty.
+@file:Suppress("EmptyFunctionBlock")
+
 package org.adblockplus.adblockplussbrowser.core.helpers
 
 import kotlinx.coroutines.flow.Flow
