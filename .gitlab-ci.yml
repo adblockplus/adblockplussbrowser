@@ -88,14 +88,14 @@ checks:unit-tests:
 checks:coverage:
   stage: checks
   needs: ["checks:unit-tests"]
-  image: spacifici/jacoco2cobertura:latest
+  image: registry.gitlab.com/haynes/jacoco2cobertura:1.0.8
   script:
     - |
-      /app/cover2cover.py \
+      python /opt/cover2cover.py \
         build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml \
-        base/src/main/kotlin \
-        core/src/main/kotlin \
-        preferences/src/main/kotlin \
+        $CI_PROJECT_DIR/base/src/main/kotlin \
+        $CI_PROJECT_DIR/core/src/main/kotlin \
+        $CI_PROJECT_DIR/preferences/src/main/kotlin \
       > build/reports/cobertura.xml
   artifacts:
     when: always
