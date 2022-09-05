@@ -277,13 +277,7 @@ internal class MainPreferencesFragment :
                             Timber.i("Spotlight started")
                         }
 
-                        override fun onEnded() {
-                            Toast.makeText(
-                                requireContext(),
-                                "Tour ended",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
+                        override fun onEnded() {}
                     })
                     .build()
 
@@ -294,7 +288,6 @@ internal class MainPreferencesFragment :
                 val closeSpotlight = View.OnClickListener { spotlight.finish() }
                 tourDialogLayout.findViewById<View>(R.id.tour_next_button).setOnClickListener(nextTarget)
                 tourDialogLayout.findViewById<View>(R.id.tour_skip_button).setOnClickListener(closeSpotlight)
-
             },
             lifecycleOwner
         )
