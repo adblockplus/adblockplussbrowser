@@ -95,8 +95,7 @@ internal class OkHttpUserCounter(
                     analyticsProvider.logError(
                         "$HTTP_ERROR_LOG_HEADER_USER_COUNTER ${response.code.toString()}"
                                 + "\nHeaders:\n${response.headers.toString().take(HTTP_ERROR_AVERAGE_HEADERS_SIZE)}"
-                                + "\nBody:\n${response.body?.string()?.take(HTTP_ERROR_MAX_BODY_SIZE) ?: ""}"
-                    )
+                                + "\nBody:\n${response.body?.string()?.take(HTTP_ERROR_MAX_BODY_SIZE) ?: ""}")
                     CountUserResult.Failed()
                 }
             }
