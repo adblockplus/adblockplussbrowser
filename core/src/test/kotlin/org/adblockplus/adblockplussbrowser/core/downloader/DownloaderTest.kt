@@ -147,6 +147,6 @@ class DownloaderTest {
             }
         }
         assertEquals(0, filesCount)
-        assertEquals(analyticsProvider.error, HTTP_ERROR_LOG_HEADER_DOWNLOADER + HTTP_ERROR_MOCK_500)
+        assertEquals(analyticsProvider.error, "$HTTP_ERROR_LOG_HEADER_DOWNLOADER $HTTP_ERROR_MOCK_500")
     }
 }

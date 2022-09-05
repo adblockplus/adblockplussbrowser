@@ -122,7 +122,7 @@ class UserCountingTest {
             fakeCoreRepository.lastUserCountingResponse)
         assertEquals(Fakes.INITIAL_COUNT, fakeCoreRepository.userCountingCount)
         assertNull(analyticsProvider.event)
-        assertEquals(analyticsProvider.error, HTTP_ERROR_LOG_HEADER_USER_COUNTER + HTTP_ERROR_MOCK_500)
+        assertEquals(analyticsProvider.error, "$HTTP_ERROR_LOG_HEADER_USER_COUNTER $HTTP_ERROR_MOCK_500")
     }
 
     @Test

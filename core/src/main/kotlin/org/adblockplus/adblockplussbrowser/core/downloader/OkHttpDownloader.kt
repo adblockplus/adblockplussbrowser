@@ -111,9 +111,9 @@ internal class OkHttpDownloader(
                 else -> {
                     Timber.e("Error downloading $url, response code: ${response.code}")
                     analyticsProvider.logError(
-                        HTTP_ERROR_LOG_HEADER_DOWNLOADER + response.code.toString()
-                                + "\nHeaders:\n" + response.headers.toString().take(HTTP_ERROR_AVERAGE_HEADERS_SIZE)
-                                + "\nBody:\n" + (response.body?.string()?.take(HTTP_ERROR_MAX_BODY_SIZE) ?: "")
+                        "$HTTP_ERROR_LOG_HEADER_DOWNLOADER ${response.code.toString()}"
+                                + "\nHeaders:\n${response.headers.toString().take(HTTP_ERROR_AVERAGE_HEADERS_SIZE)}"
+                                + "\nBody:\n${response.body?.string()?.take(HTTP_ERROR_MAX_BODY_SIZE) ?: ""}"
                     )
                     DownloadResult.Failed(previousDownload.ifExists())
                 }
@@ -258,7 +258,7 @@ internal class OkHttpDownloader(
         private val MIN_REFRESH_INTERVAL = Duration.hours(1)
         private val UNMETERED_REFRESH_INTERVAL: Duration = Duration.hours(24)
         private val METERED_REFRESH_INTERVAL = Duration.days(3)
-        internal const val HTTP_ERROR_LOG_HEADER_DOWNLOADER = "OkHttpDownloader HTTP error, return code "
+        internal const val HTTP_ERROR_LOG_HEADER_DOWNLOADER = "OkHttpDownloader HTTP error, return code"
     }
 }
 
