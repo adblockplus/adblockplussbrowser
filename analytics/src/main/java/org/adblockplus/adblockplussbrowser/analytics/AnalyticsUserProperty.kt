@@ -26,10 +26,5 @@ enum class AnalyticsUserProperty(val propertyName: String) {
     /**
      * User property used for tracking install referrer.
      */
-    INSTALL_REFERRER("install_referrer"),
-
-    /**
-     * User property used for tracking HTTP error from user counting request.
-     */
-    USER_COUNTING_HTTP_ERROR("user_counting_http_error")
+    INSTALL_REFERRER("install_referrer")
 }

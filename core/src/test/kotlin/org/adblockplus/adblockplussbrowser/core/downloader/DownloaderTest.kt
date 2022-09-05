@@ -25,7 +25,9 @@ import okhttp3.mockwebserver.MockWebServer
 import org.adblockplus.adblockplussbrowser.base.data.model.CustomSubscriptionType
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.core.AppInfo
+import org.adblockplus.adblockplussbrowser.core.downloader.OkHttpDownloader.Companion.HTTP_ERROR_LOG_HEADER_DOWNLOADER
 import org.adblockplus.adblockplussbrowser.core.helpers.Fakes
+import org.adblockplus.adblockplussbrowser.core.helpers.Fakes.Companion.HTTP_ERROR_MOCK_500
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -145,6 +147,6 @@ class DownloaderTest {
             }
         }
         assertEquals(0, filesCount)
-        assertEquals(analyticsProvider.error, HTTP_INTERNAL_ERROR.toString())
+        assertEquals(analyticsProvider.error, HTTP_ERROR_LOG_HEADER_DOWNLOADER + HTTP_ERROR_MOCK_500)
     }
 }
