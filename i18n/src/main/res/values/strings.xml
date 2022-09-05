@@ -185,7 +185,7 @@
     <string name="take_tour_description" tools:ignore="MissingTranslation">Learn how to use adblock for a more enjoyable browsing experience</string>
     <string name="tour_next_button_text" tools:ignore="MissingTranslation">Next</string>
     <string name="tour_skip_button_text" tools:ignore="MissingTranslation">Skip it</string>
-    <string name="tour_dialog_ad_blocking_options_text" tools:ignore="MissingTranslation">For optimized browsing experience,\nThink of adjusting these parameters</string>
+    <string name="tour_dialog_ad_blocking_options_text" tools:ignore="MissingTranslation">For optimized browsing experience,\nthink of adjusting these parameters</string>
     <string name="tour_add_languages" tools:ignore="MissingTranslation">Add the languages you usually browse in</string>
     <string name="tour_disable_social_media_tracking" tools:ignore="MissingTranslation">Disable social media tracking while browsing</string>
     <string name="tour_allowlist" tools:ignore="MissingTranslation">Allowlist a website to continue seeing ads on it</string>
