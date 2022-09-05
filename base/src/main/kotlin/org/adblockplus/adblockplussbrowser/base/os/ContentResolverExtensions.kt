@@ -48,6 +48,19 @@ fun ContentResolver.resolveFilename(uri: Uri): String {
 }
 
 /**
+ * Reads file content from a given uri.
+ *
+ * @param uri Uri to local file
+ * @return a pair containing the file name and content
+ */
+fun ContentResolver.processFile(uri: Uri): Pair<String, String> {
+    val fileContent = openInputStream(uri)?.use { inputStream ->
+        inputStream.bufferedReader().use { bufferReader -> bufferReader.readText() }
+    }?: ""
+    return Pair(this.resolveFilename(uri), fileContent)
+}
+
+/**
  * Load an image from the given [Uri] and scale it to a given size given as long side and short side values keeping
  * the aspect ratio. It is suggested to run this in a `runCatching { ... }` block.
  *

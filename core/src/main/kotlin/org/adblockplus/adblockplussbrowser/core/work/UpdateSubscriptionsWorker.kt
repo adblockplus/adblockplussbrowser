@@ -51,12 +51,7 @@ import org.adblockplus.adblockplussbrowser.core.extensions.toBlockRule
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
 import timber.log.Timber
-import java.io.BufferedReader
 import java.io.File
-import java.io.IOException
-import java.io.InputStreamReader
-import java.lang.RuntimeException
-import java.util.Objects
 import javax.inject.Inject
 import kotlinx.coroutines.flow.first
 import org.adblockplus.adblockplussbrowser.base.data.prefs.DebugPreferences
@@ -266,10 +261,8 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
 
         // Get subscriptions from local file
         val localFilesOtherSubscriptions = settings.activeOtherSubscriptions.mapNotNull { subscription ->
-            localFileSubscriptions.firstOrNull { it.url == subscription.url }?.let { localFileSubscription ->
-                var lastUpdate: Long = System.currentTimeMillis()
-                if (localFileSubscription.hasError) lastUpdate = Subscription.SUBSCRIPTION_LAST_UPDATE_ERROR_STATUS
-                subscription.copy(lastUpdate = lastUpdate)
+            localFileSubscriptions.firstOrNull { it.url == subscription.url }?.let {
+                subscription.copy(lastUpdate = System.currentTimeMillis())
             }
         }
 
@@ -309,10 +302,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             }
 
             localFileSubscriptions.forEach { subscription ->
-                val fileContent = readFile(Uri.parse(subscription.url))
-                if (!fileContent.isNullOrEmpty()) {
-                    sink.writeUtf8(fileContent)
-                }
+                sink.writeUtf8(readLocalFile(subscription.title))
             }
 
             if (BuildConfig.FLAVOR_product != BuildConfig.FLAVOR_CRYSTAL) {
@@ -353,32 +343,8 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
         }
     }
 
-    private fun readFile(uri: Uri): String? {
-        return try {
-            getFiltersFromFile(uri)
-        } catch (ex: Exception) {
-            when (ex) {
-                is RuntimeException, is IOException -> {
-                    localFileSubscriptions.find { it.url == uri.toString() }?.hasError = true
-                }
-            }
-            ""
-        }
-    }
-
-    private fun getFiltersFromFile(uri: Uri): String {
-        applicationContext.contentResolver.openInputStream(uri).use { inputStream ->
-            BufferedReader(
-                InputStreamReader(Objects.requireNonNull(inputStream))
-            ).use { reader ->
-                val stringBuilder = StringBuilder()
-                var line: String?
-                while (reader.readLine().also { line = it } != null) {
-                    stringBuilder.appendLine(line)
-                }
-                return stringBuilder.toString()
-            }
-        }
+    private fun readLocalFile(filename: String): String {
+        return File(appContext.filesDir, filename).readText()
     }
 
     private fun List<DownloadedSubscription>.toFiltersSet(): Set<String> {

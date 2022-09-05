@@ -35,13 +35,11 @@ import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.BuildConfig
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
-import org.adblockplus.adblockplussbrowser.base.os.resolveFilename
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentOtherSubscriptionsBinding
 import org.adblockplus.adblockplussbrowser.preferences.ui.SwipeToDeleteCallback
 import javax.inject.Inject
-
 
 @AndroidEntryPoint
 internal class OtherSubscriptionsFragment :
@@ -127,12 +125,10 @@ internal class OtherSubscriptionsFragment :
     private fun handleFilePickingResult(result: ActivityResult) {
         if (result.resultCode == Activity.RESULT_OK) {
             result.data?.data?.let { filePath ->
-                activity?.contentResolver?.resolveFilename(filePath)?.let { filename ->
-                    viewModel.addCustomFilterFile(
-                        filePath.toString(),
-                        filename
-                    )
-                }
+                viewModel.addCustomFilterFile(
+                    filePath,
+                    requireContext()
+                )
             }
         } else {
             analyticsProvider.logEvent(AnalyticsEvent.DEVICE_FILE_MANAGER_NOT_SUPPORTED_OR_CANCELED)

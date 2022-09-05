@@ -17,12 +17,15 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions
 
+import android.content.Context
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.io.File
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -35,6 +38,7 @@ import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.preferences.ui.layoutForIndex
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import javax.inject.Inject
+import org.adblockplus.adblockplussbrowser.base.os.processFile
 
 @HiltViewModel
 internal class OtherSubscriptionsViewModel @Inject constructor(
@@ -128,19 +132,30 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
         }
     }
 
-    fun addCustomFilterFile(url: String, title: String) {
+    fun addCustomFilterFile(uri: Uri, context: Context) {
         viewModelScope.launch {
-            val subscription = Subscription(url, title, 0L, LOCAL_FILE)
             _uiState.value = UiState.Loading
             addOtherSubscriptionsCount.apply { value = value?.plus(1) }
-            settingsRepository.addActiveOtherSubscription(subscription)
-            analyticsProvider.logEvent(AnalyticsEvent.CUSTOM_FILTER_LIST_ADDED_FROM_FILE)
+            kotlin.runCatching {
+                val (filename, fileContent) = context.contentResolver.processFile(uri)
+                // Save filter file into the application files
+                context.saveCustomFilterFile(filename, fileContent)
+                // As we don't depend on the location of this file, we can save the filename as url
+                val subscription = Subscription(
+                    filename, filename, 0L, LOCAL_FILE
+                )
+                settingsRepository.addActiveOtherSubscription(subscription)
+                analyticsProvider.logEvent(AnalyticsEvent.CUSTOM_FILTER_LIST_ADDED_FROM_FILE)
+            }.onFailure {
+                _uiState.value = UiState.Error
+            }
             finishAddingCustomSubscription()
         }
     }
 
-    fun removeSubscription(customItem: OtherSubscriptionsItem.CustomItem) {
+    fun removeSubscription(customItem: OtherSubscriptionsItem.CustomItem, context: Context) {
         viewModelScope.launch {
+            File(context.filesDir, customItem.subscription.title).delete()
             settingsRepository.removeActiveOtherSubscription(customItem.subscription)
             analyticsProvider.logEvent(AnalyticsEvent.CUSTOM_FILTER_LIST_REMOVED)
         }
@@ -163,5 +178,10 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
             _uiState.value = UiState.Done
         }
     }
-
 }
+
+// Save custom filter file into the application files
+private fun Context.saveCustomFilterFile(filename: String, fileContents: String) =
+    this.openFileOutput(filename, Context.MODE_PRIVATE).use {
+        it.write(fileContents.toByteArray())
+    }
