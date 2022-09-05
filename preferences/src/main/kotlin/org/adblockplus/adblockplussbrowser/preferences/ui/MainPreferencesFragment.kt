@@ -74,12 +74,7 @@ internal class MainPreferencesFragment :
         bindAdditionalLanguage(binding, supportActionBar, lifecycleOwner)
         bindOnboardingLanguages(binding, lifecycleOwner)
         bindAcceptableAds(binding, supportActionBar, lifecycleOwner)
-        if (BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_CRYSTAL) {
-            binding.mainPreferencesGuideInclude.mainPreferencesGuideInclude.visibility = View.GONE
-        } else {
-            bindGuide(binding, lifecycleOwner)
-        }
-
+        bindGuide(binding, lifecycleOwner)
         bindAbout(binding, supportActionBar, lifecycleOwner)
 
         if (BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_ABP) {
