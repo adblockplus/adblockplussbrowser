@@ -277,7 +277,9 @@ internal class MainPreferencesFragment :
                             Timber.i("Spotlight started")
                         }
 
-                        override fun onEnded() {}
+                        override fun onEnded() {
+                            Timber.i("Spotlight ended")
+                        }
                     })
                     .build()
 
