@@ -38,12 +38,75 @@ buildscript {
 plugins {
     id(Deps.GRADLE_VERSIONS_PLUGIN_ID).version(Deps.GRADLE_VERSIONS_PLUGIN_VERSION)
     id(Deps.DETEKT_PLUGIN_ID).version(Deps.DETEKT_PLUGIN_VERSION)
+    id(Deps.JACOCO)
 }
+
+val coverageProjectsPath = setOf(":base", ":core", ":preferences")
+val testTaskName = "testWorldAbpDebugUnitTest"
 
 allprojects {
     repositories {
         google()
         mavenCentral()
+    }
+
+    if (path in coverageProjectsPath) {
+        apply(plugin = Deps.JACOCO)
+
+        tasks.withType(Test::class.java) {
+            // We want coverage only for the worldAbp flavor
+            if (name != testTaskName)
+                return@withType
+
+            configure<JacocoTaskExtension> {
+                isIncludeNoLocationClasses = true
+                excludes = listOf("jdk.internal.*")
+            }
+        }
+    }
+}
+
+afterEvaluate {
+    val coverageProjects = subprojects.filter { it.path in coverageProjectsPath}
+    val executionDataPaths = coverageProjects.map {
+        it.buildDir.toPath().resolve("jacoco/$testTaskName.exec").toString()
+    }
+    val sourcePaths = coverageProjects.map {
+        it.projectDir.toPath().resolve("src/main/kotlin").toFile()
+    }
+    val classPaths = coverageProjects.map {
+        it.buildDir.toPath().resolve("tmp/kotlin-classes/worldAbpDebug").toFile()
+    }
+    val deps = coverageProjectsPath.map { "$it:$testTaskName" }
+
+    tasks.register<JacocoReport>("jacocoTestReport") {
+        executionData(executionDataPaths)
+        sourceDirectories.setFrom(sourcePaths)
+        classDirectories.setFrom(classPaths)
+        dependsOn(deps)
+
+        reports {
+            xml.required.set(true)
+            html.required.set(true)
+        }
+
+        dependsOn(deps)
+    }
+
+    tasks.register<JacocoCoverageVerification>("jacocoTestCoverageVerification") {
+        executionData(executionDataPaths)
+        sourceDirectories.setFrom(sourcePaths)
+        classDirectories.setFrom(classPaths)
+
+        violationRules {
+            rule {
+                limit {
+                    minimum = 0.39f.toBigDecimal()
+                }
+            }
+        }
+
+        dependsOn(deps)
     }
 }
 

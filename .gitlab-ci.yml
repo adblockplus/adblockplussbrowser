@@ -72,13 +72,16 @@ checks:unit-tests:
   extends: .template:environment
   stage: checks
   script:
-    - ./gradlew test core:checkCoverage
+    - ./gradlew testWorldAbpDebugUnitTest jacocoTestReport jacocoTestCoverageVerification
   artifacts:
     when: always
     paths:
+      - build/reports/
+      - base/build/reports/
+      - preferences/build/reports/
       - core/build/reports/
     reports:
-      junit: core/build/test-results/**/TEST*.xml
+      junit: ./**/build/test-results/**/TEST*.xml
   rules:
     - when: on_success
 
@@ -87,13 +90,19 @@ checks:coverage:
   needs: ["checks:unit-tests"]
   image: spacifici/jacoco2cobertura:latest
   script:
-    - /app/cover2cover.py core/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml core/src/main/kotlin > core/build/reports/cobertura.xml
+    - |
+      /app/cover2cover.py \
+        build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml \
+        base/src/main/kotlin \
+        core/src/main/kotlin \
+        preferences/src/main/kotlin \
+      > build/reports/cobertura.xml
   artifacts:
     when: always
     reports:
       coverage_report:
         coverage_format: cobertura
-        path: core/build/reports/cobertura.xml
+        path: build/reports/cobertura.xml
   rules:
     - when: on_success
 
