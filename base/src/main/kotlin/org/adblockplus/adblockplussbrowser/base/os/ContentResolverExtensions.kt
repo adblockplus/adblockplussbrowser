@@ -51,7 +51,8 @@ fun ContentResolver.resolveFilename(uri: Uri): String {
  * Reads file content from a given uri.
  *
  * @param uri Uri to local file
- * @return a pair containing the file name and content
+ * @return the file content or empty string
+ * @throws java.io.FileNotFoundException
  */
 fun ContentResolver.readText(uri: Uri) =
     openInputStream(uri)?.use { inputStream ->
