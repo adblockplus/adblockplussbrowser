@@ -125,18 +125,11 @@ internal class OtherSubscriptionsFragment :
     private fun handleFilePickingResult(result: ActivityResult) {
         if (result.resultCode == Activity.RESULT_OK) {
             result.data?.data?.let { filePath ->
-                viewModel.addCustomFilterFile(
-                    filePath,
-                    requireContext()
-                )
+                viewModel.addCustomFilterFile(filePath, requireContext())
             }
         } else {
             analyticsProvider.logEvent(AnalyticsEvent.DEVICE_FILE_MANAGER_NOT_SUPPORTED_OR_CANCELED)
-            Toast.makeText(
-                context,
-                getText(R.string.file_picking_canceled),
-                Toast.LENGTH_LONG
-            ).show()
+            Toast.makeText(context, getText(R.string.file_picking_canceled), Toast.LENGTH_LONG).show()
         }
     }
 

@@ -38,6 +38,7 @@ import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.preferences.ui.layoutForIndex
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import javax.inject.Inject
+import kotlinx.coroutines.delay
 import org.adblockplus.adblockplussbrowser.base.os.readText
 import org.adblockplus.adblockplussbrowser.base.os.resolveFilename
 
@@ -137,7 +138,7 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.value = UiState.Loading
             addOtherSubscriptionsCount.apply { value = value?.plus(1) }
-            kotlin.runCatching {
+            runCatching {
                 val filename = context.contentResolver.resolveFilename(uri)
                 val fileContent = context.contentResolver.readText(uri)
                 // Save filter file into the application files
@@ -176,9 +177,12 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
         return result
     }
 
-    private fun finishAddingCustomSubscription() {
+    private suspend fun finishAddingCustomSubscription() {
         addOtherSubscriptionsCount.apply { value = value?.minus(1) }
         if (addOtherSubscriptionsCount.value == 0) {
+            // If the current uiState is Error, delay it some MS so that the message is shown to the user
+            if (_uiState.value == UiState.Error) delay(500)
+            // Then set the uiState back to Done
             _uiState.value = UiState.Done
         }
     }
