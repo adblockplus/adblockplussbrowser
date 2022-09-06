@@ -92,10 +92,10 @@ internal class OkHttpUserCounter(
                     CountUserResult.Success()
                 }
                 else -> {
-                    analyticsProvider.setUserProperty(
-                        AnalyticsUserProperty.USER_COUNTING_HTTP_ERROR,
-                        response.code.toString()
-                    )
+                    analyticsProvider.logError(
+                        "$HTTP_ERROR_LOG_HEADER_USER_COUNTER ${response.code.toString()}"
+                                + "\nHeaders:\n${response.headers.toString().take(HTTP_ERROR_AVERAGE_HEADERS_SIZE)}"
+                                + "\nBody:\n${response.body?.string()?.take(HTTP_ERROR_MAX_BODY_SIZE) ?: ""}")
                     CountUserResult.Failed()
                 }
             }
@@ -172,5 +172,10 @@ internal class OkHttpUserCounter(
         private val serverTimeZone = TimeZone.getTimeZone("GMT")
         private const val MAX_USER_COUNTING_COUNT = 4
 
+        internal const val HTTP_ERROR_LOG_HEADER_USER_COUNTER = "OkHttpUserCounter HTTP error, return code"
+
+        // https://stackoverflow.com/questions/5358109/what-is-the-average-size-of-an-http-request-response-header
+        internal const val HTTP_ERROR_AVERAGE_HEADERS_SIZE = 800
+        internal const val HTTP_ERROR_MAX_BODY_SIZE = 500
     }
 }

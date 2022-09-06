@@ -40,6 +40,12 @@ class Fakes {
     internal companion object {
         const val INITIAL_TIMESTAMP = -1L
         const val INITIAL_COUNT = -1
+        const val HTTP_ERROR_MOCK_500 = "500\n" +
+                "Headers:\n" +
+                "Content-Length: 0\n" +
+                "\n" +
+                "Body:\n"
+
     }
 
     internal class FakeCoreRepository(serverUrl: String) : CoreRepository {
