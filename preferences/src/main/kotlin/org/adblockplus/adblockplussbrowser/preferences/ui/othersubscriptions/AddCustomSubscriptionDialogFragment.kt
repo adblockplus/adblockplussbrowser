@@ -35,8 +35,9 @@ internal class AddCustomSubscriptionDialogFragment : AppCompatDialogFragment() {
 
     private val viewModel: OtherSubscriptionsViewModel by activityViewModels()
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
-        MaterialDialog(requireContext()).show {
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val context = requireContext()
+        return MaterialDialog(context).show {
             title(R.string.other_subscriptions_add_custom_title)
             input(
                 hintRes = R.string.other_subscriptions_add_custom_hint,
@@ -47,8 +48,9 @@ internal class AddCustomSubscriptionDialogFragment : AppCompatDialogFragment() {
             }
             positiveButton(android.R.string.ok) { dialog ->
                 val url = dialog.getInputField().text.toString()
-                viewModel.addCustomUrl(url)
+                viewModel.addCustomUrl(url, context)
             }
             negativeButton(android.R.string.cancel)
         }
+    }
 }

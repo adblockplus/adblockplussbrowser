@@ -19,6 +19,7 @@ package org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions
 
 import android.content.Context
 import android.net.Uri
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -38,9 +39,9 @@ import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.preferences.ui.layoutForIndex
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import javax.inject.Inject
-import kotlinx.coroutines.delay
 import org.adblockplus.adblockplussbrowser.base.os.readText
 import org.adblockplus.adblockplussbrowser.base.os.resolveFilename
+import org.adblockplus.adblockplussbrowser.preferences.R
 
 @HiltViewModel
 internal class OtherSubscriptionsViewModel @Inject constructor(
@@ -119,13 +120,13 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
 
     }
 
-    fun addCustomUrl(url: String) {
+    fun addCustomUrl(url: String, context: Context) {
         viewModelScope.launch {
             val subscription = Subscription(url, url,0L, FROM_URL)
             _uiState.value = UiState.Loading
             addOtherSubscriptionsCount.apply { value = value?.plus(1) }
             if (!subscriptionManager.validateSubscription(subscription)) {
-                _uiState.value = UiState.Error
+                context.showErrorMessage()
             } else {
                 settingsRepository.addActiveOtherSubscription(subscription)
                 analyticsProvider.logEvent(AnalyticsEvent.CUSTOM_FILTER_LIST_ADDED_FROM_URL)
@@ -138,21 +139,25 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.value = UiState.Loading
             addOtherSubscriptionsCount.apply { value = value?.plus(1) }
-            runCatching {
-                val filename = context.contentResolver.resolveFilename(uri)
-                val fileContent = context.contentResolver.readText(uri)
-                // Save filter file into the application files
-                context.openFileOutput(filename, Context.MODE_PRIVATE).use {
-                    it.write(fileContent.toByteArray())
+            with(context) {
+                runCatching {
+                    val filename = contentResolver.resolveFilename(uri)
+                    val fileContent = contentResolver.readText(uri)
+
+                    // Save filter file into the application files
+                    openFileOutput(filename, Context.MODE_PRIVATE).use {
+                        it.write(fileContent.toByteArray())
+                    }
+
+                    // As we don't depend on the location of this file, we can save the filename as url
+                    val subscription = Subscription(
+                        filename, filename, 0L, LOCAL_FILE
+                    )
+                    settingsRepository.addActiveOtherSubscription(subscription)
+                    analyticsProvider.logEvent(AnalyticsEvent.CUSTOM_FILTER_LIST_ADDED_FROM_FILE)
+                }.onFailure {
+                    showErrorMessage()
                 }
-                // As we don't depend on the location of this file, we can save the filename as url
-                val subscription = Subscription(
-                    filename, filename, 0L, LOCAL_FILE
-                )
-                settingsRepository.addActiveOtherSubscription(subscription)
-                analyticsProvider.logEvent(AnalyticsEvent.CUSTOM_FILTER_LIST_ADDED_FROM_FILE)
-            }.onFailure {
-                _uiState.value = UiState.Error
             }
             finishAddingCustomSubscription()
         }
@@ -177,13 +182,13 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
         return result
     }
 
-    private suspend fun finishAddingCustomSubscription() {
+    private fun finishAddingCustomSubscription() {
         addOtherSubscriptionsCount.apply { value = value?.minus(1) }
         if (addOtherSubscriptionsCount.value == 0) {
-            // If the current uiState is Error, delay it some MS so that the message is shown to the user
-            if (_uiState.value == UiState.Error) delay(500)
-            // Then set the uiState back to Done
             _uiState.value = UiState.Done
         }
     }
+
+    private fun Context.showErrorMessage() =
+        Toast.makeText(this, R.string.other_subscriptions_error_add_custom, Toast.LENGTH_LONG).show()
 }

@@ -80,12 +80,8 @@ internal class OtherSubscriptionsFragment :
 
         viewModel.uiState.observe(this) { uiState ->
             when (uiState) {
-                UiState.Done -> binding.indeterminateBar.visibility = View.INVISIBLE
-                UiState.Error -> Toast.makeText(
-                    requireContext(),
-                    getString(R.string.other_subscriptions_error_add_custom), Toast.LENGTH_LONG
-                ).show()
                 UiState.Loading -> binding.indeterminateBar.visibility = View.VISIBLE
+                else -> binding.indeterminateBar.visibility = View.INVISIBLE
             }
         }
 
