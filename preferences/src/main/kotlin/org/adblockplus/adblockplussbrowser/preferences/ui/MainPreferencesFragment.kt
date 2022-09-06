@@ -252,31 +252,33 @@ internal class MainPreferencesFragment :
         binding.mainPreferencesGuideInclude.mainPreferencesGuideInclude.setDebounceOnClickListener(
             {
                 val targets = ArrayList<Target>()
-                val adBlockingOptions = binding.mainPreferencesAdBlockingInclude.mainPreferencesAdBlockingCategory
-                binding.mainPreferencesScroll.scrollTo(0, adBlockingOptions.y.toInt())
                 val overlayRoot = FrameLayout(requireContext())
                 val tourDialogLayout = layoutInflater.inflate(R.layout.tour_dialog, overlayRoot)
-                val addLanguagesView = binding.mainPreferencesAdBlockingInclude.mainPreferencesPrimarySubscriptions
-                val otherSubscriptionsView =
-                    binding.mainPreferencesAdBlockingInclude.preferencesOtherSubscriptionsTitleText
                 val allowlistView = binding.mainPreferencesAdBlockingInclude.preferencesAllowlistTitleText
+                val disableSocialMediaView =
+                    binding.mainPreferencesAdBlockingInclude.preferencesOtherSubscriptionsTitleText
+                if (BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_CRYSTAL) {
+                    binding.mainPreferencesScroll.scrollTo(0, disableSocialMediaView.y.toInt())
+                } else {
+                    binding.mainPreferencesScroll.scrollTo(0, allowlistView.y.toInt())
+                }
 
                 addTargetToSequence(
-                    adBlockingOptions,
+                    binding.mainPreferencesAdBlockingInclude.mainPreferencesAdBlockingCategory,
                     tourDialogLayout,
                     R.string.tour_dialog_ad_blocking_options_text,
                     targets
                 )
 
                 addTargetToSequence(
-                    addLanguagesView,
+                    binding.mainPreferencesAdBlockingInclude.mainPreferencesPrimarySubscriptions,
                     tourDialogLayout,
                     R.string.tour_add_languages,
                     targets
                 )
 
                 addTargetToSequence(
-                    otherSubscriptionsView,
+                    disableSocialMediaView,
                     tourDialogLayout,
                     R.string.tour_disable_social_media_tracking,
                     targets
@@ -323,17 +325,17 @@ internal class MainPreferencesFragment :
     }
 
     private fun addTargetToSequence(
-        adBlockingOptions: View,
+        highLightView: View,
         tourDialogLayout: View,
         resId: Int,
-        targets: ArrayList<Target>
+        targets: ArrayList<Target>,
     ) {
         val target = Target.Builder()
-            .setAnchor(adBlockingOptions)
+            .setAnchor(highLightView)
             .setShape(
                 RoundedRectangle(
-                    adBlockingOptions.height.toFloat(),
-                    adBlockingOptions.width.toFloat(),
+                    highLightView.height.toFloat(),
+                    highLightView.width.toFloat(),
                     TARGET_CORNER_RADIUS
                 )
             ).setOverlay(tourDialogLayout)
