@@ -343,6 +343,7 @@ internal class MainPreferencesFragment :
                 }
 
                 override fun onEnded() {
+                    Timber.i("Tour end")
                 }
             })
             .build()
