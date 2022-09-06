@@ -18,7 +18,6 @@
 package org.adblockplus.adblockplussbrowser.preferences.ui
 
 import android.view.View
-import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -30,7 +29,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.checkbox.MaterialCheckBox
-import com.google.android.material.textview.MaterialTextView
 import com.takusemba.spotlight.OnSpotlightListener
 import com.takusemba.spotlight.OnTargetListener
 import com.takusemba.spotlight.Spotlight
@@ -44,6 +42,7 @@ import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentMainPreferencesBinding
 import org.adblockplus.adblockplussbrowser.preferences.ui.updates.UpdateSubscriptionsViewModel
 import timber.log.Timber
+
 
 @AndroidEntryPoint
 internal class MainPreferencesFragment :
@@ -252,28 +251,61 @@ internal class MainPreferencesFragment :
     ) {
         binding.mainPreferencesGuideInclude.mainPreferencesGuideInclude.setDebounceOnClickListener(
             {
-                Timber.i("start guide")
                 val targets = ArrayList<Target>()
                 val adBlockingOptions = binding.mainPreferencesAdBlockingInclude.mainPreferencesAdBlockingCategory
                 binding.mainPreferencesScroll.scrollTo(0, adBlockingOptions.y.toInt())
-                val tourDialogLayout = layoutInflater.inflate(R.layout.tour_dialog, FrameLayout(requireContext()))
+                val overlayRoot = FrameLayout(requireContext())
+                val tourDialogLayout = layoutInflater.inflate(R.layout.tour_dialog, overlayRoot)
+                val addLanguagesView = binding.mainPreferencesAdBlockingInclude.mainPreferencesPrimarySubscriptions
+                val otherSubscriptionsView =
+                    binding.mainPreferencesAdBlockingInclude.preferencesOtherSubscriptionsTitleText
+                val allowlistView = binding.mainPreferencesAdBlockingInclude.preferencesAllowlistTitleText
 
-                val firstTarget =
-                    createTourTarget(adBlockingOptions, tourDialogLayout, R.string.tour_dialog_ad_blocking_options_text)
-                targets.add(firstTarget)
+                addTargetToSequence(
+                    adBlockingOptions,
+                    tourDialogLayout,
+                    R.string.tour_dialog_ad_blocking_options_text,
+                    targets
+                )
+
+                addTargetToSequence(
+                    addLanguagesView,
+                    tourDialogLayout,
+                    R.string.tour_add_languages,
+                    targets
+                )
+
+                addTargetToSequence(
+                    otherSubscriptionsView,
+                    tourDialogLayout,
+                    R.string.tour_disable_social_media_tracking,
+                    targets
+                )
+
+                if (BuildConfig.FLAVOR_product != BuildConfig.FLAVOR_CRYSTAL) {
+                    addTargetToSequence(
+                        allowlistView,
+                        tourDialogLayout,
+                        R.string.tour_allowlist,
+                        targets
+                    )
+                }
+
                 // create spotlight
                 val spotlight = Spotlight.Builder(requireActivity())
                     .setTargets(targets)
                     .setBackgroundColorRes(R.color.spotlight_background)
-                    .setDuration(TOUR_ANIMATION_DURATION)
-                    .setAnimation(DecelerateInterpolator(TOUR_ANIMATION_DECELERATE_FACTOR))
                     .setOnSpotlightListener(object : OnSpotlightListener {
                         override fun onStarted() {
                             Timber.i("Spotlight started")
                         }
 
                         override fun onEnded() {
-                            Timber.i("Spotlight ended")
+                            Toast.makeText(
+                                requireContext(),
+                                "Tour ended",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     })
                     .build()
@@ -290,12 +322,13 @@ internal class MainPreferencesFragment :
         )
     }
 
-    private fun createTourTarget(
-        adBlockingOptions: MaterialTextView,
+    private fun addTargetToSequence(
+        adBlockingOptions: View,
         tourDialogLayout: View,
-        resId: Int
-    ): Target {
-        val firstTarget = Target.Builder()
+        resId: Int,
+        targets: ArrayList<Target>
+    ) {
+        val target = Target.Builder()
             .setAnchor(adBlockingOptions)
             .setShape(
                 RoundedRectangle(
@@ -310,15 +343,10 @@ internal class MainPreferencesFragment :
                 }
 
                 override fun onEnded() {
-                    Toast.makeText(
-                        requireContext(),
-                        "first target is passed",
-                        Toast.LENGTH_SHORT
-                    ).show()
                 }
             })
             .build()
-        return firstTarget
+        targets.add(target)
     }
 
     override fun onResume() {
@@ -328,7 +356,5 @@ internal class MainPreferencesFragment :
 
     private companion object {
         private const val TARGET_CORNER_RADIUS = 6f
-        private const val TOUR_ANIMATION_DECELERATE_FACTOR = 2F
-        private const val TOUR_ANIMATION_DURATION = 500L
     }
 }
