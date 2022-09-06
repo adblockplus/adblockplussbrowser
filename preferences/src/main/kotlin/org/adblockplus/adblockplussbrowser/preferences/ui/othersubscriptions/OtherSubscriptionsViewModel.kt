@@ -38,7 +38,8 @@ import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.preferences.ui.layoutForIndex
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import javax.inject.Inject
-import org.adblockplus.adblockplussbrowser.base.os.processFile
+import org.adblockplus.adblockplussbrowser.base.os.readText
+import org.adblockplus.adblockplussbrowser.base.os.resolveFilename
 
 @HiltViewModel
 internal class OtherSubscriptionsViewModel @Inject constructor(
@@ -137,9 +138,12 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
             _uiState.value = UiState.Loading
             addOtherSubscriptionsCount.apply { value = value?.plus(1) }
             kotlin.runCatching {
-                val (filename, fileContent) = context.contentResolver.processFile(uri)
+                val filename = context.contentResolver.resolveFilename(uri)
+                val fileContent = context.contentResolver.readText(uri)
                 // Save filter file into the application files
-                context.saveCustomFilterFile(filename, fileContent)
+                context.openFileOutput(filename, Context.MODE_PRIVATE).use {
+                    it.write(fileContent.toByteArray())
+                }
                 // As we don't depend on the location of this file, we can save the filename as url
                 val subscription = Subscription(
                     filename, filename, 0L, LOCAL_FILE
@@ -179,9 +183,3 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
         }
     }
 }
-
-// Save custom filter file into the application files
-private fun Context.saveCustomFilterFile(filename: String, fileContents: String) =
-    this.openFileOutput(filename, Context.MODE_PRIVATE).use {
-        it.write(fileContents.toByteArray())
-    }

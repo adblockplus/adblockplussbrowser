@@ -302,7 +302,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             }
 
             localFileSubscriptions.forEach { subscription ->
-                sink.writeUtf8(readLocalFile(subscription.title))
+                sink.writeUtf8(File(appContext.filesDir, subscription.title).readText())
             }
 
             if (BuildConfig.FLAVOR_product != BuildConfig.FLAVOR_CRYSTAL) {
@@ -341,10 +341,6 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             Timber.d("Removing old file: ${file.absolutePath}")
             file.delete()
         }
-    }
-
-    private fun readLocalFile(filename: String): String {
-        return File(appContext.filesDir, filename).readText()
     }
 
     private fun List<DownloadedSubscription>.toFiltersSet(): Set<String> {
