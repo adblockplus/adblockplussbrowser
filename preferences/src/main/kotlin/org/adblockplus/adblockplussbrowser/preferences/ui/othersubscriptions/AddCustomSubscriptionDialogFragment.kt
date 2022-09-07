@@ -48,7 +48,7 @@ internal class AddCustomSubscriptionDialogFragment : AppCompatDialogFragment() {
             }
             positiveButton(android.R.string.ok) { dialog ->
                 val url = dialog.getInputField().text.toString()
-                viewModel.addCustomUrl(url, context)
+                viewModel.addCustomUrl(url)
             }
             negativeButton(android.R.string.cancel)
         }
