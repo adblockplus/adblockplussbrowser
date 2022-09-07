@@ -109,6 +109,13 @@
             android:layout_height="match_parent" />
 
         <View
+            android:id="@+id/main_preferences_allowlist"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+        <View
             android:id="@+id/main_preferences_divider_2"
             style="@style/PreferenceDivider"
             android:layout_width="match_parent"
