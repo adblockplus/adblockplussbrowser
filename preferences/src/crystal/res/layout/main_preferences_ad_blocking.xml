@@ -56,6 +56,7 @@
             app:layout_constraintTop_toBottomOf="@id/main_preferences_ad_blocking_category">
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/preferences_primary_subscriptions_title_text"
                 style="@style/PreferenceTitleTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -86,6 +87,7 @@
             app:layout_constraintTop_toBottomOf="@id/main_preferences_divider_1">
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/preferences_other_subscriptions_title_text"
                 style="@style/PreferenceTitleTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -98,6 +100,13 @@
                 android:text="@string/preferences_other_subscriptions_summary" />
 
         </LinearLayout>
+
+        <!-- stub allowlisting view for Crystal  -->
+        <View
+            android:id="@+id/preferences_allowlist_title_text"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
         <View
             android:id="@+id/main_preferences_divider_2"

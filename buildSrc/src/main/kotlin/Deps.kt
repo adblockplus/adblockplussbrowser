@@ -43,6 +43,8 @@ object Deps {
 
     val SPEED_DIAL = "com.leinardi.android:speed-dial" version "3.3.0"
 
+    val SPOTLIGHT = "com.github.takusemba:spotlight" version "2.0.5"
+
     object Gms: DependencyGroup("com.google.android") {
         val OSS_LICENSES_PLUGIN = dependency {
             groupName("gms:oss-licenses-plugin")

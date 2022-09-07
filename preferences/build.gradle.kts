@@ -68,6 +68,7 @@ dependencies {
     implementation(Deps.OkHttp.OKHTTP)
     implementation(Deps.OkHttp.COROUTINES)
     implementation(Deps.KotlinX.COROUTINES)
+    implementation(Deps.SPOTLIGHT)
 
     testImplementation(Deps.ROBOLECTRIC)
     testImplementation(Deps.JUNIT)
