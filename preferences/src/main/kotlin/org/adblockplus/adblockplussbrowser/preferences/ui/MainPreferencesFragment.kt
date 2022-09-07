@@ -256,7 +256,7 @@ internal class MainPreferencesFragment :
                 val tourDialogLayout = layoutInflater.inflate(R.layout.tour_dialog, overlayRoot)
                 val allowlistView = binding.mainPreferencesAdBlockingInclude.preferencesAllowlistTitleText
                 val disableSocialMediaView =
-                    binding.mainPreferencesAdBlockingInclude.preferencesOtherSubscriptionsTitleText
+                    binding.mainPreferencesAdBlockingInclude.mainPreferencesOtherSubscriptions
                 if (BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_CRYSTAL) {
                     binding.mainPreferencesScroll.scrollTo(0, disableSocialMediaView.y.toInt())
                 } else {
@@ -286,7 +286,7 @@ internal class MainPreferencesFragment :
 
                 if (BuildConfig.FLAVOR_product != BuildConfig.FLAVOR_CRYSTAL) {
                     addTargetToSequence(
-                        allowlistView,
+                        binding.mainPreferencesAdBlockingInclude.mainPreferencesAllowlist,
                         tourDialogLayout,
                         R.string.tour_allowlist,
                         targets
