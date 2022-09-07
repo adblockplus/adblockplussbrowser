@@ -18,7 +18,12 @@
 package org.adblockplus.adblockplussbrowser.core.downloader
 
 import android.content.Context
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -46,6 +51,7 @@ import kotlin.time.ExperimentalTime
 
 @RunWith(MockitoJUnitRunner::class)
 @ExperimentalTime
+@ExperimentalCoroutinesApi
 class DownloaderTest {
 
     private val mockContext = Mockito.mock(Context::class.java)
@@ -55,9 +61,11 @@ class DownloaderTest {
     private lateinit var fakeCoreRepository : Fakes.FakeCoreRepository
     private lateinit var downloader : Downloader
     private lateinit var analyticsProvider : Fakes.FakeAnalyticsProvider
+    private val testDispatcher = StandardTestDispatcher()
 
     @Before
     fun setUp() {
+        Dispatchers.setMain(testDispatcher)
         mockWebServer.start()
         val appInfo = AppInfo()
         fakeCoreRepository = Fakes.FakeCoreRepository(mockWebServer.url("").toString())
@@ -73,6 +81,7 @@ class DownloaderTest {
 
     @After
     fun tearDown() {
+        Dispatchers.resetMain()
         mockWebServer.shutdown()
         File(filesDir).deleteRecursively()
         File(cacheDir).deleteRecursively()
@@ -101,7 +110,11 @@ class DownloaderTest {
         assertEquals(0, mockWebServer.requestCount)
         runBlocking {
             var downloadResult = downloader.download(
-                Subscription(fakeCoreRepository.aaUrl, "", 0L, CustomSubscriptionType.FROM_URL),false, true, true)
+                Subscription(fakeCoreRepository.aaUrl, "", 0L, CustomSubscriptionType.FROM_URL),
+                forced = false,
+                periodic = true,
+                newSubscription = true
+            )
             assertTrue(downloadResult is DownloadResult.Success)
             assertEquals(version, downloadResult.subscription?.version)
             assertEquals(etag, downloadResult.subscription?.etag)
@@ -110,7 +123,11 @@ class DownloaderTest {
             // We cannot test more that download status because saving subscription from
             // a previous download is done by the caller - UpdateSubscriptionsWorker.
             downloadResult = downloader.download(
-                Subscription(fakeCoreRepository.aaUrl, "", 0L, CustomSubscriptionType.FROM_URL),false, true, true)
+                Subscription(fakeCoreRepository.aaUrl, "", 0L, CustomSubscriptionType.FROM_URL),
+                forced = false,
+                periodic = true,
+                newSubscription = true
+            )
             assertTrue(downloadResult is DownloadResult.NotModified)
         }
         assertEquals(2, mockWebServer.requestCount)
@@ -134,7 +151,11 @@ class DownloaderTest {
         assertEquals(0, mockWebServer.requestCount)
         runBlocking {
             val downloadResult = downloader.download(
-                Subscription(fakeCoreRepository.aaUrl, "", 0L, CustomSubscriptionType.FROM_URL),false, true, true)
+                Subscription(fakeCoreRepository.aaUrl, "", 0L, CustomSubscriptionType.FROM_URL),
+                forced = false,
+                periodic = true,
+                newSubscription = true
+            )
             assertTrue(downloadResult is DownloadResult.Failed)
             assertNull(downloadResult.subscription)
         }
@@ -148,5 +169,33 @@ class DownloaderTest {
         }
         assertEquals(0, filesCount)
         assertEquals(analyticsProvider.error, "$HTTP_ERROR_LOG_HEADER_DOWNLOADER $HTTP_ERROR_MOCK_500")
+    }
+
+    @Test
+    fun testValidation() {
+        val etag = "1234567890"
+        val lastModified = "Thu, 23 Sep 2021 17:31:01 GMT"
+        val downloadFileContent = "[Adblock Plus 2.0]\n" +
+                "! Checksum: PRVPDDw+HOO0AQNjsGwCLg\n" +
+                "! Title: Allow nonintrusive advertising\n" +
+                "! Expires: 1 days\n" +
+                "! Homepage: https://acceptableads.com/"
+        val response = MockResponse()
+            .setResponseCode(HTTP_OK)
+            .setHeader("ETag", etag)
+            .setHeader("Last-Modified", lastModified)
+            .setHeader("Date", "Thu, 23 Sep 2021 17:31:01 GMT") //202109231731
+            .setBody(downloadFileContent)
+        mockWebServer.enqueue(response)
+
+        val subscription = Subscription(fakeCoreRepository.aaUrl, "", 0L, CustomSubscriptionType.FROM_URL)
+        runBlocking {
+            assertTrue(downloader.validate(subscription))
+        }
+
+        mockWebServer.enqueue(MockResponse().setResponseCode(HTTP_INTERNAL_ERROR))
+        runBlocking {
+            assertTrue(!downloader.validate(subscription))
+        }
     }
 }
