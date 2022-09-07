@@ -69,6 +69,7 @@ class DownloaderTest {
     private val version = "202109231731"
     private val etag = "1234567890"
     private val lastModified = "Thu, 23 Sep 2021 17:31:01 GMT"
+    private val lastModifiedInt = 202109231731L
     private val downloadFileContent = "[Adblock Plus 2.0]\n" +
             "! Checksum: PRVPDDw+HOO0AQNjsGwCLg\n" +
             "! Title: Allow nonintrusive advertising\n" +
@@ -97,8 +98,10 @@ class DownloaderTest {
         val appInfo = AppInfo()
         fakeCoreRepository = Fakes.FakeCoreRepository(mockWebServer.url("").toString())
         analyticsProvider = Fakes.FakeAnalyticsProvider()
-        downloader = OkHttpDownloader(mockContext, OkHttpClient(), fakeCoreRepository, appInfo,
-            analyticsProvider)
+        downloader = OkHttpDownloader(
+            mockContext, OkHttpClient(), fakeCoreRepository, appInfo,
+            analyticsProvider
+        )
         `when`(mockContext.applicationContext).thenReturn(mockContext)
         File(cacheDir).mkdirs()
         File(filesDir).mkdirs()
@@ -116,7 +119,7 @@ class DownloaderTest {
 
 
     @Test
-    fun testDownloadOK200_ThenOK304() {
+    fun `test successful download with code 200 and then again with code 304`() {
         mockWebServer.enqueue(goodResponse)
         mockWebServer.enqueue(MockResponse().setResponseCode(HTTP_NOT_MODIFIED))
 
@@ -148,7 +151,7 @@ class DownloaderTest {
     }
 
     @Test
-    fun testDownloadNOK500() {
+    fun `test download failure with code 500`() {
         mockWebServer.enqueue(badResponse)
 
         assertEquals(0, mockWebServer.requestCount)
@@ -171,7 +174,7 @@ class DownloaderTest {
     }
 
     @Test
-    fun testDownloadFailNoDate() {
+    fun `test download failure due to absence of Date header`() {
         mockWebServer.enqueue(MockResponse().setResponseCode(HTTP_OK).setBody(downloadFileContent))
         assertEquals(0, mockWebServer.requestCount)
         runBlocking {
@@ -187,7 +190,7 @@ class DownloaderTest {
     }
 
     @Test
-    fun testDownloadSuccessWithLessFields() {
+    fun `test download success with only the Date header`() {
         mockWebServer.enqueue(
             MockResponse()
                 .setHeader("Date", "Thu, 23 Sep 2021 17:31:01 GMT") //202109231731
@@ -200,7 +203,7 @@ class DownloaderTest {
             val downloadResult =
                 downloader.download(fakeSubscription, forced = false, periodic = true, newSubscription = true)
             assertTrue(downloadResult is DownloadResult.Success)
-            assertEquals("202109231731", downloadResult.subscription?.version)
+            assertEquals(lastModifiedInt.toString(), downloadResult.subscription?.version)
             assertEquals("", downloadResult.subscription?.etag)
             assertEquals("", downloadResult.subscription?.lastModified)
             assertEquals(1, downloadResult.subscription?.downloadCount)
@@ -208,18 +211,20 @@ class DownloaderTest {
     }
 
     @Test
-    fun testValidation() {
+    fun `test validation success on HTTP fetch`() {
         mockWebServer.enqueue(goodResponse)
         runBlocking { assertTrue(downloader.validate(fakeSubscription)) }
+    }
 
+    @Test
+    fun `test validation failure on HTTP fetch error`() {
         mockWebServer.enqueue(badResponse)
         runBlocking { assertTrue(!downloader.validate(fakeSubscription)) }
     }
 
     @Test
-    fun testGetDownloadedSubscription() {
-        // Test firstOrNull=null
-        var downloadedSubscription =
+    fun `test GetDownloadedSubscription when the subscription is absent in coreData`() {
+        val downloadedSubscription =
             runBlocking { (downloader as OkHttpDownloader).getDownloadedSubscription(fakeSubscription) }
         assertEquals(fakeCoreRepository.aaUrl, downloadedSubscription.url)
         assertTrue(downloadedSubscription.path.contains(Regex("tmp.filesDir.downloads")))
@@ -228,28 +233,23 @@ class DownloaderTest {
         assertEquals("0", downloadedSubscription.version)
         assertEquals("", downloadedSubscription.etag)
         assertEquals(0, downloadedSubscription.downloadCount)
+    }
 
-        // Test firstOrNull!=null
+    @Test
+    fun `test GetDownloadedSubscription when the subscription is present in coreData`() {
         val testSubscriptionUrl = "http://test.url"
+        val testDownloadedSubscription =
+            DownloadedSubscription(testSubscriptionUrl, "", lastModifiedInt, "lastModified", "version")
         fakeCoreRepository.coreData = CoreData(
-            true,
-            0L,
+            true, 0,
             SavedState(true, listOf(""), listOf(""), listOf(""), listOf("")),
-            listOf(DownloadedSubscription(testSubscriptionUrl)),
-            0L,
-            0
+            listOf(testDownloadedSubscription), 0L, 0
         )
-        downloadedSubscription = runBlocking {
+        val downloadedSubscription = runBlocking {
             (downloader as OkHttpDownloader).getDownloadedSubscription(
                 Subscription(testSubscriptionUrl, "", 0, CustomSubscriptionType.FROM_URL)
             )
         }
-        assertEquals(DownloadedSubscription(testSubscriptionUrl), downloadedSubscription)
-        assertEquals("", downloadedSubscription.path)
-        assertEquals(0, downloadedSubscription.lastUpdated)
-        assertEquals("", downloadedSubscription.lastModified)
-        assertEquals("0", downloadedSubscription.version)
-        assertEquals("", downloadedSubscription.etag)
-        assertEquals(0, downloadedSubscription.downloadCount)
+        assertEquals(testDownloadedSubscription, downloadedSubscription)
     }
 }
