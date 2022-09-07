@@ -171,6 +171,43 @@ class DownloaderTest {
     }
 
     @Test
+    fun testDownloadFailNoDate() {
+        mockWebServer.enqueue(MockResponse().setResponseCode(HTTP_OK).setBody(downloadFileContent))
+        assertEquals(0, mockWebServer.requestCount)
+        runBlocking {
+            assertTrue(
+                downloader.download(
+                    fakeSubscription,
+                    forced = false,
+                    periodic = true,
+                    newSubscription = true
+                ) is DownloadResult.Failed
+            )
+        }
+    }
+
+    @Test
+    fun testDownloadSuccessWithLessFields() {
+        mockWebServer.enqueue(
+            MockResponse()
+                .setHeader("Date", "Thu, 23 Sep 2021 17:31:01 GMT") //202109231731
+                .setResponseCode(HTTP_OK)
+                .setBody(downloadFileContent)
+        )
+
+        assertEquals(0, mockWebServer.requestCount)
+        runBlocking {
+            val downloadResult =
+                downloader.download(fakeSubscription, forced = false, periodic = true, newSubscription = true)
+            assertTrue(downloadResult is DownloadResult.Success)
+            assertEquals("202109231731", downloadResult.subscription?.version)
+            assertEquals("", downloadResult.subscription?.etag)
+            assertEquals("", downloadResult.subscription?.lastModified)
+            assertEquals(1, downloadResult.subscription?.downloadCount)
+        }
+    }
+
+    @Test
     fun testValidation() {
         mockWebServer.enqueue(goodResponse)
         runBlocking { assertTrue(downloader.validate(fakeSubscription)) }
