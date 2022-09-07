@@ -174,7 +174,7 @@ internal class OkHttpDownloader(
         }
     }
 
-    private suspend fun getDownloadedSubscription(subscription: Subscription): DownloadedSubscription {
+    internal suspend fun getDownloadedSubscription(subscription: Subscription): DownloadedSubscription {
         return try {
             val url = subscription.url.sanitizeUrl().toHttpUrl()
             val coreData = repository.getDataSync()

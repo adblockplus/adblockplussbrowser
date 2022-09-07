@@ -60,7 +60,7 @@ class Fakes {
         val aaUrl : String
         val easylistUrl : String
 
-        private val coreData : CoreData
+        internal var coreData : CoreData
 
         init {
             aaUrl = "$serverUrl/exceptionrules.txt"
