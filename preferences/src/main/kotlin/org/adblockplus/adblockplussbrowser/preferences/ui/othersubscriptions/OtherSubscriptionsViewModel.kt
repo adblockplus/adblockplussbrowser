@@ -19,7 +19,6 @@ package org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions
 
 import android.content.Context
 import android.net.Uri
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -39,9 +38,10 @@ import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.preferences.ui.layoutForIndex
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import javax.inject.Inject
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import org.adblockplus.adblockplussbrowser.base.os.readText
 import org.adblockplus.adblockplussbrowser.base.os.resolveFilename
-import org.adblockplus.adblockplussbrowser.preferences.R
 
 @HiltViewModel
 internal class OtherSubscriptionsViewModel @Inject constructor(
@@ -83,6 +83,11 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<UiState>(UiState.Done)
     val uiState = _uiState.asLiveData()
 
+    // Emit to a flow when there is an error with the custom subscription
+    private val _errorFlow = MutableSharedFlow<Unit>() // Backing property to avoid flow emissions from other classes
+    // Expose the flow to be observed from the Fragment
+    val errorFlow: SharedFlow<Unit> = _errorFlow
+
     private val addOtherSubscriptionsCount = MutableLiveData<Int>().apply { value = 0 }
 
     fun toggleAdditionalTracking() {
@@ -120,13 +125,13 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
 
     }
 
-    fun addCustomUrl(url: String, context: Context) {
+    fun addCustomUrl(url: String) {
         viewModelScope.launch {
             val subscription = Subscription(url, url,0L, FROM_URL)
             _uiState.value = UiState.Loading
             addOtherSubscriptionsCount.apply { value = value?.plus(1) }
             if (!subscriptionManager.validateSubscription(subscription)) {
-                context.showErrorMessage()
+                _errorFlow.emit(Unit)
             } else {
                 settingsRepository.addActiveOtherSubscription(subscription)
                 analyticsProvider.logEvent(AnalyticsEvent.CUSTOM_FILTER_LIST_ADDED_FROM_URL)
@@ -156,7 +161,7 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
                     settingsRepository.addActiveOtherSubscription(subscription)
                     analyticsProvider.logEvent(AnalyticsEvent.CUSTOM_FILTER_LIST_ADDED_FROM_FILE)
                 }.onFailure {
-                    showErrorMessage()
+                    _errorFlow.emit(Unit)
                 }
             }
             finishAddingCustomSubscription()
@@ -188,7 +193,4 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
             _uiState.value = UiState.Done
         }
     }
-
-    private fun Context.showErrorMessage() =
-        Toast.makeText(this, R.string.other_subscriptions_error_add_custom, Toast.LENGTH_LONG).show()
 }
