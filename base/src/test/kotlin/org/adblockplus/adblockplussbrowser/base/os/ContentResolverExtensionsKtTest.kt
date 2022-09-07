@@ -48,11 +48,13 @@ import kotlin.math.min
 private const val MEDIA_AUTHORITY = "media"
 private const val TEST_FILENAME = "test"
 private const val TEST_DISPLAY_NAME = "test.png"
-private val TEST_URI = Uri.parse("content://media/screenshot/20")
+private val IMAGE_TEST_URI = Uri.parse("content://media/screenshot/20")
+private val TEXT_TEST_URI = Uri.parse("content://media/textFiles/20")
 private const val IMG_3680_X_2070 = "3680x2070.jpg"
 private const val IMG_2070_X_3680 = "2070x3680.jpg"
 private const val IMG_640_X_480 = "640x480.jpg"
 private const val IMG_1280_X_960 = "1280x960.jpg"
+private const val TEST_TEXT_FILE = "test_text_file.txt"
 
 private const val MAX_RATIO_DELTA = 0.001f
 
@@ -89,14 +91,21 @@ class ContentResolverExtensionsKtTest {
     @Test
     fun `should resolve to a proper name`() {
         val values = ContentValues().apply { put(OpenableColumns.DISPLAY_NAME, TEST_DISPLAY_NAME) }
-        resolver.insert(TEST_URI, values)
-        val result = resolver.resolveFilename(TEST_URI)
+        resolver.insert(IMAGE_TEST_URI, values)
+        val result = resolver.resolveFilename(IMAGE_TEST_URI)
         assertEquals(TEST_DISPLAY_NAME, result)
     }
 
     @Test
+    fun `should read the text file content`() {
+        resolver.mapUriToResource(TEXT_TEST_URI, TEST_TEXT_FILE)
+        val result = resolver.readText(TEXT_TEST_URI)
+        assert(result.contains("www.google.com"))
+    }
+
+    @Test
     fun `the legacy loader should be able to load the default bitmap`() {
-        val bitmap = resolver.legacyLoadImage(TEST_URI, 1280, 720)
+        val bitmap = resolver.legacyLoadImage(IMAGE_TEST_URI, 1280, 720)
         assertEquals(100, bitmap.width)
         assertEquals(100, bitmap.height)
     }
@@ -143,11 +152,11 @@ class ContentResolverExtensionsKtTest {
     ) {
         val originalRatio = originalRatio(resourceName)
 
-        resolver.mapUriToResource(TEST_URI, resourceName)
+        resolver.mapUriToResource(IMAGE_TEST_URI, resourceName)
 
         val targetLongSide = max(targetSide1, targetSide2)
         val targetShortSide = min(targetSide1, targetSide2)
-        val bitmap = method(TEST_URI, targetLongSide, targetShortSide)
+        val bitmap = method(IMAGE_TEST_URI, targetLongSide, targetShortSide)
 
         val longSide = max(bitmap.width, bitmap.height)
         val shortSide = min(bitmap.width, bitmap.height)
