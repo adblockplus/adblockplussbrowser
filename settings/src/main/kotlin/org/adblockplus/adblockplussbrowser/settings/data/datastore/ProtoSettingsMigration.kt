@@ -118,6 +118,9 @@ internal class ProtoSettingsMigration(
                 }
             }
         }
+        otherSubscriptions.forEach {
+            Timber.i("SUBSCRIPTION ${it.url}, type ${it.type}")
+        }
         if (primarySubscriptions.isEmpty() && !sharedPrefs.applicationActivated) {
             primarySubscriptions.add(subscriptionsDataSource.getDefaultActiveSubscription().toProtoSubscription())
         }
