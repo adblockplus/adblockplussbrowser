@@ -57,12 +57,12 @@ dependencies {
     implementation(project(":preferences"))
     implementation(project(":settings"))
 
-    implementation(Deps.MATERIAL)
-    implementation(Deps.TIMBER)
-    implementation(Deps.AndroidX.ACTIVITY)
-    implementation(Deps.AndroidX.APPCOMPAT)
-    implementation(Deps.AndroidX.CORE)
-    implementation(Deps.AndroidX.CONSTRAINT_LAYOUT)
+    implementation(libs.material)
+    implementation(libs.timber)
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.constraintlayout)
     implementation(Deps.AndroidX.DataStore.DATASTORE)
     implementation(Deps.AndroidX.DataStore.PREFERENCES)
     implementation(Deps.AndroidX.Lifecycle.LIVEDATA)
@@ -82,7 +82,7 @@ dependencies {
     implementation(Deps.Protobuf.JAVALITE)
     implementation(Deps.OkHttp.OKHTTP)
     implementation(Deps.OkHttp.LOGGER)
-    implementation(Deps.Gms.OSS_LICENSES)
+    implementation(libs.gms.play.services.oss.licenses)
     implementation(Deps.Android.INSTALL_REFERRER)
 }
 

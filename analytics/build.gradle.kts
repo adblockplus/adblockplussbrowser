@@ -26,9 +26,9 @@ applyCommonConfig()
 
 dependencies {
     implementation(Deps.Hilt.ANDROID)
-    implementation(Deps.Firebase.CRASHLYTICS)
+    implementation(libs.firebase.crashlytics.ktx)
     kapt(Deps.Hilt.ANDROID_COMPILER)
-    implementation(platform(Deps.Firebase.BOM))
-    implementation(Deps.Firebase.ANALYTICS)
-    implementation(Deps.TIMBER)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.timber)
 }

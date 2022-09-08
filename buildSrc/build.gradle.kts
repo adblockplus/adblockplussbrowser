@@ -25,6 +25,7 @@ plugins {
 }
 
 dependencies {
-    implementation("com.android.tools.build:gradle:7.0.4")
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.10")
+    // implementation(libs.)
+    implementation(libs.android.plugin.gradle)
+    implementation(libs.kotlin.plugin.gradle)
 }

@@ -19,7 +19,10 @@ import com.android.build.api.dsl.AndroidSourceSet
 import com.android.build.gradle.AppExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
+import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.findByType
+
 import java.util.Locale
 
 // Flavor descriptor
@@ -89,11 +92,10 @@ fun Project.applyCommonConfig() {
     }
 
     dependencies {
+        val libs = project.extensions.findByType<VersionCatalogsExtension>()!!.named("libs")
+
         implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-
-        testImplementation(Deps.JUNIT)
-
-        androidTestImplementation(Deps.AndroidX.Test.JUNIT)
+        androidTestImplementation(libs.findLibrary("junit").get())
         androidTestImplementation(Deps.AndroidX.Test.Espresso.CORE)
     }
 }

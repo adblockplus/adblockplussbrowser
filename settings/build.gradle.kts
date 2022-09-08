@@ -31,12 +31,12 @@ applyCommonConfig()
 dependencies {
     implementation(project(":base"))
 
-    implementation(Deps.AndroidX.APPCOMPAT)
+    implementation(libs.androidx.appcompat)
     implementation(Deps.AndroidX.DataStore.DATASTORE)
     implementation(Deps.Protobuf.JAVALITE)
     implementation(Deps.Hilt.ANDROID)
     kapt(Deps.Hilt.ANDROID_COMPILER)
-    implementation(Deps.TIMBER)
+    implementation(libs.timber)
 }
 
 createFlavorsConfig()
