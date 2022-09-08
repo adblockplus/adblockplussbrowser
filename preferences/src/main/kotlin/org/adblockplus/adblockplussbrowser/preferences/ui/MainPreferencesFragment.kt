@@ -317,6 +317,15 @@ internal class MainPreferencesFragment :
                 val nextTarget = View.OnClickListener { spotlight.next() }
 
                 val closeSpotlight = View.OnClickListener { spotlight.finish() }
+                tourDialogLayout.findViewById<View>(R.id.tour_layout).setOnClickListener {
+                    spotlight.finish()
+                }
+                tourDialogLayout.findViewById<View>(R.id.tour_dialog_text).setOnClickListener {
+                    Timber.i("Mute on purpose")
+                }
+                tourDialogLayout.findViewById<View>(R.id.tour_dialog_layout).setOnClickListener {
+                    Timber.i("Mute on purpose")
+                }
                 tourDialogLayout.findViewById<View>(R.id.tour_next_button).setOnClickListener(nextTarget)
                 tourDialogLayout.findViewById<View>(R.id.tour_skip_button).setOnClickListener(closeSpotlight)
             },
