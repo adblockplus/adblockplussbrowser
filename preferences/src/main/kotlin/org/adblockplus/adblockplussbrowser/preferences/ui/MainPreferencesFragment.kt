@@ -320,9 +320,7 @@ internal class MainPreferencesFragment :
 
         val closeSpotlight = View.OnClickListener { spotlight.finish() }
         // If the user clicks outside the dialog, we stop the start guide
-        tourDialogLayout.findViewById<View>(R.id.tour_layout).setOnClickListener {
-            spotlight.finish()
-        }
+        tourDialogLayout.findViewById<View>(R.id.tour_layout).setOnClickListener(closeSpotlight)
 
         // Setting clickable to false doesn't effect clickability of those views thus we are swallowing click events
         tourDialogLayout.findViewById<View>(R.id.tour_dialog_text).setOnClickListener {
