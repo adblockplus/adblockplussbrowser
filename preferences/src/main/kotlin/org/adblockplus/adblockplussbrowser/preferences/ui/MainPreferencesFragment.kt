@@ -298,39 +298,35 @@ internal class MainPreferencesFragment :
                     .setTargets(targets)
                     .setBackgroundColorRes(R.color.spotlight_background)
                     .setOnSpotlightListener(object : OnSpotlightListener {
-                        override fun onStarted() {
-                            Timber.i("Spotlight started")
-                        }
+                        override fun onStarted() { Timber.i("Spotlight started") }
 
-                        override fun onEnded() {
-                            Toast.makeText(
-                                requireContext(),
-                                "Tour ended",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
+                        override fun onEnded() { Timber.i("Spotlight ended") }
                     })
                     .build()
 
                 spotlight.start()
 
-                val nextTarget = View.OnClickListener { spotlight.next() }
-
-                val closeSpotlight = View.OnClickListener { spotlight.finish() }
-                tourDialogLayout.findViewById<View>(R.id.tour_layout).setOnClickListener {
-                    spotlight.finish()
-                }
-                tourDialogLayout.findViewById<View>(R.id.tour_dialog_text).setOnClickListener {
-                    Timber.i("Mute on purpose")
-                }
-                tourDialogLayout.findViewById<View>(R.id.tour_dialog_layout).setOnClickListener {
-                    Timber.i("Mute on purpose")
-                }
-                tourDialogLayout.findViewById<View>(R.id.tour_next_button).setOnClickListener(nextTarget)
-                tourDialogLayout.findViewById<View>(R.id.tour_skip_button).setOnClickListener(closeSpotlight)
+                setClickListeners(spotlight, tourDialogLayout)
             },
             lifecycleOwner
         )
+    }
+
+    private fun setClickListeners(spotlight: Spotlight, tourDialogLayout: View) {
+        val nextTarget = View.OnClickListener { spotlight.next() }
+
+        val closeSpotlight = View.OnClickListener { spotlight.finish() }
+        tourDialogLayout.findViewById<View>(R.id.tour_layout).setOnClickListener {
+            spotlight.finish()
+        }
+        tourDialogLayout.findViewById<View>(R.id.tour_dialog_text).setOnClickListener {
+            Timber.i("Mute on purpose")
+        }
+        tourDialogLayout.findViewById<View>(R.id.tour_dialog_layout).setOnClickListener {
+            Timber.i("Mute on purpose")
+        }
+        tourDialogLayout.findViewById<View>(R.id.tour_next_button).setOnClickListener(nextTarget)
+        tourDialogLayout.findViewById<View>(R.id.tour_skip_button).setOnClickListener(closeSpotlight)
     }
 
     private fun addTargetToSequence(
