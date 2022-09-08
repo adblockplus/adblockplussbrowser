@@ -297,9 +297,13 @@ internal class MainPreferencesFragment :
                     .setTargets(targets)
                     .setBackgroundColorRes(R.color.spotlight_background)
                     .setOnSpotlightListener(object : OnSpotlightListener {
-                        override fun onStarted() { Timber.i("Spotlight started") }
+                        override fun onStarted() {
+                            Timber.i("Spotlight started")
+                        }
 
-                        override fun onEnded() { Timber.i("Spotlight ended") }
+                        override fun onEnded() {
+                            Timber.i("Spotlight ended")
+                        }
                     })
                     .build()
 
@@ -318,12 +322,15 @@ internal class MainPreferencesFragment :
         tourDialogLayout.findViewById<View>(R.id.tour_layout).setOnClickListener {
             spotlight.finish()
         }
+
+        // Setting clickable to false doesn't effect clickability of those views thus we are swallowing click events
         tourDialogLayout.findViewById<View>(R.id.tour_dialog_text).setOnClickListener {
             Timber.i("Mute on purpose")
         }
         tourDialogLayout.findViewById<View>(R.id.tour_dialog_layout).setOnClickListener {
             Timber.i("Mute on purpose")
         }
+
         tourDialogLayout.findViewById<View>(R.id.tour_next_button).setOnClickListener(nextTarget)
         tourDialogLayout.findViewById<View>(R.id.tour_skip_button).setOnClickListener(closeSpotlight)
     }
