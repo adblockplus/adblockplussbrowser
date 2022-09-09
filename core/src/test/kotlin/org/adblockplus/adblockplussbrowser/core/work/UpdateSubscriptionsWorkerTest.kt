@@ -23,11 +23,14 @@ import androidx.work.ListenableWorker
 import androidx.work.testing.TestListenableWorkerBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
+import org.adblockplus.adblockplussbrowser.base.data.model.CustomSubscriptionType
+import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscription
 import org.adblockplus.adblockplussbrowser.core.downloader.DownloadResult
 import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
@@ -36,13 +39,18 @@ import org.adblockplus.adblockplussbrowser.core.helpers.WorkerParameters
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
+import org.junit.Assert.assertEquals
+import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.kotlin.any
 import org.robolectric.RobolectricTestRunner
+import java.io.BufferedInputStream
+import java.io.ByteArrayInputStream
 import java.io.File
+import java.nio.charset.StandardCharsets
 
 @RunWith(RobolectricTestRunner::class)
 @ExperimentalCoroutinesApi
@@ -76,6 +84,14 @@ class UpdateSubscriptionsWorkerTest {
         worker.coreRepository = Fakes.FakeCoreRepository("")
         worker.downloader = downloader
         worker.settingsRepository = Fakes.FakeSettingsRepository("")
+        runBlocking {
+            worker.settingsRepository.addActiveOtherSubscription(
+                Subscription(
+                    "", "empty", 0L,
+                    CustomSubscriptionType.LOCAL_FILE
+                )
+            )
+        }
         worker.debugPreferences = Fakes.FakeDebugPreferences()
         return worker
     }
@@ -162,6 +178,22 @@ class UpdateSubscriptionsWorkerTest {
             val result = updateSubscriptionsWorker.doWork()
             assertThat(result, `is`(ListenableWorker.Result.Retry()))
         }
+    }
+
+    @Test
+    fun `test getFiltersFromStream`() {
+        val updateSubscriptionsWorker = createWorker(WorkerParameters()) as UpdateSubscriptionsWorker
+        val filters = "Filter1\nFilter2"
+        val result = updateSubscriptionsWorker.getFiltersFromStream(filters.byteInputStream())
+        assertEquals(result, "$filters\n")
+    }
+
+    @Test
+    fun `test getFiltersFromStream on null`() {
+        val updateSubscriptionsWorker = createWorker(WorkerParameters()) as UpdateSubscriptionsWorker
+        kotlin.runCatching {
+            val result = updateSubscriptionsWorker.getFiltersFromStream(null)
+        }.onSuccess { fail() }
     }
 }
 
