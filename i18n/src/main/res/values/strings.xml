@@ -189,6 +189,7 @@
     <string name="tour_add_languages" tools:ignore="MissingTranslation">Add the languages you usually browse in</string>
     <string name="tour_disable_social_media_tracking" tools:ignore="MissingTranslation">Disable social media tracking while browsing</string>
     <string name="tour_allowlist" tools:ignore="MissingTranslation">Allowlist a website to continue seeing ads on it</string>
-    <string name="tour_last_step" tools:ignore="MissingTranslation">That’s it! You are ready to use ABP for Samsung Internet to its fullest</string>
+    <string name="tour_last_step_description" tools:ignore="MissingTranslation">That’s it! You are ready to use ABP for Samsung Internet to its fullest</string>
+    <string name="tour_last_step_button_done" tools:ignore="MissingTranslation">Done</string>
 
 </resources>
