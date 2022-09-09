@@ -368,6 +368,6 @@ internal class MainPreferencesFragment :
     }
 
     private companion object {
-        private const val TARGET_CORNER_RADIUS = 6f
+        private const val TARGET_CORNER_RADIUS = 16f
     }
 }
