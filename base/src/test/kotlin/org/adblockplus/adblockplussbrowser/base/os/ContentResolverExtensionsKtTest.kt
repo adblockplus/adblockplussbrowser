@@ -160,11 +160,12 @@ class ContentResolverExtensionsKtTest {
         assertThat(deltaRatio, isEqualOrLess(MAX_RATIO_DELTA))
     }
 
-    private fun originalRatio(resourceName: String) = javaClass.classLoader!!.getResourceAsStream(resourceName).use {
-        val options = BitmapFactory.Options().also { it.inJustDecodeBounds = true }
-        BitmapFactory.decodeStream(it, null, options)
-        options.outWidth / options.outHeight.toFloat()
-    }
+    private fun originalRatio(resourceName: String) =
+        javaClass.classLoader!!.getResourceAsStream(resourceName).use { inputStream ->
+            val options = BitmapFactory.Options().also { it.inJustDecodeBounds = true }
+            BitmapFactory.decodeStream(inputStream, null, options)
+            options.outWidth / options.outHeight.toFloat()
+        }
 }
 
 private fun ContentResolver.mapUriToResource(uri: Uri, resourceName: String) =
