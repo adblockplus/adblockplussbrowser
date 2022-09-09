@@ -84,14 +84,6 @@ class UpdateSubscriptionsWorkerTest {
         worker.coreRepository = Fakes.FakeCoreRepository("")
         worker.downloader = downloader
         worker.settingsRepository = Fakes.FakeSettingsRepository("")
-        runBlocking {
-            worker.settingsRepository.addActiveOtherSubscription(
-                Subscription(
-                    "", "empty", 0L,
-                    CustomSubscriptionType.LOCAL_FILE
-                )
-            )
-        }
         worker.debugPreferences = Fakes.FakeDebugPreferences()
         return worker
     }
