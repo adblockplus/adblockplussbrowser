@@ -35,8 +35,9 @@ internal class AddCustomSubscriptionDialogFragment : AppCompatDialogFragment() {
 
     private val viewModel: OtherSubscriptionsViewModel by activityViewModels()
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
-        MaterialDialog(requireContext()).show {
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val context = requireContext()
+        return MaterialDialog(context).show {
             title(R.string.other_subscriptions_add_custom_title)
             input(
                 hintRes = R.string.other_subscriptions_add_custom_hint,
@@ -51,4 +52,5 @@ internal class AddCustomSubscriptionDialogFragment : AppCompatDialogFragment() {
             }
             negativeButton(android.R.string.cancel)
         }
+    }
 }

@@ -51,11 +51,12 @@ internal class DeleteCustomSubscriptionDialogFragment : AppCompatDialogFragment(
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return MaterialDialog(requireContext()).show {
+        val context = requireContext()
+        return MaterialDialog(context).show {
             title(R.string.delete_dialog_title)
             message(0, getString(R.string.other_subscriptions_remove_custom_message, item.subscription.url))
             positiveButton(android.R.string.ok) {
-                viewModel.removeSubscription(item)
+                viewModel.removeSubscription(item, context)
                 dismiss()
             }
             negativeButton(android.R.string.cancel) {

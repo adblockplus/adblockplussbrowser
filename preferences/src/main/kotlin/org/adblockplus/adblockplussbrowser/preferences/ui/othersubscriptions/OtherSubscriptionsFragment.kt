@@ -27,6 +27,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.leinardi.android.speeddial.SpeedDialActionItem
@@ -35,13 +36,13 @@ import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.BuildConfig
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
-import org.adblockplus.adblockplussbrowser.base.os.resolveFilename
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentOtherSubscriptionsBinding
 import org.adblockplus.adblockplussbrowser.preferences.ui.SwipeToDeleteCallback
 import javax.inject.Inject
-
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 internal class OtherSubscriptionsFragment :
@@ -82,12 +83,16 @@ internal class OtherSubscriptionsFragment :
 
         viewModel.uiState.observe(this) { uiState ->
             when (uiState) {
-                UiState.Done -> binding.indeterminateBar.visibility = View.INVISIBLE
-                UiState.Error -> Toast.makeText(
-                    requireContext(),
-                    getString(R.string.other_subscriptions_error_add_custom), Toast.LENGTH_LONG
-                ).show()
                 UiState.Loading -> binding.indeterminateBar.visibility = View.VISIBLE
+                else -> binding.indeterminateBar.visibility = View.INVISIBLE
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.errorFlow.collect {
+                Toast.makeText(
+                    requireContext(), R.string.other_subscriptions_error_add_custom, Toast.LENGTH_LONG
+                ).show()
             }
         }
 
@@ -127,20 +132,11 @@ internal class OtherSubscriptionsFragment :
     private fun handleFilePickingResult(result: ActivityResult) {
         if (result.resultCode == Activity.RESULT_OK) {
             result.data?.data?.let { filePath ->
-                activity?.contentResolver?.resolveFilename(filePath)?.let { filename ->
-                    viewModel.addCustomFilterFile(
-                        filePath.toString(),
-                        filename
-                    )
-                }
+                viewModel.addCustomFilterFile(filePath, requireContext())
             }
         } else {
             analyticsProvider.logEvent(AnalyticsEvent.DEVICE_FILE_MANAGER_NOT_SUPPORTED_OR_CANCELED)
-            Toast.makeText(
-                context,
-                getText(R.string.file_picking_canceled),
-                Toast.LENGTH_LONG
-            ).show()
+            Toast.makeText(context, getText(R.string.file_picking_canceled), Toast.LENGTH_LONG).show()
         }
     }
 
