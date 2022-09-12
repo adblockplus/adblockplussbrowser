@@ -176,12 +176,10 @@ class UpdateSubscriptionsWorkerTest {
         assertEquals(result, "$filters\n")
     }
 
-    @Test
+    @Test(expected = NullPointerException::class)
     fun `test getFiltersFromStream on null`() {
         val updateSubscriptionsWorker = createWorker(WorkerParameters()) as UpdateSubscriptionsWorker
-        kotlin.runCatching {
-            val result = updateSubscriptionsWorker.getFiltersFromStream(null)
-        }.onSuccess { fail() }
+        updateSubscriptionsWorker.getFiltersFromStream(null)
     }
 
     @Test
