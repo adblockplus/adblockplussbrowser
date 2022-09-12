@@ -50,11 +50,6 @@ internal class CustomViewHolder(val binding: OtherSubscriptionsCustomItemBinding
     fun bind(item: OtherSubscriptionsItem.CustomItem) {
         binding.item = item
         binding.executePendingBindings()
-        if (item.subscription.lastUpdate == Subscription.SUBSCRIPTION_LAST_UPDATE_ERROR_STATUS) {
-            binding.otherSubscriptionsCustomItemSummary.visibility = View.GONE
-            binding.otherSubscriptionsFileNotFoundMessage.visibility = View.VISIBLE
-            binding.fileNotFoundErrorIcon.visibility = View.VISIBLE
-        }
     }
 }
 
