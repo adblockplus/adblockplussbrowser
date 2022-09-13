@@ -57,13 +57,6 @@ data class Subscription(
                 "You forgot to specify a URL override for the flavor you have added"
             ) else url
         }
-
-    @IgnoredOnParcel
-    var hasError: Boolean = false
-
-    companion object {
-        const val SUBSCRIPTION_LAST_UPDATE_ERROR_STATUS = 9999L
-    }
 }
 
 enum class CustomSubscriptionType {
