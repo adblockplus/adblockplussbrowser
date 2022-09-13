@@ -72,6 +72,7 @@ class FakeAnalyticsProvider : AnalyticsProvider {
     override fun disable() { return }
 }
 
+@SuppressWarnings("EmptyFunctionBlock")
 open class FakeSettingsRepository(private val serverUrl: String) : SettingsRepository {
     var acceptableAdsStatus: Boolean = true
 
