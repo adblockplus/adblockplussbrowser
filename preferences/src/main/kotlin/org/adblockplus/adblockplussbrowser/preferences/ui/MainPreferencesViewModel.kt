@@ -28,6 +28,7 @@ import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent.LANGUAGES_CA
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import javax.inject.Inject
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 
 @HiltViewModel
 internal class MainPreferencesViewModel @Inject constructor(
@@ -74,5 +75,18 @@ internal class MainPreferencesViewModel @Inject constructor(
         viewModelScope.launch {
             settingsRepository.checkLanguagesOnboardingCompleted()
         }
+    }
+
+    fun logStartGuideStarted() {
+        analyticsProvider.logEvent(AnalyticsEvent.TOUR_STARTED)
+    }
+
+    fun logStartGuideSkipped(step: Int) {
+        AnalyticsEvent.TOUR_SKIPPED.flag = step.toString()
+        analyticsProvider.logEvent(AnalyticsEvent.TOUR_SKIPPED)
+    }
+
+    fun logStartGuideCompleted() {
+        analyticsProvider.logEvent(AnalyticsEvent.TOUR_COMPLETED)
     }
 }

@@ -17,7 +17,7 @@
 
 package org.adblockplus.adblockplussbrowser.analytics
 
-enum class AnalyticsEvent(val eventName: String) {
+enum class AnalyticsEvent(val eventName: String, var flag: String = "") {
 
     /**
      * A new language list has been added.
@@ -191,5 +191,20 @@ enum class AnalyticsEvent(val eventName: String) {
     /**
      * Sending the issue report finished with error
      */
-    SEND_ISSUE_REPORT_SUCCESS("send_issue_report_success")
+    SEND_ISSUE_REPORT_SUCCESS("send_issue_report_success"),
+
+    /**
+        The user taps on the "Start tour" option
+     */
+    TOUR_STARTED("start_guide_tour_started"),
+
+    /**
+     * The user exits from the tour with "skip" or taps on the area outside the dialogue
+     */
+    TOUR_SKIPPED("start_guide_tour_skipped"),
+
+    /**
+     * The user has finished all the steps and taps on "Done" in the tour dialogue
+     */
+    TOUR_COMPLETED("start_guide_tour_completed")
 }

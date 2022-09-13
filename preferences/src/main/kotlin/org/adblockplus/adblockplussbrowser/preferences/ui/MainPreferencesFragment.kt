@@ -34,6 +34,7 @@ import com.takusemba.spotlight.Spotlight
 import com.takusemba.spotlight.Target
 import com.takusemba.spotlight.shape.RoundedRectangle
 import dagger.hilt.android.AndroidEntryPoint
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
 import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
@@ -51,6 +52,13 @@ internal class MainPreferencesFragment :
 
     // Lazy loading the UpdateSubscriptionsViewModel so it will only be used for crystal flavor here
     private val updateViewModel: UpdateSubscriptionsViewModel by activityViewModels()
+
+    /*
+        Use a global targets list to be able to handle at what point the start guide was skipped.
+        The list contains pairs of Int and Target.
+        The int value represents weather the target was seen (1) or not(0)
+    */
+    private val startGuideTargets: MutableList<CustomTargetWithStatus> = mutableListOf()
 
     override fun onBindView(binding: FragmentMainPreferencesBinding) {
         binding.viewModel = viewModel
@@ -250,7 +258,14 @@ internal class MainPreferencesFragment :
     ) {
         binding.mainPreferencesGuideInclude.mainPreferencesGuideInclude.setDebounceOnClickListener(
             {
-                val targets = ArrayList<Target>()
+                viewModel.logStartGuideStarted()
+                /*
+                    When starting map all the seen values to 0.
+                    Specially for when the user has already started the tour before
+                */
+//                startGuideTargets.map { it.seen = 0 }
+
+                // Prepare start guide steps
                 val overlayRoot = FrameLayout(requireContext())
                 val tourDialogLayout = layoutInflater.inflate(R.layout.tour_dialog, overlayRoot)
                 val allowlistView = binding.mainPreferencesAdBlockingInclude.preferencesAllowlistTitleText
@@ -261,42 +276,11 @@ internal class MainPreferencesFragment :
                 } else {
                     binding.mainPreferencesScroll.scrollTo(0, allowlistView.y.toInt())
                 }
+                prepareStartGuideSteps(binding, tourDialogLayout, disableSocialMediaView)
 
-                addTargetToSequence(
-                    binding.mainPreferencesAdBlockingInclude.mainPreferencesAdBlockingCategory,
-                    tourDialogLayout,
-                    R.string.tour_dialog_ad_blocking_options_text,
-                    targets
-                )
-
-                addTargetToSequence(
-                    binding.mainPreferencesAdBlockingInclude.mainPreferencesPrimarySubscriptions,
-                    tourDialogLayout,
-                    R.string.tour_add_languages,
-                    targets
-                )
-
-                addTargetToSequence(
-                    disableSocialMediaView,
-                    tourDialogLayout,
-                    R.string.tour_disable_social_media_tracking,
-                    targets
-                )
-
-                if (BuildConfig.FLAVOR_product != BuildConfig.FLAVOR_CRYSTAL) {
-                    addTargetToSequence(
-                        binding.mainPreferencesAdBlockingInclude.mainPreferencesAllowlist,
-                        tourDialogLayout,
-                        R.string.tour_allowlist,
-                        targets
-                    )
-                }
-
-                addLastStepToSequence(tourDialogLayout, targets)
-
-                // create spotlight
+                // Create spotlight
                 val spotlight = Spotlight.Builder(requireActivity())
-                    .setTargets(targets)
+                    .setTargets(startGuideTargets.map { it.target })
                     .setBackgroundColorRes(R.color.spotlight_background)
                     .setOnSpotlightListener(object : OnSpotlightListener {
                         override fun onStarted() {
@@ -308,19 +292,47 @@ internal class MainPreferencesFragment :
                         }
                     })
                     .build()
-
-                spotlight.start()
-
                 setClickListeners(spotlight, tourDialogLayout)
+                spotlight.start()
             },
             lifecycleOwner
         )
     }
 
-    private fun addLastStepToSequence(
+    private fun prepareStartGuideSteps(
+        binding: FragmentMainPreferencesBinding,
         tourDialogLayout: View,
-        targets: ArrayList<Target>
-    ) {
+        disableSocialMediaView: View) {
+
+        addTargetToSequence(
+            binding.mainPreferencesAdBlockingInclude.mainPreferencesAdBlockingCategory,
+            tourDialogLayout,
+            R.string.tour_dialog_ad_blocking_options_text
+        )
+
+        addTargetToSequence(
+            binding.mainPreferencesAdBlockingInclude.mainPreferencesPrimarySubscriptions,
+            tourDialogLayout,
+            R.string.tour_add_languages
+        )
+
+        addTargetToSequence(
+            disableSocialMediaView,
+            tourDialogLayout,
+            R.string.tour_disable_social_media_tracking
+        )
+
+        if (BuildConfig.FLAVOR_product != BuildConfig.FLAVOR_CRYSTAL) {
+            addTargetToSequence(
+                binding.mainPreferencesAdBlockingInclude.mainPreferencesAllowlist,
+                tourDialogLayout,
+                R.string.tour_allowlist
+            )
+        }
+        addLastStepToSequence(tourDialogLayout)
+    }
+
+    private fun addLastStepToSequence(tourDialogLayout: View) {
         val target = Target.Builder()
             .setOverlay(tourDialogLayout)
             .setShape(RoundedRectangle(0f, 0f, 0f))
@@ -336,18 +348,24 @@ internal class MainPreferencesFragment :
 
                 override fun onEnded() {
                     Timber.i("Tour end")
+                    viewModel.logStartGuideCompleted()
                 }
             })
             .build()
-        targets.add(target)
+        startGuideTargets.add(CustomTargetWithStatus(target))
     }
 
     private fun setClickListeners(spotlight: Spotlight, tourDialogLayout: View) {
-        val nextTarget = View.OnClickListener { spotlight.next() }
+        val nextTarget = View.OnClickListener {
+            startGuideTargets.find { it.seen == 0 }?.seen = 1
+            spotlight.next()
+        }
 
-        val closeSpotlight = View.OnClickListener { spotlight.finish() }
         // If the user clicks outside the dialog, we stop the start guide
-        tourDialogLayout.findViewById<View>(R.id.tour_layout).setOnClickListener(closeSpotlight)
+        tourDialogLayout.findViewById<View>(R.id.tour_layout).setOnClickListener {
+            skipTour()
+            spotlight.close()
+        }
 
         // Setting clickable to false doesn't effect clickability of those views thus we are swallowing click events
         tourDialogLayout.findViewById<View>(R.id.tour_dialog_text).setOnClickListener {
@@ -358,15 +376,19 @@ internal class MainPreferencesFragment :
         }
 
         tourDialogLayout.findViewById<View>(R.id.tour_next_button).setOnClickListener(nextTarget)
-        tourDialogLayout.findViewById<View>(R.id.tour_skip_button).setOnClickListener(closeSpotlight)
-        tourDialogLayout.findViewById<View>(R.id.tour_last_step_done_button).setOnClickListener(closeSpotlight)
+        tourDialogLayout.findViewById<View>(R.id.tour_skip_button).setOnClickListener {
+            skipTour()
+            spotlight.close()
+        }
+        tourDialogLayout.findViewById<View>(R.id.tour_last_step_done_button).setOnClickListener{
+            spotlight.close()
+        }
     }
 
     private fun addTargetToSequence(
         highLightView: View,
         tourDialogLayout: View,
-        resId: Int,
-        targets: ArrayList<Target>,
+        resId: Int
     ) {
         val target = Target.Builder()
             .setAnchor(highLightView)
@@ -381,13 +403,15 @@ internal class MainPreferencesFragment :
                 override fun onStarted() {
                     tourDialogLayout.findViewById<TextView>(R.id.tour_dialog_text).setText(resId)
                 }
-
-                override fun onEnded() {
-                    Timber.i("Tour end")
-                }
+                override fun onEnded() {}
             })
             .build()
-        targets.add(target)
+        startGuideTargets.add(CustomTargetWithStatus(target))
+    }
+
+    private fun skipTour() {
+        val skippedAt = startGuideTargets.indexOf(startGuideTargets.find { it.seen == 0 }) + 1
+        viewModel.logStartGuideSkipped(step = skippedAt)
     }
 
     override fun onResume() {
@@ -399,3 +423,10 @@ internal class MainPreferencesFragment :
         private const val TARGET_CORNER_RADIUS = 6f
     }
 }
+
+private fun Spotlight.close() = this.finish()
+
+private class CustomTargetWithStatus(
+    val target: Target,
+    var seen: Int = 0
+)
