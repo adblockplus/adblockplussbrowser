@@ -169,20 +169,6 @@ class UpdateSubscriptionsWorkerTest {
     }
 
     @Test
-    fun `test getFiltersFromStream`() {
-        val updateSubscriptionsWorker = createWorker(WorkerParameters()) as UpdateSubscriptionsWorker
-        val filters = "Filter1\nFilter2"
-        val result = updateSubscriptionsWorker.getFiltersFromStream(filters.byteInputStream())
-        assertEquals(result, "$filters\n")
-    }
-
-    @Test(expected = NullPointerException::class)
-    fun `test getFiltersFromStream on null`() {
-        val updateSubscriptionsWorker = createWorker(WorkerParameters()) as UpdateSubscriptionsWorker
-        updateSubscriptionsWorker.getFiltersFromStream(null)
-    }
-
-    @Test
     fun `test isFilter`() {
         assertFalse("".isFilter())
         assertFalse("[abcd".isFilter())
