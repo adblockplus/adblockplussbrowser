@@ -298,7 +298,9 @@ internal class MainPreferencesFragment :
                         }
                     })
                     .build()
+
                 setClickListeners(spotlight, tourDialogLayout)
+                // Start Spotlight
                 spotlight.start()
             },
             lifecycleOwner
@@ -362,7 +364,6 @@ internal class MainPreferencesFragment :
 
                 override fun onEnded() {
                     Timber.i("Tour end")
-                    viewModel.logStartGuideCompleted()
                 }
             })
             .build()
@@ -397,6 +398,7 @@ internal class MainPreferencesFragment :
             spotlight.finish()
         }
         tourDialogLayout.findViewById<View>(R.id.tour_last_step_done_button).setOnClickListener{
+            viewModel.logStartGuideCompleted()
             spotlight.finish()
         }
     }
@@ -420,7 +422,10 @@ internal class MainPreferencesFragment :
                 override fun onStarted() {
                     tourDialogLayout.findViewById<TextView>(R.id.tour_dialog_text).setText(resId)
                 }
-                override fun onEnded() {}
+                override fun onEnded() {
+                    // This will be executed either when "Next" or "Skipped"
+                    Timber.i("Step ended")
+                }
             })
             .build()
         targets.add(target)
