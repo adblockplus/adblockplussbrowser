@@ -280,8 +280,10 @@ internal class MainPreferencesFragment :
                     targets.forEach { _ -> startGuideStepStatus.add(false) }
                 } else {
                     /* If the status list already has elements, just restart the
-                    `seen` status to 0, the tour is re-started */
-                    startGuideStepStatus.map { false }
+                    `seen` status to false, the tour is re-started */
+                    startGuideStepStatus.mapIndexed {index, _ ->
+                        startGuideStepStatus[index] = false
+                    }
                 }
 
                 // Create spotlight
