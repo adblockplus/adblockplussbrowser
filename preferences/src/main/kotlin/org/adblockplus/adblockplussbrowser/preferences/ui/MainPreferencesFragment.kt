@@ -292,6 +292,8 @@ internal class MainPreferencesFragment :
                     )
                 }
 
+                addLastStepToSequence(tourDialogLayout, targets)
+
                 // create spotlight
                 val spotlight = Spotlight.Builder(requireActivity())
                     .setTargets(targets)
@@ -315,6 +317,31 @@ internal class MainPreferencesFragment :
         )
     }
 
+    private fun addLastStepToSequence(
+        tourDialogLayout: View,
+        targets: ArrayList<Target>
+    ) {
+        val target = Target.Builder()
+            .setOverlay(tourDialogLayout)
+            .setShape(RoundedRectangle(0f, 0f, 0f))
+            .setOnTargetListener(object : OnTargetListener {
+                override fun onStarted() {
+                    tourDialogLayout.findViewById<View>(R.id.tour_next_button).visibility = View.GONE
+                    tourDialogLayout.findViewById<View>(R.id.tour_skip_button).visibility = View.GONE
+                    tourDialogLayout.findViewById<View>(R.id.tour_last_step_done_button).visibility =
+                        View.VISIBLE
+                    tourDialogLayout.findViewById<TextView>(R.id.tour_dialog_text)
+                        .setText(R.string.tour_last_step_description)
+                }
+
+                override fun onEnded() {
+                    Timber.i("Tour end")
+                }
+            })
+            .build()
+        targets.add(target)
+    }
+
     private fun setClickListeners(spotlight: Spotlight, tourDialogLayout: View) {
         val nextTarget = View.OnClickListener { spotlight.next() }
 
@@ -332,6 +359,7 @@ internal class MainPreferencesFragment :
 
         tourDialogLayout.findViewById<View>(R.id.tour_next_button).setOnClickListener(nextTarget)
         tourDialogLayout.findViewById<View>(R.id.tour_skip_button).setOnClickListener(closeSpotlight)
+        tourDialogLayout.findViewById<View>(R.id.tour_last_step_done_button).setOnClickListener(closeSpotlight)
     }
 
     private fun addTargetToSequence(
@@ -368,6 +396,6 @@ internal class MainPreferencesFragment :
     }
 
     private companion object {
-        private const val TARGET_CORNER_RADIUS = 16f
+        private const val TARGET_CORNER_RADIUS = 6f
     }
 }
