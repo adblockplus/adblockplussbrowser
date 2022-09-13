@@ -124,7 +124,7 @@ class Fakes {
                             Subscription("$serverUrl/easylist.txt", "", 0L, CustomSubscriptionType.FROM_URL),
                             Subscription("$serverUrl/exceptionrules.txt", "", 0L, CustomSubscriptionType.FROM_URL)
                         ),
-                        listOf(Subscription("fake.txt", "", 0L, CustomSubscriptionType.LOCAL_FILE)),
+                        listOf(),
                         analyticsEnabled = true,
                         languagesOnboardingCompleted = true
                     )
