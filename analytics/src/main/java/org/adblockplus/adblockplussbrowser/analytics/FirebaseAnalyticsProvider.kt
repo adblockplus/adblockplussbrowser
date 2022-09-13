@@ -35,6 +35,7 @@ class FirebaseAnalyticsProvider(appContext: Context) : AnalyticsProvider {
         val logEvent = analyticsEvent.eventName
         bundle.putString("flag", analyticsEvent.flag )
         Timber.i(logEvent)
+        Timber.i("step ${bundle.get("flag")}")
         firebaseAnalytics.logEvent(logEvent, bundle)
     }
 

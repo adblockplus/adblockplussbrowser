@@ -34,7 +34,6 @@ import com.takusemba.spotlight.Spotlight
 import com.takusemba.spotlight.Target
 import com.takusemba.spotlight.shape.RoundedRectangle
 import dagger.hilt.android.AndroidEntryPoint
-import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
 import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
@@ -55,10 +54,10 @@ internal class MainPreferencesFragment :
 
     /*
         Use a global targets list to be able to handle at what point the start guide was skipped.
-        The list contains pairs of Int and Target.
-        The int value represents weather the target was seen (1) or not(0)
+        false -> not seen
+        true -> seen
     */
-    private val startGuideTargets: MutableList<CustomTargetWithStatus> = mutableListOf()
+    private val startGuideStepStatus: MutableList<Boolean> = mutableListOf()
 
     override fun onBindView(binding: FragmentMainPreferencesBinding) {
         binding.viewModel = viewModel
@@ -259,13 +258,9 @@ internal class MainPreferencesFragment :
         binding.mainPreferencesGuideInclude.mainPreferencesGuideInclude.setDebounceOnClickListener(
             {
                 viewModel.logStartGuideStarted()
-                /*
-                    When starting map all the seen values to 0.
-                    Specially for when the user has already started the tour before
-                */
-//                startGuideTargets.map { it.seen = 0 }
 
                 // Prepare start guide steps
+                val targets = ArrayList<Target>()
                 val overlayRoot = FrameLayout(requireContext())
                 val tourDialogLayout = layoutInflater.inflate(R.layout.tour_dialog, overlayRoot)
                 val allowlistView = binding.mainPreferencesAdBlockingInclude.preferencesAllowlistTitleText
@@ -276,11 +271,22 @@ internal class MainPreferencesFragment :
                 } else {
                     binding.mainPreferencesScroll.scrollTo(0, allowlistView.y.toInt())
                 }
-                prepareStartGuideSteps(binding, tourDialogLayout, disableSocialMediaView)
+                prepareStartGuideSteps(binding, tourDialogLayout, disableSocialMediaView, targets)
+
+                // Persist guide start progress
+                if (startGuideStepStatus.isEmpty()) {
+                    /* If it's the first run add the targets to the status list,
+                    default `seen` value is 0 */
+                    targets.forEach { _ -> startGuideStepStatus.add(false) }
+                } else {
+                    /* If the status list already has elements, just restart the
+                    `seen` status to 0, the tour is re-started */
+                    startGuideStepStatus.map { false }
+                }
 
                 // Create spotlight
                 val spotlight = Spotlight.Builder(requireActivity())
-                    .setTargets(startGuideTargets.map { it.target })
+                    .setTargets(targets)
                     .setBackgroundColorRes(R.color.spotlight_background)
                     .setOnSpotlightListener(object : OnSpotlightListener {
                         override fun onStarted() {
@@ -302,37 +308,45 @@ internal class MainPreferencesFragment :
     private fun prepareStartGuideSteps(
         binding: FragmentMainPreferencesBinding,
         tourDialogLayout: View,
-        disableSocialMediaView: View) {
+        disableSocialMediaView: View,
+        targets: ArrayList<Target>) {
 
         addTargetToSequence(
             binding.mainPreferencesAdBlockingInclude.mainPreferencesAdBlockingCategory,
             tourDialogLayout,
-            R.string.tour_dialog_ad_blocking_options_text
+            R.string.tour_dialog_ad_blocking_options_text,
+            targets
         )
 
         addTargetToSequence(
             binding.mainPreferencesAdBlockingInclude.mainPreferencesPrimarySubscriptions,
             tourDialogLayout,
-            R.string.tour_add_languages
+            R.string.tour_add_languages,
+            targets
         )
 
         addTargetToSequence(
             disableSocialMediaView,
             tourDialogLayout,
-            R.string.tour_disable_social_media_tracking
+            R.string.tour_disable_social_media_tracking,
+            targets
         )
 
         if (BuildConfig.FLAVOR_product != BuildConfig.FLAVOR_CRYSTAL) {
             addTargetToSequence(
                 binding.mainPreferencesAdBlockingInclude.mainPreferencesAllowlist,
                 tourDialogLayout,
-                R.string.tour_allowlist
+                R.string.tour_allowlist,
+                targets
             )
         }
-        addLastStepToSequence(tourDialogLayout)
+        addLastStepToSequence(tourDialogLayout, targets)
     }
 
-    private fun addLastStepToSequence(tourDialogLayout: View) {
+    private fun addLastStepToSequence(
+        tourDialogLayout: View,
+        targets: ArrayList<Target>
+    ) {
         val target = Target.Builder()
             .setOverlay(tourDialogLayout)
             .setShape(RoundedRectangle(0f, 0f, 0f))
@@ -352,19 +366,21 @@ internal class MainPreferencesFragment :
                 }
             })
             .build()
-        startGuideTargets.add(CustomTargetWithStatus(target))
+        targets.add(target)
     }
 
     private fun setClickListeners(spotlight: Spotlight, tourDialogLayout: View) {
         val nextTarget = View.OnClickListener {
-            startGuideTargets.find { it.seen == 0 }?.seen = 1
+            // Find the current step and set it to true
+            val currentStep = startGuideStepStatus.getCurrentStepIndex()
+            startGuideStepStatus[currentStep] = true
             spotlight.next()
         }
 
         // If the user clicks outside the dialog, we stop the start guide
         tourDialogLayout.findViewById<View>(R.id.tour_layout).setOnClickListener {
             skipTour()
-            spotlight.close()
+            spotlight.finish()
         }
 
         // Setting clickable to false doesn't effect clickability of those views thus we are swallowing click events
@@ -378,17 +394,18 @@ internal class MainPreferencesFragment :
         tourDialogLayout.findViewById<View>(R.id.tour_next_button).setOnClickListener(nextTarget)
         tourDialogLayout.findViewById<View>(R.id.tour_skip_button).setOnClickListener {
             skipTour()
-            spotlight.close()
+            spotlight.finish()
         }
         tourDialogLayout.findViewById<View>(R.id.tour_last_step_done_button).setOnClickListener{
-            spotlight.close()
+            spotlight.finish()
         }
     }
 
     private fun addTargetToSequence(
         highLightView: View,
         tourDialogLayout: View,
-        resId: Int
+        resId: Int,
+        targets: ArrayList<Target>
     ) {
         val target = Target.Builder()
             .setAnchor(highLightView)
@@ -406,12 +423,18 @@ internal class MainPreferencesFragment :
                 override fun onEnded() {}
             })
             .build()
-        startGuideTargets.add(CustomTargetWithStatus(target))
+        targets.add(target)
     }
 
     private fun skipTour() {
-        val skippedAt = startGuideTargets.indexOf(startGuideTargets.find { it.seen == 0 }) + 1
-        viewModel.logStartGuideSkipped(step = skippedAt)
+        val skippedAt = startGuideStepStatus.getCurrentStepIndex() + 1
+        if (skippedAt == startGuideStepStatus.size) {
+            /* If the user clicks outside the dialog in the last step he went through the whole guide,
+            so we can assume the guide is completed */
+            viewModel.logStartGuideCompleted()
+        } else {
+            viewModel.logStartGuideSkipped(step = skippedAt)
+        }
     }
 
     override fun onResume() {
@@ -424,9 +447,5 @@ internal class MainPreferencesFragment :
     }
 }
 
-private fun Spotlight.close() = this.finish()
-
-private class CustomTargetWithStatus(
-    val target: Target,
-    var seen: Int = 0
-)
+// Returns the first element that has not been marked as seen yet
+private fun MutableList<Boolean>.getCurrentStepIndex() = this.indexOf(this.find {!it})
