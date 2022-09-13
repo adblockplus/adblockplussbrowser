@@ -96,8 +96,6 @@
     <string name="other_subscriptions_custom_category">Active custom filter lists</string>
     <string name="other_subscriptions_add_custom_title">Add custom filter list</string>
     <string name="other_subscriptions_add_custom_hint">www.example.com/filterlist.txt</string>
-    <string name="other_subscriptions_file_not_found" tools:ignore="MissingTranslation">File Not Found</string>
-    <string name="other_subscriptions_file_not_found_icon" tools:ignore="MissingTranslation">File Not Found error icon</string>
     <string name="file_manager_not_found_message">Please, install a file manager</string>
     <string name="delete_dialog_title">Confirm deletion</string>
     <string name="other_subscriptions_remove_custom_message">Are you sure you want to delete the custom filter list from %s?</string>
