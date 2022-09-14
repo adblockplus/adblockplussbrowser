@@ -27,7 +27,8 @@ import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentMainPreferencesBinding
 import timber.log.Timber
 
-class SpotlightConfiguration {
+class SpotlightConfiguration private constructor() {
+
     companion object {
         private const val TARGET_CORNER_RADIUS = 6f
 
