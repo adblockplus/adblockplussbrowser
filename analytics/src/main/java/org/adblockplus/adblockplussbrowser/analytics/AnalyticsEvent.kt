@@ -17,7 +17,12 @@
 
 package org.adblockplus.adblockplussbrowser.analytics
 
-enum class AnalyticsEvent(val eventName: String, var flag: String = "") {
+/**
+ * Class containing the types of different events
+ * @property eventName analytics event short description
+ * @property data any extra information that needs to be logged
+ */
+enum class AnalyticsEvent(val eventName: String, var data: String = "") {
 
     /**
      * A new language list has been added.

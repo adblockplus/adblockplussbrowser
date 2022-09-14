@@ -39,6 +39,7 @@ import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
 import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentMainPreferencesBinding
+import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.SpotlightConfiguration
 import org.adblockplus.adblockplussbrowser.preferences.ui.updates.UpdateSubscriptionsViewModel
 import timber.log.Timber
 
@@ -52,12 +53,10 @@ internal class MainPreferencesFragment :
     // Lazy loading the UpdateSubscriptionsViewModel so it will only be used for crystal flavor here
     private val updateViewModel: UpdateSubscriptionsViewModel by activityViewModels()
 
-    /*
-        Use a global targets list to be able to handle at what point the start guide was skipped.
-        false -> not seen
-        true -> seen
-    */
-    private val startGuideStepStatus: MutableList<Boolean> = mutableListOf()
+    /* This value will increment as the user goes through the start guide and
+        will be used to indicate last seen step */
+    private var startGuideLastStep: Int = 1
+    private var startGuideTotalSteps: Int = 1
 
     override fun onBindView(binding: FragmentMainPreferencesBinding) {
         binding.viewModel = viewModel
@@ -260,7 +259,6 @@ internal class MainPreferencesFragment :
                 viewModel.logStartGuideStarted()
 
                 // Prepare start guide steps
-                val targets = ArrayList<Target>()
                 val overlayRoot = FrameLayout(requireContext())
                 val tourDialogLayout = layoutInflater.inflate(R.layout.tour_dialog, overlayRoot)
                 val allowlistView = binding.mainPreferencesAdBlockingInclude.preferencesAllowlistTitleText
@@ -271,20 +269,12 @@ internal class MainPreferencesFragment :
                 } else {
                     binding.mainPreferencesScroll.scrollTo(0, allowlistView.y.toInt())
                 }
-                prepareStartGuideSteps(binding, tourDialogLayout, disableSocialMediaView, targets)
+                val targets = SpotlightConfiguration.prepareStartGuideSteps(
+                    binding, tourDialogLayout)
 
-                // Persist guide start progress
-                if (startGuideStepStatus.isEmpty()) {
-                    /* If it's the first run add the targets to the status list,
-                    default `seen` value is 0 */
-                    targets.forEach { _ -> startGuideStepStatus.add(false) }
-                } else {
-                    /* If the status list already has elements, just restart the
-                    `seen` status to false, the tour is re-started */
-                    startGuideStepStatus.mapIndexed {index, _ ->
-                        startGuideStepStatus[index] = false
-                    }
-                }
+                // Always restart the last step value to the first step
+                startGuideLastStep = 1
+                startGuideTotalSteps = targets.size
 
                 // Create spotlight
                 val spotlight = Spotlight.Builder(requireActivity())
@@ -309,74 +299,10 @@ internal class MainPreferencesFragment :
         )
     }
 
-    private fun prepareStartGuideSteps(
-        binding: FragmentMainPreferencesBinding,
-        tourDialogLayout: View,
-        disableSocialMediaView: View,
-        targets: ArrayList<Target>) {
-
-        addTargetToSequence(
-            binding.mainPreferencesAdBlockingInclude.mainPreferencesAdBlockingCategory,
-            tourDialogLayout,
-            R.string.tour_dialog_ad_blocking_options_text,
-            targets
-        )
-
-        addTargetToSequence(
-            binding.mainPreferencesAdBlockingInclude.mainPreferencesPrimarySubscriptions,
-            tourDialogLayout,
-            R.string.tour_add_languages,
-            targets
-        )
-
-        addTargetToSequence(
-            disableSocialMediaView,
-            tourDialogLayout,
-            R.string.tour_disable_social_media_tracking,
-            targets
-        )
-
-        if (BuildConfig.FLAVOR_product != BuildConfig.FLAVOR_CRYSTAL) {
-            addTargetToSequence(
-                binding.mainPreferencesAdBlockingInclude.mainPreferencesAllowlist,
-                tourDialogLayout,
-                R.string.tour_allowlist,
-                targets
-            )
-        }
-        addLastStepToSequence(tourDialogLayout, targets)
-    }
-
-    private fun addLastStepToSequence(
-        tourDialogLayout: View,
-        targets: ArrayList<Target>
-    ) {
-        val target = Target.Builder()
-            .setOverlay(tourDialogLayout)
-            .setShape(RoundedRectangle(0f, 0f, 0f))
-            .setOnTargetListener(object : OnTargetListener {
-                override fun onStarted() {
-                    tourDialogLayout.findViewById<View>(R.id.tour_next_button).visibility = View.GONE
-                    tourDialogLayout.findViewById<View>(R.id.tour_skip_button).visibility = View.GONE
-                    tourDialogLayout.findViewById<View>(R.id.tour_last_step_done_button).visibility =
-                        View.VISIBLE
-                    tourDialogLayout.findViewById<TextView>(R.id.tour_dialog_text)
-                        .setText(R.string.tour_last_step_description)
-                }
-
-                override fun onEnded() {
-                    Timber.i("Tour end")
-                }
-            })
-            .build()
-        targets.add(target)
-    }
-
     private fun setClickListeners(spotlight: Spotlight, tourDialogLayout: View) {
         val nextTarget = View.OnClickListener {
-            // Find the current step and set it to true
-            val currentStep = startGuideStepStatus.getCurrentStepIndex()
-            startGuideStepStatus[currentStep] = true
+            // Increment step count
+            startGuideLastStep += 1
             spotlight.next()
         }
 
@@ -405,37 +331,9 @@ internal class MainPreferencesFragment :
         }
     }
 
-    private fun addTargetToSequence(
-        highLightView: View,
-        tourDialogLayout: View,
-        resId: Int,
-        targets: ArrayList<Target>
-    ) {
-        val target = Target.Builder()
-            .setAnchor(highLightView)
-            .setShape(
-                RoundedRectangle(
-                    highLightView.height.toFloat(),
-                    highLightView.width.toFloat(),
-                    TARGET_CORNER_RADIUS
-                )
-            ).setOverlay(tourDialogLayout)
-            .setOnTargetListener(object : OnTargetListener {
-                override fun onStarted() {
-                    tourDialogLayout.findViewById<TextView>(R.id.tour_dialog_text).setText(resId)
-                }
-                override fun onEnded() {
-                    // This will be executed either when "Next" or "Skipped"
-                    Timber.i("Step ended")
-                }
-            })
-            .build()
-        targets.add(target)
-    }
-
     private fun skipTour() {
-        val skippedAt = startGuideStepStatus.getCurrentStepIndex() + 1
-        if (skippedAt == startGuideStepStatus.size) {
+        val skippedAt = startGuideLastStep
+        if (skippedAt == startGuideTotalSteps) {
             /* If the user clicks outside the dialog in the last step he went through the whole guide,
             so we can assume the guide is completed */
             viewModel.logStartGuideCompleted()
@@ -448,11 +346,4 @@ internal class MainPreferencesFragment :
         super.onResume()
         viewModel.checkLanguagesOnboarding()
     }
-
-    private companion object {
-        private const val TARGET_CORNER_RADIUS = 6f
-    }
 }
-
-// Returns the first element that has not been marked as seen yet
-private fun MutableList<Boolean>.getCurrentStepIndex() = this.indexOf(this.find {!it})

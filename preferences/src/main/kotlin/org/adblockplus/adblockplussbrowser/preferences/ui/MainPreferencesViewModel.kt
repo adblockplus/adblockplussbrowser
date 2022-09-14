@@ -82,7 +82,7 @@ internal class MainPreferencesViewModel @Inject constructor(
     }
 
     fun logStartGuideSkipped(step: Int) {
-        AnalyticsEvent.TOUR_SKIPPED.flag = step.toString()
+        AnalyticsEvent.TOUR_SKIPPED.data = "{ \"skippedAtStep\": $step }"
         analyticsProvider.logEvent(AnalyticsEvent.TOUR_SKIPPED)
     }
 

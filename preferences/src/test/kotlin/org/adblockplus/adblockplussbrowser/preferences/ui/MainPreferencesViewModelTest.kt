@@ -53,6 +53,8 @@ class MainPreferencesViewModelTest {
     fun testStartGuideSkipped() {
         mainPreferencesViewModel.logStartGuideSkipped(1)
         assertEquals(AnalyticsEvent.TOUR_SKIPPED, analyticsProvider.event)
-        assertEquals("1", analyticsProvider.event?.flag)
+        assertEquals(
+            "{ \"skippedAtStep\": 1 }",
+            analyticsProvider.event?.data)
     }
 }
