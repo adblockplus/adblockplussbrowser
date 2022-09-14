@@ -32,6 +32,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.81">
 
+        <View
+            android:layout_width="256dp"
+            android:layout_height="2dp"
+            style="@style/PreferenceDivider"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            app:layout_constraintStart_toStartOf="@id/tour_skip_button"
+            app:layout_constraintEnd_toEndOf="@id/tour_next_button"
+            app:layout_constraintTop_toBottomOf="@id/tour_dialog_text" />
+
         <TextView
             android:id="@+id/tour_dialog_text"
             android:layout_width="256dp"
@@ -70,14 +80,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/ribbon"
+            android:backgroundTint="@color/white"
             android:paddingStart="24dp"
             android:paddingTop="16dp"
             android:paddingEnd="24dp"
             android:paddingBottom="16dp"
             android:text="@string/tour_skip_button_text"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/ribbon"
             app:cornerRadius="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tour_dialog_text"
