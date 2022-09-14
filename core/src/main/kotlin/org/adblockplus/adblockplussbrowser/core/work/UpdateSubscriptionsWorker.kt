@@ -362,8 +362,6 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
         return filters
     }
 
-    private fun String.isFilter(): Boolean = this.isNotEmpty() && this[0] != '[' && this[0] != '!'
-
     private fun Context.getCacheDownloadDir(): File {
         val directory = File(this.filesDir, "cache")
         directory.mkdirs()
@@ -408,3 +406,6 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
         internal const val UPDATE_KEY_FORCE_REFRESH = "UPDATE_FORCE_REFRESH"
     }
 }
+
+fun String.isFilter(): Boolean = this.isNotEmpty() && this[0] != '[' && this[0] != '!'
+
