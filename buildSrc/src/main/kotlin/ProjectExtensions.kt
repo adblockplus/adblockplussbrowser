@@ -96,7 +96,7 @@ fun Project.applyCommonConfig() {
 
         implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
         androidTestImplementation(libs.findLibrary("junit").get())
-        androidTestImplementation(Deps.AndroidX.Test.Espresso.CORE)
+        androidTestImplementation(libs.findLibrary("androidx.test.espresso.core").get())
     }
 }
 

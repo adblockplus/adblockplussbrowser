@@ -25,7 +25,6 @@ plugins {
 }
 
 dependencies {
-    // implementation(libs.)
     implementation(libs.android.plugin.gradle)
     implementation(libs.kotlin.plugin.gradle)
 }

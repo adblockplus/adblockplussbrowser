@@ -25,9 +25,9 @@ plugins {
 applyCommonConfig()
 
 dependencies {
-    implementation(Deps.Hilt.ANDROID)
+    implementation(libs.hilt)
     implementation(libs.firebase.crashlytics.ktx)
-    kapt(Deps.Hilt.ANDROID_COMPILER)
+    kapt(libs.hilt.compiler)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(libs.timber)

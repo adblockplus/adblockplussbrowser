@@ -41,13 +41,13 @@ dependencies {
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.fragment.ktx)
-    implementation(Deps.AndroidX.Navigation.FRAGMENT)
-    implementation(Deps.AndroidX.DataStore.DATASTORE)
-    implementation(Deps.AndroidX.DataStore.PREFERENCES)
-    implementation(Deps.AndroidX.Hilt.WORK)
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.datastore)
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.hilt.work)
     implementation(libs.timber)
 
     testImplementation(libs.junit)
     testImplementation(libs.robolectric)
-    testImplementation(Deps.Mockito.Kotlin)
+    testImplementation(libs.mockito.kotlin)
 }

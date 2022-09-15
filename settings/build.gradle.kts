@@ -32,10 +32,10 @@ dependencies {
     implementation(project(":base"))
 
     implementation(libs.androidx.appcompat)
-    implementation(Deps.AndroidX.DataStore.DATASTORE)
-    implementation(Deps.Protobuf.JAVALITE)
-    implementation(Deps.Hilt.ANDROID)
-    kapt(Deps.Hilt.ANDROID_COMPILER)
+    implementation(libs.androidx.datastore)
+    implementation(libs.protobuf.javalite)
+    implementation(libs.hilt)
+    kapt(libs.hilt.compiler)
     implementation(libs.timber)
 }
 
@@ -43,7 +43,7 @@ createFlavorsConfig()
 
 protobuf {
     protoc {
-        artifact = Deps.Protobuf.PROTOC
+        artifact = libs.protobuf.protoc.get().toString()
     }
     generateProtoTasks {
         all().forEach { task ->
