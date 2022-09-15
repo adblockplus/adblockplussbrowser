@@ -39,6 +39,7 @@ import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
 import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentMainPreferencesBinding
+import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.SpotlightConfiguration
 import org.adblockplus.adblockplussbrowser.preferences.ui.updates.UpdateSubscriptionsViewModel
 import timber.log.Timber
 
@@ -51,6 +52,11 @@ internal class MainPreferencesFragment :
 
     // Lazy loading the UpdateSubscriptionsViewModel so it will only be used for crystal flavor here
     private val updateViewModel: UpdateSubscriptionsViewModel by activityViewModels()
+
+    /* This value will increment as the user goes through the start guide and
+        will be used to indicate last seen step */
+    private var startGuideLastStep: Int = 1
+    private var startGuideTotalSteps: Int = 1
 
     override fun onBindView(binding: FragmentMainPreferencesBinding) {
         binding.viewModel = viewModel
@@ -250,7 +256,9 @@ internal class MainPreferencesFragment :
     ) {
         binding.mainPreferencesGuideInclude.mainPreferencesGuideInclude.setDebounceOnClickListener(
             {
-                val targets = ArrayList<Target>()
+                viewModel.logStartGuideStarted()
+
+                // Prepare start guide steps
                 val overlayRoot = FrameLayout(requireContext())
                 val tourDialogLayout = layoutInflater.inflate(R.layout.tour_dialog, overlayRoot)
                 val allowlistView = binding.mainPreferencesAdBlockingInclude.preferencesAllowlistTitleText
@@ -261,40 +269,14 @@ internal class MainPreferencesFragment :
                 } else {
                     binding.mainPreferencesScroll.scrollTo(0, allowlistView.y.toInt())
                 }
+                val targets = SpotlightConfiguration.prepareStartGuideSteps(
+                    binding, tourDialogLayout)
 
-                addTargetToSequence(
-                    binding.mainPreferencesAdBlockingInclude.mainPreferencesAdBlockingCategory,
-                    tourDialogLayout,
-                    R.string.tour_dialog_ad_blocking_options_text,
-                    targets
-                )
+                // Always restart the last step value to the first step
+                startGuideLastStep = 1
+                startGuideTotalSteps = targets.size
 
-                addTargetToSequence(
-                    binding.mainPreferencesAdBlockingInclude.mainPreferencesPrimarySubscriptions,
-                    tourDialogLayout,
-                    R.string.tour_add_languages,
-                    targets
-                )
-
-                addTargetToSequence(
-                    disableSocialMediaView,
-                    tourDialogLayout,
-                    R.string.tour_disable_social_media_tracking,
-                    targets
-                )
-
-                if (BuildConfig.FLAVOR_product != BuildConfig.FLAVOR_CRYSTAL) {
-                    addTargetToSequence(
-                        binding.mainPreferencesAdBlockingInclude.mainPreferencesAllowlist,
-                        tourDialogLayout,
-                        R.string.tour_allowlist,
-                        targets
-                    )
-                }
-
-                addLastStepToSequence(tourDialogLayout, targets)
-
-                // create spotlight
+                // Create spotlight
                 val spotlight = Spotlight.Builder(requireActivity())
                     .setTargets(targets)
                     .setBackgroundColorRes(R.color.spotlight_background)
@@ -309,45 +291,26 @@ internal class MainPreferencesFragment :
                     })
                     .build()
 
-                spotlight.start()
-
                 setClickListeners(spotlight, tourDialogLayout)
+                // Start Spotlight
+                spotlight.start()
             },
             lifecycleOwner
         )
     }
 
-    private fun addLastStepToSequence(
-        tourDialogLayout: View,
-        targets: ArrayList<Target>
-    ) {
-        val target = Target.Builder()
-            .setOverlay(tourDialogLayout)
-            .setShape(RoundedRectangle(0f, 0f, 0f))
-            .setOnTargetListener(object : OnTargetListener {
-                override fun onStarted() {
-                    tourDialogLayout.findViewById<View>(R.id.tour_next_button).visibility = View.GONE
-                    tourDialogLayout.findViewById<View>(R.id.tour_skip_button).visibility = View.GONE
-                    tourDialogLayout.findViewById<View>(R.id.tour_last_step_done_button).visibility =
-                        View.VISIBLE
-                    tourDialogLayout.findViewById<TextView>(R.id.tour_dialog_text)
-                        .setText(R.string.tour_last_step_description)
-                }
-
-                override fun onEnded() {
-                    Timber.i("Tour end")
-                }
-            })
-            .build()
-        targets.add(target)
-    }
-
     private fun setClickListeners(spotlight: Spotlight, tourDialogLayout: View) {
-        val nextTarget = View.OnClickListener { spotlight.next() }
+        val nextTarget = View.OnClickListener {
+            // Increment step count
+            startGuideLastStep += 1
+            spotlight.next()
+        }
 
-        val closeSpotlight = View.OnClickListener { spotlight.finish() }
         // If the user clicks outside the dialog, we stop the start guide
-        tourDialogLayout.findViewById<View>(R.id.tour_layout).setOnClickListener(closeSpotlight)
+        tourDialogLayout.findViewById<View>(R.id.tour_layout).setOnClickListener {
+            skipTour()
+            spotlight.finish()
+        }
 
         // Setting clickable to false doesn't effect clickability of those views thus we are swallowing click events
         tourDialogLayout.findViewById<View>(R.id.tour_dialog_text).setOnClickListener {
@@ -358,44 +321,29 @@ internal class MainPreferencesFragment :
         }
 
         tourDialogLayout.findViewById<View>(R.id.tour_next_button).setOnClickListener(nextTarget)
-        tourDialogLayout.findViewById<View>(R.id.tour_skip_button).setOnClickListener(closeSpotlight)
-        tourDialogLayout.findViewById<View>(R.id.tour_last_step_done_button).setOnClickListener(closeSpotlight)
+        tourDialogLayout.findViewById<View>(R.id.tour_skip_button).setOnClickListener {
+            skipTour()
+            spotlight.finish()
+        }
+        tourDialogLayout.findViewById<View>(R.id.tour_last_step_done_button).setOnClickListener{
+            viewModel.logStartGuideCompleted()
+            spotlight.finish()
+        }
     }
 
-    private fun addTargetToSequence(
-        highLightView: View,
-        tourDialogLayout: View,
-        resId: Int,
-        targets: ArrayList<Target>,
-    ) {
-        val target = Target.Builder()
-            .setAnchor(highLightView)
-            .setShape(
-                RoundedRectangle(
-                    highLightView.height.toFloat(),
-                    highLightView.width.toFloat(),
-                    TARGET_CORNER_RADIUS
-                )
-            ).setOverlay(tourDialogLayout)
-            .setOnTargetListener(object : OnTargetListener {
-                override fun onStarted() {
-                    tourDialogLayout.findViewById<TextView>(R.id.tour_dialog_text).setText(resId)
-                }
-
-                override fun onEnded() {
-                    Timber.i("Tour end")
-                }
-            })
-            .build()
-        targets.add(target)
+    private fun skipTour() {
+        val skippedAt = startGuideLastStep
+        if (skippedAt == startGuideTotalSteps) {
+            /* If the user clicks outside the dialog in the last step he went through the whole guide,
+            so we can assume the guide is completed */
+            viewModel.logStartGuideCompleted()
+        } else {
+            viewModel.logStartGuideSkipped(step = skippedAt)
+        }
     }
 
     override fun onResume() {
         super.onResume()
         viewModel.checkLanguagesOnboarding()
-    }
-
-    private companion object {
-        private const val TARGET_CORNER_RADIUS = 6f
     }
 }

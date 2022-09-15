@@ -41,7 +41,7 @@
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/main_preferences_ad_blocking_category"
             style="@style/CustomPreferenceCategoryTitleTextStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/preferences_ad_blocking_category"
             app:layout_constraintStart_toStartOf="parent"

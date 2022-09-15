@@ -33,6 +33,7 @@ class FirebaseAnalyticsProvider(appContext: Context) : AnalyticsProvider {
     override fun logEvent(analyticsEvent: AnalyticsEvent) {
         val bundle = Bundle()
         val logEvent = analyticsEvent.eventName
+        bundle.putString("data", analyticsEvent.data )
         Timber.i(logEvent)
         firebaseAnalytics.logEvent(logEvent, bundle)
     }
