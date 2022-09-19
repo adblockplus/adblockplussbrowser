@@ -31,19 +31,19 @@ applyCommonConfig()
 dependencies {
     implementation(project(":base"))
 
-    implementation(Deps.AndroidX.APPCOMPAT)
-    implementation(Deps.AndroidX.DataStore.DATASTORE)
-    implementation(Deps.Protobuf.JAVALITE)
-    implementation(Deps.Hilt.ANDROID)
-    kapt(Deps.Hilt.ANDROID_COMPILER)
-    implementation(Deps.TIMBER)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.datastore)
+    implementation(libs.protobuf.javalite)
+    implementation(libs.hilt)
+    kapt(libs.hilt.compiler)
+    implementation(libs.timber)
 }
 
 createFlavorsConfig()
 
 protobuf {
     protoc {
-        artifact = Deps.Protobuf.PROTOC
+        artifact = libs.protobuf.protoc.get().toString()
     }
     generateProtoTasks {
         all().forEach { task ->
