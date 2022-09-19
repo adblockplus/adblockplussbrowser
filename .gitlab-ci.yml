@@ -14,7 +14,7 @@ variables:
 cache: &global_cache
   key:
     files:
-      - buildSrc/src/main/kotlin/Deps.kt
+      - gradle/libs.versions.toml
   paths:
     - .android-sdk/
     - .gradle/
@@ -39,7 +39,7 @@ dependencies:
   rules:
     - if: '$CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "merge_request_event"'
       changes:
-        - buildSrc/src/main/kotlin/Deps.kt
+        - gradle/libs.versions.toml
         - gradle/wrapper/gradle-wrapper.properties
         - buildSrc/build.gradle.kts
     - if: '$GENERATE_DEPENDENCIES_CACHE == "true"'
