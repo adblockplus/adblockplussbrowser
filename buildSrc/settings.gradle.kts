@@ -15,16 +15,11 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-repositories {
-    google()
-    mavenCentral()
+dependencyResolutionManagement {
+    versionCatalogs {
+        create("libs") {
+            from(files("../gradle/libs.versions.toml"))
+        }
+    }
 }
 
-plugins {
-    `kotlin-dsl`
-}
-
-dependencies {
-    implementation(libs.android.plugin.gradle)
-    implementation(libs.kotlin.plugin.gradle)
-}

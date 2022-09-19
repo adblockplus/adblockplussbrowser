@@ -22,23 +22,23 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath(Deps.GRADLE_PLUGIN)
-        classpath(Deps.GRADLE_VERSIONS_PLUGIN)
-        classpath(Deps.AndroidX.Navigation.SAFE_ARGS_GRADLE_PLUGIN)
-        classpath(Deps.Hilt.ANDROID_GRADLE_PLUGIN)
-        classpath(Deps.Kotlin.KOTLIN_PLUGIN)
-        classpath(Deps.Protobuf.GRADLE_PLUGIN)
-        classpath(Deps.Gms.OSS_LICENSES_PLUGIN)
-        classpath(Deps.Firebase.GOOGLE_SERVICES)
-        classpath(Deps.Firebase.CRASHLYTICS_GRADLE)
-        classpath(Deps.JACOCO_CORE)
+        classpath(libs.android.plugin.gradle)
+        classpath(libs.plugin.versions)
+        classpath(libs.androidx.navigation.safeargs.plugin)
+        classpath(libs.hilt.gradle.plugin)
+        classpath(libs.kotlin.gradle.plugin)
+        classpath(libs.protobuf.gradle.plugin)
+        classpath(libs.gms.oss.licenses.plugin)
+        classpath(libs.gms.google.services)
+        classpath(libs.firebase.crashlytics.gradle)
+        classpath(libs.jacoco.core)
     }
 }
 
 plugins {
-    id(Deps.GRADLE_VERSIONS_PLUGIN_ID).version(Deps.GRADLE_VERSIONS_PLUGIN_VERSION)
-    id(Deps.DETEKT_PLUGIN_ID).version(Deps.DETEKT_PLUGIN_VERSION)
-    id(Deps.JACOCO)
+    `jacoco`
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.plugin.versions)
 }
 
 val coverageProjectsPath = setOf(":base", ":core", ":preferences")
@@ -51,7 +51,7 @@ allprojects {
     }
 
     if (path in coverageProjectsPath) {
-        apply(plugin = Deps.JACOCO)
+        apply(plugin = "jacoco")
 
         tasks.withType(Test::class.java) {
             // We want coverage only for the worldAbp flavor
