@@ -277,7 +277,7 @@ internal class MainPreferencesFragment :
                 val popUpWindow = PopupWindow(
                     tourDialogLayout,
                     ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
+                    400
                 )
                 popUpWindow.isOutsideTouchable = true
 
@@ -299,12 +299,12 @@ internal class MainPreferencesFragment :
                     .setOnSpotlightListener(object : OnSpotlightListener {
                         override fun onStarted() {
                             Timber.i("Spotlight started")
-                            (binding.mainPreferencesScroll as LockableScrollView).scrollable = false
+                            binding.mainPreferencesScroll.setScrollable(false)
                         }
 
                         override fun onEnded() {
                             Timber.i("Spotlight ended")
-                            (binding.mainPreferencesScroll as LockableScrollView).scrollable = true
+                            binding.mainPreferencesScroll.setScrollable(true)
                         }
                     })
                     .build()
@@ -312,13 +312,6 @@ internal class MainPreferencesFragment :
                 setClickListeners(spotlight, tourDialogLayout, popUpWindow)
                 // Start Spotlight
                 spotlight.start()
-                popUpWindow.setTouchInterceptor { _, event ->
-                    if(event.action == MotionEvent.ACTION_OUTSIDE) {
-                        spotlight.finish()
-                        true
-                    }
-                    false
-                }
             },
             lifecycleOwner
         )
@@ -331,11 +324,14 @@ internal class MainPreferencesFragment :
     ) {
 
         // If the user clicks outside the dialog, we stop the start guide
-//        tourDialogLayout.findViewById<View>(R.id.tour_layout).setOnClickListener {
-//            skipTour()
-//            popupWindow.dismiss()
-//            spotlight.finish()
-//        }
+        popupWindow.setTouchInterceptor { v, event ->
+            v.performClick()
+            if(event.action == MotionEvent.ACTION_OUTSIDE) {
+                skipTour()
+                spotlight.finish()
+            }
+            false
+        }
 
         // Setting clickable to false doesn't effect clickability of those views thus we are swallowing click events
         tourDialogLayout.findViewById<View>(R.id.tour_dialog_text).setOnClickListener {

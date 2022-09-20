@@ -11,7 +11,7 @@ class LockableScrollView @JvmOverloads constructor(
     defStyle: Int = 0
 ) : ScrollView(context, attrs, defStyle) {
 
-    var scrollable = true
+    private var scrollable = true
 
     override fun onTouchEvent(ev: MotionEvent?): Boolean {
         return when(ev?.action) {
@@ -22,5 +22,9 @@ class LockableScrollView @JvmOverloads constructor(
 
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
         return !scrollable || super.onInterceptTouchEvent(ev)
+    }
+
+    fun setScrollable(value: Boolean) {
+        scrollable = value
     }
 }

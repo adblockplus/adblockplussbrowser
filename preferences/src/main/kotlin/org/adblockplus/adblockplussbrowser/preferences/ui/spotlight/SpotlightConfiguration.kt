@@ -123,7 +123,11 @@ class SpotlightConfiguration private constructor() {
                 .setOnTargetListener(object : OnTargetListener {
                     override fun onStarted() {
                         tourDialogLayout.findViewById<TextView>(R.id.tour_dialog_text).setText(resId)
-                        popUpWindow.showAsDropDown(highLightView)
+                        popUpWindow.showAsDropDown(
+                            highLightView,
+                            highLightView.width,
+                            10,
+                        )
                     }
                     override fun onEnded() {
                         // This will be executed either when "Next" or "Skipped"
