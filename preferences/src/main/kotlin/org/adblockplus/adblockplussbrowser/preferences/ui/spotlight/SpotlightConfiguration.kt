@@ -126,7 +126,7 @@ class SpotlightConfiguration private constructor() {
                         popUpWindow.showAsDropDown(
                             highLightView,
                             highLightView.width,
-                            10,
+                            Constants.Y_OFFSET,
                         )
                     }
                     override fun onEnded() {
@@ -136,5 +136,10 @@ class SpotlightConfiguration private constructor() {
                 })
                 .build()
         }
+    }
+
+    object Constants {
+        const val Y_OFFSET = 10
+        const val POPUP_WINDOW_HEIGHT = 400
     }
 }

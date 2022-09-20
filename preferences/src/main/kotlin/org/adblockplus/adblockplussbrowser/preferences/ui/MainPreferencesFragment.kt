@@ -277,7 +277,7 @@ internal class MainPreferencesFragment :
                 val popUpWindow = PopupWindow(
                     tourDialogLayout,
                     ViewGroup.LayoutParams.WRAP_CONTENT,
-                    400
+                    SpotlightConfiguration.Constants.POPUP_WINDOW_HEIGHT
                 )
                 popUpWindow.isOutsideTouchable = true
 
