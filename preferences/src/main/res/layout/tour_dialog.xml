@@ -16,8 +16,8 @@
  along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
     android:id="@+id/tour_layout"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -30,7 +30,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.81">
+        app:layout_constraintVertical_bias="0.81" >
 
         <View
             android:layout_width="256dp"
