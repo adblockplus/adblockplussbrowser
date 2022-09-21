@@ -39,7 +39,9 @@ class SpotlightConfiguration private constructor() {
         /**
          * Configure and return the list of targets for the start guide
          * @param binding FragmentMainPreferencesBinding
+         * @param context Context
          * @param tourDialogLayout View
+         * @param popUpWindow PopupWindow
          */
         fun prepareStartGuideSteps(binding: FragmentMainPreferencesBinding, context: Context,
                                    tourDialogLayout: View, popUpWindow: PopupWindow): ArrayList<Target> {

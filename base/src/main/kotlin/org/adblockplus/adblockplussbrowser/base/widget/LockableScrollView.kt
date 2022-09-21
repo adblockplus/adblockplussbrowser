@@ -22,6 +22,10 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.widget.ScrollView
 
+/**
+ * Custom class of ScrollView to allow enabling and disabling of the scroll
+ * functionality and of touch events.
+ */
 class LockableScrollView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -31,10 +35,15 @@ class LockableScrollView @JvmOverloads constructor(
     private var scrollable = true
 
     override fun onTouchEvent(ev: MotionEvent?): Boolean {
+        super.performClick()
         return when(ev?.action) {
             MotionEvent.ACTION_DOWN -> scrollable && super.onTouchEvent(ev)
             else -> super.onTouchEvent(ev)
         }
+    }
+
+    override fun performClick(): Boolean {
+        return super.performClick()
     }
 
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
