@@ -17,6 +17,7 @@
 
 package org.adblockplus.adblockplussbrowser.base.widget
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -26,6 +27,7 @@ import android.widget.ScrollView
  * Custom class of ScrollView to allow enabling and disabling of the scroll
  * functionality and of touch events.
  */
+@SuppressLint("ClickableViewAccessibility")
 class LockableScrollView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
