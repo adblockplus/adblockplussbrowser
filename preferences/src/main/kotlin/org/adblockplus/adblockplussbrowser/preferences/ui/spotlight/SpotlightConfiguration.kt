@@ -17,7 +17,11 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui.spotlight
 
+import android.content.Context
+import android.view.Gravity
 import android.view.View
+import android.widget.FrameLayout
+import android.widget.PopupWindow
 import android.widget.TextView
 import com.takusemba.spotlight.OnTargetListener
 import com.takusemba.spotlight.Target
@@ -35,45 +39,57 @@ class SpotlightConfiguration private constructor() {
         /**
          * Configure and return the list of targets for the start guide
          * @param binding FragmentMainPreferencesBinding
+         * @param context Context
          * @param tourDialogLayout View
+         * @param popUpWindow PopupWindow
          */
-        fun prepareStartGuideSteps(binding: FragmentMainPreferencesBinding, tourDialogLayout: View): ArrayList<Target> {
+        fun prepareStartGuideSteps(binding: FragmentMainPreferencesBinding, context: Context,
+                                   tourDialogLayout: View, popUpWindow: PopupWindow): ArrayList<Target> {
 
             val targets = ArrayList<Target>()
 
             targets.add(addTargetToSequence(
-                binding.mainPreferencesAdBlockingInclude.mainPreferencesAdBlockingCategory,
+                context,
                 tourDialogLayout,
+                popUpWindow,
+                binding.mainPreferencesAdBlockingInclude.mainPreferencesAdBlockingCategory,
                 R.string.tour_dialog_ad_blocking_options_text,
             ))
 
             targets.add(addTargetToSequence(
-                binding.mainPreferencesAdBlockingInclude.mainPreferencesPrimarySubscriptions,
+                context,
                 tourDialogLayout,
-                R.string.tour_add_languages,
+                popUpWindow,
+                binding.mainPreferencesAdBlockingInclude.mainPreferencesPrimarySubscriptions,
+                R.string.tour_add_languages
             ))
 
             targets.add(addTargetToSequence(
-                binding.mainPreferencesAdBlockingInclude.mainPreferencesOtherSubscriptions,
+                context,
                 tourDialogLayout,
-                R.string.tour_disable_social_media_tracking,
+                popUpWindow,
+                binding.mainPreferencesAdBlockingInclude.mainPreferencesOtherSubscriptions,
+                R.string.tour_disable_social_media_tracking
             ))
 
             if (BuildConfig.FLAVOR_product != BuildConfig.FLAVOR_CRYSTAL) {
                 targets.add(addTargetToSequence(
-                    binding.mainPreferencesAdBlockingInclude.mainPreferencesAllowlist,
+                    context,
                     tourDialogLayout,
+                    popUpWindow,
+                    binding.mainPreferencesAdBlockingInclude.mainPreferencesAllowlist,
                     R.string.tour_allowlist,
                 ))
             }
-            targets.add(addLastStepToSequence(tourDialogLayout))
+            targets.add(addLastStepToSequence(context, tourDialogLayout, popUpWindow))
             return targets
         }
 
         // Add the last target to the spotlight sequence
-        private fun addLastStepToSequence(tourDialogLayout: View): Target {
+        private fun addLastStepToSequence(context: Context, tourDialogLayout: View, popUpWindow: PopupWindow): Target {
+            val root = FrameLayout(context)
             return Target.Builder()
-                .setOverlay(tourDialogLayout)
+                .setOverlay(root)
                 .setShape(RoundedRectangle(0f, 0f, 0f))
                 .setOnTargetListener(object : OnTargetListener {
                     override fun onStarted() {
@@ -83,6 +99,7 @@ class SpotlightConfiguration private constructor() {
                             View.VISIBLE
                         tourDialogLayout.findViewById<TextView>(R.id.tour_dialog_text)
                             .setText(R.string.tour_last_step_description)
+                        popUpWindow.showAtLocation(root, Gravity.CENTER, 0, 0)
                     }
 
                     override fun onEnded() {
@@ -93,7 +110,9 @@ class SpotlightConfiguration private constructor() {
         }
 
         // Add a new target to the spotlight sequence
-        private fun addTargetToSequence(highLightView: View, tourDialogLayout: View, resId: Int): Target {
+        private fun addTargetToSequence(context: Context, tourDialogLayout: View, popUpWindow: PopupWindow,
+                                        highLightView: View, resId: Int ): Target {
+            val root = FrameLayout(context)
             return Target.Builder()
                 .setAnchor(highLightView)
                 .setShape(
@@ -102,10 +121,15 @@ class SpotlightConfiguration private constructor() {
                         highLightView.width.toFloat(),
                         TARGET_CORNER_RADIUS
                     )
-                ).setOverlay(tourDialogLayout)
+                ).setOverlay(root)
                 .setOnTargetListener(object : OnTargetListener {
                     override fun onStarted() {
                         tourDialogLayout.findViewById<TextView>(R.id.tour_dialog_text).setText(resId)
+                        popUpWindow.showAsDropDown(
+                            highLightView,
+                            highLightView.width,
+                            Constants.Y_OFFSET,
+                        )
                     }
                     override fun onEnded() {
                         // This will be executed either when "Next" or "Skipped"
@@ -114,5 +138,10 @@ class SpotlightConfiguration private constructor() {
                 })
                 .build()
         }
+    }
+
+    object Constants {
+        const val Y_OFFSET = 10
+        const val POPUP_WINDOW_HEIGHT = 400
     }
 }
