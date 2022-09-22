@@ -17,10 +17,12 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui
 
+import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.PopupWindow
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -29,10 +31,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.takusemba.spotlight.OnSpotlightListener
-import com.takusemba.spotlight.OnTargetListener
 import com.takusemba.spotlight.Spotlight
-import com.takusemba.spotlight.Target
-import com.takusemba.spotlight.shape.RoundedRectangle
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
@@ -82,14 +81,18 @@ internal class MainPreferencesFragment :
         bindAbout(binding, supportActionBar, lifecycleOwner)
 
         if (BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_ABP) {
-            binding.mainPreferencesShareEventsInclude.mainPreferencesIssueReporterCategory.setDebounceOnClickListener({
-                supportActionBar?.subtitle = null
-                val direction = MainPreferencesFragmentDirections
-                    .actionMainPreferencesFragmentToReportIssueFragment()
-                findNavController().navigate(direction)
-            }, lifecycleOwner)
+            binding.mainPreferencesShareEventsInclude.mainPreferencesIssueReporterCategory.setDebounceOnClickListener(
+                {
+                    supportActionBar?.subtitle = null
+                    val direction = MainPreferencesFragmentDirections
+                        .actionMainPreferencesFragmentToReportIssueFragment()
+                    findNavController().navigate(direction)
+                },
+                lifecycleOwner
+            )
         } else {
-            binding.mainPreferencesShareEventsInclude.mainPreferencesIssueReporterCategory.visibility = View.GONE
+            binding.mainPreferencesShareEventsInclude.mainPreferencesIssueReporterCategory.visibility =
+                View.GONE
             binding.mainPreferencesShareEventsInclude.mainPreferencesDivider1.visibility = View.GONE
         }
     }
@@ -261,7 +264,8 @@ internal class MainPreferencesFragment :
                 // Prepare start guide steps
                 val overlayRoot = FrameLayout(requireContext())
                 val tourDialogLayout = layoutInflater.inflate(R.layout.tour_dialog, overlayRoot)
-                val allowlistView = binding.mainPreferencesAdBlockingInclude.preferencesAllowlistTitleText
+                val allowlistView =
+                    binding.mainPreferencesAdBlockingInclude.preferencesAllowlistTitleText
                 val disableSocialMediaView =
                     binding.mainPreferencesAdBlockingInclude.mainPreferencesOtherSubscriptions
                 if (BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_CRYSTAL) {
@@ -269,8 +273,19 @@ internal class MainPreferencesFragment :
                 } else {
                     binding.mainPreferencesScroll.scrollTo(0, allowlistView.y.toInt())
                 }
+                val popUpWindow = PopupWindow(
+                    tourDialogLayout,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    SpotlightConfiguration.Constants.POPUP_WINDOW_HEIGHT
+                )
+                popUpWindow.isOutsideTouchable = true
+
                 val targets = SpotlightConfiguration.prepareStartGuideSteps(
-                    binding, tourDialogLayout)
+                    binding,
+                    requireContext(),
+                    tourDialogLayout,
+                    popUpWindow
+                )
 
                 // Always restart the last step value to the first step
                 startGuideLastStep = 1
@@ -283,15 +298,17 @@ internal class MainPreferencesFragment :
                     .setOnSpotlightListener(object : OnSpotlightListener {
                         override fun onStarted() {
                             Timber.i("Spotlight started")
+                            binding.mainPreferencesScroll.setScrollable(false)
                         }
 
                         override fun onEnded() {
                             Timber.i("Spotlight ended")
+                            binding.mainPreferencesScroll.setScrollable(true)
                         }
                     })
                     .build()
 
-                setClickListeners(spotlight, tourDialogLayout)
+                setClickListeners(spotlight, tourDialogLayout, popUpWindow)
                 // Start Spotlight
                 spotlight.start()
             },
@@ -299,17 +316,20 @@ internal class MainPreferencesFragment :
         )
     }
 
-    private fun setClickListeners(spotlight: Spotlight, tourDialogLayout: View) {
-        val nextTarget = View.OnClickListener {
-            // Increment step count
-            startGuideLastStep += 1
-            spotlight.next()
-        }
+    private fun setClickListeners(
+        spotlight: Spotlight,
+        tourDialogLayout: View,
+        popupWindow: PopupWindow
+    ) {
 
         // If the user clicks outside the dialog, we stop the start guide
-        tourDialogLayout.findViewById<View>(R.id.tour_layout).setOnClickListener {
-            skipTour()
-            spotlight.finish()
+        popupWindow.setTouchInterceptor { v, event ->
+            v.performClick()
+            if(event.action == MotionEvent.ACTION_OUTSIDE) {
+                skipTour()
+                spotlight.finish()
+            }
+            false
         }
 
         // Setting clickable to false doesn't effect clickability of those views thus we are swallowing click events
@@ -320,13 +340,20 @@ internal class MainPreferencesFragment :
             Timber.i("Mute on purpose")
         }
 
-        tourDialogLayout.findViewById<View>(R.id.tour_next_button).setOnClickListener(nextTarget)
+        tourDialogLayout.findViewById<View>(R.id.tour_next_button).setOnClickListener {
+            // Increment step count
+            startGuideLastStep += 1
+            popupWindow.dismiss()
+            spotlight.next()
+        }
         tourDialogLayout.findViewById<View>(R.id.tour_skip_button).setOnClickListener {
             skipTour()
+            popupWindow.dismiss()
             spotlight.finish()
         }
         tourDialogLayout.findViewById<View>(R.id.tour_last_step_done_button).setOnClickListener{
             viewModel.logStartGuideCompleted()
+            popupWindow.dismiss()
             spotlight.finish()
         }
     }
