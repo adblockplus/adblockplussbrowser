@@ -47,7 +47,6 @@ import org.adblockplus.adblockplussbrowser.preferences.ui.tourguide.TourGuideLis
 import org.adblockplus.adblockplussbrowser.preferences.ui.updates.UpdateSubscriptionsViewModel
 import timber.log.Timber
 
-
 @AndroidEntryPoint
 internal class MainPreferencesFragment :
     DataBindingFragment<FragmentMainPreferencesBinding>(R.layout.fragment_main_preferences) {
@@ -310,12 +309,12 @@ internal class MainPreferencesFragment :
             .setOnTourGuideListener(object : TourGuideListener {
                 override fun onStarted() {
                     Timber.i("Tour guide started")
-                    binding.mainPreferencesScroll.setScrollable(false)
+                    binding.mainPreferencesScroll.scrollable = false
                 }
 
                 override fun onEnded() {
                     Timber.i("Tour guide ended")
-                    binding.mainPreferencesScroll.setScrollable(true)
+                    binding.mainPreferencesScroll.scrollable = true
                 }
             }).build()
         setClickListeners(binding, tourGuide, tourDialogLayout, popupWindow, mainPreferencesScroll)
