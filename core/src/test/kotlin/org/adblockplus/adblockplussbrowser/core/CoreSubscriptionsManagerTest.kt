@@ -18,9 +18,9 @@
 package org.adblockplus.adblockplussbrowser.core
 
 import android.content.Context
+import android.util.Log
 import androidx.test.core.app.ApplicationProvider
 import androidx.work.Configuration
-import androidx.work.WorkManager
 import androidx.work.testing.SynchronousExecutor
 import androidx.work.testing.WorkManagerTestInitHelper
 import dagger.Module
@@ -32,8 +32,7 @@ import dagger.hilt.android.testing.HiltTestApplication
 import dagger.hilt.android.testing.UninstallModules
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
-import okhttp3.mockwebserver.MockResponse
-import okhttp3.mockwebserver.MockWebServer
+import okhttp3.logging.HttpLoggingInterceptor
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
@@ -44,12 +43,8 @@ import org.adblockplus.adblockplussbrowser.core.helpers.Fakes
 import org.adblockplus.adblockplussbrowser.core.provider.TestModule
 import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
-import org.adblockplus.adblockplussbrowser.core.work.UpdateSubscriptionsWorker
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.di.SettingsModule
-import org.junit.After
-import org.junit.Assert.assertEquals
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -58,8 +53,6 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
-import java.util.TimeZone
 import javax.inject.Singleton
 import kotlin.time.ExperimentalTime
 
@@ -74,38 +67,8 @@ import kotlin.time.ExperimentalTime
 @HiltAndroidTest
 class CoreSubscriptionsManagerTest {
 
-    private val context = ApplicationProvider.getApplicationContext<Context>()
-
-    private val mockWebServer = MockWebServer()
-
-    private val serverTimeZone: TimeZone = TimeZone.getTimeZone("GMT")
-    private val serverDateParser = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z",
-        Locale.ENGLISH)
-
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
-
-    @Before
-    fun setUp() {
-//        WorkManager.initialize(context, myConfig)
-        mockWebServer.start()
-//        val settings = Fakes.FakeSettingsRepository(mockWebServer.url("").toString())
-//        val appInfo = AppInfo()
-//        analyticsProvider = Fakes.FakeAnalyticsProvider()
-//        fakeCoreRepository = Fakes.FakeCoreRepository(mockWebServer.url("").toString())
-//        fakeSettingsRepository = Fakes.FakeSettingsRepository("")
-//        userCounter = OkHttpUserCounter(OkHttpClient(), fakeCoreRepository, settings, appInfo,
-//            analyticsProvider)
-//        serverDateParser.timeZone = serverTimeZone
-//        coreSubscriptionsManager = CoreSubscriptionsManager(testContext)
-    }
-
-
-    @After
-    fun tearDown() {
-        mockWebServer.shutdown()
-    }
-
 
     @Module
     @InstallIn(SingletonComponent::class)
@@ -160,149 +123,30 @@ class CoreSubscriptionsManagerTest {
         fun provideOkHttpClient(): OkHttpClient = Mockito.mock(OkHttpClient::class.java)
 
 
-//        @Provides
-//        @Singleton
-//        fun provideOkHttpClientLogger() =
-//            HttpLoggingInterceptor().apply {
-//                if (org.adblockplus.adblockplussbrowser.analytics.BuildConfig.DEBUG) {
-//                    level = HttpLoggingInterceptor.Level.HEADERS // The default is Level.NONE
-//                }
-//            }
+        @Provides
+        @Singleton
+        fun provideOkHttpClientLogger() =
+            HttpLoggingInterceptor().apply {
+                if (org.adblockplus.adblockplussbrowser.analytics.BuildConfig.DEBUG) {
+                    level = HttpLoggingInterceptor.Level.HEADERS // The default is Level.NONE
+                }
+            }
     }
-
-
 
     @Test
-    fun `test counting success`() {
+    fun `test schedule immediate`() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
         val config = Configuration.Builder()
-            .setMinimumLoggingLevel(android.util.Log.INFO)
+            .setMinimumLoggingLevel(Log.DEBUG)
             .setExecutor(SynchronousExecutor())
             .build()
-        WorkManagerTestInitHelper.initializeTestWorkManager(context,config)
-        val manager = WorkManager.getInstance(context)
 
-        assertEquals(manager.getWorkInfosForUniqueWork(UpdateSubscriptionsWorker.UPDATE_KEY_ONESHOT_WORK),"")
+        // Initialize WorkManager for instrumentation tests.
+        WorkManagerTestInitHelper.initializeTestWorkManager(context, config)
 
-        val response = MockResponse()
-            .addHeader("Date", "Thu, 23 Sep 2021 17:31:01 GMT") //202109231731
-        mockWebServer.enqueue(response)
-        assertEquals(0, mockWebServer.requestCount)
-
-//        var coreSubscriptionsManager = CoreSubscriptionsManager(context)
-//        coreSubscriptionsManager.initialize()
-//        coreSubscriptionsManager.scheduleImmediate(true)
-//        assertEquals(manager.getWorkInfosForUniqueWork(UpdateSubscriptionsWorker.UPDATE_KEY_ONESHOT_WORK),"")
-
-
-
-//        runBlocking {
-//            assertTrue(userCounter.count(CallingApp("", "")) is CountUserResult.Success)
-//        }
-//        assertEquals(true.toString(), analyticsProvider.userPropertyValue)
-//        assertEquals(1, mockWebServer.requestCount)
-//        assertEquals(202109231731, fakeCoreRepository.lastUserCountingResponse)
-//        assertEquals(1, fakeCoreRepository.userCountingCount)
-//        assertNull(analyticsProvider.event)
+        val coreSubscriptionsManager = CoreSubscriptionsManager(context)
+        coreSubscriptionsManager.initialize()
+        coreSubscriptionsManager.scheduleImmediate(true)
     }
-
-
-
-//
-//    @Test
-//    fun `test counting success`() {
-//        val response = MockResponse()
-//            .addHeader("Date", "Thu, 23 Sep 2021 17:31:01 GMT") //202109231731
-//        mockWebServer.enqueue(response)
-//
-//        assertEquals(0, mockWebServer.requestCount)
-//        runBlocking {
-//            assertTrue(userCounter.count(CallingApp("", "")) is CountUserResult.Success)
-//        }
-//        assertEquals(true.toString(), analyticsProvider.userPropertyValue)
-//        assertEquals(1, mockWebServer.requestCount)
-//        assertEquals(202109231731, fakeCoreRepository.lastUserCountingResponse)
-//        assertEquals(1, fakeCoreRepository.userCountingCount)
-//        assertNull(analyticsProvider.event)
-//    }
-//
-//    @Test
-//    fun `test counting when Acceptable Ads are disabled`() {
-//        val response = MockResponse()
-//            .addHeader("Date", "Thu, 23 Sep 2021 17:31:01 GMT") //202109231731
-//        mockWebServer.enqueue(response)
-//        val settings = Fakes.FakeSettingsRepository(mockWebServer.url("").toString())
-//        val appInfo = AppInfo()
-//        assertEquals(0, mockWebServer.requestCount)
-//        runBlocking {
-//            // Given Acceptable Ads are disabled
-//            settings.acceptableAdsStatus = false
-//            // When the user is counted
-//            userCounter = OkHttpUserCounter(OkHttpClient(), fakeCoreRepository, settings, appInfo,
-//                analyticsProvider)
-//            assertTrue(userCounter.count(CallingApp("", "")) is CountUserResult.Success)
-//        }
-//        // Then User property value is reported to Google Analytics
-//        assertEquals(false.toString(), analyticsProvider.userPropertyValue)
-//    }
-//
-//    @Test
-//    fun `test counting Http 500`() {
-//        val response = MockResponse()
-//            .setResponseCode(HTTP_INTERNAL_ERROR)
-//        mockWebServer.enqueue(response)
-//
-//        assertEquals(0, mockWebServer.requestCount)
-//        runBlocking {
-//            assertTrue(userCounter.count(CallingApp("", "")) is CountUserResult.Failed)
-//        }
-//        assertEquals(1, mockWebServer.requestCount)
-//        assertEquals(Fakes.INITIAL_TIMESTAMP,
-//            fakeCoreRepository.lastUserCountingResponse)
-//        assertEquals(Fakes.INITIAL_COUNT, fakeCoreRepository.userCountingCount)
-//        assertNull(analyticsProvider.event)
-//        assertEquals(analyticsProvider.error, "$HTTP_ERROR_LOG_HEADER_USER_COUNTER $HTTP_ERROR_MOCK_500")
-//    }
-//
-//    @Test
-//    fun `test counting date wrong format`() {
-//        val response = MockResponse()
-//            .addHeader("Date", "Thu, 23 Sep 2021 17:31:01") //No timezone (GMT)
-//        mockWebServer.enqueue(response)
-//
-//        assertEquals(0, mockWebServer.requestCount)
-//        runBlocking {
-//            try {
-//                assertTrue(userCounter.count(CallingApp("", "")) is CountUserResult.Success)
-//                if (BuildConfig.DEBUG) {
-//                    fail() // In Debug mode we throw from count()
-//                }
-//            } catch (ex: Exception) {
-//                assert(ex is ParseException)
-//            }
-//
-//        }
-//        assertEquals(1, mockWebServer.requestCount)
-//        if (BuildConfig.DEBUG) {
-//            assertEquals(Fakes.INITIAL_TIMESTAMP,
-//                fakeCoreRepository.lastUserCountingResponse)
-//            assertEquals(Fakes.INITIAL_COUNT, fakeCoreRepository.userCountingCount)
-//        } else {
-//            assert(fakeCoreRepository.userCountingCount == 1)
-//        }
-//        assertTrue(analyticsProvider.exception is ParseException)
-//    }
-//
-//    @Test
-//    fun `test counting no header`() {
-//        val response = MockResponse()
-//        mockWebServer.enqueue(response)
-//        if (BuildConfig.DEBUG) {
-//            assertThrows(ParseException::class.java) {
-//                runBlocking { userCounter.count(CallingApp("", "")) }
-//            }
-//        } else {
-//            runBlocking { assertTrue(userCounter.count(CallingApp("", "")) is CountUserResult.Success) }
-//        }
-//    }
 }
 
