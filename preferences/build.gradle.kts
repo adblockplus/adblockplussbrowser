@@ -78,5 +78,6 @@ dependencies {
     testAnnotationProcessor(libs.hilt.compiler)
     testImplementation(libs.okhttp3.mockwebserver)
     testImplementation(libs.androidx.arch.core.testing)
+    testImplementation(libs.androidx.test.core)
 }
 

@@ -18,12 +18,15 @@
 package org.adblockplus.adblockplussbrowser.preferences.ui.reporter
 
 import android.content.ContentResolver
+import android.content.Context
 import android.net.Uri
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.test.core.app.ApplicationProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.adblockplus.adblockplussbrowser.preferences.data.ReportIssueRepository
 import org.adblockplus.adblockplussbrowser.preferences.helpers.FakeAnalyticsProvider
+import org.adblockplus.adblockplussbrowser.preferences.helpers.FakeSettingsRepository
 import org.adblockplus.adblockplussbrowser.preferences.helpers.Fakes
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -52,10 +55,16 @@ class ReportIssueViewModelTest {
     private suspend fun whenSendReport() = Mockito.`when`(
         mockReportIssueRepository.sendReport(Fakes.fakeReportIssueData))
 
+    private val context = ApplicationProvider.getApplicationContext<Context>()
+
     @Before
     fun setUp() {
         reportIssueViewModel.reportIssueRepository = mockReportIssueRepository
         reportIssueViewModel.analyticsProvider = FakeAnalyticsProvider()
+        reportIssueViewModel.settingsRepository = FakeSettingsRepository("")
+        val text = ""
+        context.openFileOutput("active_subscriptions_version_logs.txt", Context.MODE_PRIVATE)
+            .use { it.write(text.toByteArray()) }
     }
 
     @Test
@@ -94,7 +103,7 @@ class ReportIssueViewModelTest {
         runTest {
             whenSendReport().thenReturn(Result.success(Unit))
             reportIssueViewModel.data = Fakes.fakeReportIssueData
-            reportIssueViewModel.sendReport()
+            reportIssueViewModel.sendReport(context)
             assertEquals(
                 BackgroundOperationOutcome.REPORT_SEND_SUCCESS,
                 reportIssueViewModel.backgroundOperationOutcome.value
@@ -107,7 +116,7 @@ class ReportIssueViewModelTest {
         runTest {
             whenSendReport().thenReturn(Result.failure(RuntimeException()))
             reportIssueViewModel.data = Fakes.fakeReportIssueData
-            reportIssueViewModel.sendReport()
+            reportIssueViewModel.sendReport(context)
             assertEquals(
                 BackgroundOperationOutcome.REPORT_SEND_ERROR,
                 reportIssueViewModel.backgroundOperationOutcome.value
