@@ -300,9 +300,13 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             subscriptions.forEach { subscription ->
                 sink.writeUtf8("! ${subscription.url}\n")
             }
+            // Add also the local files to the header of the file
+            localFileSubscriptions.forEach { localFileSubscription ->
+                sink.writeUtf8("! ${localFileSubscription.url}\n")
+            }
 
-            localFileSubscriptions.forEach { subscription ->
-                sink.writeUtf8(File(appContext.filesDir, subscription.title).readText())
+            localFileSubscriptions.forEach { localFileSubscription ->
+                sink.writeUtf8(File(appContext.filesDir, localFileSubscription.title).readText())
             }
 
             if (BuildConfig.FLAVOR_product != BuildConfig.FLAVOR_CRYSTAL) {
@@ -345,21 +349,41 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
 
     private fun List<DownloadedSubscription>.toFiltersSet(): Set<String> {
         val filters = mutableSetOf<String>()
+        val versionsMap = mutableMapOf<String, String>()
         this.forEach { subscription ->
             val file = File(subscription.path)
             file.source().use { fileSource ->
                 fileSource.buffer().use { source ->
-                    val set = generateSequence {
+                    val (extractedFilters, headers) = generateSequence {
                         source.readUtf8Line()
-                    }.filter {
+                    }.partition {
                         it.isFilter()
-                    }.toSet()
+                    }
+                    val set = extractedFilters.toSet()
+                    // As we are reading the file here, we extract the version if it exists
+                    val version = headers.find {
+                        it.contains("Version: ", ignoreCase = true)
+                    }?.split(":")?.get(1)?.trim() ?: ""
+                    versionsMap[subscription.url] = version
+
                     Timber.d("Filter: ${subscription.url} - ${file.name} : rule size: ${set.size}")
                     filters += set
                 }
             }
         }
+        saveVersionsFile(versionsMap)
         return filters
+    }
+
+    private fun saveVersionsFile(versions: Map<String, String>) {
+        val subscriptionsVersionFile = "active_subscriptions_version_logs.txt"
+        var text = ""
+        versions.filter { it.value.isNotEmpty() }.forEach { version ->
+            text += "${version.key} :: ${version.value}\n"
+        }
+        appContext.openFileOutput(subscriptionsVersionFile, Context.MODE_PRIVATE).use { it.write(text.toByteArray()) }
+        val file = File(appContext.filesDir, subscriptionsVersionFile)
+        file.exists()
     }
 
     private fun Context.getCacheDownloadDir(): File {

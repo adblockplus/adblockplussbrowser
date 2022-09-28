@@ -131,7 +131,7 @@ internal class ReportIssueFragment :
         binding.sendReport.setDebounceOnClickListener({
             // Show progress bar
             binding.indeterminateBar.visibility = View.VISIBLE
-            viewModel.sendReport()
+            viewModel.sendReport(requireContext())
         }, lifecycleOwner)
 
         // Sets the Mandatory Marks for empty default field values

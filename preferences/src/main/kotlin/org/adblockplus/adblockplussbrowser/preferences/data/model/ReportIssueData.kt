@@ -24,7 +24,8 @@ data class ReportIssueData(
     var screenshot: String = "",
     var email: String = "",
     var comment: String = "",
-    var url: String = ""
+    var url: String = "",
+    var subscriptions: MutableList<ReportIssueSubscription> = mutableListOf()
 ) {
     fun validate(): Boolean = validateType() && validateEmail() && validateScreenshot()
 
@@ -42,3 +43,11 @@ data class ReportIssueData(
         const val REPORT_ISSUE_DATA_TYPE_MISSED_AD = "false negative"
     }
 }
+
+data class ReportIssueSubscription(
+    var id: String,
+    var lastUpdated: Long,
+    var softExpiration: Long,
+    var hardExpiration: Long,
+    var version: String?
+)
