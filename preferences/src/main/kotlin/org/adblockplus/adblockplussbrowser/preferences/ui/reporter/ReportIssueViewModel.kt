@@ -104,6 +104,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         }
     }
 
+    @SuppressWarnings("MagicNumber") // Explained in the comments
     private suspend fun addActiveSubscriptions(context: Context) {
         /* Clean current Subscriptions.
         If sending the report fails and the user retries without reloading the fragment, then
@@ -118,15 +119,19 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
 
         // Expires configuration
         val now = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
-        val oneDayExpiration = TimeUnit.HOURS.toSeconds(24) // On wifi connection we take 24 hours as threshold
-        val threeDaysExpiration = TimeUnit.DAYS.toSeconds(3) // On metered connection (3g/4g) we take 3 days as threshold
+        // On wifi connection we take 24 hours as threshold
+        val oneDayExpiration = TimeUnit.HOURS.toSeconds(24)
+        // On metered connection (3g/4g) we take 3 days as threshold
+        val threeDaysExpiration = TimeUnit.DAYS.toSeconds(3)
         val versionsFile = File(context.filesDir, "active_subscriptions_version_logs.txt")
 
         activeSubscriptions.forEach { subscription ->
             val version = versionsFile.readLines()
                 .find { it.contains(subscription.url) }?.split("::")?.get(1)?.trim()
             var lastUpdated: Long = 0
-            if (subscription.lastUpdate > 0) lastUpdated = now - TimeUnit.MILLISECONDS.toSeconds(subscription.lastUpdate)
+            if (subscription.lastUpdate > 0) {
+                lastUpdated = now - TimeUnit.MILLISECONDS.toSeconds(subscription.lastUpdate)
+            }
             data.subscriptions.add(
                 ReportIssueSubscription(
                     id = subscription.url,

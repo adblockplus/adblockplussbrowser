@@ -87,6 +87,7 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
             }
     }
 
+    @SuppressWarnings("LongMethod")
     internal fun makeXML(data: ReportIssueData): Result<String> {
         val writer = StringWriter()
         return runCatching {
