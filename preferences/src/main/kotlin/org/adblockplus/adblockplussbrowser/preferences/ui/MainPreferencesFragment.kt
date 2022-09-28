@@ -80,21 +80,9 @@ internal class MainPreferencesFragment :
         bindGuide(binding, lifecycleOwner)
         bindAbout(binding, supportActionBar, lifecycleOwner)
 
-        if (BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_ABP) {
-            binding.mainPreferencesShareEventsInclude.mainPreferencesIssueReporterCategory.setDebounceOnClickListener(
-                {
-                    supportActionBar?.subtitle = null
-                    val direction = MainPreferencesFragmentDirections
-                        .actionMainPreferencesFragmentToReportIssueFragment()
-                    findNavController().navigate(direction)
-                },
-                lifecycleOwner
-            )
-        } else {
-            binding.mainPreferencesShareEventsInclude.mainPreferencesIssueReporterCategory.visibility =
-                View.GONE
-            binding.mainPreferencesShareEventsInclude.mainPreferencesDivider1.visibility = View.GONE
-        }
+        binding.mainPreferencesShareEventsInclude.mainPreferencesIssueReporterCategory.visibility =
+            View.GONE
+        binding.mainPreferencesShareEventsInclude.mainPreferencesDivider1.visibility = View.GONE
     }
 
     private fun bindAbout(
@@ -325,7 +313,7 @@ internal class MainPreferencesFragment :
         // If the user clicks outside the dialog, we stop the start guide
         popupWindow.setTouchInterceptor { v, event ->
             v.performClick()
-            if(event.action == MotionEvent.ACTION_OUTSIDE) {
+            if (event.action == MotionEvent.ACTION_OUTSIDE) {
                 skipTour()
                 spotlight.finish()
             }
@@ -351,7 +339,7 @@ internal class MainPreferencesFragment :
             popupWindow.dismiss()
             spotlight.finish()
         }
-        tourDialogLayout.findViewById<View>(R.id.tour_last_step_done_button).setOnClickListener{
+        tourDialogLayout.findViewById<View>(R.id.tour_last_step_done_button).setOnClickListener {
             viewModel.logStartGuideCompleted()
             popupWindow.dismiss()
             spotlight.finish()
