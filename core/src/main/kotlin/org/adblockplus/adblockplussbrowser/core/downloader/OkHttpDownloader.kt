@@ -47,6 +47,8 @@ import java.net.HttpURLConnection.HTTP_NOT_MODIFIED
 import java.net.HttpURLConnection.HTTP_OK
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
+import org.adblockplus.adblockplussbrowser.base.data.DownloaderConstants.METERED_REFRESH_INTERVAL_DAYS
+import org.adblockplus.adblockplussbrowser.base.data.DownloaderConstants.UNMETERED_REFRESH_INTERVAL_HOURS
 
 
 @ExperimentalTime
@@ -255,8 +257,8 @@ internal class OkHttpDownloader(
 
     companion object {
         private val MIN_REFRESH_INTERVAL = Duration.hours(1)
-        private val UNMETERED_REFRESH_INTERVAL: Duration = Duration.hours(24)
-        private val METERED_REFRESH_INTERVAL = Duration.days(3)
+        private val UNMETERED_REFRESH_INTERVAL = Duration.hours(UNMETERED_REFRESH_INTERVAL_HOURS)
+        private val METERED_REFRESH_INTERVAL = Duration.days(METERED_REFRESH_INTERVAL_DAYS)
         internal const val HTTP_ERROR_LOG_HEADER_DOWNLOADER = "OkHttpDownloader HTTP error, return code"
     }
 }
