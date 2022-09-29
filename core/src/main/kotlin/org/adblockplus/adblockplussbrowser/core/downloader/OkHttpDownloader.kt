@@ -29,6 +29,8 @@ import okio.BufferedSource
 import okio.buffer
 import okio.sink
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
+import org.adblockplus.adblockplussbrowser.base.data.DownloaderConstants.METERED_REFRESH_INTERVAL_DAYS
+import org.adblockplus.adblockplussbrowser.base.data.DownloaderConstants.UNMETERED_REFRESH_INTERVAL_HOURS
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.core.AppInfo
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
@@ -255,8 +257,8 @@ internal class OkHttpDownloader(
 
     companion object {
         private val MIN_REFRESH_INTERVAL = Duration.hours(1)
-        private val UNMETERED_REFRESH_INTERVAL: Duration = Duration.hours(24)
-        private val METERED_REFRESH_INTERVAL = Duration.days(3)
+        private val UNMETERED_REFRESH_INTERVAL: Duration = Duration.hours(UNMETERED_REFRESH_INTERVAL_HOURS)
+        private val METERED_REFRESH_INTERVAL = Duration.days(METERED_REFRESH_INTERVAL_DAYS)
         internal const val HTTP_ERROR_LOG_HEADER_DOWNLOADER = "OkHttpDownloader HTTP error, return code"
     }
 }

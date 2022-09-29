@@ -28,25 +28,27 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.single
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
+import org.adblockplus.adblockplussbrowser.base.data.DownloaderConstants.METERED_REFRESH_INTERVAL_DAYS
+import org.adblockplus.adblockplussbrowser.base.data.DownloaderConstants.UNMETERED_REFRESH_INTERVAL_HOURS
+import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.base.os.loadImage
 import org.adblockplus.adblockplussbrowser.base.os.resolveFilename
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.data.ReportIssueRepository
 import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData
+import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueSubscription
+import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-import kotlinx.coroutines.flow.single
-import kotlinx.coroutines.flow.take
-import kotlinx.coroutines.runBlocking
-import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
-import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueSubscription
-import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 
 enum class BackgroundOperationOutcome {
     SCREENSHOT_PROCESSING_FINISHED,
@@ -120,9 +122,9 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         // Expires configuration
         val now = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
         // On wifi connection we take 24 hours as threshold
-        val oneDayExpiration = TimeUnit.HOURS.toSeconds(24)
+        val oneDayExpiration = TimeUnit.HOURS.toSeconds(UNMETERED_REFRESH_INTERVAL_HOURS.toLong())
         // On metered connection (3g/4g) we take 3 days as threshold
-        val threeDaysExpiration = TimeUnit.DAYS.toSeconds(3)
+        val threeDaysExpiration = TimeUnit.DAYS.toSeconds(METERED_REFRESH_INTERVAL_DAYS.toLong())
         val versionsFile = File(context.filesDir, "active_subscriptions_version_logs.txt")
 
         activeSubscriptions.forEach { subscription ->
