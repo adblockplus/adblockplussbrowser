@@ -22,5 +22,4 @@ object DownloaderConstants {
     const val UNMETERED_REFRESH_INTERVAL_HOURS = 24
     // On metered connection (3g/4g) we take 3 days as threshold
     const val METERED_REFRESH_INTERVAL_DAYS = 3
-
 }
