@@ -15,52 +15,47 @@
  You should have received a copy of the GNU General Public License
  along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/tour_layout"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tour_dialog_layout"
-        android:background="@drawable/preferences_group_bg_single"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <View
-            android:layout_width="256dp"
-            android:layout_height="2dp"
-            style="@style/PreferenceDivider"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="6dp"
-            app:layout_constraintStart_toStartOf="@id/tour_skip_button"
-            app:layout_constraintEnd_toEndOf="@id/tour_next_button"
-            app:layout_constraintTop_toBottomOf="@id/tour_dialog_text" />
+    android:background="@drawable/preferences_group_bg_single"
+    android:layout_width="288dp"
+    android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/tour_dialog_text"
+            style="@style/CustomPreferenceSummaryTextStyle"
             android:layout_width="256dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:textAlignment="center"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/tour_dialog_ad_blocking_options_text" />
+
+        <View
+            android:id="@+id/divider"
+            style="@style/PreferenceDivider"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/tour_dialog_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tour_dialog_text" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/tour_next_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:backgroundTint="@color/ribbon"
+            android:letterSpacing="-0.001"
             android:paddingStart="24dp"
             android:paddingTop="16dp"
             android:paddingEnd="24dp"
@@ -68,18 +63,21 @@
             android:text="@string/tour_next_button_text"
             android:textAllCaps="false"
             android:textColor="@color/white"
+            android:visibility="visible"
             app:cornerRadius="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/tour_dialog_text"
-            app:layout_constraintTop_toBottomOf="@+id/tour_dialog_text" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/tour_skip_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp"
             android:backgroundTint="@color/background_secondary"
+            android:letterSpacing="-0.001"
             android:paddingStart="24dp"
             android:paddingTop="16dp"
             android:paddingEnd="24dp"
@@ -87,19 +85,20 @@
             android:text="@string/tour_skip_button_text"
             android:textAllCaps="false"
             android:textColor="@color/ribbon"
+            android:visibility="visible"
             app:cornerRadius="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/tour_dialog_text"
-            app:layout_constraintTop_toBottomOf="@+id/tour_dialog_text" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/tour_last_step_done_button"
-            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp"
             android:backgroundTint="@color/ribbon"
+            android:letterSpacing="-0.001"
             android:paddingStart="24dp"
             android:paddingTop="16dp"
             android:paddingEnd="24dp"
@@ -107,12 +106,11 @@
             android:text="@string/tour_last_step_button_done"
             android:textAllCaps="false"
             android:textColor="@color/white"
+            android:visibility="gone"
             app:cornerRadius="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/tour_dialog_text"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tour_dialog_text" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toBottomOf="@+id/divider" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
