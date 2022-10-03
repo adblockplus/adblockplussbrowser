@@ -336,7 +336,7 @@ internal class MainPreferencesFragment :
         tourDialogLayout.findViewById<View>(R.id.tour_dialog_text).setOnClickListener {
             Timber.i("Mute on purpose")
         }
-        tourDialogLayout.findViewById<View>(R.id.tour_dialog_layout).setOnClickListener {
+        tourDialogLayout.findViewById<View>(R.id.tour_layout).setOnClickListener {
             Timber.i("Mute on purpose")
         }
 
