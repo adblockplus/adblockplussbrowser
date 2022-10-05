@@ -17,8 +17,12 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -75,10 +79,10 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
         settingsRepository.getSocialMediaTrackingSubscription()
     }.asLiveData()
 
-    val blockAdditionalTracking = MutableLiveData<Boolean?>().apply { value = false }
-    val blockSocialMediaTracking = MutableLiveData<Boolean?>().apply { value = false }
-    val additionalTrackingLastUpdate = MutableLiveData<Long>().apply { value = 0L }
-    val socialMediaIconsTrackingLastUpdate = MutableLiveData<Long>().apply { value = 0L }
+    val blockAdditionalTracking by lazy { MutableLiveData(false) }
+    val blockSocialMediaTracking by lazy { MutableLiveData(false) }
+    val additionalTrackingLastUpdate by lazy { MutableLiveData(0L) }
+    val socialMediaIconsTrackingLastUpdate by lazy { MutableLiveData(0L) }
 
     private val _uiState = MutableStateFlow<UiState>(UiState.Done)
     val uiState = _uiState.asLiveData()
@@ -87,6 +91,9 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
     private val _errorFlow = MutableSharedFlow<Unit>() // Backing property to avoid flow emissions from other classes
     // Expose the flow to be observed from the Fragment
     val errorFlow: SharedFlow<Unit> = _errorFlow
+
+    private val _activityCancelledFlow = MutableSharedFlow<Unit>()
+    val activityCancelledFlow: SharedFlow<Unit>  = _activityCancelledFlow
 
     private val addOtherSubscriptionsCount = MutableLiveData<Int>().apply { value = 0 }
 
@@ -111,18 +118,15 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
         analyticsEventOnSelected: AnalyticsEvent,
         analyticsEventOnDeselected: AnalyticsEvent
     ) {
-        if (checkboxSelected) {
-            viewModelScope.launch {
+        viewModelScope.launch {
+            if (checkboxSelected) {
                 settingsRepository.addActiveOtherSubscription(subscription)
-            }
-            analyticsProvider.logEvent(analyticsEventOnSelected)
-        } else {
-            viewModelScope.launch {
+                analyticsProvider.logEvent(analyticsEventOnSelected)
+            } else {
                 settingsRepository.removeActiveOtherSubscription(subscription)
+                analyticsProvider.logEvent(analyticsEventOnDeselected)
             }
-            analyticsProvider.logEvent(analyticsEventOnDeselected)
         }
-
     }
 
     fun addCustomUrl(url: String) {
@@ -140,7 +144,7 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
         }
     }
 
-    fun addCustomFilterFile(uri: Uri, context: Context) {
+    private fun addCustomFilterFile(uri: Uri, context: Context) {
         viewModelScope.launch {
             _uiState.value = UiState.Loading
             addOtherSubscriptionsCount.apply { value = value?.plus(1) }
@@ -176,21 +180,51 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
         }
     }
 
-    private fun List<Subscription>.customItems(): List<OtherSubscriptionsItem.CustomItem> {
-        val result = mutableListOf<OtherSubscriptionsItem.CustomItem>()
-        if (this.isNotEmpty()) {
-            this.forEachIndexed { index, subscription ->
-                val layout = this.layoutForIndex(index)
-                result.add(OtherSubscriptionsItem.CustomItem(subscription, layout))
-            }
-        }
-        return result
-    }
-
     private fun finishAddingCustomSubscription() {
         addOtherSubscriptionsCount.apply { value = value?.minus(1) }
         if (addOtherSubscriptionsCount.value == 0) {
             _uiState.value = UiState.Done
         }
     }
+
+    internal fun loadFileFromStorage(launcher: ActivityResultLauncher<Intent>) {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "text/plain"
+        }
+        val chooser = Intent.createChooser(intent, "Open file from...")
+        runCatching {
+            launcher.launch(chooser)
+        }.onFailure {
+            analyticsProvider.logError(it.message.toString())
+            throw it
+        }
+    }
+
+    internal fun handleFilePickingResult(result: ActivityResult, context:Context) {
+        viewModelScope.launch {
+            if (result.resultCode == Activity.RESULT_OK) {
+                result.data?.data?.let { filePath ->
+                    addCustomFilterFile(filePath, context)
+                }
+            } else {
+                analyticsProvider.logEvent(AnalyticsEvent.DEVICE_FILE_MANAGER_NOT_SUPPORTED_OR_CANCELED)
+                _activityCancelledFlow.emit(Unit)
+            }
+        }
+    }
+
+    internal fun logCustomFilterListFromUrl() = analyticsProvider.logEvent(AnalyticsEvent.LOAD_CUSTOM_FILTER_LIST_FROM_URL)
+    internal fun logCustomFilterListFromFile() = analyticsProvider.logEvent(AnalyticsEvent.LOAD_CUSTOM_FILTER_LIST_FROM_FILE)
+}
+
+private fun List<Subscription>.customItems(): List<OtherSubscriptionsItem.CustomItem> {
+    val result = mutableListOf<OtherSubscriptionsItem.CustomItem>()
+    if (this.isNotEmpty()) {
+        this.forEachIndexed { index, subscription ->
+            val layout = this.layoutForIndex(index)
+            result.add(OtherSubscriptionsItem.CustomItem(subscription, layout))
+        }
+    }
+    return result
 }
