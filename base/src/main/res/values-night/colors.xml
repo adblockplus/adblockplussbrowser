@@ -19,12 +19,15 @@
 <resources>
 
     <color name="background">@color/black</color>
+    <color name="background_snackbar">@color/white</color>
     <color name="background_secondary">@color/mirage</color>
     <color name="background_accent">@color/mirage</color>
     <color name="foreground">@color/white</color>
+    <color name="foreground_snackbar">@color/black</color>
     <color name="foreground_secondary">@color/regent_gray</color>
     <color name="foreground_accent">@color/dodger_blue</color>
     <color name="divider">@color/regent_gray_opacity_15</color>
     <color name="clickable_text">@color/dodger_blue</color>
+    <color name="snackbar_outline">#006C04</color>
 
 </resources>

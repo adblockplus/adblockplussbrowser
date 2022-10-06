@@ -31,6 +31,8 @@ import com.google.android.material.snackbar.Snackbar
 import org.adblockplus.adblockplussbrowser.base.databinding.SnackbarLayoutBinding
 import org.adblockplus.adblockplussbrowser.base.view.layoutInflater
 
+private const val SNACKBAR_IMAGE_PADDING = 32
+
 class SnackbarContainer @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -143,6 +145,12 @@ class SnackbarContainer @JvmOverloads constructor(
             null,
             null
         )
+        binding?.snackbarText?.setPadding(
+            SNACKBAR_IMAGE_PADDING,
+            SNACKBAR_IMAGE_PADDING,
+            SNACKBAR_IMAGE_PADDING,
+            SNACKBAR_IMAGE_PADDING
+        )
     }
 
     private fun adjustDuration() {
@@ -168,7 +176,7 @@ class SnackbarContainer @JvmOverloads constructor(
         config.actionVisibility = VISIBLE
         adjustActionVisibility()
     }
-    
+
     private fun adjustActionVisibility() {
         binding?.snackbarAction?.visibility = config.actionVisibility
     }
