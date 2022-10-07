@@ -79,7 +79,7 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
         settingsRepository.getSocialMediaTrackingSubscription()
     }.asLiveData()
 
-    val blockAdditionalTracking by lazy { MutableLiveData(false) }
+    val blockAdditionalTracking = MutableLiveData<Boolean>().apply { false }
     val blockSocialMediaTracking by lazy { MutableLiveData(false) }
     val additionalTrackingLastUpdate by lazy { MutableLiveData(0L) }
     val socialMediaIconsTrackingLastUpdate by lazy { MutableLiveData(0L) }
