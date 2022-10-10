@@ -28,6 +28,6 @@
     <color name="foreground_accent">@color/dodger_blue</color>
     <color name="divider">@color/regent_gray_opacity_15</color>
     <color name="clickable_text">@color/dodger_blue</color>
-    <color name="snackbar_outline">#006C04</color>
+    <color name="snackbar_outline">@color/dark_green</color>
 
 </resources>
