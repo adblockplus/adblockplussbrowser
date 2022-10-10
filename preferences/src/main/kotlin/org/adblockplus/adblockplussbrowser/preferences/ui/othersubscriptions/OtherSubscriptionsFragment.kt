@@ -168,7 +168,7 @@ internal class OtherSubscriptionsFragment :
             )
             .create()
 
-        speedDial.addAllActionItems(listOf(addWithUrlButton, addFromLocalStorageButton))
+        speedDial.addAllActionItems(listOf(addFromLocalStorageButton, addWithUrlButton))
 
         speedDial.setOnActionSelectedListener { actionItem ->
             when (actionItem.id) {
