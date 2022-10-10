@@ -17,9 +17,11 @@
 
 package org.adblockplus.adblockplussbrowser.base.data
 
-object DownloaderConstants {
+object SubscriptionsConstants {
     // On wifi connection we take 24 hours as threshold
     const val UNMETERED_REFRESH_INTERVAL_HOURS = 24
     // On metered connection (3g/4g) we take 3 days as threshold
     const val METERED_REFRESH_INTERVAL_DAYS = 3
+    // Filename where we save the current version of the active subscriptions
+    const val ACTIVE_SUBSCRIPTIONS_VERSIONS_FILE = "active_subscriptions_version_logs.txt"
 }

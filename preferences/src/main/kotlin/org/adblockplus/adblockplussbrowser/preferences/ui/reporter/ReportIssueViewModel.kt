@@ -44,8 +44,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.runBlocking
-import org.adblockplus.adblockplussbrowser.base.data.DownloaderConstants.METERED_REFRESH_INTERVAL_DAYS
-import org.adblockplus.adblockplussbrowser.base.data.DownloaderConstants.UNMETERED_REFRESH_INTERVAL_HOURS
+import org.adblockplus.adblockplussbrowser.base.data.SubscriptionsConstants
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueSubscription
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
@@ -120,9 +119,11 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
 
         // Expires configuration
         val now = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
-        val oneDayExpiration = TimeUnit.HOURS.toSeconds(UNMETERED_REFRESH_INTERVAL_HOURS.toLong())
-        val threeDaysExpiration = TimeUnit.DAYS.toSeconds(METERED_REFRESH_INTERVAL_DAYS.toLong())
-        val versionsFile = File(context.filesDir, "active_subscriptions_version_logs.txt")
+        val oneDayExpiration = TimeUnit.HOURS.toSeconds(
+            SubscriptionsConstants.UNMETERED_REFRESH_INTERVAL_HOURS.toLong())
+        val threeDaysExpiration = TimeUnit.DAYS.toSeconds(
+            SubscriptionsConstants.METERED_REFRESH_INTERVAL_DAYS.toLong())
+        val versionsFile = File(context.filesDir, SubscriptionsConstants.ACTIVE_SUBSCRIPTIONS_VERSIONS_FILE)
 
         if (versionsFile.exists()) {
             activeSubscriptions.forEach { subscription ->

@@ -54,6 +54,7 @@ import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
 import kotlinx.coroutines.flow.first
+import org.adblockplus.adblockplussbrowser.base.data.SubscriptionsConstants
 import org.adblockplus.adblockplussbrowser.base.data.prefs.DebugPreferences
 import org.adblockplus.adblockplussbrowser.core.BuildConfig
 
@@ -376,14 +377,12 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
     }
 
     private fun saveVersionsFile(versions: Map<String, String>) {
-        val subscriptionsVersionFile = "active_subscriptions_version_logs.txt"
         var text = ""
         versions.filter { it.value.isNotEmpty() }.forEach { version ->
             text += "${version.key} :: ${version.value}\n"
         }
-        appContext.openFileOutput(subscriptionsVersionFile, Context.MODE_PRIVATE).use { it.write(text.toByteArray()) }
-        val file = File(appContext.filesDir, subscriptionsVersionFile)
-        file.exists()
+        appContext.openFileOutput(SubscriptionsConstants.ACTIVE_SUBSCRIPTIONS_VERSIONS_FILE, Context.MODE_PRIVATE)
+            .use { it.write(text.toByteArray()) }
     }
 
     private fun Context.getCacheDownloadDir(): File {
