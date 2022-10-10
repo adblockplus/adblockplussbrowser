@@ -84,16 +84,16 @@ open class FakeSettingsRepository(private val serverUrl: String) : SettingsRepos
         get() = flow {
             emit(
                 Settings(
-                    true,
-                    acceptableAdsStatus,
-                    UpdateConfig.ALWAYS,
-                    listOf(""),
-                    listOf(""),
-                    listOf(
+                    adblockEnabled = true,
+                    acceptableAdsEnabled = acceptableAdsStatus,
+                    updateConfig = UpdateConfig.ALWAYS,
+                    allowedDomains = listOf(),
+                    blockedDomains = listOf(),
+                    activePrimarySubscriptions = listOf(
                         Subscription("$serverUrl/easylist.txt", "", 0L, CustomSubscriptionType.FROM_URL),
                         Subscription("$serverUrl/exceptionrules.txt", "", 0L, CustomSubscriptionType.FROM_URL)
                     ),
-                    listOf(),
+                    activeOtherSubscriptions = listOf(),
                     analyticsEnabled = true,
                     languagesOnboardingCompleted = true
                 )
@@ -164,11 +164,11 @@ open class FakeSettingsRepository(private val serverUrl: String) : SettingsRepos
     override suspend fun setAnalyticsEnabled(enabled: Boolean) {}
 
     override suspend fun getAdditionalTrackingSubscription(): Subscription {
-        TODO("Not yet implemented")
+        return Subscription("$serverUrl/easyprivacy.txt", "", 0L, CustomSubscriptionType.FROM_URL)
     }
 
     override suspend fun getSocialMediaTrackingSubscription(): Subscription {
-        TODO("Not yet implemented")
+        return Subscription("$serverUrl/fanboy-social.txt", "", 0L, CustomSubscriptionType.FROM_URL)
     }
 
     override suspend fun markLanguagesOnboardingCompleted() {}
