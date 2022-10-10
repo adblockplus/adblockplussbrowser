@@ -28,10 +28,9 @@ import androidx.annotation.StringRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.postDelayed
 import com.google.android.material.snackbar.Snackbar
+import org.adblockplus.adblockplussbrowser.base.R
 import org.adblockplus.adblockplussbrowser.base.databinding.SnackbarLayoutBinding
 import org.adblockplus.adblockplussbrowser.base.view.layoutInflater
-
-private const val SNACKBAR_IMAGE_PADDING = 32
 
 class SnackbarContainer @JvmOverloads constructor(
     context: Context,
@@ -146,10 +145,10 @@ class SnackbarContainer @JvmOverloads constructor(
             null
         )
         binding?.snackbarText?.setPadding(
-            SNACKBAR_IMAGE_PADDING,
-            SNACKBAR_IMAGE_PADDING,
-            SNACKBAR_IMAGE_PADDING,
-            SNACKBAR_IMAGE_PADDING
+            resources.getDimensionPixelSize(R.dimen.snackbar_image_padding),
+            resources.getDimensionPixelSize(R.dimen.snackbar_image_padding),
+            resources.getDimensionPixelSize(R.dimen.snackbar_image_padding),
+            resources.getDimensionPixelSize(R.dimen.snackbar_image_padding)
         )
     }
 
