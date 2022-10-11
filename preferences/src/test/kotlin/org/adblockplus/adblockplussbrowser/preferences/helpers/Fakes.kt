@@ -21,6 +21,7 @@ import dagger.Provides
 import javax.inject.Singleton
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
@@ -81,24 +82,22 @@ open class FakeSettingsRepository(private val serverUrl: String) : SettingsRepos
     var acceptableAdsStatus: Boolean = true
 
     override val settings: Flow<Settings>
-        get() = flow {
-            emit(
-                Settings(
-                    adblockEnabled = true,
-                    acceptableAdsEnabled = acceptableAdsStatus,
-                    updateConfig = UpdateConfig.ALWAYS,
-                    allowedDomains = listOf(),
-                    blockedDomains = listOf(),
-                    activePrimarySubscriptions = listOf(
-                        Subscription("$serverUrl/easylist.txt", "", 0L, CustomSubscriptionType.FROM_URL),
-                        Subscription("$serverUrl/exceptionrules.txt", "", 0L, CustomSubscriptionType.FROM_URL)
-                    ),
-                    activeOtherSubscriptions = listOf(),
-                    analyticsEnabled = true,
-                    languagesOnboardingCompleted = true
-                )
+        get() = flowOf(
+            Settings(
+                adblockEnabled = true,
+                acceptableAdsEnabled = acceptableAdsStatus,
+                updateConfig = UpdateConfig.ALWAYS,
+                allowedDomains = listOf(),
+                blockedDomains = listOf(),
+                activePrimarySubscriptions = listOf(
+                    Subscription("$serverUrl/easylist.txt", "", 0L, CustomSubscriptionType.FROM_URL),
+                    Subscription("$serverUrl/exceptionrules.txt", "", 0L, CustomSubscriptionType.FROM_URL)
+                ),
+                activeOtherSubscriptions = listOf(),
+                analyticsEnabled = true,
+                languagesOnboardingCompleted = true
             )
-        }
+        )
 
     override suspend fun getEasylistSubscription(): Subscription {
         return Subscription("$serverUrl/easylist.txt", "", 0L, CustomSubscriptionType.FROM_URL)

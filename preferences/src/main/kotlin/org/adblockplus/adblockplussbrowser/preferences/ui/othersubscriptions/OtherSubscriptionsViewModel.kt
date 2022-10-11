@@ -44,6 +44,7 @@ import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.collect
 import org.adblockplus.adblockplussbrowser.base.os.readText
 import org.adblockplus.adblockplussbrowser.base.os.resolveFilename
 
@@ -98,6 +99,12 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
     private val addOtherSubscriptionsCount = MutableLiveData<Int>().apply { value = 0 }
 
     fun toggleAdditionalTracking() {
+//        var settings: org.adblockplus.adblockplussbrowser.settings.data.model.Settings? = null
+//        viewModelScope.launch {
+//            settingsRepository.settings.collect {
+//                settings = it
+//            }
+//        }
         blockAdditionalTracking.apply { value?.let { it -> value = !it } }
         handleDefaultSubscriptions(
             blockAdditionalTracking.value!!, additionalTrackingSubscription.value!!,

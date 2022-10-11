@@ -1,17 +1,27 @@
 package org.adblockplus.adblockplussbrowser.preferences.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.preferences.helpers.FakeAnalyticsProvider
 import org.adblockplus.adblockplussbrowser.preferences.helpers.FakeSettingsRepository
 import org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions.OtherSubscriptionsViewModel
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 import org.mockito.Mockito
+import org.robolectric.RobolectricTestRunner
 
+//@RunWith(RobolectricTestRunner::class)
+//@ExperimentalCoroutinesApi
 class OtherSubscriptionsViewModelTest {
 
     private lateinit var otherSubscriptionsViewModel: OtherSubscriptionsViewModel
