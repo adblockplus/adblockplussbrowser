@@ -43,6 +43,7 @@ import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.di.SettingsModule
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -70,6 +71,17 @@ class CoreSubscriptionsManagerTest {
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
+
+    lateinit var coreSubscriptionsManager: CoreSubscriptionsManager
+    lateinit var mockWorkManager: WorkManager
+
+    @Before
+    fun setUp() {
+        mockWorkManager= mock()
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        coreSubscriptionsManager = CoreSubscriptionsManager(context, workManager = mockWorkManager)
+        coreSubscriptionsManager.initialize()
+    }
 
     @Module
     @InstallIn(SingletonComponent::class)
@@ -136,11 +148,14 @@ class CoreSubscriptionsManagerTest {
 
     @Test
     fun `test schedule immediate`() {
-        val mockWorkManager: WorkManager = mock<WorkManager>()
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        val coreSubscriptionsManager = CoreSubscriptionsManager(context, workManager = mockWorkManager)
-        coreSubscriptionsManager.initialize()
         coreSubscriptionsManager.scheduleImmediate(true)
+
+        verify(mockWorkManager).enqueueUniqueWork(any(), any(), any<OneTimeWorkRequest>())
+    }
+
+    @Test
+    fun `test schedule not immediate`() {
+        coreSubscriptionsManager.scheduleImmediate(false)
 
         verify(mockWorkManager).enqueueUniqueWork(any(), any(), any<OneTimeWorkRequest>())
     }
