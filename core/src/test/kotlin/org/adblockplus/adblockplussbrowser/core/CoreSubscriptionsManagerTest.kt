@@ -18,11 +18,9 @@
 package org.adblockplus.adblockplussbrowser.core
 
 import android.content.Context
-import android.util.Log
 import androidx.test.core.app.ApplicationProvider
-import androidx.work.Configuration
-import androidx.work.testing.SynchronousExecutor
-import androidx.work.testing.WorkManagerTestInitHelper
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -49,6 +47,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
+import org.mockito.kotlin.any
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import java.text.SimpleDateFormat
@@ -89,7 +90,7 @@ class CoreSubscriptionsManagerTest {
         @Provides
         @Singleton
         fun getSettingsRepository(): SettingsRepository {
-            val settingsRepository =  Fakes.FakeSettingsRepository("")
+            val settingsRepository = Fakes.FakeSettingsRepository("")
             settingsRepository.acceptableAdsStatus = false
             return settingsRepository
         }
@@ -135,18 +136,13 @@ class CoreSubscriptionsManagerTest {
 
     @Test
     fun `test schedule immediate`() {
+        val mockWorkManager: WorkManager = mock<WorkManager>()
         val context = ApplicationProvider.getApplicationContext<Context>()
-        val config = Configuration.Builder()
-            .setMinimumLoggingLevel(Log.DEBUG)
-            .setExecutor(SynchronousExecutor())
-            .build()
-
-        // Initialize WorkManager for instrumentation tests.
-        WorkManagerTestInitHelper.initializeTestWorkManager(context, config)
-
-        val coreSubscriptionsManager = CoreSubscriptionsManager(context)
+        val coreSubscriptionsManager = CoreSubscriptionsManager(context, workManager = mockWorkManager)
         coreSubscriptionsManager.initialize()
         coreSubscriptionsManager.scheduleImmediate(true)
+
+        verify(mockWorkManager).enqueueUniqueWork(any(), any(), any<OneTimeWorkRequest>())
     }
 }
 
