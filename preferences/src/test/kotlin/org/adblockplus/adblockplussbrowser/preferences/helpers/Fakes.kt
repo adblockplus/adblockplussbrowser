@@ -108,7 +108,7 @@ open class FakeSettingsRepository(private val serverUrl: String) : SettingsRepos
     }
 
     override suspend fun getTestPagesSubscription(): Subscription {
-        return Subscription("$serverUrl/exceptionrules.txt", "", 0L, CustomSubscriptionType.FROM_URL)
+        return Subscription("$serverUrl/abp-testcase-subscription.txt", "", 0L, CustomSubscriptionType.FROM_URL)
     }
 
     override suspend fun getDefaultPrimarySubscriptions(): List<Subscription> {
@@ -119,7 +119,10 @@ open class FakeSettingsRepository(private val serverUrl: String) : SettingsRepos
     }
 
     override suspend fun getDefaultOtherSubscriptions(): List<Subscription> {
-        TODO("Not yet implemented")
+        return listOf(
+            Subscription("$serverUrl/easyprivacy.txt", "", 0L, CustomSubscriptionType.FROM_URL),
+            Subscription("$serverUrl/fanboy-social.txt", "", 0L, CustomSubscriptionType.FROM_URL)
+        )
     }
 
     override suspend fun setAdblockEnabled(enabled: Boolean) {}

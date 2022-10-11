@@ -26,6 +26,7 @@ class OtherSubscriptionsViewModelTest {
 
     private lateinit var otherSubscriptionsViewModel: OtherSubscriptionsViewModel
     private val analyticsProvider = FakeAnalyticsProvider()
+    private val settingsRepository = FakeSettingsRepository("")
 
     // This rule is used to be able to listen to the changes of mutable live data as it
     // runs tasks synchronously
@@ -35,7 +36,7 @@ class OtherSubscriptionsViewModelTest {
     @Before
     fun setUp() {
         otherSubscriptionsViewModel = OtherSubscriptionsViewModel(
-            settingsRepository = FakeSettingsRepository(""),
+            settingsRepository = settingsRepository,
             subscriptionManager = Mockito.mock(SubscriptionsManager::class.java)
         )
         otherSubscriptionsViewModel.analyticsProvider = analyticsProvider
