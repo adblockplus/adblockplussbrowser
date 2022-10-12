@@ -15,7 +15,7 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.adblockplus.adblockplussbrowser.core
+package org.adblockplus.adblockplussbrowser.core.subscriptionsmanager
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
@@ -34,6 +34,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
+import org.adblockplus.adblockplussbrowser.core.CoreSubscriptionsManager
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.di.CoreModule
 import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
@@ -77,7 +78,7 @@ class CoreSubscriptionsManagerTest {
 
     @Before
     fun setUp() {
-        mockWorkManager= mock()
+        mockWorkManager = mock()
         val context = ApplicationProvider.getApplicationContext<Context>()
         coreSubscriptionsManager = CoreSubscriptionsManager(context, workManager = mockWorkManager)
         coreSubscriptionsManager.initialize()
