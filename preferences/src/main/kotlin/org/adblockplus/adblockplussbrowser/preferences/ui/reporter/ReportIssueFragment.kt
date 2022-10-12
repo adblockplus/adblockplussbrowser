@@ -63,12 +63,16 @@ internal class ReportIssueFragment :
         super.onCreate(savedInstanceState)
         // log issue reporter was opened
         viewModel.logOpenIssueReporter()
+        // Back press from phone
+        requireActivity().onBackPressedDispatcher.addCallback(this) { cancelIssueReporter() }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         // log issue reporter was canceled
         // Back press on toolbar
         val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.toolbar)
         toolbar.setNavigationOnClickListener { cancelIssueReporter() }
-        // Back press from phone
-        requireActivity().onBackPressedDispatcher.addCallback(this) { cancelIssueReporter() }
     }
 
     @Suppress("LongMethod")
@@ -131,7 +135,7 @@ internal class ReportIssueFragment :
         binding.sendReport.setDebounceOnClickListener({
             // Show progress bar
             binding.indeterminateBar.visibility = View.VISIBLE
-            viewModel.sendReport()
+            viewModel.sendReport(requireContext())
         }, lifecycleOwner)
 
         // Sets the Mandatory Marks for empty default field values

@@ -18,6 +18,7 @@
 package org.adblockplus.adblockplussbrowser.preferences.ui.reporter
 
 import android.app.Application
+import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Base64
@@ -37,7 +38,16 @@ import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.data.ReportIssueRepository
 import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import kotlinx.coroutines.flow.single
+import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.runBlocking
+import org.adblockplus.adblockplussbrowser.base.data.SubscriptionsConstants
+import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
+import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueSubscription
+import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 
 enum class BackgroundOperationOutcome {
     SCREENSHOT_PROCESSING_FINISHED,
@@ -65,8 +75,18 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
     @Inject
     lateinit var analyticsProvider: AnalyticsProvider
 
-    internal fun sendReport() {
+    @Inject
+    lateinit var settingsRepository: SettingsRepository
+
+    private val settings by lazy {
+        runBlocking {
+            settingsRepository.currentSettings()
+        }
+    }
+
+    internal fun sendReport(context: Context) {
         viewModelScope.launch {
+            addActiveSubscriptions(context)
             backgroundOperationOutcome.postValue(
                 if (reportIssueRepository.sendReport(data).isSuccess) {
                     if (data.email.isBlank()) {
@@ -82,6 +102,47 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
                     BackgroundOperationOutcome.REPORT_SEND_ERROR
                 }
             )
+        }
+    }
+
+    private suspend fun addActiveSubscriptions(context: Context) {
+        /* Clean current Subscriptions.
+        If sending the report fails and the user retries without reloading the fragment, then
+        subscriptions would be repeated. */
+        data.subscriptions = mutableListOf()
+
+        // Process subscriptions
+        val activeSubscriptions = mutableListOf<Subscription>()
+        activeSubscriptions.addAll(settings.activePrimarySubscriptions)
+        activeSubscriptions.addAll(settings.activeOtherSubscriptions)
+        if (settings.acceptableAdsEnabled) activeSubscriptions.add(settingsRepository.getAcceptableAdsSubscription())
+
+        // Expires configuration
+        val now = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
+        val oneDayExpiration = TimeUnit.HOURS.toSeconds(
+            SubscriptionsConstants.UNMETERED_REFRESH_INTERVAL_HOURS.toLong())
+        val threeDaysExpiration = TimeUnit.DAYS.toSeconds(
+            SubscriptionsConstants.METERED_REFRESH_INTERVAL_DAYS.toLong())
+        val versionsFile = File(context.filesDir, SubscriptionsConstants.ACTIVE_SUBSCRIPTIONS_VERSIONS_FILE)
+
+        if (versionsFile.exists()) {
+            activeSubscriptions.forEach { subscription ->
+                val version = versionsFile.readLines()
+                    .find { it.contains(subscription.url) }?.split("::")?.get(1)?.trim()
+                var lastUpdated: Long = 0
+                if (subscription.lastUpdate > 0) {
+                    lastUpdated = now - TimeUnit.MILLISECONDS.toSeconds(subscription.lastUpdate)
+                }
+                data.subscriptions.add(
+                    ReportIssueSubscription(
+                        id = subscription.url,
+                        lastUpdated = (-1) * lastUpdated, // -1 so that it gets calculated in the past
+                        softExpiration = oneDayExpiration - lastUpdated,
+                        hardExpiration = threeDaysExpiration - lastUpdated,
+                        version = version
+                    )
+                )
+            }
         }
     }
 
@@ -128,8 +189,10 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
     }
 }
 
-private fun Bitmap.toBase64EncodedPng(): String = ByteArrayOutputStream().use {
-    it.write("data:image/png;base64,".toByteArray(Charsets.US_ASCII))
-    compress(Bitmap.CompressFormat.PNG, 0, it)
-    Base64.encodeToString(it.toByteArray(), Base64.DEFAULT)
+private fun Bitmap.toBase64EncodedPng(): String = ByteArrayOutputStream().use { screenshotByteStream ->
+    compress(Bitmap.CompressFormat.PNG, 0, screenshotByteStream)
+    "data:image/png;base64," + Base64.encodeToString(screenshotByteStream.toByteArray(), Base64.DEFAULT)
 }
+
+private suspend fun SettingsRepository.currentSettings() =
+    this.settings.take(1).single()
