@@ -56,6 +56,13 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
     @Inject
     lateinit var analyticsProvider: AnalyticsProvider
 
+    init {
+        viewModelScope.launch {
+            (additionalTrackingSubscription as MutableLiveData).value = (settingsRepository.getAdditionalTrackingSubscription())
+            (socialMediaTrackingSubscription as MutableLiveData).value = (settingsRepository.getSocialMediaTrackingSubscription())
+        }
+    }
+
     val activeSubscriptions: LiveData<List<Subscription>> =
         settingsRepository.settings.map { settings ->
             settings.activeOtherSubscriptions
@@ -71,18 +78,14 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
             customSubscriptions.customItems()
         }.asLiveData()
 
-    val additionalTrackingSubscription: LiveData<Subscription> = settingsRepository.settings.map {
-        settingsRepository.getAdditionalTrackingSubscription()
-    }.asLiveData()
+    val additionalTrackingSubscription: LiveData<Subscription> = MutableLiveData()
 
-    val socialMediaTrackingSubscription: LiveData<Subscription> = settingsRepository.settings.map {
-        settingsRepository.getSocialMediaTrackingSubscription()
-    }.asLiveData()
+    val socialMediaTrackingSubscription: LiveData<Subscription> = MutableLiveData()
 
     val blockAdditionalTracking by lazy { MutableLiveData(false) }
-    val blockSocialMediaTracking = MutableLiveData<Boolean?>().apply { value = false }
-    val additionalTrackingLastUpdate = MutableLiveData<Long>().apply { value = 0L }
-    val socialMediaIconsTrackingLastUpdate = MutableLiveData<Long>().apply { value = 0L }
+    val blockSocialMediaTracking by lazy { MutableLiveData(false) }
+    val additionalTrackingLastUpdate by lazy { MutableLiveData(0L)}
+    val socialMediaIconsTrackingLastUpdate by lazy { MutableLiveData(0L) }
 
     private val _uiState = MutableStateFlow<UiState>(UiState.Done)
     val uiState = _uiState.asLiveData()
@@ -95,16 +98,10 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
     private val _activityCancelledFlow = MutableSharedFlow<Unit>()
     val activityCancelledFlow: SharedFlow<Unit>  = _activityCancelledFlow
 
-    private val addOtherSubscriptionsCount = MutableLiveData<Int>().apply { value = 0 }
+    private val addOtherSubscriptionsCount by lazy { MutableLiveData(0) }
 
     fun toggleAdditionalTracking() {
-//        var settings: org.adblockplus.adblockplussbrowser.settings.data.model.Settings? = null
-//        viewModelScope.launch {
-//            settingsRepository.settings.collect {
-//                settings = it
-//            }
-//        }
-        blockAdditionalTracking.apply { value?.let { it -> value = !it } }
+        blockAdditionalTracking.value = !blockAdditionalTracking.value!!
         handleDefaultSubscriptions(
             blockAdditionalTracking.value!!, additionalTrackingSubscription.value!!,
             AnalyticsEvent.DISABLE_TRACKING_OFF, AnalyticsEvent.DISABLE_TRACKING_ON
