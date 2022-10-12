@@ -83,16 +83,14 @@ internal class OtherSubscriptionsFragment :
         lifecycleScope.launch {
             viewModel.errorFlow.collect {
                 Toast.makeText(
-                    requireContext(), R.string.other_subscriptions_error_add_custom, Toast.LENGTH_LONG
-                ).show()
+                    requireContext(), R.string.other_subscriptions_error_add_custom, Toast.LENGTH_LONG).show()
             }
         }
 
         lifecycleScope.launch {
             viewModel.activityCancelledFlow.collect {
                 Toast.makeText(
-                    requireContext(), getText(R.string.file_picking_canceled), Toast.LENGTH_LONG
-                ).show()
+                    requireContext(), getText(R.string.file_picking_canceled), Toast.LENGTH_LONG).show()
             }
         }
 
@@ -120,7 +118,10 @@ internal class OtherSubscriptionsFragment :
                 }
             }
         }
+        handleTextFile()
+    }
 
+    private fun handleTextFile() {
         getTextFile =
             registerForActivityResult(
                 ActivityResultContracts.StartActivityForResult()

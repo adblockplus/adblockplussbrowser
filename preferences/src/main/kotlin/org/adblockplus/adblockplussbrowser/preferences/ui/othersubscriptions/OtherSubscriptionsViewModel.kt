@@ -48,6 +48,7 @@ import org.adblockplus.adblockplussbrowser.base.os.readText
 import org.adblockplus.adblockplussbrowser.base.os.resolveFilename
 
 @HiltViewModel
+@Suppress("TooManyFunctions")
 internal class OtherSubscriptionsViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository,
     private val subscriptionManager: SubscriptionsManager
@@ -56,10 +57,15 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
     @Inject
     lateinit var analyticsProvider: AnalyticsProvider
 
+    val additionalTrackingSubscription: LiveData<Subscription> = MutableLiveData()
+    val socialMediaTrackingSubscription: LiveData<Subscription> = MutableLiveData()
+
     init {
         viewModelScope.launch {
-            (additionalTrackingSubscription as MutableLiveData).value = (settingsRepository.getAdditionalTrackingSubscription())
-            (socialMediaTrackingSubscription as MutableLiveData).value = (settingsRepository.getSocialMediaTrackingSubscription())
+            (additionalTrackingSubscription as MutableLiveData).value =
+                (settingsRepository.getAdditionalTrackingSubscription())
+            (socialMediaTrackingSubscription as MutableLiveData).value =
+                (settingsRepository.getSocialMediaTrackingSubscription())
         }
     }
 
@@ -77,10 +83,6 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
             }
             customSubscriptions.customItems()
         }.asLiveData()
-
-    val additionalTrackingSubscription: LiveData<Subscription> = MutableLiveData()
-
-    val socialMediaTrackingSubscription: LiveData<Subscription> = MutableLiveData()
 
     val blockAdditionalTracking by lazy { MutableLiveData(false) }
     val blockSocialMediaTracking by lazy { MutableLiveData(false) }
@@ -147,7 +149,7 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
         }
     }
 
-    private fun addCustomFilterFile(uri: Uri, context: Context) {
+    internal fun addCustomFilterFile(uri: Uri, context: Context) {
         viewModelScope.launch {
             _uiState.value = UiState.Loading
             addOtherSubscriptionsCount.apply { value = value?.plus(1) }
@@ -217,8 +219,10 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
         }
     }
 
-    internal fun logCustomFilterListFromUrl() = analyticsProvider.logEvent(AnalyticsEvent.LOAD_CUSTOM_FILTER_LIST_FROM_URL)
-    internal fun logCustomFilterListFromFile() = analyticsProvider.logEvent(AnalyticsEvent.LOAD_CUSTOM_FILTER_LIST_FROM_FILE)
+    internal fun logCustomFilterListFromUrl() = analyticsProvider.logEvent(
+        AnalyticsEvent.LOAD_CUSTOM_FILTER_LIST_FROM_URL)
+    internal fun logCustomFilterListFromFile() = analyticsProvider.logEvent(
+        AnalyticsEvent.LOAD_CUSTOM_FILTER_LIST_FROM_FILE)
 }
 
 private fun List<Subscription>.customItems(): List<OtherSubscriptionsItem.CustomItem> {
