@@ -87,6 +87,7 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
             }
     }
 
+    @SuppressWarnings("LongMethod")
     internal fun makeXML(data: ReportIssueData): Result<String> {
         val writer = StringWriter()
         return runCatching {
@@ -115,6 +116,17 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
                 endTag(null, "window")
 
                 startTag(null, "subscriptions")
+                for (subscription in data.subscriptions) {
+                    startTag(null, "subscription")
+                    attribute(null, "id", subscription.id)
+                    if (subscription.version != null) {
+                        attribute(null, "version", subscription.version)
+                    }
+                    attribute(null, "lastDownloadSuccess", subscription.lastUpdated.toString())
+                    attribute(null, "softExpiration", subscription.softExpiration.toString())
+                    attribute(null, "hardExpiration", subscription.hardExpiration.toString())
+                    endTag(null, "subscription")
+                }
                 endTag(null, "subscriptions")
 
                 startTag(null, "adblock-plus")

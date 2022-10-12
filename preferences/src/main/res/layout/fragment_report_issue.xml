@@ -257,6 +257,7 @@
                     android:layout_marginTop="@dimen/margin"
                     android:layout_marginEnd="@dimen/margin"
                     android:hint="@string/report_issue_enter_comment_hint"
+                    android:maxLength="1024"
                     android:minHeight="48dp"
                     android:textColorHint="@color/hint_color"
                     app:layout_constraintEnd_toEndOf="parent"
