@@ -38,8 +38,6 @@ import org.adblockplus.adblockplussbrowser.core.data.model.ifExists
 import org.adblockplus.adblockplussbrowser.core.extensions.sanitizeUrl
 import org.adblockplus.adblockplussbrowser.core.retryIO
 import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
-import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter.Companion.HTTP_ERROR_AVERAGE_HEADERS_SIZE
-import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter.Companion.HTTP_ERROR_MAX_BODY_SIZE
 import ru.gildor.coroutines.okhttp.await
 import timber.log.Timber
 import java.io.File
@@ -47,6 +45,7 @@ import java.net.HttpURLConnection.HTTP_NOT_MODIFIED
 import java.net.HttpURLConnection.HTTP_OK
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
+import org.adblockplus.adblockplussbrowser.base.data.HttpConstants
 import org.adblockplus.adblockplussbrowser.base.data.SubscriptionsConstants
 
 
@@ -113,8 +112,10 @@ internal class OkHttpDownloader(
                     Timber.e("Error downloading $url, response code: ${response.code}")
                     analyticsProvider.logError(
                         "$HTTP_ERROR_LOG_HEADER_DOWNLOADER ${response.code}"
-                                + "\nHeaders:\n${response.headers.toString().take(HTTP_ERROR_AVERAGE_HEADERS_SIZE)}"
-                                + "\nBody:\n${response.body?.string()?.take(HTTP_ERROR_MAX_BODY_SIZE) ?: ""}")
+                                + "\nHeaders:\n${response.headers.toString()
+                                        .take(HttpConstants.HTTP_ERROR_AVERAGE_HEADERS_SIZE)}"
+                                + "\nBody:\n${response.body?.string()
+                                        ?.take(HttpConstants.HTTP_ERROR_MAX_BODY_SIZE) ?: ""}")
                     DownloadResult.Failed(previousDownload.ifExists())
                 }
             }
