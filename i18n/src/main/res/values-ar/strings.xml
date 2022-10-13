@@ -122,6 +122,7 @@
     <string name="languages_onboarding_option_add">أضف لغة إضافية لحجب الإعلانات.</string>
     <string name="languages_onboarding_option_skip">لا، شكرًا، لا أتصفح سوى بلغة واحدة.</string>
     <string name="delete_swipe_hint">لحذف إدخال ما، اسحبه إلى اليسار.</string>
+    <string name="file_picking_canceled">تم إلغاء انتقاء الملف</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">رمز نقطي</string>
@@ -133,10 +134,19 @@
 
     <!-- Issue reporter -->
     <string name="issueReporter_page_title">مُبَلِغ المشاكل</string>
+    <string name="issueReporter_page_description">شارك المشكلات عند حدوثها.</string>
     <string name="issueReporter_typeSelector_heading">إختر نوع المشكلة</string>
     <string name="issueReporter_typeSelector_description">هذه النافذة ستقودك خلال الخطوات المطلوبة لإرسال تبليغ بمشكلة في آدبلوك بلس. في البداية عليك إختيار نوع المشكلة التي تواجهها من هذه الصفحة:</string>
     <string name="issueReporter_falsePositive_label">آدبلوك بلس يحجب أكثر من اللازم</string>
     <string name="issueReporter_falseNegative_label">.إستخدم الأدوات لتظليل كل إعلان أو إخفاء معلومات حساسة على لقطة الشاشة. تظليل الإعلانات سيساعدنا في حل المشكلة بشكل أسرع</string>
+
+    <string name="comment_title">التعليق (اختياري):</string>
+    <string name="make_screenshot_of_samsung_internet">اصنع لقطة شاشة من Samsung Internet</string>
+    <string name="cancel">يلغي</string>
+    <string name="report_issue_enter_email_hint">أدخل البريد الإلكتروني</string>
+    <string name="report_issue_enter_url_hint">إدخال عنوان الموقع</string>
+    <string name="report_issue_enter_comment_hint">أدخل التعليق</string>
+    <string name="issueReporter_url_description"> نحن نشجعك على إدخال عنوان URL حيث وجدت المشكلة. مجرد التفكير في نسخ ولصق رابط الصفحة.</string>
 
     <string name="issueReporter_email_description">نحن نشجعك لإدخال بريد إلكتروني صحيح لكي نتمكن من الاتصال بك بخصوص تقريرك إذا كانت هناك أسئلة. أيضا يسمح لنا بالتعرف على مساهمتك و إعطائها أولوية.</string>
     <string name="issueReporter_comment_description">يسمح لك الحقل التالي بإدخال تعليق ليساعدنا في فهم المشكلة. هذه الخطوة إختيارية ولكننا نصح بها إن لم تكن المشكلة واضحة. تستطيع أيضا مراجعة بيانات التقرير قبل إرساله.</string>
@@ -145,5 +155,27 @@
     <string name="issueReporter_sendButton_label">إرسال التقرير</string>
     <string name="issueReporter_email_label">البريد الإلكتروني:</string>
     <string name="issueReporter_privacyPolicy"><a href="https://adblockplus.org/en/privacy#issue-reporter">سياسة الخصوصية</a></string>
+    <string name="issueReporter_url_label">URL (اختياري):</string>
+    <string name="issueReporter_attached_image_thumbnail">الصورة المصغرة المرفقة</string>
+    <string name="tap_here_to_pick_screenshot">انقر هنا لاختيار لقطة شاشة</string>
+    <string name="processing_issue_report_screenshot_description">جار التحميل…</string>
+    <string name="screenshot_reselect_description">انقر هنا لاختيار لقطة شاشة مختلفة</string>
+    <string name="issueReporter_report_sent">شكرا للإبلاغ عن هذه المسألة!</string>
+    <string name="issueReporter_report_send_error">غير قادر على معالجة طلبك. الرجاء معاودة المحاولة في وقت لاحق.</string>
+    <string name="issueReporter_report_screenshot_too_large">ملف الصورة كبير جدًا. الرجاء اختيار واحدة أخرى.</string>
+    <string name="issueReporter_report_screenshot_invalid">ملف لقطة الشاشة غير صالح. الرجاء اختيار واحدة أخرى.</string>
+
+    <!-- Start guide -->
+    <string name="tour_header">مرشد</string>
+    <string name="take_tour_title">خذ جولة</string>
+    <string name="take_tour_description">تعرف على كيفية استخدام ABP للحصول على تجربة تصفح أكثر متعة</string>
+    <string name="tour_next_button_text">التالي</string>
+    <string name="tour_skip_button_text">تخطاها</string>
+    <string name="tour_dialog_ad_blocking_options_text">للحصول على تجربة تصفح محسنة ،&#13;\n فكر في تعديل هذه المعلمات</string>
+    <string name="tour_add_languages">أضف اللغات التي تتصفح بها عادة</string>
+    <string name="tour_disable_social_media_tracking">تعطيل تتبع الوسائط الاجتماعية أثناء التصفح</string>
+    <string name="tour_allowlist">السماح بإدراج موقع على شبكة الإنترنت لمتابعة مشاهدة الإعلانات عليه</string>
+    <string name="tour_last_step_description">هذا هو! أنت جاهز لاستخدام ABP لـ Samsung Internet على أكمل وجه</string>
+    <string name="tour_last_step_button_done">فعله</string>
 
 </resources>

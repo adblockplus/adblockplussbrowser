@@ -15,7 +15,7 @@
  along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- app-->
     <string name="app_name">ABP for Samsung Internet</string>
     <string name="app_subtitle">for Samsung Internet</string>
@@ -121,7 +121,7 @@
     <string name="languages_onboarding_option_add">Add an additional ad blocking language.</string>
     <string name="languages_onboarding_option_skip">No thanks, I only browse in one language.</string>
     <string name="delete_swipe_hint">To delete an entry, swipe it to the left.</string>
-    <string name="file_picking_canceled" tools:ignore="MissingTranslation">File picking is canceled</string>
+    <string name="file_picking_canceled">File picking is canceled</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">Bullet Point Symbol</string>
@@ -133,7 +133,7 @@
 
     <!-- Issue reporter -->
     <string name="issueReporter_page_title">Issue reporter</string>
-    <string name="issueReporter_page_description" tools:ignore="MissingTranslation">Share issues when they happen.</string>
+    <string name="issueReporter_page_description">Share issues when they happen.</string>
     <string name="issueReporter_typeSelector_heading">Select issue type</string>
     <string name="issueReporter_typeSelector_description">This window will guide you through the steps required for the
         submission of an Adblock Plus issue report. First, please select the type of issue that you are experiencing on
@@ -142,18 +142,18 @@
     <string name="issueReporter_falsePositive_label">Adblock Plus is blocking too much</string>
     <string name="issueReporter_falseNegative_label">Adblock Plus doesn\'t block an advertisement</string>
 
-    <string name="comment_title" tools:ignore="MissingTranslation">Comment (optional):</string>
-    <string name="make_screenshot_of_samsung_internet" tools:ignore="MissingTranslation">Make screenshot of Samsung Internet</string>
-    <string name="cancel" tools:ignore="MissingTranslation">Cancel</string>
-    <string name="report_issue_enter_email_hint" tools:ignore="MissingTranslation">Enter email</string>
-    <string name="report_issue_enter_url_hint" tools:ignore="MissingTranslation">Enter URL</string>
-    <string name="report_issue_enter_comment_hint" tools:ignore="MissingTranslation">Enter comment</string>
+    <string name="comment_title">Comment (optional):</string>
+    <string name="make_screenshot_of_samsung_internet">Make screenshot of Samsung Internet</string>
+    <string name="cancel">Cancel</string>
+    <string name="report_issue_enter_email_hint">Enter email</string>
+    <string name="report_issue_enter_url_hint">Enter URL</string>
+    <string name="report_issue_enter_comment_hint">Enter comment</string>
 
     <string name="issueReporter_email_description">We encourage you to enter a valid email address so that we can contact you if
         there are questions about your report. It will also allow us to recognize your contributions and to prioritize
         them higher.
     </string>
-    <string name="issueReporter_url_description" tools:ignore="MissingTranslation"> We encourage you to enter the URL where you found
+    <string name="issueReporter_url_description"> We encourage you to enter the URL where you found
         the issue. Just think of copying and pasting the link of the page.
     </string>
     <string name="issueReporter_comment_description">The text field below allows you to enter a comment to help us understand the
@@ -166,28 +166,28 @@
     </string>
     <string name="issueReporter_sendButton_label">Send Report</string>
     <string name="issueReporter_email_label">Email:</string>
-    <string name="issueReporter_url_label" tools:ignore="MissingTranslation">URL (optional):</string>
-    <string name="issueReporter_attached_image_thumbnail" tools:ignore="MissingTranslation">attached image thumbnail</string>
+    <string name="issueReporter_url_label">URL (optional):</string>
+    <string name="issueReporter_attached_image_thumbnail">attached image thumbnail</string>
     <string name="issueReporter_privacyPolicy"><a href="https://adblockplus.org/en/privacy#issue-reporter">Privacy Policy</a></string>
-    <string name="tap_here_to_pick_screenshot" tools:ignore="MissingTranslation">Tap here to pick a screenshot</string>
-    <string name="processing_issue_report_screenshot_description" tools:ignore="MissingTranslation">Loading…</string>
-    <string name="screenshot_reselect_description" tools:ignore="MissingTranslation">Tap here to pick a different screenshot</string>
-    <string name="issueReporter_report_sent" tools:ignore="MissingTranslation">Thanks for reporting the issue!</string>
-    <string name="issueReporter_report_send_error" tools:ignore="MissingTranslation">"Unable to process your request. Please try again later."</string>
-    <string name="issueReporter_report_screenshot_too_large" tools:ignore="MissingTranslation">The image file is too large. Please pick another one.</string>
-    <string name="issueReporter_report_screenshot_invalid" tools:ignore="MissingTranslation">The screenshot file is invalid. Please pick another one.</string>
+    <string name="tap_here_to_pick_screenshot">Tap here to pick a screenshot</string>
+    <string name="processing_issue_report_screenshot_description">Loading…</string>
+    <string name="screenshot_reselect_description">Tap here to pick a different screenshot</string>
+    <string name="issueReporter_report_sent">Thanks for reporting the issue!</string>
+    <string name="issueReporter_report_send_error">"Unable to process your request. Please try again later."</string>
+    <string name="issueReporter_report_screenshot_too_large">The image file is too large. Please pick another one.</string>
+    <string name="issueReporter_report_screenshot_invalid">The screenshot file is invalid. Please pick another one.</string>
 
     <!-- Start guide -->
-    <string name="tour_header" tools:ignore="MissingTranslation">Guide</string>
-    <string name="take_tour_title" tools:ignore="MissingTranslation">Take a tour</string>
-    <string name="take_tour_description" tools:ignore="MissingTranslation">Learn how to use ABP for a more enjoyable browsing experience</string>
-    <string name="tour_next_button_text" tools:ignore="MissingTranslation">Next</string>
-    <string name="tour_skip_button_text" tools:ignore="MissingTranslation">Skip it</string>
-    <string name="tour_dialog_ad_blocking_options_text" tools:ignore="MissingTranslation">For optimized browsing experience,\nthink of adjusting these parameters</string>
-    <string name="tour_add_languages" tools:ignore="MissingTranslation">Add the languages you usually browse in</string>
-    <string name="tour_disable_social_media_tracking" tools:ignore="MissingTranslation">Disable social media tracking while browsing</string>
-    <string name="tour_allowlist" tools:ignore="MissingTranslation">Allowlist a website to continue seeing ads on it</string>
-    <string name="tour_last_step_description" tools:ignore="MissingTranslation">That’s it! You are ready to use ABP for Samsung Internet to its fullest</string>
-    <string name="tour_last_step_button_done" tools:ignore="MissingTranslation">Done</string>
+    <string name="tour_header">Guide</string>
+    <string name="take_tour_title">Take a tour</string>
+    <string name="take_tour_description">Learn how to use ABP for a more enjoyable browsing experience</string>
+    <string name="tour_next_button_text">Next</string>
+    <string name="tour_skip_button_text">Skip it</string>
+    <string name="tour_dialog_ad_blocking_options_text">For optimized browsing experience,\nthink of adjusting these parameters</string>
+    <string name="tour_add_languages">Add the languages you usually browse in</string>
+    <string name="tour_disable_social_media_tracking">Disable social media tracking while browsing</string>
+    <string name="tour_allowlist">Allowlist a website to continue seeing ads on it</string>
+    <string name="tour_last_step_description">That’s it! You are ready to use ABP for Samsung Internet to its fullest</string>
+    <string name="tour_last_step_button_done">Done</string>
 
 </resources>

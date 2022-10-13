@@ -121,6 +121,7 @@
     <string name="languages_onboarding_option_add">Een extra taal toevoegen om advertenties te blokkeren</string>
     <string name="languages_onboarding_option_skip">Nee bedankt, ik surf slechts in één taal.</string>
     <string name="delete_swipe_hint">Om invoer te verwijderen, naar links vegen.</string>
+    <string name="file_picking_canceled">Bestandsselectie is geannuleerd</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">Symbool opsommingsteken</string>
@@ -132,9 +133,19 @@
 
     <!-- Issue reporter -->
     <string name="issueReporter_page_title">Probleemrapportage</string>
+    <string name="issueReporter_page_description">Deel problemen wanneer ze zich voordoen.</string>
     <string name="issueReporter_typeSelector_heading">Welk type probleem ondervindt u?</string>
     <string name="issueReporter_typeSelector_description">Selecteer een probleem:</string>
     <string name="issueReporter_falsePositive_label">De pagina die ik probeer te bekijken werkt niet</string>
+
+    <string name="comment_title">Opmerking (optioneel):</string>
+    <string name="make_screenshot_of_samsung_internet">Maak een screenshot van Samsung Internet</string>
+    <string name="cancel">Annuleren</string>
+    <string name="report_issue_enter_email_hint">Voer email in</string>
+    <string name="report_issue_enter_url_hint">URL invoeren</string>
+    <string name="report_issue_enter_comment_hint">Voer commentaar in</string>
+    <string name="issueReporter_url_description"> We raden u aan de URL in te voeren waar u het probleem heeft gevonden. Denk maar aan het kopiëren en plakken van de link van de pagina.</string>
+
     <string name="issueReporter_falseNegative_label">Ik zie nog steeds advertenties</string>
     <string name="issueReporter_email_description">Het is handig om een geldig e-mailadres in te voeren. Hierdoor kunnen we contact met u opnemen om moeilijke problemen zoals malware op te lossen. Houd in gedachten dat het niet verplicht is om een e-mailadres in te voeren, en dat uw adres nooit zal worden gedeeld.</string>
     <string name="issueReporter_comment_description">Help ons het probleem beter te begrijpen door hieronder een opmerking toe te voegen.</string>
@@ -143,5 +154,27 @@
     <string name="issueReporter_sendButton_label">Rapport verzenden</string>
     <string name="issueReporter_email_label">E-mail:</string>
     <string name="issueReporter_privacyPolicy"><a href="https://adblockplus.org/en/privacy#issue-reporter">Privacybeleid</a></string>
+    <string name="issueReporter_url_label">URL (optioneel):</string>
+    <string name="issueReporter_attached_image_thumbnail">miniatuur van bijgevoegde afbeelding</string>
+    <string name="tap_here_to_pick_screenshot">Tik hier om een screenshot te kiezen</string>
+    <string name="processing_issue_report_screenshot_description">Bezig met laden…</string>
+    <string name="screenshot_reselect_description">Tik hier om een andere schermafbeelding te kiezen</string>
+    <string name="issueReporter_report_sent">Bedankt voor het melden van het probleem!</string>
+    <string name="issueReporter_report_send_error">Kan uw verzoek niet verwerken. Probeer het later opnieuw.</string>
+    <string name="issueReporter_report_screenshot_too_large">Het afbeeldingsbestand is te groot. Kies een andere.</string>
+    <string name="issueReporter_report_screenshot_invalid">Het screenshotbestand is ongeldig. Kies een andere.</string>
+
+    <!-- Start guide -->
+    <string name="tour_header">Gids</string>
+    <string name="take_tour_title">Neem een rondleiding</string>
+    <string name="take_tour_description">Leer hoe u ABP kunt gebruiken voor een aangenamere browse-ervaring</string>
+    <string name="tour_next_button_text">Volgende</string>
+    <string name="tour_skip_button_text">Sla het over</string>
+    <string name="tour_dialog_ad_blocking_options_text">Overweeg om deze parameters aan te passen voor een optimale browse-ervaring</string>
+    <string name="tour_add_languages">Voeg de talen toe waarin u gewoonlijk bladert</string>
+    <string name="tour_disable_social_media_tracking">Schakel het volgen van sociale media uit tijdens het browsen</string>
+    <string name="tour_allowlist">Een website toestaan om advertenties erop te blijven zien</string>
+    <string name="tour_last_step_description">Dat is het! U bent klaar om ABP voor Samsung Internet ten volle te gebruiken</string>
+    <string name="tour_last_step_button_done">Gedaan</string>
 
 </resources>
