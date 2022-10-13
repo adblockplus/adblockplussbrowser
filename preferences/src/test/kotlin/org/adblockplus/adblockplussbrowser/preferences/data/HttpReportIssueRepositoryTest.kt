@@ -78,14 +78,19 @@ class HttpReportIssueRepositoryTest {
 
     @Test
     fun `test sendReport no URL returned from server`() {
+        val fakeLongResponseBody = Fakes.longResponseBody
         val response = MockResponse()
             .setResponseCode(HTTP_OK)
-            .setBody("some invalid body")
+            .setBody(fakeLongResponseBody)
         mockWebServer.enqueue(response)
         runTest {
             val exception = httpReportIssueRepository.sendReport(fakeData).exceptionOrNull()
             assertNotNull(exception)
-            assertEquals("Invalid response: some invalid body.", exception?.message)
+            // longResponseBody is bigger than 500B
+            assert(Fakes.longResponseBody.length > 500)
+            // Assert response was truncated
+            val truncatedBody = fakeLongResponseBody.take(500)
+            assertEquals("Invalid response: $truncatedBody.", exception?.message)
         }
     }
 
