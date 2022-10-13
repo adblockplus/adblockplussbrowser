@@ -23,7 +23,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.activity.result.ActivityResult
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ApplicationProvider
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
@@ -41,6 +40,7 @@ import org.adblockplus.adblockplussbrowser.base.data.model.CustomSubscriptionTyp
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.preferences.helpers.FakeAnalyticsProvider
 import org.adblockplus.adblockplussbrowser.preferences.helpers.FakeSettingsRepository
+import org.adblockplus.adblockplussbrowser.preferences.helpers.observeForTesting
 import org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions.OtherSubscriptionsItem
 import org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions.OtherSubscriptionsViewModel
 import org.junit.After
@@ -48,7 +48,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.anyInt
@@ -71,11 +70,6 @@ class OtherSubscriptionsViewModelTest {
         ApplicationProvider.getApplicationContext<Context>()::class.java)
     private val contentResolver: ContentResolver = Mockito.mock(ContentResolver::class.java)
 
-    // This rule is used to be able to listen to the changes of mutable live data as it
-    // runs tasks synchronously
-    @get:Rule
-    val rule = InstantTaskExecutorRule()
-
     @Before
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
@@ -96,6 +90,7 @@ class OtherSubscriptionsViewModelTest {
     fun `test Enable AdditionalTracking`() {
         runTest {
             // Advances the testScheduler to the point where there are no tasks remaining.
+            otherSubscriptionsViewModel.additionalTrackingSubscription.observeForTesting{}
             advanceUntilIdle()
             otherSubscriptionsViewModel.toggleAdditionalTracking()
         }
@@ -105,6 +100,7 @@ class OtherSubscriptionsViewModelTest {
     @Test
     fun `test Disable AdditionalTracking`() {
         runTest {
+            otherSubscriptionsViewModel.additionalTrackingSubscription.observeForTesting{}
             advanceUntilIdle()
             otherSubscriptionsViewModel.blockAdditionalTracking.value = true
             otherSubscriptionsViewModel.toggleAdditionalTracking()
@@ -115,6 +111,7 @@ class OtherSubscriptionsViewModelTest {
     @Test
     fun `test Enable SocialMediaTracking`() {
         runTest {
+            otherSubscriptionsViewModel.socialMediaTrackingSubscription.observeForTesting{}
             advanceUntilIdle()
             otherSubscriptionsViewModel.toggleSocialMediaTracking()
         }
@@ -124,6 +121,7 @@ class OtherSubscriptionsViewModelTest {
     @Test
     fun `test Disable SocialMediaTracking`() {
         runTest {
+            otherSubscriptionsViewModel.socialMediaTrackingSubscription.observeForTesting{}
             advanceUntilIdle()
             otherSubscriptionsViewModel.blockSocialMediaTracking.value = true
             otherSubscriptionsViewModel.toggleSocialMediaTracking()

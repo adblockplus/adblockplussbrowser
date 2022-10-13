@@ -27,6 +27,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.io.File
@@ -57,16 +58,11 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
     @Inject
     lateinit var analyticsProvider: AnalyticsProvider
 
-    val additionalTrackingSubscription: LiveData<Subscription> = MutableLiveData()
-    val socialMediaTrackingSubscription: LiveData<Subscription> = MutableLiveData()
-
-    init {
-        viewModelScope.launch {
-            (additionalTrackingSubscription as MutableLiveData).value =
-                (settingsRepository.getAdditionalTrackingSubscription())
-            (socialMediaTrackingSubscription as MutableLiveData).value =
-                (settingsRepository.getSocialMediaTrackingSubscription())
-        }
+    val additionalTrackingSubscription: LiveData<Subscription> = liveData {
+        emit(settingsRepository.getAdditionalTrackingSubscription())
+    }
+    val socialMediaTrackingSubscription: LiveData<Subscription> = liveData {
+        emit(settingsRepository.getSocialMediaTrackingSubscription())
     }
 
     val activeSubscriptions: LiveData<List<Subscription>> =
