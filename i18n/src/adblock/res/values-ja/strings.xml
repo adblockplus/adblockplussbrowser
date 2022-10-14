@@ -38,4 +38,8 @@
     <string name="about_privacy_policy"><a href="https://getadblock.com/privacy/">プライバシー方針</a></string>
     <string name="about_terms_of_use"><a href="https://getadblock.com/terms/">ご利用条件</a></string>
 
+    <!-- Start Guide -->
+    <string name="tour_last_step_description">以上です！これで、AdBlock for Samsung Internet を最大限に活用する準備が整いました</string>
+    <string name="take_tour_description">より楽しいブラウジング体験のために AdBlock を使用する方法を学びます</string>
+
 </resources>

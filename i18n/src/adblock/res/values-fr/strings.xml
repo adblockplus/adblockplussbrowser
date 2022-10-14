@@ -38,4 +38,8 @@
     <string name="about_privacy_policy"><a href="https://getadblock.com/privacy/">Politique de confidentialité</a></string>
     <string name="about_terms_of_use"><a href="https://getadblock.com/terms/">Conditions d\'utilisation</a></string>
 
+    <!-- Start Guide -->
+    <string name="tour_last_step_description">C\'est ça ! Vous êtes prêt à utiliser AdBlock pour Samsung Internet au maximum</string>
+    <string name="take_tour_description">Apprenez à utiliser AdBlock pour une expérience de navigation plus agréable</string>
+
 </resources>

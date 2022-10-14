@@ -38,4 +38,8 @@
     <string name="about_privacy_policy"><a href="https://getadblock.com/privacy/">Adatvédelmi nyilatkozat</a></string>
     <string name="about_terms_of_use"><a href="https://getadblock.com/terms/">Használati feltételek</a></string>
 
+    <!-- Start Guide -->
+    <string name="tour_last_step_description">Ez az! Készen áll az AdBlock for Samsung Internet teljes használatára</string>
+    <string name="take_tour_description">Ismerje meg, hogyan használhatja az AdBlock-t a még élvezetesebb böngészés érdekében</string>
+
 </resources>
