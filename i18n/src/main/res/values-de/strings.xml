@@ -174,7 +174,7 @@
     <string name="tour_add_languages">Fügen Sie die Sprachen hinzu, in denen Sie normalerweise surfen</string>
     <string name="tour_disable_social_media_tracking">Deaktivieren Sie Social-Media-Tracking beim Surfen</string>
     <string name="tour_allowlist">Setzen Sie eine Website auf die Zulassungsliste, um weiterhin Anzeigen darauf zu sehen</string>
-    <string name="tour_last_step_description">Das ist es! Sie sind bereit, ABP for Samsung Internet in vollem Umfang zu nutzen</string>
+    <string name="tour_last_step_description">Das ist es! Sie sind bereit, ABP für Samsung Internet in vollem Umfang zu nutzen</string>
     <string name="tour_last_step_button_done">Fertig</string>
 
 </resources>

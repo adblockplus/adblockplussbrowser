@@ -34,4 +34,8 @@
     <string name="share_events_header">Crystal 개선을 도와주세요</string>
     <string name="share_events_description">Crystal 개선을 지원할 익명화된 데이터를 수집하여 더 나은 브라우징 환경을 만들고 있습니다.</string>
 
+    <!-- Start Guide -->
+    <string name="tour_last_step_description">以上です！これで、Crystal for Samsung Internet を最大限に活用する準備が整いました</string>
+    <string name="take_tour_description">より楽しいブラウジング体験のために Crystal を使用する方法を学びます</string>
+
 </resources>

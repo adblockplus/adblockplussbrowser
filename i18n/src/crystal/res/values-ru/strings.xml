@@ -34,4 +34,8 @@
     <string name="share_events_header">Помогите улучшить Crystal</string>
     <string name="share_events_description">Обезличенные данные помогут улучшить Crystal, и работать в браузере станет еще приятнее.</string>
 
+    <!-- Start Guide -->
+    <string name="tour_last_step_description">Вот и все! Вы готовы использовать Crystal для Samsung Internet на полную катушку</string>
+    <string name="take_tour_description">Узнайте, как использовать Crystal для более приятного просмотра</string>
+
 </resources>

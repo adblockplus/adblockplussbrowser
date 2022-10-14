@@ -34,4 +34,8 @@
     <string name="share_events_header">帮助改进 Crystal</string>
     <string name="share_events_description">匿名数据帮助我们改进 Crystal，从而为您打造更好的浏览体验。</string>
 
+    <!-- Start Guide -->
+    <string name="tour_last_step_description">就是如此！您已准备好充分利用三星互联网 Crystal 了。</string>
+    <string name="take_tour_description">了解如何使用 Crystal 获得更愉快的浏览体验</string>
+
 </resources>
