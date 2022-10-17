@@ -124,6 +124,26 @@ class ReportIssueViewModelTest {
         }
     }
 
+    @Test
+    fun `test removeUrlParameters`() {
+        reportIssueViewModel.data = Fakes.fakeReportIssueData
+        reportIssueViewModel.data.url = "http://www.example.com?user=username&pass=password"
+        reportIssueViewModel.removeUrlParameters()
+        assertEquals(
+            "http://www.example.com?user=*&pass=*",
+            reportIssueViewModel.data.url
+        )
+    }
+
+    @Test
+    fun `test addActiveSubscriptions`() {
+        runTest {
+            reportIssueViewModel.data = Fakes.fakeReportIssueData
+            reportIssueViewModel.addActiveSubscriptions(context)
+            assert(reportIssueViewModel.data.subscriptions.isNotEmpty())
+        }
+    }
+
     companion object {
         private val TEST_URI = Uri.parse("content://media/screenshot/20")
     }

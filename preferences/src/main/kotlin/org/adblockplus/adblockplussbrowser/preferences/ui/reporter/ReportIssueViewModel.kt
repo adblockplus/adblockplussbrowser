@@ -106,7 +106,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         }
     }
 
-    private fun removeUrlParameters() {
+    internal fun removeUrlParameters() {
         var url = data.url
         if (url.isNotEmpty()) {
             val regex = """[?]?([\w]+)=([\w-]+)""".toRegex()
@@ -117,7 +117,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         }
     }
 
-    private suspend fun addActiveSubscriptions(context: Context) {
+    internal suspend fun addActiveSubscriptions(context: Context) {
         /* Clean current Subscriptions.
         If sending the report fails and the user retries without reloading the fragment, then
         subscriptions would be repeated. */
