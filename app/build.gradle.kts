@@ -90,6 +90,7 @@ dependencies {
     testImplementation(libs.androidx.arch.core.testing)
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.kotlinx.coroutines.test )
 }
 
 // Install commit pre-hook
