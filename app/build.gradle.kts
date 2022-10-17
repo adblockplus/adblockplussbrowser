@@ -84,6 +84,11 @@ dependencies {
     implementation(libs.okhttp3.logging.interceptor)
     implementation(libs.gms.play.services.oss.licenses)
     implementation(libs.installreferrer)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.androidx.arch.core.testing)
+    testImplementation(libs.kotlinx.coroutines.test )
 }
 
 // Install commit pre-hook
