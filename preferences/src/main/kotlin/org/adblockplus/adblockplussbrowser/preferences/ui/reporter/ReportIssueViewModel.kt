@@ -87,6 +87,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
     internal fun sendReport(context: Context) {
         viewModelScope.launch {
             addActiveSubscriptions(context)
+            removeUrlParameters()
             backgroundOperationOutcome.postValue(
                 if (reportIssueRepository.sendReport(data).isSuccess) {
                     if (data.email.isBlank()) {
@@ -102,6 +103,17 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
                     BackgroundOperationOutcome.REPORT_SEND_ERROR
                 }
             )
+        }
+    }
+
+    private fun removeUrlParameters() {
+        var url = data.url
+        if (url.isNotEmpty()) {
+            val regex = """[?]?([\w]+)=([\w-]+)""".toRegex()
+            regex.findAll(url).forEach {
+                url = url.replace(it.groups[2]!!.value, "*")
+            }
+            data.url = url
         }
     }
 
