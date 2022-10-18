@@ -34,6 +34,7 @@ import java.net.HttpURLConnection.HTTP_OK
 import java.util.Locale
 import java.util.UUID
 import javax.inject.Inject
+import org.adblockplus.adblockplussbrowser.base.data.HttpConstants
 
 /**
  * Contains logic of report data conversion into Xml and performing and HTTP post request to the backend.
@@ -80,9 +81,10 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
                     // Just log the result will contain just Unit
                     Timber.d("ReportIssue report sent: ${responseUrls.last()}")
                 } else {
-                    Timber.d("ReportIssue report sent, but no URL received: $body")
+                    val bodyLog = body.take(HttpConstants.HTTP_ERROR_MAX_BODY_SIZE)
+                    Timber.d("ReportIssue report sent, but no URL received: $bodyLog")
                     // We throw in order to have a failure
-                    throw IOException("Invalid response: $body.")
+                    throw IOException("Invalid response: $bodyLog.")
                 }
             }
     }

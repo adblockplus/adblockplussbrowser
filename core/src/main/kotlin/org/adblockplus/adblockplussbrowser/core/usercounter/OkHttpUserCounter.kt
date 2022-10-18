@@ -43,6 +43,7 @@ import java.util.Calendar
 import java.util.Locale
 import java.util.TimeZone
 import kotlin.time.ExperimentalTime
+import org.adblockplus.adblockplussbrowser.base.data.HttpConstants
 
 
 @ExperimentalTime
@@ -54,7 +55,7 @@ internal class OkHttpUserCounter(
     private val analyticsProvider: AnalyticsProvider
 ) : UserCounter {
 
-    @Suppress("TooGenericExceptionCaught")
+    @Suppress("TooGenericExceptionCaught", "LongMethod")
     override suspend fun count(callingApp: CallingApp): CountUserResult = coroutineScope {
         try {
             val savedLastUserCountingResponse = repository.currentData().lastUserCountingResponse
@@ -74,7 +75,6 @@ internal class OkHttpUserCounter(
             val response = retryIO(description = "User counting HEAD request") {
                 okHttpClient.newCall(request).await()
             }
-
             val result = when (response.code) {
                 HTTP_OK -> {
                     val newLastVersion = parseDateString(
@@ -93,9 +93,11 @@ internal class OkHttpUserCounter(
                 }
                 else -> {
                     analyticsProvider.logError(
-                        "$HTTP_ERROR_LOG_HEADER_USER_COUNTER ${response.code.toString()}"
-                                + "\nHeaders:\n${response.headers.toString().take(HTTP_ERROR_AVERAGE_HEADERS_SIZE)}"
-                                + "\nBody:\n${response.body?.string()?.take(HTTP_ERROR_MAX_BODY_SIZE) ?: ""}")
+                        "$HTTP_ERROR_LOG_HEADER_USER_COUNTER ${response.code}"
+                                + "\nHeaders:\n${response.headers.toString()
+                                        .take(HttpConstants.HTTP_ERROR_AVERAGE_HEADERS_SIZE)}"
+                                + "\nBody:\n${response.body?.string()
+                                        ?.take(HttpConstants.HTTP_ERROR_MAX_BODY_SIZE) ?: ""}")
                     CountUserResult.Failed()
                 }
             }
@@ -173,9 +175,5 @@ internal class OkHttpUserCounter(
         private const val MAX_USER_COUNTING_COUNT = 4
 
         internal const val HTTP_ERROR_LOG_HEADER_USER_COUNTER = "OkHttpUserCounter HTTP error, return code"
-
-        // https://stackoverflow.com/questions/5358109/what-is-the-average-size-of-an-http-request-response-header
-        internal const val HTTP_ERROR_AVERAGE_HEADERS_SIZE = 800
-        internal const val HTTP_ERROR_MAX_BODY_SIZE = 500
     }
 }
