@@ -39,13 +39,14 @@ object Fakes {
     )
 
     // Long response body of 550 characters
-    const val longResponseBody = "The European languages are members of the same family. \n" +
-            "Their separate existence is a myth. For science, music, sport, etc, Europe uses the " +
-            "same vocabulary. The languages only differ in their grammar, their pronunciation and " +
-            "their most common words. Everyone realizes why a new common language would be desirable: " +
-            "one could refuse to pay expensive translators. To achieve this, it would be necessary " +
-            "to have uniform grammar, pronunciation and more common words. If several languages " +
-            "coalesce, the grammar of the resulting language is more simple and r"
+    const val longResponseBody = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. " +
+            "Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et " +
+            "magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec," +
+            " pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. " +
+            "Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. " +
+            "In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis " +
+            "eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. " +
+            "Aenean vulputate"
 }
 
 class FakeAnalyticsProvider : AnalyticsProvider {
