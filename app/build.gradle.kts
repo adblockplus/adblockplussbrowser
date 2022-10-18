@@ -88,7 +88,8 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.robolectric)
     testImplementation(libs.androidx.arch.core.testing)
-    testImplementation(libs.kotlinx.coroutines.test )
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)
 }
 
 // Install commit pre-hook
