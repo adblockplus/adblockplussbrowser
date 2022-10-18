@@ -66,7 +66,8 @@ import kotlin.time.ExperimentalTime
 @Suppress("PropertyName")
 @ExperimentalTime
 class CoreSubscriptionsManager(
-    private val appContext: Context
+    private val appContext: Context,
+    private val workManager: WorkManager = WorkManager.getInstance(appContext),
 ) : SubscriptionsManager, CoroutineScope {
 
     private val settingsRepository: SettingsRepository
@@ -146,18 +147,19 @@ class CoreSubscriptionsManager(
 
     override fun scheduleImmediate(force: Boolean) {
         val request = OneTimeWorkRequestBuilder<UpdateSubscriptionsWorker>().apply {
-                setConstraints(Constraints.Builder()
-                    .setRequiredNetworkType(NetworkType.NOT_REQUIRED).build())
-                setBackoffTime(Duration.minutes(1))
-                addTag(UPDATE_KEY_ONESHOT_WORK)
-                if (force) {
-                    addTag(UPDATE_KEY_FORCE_REFRESH)
-                }
-            }.build()
+            setConstraints(
+                Constraints.Builder()
+                    .setRequiredNetworkType(NetworkType.NOT_REQUIRED).build()
+            )
+            setBackoffTime(Duration.minutes(1))
+            addTag(UPDATE_KEY_ONESHOT_WORK)
+            if (force) {
+                addTag(UPDATE_KEY_FORCE_REFRESH)
+            }
+        }.build()
 
-        val manager = WorkManager.getInstance(appContext)
         // REPLACE old enqueued works
-        manager.enqueueUniqueWork(UPDATE_KEY_ONESHOT_WORK, ExistingWorkPolicy.REPLACE, request)
+        workManager.enqueueUniqueWork(UPDATE_KEY_ONESHOT_WORK, ExistingWorkPolicy.REPLACE, request)
     }
 
     private fun schedule(updateConfig: UpdateConfig) {
@@ -172,10 +174,11 @@ class CoreSubscriptionsManager(
             .setInitialDelay(INITIAL_UPDATE_DELAY)
             .build()
 
-        val manager = WorkManager.getInstance(appContext)
         // REPLACE old enqueued works
-        manager.enqueueUniquePeriodicWork(UPDATE_KEY_PERIODIC_WORK,
-            ExistingPeriodicWorkPolicy.REPLACE, requestSubs)
+        workManager.enqueueUniquePeriodicWork(
+            UPDATE_KEY_PERIODIC_WORK,
+            ExistingPeriodicWorkPolicy.REPLACE, requestSubs
+        )
         Timber.d("Scheduled %s", UPDATE_KEY_PERIODIC_WORK)
     }
 
@@ -192,11 +195,11 @@ class CoreSubscriptionsManager(
 
     private fun Settings.changed(other: Settings): Boolean {
         return this.adblockEnabled != other.adblockEnabled ||
-            this.acceptableAdsEnabled != other.acceptableAdsEnabled ||
-            this.allowedDomains != other.allowedDomains ||
-            this.blockedDomains != other.blockedDomains ||
-            this.activePrimarySubscriptions.changed(other.activePrimarySubscriptions) ||
-            this.activeOtherSubscriptions.changed(other.activeOtherSubscriptions)
+                this.acceptableAdsEnabled != other.acceptableAdsEnabled ||
+                this.allowedDomains != other.allowedDomains ||
+                this.blockedDomains != other.blockedDomains ||
+                this.activePrimarySubscriptions.changed(other.activePrimarySubscriptions) ||
+                this.activeOtherSubscriptions.changed(other.activeOtherSubscriptions)
     }
 
     private fun Settings.changedUpdateConfig(other: Settings): Boolean =
