@@ -75,7 +75,7 @@ internal class MainViewModel @Inject constructor(
             PackageInfoCompat.getLongVersionCode(packageInfo) >=
                     SamsungInternetConstants.SBROWSER_OLDEST_SAMSUNG_INTERNET_4_VERSIONCODE
         } catch (e: PackageManager.NameNotFoundException) {
-            Timber.i("$packageId not found", e.message) // Logging the exception message because of detekt
+            Timber.d("${e.message}") // Logging the exception message because of detekt
             false
         }
     }
