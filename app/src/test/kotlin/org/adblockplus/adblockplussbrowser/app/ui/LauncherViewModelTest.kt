@@ -19,7 +19,6 @@ package org.adblockplus.adblockplussbrowser.app.ui
 
 import android.os.Bundle
 import android.os.RemoteException
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.android.installreferrer.api.InstallReferrerClient
 import com.android.installreferrer.api.ReferrerDetails
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -30,7 +29,6 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
@@ -48,9 +46,6 @@ class LauncherViewModelTest {
     private val application = getApplication()
     private val fakeSettingsRepository = Fakes.FakeSettingsRepository("")
     private val fakeAnalyticsProvider = Fakes.FakeAnalyticsProvider()
-
-    @get:Rule
-    val instantTaskExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Before
     fun setUp() {
