@@ -52,7 +52,7 @@
 
     <style name="ThemeOverlay.Abp.Snackbar" parent="">
         <item name="colorPrimary">@color/foreground_accent</item>
-        <item name="colorOnSurface">@color/background_secondary</item>
+        <item name="colorOnSurface">@color/background_snackbar</item>
     </style>
 
     <style name="Widget.Abp.Snackbar" parent="Widget.MaterialComponents.Snackbar">
@@ -61,7 +61,7 @@
     </style>
 
     <style name="Widget.Abp.SnackbarTextView" parent="Widget.MaterialComponents.Snackbar.TextView">
-        <item name="android:textColor">@color/foreground_secondary</item>
+        <item name="android:textColor">@color/foreground_snackbar</item>
     </style>
 
     <style name="Widget.Abp.SnackbarButton" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">

@@ -64,7 +64,7 @@ internal fun bindReporterResult(snackbarContainer: SnackbarContainer, @StringRes
             dismiss()
         } else {
             text = context.getText(status)
-            setTextDrawableStart(R.drawable.outline_info_24)
+            setTextDrawableStart(R.drawable.check_circle_outline)
             showAction()
             show()
             dismiss(SnackbarContainer.HIDE_DELAY_LONG)
