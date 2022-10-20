@@ -34,4 +34,8 @@
     <string name="share_events_header">المساعدة في تحسين Crystal</string>
     <string name="share_events_description">تساعدنا البيانات مجهولة المصدر على تحسين Crystal؛ وهو ما يوفر لك تجربة تصفح أفضل.</string>
 
+    <!-- Start Guide -->
+    <string name="tour_last_step_description">هذا هو! أنت جاهز لاستخدام Crystal لـ Samsung Internet على أكمل وجه</string>
+    <string name="take_tour_description">تعرف على كيفية استخدام Crystal للحصول على تجربة تصفح أكثر متعة</string>
+
 </resources>

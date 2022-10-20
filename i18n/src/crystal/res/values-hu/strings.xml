@@ -34,4 +34,8 @@
     <string name="share_events_header">Segítse az Crystal javításában</string>
     <string name="share_events_description">Az anonimizált adatok segítségével javíthatjuk az Crystal alkalmazást, hogy még jobb böngészési élményt nyújthasson.</string>
 
+    <!-- Start Guide -->
+    <string name="tour_last_step_description">Ez az! Készen áll az Crystal for Samsung Internet teljes használatára</string>
+    <string name="take_tour_description">Ismerje meg, hogyan használhatja az Crystal-t a még élvezetesebb böngészés érdekében</string>
+
 </resources>

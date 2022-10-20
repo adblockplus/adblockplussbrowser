@@ -122,6 +122,7 @@
     <string name="languages_onboarding_option_add">広告ブロック言語を追加する。</string>
     <string name="languages_onboarding_option_skip">いいえ。１つの言語だけで閲覧します。</string>
     <string name="delete_swipe_hint">エントリーを削除するには、左にスワイプしてください。</string>
+    <string name="file_picking_canceled">ファイルのピッキングがキャンセルされました</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">ビュレット記号</string>
@@ -133,10 +134,19 @@
 
     <!-- Issue reporter -->
     <string name="issueReporter_page_title">不具合報告</string>
+    <string name="issueReporter_page_description">問題が発生したときに共有します。</string>
     <string name="issueReporter_typeSelector_heading">不具合種別を選択</string>
     <string name="issueReporter_typeSelector_description">このウィンドウで不具合の報告に必要なステップをご案内します。まず最初に、遭遇した不具合の種別を選択してください:</string>
     <string name="issueReporter_falsePositive_label">Adblock Plus のブロックが過剰</string>
     <string name="issueReporter_falseNegative_label">Adblock Plus が広告をブロックしていない</string>
+
+    <string name="comment_title">コメント (オプション):</string>
+    <string name="make_screenshot_of_samsung_internet">Samsung Internet のスクリーンショットを作成</string>
+    <string name="cancel">キャンセル</string>
+    <string name="report_issue_enter_email_hint">メールアドレスを入力</string>
+    <string name="report_issue_enter_url_hint">URL を入力</string>
+    <string name="report_issue_enter_comment_hint">コメントを入力</string>
+    <string name="issueReporter_url_description"> 問題が見つかった URL を入力することをお勧めします。ページのリンクをコピーして貼り付けることを考えてみてください。</string>
 
     <string name="issueReporter_email_description">メールアドレスを入力すると調査中の不明な点を問い合わせたり、報告者毎に優先度に上げた対応が可能になります。</string>
     <string name="issueReporter_comment_description">以下のテキストフィールドに、私たちが問題を理解するのを助けるためのコメントを入力できます。この手順は省略できますが、問題が明らかではない場合には推奨されます。また送信前にレポートデータを確認できます。</string>
@@ -145,5 +155,27 @@
     <string name="issueReporter_sendButton_label">不具合報告を送信</string>
     <string name="issueReporter_email_label">メール:</string>
     <string name="issueReporter_privacyPolicy"><a href="https://adblockplus.org/en/privacy#issue-reporter">プライバシー ポリシー</a></string>
+    <string name="issueReporter_url_label">URL (オプション):</string>
+    <string name="issueReporter_attached_image_thumbnail">添付画像のサムネイル</string>
+    <string name="tap_here_to_pick_screenshot">ここをタップしてスクリーンショットを選択</string>
+    <string name="processing_issue_report_screenshot_description">読み込んでいます…</string>
+    <string name="screenshot_reselect_description">ここをタップして別のスクリーンショットを選択</string>
+    <string name="issueReporter_report_sent">問題を報告していただきありがとうございます。</string>
+    <string name="issueReporter_report_send_error">リクエストを処理できません。後でもう一度やり直してください。</string>
+    <string name="issueReporter_report_screenshot_too_large">画像ファイルが大きすぎます。別のものを選んでください。</string>
+    <string name="issueReporter_report_screenshot_invalid">スクリーンショットファイルが無効です。別のものを選んでください。</string>
+
+    <!-- Start guide -->
+    <string name="tour_header">ガイド</string>
+    <string name="take_tour_title">ツアーに参加</string>
+    <string name="take_tour_description">より楽しいブラウジング体験のために ABP を使用する方法を学びます</string>
+    <string name="tour_next_button_text">次</string>
+    <string name="tour_skip_button_text">スキップ</string>
+    <string name="tour_dialog_ad_blocking_options_text">ブラウジング体験を最適化するには&#13;\nこれらのパラメーターを調整することを検討してください</string>
+    <string name="tour_add_languages">普段ブラウジングする言語を追加</string>
+    <string name="tour_disable_social_media_tracking">ブラウジング中にソーシャル メディアの追跡を無効にする</string>
+    <string name="tour_allowlist">ウェブサイトを許可リストに登録して、広告を引き続き表示</string>
+    <string name="tour_last_step_description">以上です！これで、ABP for Samsung Internet を最大限に活用する準備が整いました</string>
+    <string name="tour_last_step_button_done">実行済み</string>
 
 </resources>

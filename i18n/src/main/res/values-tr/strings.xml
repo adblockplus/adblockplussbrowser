@@ -121,6 +121,7 @@
     <string name="languages_onboarding_option_add">Bir reklam engelleme dili daha ekleyin.</string>
     <string name="languages_onboarding_option_skip">Hayır teşekkürler, yalnızca bir dilde geziniyorum.</string>
     <string name="delete_swipe_hint">Bir girdiyi silmek için sola kaydırın.</string>
+    <string name="file_picking_canceled">Dosya toplama iptal edildi</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">Madde İşareti Sembolü</string>
@@ -132,10 +133,19 @@
 
     <!-- Issue reporter -->
     <string name="issueReporter_page_title">Sorun bildirici</string>
+    <string name="issueReporter_page_description">Sorunlar ortaya çıktığında paylaşın.</string>
     <string name="issueReporter_typeSelector_heading">Ne tür bir sorun yaşıyorsunuz?</string>
     <string name="issueReporter_typeSelector_description">Lütfen bir sorun seçin:</string>
     <string name="issueReporter_falsePositive_label">Görüntülemeye çalıştığım sayfa bozulmuş</string>
     <string name="issueReporter_falseNegative_label">Hâlâ reklamları görüyorum</string>
+
+    <string name="comment_title">Yorum (isteğe bağlı):</string>
+    <string name="make_screenshot_of_samsung_internet">Samsung Internet\'in ekran görüntüsünü alın</string>
+    <string name="cancel">İptal</string>
+    <string name="report_issue_enter_email_hint">E-posta girin</string>
+    <string name="report_issue_enter_url_hint">URL girin</string>
+    <string name="report_issue_enter_comment_hint">Yorum girin</string>
+    <string name="issueReporter_url_description"> Sorunu bulduğunuz URL\'yi girmenizi öneririz. Sadece sayfanın bağlantısını kopyalayıp yapıştırmayı düşünün.</string>
 
     <string name="issueReporter_email_description">Geçerli bir e-posta adresi girilmesi faydalı olacaktır. Bu, kötü amaçlı yazılım gibi zorlu sorunları çözmek amacıyla sizinle iletişim kurmamızı sağlar. E-posta adresi girilmesinin zorunlu olmadığını ve adresinizin hiçbir şekilde paylaşılmayacağını unutmayın.</string>
     <string name="issueReporter_comment_description">Lütfen aşağıya bir yorum bırakarak sorunu daha iyi anlamamıza yardımcı olun.</string>
@@ -144,5 +154,27 @@
     <string name="issueReporter_sendButton_label">Bildirimi gönder</string>
     <string name="issueReporter_email_label">E-posta:</string>
     <string name="issueReporter_privacyPolicy"><a href="https://adblockplus.org/en/privacy#issue-reporter">Gizlilik Politikası</a></string>
+    <string name="issueReporter_url_label">URL (isteğe bağlı):</string>
+    <string name="issueReporter_attached_image_thumbnail">ekli resim küçük resmi</string>
+    <string name="tap_here_to_pick_screenshot">Bir ekran görüntüsü seçmek için buraya dokunun</string>
+    <string name="processing_issue_report_screenshot_description">Yükleniyor…</string>
+    <string name="screenshot_reselect_description">Farklı bir ekran görüntüsü seçmek için buraya dokunun</string>
+    <string name="issueReporter_report_sent">Sorunu bildirdiği için teşekkür ederiz!</string>
+    <string name="issueReporter_report_send_error">İsteğiniz işlenemiyor. Lütfen daha sonra tekrar deneyiniz.</string>
+    <string name="issueReporter_report_screenshot_too_large">Resim dosyası çok büyük. Lütfen başka bir tane seçin.</string>
+    <string name="issueReporter_report_screenshot_invalid">Ekran görüntüsü dosyası geçersiz. Lütfen başka bir tane seçin.</string>
+
+    <!-- Start guide -->
+    <string name="tour_header">Kılavuz</string>
+    <string name="take_tour_title">Bir tur at</string>
+    <string name="take_tour_description">Daha keyifli bir tarama deneyimi için ABP\'yi nasıl kullanacağınızı öğrenin</string>
+    <string name="tour_next_button_text">Sonraki</string>
+    <string name="tour_skip_button_text">Bunu atlayın</string>
+    <string name="tour_dialog_ad_blocking_options_text">Optimize edilmiş tarama deneyimi için &#13;\nbu parametreleri ayarlamayı düşünün</string>
+    <string name="tour_add_languages">Genellikle göz attığınız dilleri ekleyin</string>
+    <string name="tour_disable_social_media_tracking">Gezinirken sosyal medya takibini devre dışı bırakın</string>
+    <string name="tour_allowlist">Bir web sitesinde reklam görmeye devam etmek için izin verilenler listesine ekleyin</string>
+    <string name="tour_last_step_description">Bu kadar! ABP for Samsung Internet\'i sonuna kadar kullanmaya hazırsınız</string>
+    <string name="tour_last_step_button_done">Tamamlandı</string>
 
 </resources>

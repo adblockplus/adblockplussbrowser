@@ -34,4 +34,8 @@
     <string name="share_events_header">Crystal\'ı iyileştirmemize yardımcı olun</string>
     <string name="share_events_description">Anonimleştirilmiş veriler Crystal\'ı iyileştirmemize yardımcı olurken sizin için de daha iyi bir gezinme deneyimi sağlar.</string>
 
+    <!-- Start Guide -->
+    <string name="tour_last_step_description">Bu kadar! Crystal for Samsung Internet\'i sonuna kadar kullanmaya hazırsınız</string>
+    <string name="take_tour_description">Daha keyifli bir tarama deneyimi için Crystal\'yi nasıl kullanacağınızı öğrenin</string>
+
 </resources>

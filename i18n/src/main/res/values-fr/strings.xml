@@ -122,6 +122,7 @@
     <string name="languages_onboarding_option_add">Ajouter une langue de blocage des publicités supplémentaire.</string>
     <string name="languages_onboarding_option_skip">Non merci, je ne navigue que dans une seule langue.</string>
     <string name="delete_swipe_hint">Pour supprimer une entrée, faites-la glisser vers la gauche.</string>
+    <string name="file_picking_canceled">La cueillette de fichiers est annulée</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">Symbole de puce</string>
@@ -133,10 +134,19 @@
 
     <!-- Issue reporter -->
     <string name="issueReporter_page_title">Signalement de problèmes</string>
+    <string name="issueReporter_page_description">Partagez les problèmes lorsqu\'ils surviennent.</string>
     <string name="issueReporter_typeSelector_heading">Quel type de problème rencontrez-vous ?</string>
     <string name="issueReporter_typeSelector_description">S\'il vous plaît sélectionnez un problème :</string>
     <string name="issueReporter_falsePositive_label">Le lien vers la page que j’essaie d\'afficher est brisé</string>
     <string name="issueReporter_falseNegative_label">Je vois encore des publicités</string>
+
+    <string name="comment_title">Commentaire (facultatif) :</string>
+    <string name="make_screenshot_of_samsung_internet">Faire une capture d\'écran de Samsung Internet</string>
+    <string name="cancel">Annuler</string>
+    <string name="report_issue_enter_email_hint">Entrez le courriel</string>
+    <string name="report_issue_enter_url_hint">Entrer l\'URL</string>
+    <string name="report_issue_enter_comment_hint">Entrez un commentaire</string>
+    <string name="issueReporter_url_description"> Nous vous encourageons à entrer l\'URL où vous avez trouvé le problème. Pensez simplement à copier-coller le lien de la page.</string>
 
     <string name="issueReporter_email_description">Si vous saisissez votre adresse mail cela nous aidera. Nous pourrons alors vous contacter pour résoudre les problèmes difficiles comme le malware. N’oubliez pas qu’il n’est pas obligatoire de saisir une adresse e-mail et que votre adresse ne sera jamais partagée avec des tiers.</string>
     <string name="issueReporter_comment_description">Merci de bien vouloir nous aider à mieux comprendre le problème en laissant un commentaire ci-dessous.</string>
@@ -145,5 +155,27 @@
     <string name="issueReporter_sendButton_label">Envoyer le signalement</string>
     <string name="issueReporter_email_label">E-mail :</string>
     <string name="issueReporter_privacyPolicy"><a href="https://adblockplus.org/en/privacy#issue-reporter">Politique de confidentialité</a></string>
+    <string name="issueReporter_url_label">URL (facultatif) :</string>
+    <string name="issueReporter_attached_image_thumbnail">vignette de l\'image jointe</string>
+    <string name="tap_here_to_pick_screenshot">Appuyez ici pour choisir une capture d\'écran</string>
+    <string name="processing_issue_report_screenshot_description">Chargement…</string>
+    <string name="screenshot_reselect_description">Appuyez ici pour choisir une autre capture d\'écran</string>
+    <string name="issueReporter_report_sent">Merci d\'avoir signalé le problème !</string>
+    <string name="issueReporter_report_send_error">Impossible de traiter votre demande. Veuillez réessayer plus tard.</string>
+    <string name="issueReporter_report_screenshot_too_large">Le fichier image est trop volumineux. Veuillez en choisir un autre.</string>
+    <string name="issueReporter_report_screenshot_invalid">Le fichier de capture d\'écran n\'est pas valide. Veuillez en choisir un autre.</string>
+
+    <!-- Start guide -->
+    <string name="tour_header">Guide</string>
+    <string name="take_tour_title">Faire un tour</string>
+    <string name="take_tour_description">Apprenez à utiliser ABP pour une expérience de navigation plus agréable</string>
+    <string name="tour_next_button_text">Prochain</string>
+    <string name="tour_skip_button_text">Sauter</string>
+    <string name="tour_dialog_ad_blocking_options_text">Pour une expérience de navigation optimisée, pensez à ajuster ces paramètres</string>
+    <string name="tour_add_languages">Ajoutez les langues dans lesquelles vous naviguez habituellement</string>
+    <string name="tour_disable_social_media_tracking">Désactiver le suivi des réseaux sociaux lors de la navigation</string>
+    <string name="tour_allowlist">Ajouter un site Internet à la liste d\'autorisation pour continuer à y voir des annonces</string>
+    <string name="tour_last_step_description">C\'est ça ! Vous êtes prêt à utiliser ABP pour Samsung Internet au maximum</string>
+    <string name="tour_last_step_button_done">Fait</string>
 
 </resources>

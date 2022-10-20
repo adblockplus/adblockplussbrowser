@@ -121,6 +121,7 @@
     <string name="languages_onboarding_option_add">Füge eine zusätzliche Werbeblockierungssprache hinzu.</string>
     <string name="languages_onboarding_option_skip">Nein danke, ich browse nur in einer Sprache.</string>
     <string name="delete_swipe_hint">Nach links wischen, um einen Eintrag zu löschen.</string>
+    <string name="file_picking_canceled">Die Dateiauswahl wird abgebrochen</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">Aufzählungszeichen-Symbol</string>
@@ -132,10 +133,19 @@
 
     <!-- Issue reporter -->
     <string name="issueReporter_page_title">Fehler melden</string>
+    <string name="issueReporter_page_description">Teilen Sie Probleme, wenn sie auftreten.</string>
     <string name="issueReporter_typeSelector_heading">Welche Art von Problem liegt vor?</string>
     <string name="issueReporter_typeSelector_description">Wähle ein Problem aus:</string>
     <string name="issueReporter_falsePositive_label">Die Seite, die ich anzeigen möchte, ist kaputt.</string>
     <string name="issueReporter_falseNegative_label">Ich sehe noch Anzeigen</string>
+
+    <string name="comment_title">Kommentar (optional):</string>
+    <string name="make_screenshot_of_samsung_internet">Machen Sie einen Screenshot von Samsung Internet</string>
+    <string name="cancel">Absagen</string>
+    <string name="report_issue_enter_email_hint">E-Mail eingeben</string>
+    <string name="report_issue_enter_url_hint">URL eingeben</string>
+    <string name="report_issue_enter_comment_hint">Kommentar eingeben</string>
+    <string name="issueReporter_url_description"> Wir empfehlen Ihnen, die URL einzugeben, unter der Sie das Problem gefunden haben. Denken Sie nur daran, den Link der Seite zu kopieren und einzufügen.</string>
 
     <string name="issueReporter_email_description">Es ist hilfreich, wenn du eine gültige E-Mail-Adresse eingibst. Dadurch können wir dich kontaktieren, um schwerwiegende Probleme wie Malware zu beheben. Denke daran, dass es nicht verpflichtend ist, eine E-Mail-Adresse einzugeben. Deine Adresse wird zudem niemals an andere weitergegeben.</string>
     <string name="issueReporter_comment_description">Hilf uns dabei, das Problem besser zu verstehen, indem du unten einen Kommentar hinterlässt.</string>
@@ -144,5 +154,27 @@
     <string name="issueReporter_sendButton_label">Bericht absenden</string>
     <string name="issueReporter_email_label">E-Mail:</string>
     <string name="issueReporter_privacyPolicy"><a href="https://adblockplus.org/en/privacy#issue-reporter">Datenschutzerklärung</a></string>
+    <string name="issueReporter_url_label">URL (optional):</string>
+    <string name="issueReporter_attached_image_thumbnail">angehängtes Miniaturbild</string>
+    <string name="tap_here_to_pick_screenshot">Tippen Sie hier, um einen Screenshot auszuwählen</string>
+    <string name="processing_issue_report_screenshot_description">Wird geladen…</string>
+    <string name="screenshot_reselect_description">Tippen Sie hier, um einen anderen Screenshot auszuwählen</string>
+    <string name="issueReporter_report_sent">Danke, dass Sie das Problem gemeldet haben!</string>
+    <string name="issueReporter_report_send_error">Ihre Anfrage kann nicht bearbeitet werden. Bitte versuchen Sie es später erneut.</string>
+    <string name="issueReporter_report_screenshot_too_large">Die Bilddatei ist zu groß. Bitte wählen Sie eine andere aus.</string>
+    <string name="issueReporter_report_screenshot_invalid">Die Screenshot-Datei ist ungültig. Bitte wählen Sie eine andere aus.</string>
+
+    <!-- Start guide -->
+    <string name="tour_header">Führen</string>
+    <string name="take_tour_title">Machen Sie eine Tour</string>
+    <string name="take_tour_description">Erfahren Sie, wie Sie ABP für ein angenehmeres Surferlebnis verwenden</string>
+    <string name="tour_next_button_text">Nächste</string>
+    <string name="tour_skip_button_text">Überspringen</string>
+    <string name="tour_dialog_ad_blocking_options_text">Denken Sie für ein optimiertes Surferlebnis daran, diese Parameter anzupassen</string>
+    <string name="tour_add_languages">Fügen Sie die Sprachen hinzu, in denen Sie normalerweise surfen</string>
+    <string name="tour_disable_social_media_tracking">Deaktivieren Sie Social-Media-Tracking beim Surfen</string>
+    <string name="tour_allowlist">Setzen Sie eine Website auf die Zulassungsliste, um weiterhin Anzeigen darauf zu sehen</string>
+    <string name="tour_last_step_description">Das ist es! Sie sind bereit, ABP für Samsung Internet in vollem Umfang zu nutzen</string>
+    <string name="tour_last_step_button_done">Fertig</string>
 
 </resources>

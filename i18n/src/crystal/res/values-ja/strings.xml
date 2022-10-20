@@ -34,4 +34,8 @@
     <string name="share_events_header">Crystal の改善にご協力ください</string>
     <string name="share_events_description">匿名化データを共有してくださいますと、当社では Crystal の改善に活用させてただき、皆様の良いブラウザ体験に貢献します。</string>
 
+    <!-- Start Guide -->
+    <string name="tour_last_step_description">以上です！これで、Crystal for Samsung Internet を最大限に活用する準備が整いました</string>
+    <string name="take_tour_description">より楽しいブラウジング体験のために Crystal を使用する方法を学びます</string>
+
 </resources>
