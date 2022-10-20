@@ -28,6 +28,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.postDelayed
 import com.google.android.material.snackbar.Snackbar
+import org.adblockplus.adblockplussbrowser.base.R
 import org.adblockplus.adblockplussbrowser.base.databinding.SnackbarLayoutBinding
 import org.adblockplus.adblockplussbrowser.base.view.layoutInflater
 
@@ -143,6 +144,12 @@ class SnackbarContainer @JvmOverloads constructor(
             null,
             null
         )
+        binding?.snackbarText?.setPadding(
+            resources.getDimensionPixelSize(R.dimen.snackbar_image_padding),
+            resources.getDimensionPixelSize(R.dimen.snackbar_image_padding),
+            resources.getDimensionPixelSize(R.dimen.snackbar_image_padding),
+            resources.getDimensionPixelSize(R.dimen.snackbar_image_padding)
+        )
     }
 
     private fun adjustDuration() {
@@ -168,7 +175,7 @@ class SnackbarContainer @JvmOverloads constructor(
         config.actionVisibility = VISIBLE
         adjustActionVisibility()
     }
-    
+
     private fun adjustActionVisibility() {
         binding?.snackbarAction?.visibility = config.actionVisibility
     }

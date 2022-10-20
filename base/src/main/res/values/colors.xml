@@ -19,13 +19,16 @@
 <resources>
 
     <color name="background">@color/white_lilac</color>
+    <color name="background_snackbar">@color/black</color>
     <color name="background_secondary">@color/white</color>
     <color name="background_accent">@color/blue_bayoux</color>
     <color name="foreground">@color/black</color>
+    <color name="foreground_snackbar">@color/white</color>
     <color name="foreground_secondary">@color/blue_bayoux</color>
     <color name="foreground_accent">@color/blue</color>
     <color name="clickable_text">@color/blue</color>
     <color name="divider">@color/lynch_opacity_15</color>
+    <color name="snackbar_outline">@color/light_green</color>
 
     <!-- Used the following tool to name the colors:
     https://chir.ag/projects/name-that-color -->
@@ -50,5 +53,8 @@
     <color name="ribbon">@color/blue</color>
     <color name="dodger_blue">#2786FF</color>
     <color name="blue">#0070FF</color>
+    <color name="light_green">#66D06B</color>
+    <color name="dark_green">#006C04</color>
+
 
 </resources>
