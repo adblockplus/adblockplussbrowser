@@ -61,6 +61,8 @@ internal class LauncherViewModel @Inject constructor(
     private val onBoardingCompletedFlow = appPreferences.onboardingCompleted
     private val lastFilterRequestFlow = appPreferences.lastFilterListRequest
 
+    internal var referrerClient = InstallReferrerClient.newBuilder(context).build()
+
     fun fetchDirection(): MutableLiveData<LauncherDirection> {
         val navigationDirection = MutableLiveData<LauncherDirection>()
         viewModelScope.launch {
@@ -92,33 +94,9 @@ internal class LauncherViewModel @Inject constructor(
         try {
             Timber.d("Checking InstallReferrer")
             // All InstallReferrerClient API needs to be called on UiThread
-            val referrerClient = InstallReferrerClient.newBuilder(context).build()
             referrerClient.startConnection(object : InstallReferrerStateListener {
                 override fun onInstallReferrerSetupFinished(responseCode: Int) {
-                    when (responseCode) {
-                        InstallReferrerClient.InstallReferrerResponse.OK -> {
-                            try {
-                                val response = referrerClient.installReferrer
-                                val referrer = response.installReferrer
-                                analyticsProvider.setUserProperty(
-                                    AnalyticsUserProperty.INSTALL_REFERRER, referrer
-                                )
-                                appPreferences.referrerChecked()
-                                referrerClient.endConnection()
-                                Timber.d("InstallReferrer checked: %s", referrer)
-                            } catch (ex: RemoteException) {
-                                Timber.e(ex, "Error processing InstallReferrerResponse")
-                            }
-                        }
-                        InstallReferrerClient.InstallReferrerResponse.DEVELOPER_ERROR,
-                        InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED,
-                        InstallReferrerClient.InstallReferrerResponse.SERVICE_DISCONNECTED,
-                        InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE -> {
-                            // Call referrerChecked() to not repeat on those failures
-                            appPreferences.referrerChecked()
-                            Timber.w("checkInstallReferrer() gets %d", responseCode)
-                        }
-                    }
+                    handleInstallReferrerResponse(responseCode)
                 }
 
                 override fun onInstallReferrerServiceDisconnected() {
@@ -131,6 +109,33 @@ internal class LauncherViewModel @Inject constructor(
             if (ex is SecurityException) {
                 // Call referrerChecked() to not repeat on this failure
                 appPreferences.referrerChecked()
+            }
+        }
+    }
+
+    internal fun handleInstallReferrerResponse(responseCode: Int) {
+        when (responseCode) {
+            InstallReferrerClient.InstallReferrerResponse.OK -> {
+                try {
+                    val response = referrerClient.installReferrer
+                    val referrer = response.installReferrer
+                    analyticsProvider.setUserProperty(
+                        AnalyticsUserProperty.INSTALL_REFERRER, referrer
+                    )
+                    appPreferences.referrerChecked()
+                    referrerClient.endConnection()
+                    Timber.d("InstallReferrer checked: %s", referrer)
+                } catch (ex: RemoteException) {
+                    Timber.e(ex, "Error processing InstallReferrerResponse")
+                }
+            }
+            InstallReferrerClient.InstallReferrerResponse.DEVELOPER_ERROR,
+            InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED,
+            InstallReferrerClient.InstallReferrerResponse.SERVICE_DISCONNECTED,
+            InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE -> {
+                // Call referrerChecked() to not repeat on those failures
+                appPreferences.referrerChecked()
+                Timber.w("checkInstallReferrer() gets %d", responseCode)
             }
         }
     }
