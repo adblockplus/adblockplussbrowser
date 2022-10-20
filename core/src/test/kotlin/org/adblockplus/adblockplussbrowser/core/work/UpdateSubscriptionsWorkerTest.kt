@@ -21,6 +21,7 @@ import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.work.ListenableWorker
 import androidx.work.testing.TestListenableWorkerBuilder
+import java.io.File
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -31,23 +32,22 @@ import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscription
 import org.adblockplus.adblockplussbrowser.core.downloader.DownloadResult
 import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
-import org.adblockplus.adblockplussbrowser.core.helpers.Fakes
+import org.adblockplus.adblockplussbrowser.core.helpers.FakeCoreRepository
+import org.adblockplus.adblockplussbrowser.core.helpers.FakeDebugPreferences
+import org.adblockplus.adblockplussbrowser.core.helpers.FakeSettingsRepositoryNoChanges
 import org.adblockplus.adblockplussbrowser.core.helpers.WorkerParameters
+import org.adblockplus.adblockplussbrowser.settings.helpers.test.FakeSettingsRepository
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
-import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
-import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.kotlin.any
 import org.robolectric.RobolectricTestRunner
-import java.io.File
-import org.adblockplus.adblockplussbrowser.settings.helpers.test.FakeSettingsRepository
 
 @RunWith(RobolectricTestRunner::class)
 @ExperimentalCoroutinesApi
@@ -78,10 +78,10 @@ class UpdateSubscriptionsWorkerTest {
             .setTags(params.tags)
             .build()
         worker.subscriptionsManager = Mockito.mock(SubscriptionsManager::class.java)
-        worker.coreRepository = Fakes.FakeCoreRepository("")
+        worker.coreRepository = FakeCoreRepository("")
         worker.downloader = downloader
         worker.settingsRepository = FakeSettingsRepository("")
-        worker.debugPreferences = Fakes.FakeDebugPreferences()
+        worker.debugPreferences = FakeDebugPreferences()
         return worker
     }
 
@@ -103,7 +103,7 @@ class UpdateSubscriptionsWorkerTest {
     fun `test update should succeed`() {
         val params = WorkerParameters(runAttemptCount = 0)
         val updateSubscriptionsWorker = createWorker(params) as UpdateSubscriptionsWorker
-        updateSubscriptionsWorker.settingsRepository = Fakes.FakeSettingsRepositoryNoChanges("")
+        updateSubscriptionsWorker.settingsRepository = FakeSettingsRepositoryNoChanges("")
         runTest {
             val result = updateSubscriptionsWorker.doWork()
             assertThat(result, `is`(ListenableWorker.Result.success()))

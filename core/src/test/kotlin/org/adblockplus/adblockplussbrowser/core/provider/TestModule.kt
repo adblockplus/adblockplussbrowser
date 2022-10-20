@@ -33,7 +33,8 @@ import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
 import org.adblockplus.adblockplussbrowser.core.downloader.OkHttpDownloader
-import org.adblockplus.adblockplussbrowser.core.helpers.Fakes
+import org.adblockplus.adblockplussbrowser.core.helpers.FakeActivationPreferences
+import org.adblockplus.adblockplussbrowser.core.helpers.FakeCoreRepository
 import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
@@ -47,7 +48,7 @@ internal class TestModule {
     @Provides
     @Singleton
     fun getCoreRepository(): CoreRepository {
-        return Fakes.FakeCoreRepository("")
+        return FakeCoreRepository("")
     }
 
     @Provides
@@ -63,7 +64,7 @@ internal class TestModule {
     @Provides
     @Singleton
     fun getActivationPreferences(): ActivationPreferences {
-        return Fakes.FakeActivationPreferences()
+        return FakeActivationPreferences()
     }
 
     @Provides

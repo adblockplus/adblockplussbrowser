@@ -45,7 +45,8 @@ import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.di.CoreModule
 import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
 import org.adblockplus.adblockplussbrowser.core.downloader.OkHttpDownloader
-import org.adblockplus.adblockplussbrowser.core.helpers.Fakes
+import org.adblockplus.adblockplussbrowser.core.helpers.FakeActivationPreferences
+import org.adblockplus.adblockplussbrowser.core.helpers.FakeCoreRepository
 import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
@@ -103,7 +104,7 @@ class FilterListContentProviderAADisabledTest {
         @Provides
         @Singleton
         fun getCoreRepository(): CoreRepository {
-            val coreRepository = Fakes.FakeCoreRepository("")
+            val coreRepository = FakeCoreRepository("")
             // Last user count was done right now
             val lastUserCountingDate = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z")
                 .format(Date(System.currentTimeMillis()))
@@ -127,7 +128,7 @@ class FilterListContentProviderAADisabledTest {
         @Provides
         @Singleton
         fun getActivationPreferences(): ActivationPreferences {
-            return Fakes.FakeActivationPreferences()
+            return FakeActivationPreferences()
         }
 
         @Provides

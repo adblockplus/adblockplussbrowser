@@ -38,7 +38,6 @@ import org.adblockplus.adblockplussbrowser.core.CoreSubscriptionsManager
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.di.CoreModule
 import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
-import org.adblockplus.adblockplussbrowser.core.helpers.Fakes
 import org.adblockplus.adblockplussbrowser.core.provider.TestModule
 import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
@@ -59,6 +58,8 @@ import java.util.Date
 import javax.inject.Singleton
 import kotlin.time.ExperimentalTime
 import org.adblockplus.adblockplussbrowser.analytics.helpers.test.FakeAnalyticsProvider
+import org.adblockplus.adblockplussbrowser.core.helpers.FakeActivationPreferences
+import org.adblockplus.adblockplussbrowser.core.helpers.FakeCoreRepository
 import org.adblockplus.adblockplussbrowser.settings.helpers.test.FakeSettingsRepository
 
 @ExperimentalTime
@@ -93,7 +94,7 @@ class CoreSubscriptionsManagerTest {
         @Provides
         @Singleton
         fun getCoreRepository(): CoreRepository {
-            val coreRepository = Fakes.FakeCoreRepository("")
+            val coreRepository = FakeCoreRepository("")
             // Last user count was done right now
             val lastUserCountingDate = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z")
                 .format(Date(System.currentTimeMillis()))
@@ -117,7 +118,7 @@ class CoreSubscriptionsManagerTest {
         @Provides
         @Singleton
         fun getActivationPreferences(): ActivationPreferences {
-            return Fakes.FakeActivationPreferences()
+            return FakeActivationPreferences()
         }
 
         @Provides
