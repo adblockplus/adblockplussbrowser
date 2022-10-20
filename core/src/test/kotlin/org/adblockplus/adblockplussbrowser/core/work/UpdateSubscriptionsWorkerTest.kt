@@ -36,10 +36,8 @@ import org.adblockplus.adblockplussbrowser.core.helpers.WorkerParameters
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
-import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
-import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -81,6 +79,7 @@ class UpdateSubscriptionsWorkerTest {
         worker.downloader = downloader
         worker.settingsRepository = Fakes.FakeSettingsRepository("")
         worker.debugPreferences = Fakes.FakeDebugPreferences()
+        worker.analyticsProvider = Fakes.FakeAnalyticsProvider()
         return worker
     }
 
@@ -110,9 +109,9 @@ class UpdateSubscriptionsWorkerTest {
     }
 
     @Test
-    fun `test downloads failed result should retry`(){
+    fun `test downloads failed result should retry`() {
         val updateSubscriptionsWorker = createWorker(WorkerParameters()) as UpdateSubscriptionsWorker
-        val directory = File(context.filesDir,"cache")
+        val directory = File(context.filesDir, "cache")
         directory.mkdirs()
         val file = File.createTempFile("filter", ".txt", directory)
         runTest {
@@ -123,9 +122,9 @@ class UpdateSubscriptionsWorkerTest {
     }
 
     @Test
-    fun `test downloads Succeed should succeed`(){
+    fun `test downloads Succeed should succeed`() {
         val updateSubscriptionsWorker = createWorker(WorkerParameters()) as UpdateSubscriptionsWorker
-        val directory = File(context.filesDir,"cache")
+        val directory = File(context.filesDir, "cache")
         directory.mkdirs()
         val file = File.createTempFile("filter", ".txt", directory)
         runTest {
@@ -150,9 +149,11 @@ class UpdateSubscriptionsWorkerTest {
 
     @Test
     fun `test CatchException should fail`() {
-        val updateSubscriptionsWorker = createWorker(WorkerParameters(
-            tags = mutableListOf(UpdateSubscriptionsWorker.UPDATE_KEY_FORCE_REFRESH)
-        )) as UpdateSubscriptionsWorker
+        val updateSubscriptionsWorker = createWorker(
+            WorkerParameters(
+                tags = mutableListOf(UpdateSubscriptionsWorker.UPDATE_KEY_FORCE_REFRESH)
+            )
+        ) as UpdateSubscriptionsWorker
         runTest {
             val result = updateSubscriptionsWorker.doWork()
             assertThat(result, `is`(ListenableWorker.Result.failure()))
