@@ -47,6 +47,7 @@ import org.mockito.Mockito
 import org.mockito.kotlin.any
 import org.robolectric.RobolectricTestRunner
 import java.io.File
+import org.adblockplus.adblockplussbrowser.settings.helpers.test.FakeSettingsRepository
 
 @RunWith(RobolectricTestRunner::class)
 @ExperimentalCoroutinesApi
@@ -79,7 +80,7 @@ class UpdateSubscriptionsWorkerTest {
         worker.subscriptionsManager = Mockito.mock(SubscriptionsManager::class.java)
         worker.coreRepository = Fakes.FakeCoreRepository("")
         worker.downloader = downloader
-        worker.settingsRepository = Fakes.FakeSettingsRepository("")
+        worker.settingsRepository = FakeSettingsRepository("")
         worker.debugPreferences = Fakes.FakeDebugPreferences()
         return worker
     }

@@ -26,8 +26,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.adblockplus.adblockplussbrowser.preferences.data.ReportIssueRepository
 import org.adblockplus.adblockplussbrowser.preferences.helpers.FakeAnalyticsProvider
-import org.adblockplus.adblockplussbrowser.preferences.helpers.FakeSettingsRepository
 import org.adblockplus.adblockplussbrowser.preferences.helpers.Fakes
+import org.adblockplus.adblockplussbrowser.settings.helpers.test.FakeSettingsRepository
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before

@@ -58,6 +58,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import javax.inject.Singleton
 import kotlin.time.ExperimentalTime
+import org.adblockplus.adblockplussbrowser.settings.helpers.test.FakeSettingsRepository
 
 @ExperimentalTime
 @Config(
@@ -103,7 +104,7 @@ class CoreSubscriptionsManagerTest {
         @Provides
         @Singleton
         fun getSettingsRepository(): SettingsRepository {
-            val settingsRepository = Fakes.FakeSettingsRepository("")
+            val settingsRepository = FakeSettingsRepository("")
             settingsRepository.acceptableAdsStatus = false
             return settingsRepository
         }

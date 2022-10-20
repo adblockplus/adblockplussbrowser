@@ -41,6 +41,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
 import kotlin.time.ExperimentalTime
+import org.adblockplus.adblockplussbrowser.settings.helpers.test.FakeSettingsRepository
 
 @ExperimentalTime
 class UserCountingTest {
@@ -56,7 +57,7 @@ class UserCountingTest {
     @Before
     fun setUp() {
         mockWebServer.start()
-        val settings = Fakes.FakeSettingsRepository(mockWebServer.url("").toString())
+        val settings = FakeSettingsRepository(mockWebServer.url("").toString())
         val appInfo = AppInfo()
         analyticsProvider = Fakes.FakeAnalyticsProvider()
         fakeCoreRepository = Fakes.FakeCoreRepository(mockWebServer.url("").toString())
@@ -92,7 +93,7 @@ class UserCountingTest {
         val response = MockResponse()
             .addHeader("Date", "Thu, 23 Sep 2021 17:31:01 GMT") //202109231731
         mockWebServer.enqueue(response)
-        val settings = Fakes.FakeSettingsRepository(mockWebServer.url("").toString())
+        val settings =FakeSettingsRepository(mockWebServer.url("").toString())
         val appInfo = AppInfo()
         assertEquals(0, mockWebServer.requestCount)
         runBlocking {

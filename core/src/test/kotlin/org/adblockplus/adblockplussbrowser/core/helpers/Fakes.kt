@@ -35,9 +35,9 @@ import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.data.model.CoreData
 import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscription
 import org.adblockplus.adblockplussbrowser.core.data.model.SavedState
-import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
 import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig
+import org.adblockplus.adblockplussbrowser.settings.helpers.test.FakeSettingsRepository
 
 class Fakes {
 
@@ -106,106 +106,6 @@ class Fakes {
         }
 
         override suspend fun updateSavedState(savedState: SavedState) {  }
-    }
-
-    open class FakeSettingsRepository(private val serverUrl: String) : SettingsRepository {
-        var acceptableAdsStatus: Boolean = true
-
-        override val settings: Flow<Settings>
-            get() = flow {
-                emit(
-                    Settings(
-                        true,
-                        acceptableAdsStatus,
-                        UpdateConfig.ALWAYS,
-                        listOf(""),
-                        listOf(""),
-                        listOf(
-                            Subscription("$serverUrl/easylist.txt", "", 0L, CustomSubscriptionType.FROM_URL),
-                            Subscription("$serverUrl/exceptionrules.txt", "", 0L, CustomSubscriptionType.FROM_URL)
-                        ),
-                        listOf(),
-                        analyticsEnabled = true,
-                        languagesOnboardingCompleted = true
-                    )
-                )
-            }
-
-        override suspend fun getEasylistSubscription(): Subscription {
-            return Subscription("$serverUrl/easylist.txt", "", 0L, CustomSubscriptionType.FROM_URL)
-        }
-
-        override suspend fun getAcceptableAdsSubscription(): Subscription {
-            return Subscription("$serverUrl/exceptionrules.txt", "", 0L, CustomSubscriptionType.FROM_URL)
-        }
-
-        override suspend fun getTestPagesSubscription(): Subscription {
-            return Subscription("$serverUrl/exceptionrules.txt", "", 0L, CustomSubscriptionType.FROM_URL)
-        }
-
-        override suspend fun getDefaultPrimarySubscriptions(): List<Subscription> {
-            return listOf(
-                Subscription("$serverUrl/easylist.txt", "", 0L, CustomSubscriptionType.FROM_URL),
-                Subscription("$serverUrl/exceptionrules.txt", "", 0L, CustomSubscriptionType.FROM_URL)
-            )
-        }
-
-        override suspend fun getDefaultOtherSubscriptions(): List<Subscription> {
-            TODO("Not yet implemented")
-        }
-
-        override suspend fun setAdblockEnabled(enabled: Boolean) {}
-
-        override suspend fun setAcceptableAdsEnabled(enabled: Boolean) {}
-
-        override suspend fun setUpdateConfig(updateConfig: UpdateConfig) {}
-
-        override suspend fun addAllowedDomain(domain: String) {}
-
-        override suspend fun removeAllowedDomain(domain: String) {}
-
-        override suspend fun setAllowedDomains(domains: List<String>) {}
-
-        override suspend fun addBlockedDomain(domain: String) {}
-
-        override suspend fun removeBlockedDomain(domain: String) {}
-
-        override suspend fun setBlockedDomains(domains: List<String>) {}
-
-        override suspend fun addActivePrimarySubscription(subscription: Subscription) {}
-
-        override suspend fun removeActivePrimarySubscription(subscription: Subscription) {}
-
-        override suspend fun setActivePrimarySubscriptions(subscriptions: List<Subscription>) {}
-
-        override suspend fun addActiveOtherSubscription(subscription: Subscription) {}
-
-        override suspend fun removeActiveOtherSubscription(subscription: Subscription) {}
-
-        override suspend fun setActiveOtherSubscriptions(subscriptions: List<Subscription>) {}
-
-        override suspend fun updatePrimarySubscriptionLastUpdate(url: String, lastUpdate: Long) {}
-
-        override suspend fun updateOtherSubscriptionLastUpdate(url: String, lastUpdate: Long) {}
-
-        override suspend fun updatePrimarySubscriptionsLastUpdate(subscriptions: List<Subscription>) {}
-
-        override suspend fun updateOtherSubscriptionsLastUpdate(subscriptions: List<Subscription>) {}
-
-        override suspend fun setAnalyticsEnabled(enabled: Boolean) {}
-
-        override suspend fun getAdditionalTrackingSubscription(): Subscription {
-            TODO("Not yet implemented")
-        }
-
-        override suspend fun getSocialMediaTrackingSubscription(): Subscription {
-            TODO("Not yet implemented")
-        }
-
-        override suspend fun markLanguagesOnboardingCompleted() {}
-        override suspend fun checkLanguagesOnboardingCompleted() {
-            TODO("Not yet implemented")
-        }
     }
 
     class FakeAnalyticsProvider : AnalyticsProvider {

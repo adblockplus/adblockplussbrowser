@@ -36,6 +36,7 @@ import org.adblockplus.adblockplussbrowser.core.helpers.Fakes
 import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
+import org.adblockplus.adblockplussbrowser.settings.helpers.test.FakeSettingsRepository
 import org.mockito.Mockito
 
 @Module
@@ -51,7 +52,7 @@ internal class TestModule {
     @Provides
     @Singleton
     fun getSettingsRepository(): SettingsRepository {
-        return Fakes.FakeSettingsRepository("")
+        return FakeSettingsRepository("")
     }
 
     @Provides

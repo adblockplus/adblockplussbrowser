@@ -49,6 +49,7 @@ import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.di.SettingsModule
+import org.adblockplus.adblockplussbrowser.settings.helpers.test.FakeSettingsRepository
 import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
@@ -113,7 +114,7 @@ class FilterListContentProviderAADisabledTest {
         @Provides
         @Singleton
         fun getSettingsRepository(): SettingsRepository {
-            val settingsRepository =  Fakes.FakeSettingsRepository("")
+            val settingsRepository =  FakeSettingsRepository("")
             settingsRepository.acceptableAdsStatus = false
             return settingsRepository
         }
