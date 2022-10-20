@@ -38,4 +38,8 @@
     <string name="about_privacy_policy"><a href="https://getadblock.com/privacy/">隐私政策</a></string>
     <string name="about_terms_of_use"><a href="https://getadblock.com/terms/">使用条款</a></string>
 
+    <!-- Start Guide -->
+    <string name="tour_last_step_description">就是如此！您已准备好充分利用三星互联网 AdBlock 了。</string>
+    <string name="take_tour_description">了解如何使用 AdBlock 获得更愉快的浏览体验</string>
+
 </resources>

@@ -34,4 +34,8 @@
     <string name="share_events_header">Ajude a melhorar o Crystal</string>
     <string name="share_events_description">Dados anônimos nos ajudam a melhorar o Crystal e, assim, a criar uma experiência de navegação melhor para você.</string>
 
+    <!-- Start Guide -->
+    <string name="tour_last_step_description">É isso! Você está pronto para usar o Crystal para Samsung Internet ao máximo</string>
+    <string name="take_tour_description">Aprenda a usar o Crystal para uma experiência de navegação mais agradável</string>
+
 </resources>

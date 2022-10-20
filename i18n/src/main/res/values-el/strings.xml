@@ -120,6 +120,7 @@
     <string name="languages_onboarding_option_add">Προσθέστε μια επιπλέον γλώσσα αποκλεισμού διαφημίσεων.</string>
     <string name="languages_onboarding_option_skip">Όχι, ευχαριστώ, κάνω περιήγηση μόνο σε μία γλώσσα.</string>
     <string name="delete_swipe_hint">Για να διαγράψετε μια καταχώριση, σύρετέ την προς τα αριστερά.</string>
+    <string name="file_picking_canceled">Η επιλογή αρχείου ακυρώθηκε</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">Σύμβολο κουκκίδας</string>
@@ -131,10 +132,19 @@
 
     <!-- Issue reporter -->
     <string name="issueReporter_page_title">Αναφορά ζητήματος</string>
+    <string name="issueReporter_page_description">Μοιραστείτε προβλήματα όταν συμβούν.</string>
     <string name="issueReporter_typeSelector_heading">Τύπος ζητήματος</string>
     <string name="issueReporter_typeSelector_description">Σε αυτό το παράθυρο θα βρείτε βοήθεια για τα βήματα που πρέπει να ακολουθηθούν ώστε να υποβληθεί μια αναφορά για κάποιο ζήτημα που αντιμετωπίζετε σχετικά με το Adblock Plus. Παρακαλώ πρώτα επιλέξτε τον τύπο του ζητήματος που αντιμετωπίζετε σε αυτή την σελίδα:</string>
     <string name="issueReporter_falsePositive_label">Το Adblock Plus φράζει πάρα πολλά στοιχεία</string>
     <string name="issueReporter_falseNegative_label">Το Adblock Plus δεν φράζει μια διαφήμιση</string>
+
+    <string name="comment_title">Σχόλιο (προαιρετικό):</string>
+    <string name="make_screenshot_of_samsung_internet">Κάντε στιγμιότυπο οθόνης του Samsung Internet</string>
+    <string name="cancel">Ματαίωση</string>
+    <string name="report_issue_enter_email_hint">Εισάγετε ηλεκτρονική διεύθυνση</string>
+    <string name="report_issue_enter_url_hint">Εισαγάγετε τη διεύθυνση URL</string>
+    <string name="report_issue_enter_comment_hint">Εισάγετε σχόλιο</string>
+    <string name="issueReporter_url_description"> Σας συνιστούμε να εισαγάγετε τη διεύθυνση URL όπου εντοπίζεται το πρόβλημα. Απλά σκεφτείτε να αντιγράψετε και να επικολλήσετε τον σύνδεσμο της σελίδας.</string>
 
     <string name="issueReporter_email_description">Σας συνιστούμε να εισάγετε μια έγκυρη διεύθυνση ηλεκτρονικού ταχυδρομείου, ώστε να επικοινωνήσουμε μαζί σας εάν υπάρχουν ερωτήσεις σχετικά με την αναφορά σας. Θα μας επιτρέψει επίσης, να αναγνωρίζουμε τις συνεισφορές σας και να τις δώσουμε υψηλότερη προτεραιότητα.</string>
     <string name="issueReporter_comment_description">Το πεδίο κειμένου παρακάτω σας επιτρέπει να εισάγετε κάποιο σχόλιο το οποίο θα μας βοηθήσει να κατανοήσουμε το ζήτημα που αντιμετωπίζετε. Το παρόν βήμα είναι προαιρετικό αλλά προτείνεται να συμπληρωθεί αν το πρόβλημα δεν είναι προφανές. Μπορείτε να αναθεωρήσετε την αναφορά πριν την αποστείλετε.</string>
@@ -143,5 +153,27 @@
     <string name="issueReporter_sendButton_label">Αποστολή αναφοράς</string>
     <string name="issueReporter_email_label">Email:</string>
     <string name="issueReporter_privacyPolicy"><a href="https://adblockplus.org/en/privacy#issue-reporter">Πολιτική ιδιωτικού απορρήτου</a></string>
+    <string name="issueReporter_url_label">URL (προαιρετικό):</string>
+    <string name="issueReporter_attached_image_thumbnail">συνημμένη μικρογραφία εικόνας</string>
+    <string name="tap_here_to_pick_screenshot">Πατήστε εδώ για να επιλέξετε ένα στιγμιότυπο οθόνης</string>
+    <string name="processing_issue_report_screenshot_description">Φόρτωση…</string>
+    <string name="screenshot_reselect_description">Πατήστε εδώ για να επιλέξετε ένα διαφορετικό στιγμιότυπο οθόνης</string>
+    <string name="issueReporter_report_sent">Ευχαριστούμε για την αναφορά του προβλήματος!</string>
+    <string name="issueReporter_report_send_error">Δεν είναι δυνατή η επεξεργασία του αιτήματός σας. Παρακαλώ προσπαθήστε ξανά αργότερα.</string>
+    <string name="issueReporter_report_screenshot_too_large">Το αρχείο εικόνας είναι πολύ μεγάλο. Παρακαλώ επιλέξτε άλλο.</string>
+    <string name="issueReporter_report_screenshot_invalid">Το αρχείο στιγμιότυπου οθόνης δεν είναι έγκυρο. Επιλέξτε ένα άλλο.</string>
+
+    <!-- Start guide -->
+    <string name="tour_header">Οδηγός</string>
+    <string name="take_tour_title">Να λάβει μια περιήγηση</string>
+    <string name="take_tour_description">Μάθετε πώς να χρησιμοποιείτε το ABP για μια πιο ευχάριστη εμπειρία περιήγησης</string>
+    <string name="tour_next_button_text">Επόμενο</string>
+    <string name="tour_skip_button_text">Προσπέρασέ το</string>
+    <string name="tour_dialog_ad_blocking_options_text">Για βελτιστοποιημένη εμπειρία περιήγησης, σκεφτείτε να προσαρμόσετε αυτές τις παραμέτρους</string>
+    <string name="tour_add_languages">Προσθέστε τις γλώσσες στις οποίες συνήθως περιηγείστε</string>
+    <string name="tour_disable_social_media_tracking">Απενεργοποιήστε την παρακολούθηση μέσων κοινωνικής δικτύωσης κατά την περιήγηση</string>
+    <string name="tour_allowlist">Να επιτρέπεται στη λίστα ενός ιστότοπου για να συνεχίσει να βλέπει διαφημίσεις σε αυτόν</string>
+    <string name="tour_last_step_description">Αυτό είναι! Είστε έτοιμοι να χρησιμοποιήσετε το ABP για το Samsung Internet στο έπακρο</string>
+    <string name="tour_last_step_button_done">Ολοκληρώθηκε</string>
 
 </resources>

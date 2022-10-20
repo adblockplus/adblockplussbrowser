@@ -114,6 +114,7 @@
     <string name="languages_onboarding_option_add">További blokkolási nyelv hozzáadása.</string>
     <string name="languages_onboarding_option_skip">Nem, köszönöm, csak egy nyelven böngészek.</string>
     <string name="delete_swipe_hint">Pöccintsen balra egy bejegyzés törléséhez.</string>
+    <string name="file_picking_canceled">A fájlkiválasztás megszakadt</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">Felsorolási pont szimbólum</string>
@@ -125,10 +126,19 @@
 
     <!-- Issue reporter -->
     <string name="issueReporter_page_title">Hibajelentő</string>
+    <string name="issueReporter_page_description">Ossza meg a problémákat, amikor előfordulnak.</string>
     <string name="issueReporter_typeSelector_heading">Vállasszon típust</string>
     <string name="issueReporter_typeSelector_description">Ez az ablak végigvezeti az Adblock Plus hiba bejelentési lépésein. Először kérem válassza ki a webhelyen jelentkező hiba jellegét:</string>
     <string name="issueReporter_falsePositive_label">Az Adblock Plus túl sok mindent letilt</string>
     <string name="issueReporter_falseNegative_label">Az Adblock Plus nem tiltott le egy hirdetést</string>
+
+    <string name="comment_title">Megjegyzés (nem kötelező):</string>
+    <string name="make_screenshot_of_samsung_internet">Készítsen képernyőképet a Samsung Internetről</string>
+    <string name="cancel">Mégse</string>
+    <string name="report_issue_enter_email_hint">Írja be az e-mail címet</string>
+    <string name="report_issue_enter_url_hint">Írja be az URL-t</string>
+    <string name="report_issue_enter_comment_hint">Írja be a megjegyzést</string>
+    <string name="issueReporter_url_description"> Javasoljuk, hogy adja meg azt az URL-t, ahol a problémát találta. Gondoljon csak az oldal linkjének másolására és beillesztésére.</string>
 
     <string name="issueReporter_email_description">Javasoljuk, hogy érvényes e-mail címet adjon meg, így fel tudjuk venni Önnel a kapcsolatot, ha kérdés merül fel a jelentésével kapcsolatban. Ezzel azt is lehetővé teszi, hogy felismerjük az Ön hozzájárulásait, és azok magasabb prioritást kapjanak.</string>
     <string name="issueReporter_comment_description">Az alábbi szöveges mezőbe beírhat egy megjegyzést, ami segíthet megérteni a problémát. Ez a lépés kihagyható, de ajánlott, ha a probléma nem egyértelmű. A jelentés elküldése előtt még lesz lehetősége átnézni a megadott adatokat.</string>
@@ -137,5 +147,27 @@
     <string name="issueReporter_sendButton_label">Jelentés küldése</string>
     <string name="issueReporter_email_label">Email:</string>
     <string name="issueReporter_privacyPolicy"><a href="https://adblockplus.org/en/privacy#issue-reporter">Adatvédelmi irányelv</a></string>
+    <string name="issueReporter_url_label">URL (nem kötelező):</string>
+    <string name="issueReporter_attached_image_thumbnail">csatolt kép bélyegképe</string>
+    <string name="tap_here_to_pick_screenshot">Koppintson ide egy képernyőkép kiválasztásához</string>
+    <string name="processing_issue_report_screenshot_description">Betöltés…</string>
+    <string name="screenshot_reselect_description">Koppintson ide egy másik képernyőkép kiválasztásához</string>
+    <string name="issueReporter_report_sent">Köszönjük a probléma bejelentését!</string>
+    <string name="issueReporter_report_send_error">Nem tudjuk feldolgozni a kérését. Kérjük, próbálja újra később.</string>
+    <string name="issueReporter_report_screenshot_too_large">A képfájl túl nagy. Kérem, válasszon másikat.</string>
+    <string name="issueReporter_report_screenshot_invalid">A képernyőkép fájl érvénytelen. Kérem, válasszon másikat.</string>
+
+    <!-- Start guide -->
+    <string name="tour_header">Útmutató</string>
+    <string name="take_tour_title">Túrázzon</string>
+    <string name="take_tour_description">Ismerje meg, hogyan használhatja az ABP-t a még élvezetesebb böngészés érdekében</string>
+    <string name="tour_next_button_text">Tovább</string>
+    <string name="tour_skip_button_text">Kihagy</string>
+    <string name="tour_dialog_ad_blocking_options_text">Az optimalizált böngészési élmény érdekében fontolja meg ezen paraméterek módosítását</string>
+    <string name="tour_add_languages">Adja hozzá azokat a nyelveket, amelyeken általában böngészik</string>
+    <string name="tour_disable_social_media_tracking">Böngészés közben kapcsolja ki a közösségi média követését</string>
+    <string name="tour_allowlist">Engedélyezze egy webhely számára, hogy továbbra is hirdetéseket jelenítsen meg rajta</string>
+    <string name="tour_last_step_description">Ez az! Készen áll az ABP for Samsung Internet teljes használatára</string>
+    <string name="tour_last_step_button_done">Kész</string>
 
 </resources>

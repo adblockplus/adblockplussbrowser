@@ -121,6 +121,7 @@
     <string name="languages_onboarding_option_add">Добавить дополнительный язык для блокировки рекламы.</string>
     <string name="languages_onboarding_option_skip">Нет, спасибо, я использую только один язык.</string>
     <string name="delete_swipe_hint">Для удаления записи проведите по ней влево.</string>
+    <string name="file_picking_canceled">Выбор файла отменен</string>
 
     <!-- image descriptions -->
     <string name="image_bullet">Значок пункта маркированного списка</string>
@@ -132,10 +133,19 @@
 
     <!-- Issue reporter -->
     <string name="issueReporter_page_title">Сообщить о проблеме</string>
+    <string name="issueReporter_page_description">Делитесь проблемами, когда они возникают.</string>
     <string name="issueReporter_typeSelector_heading">С какой проблемой вы столкнулись?</string>
     <string name="issueReporter_typeSelector_description">Выберите проблему:</string>
     <string name="issueReporter_falsePositive_label">Страница, которую я пытаюсь открыть, не работает</string>
     <string name="issueReporter_falseNegative_label">Я всё ещё вижу рекламу</string>
+
+    <string name="comment_title">Комментарий (необязательно):</string>
+    <string name="make_screenshot_of_samsung_internet">Сделать скриншот Samsung Internet</string>
+    <string name="cancel">Отмена</string>
+    <string name="report_issue_enter_email_hint">Введите адрес электронной почты</string>
+    <string name="report_issue_enter_url_hint">Введите URL</string>
+    <string name="report_issue_enter_comment_hint">Введите комментарий</string>
+    <string name="issueReporter_url_description"> Мы рекомендуем вам ввести URL-адрес, по которому вы обнаружили проблему. Просто подумайте о том, чтобы скопировать и вставить ссылку на страницу.</string>
 
     <string name="issueReporter_email_description">Рекомендуется указать действующий адрес электронной почты. Мы сможем связаться с вами для решения сложных проблем, таких как вредоносные программы. Помните, что указывать адрес электронной почты необязательно, и он не будет передан другим лицам.</string>
     <string name="issueReporter_comment_description">Помогите нам лучше понять проблему, оставив комментарий ниже.</string>
@@ -144,4 +154,27 @@
     <string name="issueReporter_sendButton_label">Отправить сообщение</string>
     <string name="issueReporter_email_label">E-mail:</string>
     <string name="issueReporter_privacyPolicy"><a href="https://adblockplus.org/en/privacy#issue-reporter">Политика конфиденциальности</a></string>
+    <string name="issueReporter_url_label">URL-адрес (необязательно):</string>
+    <string name="issueReporter_attached_image_thumbnail">прикрепленная миниатюра изображения</string>
+    <string name="tap_here_to_pick_screenshot">Нажмите здесь, чтобы выбрать снимок экрана</string>
+    <string name="processing_issue_report_screenshot_description">Загрузка…</string>
+    <string name="screenshot_reselect_description">Нажмите здесь, чтобы выбрать другой скриншот</string>
+    <string name="issueReporter_report_sent">Спасибо, что сообщили о проблеме!</string>
+    <string name="issueReporter_report_send_error">Не удалось обработать ваш запрос. Пожалуйста, попробуйте позже.</string>
+    <string name="issueReporter_report_screenshot_too_large">Файл изображения слишком большой. Пожалуйста, выберите другой.</string>
+    <string name="issueReporter_report_screenshot_invalid">Файл скриншота недействителен. Пожалуйста, выберите другой.</string>
+
+    <!-- Start guide -->
+    <string name="tour_header">Руководство</string>
+    <string name="take_tour_title">Совершите экскурсию</string>
+    <string name="take_tour_description">Узнайте, как использовать ABP для более приятного просмотра</string>
+    <string name="tour_next_button_text">Следующий</string>
+    <string name="tour_skip_button_text">Пропустить это</string>
+    <string name="tour_dialog_ad_blocking_options_text">Для оптимизации работы в Интернете подумайте об изменении этих параметров.</string>
+    <string name="tour_add_languages">Добавьте языки, на которых вы обычно просматриваете</string>
+    <string name="tour_disable_social_media_tracking">Отключить отслеживание социальных сетей во время просмотра</string>
+    <string name="tour_allowlist">Разрешить веб-сайт, чтобы продолжать видеть рекламу на нем</string>
+    <string name="tour_last_step_description">Вот и все! Вы готовы использовать ABP для Samsung Internet на полную катушку</string>
+    <string name="tour_last_step_button_done">Готово</string>
+
 </resources>
