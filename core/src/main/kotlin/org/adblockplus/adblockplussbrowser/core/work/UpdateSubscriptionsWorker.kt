@@ -166,6 +166,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             }
         } catch (ex: Exception) {
             Timber.w(ex, "Failed subscriptions updates, retrying shortly")
+            analyticsProvider.logEvent(AnalyticsEvent.UNSUCCESSFUL_SUBSCRIPTION_DOWNLOAD)
             delay(DELAY_DEFAULT)
             updateStatus(ProgressType.FAILED)
             if (ex is CancellationException) Result.success() else failedResult()
