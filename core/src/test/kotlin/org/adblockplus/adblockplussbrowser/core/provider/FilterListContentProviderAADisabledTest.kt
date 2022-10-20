@@ -38,6 +38,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.analytics.BuildConfig
+import org.adblockplus.adblockplussbrowser.analytics.helpers.test.FakeAnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
@@ -132,7 +133,7 @@ class FilterListContentProviderAADisabledTest {
         @Provides
         @Singleton
         fun getAnalyticsProvider(): AnalyticsProvider {
-            return Fakes.FakeAnalyticsProvider()
+            return FakeAnalyticsProvider()
         }
 
         @Provides

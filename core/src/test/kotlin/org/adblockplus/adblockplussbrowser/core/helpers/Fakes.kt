@@ -24,9 +24,6 @@ package org.adblockplus.adblockplussbrowser.core.helpers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
-import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
-import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
 import org.adblockplus.adblockplussbrowser.base.data.model.CustomSubscriptionType
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
@@ -106,39 +103,6 @@ class Fakes {
         }
 
         override suspend fun updateSavedState(savedState: SavedState) {  }
-    }
-
-    class FakeAnalyticsProvider : AnalyticsProvider {
-
-        var event : AnalyticsEvent? = null
-        var exception : Exception? = null
-        var error : String? = null
-        var userPropertyName : AnalyticsUserProperty? = null
-        var userPropertyValue : String? = null
-
-        override fun logEvent(analyticsEvent: AnalyticsEvent) {
-            this.event = analyticsEvent
-        }
-
-        override fun logException(exception: Exception) {
-            this.exception = exception
-        }
-
-        override fun logError(error: String) {
-            this.error = error
-        }
-
-        override fun setUserProperty(
-            analyticsProperty: AnalyticsUserProperty,
-            analyticsPropertyValue: String
-        ) {
-            userPropertyName = analyticsProperty
-            userPropertyValue = analyticsPropertyValue
-        }
-
-        override fun enable() {}
-
-        override fun disable() {}
     }
 
     class FakeSettingsRepositoryNoChanges(serverUrl: String) :

@@ -24,6 +24,7 @@ import com.android.installreferrer.api.InstallReferrerClient
 import com.android.installreferrer.api.ReferrerDetails
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
+import org.adblockplus.adblockplussbrowser.analytics.helpers.test.FakeAnalyticsProvider
 import org.adblockplus.adblockplussbrowser.app.ui.helpers.Fakes
 import org.adblockplus.adblockplussbrowser.settings.helpers.test.FakeSettingsRepository
 import org.junit.Assert.assertEquals
@@ -48,7 +49,7 @@ class LauncherViewModelTest {
     private lateinit var fakeAppPreferences: Fakes.CustomFakeAppPreferences
     private val application = getApplication()
     private val fakeSettingsRepository = FakeSettingsRepository("")
-    private val fakeAnalyticsProvider = Fakes.FakeAnalyticsProvider()
+    private val fakeAnalyticsProvider = FakeAnalyticsProvider()
 
     @get:Rule
     val instantTaskExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()

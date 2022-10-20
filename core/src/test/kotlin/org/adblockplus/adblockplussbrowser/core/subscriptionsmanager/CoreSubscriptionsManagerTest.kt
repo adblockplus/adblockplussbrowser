@@ -58,6 +58,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import javax.inject.Singleton
 import kotlin.time.ExperimentalTime
+import org.adblockplus.adblockplussbrowser.analytics.helpers.test.FakeAnalyticsProvider
 import org.adblockplus.adblockplussbrowser.settings.helpers.test.FakeSettingsRepository
 
 @ExperimentalTime
@@ -122,7 +123,7 @@ class CoreSubscriptionsManagerTest {
         @Provides
         @Singleton
         fun getAnalyticsProvider(): AnalyticsProvider {
-            return Fakes.FakeAnalyticsProvider()
+            return FakeAnalyticsProvider()
         }
 
         @Provides

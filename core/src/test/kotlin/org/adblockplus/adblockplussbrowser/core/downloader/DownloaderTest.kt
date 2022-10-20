@@ -51,6 +51,7 @@ import java.net.HttpURLConnection.HTTP_INTERNAL_ERROR
 import java.net.HttpURLConnection.HTTP_NOT_MODIFIED
 import java.net.HttpURLConnection.HTTP_OK
 import kotlin.time.ExperimentalTime
+import org.adblockplus.adblockplussbrowser.analytics.helpers.test.FakeAnalyticsProvider
 
 @RunWith(MockitoJUnitRunner::class)
 @ExperimentalTime
@@ -63,7 +64,7 @@ class DownloaderTest {
     private val mockWebServer = MockWebServer()
     private lateinit var fakeCoreRepository: Fakes.FakeCoreRepository
     private lateinit var downloader: Downloader
-    private lateinit var analyticsProvider: Fakes.FakeAnalyticsProvider
+    private lateinit var analyticsProvider: FakeAnalyticsProvider
     private val testDispatcher = StandardTestDispatcher()
 
     private val version = "202109231731"
@@ -97,7 +98,7 @@ class DownloaderTest {
         mockWebServer.start()
         val appInfo = AppInfo()
         fakeCoreRepository = Fakes.FakeCoreRepository(mockWebServer.url("").toString())
-        analyticsProvider = Fakes.FakeAnalyticsProvider()
+        analyticsProvider = FakeAnalyticsProvider()
         downloader = OkHttpDownloader(
             mockContext, OkHttpClient(), fakeCoreRepository, appInfo,
             analyticsProvider

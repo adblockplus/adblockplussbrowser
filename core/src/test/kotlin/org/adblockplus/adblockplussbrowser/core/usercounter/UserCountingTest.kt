@@ -41,13 +41,14 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
 import kotlin.time.ExperimentalTime
+import org.adblockplus.adblockplussbrowser.analytics.helpers.test.FakeAnalyticsProvider
 import org.adblockplus.adblockplussbrowser.settings.helpers.test.FakeSettingsRepository
 
 @ExperimentalTime
 class UserCountingTest {
 
     private val mockWebServer = MockWebServer()
-    private lateinit var analyticsProvider : Fakes.FakeAnalyticsProvider
+    private lateinit var analyticsProvider : FakeAnalyticsProvider
     private lateinit var fakeCoreRepository : Fakes.FakeCoreRepository
     private lateinit var userCounter : OkHttpUserCounter
     private val serverTimeZone: TimeZone = TimeZone.getTimeZone("GMT")
@@ -59,7 +60,7 @@ class UserCountingTest {
         mockWebServer.start()
         val settings = FakeSettingsRepository(mockWebServer.url("").toString())
         val appInfo = AppInfo()
-        analyticsProvider = Fakes.FakeAnalyticsProvider()
+        analyticsProvider = FakeAnalyticsProvider()
         fakeCoreRepository = Fakes.FakeCoreRepository(mockWebServer.url("").toString())
         userCounter = OkHttpUserCounter(OkHttpClient(), fakeCoreRepository, settings, appInfo,
             analyticsProvider)
