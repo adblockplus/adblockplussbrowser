@@ -81,9 +81,9 @@ internal class MainViewModel @Inject constructor(
     }
 
     fun shouldTriggerSamsungInstallation(packageManager: PackageManager): Boolean =
-        !hasSamsungInternetVersion4OrNewer(packageManager) &&
-                !PackageHelper.isPackageInstalled(
-                    packageManager, SamsungInternetConstants.SBROWSER_APP_ID_BETA)
+        !(hasSamsungInternetVersion4OrNewer(packageManager) ||
+                PackageHelper.isPackageInstalled(
+                    packageManager, SamsungInternetConstants.SBROWSER_APP_ID_BETA))
 
     fun logDeviceNotSupported() {
         // A device without Play Store, Galaxy store, and a browser

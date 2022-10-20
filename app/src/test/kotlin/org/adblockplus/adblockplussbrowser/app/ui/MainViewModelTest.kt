@@ -20,9 +20,15 @@ package org.adblockplus.adblockplussbrowser.app.ui
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.app.ui.helpers.Fakes
 import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -32,11 +38,13 @@ import org.junit.Test
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 
+@ExperimentalCoroutinesApi
 class MainViewModelTest {
 
     private lateinit var mainViewModel: MainViewModel
     private val packageManager = Mockito.mock(PackageManager::class.java)
     private val fakeSubscriptionsManager = Fakes.FakeSubscriptionsManager()
+    private val testDispatcher = StandardTestDispatcher()
 
     @get:Rule
     val instantTaskExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()
@@ -46,10 +54,16 @@ class MainViewModelTest {
 
     @Before
     fun setUp() {
+        Dispatchers.setMain(testDispatcher)
         mainViewModel = MainViewModel(
             fakeSubscriptionsManager,
             Fakes.CustomFakeAppPreferences()
         )
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
     }
 
     @Test
