@@ -18,14 +18,12 @@
 package org.adblockplus.adblockplussbrowser.app.ui
 
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.pm.PackageInfoCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -33,25 +31,16 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import dagger.hilt.android.AndroidEntryPoint
-import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
-import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.app.R
 import org.adblockplus.adblockplussbrowser.app.databinding.ActivityMainBinding
 import org.adblockplus.adblockplussbrowser.base.navigation.navControllerFromFragmentContainerView
-import org.adblockplus.adblockplussbrowser.base.os.PackageHelper
 import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.SBROWSER_APP_ID
-import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.SBROWSER_APP_ID_BETA
-import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.SBROWSER_OLDEST_SAMSUNG_INTERNET_4_VERSIONCODE
 import timber.log.Timber
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
-
-    @Inject
-    lateinit var analyticsProvider: AnalyticsProvider
 
     private val navController: NavController
         get() = navControllerFromFragmentContainerView(R.id.nav_host_fragment)
@@ -68,32 +57,20 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (!hasSamsungInternetVersion4OrNewer()
-            && !PackageHelper.isPackageInstalled(packageManager, SBROWSER_APP_ID_BETA)
-        ) {
+        if (viewModel.shouldTriggerSamsungInstallation(packageManager)) {
             showInstallSamsungInternetDialog()
         } else {
-            checkAdblockActivation()
+            // Check Adblock Activation
+            viewModel.fetchAdblockActivationStatus().observe(this) {
+                if (!it) {
+                    navigate(LauncherDirection.ONBOARDING_LAST_STEP)
+                }
+            }
         }
     }
 
     override fun onSupportNavigateUp(): Boolean =
         navController.navigateUp() || super.onSupportNavigateUp()
-
-    /**
-     * Starting with Samsung Internet 4.0, the way to enable ad blocking has changed. As a result, we
-     * need to check for the version of Samsung Internet and apply text changes to the first run slide.
-     *
-     * @return a boolean that indicates, if the user has Samsung Internet version 4.x
-     */
-    private fun hasSamsungInternetVersion4OrNewer(): Boolean {
-        return try {
-            val packageInfo = packageManager.getPackageInfo(SBROWSER_APP_ID, 0)
-            PackageInfoCompat.getLongVersionCode(packageInfo) >= SBROWSER_OLDEST_SAMSUNG_INTERNET_4_VERSIONCODE
-        } catch (e: PackageManager.NameNotFoundException) {
-            false
-        }
-    }
 
     private fun showInstallSamsungInternetDialog() {
         MaterialDialog(this).show {
@@ -107,16 +84,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun installSamsungInternet(dialog: MaterialDialog) {
-        listOf(PLAY_STORE_PREFIX, SAMSUNG_STORE_PREFIX, PLAY_STORE_WEB_PREFIX).forEach {
+        listOf(
+            MainViewModel.PLAY_STORE_PREFIX,
+            MainViewModel.SAMSUNG_STORE_PREFIX,
+            MainViewModel.PLAY_STORE_WEB_PREFIX
+        ).forEach {
             runCatching {
                 startStore(it)
                 dialog.dismiss()
                 return
             }
         }
-        // A device without Play Store, Galaxy store, and a browser
-        Timber.e("This device is not supported")
-        analyticsProvider.logEvent(AnalyticsEvent.DEVICE_NOT_SUPPORTED)
+        viewModel.logDeviceNotSupported()
         Toast.makeText(applicationContext, getString(R.string.device_not_supported), Toast.LENGTH_LONG)
             .show()
     }
@@ -129,20 +108,4 @@ class MainActivity : AppCompatActivity() {
         )
         startActivity(intent)
     }
-
-    private fun checkAdblockActivation() {
-        viewModel.fetchAdblockActivationStatus().observe(this) {
-            if (!it) {
-                navigate(LauncherDirection.ONBOARDING_LAST_STEP)
-            }
-        }
-    }
-
-    private companion object {
-        private const val PLAY_STORE_PREFIX = "market://details?id="
-        private const val SAMSUNG_STORE_PREFIX = "samsungapps://ProductDetail/"
-        private const val PLAY_STORE_WEB_PREFIX = "https://play.google.com/store/apps/details?id="
-
-    }
-
 }
