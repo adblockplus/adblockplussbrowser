@@ -23,8 +23,10 @@ import kotlinx.coroutines.flow.flowOf
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
+import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.base.data.model.CustomSubscriptionType
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
+import org.adblockplus.adblockplussbrowser.base.data.model.SubscriptionUpdateStatus
 import org.adblockplus.adblockplussbrowser.base.data.prefs.AppPreferences
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
@@ -36,7 +38,8 @@ class Fakes {
     internal open class CustomFakeAppPreferences(
         private val customOnBoardingCompleted: Boolean = true,
         private val customLastFilterListRequest: Long = 0L,
-        private val customReferrerAlreadyChecked: Boolean = false
+        private val customReferrerAlreadyChecked: Boolean = false,
+        private val customIsAdblockEnabled: Boolean = true
     ): AppPreferences {
         var referrerChecked = false
         override val referrerAlreadyChecked: Boolean
@@ -55,7 +58,7 @@ class Fakes {
             get() = flowOf(customLastFilterListRequest)
 
         override suspend fun isAdblockEnabled(): Flow<Boolean> {
-            return super.isAdblockEnabled()
+            return flowOf(customIsAdblockEnabled)
         }
 
         override suspend fun updateLastFilterRequest(lastFilterListRequest: Long) {}
@@ -197,6 +200,29 @@ class Fakes {
         override suspend fun checkLanguagesOnboardingCompleted() {
             TODO("Not yet implemented")
         }
+    }
+
+    internal class FakeSubscriptionsManager(
+        private val customStatus: SubscriptionUpdateStatus = SubscriptionUpdateStatus.None,
+        private val customLastUpdate: Long = 0L
+    ): SubscriptionsManager {
+        var forceSubscriptionsManager = false
+
+        override val status: Flow<SubscriptionUpdateStatus>
+            get() = flowOf(customStatus)
+
+        override val lastUpdate: Flow<Long>
+            get() = flowOf(customLastUpdate)
+
+        override fun initialize() {}
+
+        override fun scheduleImmediate(force: Boolean) {
+            forceSubscriptionsManager = force
+        }
+
+        override suspend fun validateSubscription(subscription: Subscription): Boolean = false
+
+        override suspend fun updateStatus(status: SubscriptionUpdateStatus) {}
     }
 
 }
