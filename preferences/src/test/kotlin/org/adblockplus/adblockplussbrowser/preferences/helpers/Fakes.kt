@@ -18,7 +18,7 @@
 package org.adblockplus.adblockplussbrowser.preferences.helpers
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
@@ -87,24 +87,22 @@ open class FakeSettingsRepository(private val serverUrl: String) : SettingsRepos
     var acceptableAdsStatus: Boolean = true
 
     override val settings: Flow<Settings>
-        get() = flow {
-            emit(
-                Settings(
-                    true,
-                    acceptableAdsStatus,
-                    UpdateConfig.ALWAYS,
-                    listOf(""),
-                    listOf(""),
-                    listOf(
-                        Subscription("$serverUrl/easylist.txt", "", 0L, CustomSubscriptionType.FROM_URL),
-                        Subscription("$serverUrl/exceptionrules.txt", "", 0L, CustomSubscriptionType.FROM_URL)
-                    ),
-                    listOf(),
-                    analyticsEnabled = true,
-                    languagesOnboardingCompleted = true
-                )
+        get() = flowOf(
+            Settings(
+                adblockEnabled = true,
+                acceptableAdsEnabled = acceptableAdsStatus,
+                updateConfig = UpdateConfig.ALWAYS,
+                allowedDomains = listOf(),
+                blockedDomains = listOf(),
+                activePrimarySubscriptions = listOf(
+                    Subscription("$serverUrl/easylist.txt", "", 0L, CustomSubscriptionType.FROM_URL),
+                    Subscription("$serverUrl/exceptionrules.txt", "", 0L, CustomSubscriptionType.FROM_URL)
+                ),
+                activeOtherSubscriptions = listOf(),
+                analyticsEnabled = true,
+                languagesOnboardingCompleted = true
             )
-        }
+        )
 
     override suspend fun getEasylistSubscription(): Subscription {
         return Subscription("$serverUrl/easylist.txt", "", 0L, CustomSubscriptionType.FROM_URL)
@@ -115,7 +113,7 @@ open class FakeSettingsRepository(private val serverUrl: String) : SettingsRepos
     }
 
     override suspend fun getTestPagesSubscription(): Subscription {
-        return Subscription("$serverUrl/exceptionrules.txt", "", 0L, CustomSubscriptionType.FROM_URL)
+        return Subscription("$serverUrl/abp-testcase-subscription.txt", "", 0L, CustomSubscriptionType.FROM_URL)
     }
 
     override suspend fun getDefaultPrimarySubscriptions(): List<Subscription> {
@@ -126,7 +124,10 @@ open class FakeSettingsRepository(private val serverUrl: String) : SettingsRepos
     }
 
     override suspend fun getDefaultOtherSubscriptions(): List<Subscription> {
-        TODO("Not yet implemented")
+        return listOf(
+            Subscription("$serverUrl/easyprivacy.txt", "", 0L, CustomSubscriptionType.FROM_URL),
+            Subscription("$serverUrl/fanboy-social.txt", "", 0L, CustomSubscriptionType.FROM_URL)
+        )
     }
 
     override suspend fun setAdblockEnabled(enabled: Boolean) {}
@@ -170,11 +171,11 @@ open class FakeSettingsRepository(private val serverUrl: String) : SettingsRepos
     override suspend fun setAnalyticsEnabled(enabled: Boolean) {}
 
     override suspend fun getAdditionalTrackingSubscription(): Subscription {
-        TODO("Not yet implemented")
+        return Subscription("$serverUrl/easyprivacy.txt", "", 0L, CustomSubscriptionType.FROM_URL)
     }
 
     override suspend fun getSocialMediaTrackingSubscription(): Subscription {
-        TODO("Not yet implemented")
+        return Subscription("$serverUrl/fanboy-social.txt", "", 0L, CustomSubscriptionType.FROM_URL)
     }
 
     override suspend fun markLanguagesOnboardingCompleted() {}
