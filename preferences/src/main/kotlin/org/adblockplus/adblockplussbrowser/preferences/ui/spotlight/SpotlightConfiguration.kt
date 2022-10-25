@@ -43,46 +43,58 @@ class SpotlightConfiguration private constructor() {
          * @param tourDialogLayout View
          * @param popUpWindow PopupWindow
          */
-        fun prepareStartGuideSteps(binding: FragmentMainPreferencesBinding, context: Context,
-                                   tourDialogLayout: View, popUpWindow: PopupWindow): ArrayList<Target> {
+        fun prepareStartGuideSteps(
+            binding: FragmentMainPreferencesBinding, context: Context,
+            tourDialogLayout: View, popUpWindow: PopupWindow,
+            currentTargetIndex: Int
+        ): ArrayList<Target> {
 
             val targets = ArrayList<Target>()
 
-            targets.add(addTargetToSequence(
-                context,
-                tourDialogLayout,
-                popUpWindow,
-                binding.mainPreferencesAdBlockingInclude.mainPreferencesAdBlockingCategory,
-                R.string.tour_dialog_ad_blocking_options_text,
-            ))
-
-            targets.add(addTargetToSequence(
-                context,
-                tourDialogLayout,
-                popUpWindow,
-                binding.mainPreferencesAdBlockingInclude.mainPreferencesPrimarySubscriptions,
-                R.string.tour_add_languages
-            ))
-
-            targets.add(addTargetToSequence(
-                context,
-                tourDialogLayout,
-                popUpWindow,
-                binding.mainPreferencesAdBlockingInclude.mainPreferencesOtherSubscriptions,
-                R.string.tour_disable_social_media_tracking
-            ))
-
-            if (BuildConfig.FLAVOR_product != BuildConfig.FLAVOR_CRYSTAL) {
-                targets.add(addTargetToSequence(
+            targets.add(
+                addTargetToSequence(
                     context,
                     tourDialogLayout,
                     popUpWindow,
-                    binding.mainPreferencesAdBlockingInclude.mainPreferencesAllowlist,
-                    R.string.tour_allowlist,
-                ))
+                    binding.mainPreferencesAdBlockingInclude.mainPreferencesAdBlockingCategory,
+                    R.string.tour_dialog_ad_blocking_options_text,
+                )
+            )
+
+            targets.add(
+                addTargetToSequence(
+                    context,
+                    tourDialogLayout,
+                    popUpWindow,
+                    binding.mainPreferencesAdBlockingInclude.mainPreferencesPrimarySubscriptions,
+                    R.string.tour_add_languages
+                )
+            )
+
+            targets.add(
+                addTargetToSequence(
+                    context,
+                    tourDialogLayout,
+                    popUpWindow,
+                    binding.mainPreferencesAdBlockingInclude.mainPreferencesOtherSubscriptions,
+                    R.string.tour_disable_social_media_tracking
+                )
+            )
+
+            if (BuildConfig.FLAVOR_product != BuildConfig.FLAVOR_CRYSTAL) {
+                targets.add(
+                    addTargetToSequence(
+                        context,
+                        tourDialogLayout,
+                        popUpWindow,
+                        binding.mainPreferencesAdBlockingInclude.mainPreferencesAllowlist,
+                        R.string.tour_allowlist,
+                    )
+                )
             }
             targets.add(addLastStepToSequence(context, tourDialogLayout, popUpWindow))
-            return targets
+
+            return ArrayList(targets.subList(currentTargetIndex, targets.size))
         }
 
         // Add the last target to the spotlight sequence
@@ -110,8 +122,10 @@ class SpotlightConfiguration private constructor() {
         }
 
         // Add a new target to the spotlight sequence
-        private fun addTargetToSequence(context: Context, tourDialogLayout: View, popUpWindow: PopupWindow,
-                                        highLightView: View, resId: Int ): Target {
+        private fun addTargetToSequence(
+            context: Context, tourDialogLayout: View, popUpWindow: PopupWindow,
+            highLightView: View, resId: Int
+        ): Target {
             val root = FrameLayout(context)
             return Target.Builder()
                 .setAnchor(highLightView)

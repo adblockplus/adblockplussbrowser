@@ -264,15 +264,6 @@ internal class MainPreferencesFragment :
                 // Prepare start guide steps
                 val overlayRoot = FrameLayout(requireContext())
                 val tourDialogLayout = layoutInflater.inflate(R.layout.tour_dialog, overlayRoot)
-                val allowlistView =
-                    binding.mainPreferencesAdBlockingInclude.preferencesAllowlistTitleText
-                val disableSocialMediaView =
-                    binding.mainPreferencesAdBlockingInclude.mainPreferencesOtherSubscriptions
-                if (BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_CRYSTAL) {
-                    binding.mainPreferencesScroll.scrollTo(0, disableSocialMediaView.y.toInt())
-                } else {
-                    binding.mainPreferencesScroll.scrollTo(0, allowlistView.y.toInt())
-                }
                 val popUpWindow = PopupWindow(
                     tourDialogLayout,
                     ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -284,12 +275,15 @@ internal class MainPreferencesFragment :
                     binding,
                     requireContext(),
                     tourDialogLayout,
-                    popUpWindow
+                    popUpWindow,
+                    viewModel.currentTargetIndex
                 )
+                binding.mainPreferencesScroll.scrollTo(0, targets[0].anchor.y.toInt())
 
                 // Always restart the last step value to the first step
                 startGuideLastStep = 1
                 startGuideTotalSteps = targets.size
+                viewModel.targetsSize = targets.size
 
                 // Create spotlight
                 val spotlight = Spotlight.Builder(requireActivity())
@@ -325,7 +319,7 @@ internal class MainPreferencesFragment :
         // If the user clicks outside the dialog, we stop the start guide
         popupWindow.setTouchInterceptor { v, event ->
             v.performClick()
-            if(event.action == MotionEvent.ACTION_OUTSIDE) {
+            if (event.action == MotionEvent.ACTION_OUTSIDE) {
                 skipTour()
                 spotlight.finish()
             }
@@ -343,6 +337,8 @@ internal class MainPreferencesFragment :
         tourDialogLayout.findViewById<View>(R.id.tour_next_button).setOnClickListener {
             // Increment step count
             startGuideLastStep += 1
+            viewModel.currentTargetIndex++
+            Timber.i("viewModel.currentTargetIndex: ${viewModel.currentTargetIndex}")
             popupWindow.dismiss()
             spotlight.next()
         }
@@ -351,14 +347,16 @@ internal class MainPreferencesFragment :
             popupWindow.dismiss()
             spotlight.finish()
         }
-        tourDialogLayout.findViewById<View>(R.id.tour_last_step_done_button).setOnClickListener{
+        tourDialogLayout.findViewById<View>(R.id.tour_last_step_done_button).setOnClickListener {
             viewModel.logStartGuideCompleted()
+            viewModel.currentTargetIndex = 0
             popupWindow.dismiss()
             spotlight.finish()
         }
     }
 
     private fun skipTour() {
+        viewModel.currentTargetIndex = 0
         val skippedAt = startGuideLastStep
         if (skippedAt == startGuideTotalSteps) {
             /* If the user clicks outside the dialog in the last step he went through the whole guide,
