@@ -257,57 +257,63 @@ internal class MainPreferencesFragment :
         binding: FragmentMainPreferencesBinding,
         lifecycleOwner: LifecycleOwner
     ) {
+        if (viewModel.currentTargetIndex != 0) {
+            startGuide(binding)
+        }
         binding.mainPreferencesGuideInclude.mainPreferencesGuideInclude.setDebounceOnClickListener(
             {
-                viewModel.logStartGuideStarted()
-
-                // Prepare start guide steps
-                val overlayRoot = FrameLayout(requireContext())
-                val tourDialogLayout = layoutInflater.inflate(R.layout.tour_dialog, overlayRoot)
-                val popUpWindow = PopupWindow(
-                    tourDialogLayout,
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    SpotlightConfiguration.Constants.POPUP_WINDOW_HEIGHT
-                )
-                popUpWindow.isOutsideTouchable = true
-
-                val targets = SpotlightConfiguration.prepareStartGuideSteps(
-                    binding,
-                    requireContext(),
-                    tourDialogLayout,
-                    popUpWindow,
-                    viewModel.currentTargetIndex
-                )
-                binding.mainPreferencesScroll.scrollTo(0, targets[0].anchor.y.toInt())
-
-                // Always restart the last step value to the first step
-                startGuideLastStep = 1
-                startGuideTotalSteps = targets.size
-                viewModel.targetsSize = targets.size
-
-                // Create spotlight
-                val spotlight = Spotlight.Builder(requireActivity())
-                    .setTargets(targets)
-                    .setBackgroundColorRes(R.color.spotlight_background)
-                    .setOnSpotlightListener(object : OnSpotlightListener {
-                        override fun onStarted() {
-                            Timber.i("Spotlight started")
-                            binding.mainPreferencesScroll.setScrollable(false)
-                        }
-
-                        override fun onEnded() {
-                            Timber.i("Spotlight ended")
-                            binding.mainPreferencesScroll.setScrollable(true)
-                        }
-                    })
-                    .build()
-
-                setClickListeners(spotlight, tourDialogLayout, popUpWindow)
-                // Start Spotlight
-                spotlight.start()
+                startGuide(binding)
             },
             lifecycleOwner
         )
+    }
+
+    private fun startGuide(binding: FragmentMainPreferencesBinding) {
+        viewModel.logStartGuideStarted()
+
+        // Prepare start guide steps
+        val overlayRoot = FrameLayout(requireContext())
+        val tourDialogLayout = layoutInflater.inflate(R.layout.tour_dialog, overlayRoot)
+        val popUpWindow = PopupWindow(
+            tourDialogLayout,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            SpotlightConfiguration.Constants.POPUP_WINDOW_HEIGHT
+        )
+        popUpWindow.isOutsideTouchable = true
+
+        val targets = SpotlightConfiguration.prepareStartGuideSteps(
+            binding,
+            requireContext(),
+            tourDialogLayout,
+            popUpWindow,
+            viewModel.currentTargetIndex
+        )
+        binding.mainPreferencesScroll.scrollTo(0, targets[0].anchor.y.toInt())
+
+        // Always restart the last step value to the first step
+        startGuideLastStep = 1
+        startGuideTotalSteps = targets.size
+        viewModel.targetsSize = targets.size
+
+        // Create spotlight
+        val spotlight = Spotlight.Builder(requireActivity())
+            .setTargets(targets)
+            .setBackgroundColorRes(R.color.spotlight_background)
+            .setOnSpotlightListener(object : OnSpotlightListener {
+                override fun onStarted() {
+                    Timber.i("Spotlight started")
+                    binding.mainPreferencesScroll.setScrollable(false)
+                }
+
+                override fun onEnded() {
+                    Timber.i("Spotlight ended")
+                    binding.mainPreferencesScroll.setScrollable(true)
+                }
+            })
+            .build()
+
+        setClickListeners(spotlight, tourDialogLayout, popUpWindow)
+        spotlight.start()
     }
 
     private fun setClickListeners(
