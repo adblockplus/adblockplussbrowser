@@ -274,6 +274,15 @@ internal class MainPreferencesFragment :
         // Prepare start guide steps
         val overlayRoot = FrameLayout(requireContext())
         val tourDialogLayout = layoutInflater.inflate(R.layout.tour_dialog, overlayRoot)
+        val allowlistView =
+            binding.mainPreferencesAdBlockingInclude.preferencesAllowlistTitleText
+        val disableSocialMediaView =
+            binding.mainPreferencesAdBlockingInclude.mainPreferencesOtherSubscriptions
+        if (BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_CRYSTAL) {
+            binding.mainPreferencesScroll.scrollTo(0, disableSocialMediaView.y.toInt())
+        } else {
+            binding.mainPreferencesScroll.scrollTo(0, allowlistView.y.toInt())
+        }
         val popUpWindow = PopupWindow(
             tourDialogLayout,
             ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -288,7 +297,6 @@ internal class MainPreferencesFragment :
             popUpWindow,
             viewModel.currentTargetIndex
         )
-        binding.mainPreferencesScroll.scrollTo(0, targets[0].anchor.y.toInt())
 
         // Always restart the last step value to the first step
         startGuideLastStep = 1
