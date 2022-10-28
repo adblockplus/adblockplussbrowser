@@ -410,6 +410,11 @@ internal class MainPreferencesFragment :
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        spotlight.finish()
+    }
+
     override fun onResume() {
         super.onResume()
         viewModel.checkLanguagesOnboarding()
