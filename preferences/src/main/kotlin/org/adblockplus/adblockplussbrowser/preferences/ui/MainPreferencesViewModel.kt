@@ -50,6 +50,7 @@ internal class MainPreferencesViewModel @Inject constructor(
     }.asLiveData()
 
     var currentTargetIndex = 0
+    var isTourStarted = false
 
     fun toggleAnalytics() {
         viewModelScope.launch {
