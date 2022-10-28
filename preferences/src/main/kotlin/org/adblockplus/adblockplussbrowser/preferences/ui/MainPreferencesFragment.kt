@@ -279,18 +279,9 @@ internal class MainPreferencesFragment :
         // Prepare start guide steps
         val overlayRoot = FrameLayout(requireContext())
         val tourDialogLayout = layoutInflater.inflate(R.layout.tour_dialog, overlayRoot)
-        val adBlocking =
-            binding.mainPreferencesAdBlockingInclude.mainPreferencesPrimarySubscriptions
-        val disableSocialMediaView =
-            binding.mainPreferencesAdBlockingInclude.mainPreferencesOtherSubscriptions
         val mainPreferencesScroll = binding.mainPreferencesScroll
-        if (BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_CRYSTAL) {
-            mainPreferencesScroll.scrollTo(0, disableSocialMediaView.y.toInt())
-        } else {
-            mainPreferencesScroll.scrollTo(0, adBlocking.y.toInt())
-        }
-
         targetInfos = createTargetInfos(binding)
+        scrollToHighlightedView(mainPreferencesScroll)
 
         val popupWindow = PopupWindow(
             tourDialogLayout,
@@ -367,13 +358,7 @@ internal class MainPreferencesFragment :
             Timber.i("viewModel.currentTargetIndex: ${viewModel.currentTargetIndex}")
             popupWindow.dismiss()
             spotlight.finish()
-            val highLightView = targetInfos[viewModel.currentTargetIndex].highLightView
-            highLightView?.let {
-                mainPreferencesScroll.scrollTo(
-                    0,
-                    highLightView.y.toInt()
-                )
-            }
+            scrollToHighlightedView(mainPreferencesScroll)
             val target = SpotlightConfiguration.createTarget(
                 targetInfos[viewModel.currentTargetIndex],
                 requireContext(),
@@ -394,6 +379,16 @@ internal class MainPreferencesFragment :
             viewModel.isTourStarted = false
             popupWindow.dismiss()
             spotlight.finish()
+        }
+    }
+
+    private fun scrollToHighlightedView(mainPreferencesScroll: LockableScrollView) {
+        val highLightView = targetInfos[viewModel.currentTargetIndex].highLightView
+        highLightView?.let {
+            mainPreferencesScroll.scrollTo(
+                0,
+                highLightView.y.toInt()
+            )
         }
     }
 
