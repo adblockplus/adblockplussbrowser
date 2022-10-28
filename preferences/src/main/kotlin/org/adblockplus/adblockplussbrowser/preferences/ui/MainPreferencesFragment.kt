@@ -58,8 +58,6 @@ internal class MainPreferencesFragment :
 
     /* This value will increment as the user goes through the start guide and
         will be used to indicate last seen step */
-    private var startGuideLastStep: Int = 1
-    private var startGuideTotalSteps: Int = 1
     private lateinit var spotlight: Spotlight
     lateinit var targetInfos: ArrayList<SpotlightConfiguration.TargetInfo>
 
@@ -308,10 +306,6 @@ internal class MainPreferencesFragment :
             popupWindow
         )
 
-        // Always restart the last step value to the first step
-        startGuideLastStep = 1
-        startGuideTotalSteps = targetInfos.size
-
         createSpotlight(target, binding, tourDialogLayout, popupWindow, mainPreferencesScroll)
 
     }
@@ -369,8 +363,6 @@ internal class MainPreferencesFragment :
         }
 
         tourDialogLayout.findViewById<View>(R.id.tour_next_button).setOnClickListener {
-            // Increment step count
-            startGuideLastStep += 1
             viewModel.currentTargetIndex++
             Timber.i("viewModel.currentTargetIndex: ${viewModel.currentTargetIndex}")
             popupWindow.dismiss()
@@ -407,8 +399,8 @@ internal class MainPreferencesFragment :
 
     private fun skipTour() {
         viewModel.currentTargetIndex = 0
-        val skippedAt = startGuideLastStep
-        if (skippedAt == startGuideTotalSteps) {
+        val skippedAt = viewModel.currentTargetIndex + 1
+        if (skippedAt == targetInfos.size) {
             /* If the user clicks outside the dialog in the last step he went through the whole guide,
             so we can assume the guide is completed */
             viewModel.logStartGuideCompleted()
