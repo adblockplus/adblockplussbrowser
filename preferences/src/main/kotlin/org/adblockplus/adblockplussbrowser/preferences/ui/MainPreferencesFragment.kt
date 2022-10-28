@@ -407,7 +407,9 @@ internal class MainPreferencesFragment :
 
     override fun onPause() {
         super.onPause()
-        spotlight.finish()
+        if (viewModel.isTourStarted) {
+            spotlight.finish()
+        }
     }
 
     override fun onResume() {
