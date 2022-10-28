@@ -38,17 +38,34 @@ class SpotlightConfiguration private constructor() {
         private const val TARGET_CORNER_RADIUS = 6f
 
         /**
-         * Configure and return the list of targets for the start guide
-         * @param binding FragmentMainPreferencesBinding
+         * Configure and return the Spotlight target for the start guide.
+         * @param targetInfo TargetInfo describing view to be anchored
          * @param context Context
          * @param tourDialogLayout View
          * @param popUpWindow PopupWindow
          */
-        fun prepareStartGuideSteps(
-            binding: FragmentMainPreferencesBinding, context: Context,
+        fun createTarget(
+            targetInfo: TargetInfo, context: Context,
             tourDialogLayout: View, popUpWindow: PopupWindow,
-            currentTargetIndex: Int
-        ): ArrayList<Target> {
+        ): Target {
+            return if (targetInfo.highLightView != null) {
+                createStartingTarget(
+                    context,
+                    tourDialogLayout,
+                    popUpWindow,
+                    targetInfo.highLightView,
+                    targetInfo.resId
+                )
+            } else {
+                createLastTarget(context, tourDialogLayout, popUpWindow, targetInfo.resId)
+            }
+        }
+
+        /**
+         * Create target info bindings and descriptions for every step.
+         * @param binding View FragmentMainPreferencesBinding
+         */
+        fun createTargetInfos(binding: FragmentMainPreferencesBinding): ArrayList<TargetInfo> {
             val targetInfos = ArrayList<TargetInfo>()
             targetInfos.add(
                 TargetInfo(
@@ -84,31 +101,11 @@ class SpotlightConfiguration private constructor() {
                     R.string.tour_last_step_description,
                 )
             )
-
-            targetInfos.subList(currentTargetIndex, targetInfos.size)
-
-            val targets = ArrayList<Target>()
-            targetInfos.forEach {
-                if (it.highLightView != null) {
-                    targets.add(
-                        addTargetToSequence(
-                            context,
-                            tourDialogLayout,
-                            popUpWindow,
-                            it.highLightView,
-                            it.resId
-                        )
-                    )
-                } else {
-                    targets.add(addLastStepToSequence(context, tourDialogLayout, popUpWindow, it.resId))
-                }
-            }
-
-            return targets
+            return targetInfos
         }
 
         // Add the last target to the spotlight sequence
-        private fun addLastStepToSequence(
+        private fun createLastTarget(
             context: Context,
             tourDialogLayout: View,
             popUpWindow: PopupWindow,
@@ -136,7 +133,7 @@ class SpotlightConfiguration private constructor() {
         }
 
         // Add a new target to the spotlight sequence
-        private fun addTargetToSequence(
+        private fun createStartingTarget(
             context: Context, tourDialogLayout: View, popUpWindow: PopupWindow,
             highLightView: View, resId: Int
         ): Target {
@@ -171,6 +168,7 @@ class SpotlightConfiguration private constructor() {
 
     object Constants {
         const val Y_OFFSET = 10
+        const val ANIMATION_DURATION = 300L
         const val POPUP_WINDOW_HEIGHT = 400
     }
 }

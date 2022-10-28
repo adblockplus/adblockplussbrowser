@@ -32,13 +32,17 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.takusemba.spotlight.OnSpotlightListener
 import com.takusemba.spotlight.Spotlight
+import com.takusemba.spotlight.Target
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
+import org.adblockplus.adblockplussbrowser.base.widget.LockableScrollView
 import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentMainPreferencesBinding
 import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.SpotlightConfiguration
+import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.SpotlightConfiguration.Companion.createTargetInfos
+import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.SpotlightConfiguration.Constants.ANIMATION_DURATION
 import org.adblockplus.adblockplussbrowser.preferences.ui.updates.UpdateSubscriptionsViewModel
 import timber.log.Timber
 
@@ -56,6 +60,8 @@ internal class MainPreferencesFragment :
         will be used to indicate last seen step */
     private var startGuideLastStep: Int = 1
     private var startGuideTotalSteps: Int = 1
+    private lateinit var spotlight: Spotlight
+    lateinit var targetInfos: ArrayList<SpotlightConfiguration.TargetInfo>
 
     override fun onBindView(binding: FragmentMainPreferencesBinding) {
         binding.viewModel = viewModel
@@ -274,38 +280,51 @@ internal class MainPreferencesFragment :
         // Prepare start guide steps
         val overlayRoot = FrameLayout(requireContext())
         val tourDialogLayout = layoutInflater.inflate(R.layout.tour_dialog, overlayRoot)
-        val allowlistView =
-            binding.mainPreferencesAdBlockingInclude.preferencesAllowlistTitleText
+        val adBlocking =
+            binding.mainPreferencesAdBlockingInclude.mainPreferencesPrimarySubscriptions
         val disableSocialMediaView =
             binding.mainPreferencesAdBlockingInclude.mainPreferencesOtherSubscriptions
+        val mainPreferencesScroll = binding.mainPreferencesScroll
         if (BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_CRYSTAL) {
-            binding.mainPreferencesScroll.scrollTo(0, disableSocialMediaView.y.toInt())
+            mainPreferencesScroll.scrollTo(0, disableSocialMediaView.y.toInt())
         } else {
-            binding.mainPreferencesScroll.scrollTo(0, allowlistView.y.toInt())
+            mainPreferencesScroll.scrollTo(0, adBlocking.y.toInt())
         }
-        val popUpWindow = PopupWindow(
+
+        targetInfos = createTargetInfos(binding)
+
+        val popupWindow = PopupWindow(
             tourDialogLayout,
             ViewGroup.LayoutParams.WRAP_CONTENT,
             SpotlightConfiguration.Constants.POPUP_WINDOW_HEIGHT
         )
-        popUpWindow.isOutsideTouchable = true
+        popupWindow.isOutsideTouchable = true
 
-        val targets = SpotlightConfiguration.prepareStartGuideSteps(
-            binding,
+        val target = SpotlightConfiguration.createTarget(
+            targetInfos[viewModel.currentTargetIndex],
             requireContext(),
             tourDialogLayout,
-            popUpWindow,
-            viewModel.currentTargetIndex
+            popupWindow
         )
 
         // Always restart the last step value to the first step
         startGuideLastStep = 1
-        startGuideTotalSteps = targets.size
-        viewModel.targetsSize = targets.size
+        startGuideTotalSteps = targetInfos.size
 
-        // Create spotlight
-        val spotlight = Spotlight.Builder(requireActivity())
-            .setTargets(targets)
+        createSpotlight(target, binding, tourDialogLayout, popupWindow, mainPreferencesScroll)
+
+    }
+
+    private fun createSpotlight(
+        target: Target,
+        binding: FragmentMainPreferencesBinding,
+        tourDialogLayout: View,
+        popupWindow: PopupWindow,
+        mainPreferencesScroll: LockableScrollView,
+    ) {
+        spotlight = Spotlight.Builder(requireActivity())
+            .setTargets(target)
+            .setDuration(ANIMATION_DURATION)
             .setBackgroundColorRes(R.color.spotlight_background)
             .setOnSpotlightListener(object : OnSpotlightListener {
                 override fun onStarted() {
@@ -317,17 +336,17 @@ internal class MainPreferencesFragment :
                     Timber.i("Spotlight ended")
                     binding.mainPreferencesScroll.setScrollable(true)
                 }
-            })
-            .build()
-
-        setClickListeners(spotlight, tourDialogLayout, popUpWindow)
+            }).build()
+        setClickListeners(binding, spotlight, tourDialogLayout, popupWindow, mainPreferencesScroll)
         spotlight.start()
     }
 
     private fun setClickListeners(
+        binding: FragmentMainPreferencesBinding,
         spotlight: Spotlight,
         tourDialogLayout: View,
-        popupWindow: PopupWindow
+        popupWindow: PopupWindow,
+        mainPreferencesScroll: LockableScrollView,
     ) {
 
         // If the user clicks outside the dialog, we stop the start guide
@@ -354,8 +373,23 @@ internal class MainPreferencesFragment :
             viewModel.currentTargetIndex++
             Timber.i("viewModel.currentTargetIndex: ${viewModel.currentTargetIndex}")
             popupWindow.dismiss()
-            spotlight.next()
+            spotlight.finish()
+            val highLightView = targetInfos[viewModel.currentTargetIndex].highLightView
+            highLightView?.let {
+                mainPreferencesScroll.scrollTo(
+                    0,
+                    highLightView.y.toInt()
+                )
+            }
+            val target = SpotlightConfiguration.createTarget(
+                targetInfos[viewModel.currentTargetIndex],
+                requireContext(),
+                tourDialogLayout,
+                popupWindow
+            )
+            createSpotlight(target, binding, tourDialogLayout, popupWindow, mainPreferencesScroll)
         }
+
         tourDialogLayout.findViewById<View>(R.id.tour_skip_button).setOnClickListener {
             skipTour()
             popupWindow.dismiss()
