@@ -263,11 +263,12 @@ internal class MainPreferencesFragment :
         binding: FragmentMainPreferencesBinding,
         lifecycleOwner: LifecycleOwner
     ) {
-        if (viewModel.currentTargetIndex != 0) {
+        if (viewModel.isTourStarted) {
             startGuide(binding)
         }
         binding.mainPreferencesGuideInclude.mainPreferencesGuideInclude.setDebounceOnClickListener(
             {
+                viewModel.isTourStarted = true
                 startGuide(binding)
             },
             lifecycleOwner
@@ -398,6 +399,7 @@ internal class MainPreferencesFragment :
         tourDialogLayout.findViewById<View>(R.id.tour_last_step_done_button).setOnClickListener {
             viewModel.logStartGuideCompleted()
             viewModel.currentTargetIndex = 0
+            viewModel.isTourStarted = false
             popupWindow.dismiss()
             spotlight.finish()
         }
@@ -411,6 +413,7 @@ internal class MainPreferencesFragment :
             so we can assume the guide is completed */
             viewModel.logStartGuideCompleted()
         } else {
+            viewModel.isTourStarted = false
             viewModel.logStartGuideSkipped(step = skippedAt)
         }
     }
