@@ -49,7 +49,6 @@ internal class MainPreferencesViewModel @Inject constructor(
         settings.analyticsEnabled
     }.asLiveData()
 
-    var targetsSize = 0
     var currentTargetIndex = 0
 
     fun toggleAnalytics() {
