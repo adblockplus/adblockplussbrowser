@@ -40,11 +40,11 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
 import kotlin.time.ExperimentalTime
-import org.adblockplus.adblockplussbrowser.analytics.helpers.test.FakeAnalyticsProvider
+import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
+import org.adblockplus.adblockplusbrowser.testutils.FakeSettingsRepository
 import org.adblockplus.adblockplussbrowser.core.helpers.FakeCoreRepository
 import org.adblockplus.adblockplussbrowser.core.helpers.Fakes.INITIAL_COUNT
 import org.adblockplus.adblockplussbrowser.core.helpers.Fakes.INITIAL_TIMESTAMP
-import org.adblockplus.adblockplussbrowser.settings.helpers.test.FakeSettingsRepository
 
 @ExperimentalTime
 class UserCountingTest {

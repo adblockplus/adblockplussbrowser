@@ -15,7 +15,7 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.adblockplus.adblockplussbrowser.settings.helpers.test
+package org.adblockplus.adblockplusbrowser.testutils
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -25,7 +25,7 @@ import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
 import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig
 
-@SuppressWarnings("EmptyFunctionBlock")
+@SuppressWarnings("EmptyFunctionBlock", "TooManyFunctions")
 open class FakeSettingsRepository(private val serverUrl: String) : SettingsRepository {
     var acceptableAdsStatus: Boolean = true
 
@@ -111,15 +111,13 @@ open class FakeSettingsRepository(private val serverUrl: String) : SettingsRepos
     override suspend fun setAnalyticsEnabled(enabled: Boolean) {}
 
     override suspend fun getAdditionalTrackingSubscription(): Subscription {
-        TODO("Not yet implemented")
+        return Subscription("$serverUrl/easyprivacy.txt", "", 0L, CustomSubscriptionType.FROM_URL)
     }
 
     override suspend fun getSocialMediaTrackingSubscription(): Subscription {
-        TODO("Not yet implemented")
+        return Subscription("$serverUrl/fanboy-social.txt", "", 0L, CustomSubscriptionType.FROM_URL)
     }
 
     override suspend fun markLanguagesOnboardingCompleted() {}
-    override suspend fun checkLanguagesOnboardingCompleted() {
-        TODO("Not yet implemented")
-    }
+    override suspend fun checkLanguagesOnboardingCompleted() {}
 }

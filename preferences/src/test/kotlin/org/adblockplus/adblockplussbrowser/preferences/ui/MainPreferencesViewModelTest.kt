@@ -17,9 +17,9 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui
 
+import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
+import org.adblockplus.adblockplusbrowser.testutils.FakeSettingsRepository
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
-import org.adblockplus.adblockplussbrowser.analytics.helpers.test.FakeAnalyticsProvider
-import org.adblockplus.adblockplussbrowser.settings.helpers.test.FakeSettingsRepository
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test

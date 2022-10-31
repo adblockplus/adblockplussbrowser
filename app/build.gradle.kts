@@ -91,6 +91,7 @@ dependencies {
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.kotlin)
     testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(project(":test-utils"))
 }
 
 // Install commit pre-hook

@@ -25,8 +25,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
+import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
-import org.adblockplus.adblockplussbrowser.analytics.helpers.test.FakeAnalyticsProvider
 import org.adblockplus.adblockplussbrowser.app.ui.helpers.CustomFakeAppPreferences
 import org.adblockplus.adblockplussbrowser.app.ui.helpers.FakeSubscriptionsManager
 import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants

@@ -34,7 +34,7 @@ import org.mockito.Mockito
 import org.mockito.kotlin.any
 import org.robolectric.RobolectricTestRunner
 import java.lang.IndexOutOfBoundsException
-import org.adblockplus.adblockplussbrowser.analytics.helpers.test.FakeAnalyticsProvider
+import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
 
 @RunWith(RobolectricTestRunner::class)
 @ExperimentalCoroutinesApi

@@ -36,7 +36,7 @@ buildscript {
 }
 
 plugins {
-    `jacoco`
+    jacoco
     alias(libs.plugins.detekt)
     alias(libs.plugins.plugin.versions)
 }
@@ -100,7 +100,7 @@ afterEvaluate {
         violationRules {
             rule {
                 limit {
-                    minimum = 0.39f.toBigDecimal()
+                    minimum = 0.48f.toBigDecimal()
                 }
             }
         }

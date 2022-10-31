@@ -15,7 +15,7 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.adblockplus.adblockplussbrowser.analytics.helpers.test
+package org.adblockplus.adblockplusbrowser.testutils
 
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider

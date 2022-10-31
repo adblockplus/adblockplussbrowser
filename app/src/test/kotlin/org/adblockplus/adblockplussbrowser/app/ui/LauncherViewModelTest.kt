@@ -23,10 +23,10 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.android.installreferrer.api.InstallReferrerClient
 import com.android.installreferrer.api.ReferrerDetails
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
+import org.adblockplus.adblockplusbrowser.testutils.FakeSettingsRepository
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
-import org.adblockplus.adblockplussbrowser.analytics.helpers.test.FakeAnalyticsProvider
 import org.adblockplus.adblockplussbrowser.app.ui.helpers.CustomFakeAppPreferences
-import org.adblockplus.adblockplussbrowser.settings.helpers.test.FakeSettingsRepository
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull

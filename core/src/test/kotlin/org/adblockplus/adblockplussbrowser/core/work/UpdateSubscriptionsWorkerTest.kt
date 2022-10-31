@@ -28,6 +28,8 @@ import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
+import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
+import org.adblockplus.adblockplusbrowser.testutils.FakeSettingsRepository
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscription
@@ -37,7 +39,6 @@ import org.adblockplus.adblockplussbrowser.core.helpers.FakeCoreRepository
 import org.adblockplus.adblockplussbrowser.core.helpers.FakeDebugPreferences
 import org.adblockplus.adblockplussbrowser.core.helpers.FakeSettingsRepositoryNoChanges
 import org.adblockplus.adblockplussbrowser.core.helpers.WorkerParameters
-import org.adblockplus.adblockplussbrowser.settings.helpers.test.FakeSettingsRepository
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
@@ -58,14 +59,14 @@ class UpdateSubscriptionsWorkerTest {
     private lateinit var context: Context
     private lateinit var downloader: Downloader
     private val testDispatcher = StandardTestDispatcher()
-    private lateinit var analyticsProvider: Fakes.FakeAnalyticsProvider
+    private lateinit var analyticsProvider: FakeAnalyticsProvider
 
     @Before
     fun setUp() {
         context = ApplicationProvider.getApplicationContext()
         downloader = Mockito.mock(Downloader::class.java)
         Dispatchers.setMain(testDispatcher)
-        analyticsProvider = Fakes.FakeAnalyticsProvider()
+        analyticsProvider = FakeAnalyticsProvider()
     }
 
     @After

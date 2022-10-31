@@ -50,7 +50,7 @@ import java.net.HttpURLConnection.HTTP_INTERNAL_ERROR
 import java.net.HttpURLConnection.HTTP_NOT_MODIFIED
 import java.net.HttpURLConnection.HTTP_OK
 import kotlin.time.ExperimentalTime
-import org.adblockplus.adblockplussbrowser.analytics.helpers.test.FakeAnalyticsProvider
+import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
 import org.adblockplus.adblockplussbrowser.core.helpers.FakeCoreRepository
 
 @RunWith(MockitoJUnitRunner::class)

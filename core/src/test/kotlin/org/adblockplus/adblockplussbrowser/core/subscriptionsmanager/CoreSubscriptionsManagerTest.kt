@@ -57,10 +57,10 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import javax.inject.Singleton
 import kotlin.time.ExperimentalTime
-import org.adblockplus.adblockplussbrowser.analytics.helpers.test.FakeAnalyticsProvider
+import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
+import org.adblockplus.adblockplusbrowser.testutils.FakeSettingsRepository
 import org.adblockplus.adblockplussbrowser.core.helpers.FakeActivationPreferences
 import org.adblockplus.adblockplussbrowser.core.helpers.FakeCoreRepository
-import org.adblockplus.adblockplussbrowser.settings.helpers.test.FakeSettingsRepository
 
 @ExperimentalTime
 @Config(

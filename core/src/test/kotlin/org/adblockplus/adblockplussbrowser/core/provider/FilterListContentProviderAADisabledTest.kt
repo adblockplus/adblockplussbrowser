@@ -36,9 +36,10 @@ import javax.inject.Singleton
 import kotlin.time.ExperimentalTime
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
+import org.adblockplus.adblockplusbrowser.testutils.FakeSettingsRepository
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.analytics.BuildConfig
-import org.adblockplus.adblockplussbrowser.analytics.helpers.test.FakeAnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
@@ -51,7 +52,6 @@ import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.di.SettingsModule
-import org.adblockplus.adblockplussbrowser.settings.helpers.test.FakeSettingsRepository
 import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
@@ -165,6 +165,7 @@ class FilterListContentProviderAADisabledTest {
         // Open file and check result is not null
         val parcelFileDescriptor = filterListContentProvider?.openFile(uriSource, "r")
         assertNotNull(parcelFileDescriptor)
+        parcelFileDescriptor?.close()
     }
 }
 

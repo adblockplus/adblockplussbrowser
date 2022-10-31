@@ -24,6 +24,7 @@ package org.adblockplus.adblockplussbrowser.core.helpers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
+import org.adblockplus.adblockplusbrowser.testutils.FakeSettingsRepository
 import org.adblockplus.adblockplussbrowser.base.data.model.CustomSubscriptionType
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
@@ -34,7 +35,6 @@ import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscriptio
 import org.adblockplus.adblockplussbrowser.core.data.model.SavedState
 import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
 import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig
-import org.adblockplus.adblockplussbrowser.settings.helpers.test.FakeSettingsRepository
 
 object Fakes {
 

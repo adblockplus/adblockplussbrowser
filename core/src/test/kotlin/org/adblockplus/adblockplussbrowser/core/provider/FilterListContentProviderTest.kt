@@ -112,6 +112,7 @@ internal class FilterListContentProviderTest {
         // Open file and check result is not null
         val parcelFileDescriptor = filterListContentProvider?.openFile(uriSource, "r")
         assertNotNull(parcelFileDescriptor)
+        parcelFileDescriptor?.close()
         // User counter work was enqueued
         val userCounterWork = WorkManager.getInstance(context)
             .getWorkInfosForUniqueWork(USER_COUNTER_KEY_ONESHOT_WORK)
