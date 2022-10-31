@@ -54,6 +54,8 @@ import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
 import kotlinx.coroutines.flow.first
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.data.SubscriptionsConstants
 import org.adblockplus.adblockplussbrowser.base.data.prefs.DebugPreferences
 import org.adblockplus.adblockplussbrowser.core.BuildConfig
@@ -79,6 +81,9 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
 
     @Inject
     internal lateinit var debugPreferences: DebugPreferences
+
+    @Inject
+    internal lateinit var analyticsProvider: AnalyticsProvider
 
     private var totalSteps: Int = 0
     private var currentStep: Int = 0
@@ -147,11 +152,13 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
 
             if (results.hasFailedResult()) {
                 Timber.w("Failed subscriptions updates, retrying shortly")
+                analyticsProvider.logEvent(AnalyticsEvent.UNSUCCESSFUL_SUBSCRIPTION_DOWNLOAD)
                 delay(DELAY_DEFAULT)
                 updateStatus(ProgressType.FAILED)
                 failedResult()
             } else {
                 Timber.i("Subscriptions downloaded")
+                analyticsProvider.logEvent(AnalyticsEvent.SUCCESSFUL_SUBSCRIPTION_DOWNLOAD)
                 delay(DELAY_DEFAULT)
                 prepareUpdatedSubscriptionsFiles(results)
                 updateStatus(ProgressType.SUCCESS)
@@ -159,6 +166,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             }
         } catch (ex: Exception) {
             Timber.w(ex, "Failed subscriptions updates, retrying shortly")
+            analyticsProvider.logEvent(AnalyticsEvent.UNSUCCESSFUL_SUBSCRIPTION_DOWNLOAD)
             delay(DELAY_DEFAULT)
             updateStatus(ProgressType.FAILED)
             if (ex is CancellationException) Result.success() else failedResult()

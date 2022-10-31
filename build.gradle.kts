@@ -83,7 +83,6 @@ afterEvaluate {
         executionData(executionDataPaths)
         sourceDirectories.setFrom(sourcePaths)
         classDirectories.setFrom(classPaths)
-        dependsOn(deps)
 
         reports {
             xml.required.set(true)
