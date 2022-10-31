@@ -27,6 +27,7 @@ import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscription
 import org.adblockplus.adblockplussbrowser.core.downloader.DownloadResult
@@ -39,7 +40,6 @@ import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
-import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -55,13 +55,14 @@ class UpdateSubscriptionsWorkerTest {
     private lateinit var context: Context
     private lateinit var downloader: Downloader
     private val testDispatcher = StandardTestDispatcher()
-
+    private lateinit var analyticsProvider: Fakes.FakeAnalyticsProvider
 
     @Before
     fun setUp() {
         context = ApplicationProvider.getApplicationContext()
         downloader = Mockito.mock(Downloader::class.java)
         Dispatchers.setMain(testDispatcher)
+        analyticsProvider = Fakes.FakeAnalyticsProvider()
     }
 
     @After
@@ -81,6 +82,7 @@ class UpdateSubscriptionsWorkerTest {
         worker.downloader = downloader
         worker.settingsRepository = Fakes.FakeSettingsRepository("")
         worker.debugPreferences = Fakes.FakeDebugPreferences()
+        worker.analyticsProvider = analyticsProvider
         return worker
     }
 
@@ -110,28 +112,30 @@ class UpdateSubscriptionsWorkerTest {
     }
 
     @Test
-    fun `test downloads failed result should retry`(){
+    fun `test downloads failed result should retry`() {
         val updateSubscriptionsWorker = createWorker(WorkerParameters()) as UpdateSubscriptionsWorker
-        val directory = File(context.filesDir,"cache")
+        val directory = File(context.filesDir, "cache")
         directory.mkdirs()
         val file = File.createTempFile("filter", ".txt", directory)
         runTest {
             whenDownload().thenReturn(DownloadResult.Failed(DownloadedSubscription("", file.path)))
             val result = updateSubscriptionsWorker.doWork()
+            assertEquals(AnalyticsEvent.UNSUCCESSFUL_SUBSCRIPTION_DOWNLOAD, analyticsProvider.event)
             assertThat(result, `is`(ListenableWorker.Result.Retry()))
         }
     }
 
     @Test
-    fun `test downloads Succeed should succeed`(){
+    fun `test downloads Succeed should succeed`() {
         val updateSubscriptionsWorker = createWorker(WorkerParameters()) as UpdateSubscriptionsWorker
-        val directory = File(context.filesDir,"cache")
+        val directory = File(context.filesDir, "cache")
         directory.mkdirs()
         val file = File.createTempFile("filter", ".txt", directory)
         runTest {
             whenDownload().thenReturn(DownloadResult.Success(DownloadedSubscription("", file.path)))
             val result = updateSubscriptionsWorker.doWork()
             assertThat(result, `is`(ListenableWorker.Result.Success()))
+            assertEquals(AnalyticsEvent.SUCCESSFUL_SUBSCRIPTION_DOWNLOAD, analyticsProvider.event)
         }
     }
 
@@ -145,17 +149,21 @@ class UpdateSubscriptionsWorkerTest {
                 updateSubscriptionsWorker.doWork()
             }
             assertThat(result, `is`(ListenableWorker.Result.Success()))
+            assertEquals(AnalyticsEvent.UNSUCCESSFUL_SUBSCRIPTION_DOWNLOAD, analyticsProvider.event)
         }
     }
 
     @Test
     fun `test CatchException should fail`() {
-        val updateSubscriptionsWorker = createWorker(WorkerParameters(
-            tags = mutableListOf(UpdateSubscriptionsWorker.UPDATE_KEY_FORCE_REFRESH)
-        )) as UpdateSubscriptionsWorker
+        val updateSubscriptionsWorker = createWorker(
+            WorkerParameters(
+                tags = mutableListOf(UpdateSubscriptionsWorker.UPDATE_KEY_FORCE_REFRESH)
+            )
+        ) as UpdateSubscriptionsWorker
         runTest {
             val result = updateSubscriptionsWorker.doWork()
             assertThat(result, `is`(ListenableWorker.Result.failure()))
+            assertEquals(AnalyticsEvent.UNSUCCESSFUL_SUBSCRIPTION_DOWNLOAD, analyticsProvider.event)
         }
     }
 
@@ -165,6 +173,7 @@ class UpdateSubscriptionsWorkerTest {
         runTest {
             val result = updateSubscriptionsWorker.doWork()
             assertThat(result, `is`(ListenableWorker.Result.Retry()))
+            assertEquals(AnalyticsEvent.UNSUCCESSFUL_SUBSCRIPTION_DOWNLOAD, analyticsProvider.event)
         }
     }
 

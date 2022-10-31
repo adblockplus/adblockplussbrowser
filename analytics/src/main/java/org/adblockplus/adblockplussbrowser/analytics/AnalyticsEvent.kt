@@ -211,5 +211,15 @@ enum class AnalyticsEvent(val eventName: String, var data: String = "") {
     /**
      * The user has finished all the steps and taps on "Done" in the tour dialogue
      */
-    TOUR_COMPLETED("start_guide_tour_completed")
+    TOUR_COMPLETED("start_guide_tour_completed"),
+
+    /**
+     * Subscriptions has been downloaded
+     */
+    SUCCESSFUL_SUBSCRIPTION_DOWNLOAD("successful_subscriptions_download"),
+
+    /**
+     * Subscriptions download failed.
+     */
+    UNSUCCESSFUL_SUBSCRIPTION_DOWNLOAD("unsuccessful_subscriptions_download")
 }
