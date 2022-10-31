@@ -58,7 +58,6 @@ internal class MainPreferencesFragment :
 
     /* This value will increment as the user goes through the start guide and
         will be used to indicate last seen step */
-    private lateinit var spotlight: Spotlight
     lateinit var targetInfos: ArrayList<SpotlightConfiguration.TargetInfo>
 
     override fun onBindView(binding: FragmentMainPreferencesBinding) {
@@ -309,7 +308,7 @@ internal class MainPreferencesFragment :
         popupWindow: PopupWindow,
         mainPreferencesScroll: LockableScrollView,
     ) {
-        spotlight = Spotlight.Builder(requireActivity())
+        val spotlight = Spotlight.Builder(requireActivity())
             .setTargets(target)
             .setDuration(ANIMATION_DURATION)
             .setBackgroundColorRes(R.color.spotlight_background)
