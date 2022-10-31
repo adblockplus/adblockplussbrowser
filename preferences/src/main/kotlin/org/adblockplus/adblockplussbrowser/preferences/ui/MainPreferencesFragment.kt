@@ -81,7 +81,6 @@ internal class MainPreferencesFragment :
         bindAdditionalLanguage(binding, supportActionBar, lifecycleOwner)
         bindOnboardingLanguages(binding, lifecycleOwner)
         bindAcceptableAds(binding, supportActionBar, lifecycleOwner)
-        bindGuide(binding, lifecycleOwner)
         bindAbout(binding, supportActionBar, lifecycleOwner)
 
         if (BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_ABP) {
@@ -99,6 +98,8 @@ internal class MainPreferencesFragment :
                 View.GONE
             binding.mainPreferencesShareEventsInclude.mainPreferencesDivider1.visibility = View.GONE
         }
+
+        bindGuide(binding, lifecycleOwner)
     }
 
     private fun bindAbout(
@@ -402,13 +403,6 @@ internal class MainPreferencesFragment :
         } else {
             viewModel.isTourStarted = false
             viewModel.logStartGuideSkipped(step = skippedAt)
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        if (viewModel.isTourStarted) {
-            spotlight.finish()
         }
     }
 
