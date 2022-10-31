@@ -26,6 +26,7 @@ import android.widget.TextView
 import com.takusemba.spotlight.OnTargetListener
 import com.takusemba.spotlight.Target
 import com.takusemba.spotlight.shape.RoundedRectangle
+import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentMainPreferencesBinding
 import timber.log.Timber
@@ -88,12 +89,14 @@ class SpotlightConfiguration private constructor() {
                 )
             )
 
-            targetInfos.add(
-                TargetInfo(
-                    binding.mainPreferencesAdBlockingInclude.mainPreferencesAllowlist,
-                    R.string.tour_allowlist,
+            if (BuildConfig.FLAVOR_product != BuildConfig.FLAVOR_CRYSTAL) {
+                targetInfos.add(
+                    TargetInfo(
+                        binding.mainPreferencesAdBlockingInclude.mainPreferencesAllowlist,
+                        R.string.tour_allowlist,
+                    )
                 )
-            )
+            }
 
             targetInfos.add(
                 TargetInfo(
