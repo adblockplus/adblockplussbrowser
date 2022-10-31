@@ -59,6 +59,7 @@ internal class MainPreferencesFragment :
     /* This value will increment as the user goes through the start guide and
         will be used to indicate last seen step */
     lateinit var targetInfos: ArrayList<SpotlightConfiguration.TargetInfo>
+    private lateinit var spotlight: Spotlight
 
     override fun onBindView(binding: FragmentMainPreferencesBinding) {
         binding.viewModel = viewModel
@@ -261,9 +262,6 @@ internal class MainPreferencesFragment :
         binding: FragmentMainPreferencesBinding,
         lifecycleOwner: LifecycleOwner
     ) {
-        if (viewModel.isTourStarted) {
-            startGuide(binding)
-        }
         binding.mainPreferencesGuideInclude.mainPreferencesGuideInclude.setDebounceOnClickListener(
             {
                 viewModel.isTourStarted = true
@@ -308,7 +306,7 @@ internal class MainPreferencesFragment :
         popupWindow: PopupWindow,
         mainPreferencesScroll: LockableScrollView,
     ) {
-        val spotlight = Spotlight.Builder(requireActivity())
+        spotlight = Spotlight.Builder(requireActivity())
             .setTargets(target)
             .setDuration(ANIMATION_DURATION)
             .setBackgroundColorRes(R.color.spotlight_background)
@@ -405,8 +403,19 @@ internal class MainPreferencesFragment :
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        if (viewModel.isTourStarted) {
+            spotlight.finish()
+        }
+    }
+
+
     override fun onResume() {
         super.onResume()
         viewModel.checkLanguagesOnboarding()
+        if (viewModel.isTourStarted) {
+            startGuide(binding!!)
+        }
     }
 }
