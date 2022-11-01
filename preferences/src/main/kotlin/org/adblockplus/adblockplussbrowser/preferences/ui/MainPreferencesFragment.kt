@@ -60,6 +60,7 @@ internal class MainPreferencesFragment :
         will be used to indicate last seen step */
     lateinit var targetInfos: ArrayList<SpotlightConfiguration.TargetInfo>
     private lateinit var spotlight: Spotlight
+    private lateinit var popupWindow: PopupWindow
 
     override fun onBindView(binding: FragmentMainPreferencesBinding) {
         binding.viewModel = viewModel
@@ -281,7 +282,7 @@ internal class MainPreferencesFragment :
         targetInfos = createTargetInfos(binding)
         scrollToHighlightedView(mainPreferencesScroll)
 
-        val popupWindow = PopupWindow(
+        popupWindow = PopupWindow(
             tourDialogLayout,
             ViewGroup.LayoutParams.WRAP_CONTENT,
             SpotlightConfiguration.Constants.POPUP_WINDOW_HEIGHT
@@ -406,6 +407,7 @@ internal class MainPreferencesFragment :
     override fun onPause() {
         super.onPause()
         if (viewModel.isTourStarted) {
+            popupWindow.dismiss()
             spotlight.finish()
         }
     }
