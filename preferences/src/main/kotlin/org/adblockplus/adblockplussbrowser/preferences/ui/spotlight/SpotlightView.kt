@@ -74,15 +74,17 @@ internal class SpotlightView @JvmOverloads constructor(
         val currentTarget = target
         val currentShapeAnimator = shapeAnimator
         val currentEffectAnimator = effectAnimator
-        if (currentTarget != null && currentEffectAnimator != null && currentShapeAnimator != null
-            && !currentShapeAnimator.isRunning
-        ) {
-            currentTarget.effect.draw(
-                canvas = canvas,
-                point = currentTarget.anchor,
-                value = currentEffectAnimator.animatedValue as Float,
-                paint = effectPaint
-            )
+        if (currentTarget != null && currentEffectAnimator != null) {
+            currentShapeAnimator?.let {
+                if (!currentShapeAnimator.isRunning) {
+                    currentTarget.effect.draw(
+                        canvas = canvas,
+                        point = currentTarget.anchor,
+                        value = currentEffectAnimator.animatedValue as Float,
+                        paint = effectPaint
+                    )
+                }
+            }
         }
         if (currentTarget != null && currentShapeAnimator != null) {
             currentTarget.shape.draw(
@@ -139,10 +141,10 @@ internal class SpotlightView @JvmOverloads constructor(
             val offset = PointF(location[0].toFloat(), location[1].toFloat())
             anchor.offset(-offset.x, -offset.y)
         }
-        this.shapeAnimator?.removeAllListeners()
-        this.shapeAnimator?.removeAllUpdateListeners()
-        this.shapeAnimator?.cancel()
-        this.shapeAnimator = ofFloat(0f, 1f).apply {
+        shapeAnimator?.removeAllListeners()
+        shapeAnimator?.removeAllUpdateListeners()
+        shapeAnimator?.cancel()
+        shapeAnimator = ofFloat(0f, 1f).apply {
             duration = target.shape.duration
             interpolator = target.shape.interpolator
             addUpdateListener(invalidator)
@@ -158,10 +160,10 @@ internal class SpotlightView @JvmOverloads constructor(
                 }
             })
         }
-        this.effectAnimator?.removeAllListeners()
-        this.effectAnimator?.removeAllUpdateListeners()
-        this.effectAnimator?.cancel()
-        this.effectAnimator = ofFloat(0f, 1f).apply {
+        effectAnimator?.removeAllListeners()
+        effectAnimator?.removeAllUpdateListeners()
+        effectAnimator?.cancel()
+        effectAnimator = ofFloat(0f, 1f).apply {
             startDelay = target.shape.duration
             duration = target.effect.duration
             interpolator = target.effect.interpolator
