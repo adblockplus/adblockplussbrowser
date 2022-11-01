@@ -34,7 +34,7 @@ class SpotlightConfiguration private constructor() {
     data class TargetInfo(val highLightView: View?, val resId: Int)
 
     companion object {
-        private const val TARGET_CORNER_RADIUS = 6f
+        private const val TARGET_CORNER_RADIUS = 32f
 
         /**
          * Configure and return the Spotlight target for the start guide.
