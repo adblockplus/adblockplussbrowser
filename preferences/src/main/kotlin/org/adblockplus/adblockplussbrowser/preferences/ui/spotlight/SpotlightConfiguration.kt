@@ -50,7 +50,7 @@ class SpotlightConfiguration private constructor() {
             tourDialogLayout: View, popUpWindow: PopupWindow,
         ): Target {
             return if (targetInfo.highLightView != null) {
-                createStartingTarget(
+                createTargetWithHighlight(
                     context,
                     tourDialogLayout,
                     popUpWindow,
@@ -107,7 +107,14 @@ class SpotlightConfiguration private constructor() {
             return targetInfos
         }
 
-        // Add the last target to the spotlight sequence
+        /**
+         * Create last target with view
+         *
+         * @param context Context
+         * @param tourDialogLayout View with tour dialog layout
+         * @param popUpWindow PopupWindow
+         * @param resId Resource id with description of the last step
+         */
         private fun createLastTarget(
             context: Context,
             tourDialogLayout: View,
@@ -135,8 +142,16 @@ class SpotlightConfiguration private constructor() {
                 .build()
         }
 
-        // Add a new target to the spotlight sequence
-        private fun createStartingTarget(
+        /**
+         * Create target with view to be highlighted
+         *
+         * @param context Context
+         * @param tourDialogLayout View with tour dialog layout
+         * @param popUpWindow PopupWindow
+         * @param highLightView View that is going to be highlighted
+         * @param resId Resource id with description for highlighted view
+         */
+        private fun createTargetWithHighlight(
             context: Context, tourDialogLayout: View, popUpWindow: PopupWindow,
             highLightView: View, resId: Int
         ): Target {
