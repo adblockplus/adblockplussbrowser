@@ -30,9 +30,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.checkbox.MaterialCheckBox
-import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.OnSpotlightListener
-import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.Spotlight
-import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.Target
+import com.takusemba.spotlight.OnSpotlightListener
+import com.takusemba.spotlight.Spotlight
+import com.takusemba.spotlight.Target
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
