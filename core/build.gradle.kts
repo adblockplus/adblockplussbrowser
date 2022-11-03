@@ -65,6 +65,7 @@ dependencies {
     testImplementation(libs.androidx.work.testing)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.hilt.testing)
+    testImplementation(project(":test-utils"))
     testAnnotationProcessor(libs.hilt.compiler)
     kaptTest(libs.hilt.compiler)
     kaptTest(libs.androidx.hilt.compiler)

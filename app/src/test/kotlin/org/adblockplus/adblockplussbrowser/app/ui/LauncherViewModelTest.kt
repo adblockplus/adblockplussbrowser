@@ -23,8 +23,10 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.android.installreferrer.api.InstallReferrerClient
 import com.android.installreferrer.api.ReferrerDetails
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
+import org.adblockplus.adblockplusbrowser.testutils.FakeSettingsRepository
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
-import org.adblockplus.adblockplussbrowser.app.ui.helpers.Fakes
+import org.adblockplus.adblockplussbrowser.app.ui.helpers.CustomFakeAppPreferences
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -44,17 +46,17 @@ import org.robolectric.RuntimeEnvironment.getApplication
 class LauncherViewModelTest {
 
     private lateinit var launcherViewModel: LauncherViewModel
-    private lateinit var fakeAppPreferences: Fakes.CustomFakeAppPreferences
+    private lateinit var fakeAppPreferences: CustomFakeAppPreferences
     private val application = getApplication()
-    private val fakeSettingsRepository = Fakes.FakeSettingsRepository("")
-    private val fakeAnalyticsProvider = Fakes.FakeAnalyticsProvider()
+    private val fakeSettingsRepository = FakeSettingsRepository("")
+    private val fakeAnalyticsProvider = FakeAnalyticsProvider()
 
     @get:Rule
     val instantTaskExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Before
     fun setUp() {
-        fakeAppPreferences = Fakes.CustomFakeAppPreferences()
+        fakeAppPreferences = CustomFakeAppPreferences()
         launcherViewModel = LauncherViewModel(
             fakeAppPreferences,
             application
@@ -73,7 +75,7 @@ class LauncherViewModelTest {
 
     @Test
     fun `test fetchDirection MAIN`() {
-        val fakeAppPreferences = Fakes.CustomFakeAppPreferences(
+        val fakeAppPreferences = CustomFakeAppPreferences(
             customLastFilterListRequest = System.currentTimeMillis())
         launcherViewModel = LauncherViewModel(fakeAppPreferences, getApplication())
         launcherViewModel.fetchDirection().observeForever {
@@ -83,7 +85,7 @@ class LauncherViewModelTest {
 
     @Test
     fun `test fetchDirection ONBOARDING`() {
-        val fakeAppPreferences = Fakes.CustomFakeAppPreferences(customOnBoardingCompleted = false)
+        val fakeAppPreferences = CustomFakeAppPreferences(customOnBoardingCompleted = false)
         launcherViewModel = LauncherViewModel(fakeAppPreferences, getApplication())
         launcherViewModel.fetchDirection().observeForever {
             assertEquals(it, LauncherDirection.ONBOARDING)

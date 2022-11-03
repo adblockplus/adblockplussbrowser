@@ -34,8 +34,7 @@ import org.adblockplus.adblockplussbrowser.core.data.model.CoreData
 import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscription
 import org.adblockplus.adblockplussbrowser.core.data.model.SavedState
 import org.adblockplus.adblockplussbrowser.core.downloader.OkHttpDownloader.Companion.HTTP_ERROR_LOG_HEADER_DOWNLOADER
-import org.adblockplus.adblockplussbrowser.core.helpers.Fakes
-import org.adblockplus.adblockplussbrowser.core.helpers.Fakes.Companion.HTTP_ERROR_MOCK_500
+import org.adblockplus.adblockplussbrowser.core.helpers.Fakes.HTTP_ERROR_MOCK_500
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -51,6 +50,8 @@ import java.net.HttpURLConnection.HTTP_INTERNAL_ERROR
 import java.net.HttpURLConnection.HTTP_NOT_MODIFIED
 import java.net.HttpURLConnection.HTTP_OK
 import kotlin.time.ExperimentalTime
+import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
+import org.adblockplus.adblockplussbrowser.core.helpers.FakeCoreRepository
 
 @RunWith(MockitoJUnitRunner::class)
 @ExperimentalTime
@@ -61,9 +62,9 @@ class DownloaderTest {
     private val cacheDir = "/tmp/cacheDir/"
     private val filesDir = "/tmp/filesDir/"
     private val mockWebServer = MockWebServer()
-    private lateinit var fakeCoreRepository: Fakes.FakeCoreRepository
+    private lateinit var fakeCoreRepository: FakeCoreRepository
     private lateinit var downloader: Downloader
-    private lateinit var analyticsProvider: Fakes.FakeAnalyticsProvider
+    private lateinit var analyticsProvider: FakeAnalyticsProvider
     private val testDispatcher = StandardTestDispatcher()
 
     private val version = "202109231731"
@@ -96,8 +97,8 @@ class DownloaderTest {
         Dispatchers.setMain(testDispatcher)
         mockWebServer.start()
         val appInfo = AppInfo()
-        fakeCoreRepository = Fakes.FakeCoreRepository(mockWebServer.url("").toString())
-        analyticsProvider = Fakes.FakeAnalyticsProvider()
+        fakeCoreRepository = FakeCoreRepository(mockWebServer.url("").toString())
+        analyticsProvider = FakeAnalyticsProvider()
         downloader = OkHttpDownloader(
             mockContext, OkHttpClient(), fakeCoreRepository, appInfo,
             analyticsProvider

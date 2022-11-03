@@ -24,8 +24,7 @@ import okhttp3.mockwebserver.MockWebServer
 import org.adblockplus.adblockplussbrowser.core.AppInfo
 import org.adblockplus.adblockplussbrowser.core.BuildConfig
 import org.adblockplus.adblockplussbrowser.core.CallingApp
-import org.adblockplus.adblockplussbrowser.core.helpers.Fakes
-import org.adblockplus.adblockplussbrowser.core.helpers.Fakes.Companion.HTTP_ERROR_MOCK_500
+import org.adblockplus.adblockplussbrowser.core.helpers.Fakes.HTTP_ERROR_MOCK_500
 import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter.Companion.HTTP_ERROR_LOG_HEADER_USER_COUNTER
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -41,13 +40,18 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
 import kotlin.time.ExperimentalTime
+import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
+import org.adblockplus.adblockplusbrowser.testutils.FakeSettingsRepository
+import org.adblockplus.adblockplussbrowser.core.helpers.FakeCoreRepository
+import org.adblockplus.adblockplussbrowser.core.helpers.Fakes.INITIAL_COUNT
+import org.adblockplus.adblockplussbrowser.core.helpers.Fakes.INITIAL_TIMESTAMP
 
 @ExperimentalTime
 class UserCountingTest {
 
     private val mockWebServer = MockWebServer()
-    private lateinit var analyticsProvider : Fakes.FakeAnalyticsProvider
-    private lateinit var fakeCoreRepository : Fakes.FakeCoreRepository
+    private lateinit var analyticsProvider : FakeAnalyticsProvider
+    private lateinit var fakeCoreRepository : FakeCoreRepository
     private lateinit var userCounter : OkHttpUserCounter
     private val serverTimeZone: TimeZone = TimeZone.getTimeZone("GMT")
     private val serverDateParser = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z",
@@ -56,10 +60,10 @@ class UserCountingTest {
     @Before
     fun setUp() {
         mockWebServer.start()
-        val settings = Fakes.FakeSettingsRepository(mockWebServer.url("").toString())
+        val settings = FakeSettingsRepository(mockWebServer.url("").toString())
         val appInfo = AppInfo()
-        analyticsProvider = Fakes.FakeAnalyticsProvider()
-        fakeCoreRepository = Fakes.FakeCoreRepository(mockWebServer.url("").toString())
+        analyticsProvider = FakeAnalyticsProvider()
+        fakeCoreRepository = FakeCoreRepository(mockWebServer.url("").toString())
         userCounter = OkHttpUserCounter(OkHttpClient(), fakeCoreRepository, settings, appInfo,
             analyticsProvider)
         serverDateParser.timeZone = serverTimeZone
@@ -92,7 +96,7 @@ class UserCountingTest {
         val response = MockResponse()
             .addHeader("Date", "Thu, 23 Sep 2021 17:31:01 GMT") //202109231731
         mockWebServer.enqueue(response)
-        val settings = Fakes.FakeSettingsRepository(mockWebServer.url("").toString())
+        val settings =FakeSettingsRepository(mockWebServer.url("").toString())
         val appInfo = AppInfo()
         assertEquals(0, mockWebServer.requestCount)
         runBlocking {
@@ -118,9 +122,9 @@ class UserCountingTest {
             assertTrue(userCounter.count(CallingApp("", "")) is CountUserResult.Failed)
         }
         assertEquals(1, mockWebServer.requestCount)
-        assertEquals(Fakes.INITIAL_TIMESTAMP,
+        assertEquals(INITIAL_TIMESTAMP,
             fakeCoreRepository.lastUserCountingResponse)
-        assertEquals(Fakes.INITIAL_COUNT, fakeCoreRepository.userCountingCount)
+        assertEquals(INITIAL_COUNT, fakeCoreRepository.userCountingCount)
         assertNull(analyticsProvider.event)
         assertEquals(analyticsProvider.error, "$HTTP_ERROR_LOG_HEADER_USER_COUNTER $HTTP_ERROR_MOCK_500")
     }
@@ -145,9 +149,9 @@ class UserCountingTest {
         }
         assertEquals(1, mockWebServer.requestCount)
         if (BuildConfig.DEBUG) {
-            assertEquals(Fakes.INITIAL_TIMESTAMP,
+            assertEquals(INITIAL_TIMESTAMP,
                 fakeCoreRepository.lastUserCountingResponse)
-            assertEquals(Fakes.INITIAL_COUNT, fakeCoreRepository.userCountingCount)
+            assertEquals(INITIAL_COUNT, fakeCoreRepository.userCountingCount)
         } else {
             assert(fakeCoreRepository.userCountingCount == 1)
         }

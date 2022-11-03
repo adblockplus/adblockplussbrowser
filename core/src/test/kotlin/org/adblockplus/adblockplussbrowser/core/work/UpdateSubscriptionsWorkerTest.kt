@@ -21,18 +21,23 @@ import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.work.ListenableWorker
 import androidx.work.testing.TestListenableWorkerBuilder
+import java.io.File
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
+import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
+import org.adblockplus.adblockplusbrowser.testutils.FakeSettingsRepository
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscription
 import org.adblockplus.adblockplussbrowser.core.downloader.DownloadResult
 import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
-import org.adblockplus.adblockplussbrowser.core.helpers.Fakes
+import org.adblockplus.adblockplussbrowser.core.helpers.FakeCoreRepository
+import org.adblockplus.adblockplussbrowser.core.helpers.FakeDebugPreferences
+import org.adblockplus.adblockplussbrowser.core.helpers.FakeSettingsRepositoryNoChanges
 import org.adblockplus.adblockplussbrowser.core.helpers.WorkerParameters
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
@@ -46,7 +51,6 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.kotlin.any
 import org.robolectric.RobolectricTestRunner
-import java.io.File
 
 @RunWith(RobolectricTestRunner::class)
 @ExperimentalCoroutinesApi
@@ -55,14 +59,14 @@ class UpdateSubscriptionsWorkerTest {
     private lateinit var context: Context
     private lateinit var downloader: Downloader
     private val testDispatcher = StandardTestDispatcher()
-    private lateinit var analyticsProvider: Fakes.FakeAnalyticsProvider
+    private lateinit var analyticsProvider: FakeAnalyticsProvider
 
     @Before
     fun setUp() {
         context = ApplicationProvider.getApplicationContext()
         downloader = Mockito.mock(Downloader::class.java)
         Dispatchers.setMain(testDispatcher)
-        analyticsProvider = Fakes.FakeAnalyticsProvider()
+        analyticsProvider = FakeAnalyticsProvider()
     }
 
     @After
@@ -78,10 +82,10 @@ class UpdateSubscriptionsWorkerTest {
             .setTags(params.tags)
             .build()
         worker.subscriptionsManager = Mockito.mock(SubscriptionsManager::class.java)
-        worker.coreRepository = Fakes.FakeCoreRepository("")
+        worker.coreRepository = FakeCoreRepository("")
         worker.downloader = downloader
-        worker.settingsRepository = Fakes.FakeSettingsRepository("")
-        worker.debugPreferences = Fakes.FakeDebugPreferences()
+        worker.settingsRepository = FakeSettingsRepository("")
+        worker.debugPreferences = FakeDebugPreferences()
         worker.analyticsProvider = analyticsProvider
         return worker
     }
@@ -104,7 +108,7 @@ class UpdateSubscriptionsWorkerTest {
     fun `test update should succeed`() {
         val params = WorkerParameters(runAttemptCount = 0)
         val updateSubscriptionsWorker = createWorker(params) as UpdateSubscriptionsWorker
-        updateSubscriptionsWorker.settingsRepository = Fakes.FakeSettingsRepositoryNoChanges("")
+        updateSubscriptionsWorker.settingsRepository = FakeSettingsRepositoryNoChanges("")
         runTest {
             val result = updateSubscriptionsWorker.doWork()
             assertThat(result, `is`(ListenableWorker.Result.success()))

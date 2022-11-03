@@ -25,6 +25,8 @@ import javax.inject.Singleton
 import kotlin.time.ExperimentalTime
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
+import org.adblockplus.adblockplusbrowser.testutils.FakeSettingsRepository
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.analytics.BuildConfig
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
@@ -32,7 +34,8 @@ import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
 import org.adblockplus.adblockplussbrowser.core.downloader.OkHttpDownloader
-import org.adblockplus.adblockplussbrowser.core.helpers.Fakes
+import org.adblockplus.adblockplussbrowser.core.helpers.FakeActivationPreferences
+import org.adblockplus.adblockplussbrowser.core.helpers.FakeCoreRepository
 import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
@@ -45,13 +48,13 @@ internal class TestModule {
     @Provides
     @Singleton
     fun getCoreRepository(): CoreRepository {
-        return Fakes.FakeCoreRepository("")
+        return FakeCoreRepository("")
     }
 
     @Provides
     @Singleton
     fun getSettingsRepository(): SettingsRepository {
-        return Fakes.FakeSettingsRepository("")
+        return FakeSettingsRepository("")
     }
 
     @Provides
@@ -61,13 +64,13 @@ internal class TestModule {
     @Provides
     @Singleton
     fun getActivationPreferences(): ActivationPreferences {
-        return Fakes.FakeActivationPreferences()
+        return FakeActivationPreferences()
     }
 
     @Provides
     @Singleton
     fun getAnalyticsProvider(): AnalyticsProvider {
-        return Fakes.FakeAnalyticsProvider()
+        return FakeAnalyticsProvider()
     }
 
     @Provides

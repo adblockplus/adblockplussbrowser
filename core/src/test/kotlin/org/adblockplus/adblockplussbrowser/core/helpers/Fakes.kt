@@ -24,9 +24,7 @@ package org.adblockplus.adblockplussbrowser.core.helpers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
-import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
-import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
+import org.adblockplus.adblockplusbrowser.testutils.FakeSettingsRepository
 import org.adblockplus.adblockplussbrowser.base.data.model.CustomSubscriptionType
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
@@ -35,248 +33,109 @@ import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.data.model.CoreData
 import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscription
 import org.adblockplus.adblockplussbrowser.core.data.model.SavedState
-import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
 import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig
 
-class Fakes {
+object Fakes {
 
-    internal companion object {
-        const val INITIAL_TIMESTAMP = -1L
-        const val INITIAL_COUNT = -1
-        const val HTTP_ERROR_MOCK_500 = "500\n" +
-                "Headers:\n" +
-                "Content-Length: 0\n" +
-                "\n" +
-                "Body:\n"
+    const val INITIAL_TIMESTAMP = -1L
+    const val INITIAL_COUNT = -1
+    const val HTTP_ERROR_MOCK_500 = "500\n" +
+            "Headers:\n" +
+            "Content-Length: 0\n" +
+            "\n" +
+            "Body:\n"
+}
 
+internal class FakeCoreRepository(serverUrl: String) : CoreRepository {
+
+    var lastUserCountingResponse = Fakes.INITIAL_TIMESTAMP
+    var userCountingCount = Fakes.INITIAL_COUNT
+
+    val aaUrl : String
+    val easylistUrl : String
+
+    internal var coreData : CoreData
+
+    init {
+        aaUrl = "$serverUrl/exceptionrules.txt"
+        easylistUrl = "$serverUrl/easylist.txt"
+        coreData = CoreData(
+            true,
+            0L,
+            SavedState(true, listOf(""), listOf(""), listOf(""), listOf("")),
+            listOf(),
+            0L,
+            0)
     }
 
-    internal class FakeCoreRepository(serverUrl: String) : CoreRepository {
-
-        var lastUserCountingResponse = INITIAL_TIMESTAMP
-        var userCountingCount = INITIAL_COUNT
-
-        val aaUrl : String
-        val easylistUrl : String
-
-        internal var coreData : CoreData
-
-        init {
-            aaUrl = "$serverUrl/exceptionrules.txt"
-            easylistUrl = "$serverUrl/easylist.txt"
-            coreData = CoreData(
-                true,
-                0L,
-                SavedState(true, listOf(""), listOf(""), listOf(""), listOf("")),
-                listOf(),
-                0L,
-                0)
+    override val data: Flow<CoreData>
+        get() = flow {
+            emit(coreData.copy(lastUserCountingResponse = this@FakeCoreRepository.lastUserCountingResponse))
         }
 
-        override val data: Flow<CoreData>
-            get() = flow {
-                emit(coreData.copy(lastUserCountingResponse = this@FakeCoreRepository.lastUserCountingResponse))
-            }
+    override var subscriptionsPath: String?
+        get() = ""
+        @Suppress("UNUSED_PARAMETER")
+        set(value) {}
 
-        override var subscriptionsPath: String?
-            get() = ""
-            @Suppress("UNUSED_PARAMETER")
-            set(value) {}
-
-        override suspend fun getDataSync(): CoreData {
-            return coreData.copy(lastUserCountingResponse = this.lastUserCountingResponse)
-        }
-
-        override suspend fun setConfigured() {}
-
-        override suspend fun updateDownloadedSubscriptions(
-            subscriptions: List<DownloadedSubscription>,
-            updateTimestamp: Boolean
-        ) {}
-
-        override suspend fun updateLastUpdated(lastUpdated: Long) {}
-
-        override suspend fun updateLastUserCountingResponse(lastUserCountingResponse: Long) {
-            this.lastUserCountingResponse = lastUserCountingResponse
-        }
-
-        override suspend fun updateUserCountingCount(userCountingCount: Int) {
-            this.userCountingCount = userCountingCount
-        }
-
-        override suspend fun updateSavedState(savedState: SavedState) {  }
+    override suspend fun getDataSync(): CoreData {
+        return coreData.copy(lastUserCountingResponse = this.lastUserCountingResponse)
     }
 
-    open class FakeSettingsRepository(private val serverUrl: String) : SettingsRepository {
-        var acceptableAdsStatus: Boolean = true
+    override suspend fun setConfigured() {}
 
-        override val settings: Flow<Settings>
-            get() = flow {
-                emit(
-                    Settings(
-                        true,
-                        acceptableAdsStatus,
-                        UpdateConfig.ALWAYS,
-                        listOf(""),
-                        listOf(""),
-                        listOf(
-                            Subscription("$serverUrl/easylist.txt", "", 0L, CustomSubscriptionType.FROM_URL),
-                            Subscription("$serverUrl/exceptionrules.txt", "", 0L, CustomSubscriptionType.FROM_URL)
-                        ),
-                        listOf(),
-                        analyticsEnabled = true,
-                        languagesOnboardingCompleted = true
-                    )
+    override suspend fun updateDownloadedSubscriptions(
+        subscriptions: List<DownloadedSubscription>,
+        updateTimestamp: Boolean
+    ) {}
+
+    override suspend fun updateLastUpdated(lastUpdated: Long) {}
+
+    override suspend fun updateLastUserCountingResponse(lastUserCountingResponse: Long) {
+        this.lastUserCountingResponse = lastUserCountingResponse
+    }
+
+    override suspend fun updateUserCountingCount(userCountingCount: Int) {
+        this.userCountingCount = userCountingCount
+    }
+
+    override suspend fun updateSavedState(savedState: SavedState) {  }
+}
+
+class FakeSettingsRepositoryNoChanges(serverUrl: String) : FakeSettingsRepository(serverUrl) {
+    override val settings: Flow<Settings>
+        get() = flow {
+            emit(
+                Settings(
+                    true,
+                    acceptableAdsStatus,
+                    UpdateConfig.ALWAYS,
+                    listOf(""),
+                    listOf(""),
+                    listOf(Subscription("", "", 0L, CustomSubscriptionType.FROM_URL)),
+                    listOf(Subscription("", "", 0L, CustomSubscriptionType.FROM_URL)),
+                    analyticsEnabled = true,
+                    languagesOnboardingCompleted = true
                 )
-            }
-
-        override suspend fun getEasylistSubscription(): Subscription {
-            return Subscription("$serverUrl/easylist.txt", "", 0L, CustomSubscriptionType.FROM_URL)
-        }
-
-        override suspend fun getAcceptableAdsSubscription(): Subscription {
-            return Subscription("$serverUrl/exceptionrules.txt", "", 0L, CustomSubscriptionType.FROM_URL)
-        }
-
-        override suspend fun getTestPagesSubscription(): Subscription {
-            return Subscription("$serverUrl/exceptionrules.txt", "", 0L, CustomSubscriptionType.FROM_URL)
-        }
-
-        override suspend fun getDefaultPrimarySubscriptions(): List<Subscription> {
-            return listOf(
-                Subscription("$serverUrl/easylist.txt", "", 0L, CustomSubscriptionType.FROM_URL),
-                Subscription("$serverUrl/exceptionrules.txt", "", 0L, CustomSubscriptionType.FROM_URL)
             )
         }
+}
 
-        override suspend fun getDefaultOtherSubscriptions(): List<Subscription> {
-            TODO("Not yet implemented")
-        }
+class FakeActivationPreferences : ActivationPreferences {
+    override val lastFilterListRequest: Flow<Long>
+        get() = flowOf(System.currentTimeMillis())
 
-        override suspend fun setAdblockEnabled(enabled: Boolean) {}
-
-        override suspend fun setAcceptableAdsEnabled(enabled: Boolean) {}
-
-        override suspend fun setUpdateConfig(updateConfig: UpdateConfig) {}
-
-        override suspend fun addAllowedDomain(domain: String) {}
-
-        override suspend fun removeAllowedDomain(domain: String) {}
-
-        override suspend fun setAllowedDomains(domains: List<String>) {}
-
-        override suspend fun addBlockedDomain(domain: String) {}
-
-        override suspend fun removeBlockedDomain(domain: String) {}
-
-        override suspend fun setBlockedDomains(domains: List<String>) {}
-
-        override suspend fun addActivePrimarySubscription(subscription: Subscription) {}
-
-        override suspend fun removeActivePrimarySubscription(subscription: Subscription) {}
-
-        override suspend fun setActivePrimarySubscriptions(subscriptions: List<Subscription>) {}
-
-        override suspend fun addActiveOtherSubscription(subscription: Subscription) {}
-
-        override suspend fun removeActiveOtherSubscription(subscription: Subscription) {}
-
-        override suspend fun setActiveOtherSubscriptions(subscriptions: List<Subscription>) {}
-
-        override suspend fun updatePrimarySubscriptionLastUpdate(url: String, lastUpdate: Long) {}
-
-        override suspend fun updateOtherSubscriptionLastUpdate(url: String, lastUpdate: Long) {}
-
-        override suspend fun updatePrimarySubscriptionsLastUpdate(subscriptions: List<Subscription>) {}
-
-        override suspend fun updateOtherSubscriptionsLastUpdate(subscriptions: List<Subscription>) {}
-
-        override suspend fun setAnalyticsEnabled(enabled: Boolean) {}
-
-        override suspend fun getAdditionalTrackingSubscription(): Subscription {
-            TODO("Not yet implemented")
-        }
-
-        override suspend fun getSocialMediaTrackingSubscription(): Subscription {
-            TODO("Not yet implemented")
-        }
-
-        override suspend fun markLanguagesOnboardingCompleted() {}
-        override suspend fun checkLanguagesOnboardingCompleted() {
-            TODO("Not yet implemented")
-        }
-    }
-
-    class FakeAnalyticsProvider : AnalyticsProvider {
-
-        var event : AnalyticsEvent? = null
-        var exception : Exception? = null
-        var error : String? = null
-        var userPropertyName : AnalyticsUserProperty? = null
-        var userPropertyValue : String? = null
-
-        override fun logEvent(analyticsEvent: AnalyticsEvent) {
-            this.event = analyticsEvent
-        }
-
-        override fun logException(exception: Exception) {
-            this.exception = exception
-        }
-
-        override fun logError(error: String) {
-            this.error = error
-        }
-
-        override fun setUserProperty(
-            analyticsProperty: AnalyticsUserProperty,
-            analyticsPropertyValue: String
-        ) {
-            userPropertyName = analyticsProperty
-            userPropertyValue = analyticsPropertyValue
-        }
-
-        override fun enable() {}
-
-        override fun disable() {}
-    }
-
-    class FakeSettingsRepositoryNoChanges(serverUrl: String) :
-        FakeSettingsRepository(serverUrl) {
-        override val settings: Flow<Settings>
-            get() = flow {
-                emit(
-                    Settings(
-                        true,
-                        acceptableAdsStatus,
-                        UpdateConfig.ALWAYS,
-                        listOf(""),
-                        listOf(""),
-                        listOf(Subscription("", "", 0L, CustomSubscriptionType.FROM_URL)),
-                        listOf(Subscription("", "", 0L, CustomSubscriptionType.FROM_URL)),
-                        analyticsEnabled = true,
-                        languagesOnboardingCompleted = true
-                    )
-                )
-            }
-    }
-
-    class FakeActivationPreferences : ActivationPreferences {
-        override val lastFilterListRequest: Flow<Long>
-            get() = flowOf(System.currentTimeMillis())
-
-        override suspend fun updateLastFilterRequest(lastFilterListRequest: Long) {
-            // NOP
-        }
-    }
-
-    class FakeDebugPreferences: DebugPreferences {
-        override val shouldAddTestPages: Flow<Boolean>
-            get() = flowOf(false)
-
-        override fun initialTestPagesConfigurationCompleted() {
-            TODO("Not yet implemented")
-        }
+    override suspend fun updateLastFilterRequest(lastFilterListRequest: Long) {
+        // NOP
     }
 }
 
+class FakeDebugPreferences: DebugPreferences {
+    override val shouldAddTestPages: Flow<Boolean>
+        get() = flowOf(false)
+
+    override fun initialTestPagesConfigurationCompleted() {
+        TODO("Not yet implemented")
+    }
+}
