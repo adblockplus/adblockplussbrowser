@@ -38,7 +38,6 @@ import org.adblockplus.adblockplussbrowser.core.CoreSubscriptionsManager
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.di.CoreModule
 import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
-import org.adblockplus.adblockplussbrowser.core.helpers.Fakes
 import org.adblockplus.adblockplussbrowser.core.provider.TestModule
 import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
@@ -58,6 +57,10 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import javax.inject.Singleton
 import kotlin.time.ExperimentalTime
+import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
+import org.adblockplus.adblockplusbrowser.testutils.FakeSettingsRepository
+import org.adblockplus.adblockplussbrowser.core.helpers.FakeActivationPreferences
+import org.adblockplus.adblockplussbrowser.core.helpers.FakeCoreRepository
 
 @ExperimentalTime
 @Config(
@@ -91,7 +94,7 @@ class CoreSubscriptionsManagerTest {
         @Provides
         @Singleton
         fun getCoreRepository(): CoreRepository {
-            val coreRepository = Fakes.FakeCoreRepository("")
+            val coreRepository = FakeCoreRepository("")
             // Last user count was done right now
             val lastUserCountingDate = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z")
                 .format(Date(System.currentTimeMillis()))
@@ -103,7 +106,7 @@ class CoreSubscriptionsManagerTest {
         @Provides
         @Singleton
         fun getSettingsRepository(): SettingsRepository {
-            val settingsRepository = Fakes.FakeSettingsRepository("")
+            val settingsRepository = FakeSettingsRepository("")
             settingsRepository.acceptableAdsStatus = false
             return settingsRepository
         }
@@ -115,13 +118,13 @@ class CoreSubscriptionsManagerTest {
         @Provides
         @Singleton
         fun getActivationPreferences(): ActivationPreferences {
-            return Fakes.FakeActivationPreferences()
+            return FakeActivationPreferences()
         }
 
         @Provides
         @Singleton
         fun getAnalyticsProvider(): AnalyticsProvider {
-            return Fakes.FakeAnalyticsProvider()
+            return FakeAnalyticsProvider()
         }
 
         @Provides

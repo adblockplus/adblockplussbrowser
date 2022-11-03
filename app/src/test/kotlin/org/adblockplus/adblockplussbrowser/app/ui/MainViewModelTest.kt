@@ -25,8 +25,10 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
+import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
-import org.adblockplus.adblockplussbrowser.app.ui.helpers.Fakes
+import org.adblockplus.adblockplussbrowser.app.ui.helpers.CustomFakeAppPreferences
+import org.adblockplus.adblockplussbrowser.app.ui.helpers.FakeSubscriptionsManager
 import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -43,7 +45,7 @@ class MainViewModelTest {
 
     private lateinit var mainViewModel: MainViewModel
     private val packageManager = Mockito.mock(PackageManager::class.java)
-    private val fakeSubscriptionsManager = Fakes.FakeSubscriptionsManager()
+    private val fakeSubscriptionsManager = FakeSubscriptionsManager()
     private val testDispatcher = StandardTestDispatcher()
 
     @get:Rule
@@ -57,7 +59,7 @@ class MainViewModelTest {
         Dispatchers.setMain(testDispatcher)
         mainViewModel = MainViewModel(
             fakeSubscriptionsManager,
-            Fakes.CustomFakeAppPreferences()
+            CustomFakeAppPreferences()
         )
     }
 
@@ -82,8 +84,8 @@ class MainViewModelTest {
     @Test
     fun `test fetchAdblockActivationStatus false`() {
         mainViewModel = MainViewModel(
-            Fakes.FakeSubscriptionsManager(),
-            Fakes.CustomFakeAppPreferences(customIsAdblockEnabled = false)
+            FakeSubscriptionsManager(),
+            CustomFakeAppPreferences(customIsAdblockEnabled = false)
         )
         mainViewModel.fetchAdblockActivationStatus().observeForever {
             assertFalse(it)
@@ -116,7 +118,7 @@ class MainViewModelTest {
 
     @Test
     fun `test logDeviceNotSupported`() {
-        val fakeAnalyticsProvider = Fakes.FakeAnalyticsProvider()
+        val fakeAnalyticsProvider = FakeAnalyticsProvider()
         mainViewModel.analyticsProvider = fakeAnalyticsProvider
         mainViewModel.logDeviceNotSupported()
         assertEquals(AnalyticsEvent.DEVICE_NOT_SUPPORTED, fakeAnalyticsProvider.event)

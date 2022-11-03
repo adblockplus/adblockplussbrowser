@@ -26,7 +26,6 @@ import androidx.work.testing.TestListenableWorkerBuilder
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.adblockplus.adblockplussbrowser.core.helpers.Fakes
 import org.adblockplus.adblockplussbrowser.core.helpers.WorkerParameters
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert
@@ -35,6 +34,7 @@ import org.mockito.Mockito
 import org.mockito.kotlin.any
 import org.robolectric.RobolectricTestRunner
 import java.lang.IndexOutOfBoundsException
+import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
 
 @RunWith(RobolectricTestRunner::class)
 @ExperimentalCoroutinesApi
@@ -53,7 +53,7 @@ class UserCounterWorkerTest {
         val worker = TestListenableWorkerBuilder<UserCounterWorker>(context)
             .setRunAttemptCount(params.runAttemptCount)
             .build()
-        worker.analyticsProvider = Fakes.FakeAnalyticsProvider()
+        worker.analyticsProvider = FakeAnalyticsProvider()
         worker.userCounter = userCounter
         return worker
     }

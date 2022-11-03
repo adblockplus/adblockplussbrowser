@@ -15,5 +15,20 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-include(":app", ":analytics", ":base", ":core", ":i18n", ":onboarding", ":preferences", ":settings", ":test-utils")
-rootProject.name = "Adblock Plus for Samsung Internet"
+@file:Suppress("UnstableApiUsage")
+
+plugins {
+    id("com.android.library")
+    kotlin("android")
+    kotlin("kapt")
+}
+
+applyCommonConfig()
+
+createFlavorsConfig()
+
+dependencies {
+    implementation(project(":settings"))
+    implementation(project(":base"))
+    implementation(project(":analytics"))
+}

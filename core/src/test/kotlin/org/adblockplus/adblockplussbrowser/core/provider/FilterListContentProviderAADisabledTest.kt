@@ -36,6 +36,8 @@ import javax.inject.Singleton
 import kotlin.time.ExperimentalTime
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
+import org.adblockplus.adblockplusbrowser.testutils.FakeSettingsRepository
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.analytics.BuildConfig
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
@@ -44,7 +46,8 @@ import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.di.CoreModule
 import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
 import org.adblockplus.adblockplussbrowser.core.downloader.OkHttpDownloader
-import org.adblockplus.adblockplussbrowser.core.helpers.Fakes
+import org.adblockplus.adblockplussbrowser.core.helpers.FakeActivationPreferences
+import org.adblockplus.adblockplussbrowser.core.helpers.FakeCoreRepository
 import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
@@ -101,7 +104,7 @@ class FilterListContentProviderAADisabledTest {
         @Provides
         @Singleton
         fun getCoreRepository(): CoreRepository {
-            val coreRepository = Fakes.FakeCoreRepository("")
+            val coreRepository = FakeCoreRepository("")
             // Last user count was done right now
             val lastUserCountingDate = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z")
                 .format(Date(System.currentTimeMillis()))
@@ -113,7 +116,7 @@ class FilterListContentProviderAADisabledTest {
         @Provides
         @Singleton
         fun getSettingsRepository(): SettingsRepository {
-            val settingsRepository =  Fakes.FakeSettingsRepository("")
+            val settingsRepository =  FakeSettingsRepository("")
             settingsRepository.acceptableAdsStatus = false
             return settingsRepository
         }
@@ -125,13 +128,13 @@ class FilterListContentProviderAADisabledTest {
         @Provides
         @Singleton
         fun getActivationPreferences(): ActivationPreferences {
-            return Fakes.FakeActivationPreferences()
+            return FakeActivationPreferences()
         }
 
         @Provides
         @Singleton
         fun getAnalyticsProvider(): AnalyticsProvider {
-            return Fakes.FakeAnalyticsProvider()
+            return FakeAnalyticsProvider()
         }
 
         @Provides
@@ -162,6 +165,7 @@ class FilterListContentProviderAADisabledTest {
         // Open file and check result is not null
         val parcelFileDescriptor = filterListContentProvider?.openFile(uriSource, "r")
         assertNotNull(parcelFileDescriptor)
+        parcelFileDescriptor?.close()
     }
 }
 
