@@ -68,7 +68,6 @@ dependencies {
     implementation(libs.okhttp3)
     implementation(libs.gildor.coroutines.okhttp)
     implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.spotlight)
 
     testImplementation(libs.robolectric)
     testImplementation(libs.junit)

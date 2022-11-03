@@ -23,12 +23,10 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.PopupWindow
 import android.widget.TextView
-import com.takusemba.spotlight.OnTargetListener
-import com.takusemba.spotlight.Target
-import com.takusemba.spotlight.shape.RoundedRectangle
 import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentMainPreferencesBinding
+import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.shape.RoundedRectangle
 import timber.log.Timber
 
 class SpotlightConfiguration private constructor() {
