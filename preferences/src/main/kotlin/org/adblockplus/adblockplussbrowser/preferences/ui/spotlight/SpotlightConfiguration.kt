@@ -178,6 +178,7 @@ class SpotlightConfiguration private constructor() {
                         Timber.i("Step ended")
                     }
                 })
+                .setHighlightView(highLightView)
                 .build()
         }
     }

@@ -28,6 +28,7 @@ import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.shape.Shape
  * Target represents the spot that Spotlight will cast.
  */
 class Target(
+    val highlightView: View?,
     val anchor: PointF,
     val shape: Shape,
     val effect: Effect,
@@ -46,6 +47,7 @@ class Target(
         private var effect: Effect = DEFAULT_EFFECT
         private var overlay: View? = null
         private var listener: OnTargetListener? = null
+        private var highlightView: View? = null
 
         /**
          * Sets a pointer to start a [Target].
@@ -56,6 +58,10 @@ class Target(
             val x = location[0] + view.width / 2f
             val y = location[1] + view.height / 2f
             setAnchor(x, y)
+        }
+
+        fun setHighlightView(highlightView: View): Builder = apply {
+            this.highlightView = highlightView
         }
 
         /**
@@ -94,6 +100,7 @@ class Target(
         }
 
         fun build() = Target(
+            highlightView = highlightView,
             anchor = anchor,
             shape = shape,
             effect = effect,

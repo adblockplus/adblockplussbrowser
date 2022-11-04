@@ -31,6 +31,7 @@ import android.graphics.Paint
 import android.graphics.PointF
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
+import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
@@ -71,28 +72,16 @@ internal class SpotlightView @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), backgroundPaint)
-        val currentTarget = target
-        val currentShapeAnimator = shapeAnimator
-        val currentEffectAnimator = effectAnimator
-        if (currentTarget != null && currentEffectAnimator != null) {
-            currentShapeAnimator?.let {
-                if (!currentShapeAnimator.isRunning) {
-                    currentTarget.effect.draw(
-                        canvas = canvas,
-                        point = currentTarget.anchor,
-                        value = currentEffectAnimator.animatedValue as Float,
-                        paint = effectPaint
-                    )
-                }
-            }
-        }
-        if (currentTarget != null && currentShapeAnimator != null) {
-            currentTarget.shape.draw(
-                canvas = canvas,
-                point = currentTarget.anchor,
-                value = currentShapeAnimator.animatedValue as Float,
-                paint = shapePaint
+        if (target != null && target!!.highlightView != null) {
+            val location = IntArray(2)
+            target!!.highlightView!!.getLocationInWindow(location)
+            val rectangle = Rect(
+                location[0],
+                location[1],
+                location[0] + target!!.highlightView!!.width,
+                location[1] + target!!.highlightView!!.height,
             )
+            canvas.drawRect(rectangle, shapePaint)
         }
     }
 
