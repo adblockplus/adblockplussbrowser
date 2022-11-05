@@ -17,21 +17,13 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui.spotlight
 
-import android.graphics.PointF
 import android.view.View
-import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.effcet.Effect
-import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.effcet.EmptyEffect
-import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.shape.Circle
-import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.shape.Shape
 
 /**
  * Target represents the spot that Spotlight will cast.
  */
 class Target(
     val highlightView: View?,
-    val anchor: PointF,
-    val shape: Shape,
-    val effect: Effect,
     val overlay: View?,
     val listener: OnTargetListener?
 ) {
@@ -41,49 +33,15 @@ class Target(
      * All parameters should be set in this [Builder].
      */
     class Builder {
-
-        private var anchor: PointF = DEFAULT_ANCHOR
-        private var shape: Shape = DEFAULT_SHAPE
-        private var effect: Effect = DEFAULT_EFFECT
         private var overlay: View? = null
         private var listener: OnTargetListener? = null
         private var highlightView: View? = null
 
-        /**
-         * Sets a pointer to start a [Target].
-         */
-        fun setAnchor(view: View): Builder = apply {
-            val location = IntArray(2)
-            view.getLocationInWindow(location)
-            val x = location[0] + view.width / 2f
-            val y = location[1] + view.height / 2f
-            setAnchor(x, y)
-        }
 
         fun setHighlightView(highlightView: View): Builder = apply {
             this.highlightView = highlightView
         }
 
-        /**
-         * Sets an anchor point to start [Target].
-         */
-        private fun setAnchor(x: Float, y: Float): Builder = apply {
-            setAnchor(PointF(x, y))
-        }
-
-        /**
-         * Sets an anchor point to start [Target].
-         */
-        private fun setAnchor(anchor: PointF): Builder = apply {
-            this.anchor = anchor
-        }
-
-        /**
-         * Sets [shape] of the spot of [Target].
-         */
-        fun setShape(shape: Shape): Builder = apply {
-            this.shape = shape
-        }
 
         /**
          * Sets [overlay] to be laid out to describe [Target].
@@ -101,20 +59,8 @@ class Target(
 
         fun build() = Target(
             highlightView = highlightView,
-            anchor = anchor,
-            shape = shape,
-            effect = effect,
             overlay = overlay,
             listener = listener
         )
-
-        companion object {
-
-            private val DEFAULT_ANCHOR = PointF(0f, 0f)
-
-            private val DEFAULT_SHAPE = Circle(100f)
-
-            private val DEFAULT_EFFECT = EmptyEffect()
-        }
     }
 }

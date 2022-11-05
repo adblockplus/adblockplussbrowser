@@ -18,21 +18,14 @@
 package org.adblockplus.adblockplussbrowser.preferences.ui.spotlight
 
 import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.animation.TimeInterpolator
-import android.animation.ValueAnimator
-import android.animation.ValueAnimator.AnimatorUpdateListener
-import android.animation.ValueAnimator.INFINITE
-import android.animation.ValueAnimator.ofFloat
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
-import android.graphics.PointF
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import android.graphics.Rect
-import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.FrameLayout
@@ -41,12 +34,12 @@ import androidx.annotation.ColorInt
 /**
  * [SpotlightView] starts/finishes [Spotlight], and starts/finishes a current [Target].
  */
-internal class SpotlightView @JvmOverloads constructor(
+internal class SpotlightView constructor(
     context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0,
     @ColorInt backgroundColor: Int,
-) : FrameLayout(context, attrs, defStyleAttr) {
+) : FrameLayout(context, null, 0) {
+    var location = IntArray(2)
+    var rectangle = Rect()
 
     private val backgroundPaint by lazy {
         Paint().apply { color = backgroundColor }
@@ -56,12 +49,6 @@ internal class SpotlightView @JvmOverloads constructor(
         Paint().apply { xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR) }
     }
 
-    private val effectPaint by lazy { Paint() }
-
-    private val invalidator = AnimatorUpdateListener { invalidate() }
-
-    private var shapeAnimator: ValueAnimator? = null
-    private var effectAnimator: ValueAnimator? = null
     private var target: Target? = null
 
     init {
@@ -72,15 +59,7 @@ internal class SpotlightView @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), backgroundPaint)
-        if (target != null && target!!.highlightView != null) {
-            val location = IntArray(2)
-            target!!.highlightView!!.getLocationInWindow(location)
-            val rectangle = Rect(
-                location[0],
-                location[1],
-                location[0] + target!!.highlightView!!.width,
-                location[1] + target!!.highlightView!!.height,
-            )
+        target?.highlightView?.let {
             canvas.drawRect(rectangle, shapePaint)
         }
     }
@@ -123,100 +102,22 @@ internal class SpotlightView @JvmOverloads constructor(
     fun startTarget(target: Target) {
         removeAllViews()
         addView(target.overlay, MATCH_PARENT, MATCH_PARENT)
-        this.target = target.apply {
+        this.target = target.also {
             // adjust anchor in case where custom container is set.
             val location = IntArray(2)
-            getLocationInWindow(location)
-            val offset = PointF(location[0].toFloat(), location[1].toFloat())
-            anchor.offset(-offset.x, -offset.y)
+            target.highlightView?.let {
+                it.getLocationInWindow(location)
+                rectangle = Rect(
+                    location[0],
+                    location[1],
+                    location[0] + it.width,
+                    location[1] + it.height,
+                )
+            }
         }
-        shapeAnimator?.removeAllListeners()
-        shapeAnimator?.removeAllUpdateListeners()
-        shapeAnimator?.cancel()
-        shapeAnimator = ofFloat(0f, 1f).apply {
-            duration = target.shape.duration
-            interpolator = target.shape.interpolator
-            addUpdateListener(invalidator)
-            addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    removeAllListeners()
-                    removeAllUpdateListeners()
-                }
-
-                override fun onAnimationCancel(animation: Animator) {
-                    removeAllListeners()
-                    removeAllUpdateListeners()
-                }
-            })
-        }
-        effectAnimator?.removeAllListeners()
-        effectAnimator?.removeAllUpdateListeners()
-        effectAnimator?.cancel()
-        effectAnimator = ofFloat(0f, 1f).apply {
-            startDelay = target.shape.duration
-            duration = target.effect.duration
-            interpolator = target.effect.interpolator
-            repeatMode = target.effect.repeatMode
-            repeatCount = INFINITE
-            addUpdateListener(invalidator)
-            addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    removeAllListeners()
-                    removeAllUpdateListeners()
-                }
-
-                override fun onAnimationCancel(animation: Animator) {
-                    removeAllListeners()
-                    removeAllUpdateListeners()
-                }
-            })
-        }
-        shapeAnimator?.start()
-        effectAnimator?.start()
-    }
-
-    /**
-     * Finishes the current [Target].
-     */
-    fun finishTarget(listener: Animator.AnimatorListener) {
-        val currentTarget = target ?: return
-        val currentAnimatedValue = shapeAnimator?.animatedValue ?: return
-        shapeAnimator?.removeAllListeners()
-        shapeAnimator?.removeAllUpdateListeners()
-        shapeAnimator?.cancel()
-        shapeAnimator = ofFloat(currentAnimatedValue as Float, 0f).apply {
-            duration = currentTarget.shape.duration
-            interpolator = currentTarget.shape.interpolator
-            addUpdateListener(invalidator)
-            addListener(listener)
-            addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    removeAllListeners()
-                    removeAllUpdateListeners()
-                }
-
-                override fun onAnimationCancel(animation: Animator) {
-                    removeAllListeners()
-                    removeAllUpdateListeners()
-                }
-            })
-        }
-        effectAnimator?.removeAllListeners()
-        effectAnimator?.removeAllUpdateListeners()
-        effectAnimator?.cancel()
-        effectAnimator = null
-        shapeAnimator?.start()
     }
 
     fun cleanup() {
-        effectAnimator?.removeAllListeners()
-        effectAnimator?.removeAllUpdateListeners()
-        effectAnimator?.cancel()
-        effectAnimator = null
-        shapeAnimator?.removeAllListeners()
-        shapeAnimator?.removeAllUpdateListeners()
-        shapeAnimator?.cancel()
-        shapeAnimator = null
         removeAllViews()
     }
 }

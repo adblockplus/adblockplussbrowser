@@ -30,9 +30,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.checkbox.MaterialCheckBox
-import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.OnSpotlightListener
-import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.Spotlight
-import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.Target
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
@@ -40,9 +37,11 @@ import org.adblockplus.adblockplussbrowser.base.widget.LockableScrollView
 import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentMainPreferencesBinding
+import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.OnSpotlightListener
+import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.Spotlight
 import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.SpotlightConfiguration
 import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.SpotlightConfiguration.Companion.createTargetInfos
-import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.SpotlightConfiguration.Constants.ANIMATION_DURATION
+import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.Target
 import org.adblockplus.adblockplussbrowser.preferences.ui.updates.UpdateSubscriptionsViewModel
 import timber.log.Timber
 
@@ -309,7 +308,6 @@ internal class MainPreferencesFragment :
     ) {
         spotlight = Spotlight.Builder(requireActivity())
             .setTargets(target)
-            .setDuration(ANIMATION_DURATION)
             .setBackgroundColorRes(R.color.spotlight_background)
             .setOnSpotlightListener(object : OnSpotlightListener {
                 override fun onStarted() {

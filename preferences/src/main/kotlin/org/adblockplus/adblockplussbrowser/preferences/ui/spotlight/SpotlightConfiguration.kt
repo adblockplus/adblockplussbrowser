@@ -26,7 +26,6 @@ import android.widget.TextView
 import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentMainPreferencesBinding
-import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.shape.RoundedRectangle
 import timber.log.Timber
 
 class SpotlightConfiguration private constructor() {
@@ -34,7 +33,6 @@ class SpotlightConfiguration private constructor() {
     data class TargetInfo(val highLightView: View?, val resId: Int)
 
     companion object {
-        private const val TARGET_CORNER_RADIUS = 32f
 
         /**
          * Configure and return the Spotlight target for the start guide.
@@ -122,7 +120,6 @@ class SpotlightConfiguration private constructor() {
             val root = FrameLayout(context)
             return Target.Builder()
                 .setOverlay(root)
-                .setShape(RoundedRectangle(0f, 0f, 0f))
                 .setOnTargetListener(object : OnTargetListener {
                     override fun onStarted() {
                         tourDialogLayout.findViewById<View>(R.id.tour_next_button).visibility = View.GONE
@@ -155,14 +152,7 @@ class SpotlightConfiguration private constructor() {
         ): Target {
             val root = FrameLayout(context)
             return Target.Builder()
-                .setAnchor(highLightView)
-                .setShape(
-                    RoundedRectangle(
-                        highLightView.height.toFloat(),
-                        highLightView.width.toFloat(),
-                        TARGET_CORNER_RADIUS
-                    )
-                ).setOverlay(root)
+                .setOverlay(root)
                 .setOnTargetListener(object : OnTargetListener {
                     override fun onStarted() {
                         tourDialogLayout.findViewById<TextView>(R.id.tour_dialog_text).setText(resId)
@@ -185,7 +175,6 @@ class SpotlightConfiguration private constructor() {
 
     object Constants {
         const val Y_OFFSET = 10
-        const val ANIMATION_DURATION = 300L
         const val POPUP_WINDOW_HEIGHT = 400
     }
 }

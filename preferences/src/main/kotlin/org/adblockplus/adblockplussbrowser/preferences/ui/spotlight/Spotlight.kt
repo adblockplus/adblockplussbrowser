@@ -27,7 +27,6 @@ import android.view.animation.DecelerateInterpolator
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
-import java.util.concurrent.TimeUnit
 
 /**
  * Holds all of the [Target]s and [SpotlightView] to show/hide [Target], [SpotlightView] properly.
@@ -114,22 +113,6 @@ class Spotlight private constructor(
             currentIndex = index
             spotlight.startTarget(target)
             target.listener?.onStarted()
-        } else {
-            spotlight.finishTarget(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    val previousIndex = currentIndex
-                    val previousTarget = targets[previousIndex]
-                    previousTarget.listener?.onEnded()
-                    if (index < targets.size) {
-                        val target = targets[index]
-                        currentIndex = index
-                        spotlight.startTarget(target)
-                        target.listener?.onStarted()
-                    } else {
-                        finishSpotlight()
-                    }
-                }
-            })
         }
     }
 
@@ -182,12 +165,6 @@ class Spotlight private constructor(
             this.targets = targets.toTypedArray()
         }
 
-        /**
-         * Sets [duration] to start/finish [Spotlight].
-         */
-        fun setDuration(duration: Long): Builder = apply {
-            this.duration = duration
-        }
 
         /**
          * Sets [backgroundColor] resource on [Spotlight].
@@ -205,7 +182,7 @@ class Spotlight private constructor(
 
         fun build(): Spotlight {
 
-            val spotlight = SpotlightView(activity, null, 0, backgroundColor)
+            val spotlight = SpotlightView(activity, backgroundColor)
             val targets = requireNotNull(targets) { "targets should not be null. " }
             val container = container ?: activity.window.decorView as ViewGroup
 
@@ -220,9 +197,7 @@ class Spotlight private constructor(
         }
 
         companion object {
-
-            private val DEFAULT_DURATION = TimeUnit.SECONDS.toMillis(1)
-
+            private const val DEFAULT_DURATION = 300L
             private val DEFAULT_ANIMATION = DecelerateInterpolator(2f)
 
             @ColorInt
