@@ -36,7 +36,7 @@ import androidx.core.content.ContextCompat
  * unless you create a new [TourGuide] to start again.
  */
 class TourGuide private constructor(
-    private val spotlight: TourGuideView,
+    private val tourGuide: TourGuideView,
     private val target: Target,
     private val duration: Long,
     private val interpolator: TimeInterpolator,
@@ -44,7 +44,7 @@ class TourGuide private constructor(
     private val spotlightListener: TourGuideListener?
 ) {
     init {
-        container.addView(spotlight, MATCH_PARENT, MATCH_PARENT)
+        container.addView(tourGuide, MATCH_PARENT, MATCH_PARENT)
     }
 
     /**
@@ -65,13 +65,13 @@ class TourGuide private constructor(
      * Starts Spotlight.
      */
     private fun startSpotlight() {
-        spotlight.startSpotlight(duration, interpolator, object : AnimatorListenerAdapter() {
+        tourGuide.startSpotlight(duration, interpolator, object : AnimatorListenerAdapter() {
             override fun onAnimationStart(animation: Animator) {
                 spotlightListener?.onStarted()
             }
 
             override fun onAnimationEnd(animation: Animator) {
-                spotlight.startTarget(target)
+                tourGuide.startTarget(target)
                 target.listener?.onStarted()
             }
         })
@@ -81,10 +81,10 @@ class TourGuide private constructor(
      * Closes Spotlight.
      */
     private fun finishSpotlight() {
-        spotlight.finishSpotlight(duration, interpolator, object : AnimatorListenerAdapter() {
+        tourGuide.finishSpotlight(duration, interpolator, object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
-                spotlight.cleanup()
-                container.removeView(spotlight)
+                tourGuide.cleanup()
+                container.removeView(tourGuide)
                 spotlightListener?.onEnded()
             }
         })
@@ -132,7 +132,7 @@ class TourGuide private constructor(
             val container = container ?: activity.window.decorView as ViewGroup
 
             return TourGuide(
-                spotlight = spotlight,
+                tourGuide = spotlight,
                 target = target,
                 duration = duration,
                 interpolator = interpolator,
