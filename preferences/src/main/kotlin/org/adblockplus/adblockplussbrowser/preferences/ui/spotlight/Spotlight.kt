@@ -31,22 +31,18 @@ import androidx.core.content.ContextCompat
 /**
  * Holds all of the [Target]s and [SpotlightView] to show/hide [Target], [SpotlightView] properly.
  * [SpotlightView] can be controlled with [start]/[finish].
- * All of the [Target]s can be controlled with [next]/[previous]/[show].
  *
  * Once you finish the current [Spotlight] with [finish], you can not start the [Spotlight] again
  * unless you create a new [Spotlight] to start again.
  */
 class Spotlight private constructor(
     private val spotlight: SpotlightView,
-    private val targets: Array<Target>,
+    private val target: Target,
     private val duration: Long,
     private val interpolator: TimeInterpolator,
     private val container: ViewGroup,
     private val spotlightListener: OnSpotlightListener?
 ) {
-
-    private var currentIndex = NO_POSITION
-
     init {
         container.addView(spotlight, MATCH_PARENT, MATCH_PARENT)
     }
@@ -56,30 +52,6 @@ class Spotlight private constructor(
      */
     fun start() {
         startSpotlight()
-    }
-
-    /**
-     * Closes the current [Target] if exists, and shows a [Target] at the specified [index].
-     * If target is not found at the [index], it will throw an exception.
-     */
-    fun show(index: Int) {
-        showTarget(index)
-    }
-
-    /**
-     * Closes the current [Target] if exists, and shows the next [Target].
-     * If the next [Target] is not found, Spotlight will finish.
-     */
-    fun next() {
-        showTarget(currentIndex + 1)
-    }
-
-    /**
-     * Closes the current [Target] if exists, and shows the previous [Target].
-     * If the previous target is not found, it will throw an exception.
-     */
-    fun previous() {
-        showTarget(currentIndex - 1)
     }
 
     /**
@@ -99,21 +71,10 @@ class Spotlight private constructor(
             }
 
             override fun onAnimationEnd(animation: Animator) {
-                showTarget(0)
+                spotlight.startTarget(target)
+                target.listener?.onStarted()
             }
         })
-    }
-
-    /**
-     * Closes the current [Target] if exists, and show the [Target] at [index].
-     */
-    private fun showTarget(index: Int) {
-        if (currentIndex == NO_POSITION) {
-            val target = targets[index]
-            currentIndex = index
-            spotlight.startTarget(target)
-            target.listener?.onStarted()
-        }
     }
 
     /**
@@ -129,18 +90,13 @@ class Spotlight private constructor(
         })
     }
 
-    companion object {
-
-        private const val NO_POSITION = -1
-    }
-
     /**
      * Builder to build [Spotlight].
      * All parameters should be set in this [Builder].
      */
     class Builder(private val activity: Activity) {
 
-        private var targets: Array<Target>? = null
+        private lateinit var target: Target
         private var duration: Long = DEFAULT_DURATION
         private var interpolator: TimeInterpolator = DEFAULT_ANIMATION
 
@@ -150,21 +106,11 @@ class Spotlight private constructor(
         private var listener: OnSpotlightListener? = null
 
         /**
-         * Sets [Target]s to show on [Spotlight].
+         * Sets [Target] to show on [Spotlight].
          */
-        fun setTargets(vararg targets: Target): Builder = apply {
-            require(targets.isNotEmpty()) { "targets should not be empty. " }
-            this.targets = arrayOf(*targets)
+        fun setTarget(target: Target): Builder = apply {
+            this.target = target
         }
-
-        /**
-         * Sets [Target]s to show on [Spotlight].
-         */
-        fun setTargets(targets: List<Target>): Builder = apply {
-            require(targets.isNotEmpty()) { "targets should not be empty. " }
-            this.targets = targets.toTypedArray()
-        }
-
 
         /**
          * Sets [backgroundColor] resource on [Spotlight].
@@ -183,12 +129,11 @@ class Spotlight private constructor(
         fun build(): Spotlight {
 
             val spotlight = SpotlightView(activity, backgroundColor)
-            val targets = requireNotNull(targets) { "targets should not be null. " }
             val container = container ?: activity.window.decorView as ViewGroup
 
             return Spotlight(
                 spotlight = spotlight,
-                targets = targets,
+                target = target,
                 duration = duration,
                 interpolator = interpolator,
                 container = container,

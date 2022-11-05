@@ -307,7 +307,7 @@ internal class MainPreferencesFragment :
         mainPreferencesScroll: LockableScrollView,
     ) {
         spotlight = Spotlight.Builder(requireActivity())
-            .setTargets(target)
+            .setTarget(target)
             .setBackgroundColorRes(R.color.spotlight_background)
             .setOnSpotlightListener(object : OnSpotlightListener {
                 override fun onStarted() {

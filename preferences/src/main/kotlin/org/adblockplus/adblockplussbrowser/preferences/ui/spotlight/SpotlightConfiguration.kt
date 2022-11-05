@@ -174,7 +174,7 @@ class SpotlightConfiguration private constructor() {
     }
 
     object Constants {
-        const val Y_OFFSET = 10
+        const val Y_OFFSET = 32
         const val POPUP_WINDOW_HEIGHT = 400
     }
 }
