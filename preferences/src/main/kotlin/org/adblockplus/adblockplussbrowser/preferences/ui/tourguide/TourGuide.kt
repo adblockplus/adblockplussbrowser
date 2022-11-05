@@ -15,7 +15,7 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.adblockplus.adblockplussbrowser.preferences.ui.spotlight
+package org.adblockplus.adblockplussbrowser.preferences.ui.tourguide
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -29,33 +29,33 @@ import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 
 /**
- * Holds all of the [Target]s and [SpotlightView] to show/hide [Target], [SpotlightView] properly.
- * [SpotlightView] can be controlled with [start]/[finish].
+ * Holds all of the [Target]s and [TourGuideView] to show/hide [Target], [TourGuideView] properly.
+ * [TourGuideView] can be controlled with [start]/[finish].
  *
- * Once you finish the current [Spotlight] with [finish], you can not start the [Spotlight] again
- * unless you create a new [Spotlight] to start again.
+ * Once you finish the current [TourGuide] with [finish], you can not start the [TourGuide] again
+ * unless you create a new [TourGuide] to start again.
  */
-class Spotlight private constructor(
-    private val spotlight: SpotlightView,
+class TourGuide private constructor(
+    private val spotlight: TourGuideView,
     private val target: Target,
     private val duration: Long,
     private val interpolator: TimeInterpolator,
     private val container: ViewGroup,
-    private val spotlightListener: OnSpotlightListener?
+    private val spotlightListener: TourGuideListener?
 ) {
     init {
         container.addView(spotlight, MATCH_PARENT, MATCH_PARENT)
     }
 
     /**
-     * Starts [SpotlightView] and show the first [Target].
+     * Starts [TourGuideView] and show the first [Target].
      */
     fun start() {
         startSpotlight()
     }
 
     /**
-     * Closes Spotlight and [SpotlightView] will remove all children and be removed from the [container].
+     * Closes Spotlight and [TourGuideView] will remove all children and be removed from the [container].
      */
     fun finish() {
         finishSpotlight()
@@ -91,7 +91,7 @@ class Spotlight private constructor(
     }
 
     /**
-     * Builder to build [Spotlight].
+     * Builder to build [TourGuide].
      * All parameters should be set in this [Builder].
      */
     class Builder(private val activity: Activity) {
@@ -103,35 +103,35 @@ class Spotlight private constructor(
         @ColorInt
         private var backgroundColor: Int = DEFAULT_OVERLAY_COLOR
         private var container: ViewGroup? = null
-        private var listener: OnSpotlightListener? = null
+        private var listener: TourGuideListener? = null
 
         /**
-         * Sets [Target] to show on [Spotlight].
+         * Sets [Target] to show on [TourGuide].
          */
         fun setTarget(target: Target): Builder = apply {
             this.target = target
         }
 
         /**
-         * Sets [backgroundColor] resource on [Spotlight].
+         * Sets [backgroundColor] resource on [TourGuide].
          */
         fun setBackgroundColorRes(@ColorRes backgroundColorRes: Int): Builder = apply {
             this.backgroundColor = ContextCompat.getColor(activity, backgroundColorRes)
         }
 
         /**
-         * Sets [OnSpotlightListener] to notify the state of [Spotlight].
+         * Sets [TourGuideListener] to notify the state of [TourGuide].
          */
-        fun setOnSpotlightListener(listener: OnSpotlightListener): Builder = apply {
+        fun setOnSpotlightListener(listener: TourGuideListener): Builder = apply {
             this.listener = listener
         }
 
-        fun build(): Spotlight {
+        fun build(): TourGuide {
 
-            val spotlight = SpotlightView(activity, backgroundColor)
+            val spotlight = TourGuideView(activity, backgroundColor)
             val container = container ?: activity.window.decorView as ViewGroup
 
-            return Spotlight(
+            return TourGuide(
                 spotlight = spotlight,
                 target = target,
                 duration = duration,

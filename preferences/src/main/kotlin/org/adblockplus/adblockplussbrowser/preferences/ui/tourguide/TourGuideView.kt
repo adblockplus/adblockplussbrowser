@@ -15,7 +15,7 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.adblockplus.adblockplussbrowser.preferences.ui.spotlight
+package org.adblockplus.adblockplussbrowser.preferences.ui.tourguide
 
 import android.animation.Animator
 import android.animation.ObjectAnimator
@@ -32,9 +32,9 @@ import android.widget.FrameLayout
 import androidx.annotation.ColorInt
 
 /**
- * [SpotlightView] starts/finishes [Spotlight], and starts/finishes a current [Target].
+ * [TourGuideView] starts/finishes [TourGuide], and starts/finishes a current [Target].
  */
-internal class SpotlightView constructor(
+internal class TourGuideView constructor(
     context: Context,
     @ColorInt backgroundColor: Int,
 ) : FrameLayout(context, null, 0) {
@@ -65,7 +65,7 @@ internal class SpotlightView constructor(
     }
 
     /**
-     * Starts [Spotlight].
+     * Starts [TourGuide].
      */
     fun startSpotlight(
         duration: Long,
@@ -81,7 +81,7 @@ internal class SpotlightView constructor(
     }
 
     /**
-     * Finishes [Spotlight].
+     * Finishes [TourGuide].
      */
     fun finishSpotlight(
         duration: Long,

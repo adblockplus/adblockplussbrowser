@@ -15,20 +15,20 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.adblockplus.adblockplussbrowser.preferences.ui.spotlight
+package org.adblockplus.adblockplussbrowser.preferences.ui.tourguide
 
 /**
- * Listener to notify the state of Target.
+ * Listener to notify the state of Spotlight.
  */
-interface OnTargetListener {
+interface TourGuideListener {
 
     /**
-     * Called when Target is started
+     * Called when Spotlight is started
      */
     fun onStarted()
 
     /**
-     * Called when Target is started
+     * Called when Spotlight is ended
      */
     fun onEnded()
 }

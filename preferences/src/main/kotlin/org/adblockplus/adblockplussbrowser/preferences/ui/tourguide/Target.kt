@@ -15,7 +15,7 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.adblockplus.adblockplussbrowser.preferences.ui.spotlight
+package org.adblockplus.adblockplussbrowser.preferences.ui.tourguide
 
 import android.view.View
 

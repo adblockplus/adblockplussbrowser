@@ -37,11 +37,11 @@ import org.adblockplus.adblockplussbrowser.base.widget.LockableScrollView
 import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentMainPreferencesBinding
-import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.OnSpotlightListener
-import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.Spotlight
-import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.SpotlightConfiguration
-import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.SpotlightConfiguration.Companion.createTargetInfos
-import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.Target
+import org.adblockplus.adblockplussbrowser.preferences.ui.tourguide.TourGuideListener
+import org.adblockplus.adblockplussbrowser.preferences.ui.tourguide.TourGuide
+import org.adblockplus.adblockplussbrowser.preferences.ui.tourguide.SpotlightConfiguration
+import org.adblockplus.adblockplussbrowser.preferences.ui.tourguide.SpotlightConfiguration.Companion.createTargetInfos
+import org.adblockplus.adblockplussbrowser.preferences.ui.tourguide.Target
 import org.adblockplus.adblockplussbrowser.preferences.ui.updates.UpdateSubscriptionsViewModel
 import timber.log.Timber
 
@@ -58,7 +58,7 @@ internal class MainPreferencesFragment :
     /* This value will increment as the user goes through the start guide and
         will be used to indicate last seen step */
     lateinit var targetInfos: ArrayList<SpotlightConfiguration.TargetInfo>
-    private lateinit var spotlight: Spotlight
+    private lateinit var spotlight: TourGuide
     private lateinit var popupWindow: PopupWindow
 
     override fun onBindView(binding: FragmentMainPreferencesBinding) {
@@ -306,10 +306,10 @@ internal class MainPreferencesFragment :
         popupWindow: PopupWindow,
         mainPreferencesScroll: LockableScrollView,
     ) {
-        spotlight = Spotlight.Builder(requireActivity())
+        spotlight = TourGuide.Builder(requireActivity())
             .setTarget(target)
             .setBackgroundColorRes(R.color.spotlight_background)
-            .setOnSpotlightListener(object : OnSpotlightListener {
+            .setOnSpotlightListener(object : TourGuideListener {
                 override fun onStarted() {
                     Timber.i("Spotlight started")
                     binding.mainPreferencesScroll.setScrollable(false)
@@ -326,7 +326,7 @@ internal class MainPreferencesFragment :
 
     private fun setClickListeners(
         binding: FragmentMainPreferencesBinding,
-        spotlight: Spotlight,
+        spotlight: TourGuide,
         tourDialogLayout: View,
         popupWindow: PopupWindow,
         mainPreferencesScroll: LockableScrollView,
