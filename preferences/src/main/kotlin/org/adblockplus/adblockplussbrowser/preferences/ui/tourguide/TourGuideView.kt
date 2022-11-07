@@ -38,8 +38,7 @@ internal class TourGuideView constructor(
     context: Context,
     @ColorInt backgroundColor: Int,
 ) : FrameLayout(context, null, 0) {
-    var location = IntArray(2)
-    var rectangle = Rect()
+    private var rectangle = Rect()
 
     private val backgroundPaint by lazy {
         Paint().apply { color = backgroundColor }
