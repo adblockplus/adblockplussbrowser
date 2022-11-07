@@ -15,7 +15,7 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.adblockplus.adblockplussbrowser.preferences.ui.spotlight
+package org.adblockplus.adblockplussbrowser.preferences.ui.tourguide
 
 import android.content.Context
 import android.view.Gravity
@@ -23,23 +23,19 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.PopupWindow
 import android.widget.TextView
-import com.takusemba.spotlight.OnTargetListener
-import com.takusemba.spotlight.Target
-import com.takusemba.spotlight.shape.RoundedRectangle
 import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentMainPreferencesBinding
 import timber.log.Timber
 
-class SpotlightConfiguration private constructor() {
+class TourGuideConfiguration private constructor() {
 
     data class TargetInfo(val highLightView: View?, val resId: Int)
 
     companion object {
-        private const val TARGET_CORNER_RADIUS = 32f
 
         /**
-         * Configure and return the Spotlight target for the start guide.
+         * Configure and return the tour guide target for the start guide.
          * @param targetInfo TargetInfo describing view to be anchored
          * @param context Context
          * @param tourDialogLayout View
@@ -124,7 +120,6 @@ class SpotlightConfiguration private constructor() {
             val root = FrameLayout(context)
             return Target.Builder()
                 .setOverlay(root)
-                .setShape(RoundedRectangle(0f, 0f, 0f))
                 .setOnTargetListener(object : OnTargetListener {
                     override fun onStarted() {
                         tourDialogLayout.findViewById<View>(R.id.tour_next_button).visibility = View.GONE
@@ -157,14 +152,7 @@ class SpotlightConfiguration private constructor() {
         ): Target {
             val root = FrameLayout(context)
             return Target.Builder()
-                .setAnchor(highLightView)
-                .setShape(
-                    RoundedRectangle(
-                        highLightView.height.toFloat(),
-                        highLightView.width.toFloat(),
-                        TARGET_CORNER_RADIUS
-                    )
-                ).setOverlay(root)
+                .setOverlay(root)
                 .setOnTargetListener(object : OnTargetListener {
                     override fun onStarted() {
                         tourDialogLayout.findViewById<TextView>(R.id.tour_dialog_text).setText(resId)
@@ -180,13 +168,13 @@ class SpotlightConfiguration private constructor() {
                         Timber.i("Step ended")
                     }
                 })
+                .setHighlightView(highLightView)
                 .build()
         }
     }
 
     object Constants {
-        const val Y_OFFSET = 10
-        const val ANIMATION_DURATION = 300L
+        const val Y_OFFSET = 32
         const val POPUP_WINDOW_HEIGHT = 400
     }
 }

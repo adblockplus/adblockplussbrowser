@@ -30,9 +30,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.checkbox.MaterialCheckBox
-import com.takusemba.spotlight.OnSpotlightListener
-import com.takusemba.spotlight.Spotlight
-import com.takusemba.spotlight.Target
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
@@ -40,9 +37,10 @@ import org.adblockplus.adblockplussbrowser.base.widget.LockableScrollView
 import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentMainPreferencesBinding
-import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.SpotlightConfiguration
-import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.SpotlightConfiguration.Companion.createTargetInfos
-import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.SpotlightConfiguration.Constants.ANIMATION_DURATION
+import org.adblockplus.adblockplussbrowser.preferences.ui.tourguide.TourGuide
+import org.adblockplus.adblockplussbrowser.preferences.ui.tourguide.TourGuideConfiguration
+import org.adblockplus.adblockplussbrowser.preferences.ui.tourguide.TourGuideConfiguration.Companion.createTargetInfos
+import org.adblockplus.adblockplussbrowser.preferences.ui.tourguide.TourGuideListener
 import org.adblockplus.adblockplussbrowser.preferences.ui.updates.UpdateSubscriptionsViewModel
 import timber.log.Timber
 
@@ -58,8 +56,8 @@ internal class MainPreferencesFragment :
 
     /* This value will increment as the user goes through the start guide and
         will be used to indicate last seen step */
-    lateinit var targetInfos: ArrayList<SpotlightConfiguration.TargetInfo>
-    private lateinit var spotlight: Spotlight
+    private lateinit var targetInfos: ArrayList<TourGuideConfiguration.TargetInfo>
+    private lateinit var tourGuide: TourGuide
     private lateinit var popupWindow: PopupWindow
 
     override fun onBindView(binding: FragmentMainPreferencesBinding) {
@@ -285,50 +283,49 @@ internal class MainPreferencesFragment :
         popupWindow = PopupWindow(
             tourDialogLayout,
             ViewGroup.LayoutParams.WRAP_CONTENT,
-            SpotlightConfiguration.Constants.POPUP_WINDOW_HEIGHT
+            TourGuideConfiguration.Constants.POPUP_WINDOW_HEIGHT
         )
         popupWindow.isOutsideTouchable = true
 
-        val target = SpotlightConfiguration.createTarget(
+        val target = TourGuideConfiguration.createTarget(
             targetInfos[viewModel.currentTargetIndex],
             requireContext(),
             tourDialogLayout,
             popupWindow
         )
 
-        createSpotlight(target, binding, tourDialogLayout, popupWindow, mainPreferencesScroll)
+        createTourGuide(target, binding, tourDialogLayout, popupWindow, mainPreferencesScroll)
 
     }
 
-    private fun createSpotlight(
-        target: Target,
+    private fun createTourGuide(
+        target: org.adblockplus.adblockplussbrowser.preferences.ui.tourguide.Target,
         binding: FragmentMainPreferencesBinding,
         tourDialogLayout: View,
         popupWindow: PopupWindow,
         mainPreferencesScroll: LockableScrollView,
     ) {
-        spotlight = Spotlight.Builder(requireActivity())
-            .setTargets(target)
-            .setDuration(ANIMATION_DURATION)
-            .setBackgroundColorRes(R.color.spotlight_background)
-            .setOnSpotlightListener(object : OnSpotlightListener {
+        tourGuide = TourGuide.Builder(requireActivity())
+            .setTarget(target)
+            .setBackgroundColorRes(R.color.tour_guide_background)
+            .setOnTourGuideListener(object : TourGuideListener {
                 override fun onStarted() {
-                    Timber.i("Spotlight started")
+                    Timber.i("Tour guide started")
                     binding.mainPreferencesScroll.setScrollable(false)
                 }
 
                 override fun onEnded() {
-                    Timber.i("Spotlight ended")
+                    Timber.i("Tour guide ended")
                     binding.mainPreferencesScroll.setScrollable(true)
                 }
             }).build()
-        setClickListeners(binding, spotlight, tourDialogLayout, popupWindow, mainPreferencesScroll)
-        spotlight.start()
+        setClickListeners(binding, tourGuide, tourDialogLayout, popupWindow, mainPreferencesScroll)
+        tourGuide.start()
     }
 
     private fun setClickListeners(
         binding: FragmentMainPreferencesBinding,
-        spotlight: Spotlight,
+        tourGuide: TourGuide,
         tourDialogLayout: View,
         popupWindow: PopupWindow,
         mainPreferencesScroll: LockableScrollView,
@@ -339,7 +336,7 @@ internal class MainPreferencesFragment :
             v.performClick()
             if (event.action == MotionEvent.ACTION_OUTSIDE) {
                 skipTour()
-                spotlight.finish()
+                tourGuide.finish()
             }
             false
         }
@@ -356,28 +353,28 @@ internal class MainPreferencesFragment :
             viewModel.currentTargetIndex++
             Timber.i("viewModel.currentTargetIndex: ${viewModel.currentTargetIndex}")
             popupWindow.dismiss()
-            spotlight.finish()
+            tourGuide.finish()
             scrollToHighlightedView(mainPreferencesScroll)
-            val target = SpotlightConfiguration.createTarget(
+            val target = TourGuideConfiguration.createTarget(
                 targetInfos[viewModel.currentTargetIndex],
                 requireContext(),
                 tourDialogLayout,
                 popupWindow
             )
-            createSpotlight(target, binding, tourDialogLayout, popupWindow, mainPreferencesScroll)
+            createTourGuide(target, binding, tourDialogLayout, popupWindow, mainPreferencesScroll)
         }
 
         tourDialogLayout.findViewById<View>(R.id.tour_skip_button).setOnClickListener {
             skipTour()
             popupWindow.dismiss()
-            spotlight.finish()
+            tourGuide.finish()
         }
         tourDialogLayout.findViewById<View>(R.id.tour_last_step_done_button).setOnClickListener {
             viewModel.logStartGuideCompleted()
             viewModel.currentTargetIndex = 0
             viewModel.isTourStarted = false
             popupWindow.dismiss()
-            spotlight.finish()
+            tourGuide.finish()
         }
     }
 
@@ -408,7 +405,7 @@ internal class MainPreferencesFragment :
         super.onPause()
         if (viewModel.isTourStarted) {
             popupWindow.dismiss()
-            spotlight.finish()
+            tourGuide.finish()
         }
     }
 

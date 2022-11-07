@@ -47,7 +47,6 @@ protobuf = "3.17.2"
 installreferrer = "1.1"
 mockito = "4.0.0"
 xz = "1.9"
-spotlight = "2.0.5"
 
 [libraries]
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
@@ -114,7 +113,6 @@ gildor-coroutines-okhttp = { module = "ru.gildor.coroutines:kotlin-coroutines-ok
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito" }
 xz = { module = "org.tukaani:xz", version.ref = "xz" }
-spotlight = { module = "com.github.takusemba:spotlight", version.ref = "spotlight" }
 
 [plugins]
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
