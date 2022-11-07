@@ -164,7 +164,6 @@ class TourGuideConfiguration private constructor() {
                     }
 
                     override fun onEnded() {
-                        // This will be executed either when "Next" or "Skipped"
                         Timber.i("Step ended")
                     }
                 })

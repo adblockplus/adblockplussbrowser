@@ -50,12 +50,7 @@ internal class MainPreferencesFragment :
     DataBindingFragment<FragmentMainPreferencesBinding>(R.layout.fragment_main_preferences) {
 
     private val viewModel: MainPreferencesViewModel by activityViewModels()
-
-    // Lazy loading the UpdateSubscriptionsViewModel so it will only be used for crystal flavor here
     private val updateViewModel: UpdateSubscriptionsViewModel by activityViewModels()
-
-    /* This value will increment as the user goes through the start guide and
-        will be used to indicate last seen step */
     private lateinit var targetInfos: ArrayList<TourGuideConfiguration.TargetInfo>
     private lateinit var tourGuide: TourGuide
     private lateinit var popupWindow: PopupWindow

@@ -102,7 +102,6 @@ internal class TourGuideView constructor(
         removeAllViews()
         addView(target.overlay, MATCH_PARENT, MATCH_PARENT)
         this.target = target.also {
-            // adjust anchor in case where custom container is set.
             val location = IntArray(2)
             target.highlightView?.let {
                 it.getLocationInWindow(location)
