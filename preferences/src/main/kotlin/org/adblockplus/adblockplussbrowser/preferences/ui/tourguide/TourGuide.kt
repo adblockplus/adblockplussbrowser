@@ -35,7 +35,7 @@ private const val ANIMATION_DURATION = 300L
 
 @ColorInt
 private const val DEFAULT_OVERLAY_COLOR: Int = 0x6000000
-private const val ANIMATION_FACTOR = 2f
+private const val ANIMATION_FACTOR = 2F
 
 class TourGuide private constructor(
     private val tourGuide: TourGuideView,

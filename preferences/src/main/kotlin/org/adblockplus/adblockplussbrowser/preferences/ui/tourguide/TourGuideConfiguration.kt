@@ -28,148 +28,144 @@ import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentMainPreferencesBinding
 import timber.log.Timber
 
-class TourGuideConfiguration private constructor() {
+object TourGuideConfiguration {
 
-    data class TargetInfo(val highLightView: View?, val resId: Int)
 
-    companion object {
+    /**
+     * Configure and return the tour guide target for the start guide.
+     * @param targetInfo TargetInfo describing view to be anchored
+     * @param context Context
+     * @param tourDialogLayout View
+     * @param popUpWindow PopupWindow
+     */
+    fun createTarget(
+        targetInfo: TargetInfo, context: Context,
+        tourDialogLayout: View, popUpWindow: PopupWindow,
+    ): Target {
+        return if (targetInfo.highLightView != null) {
+            createTargetWithHighlight(
+                context,
+                tourDialogLayout,
+                popUpWindow,
+                targetInfo.highLightView,
+                targetInfo.resId
+            )
+        } else {
+            createLastTarget(context, tourDialogLayout, popUpWindow, targetInfo.resId)
+        }
+    }
 
-        /**
-         * Configure and return the tour guide target for the start guide.
-         * @param targetInfo TargetInfo describing view to be anchored
-         * @param context Context
-         * @param tourDialogLayout View
-         * @param popUpWindow PopupWindow
-         */
-        fun createTarget(
-            targetInfo: TargetInfo, context: Context,
-            tourDialogLayout: View, popUpWindow: PopupWindow,
-        ): Target {
-            return if (targetInfo.highLightView != null) {
-                createTargetWithHighlight(
-                    context,
-                    tourDialogLayout,
-                    popUpWindow,
-                    targetInfo.highLightView,
-                    targetInfo.resId
+    /**
+     * Create target info bindings and descriptions for every step.
+     * @param binding View FragmentMainPreferencesBinding
+     */
+    fun createTargetInfos(binding: FragmentMainPreferencesBinding): ArrayList<TargetInfo> {
+        val targetInfos = ArrayList<TargetInfo>()
+        targetInfos.add(
+            TargetInfo(
+                binding.mainPreferencesAdBlockingInclude.mainPreferencesAdBlockingCategory,
+                R.string.tour_dialog_ad_blocking_options_text
+            )
+        )
+
+        targetInfos.add(
+            TargetInfo(
+                binding.mainPreferencesAdBlockingInclude.mainPreferencesPrimarySubscriptions,
+                R.string.tour_add_languages
+            )
+        )
+
+        targetInfos.add(
+            TargetInfo(
+                binding.mainPreferencesAdBlockingInclude.mainPreferencesOtherSubscriptions,
+                R.string.tour_disable_social_media_tracking
+            )
+        )
+
+        if (BuildConfig.FLAVOR_product != BuildConfig.FLAVOR_CRYSTAL) {
+            targetInfos.add(
+                TargetInfo(
+                    binding.mainPreferencesAdBlockingInclude.mainPreferencesAllowlist,
+                    R.string.tour_allowlist,
                 )
-            } else {
-                createLastTarget(context, tourDialogLayout, popUpWindow, targetInfo.resId)
-            }
+            )
         }
 
-        /**
-         * Create target info bindings and descriptions for every step.
-         * @param binding View FragmentMainPreferencesBinding
-         */
-        fun createTargetInfos(binding: FragmentMainPreferencesBinding): ArrayList<TargetInfo> {
-            val targetInfos = ArrayList<TargetInfo>()
-            targetInfos.add(
-                TargetInfo(
-                    binding.mainPreferencesAdBlockingInclude.mainPreferencesAdBlockingCategory,
-                    R.string.tour_dialog_ad_blocking_options_text
-                )
+        targetInfos.add(
+            TargetInfo(
+                null,
+                R.string.tour_last_step_description,
             )
+        )
+        return targetInfos
+    }
 
-            targetInfos.add(
-                TargetInfo(
-                    binding.mainPreferencesAdBlockingInclude.mainPreferencesPrimarySubscriptions,
-                    R.string.tour_add_languages
-                )
-            )
+    /**
+     * Create last target with view
+     *
+     * @param context Context
+     * @param tourDialogLayout View with tour dialog layout
+     * @param popUpWindow PopupWindow
+     * @param resId Resource id with description of the last step
+     */
+    private fun createLastTarget(
+        context: Context,
+        tourDialogLayout: View,
+        popUpWindow: PopupWindow,
+        resId: Int
+    ): Target {
+        val root = FrameLayout(context)
+        return Target.Builder()
+            .setOverlay(root)
+            .setOnTargetListener(object : OnTargetListener {
+                override fun onStarted() {
+                    tourDialogLayout.findViewById<View>(R.id.tour_next_button).visibility = View.GONE
+                    tourDialogLayout.findViewById<View>(R.id.tour_skip_button).visibility = View.GONE
+                    tourDialogLayout.findViewById<View>(R.id.tour_last_step_done_button).visibility =
+                        View.VISIBLE
+                    tourDialogLayout.findViewById<TextView>(R.id.tour_dialog_text).setText(resId)
+                    popUpWindow.showAtLocation(root, Gravity.CENTER, 0, 0)
+                }
 
-            targetInfos.add(
-                TargetInfo(
-                    binding.mainPreferencesAdBlockingInclude.mainPreferencesOtherSubscriptions,
-                    R.string.tour_disable_social_media_tracking
-                )
-            )
+                override fun onEnded() {
+                    Timber.i("Tour end")
+                }
+            })
+            .build()
+    }
 
-            if (BuildConfig.FLAVOR_product != BuildConfig.FLAVOR_CRYSTAL) {
-                targetInfos.add(
-                    TargetInfo(
-                        binding.mainPreferencesAdBlockingInclude.mainPreferencesAllowlist,
-                        R.string.tour_allowlist,
+    /**
+     * Create target with view to be highlighted
+     *
+     * @param context Context
+     * @param tourDialogLayout View with tour dialog layout
+     * @param popUpWindow PopupWindow
+     * @param highLightView View that is going to be highlighted
+     * @param resId Resource id with description for highlighted view
+     */
+    private fun createTargetWithHighlight(
+        context: Context, tourDialogLayout: View, popUpWindow: PopupWindow,
+        highLightView: View, resId: Int
+    ): Target {
+        val root = FrameLayout(context)
+        return Target.Builder()
+            .setOverlay(root)
+            .setOnTargetListener(object : OnTargetListener {
+                override fun onStarted() {
+                    tourDialogLayout.findViewById<TextView>(R.id.tour_dialog_text).setText(resId)
+                    popUpWindow.showAsDropDown(
+                        highLightView,
+                        highLightView.width,
+                        Constants.Y_OFFSET,
                     )
-                )
-            }
+                }
 
-            targetInfos.add(
-                TargetInfo(
-                    null,
-                    R.string.tour_last_step_description,
-                )
-            )
-            return targetInfos
-        }
-
-        /**
-         * Create last target with view
-         *
-         * @param context Context
-         * @param tourDialogLayout View with tour dialog layout
-         * @param popUpWindow PopupWindow
-         * @param resId Resource id with description of the last step
-         */
-        private fun createLastTarget(
-            context: Context,
-            tourDialogLayout: View,
-            popUpWindow: PopupWindow,
-            resId: Int
-        ): Target {
-            val root = FrameLayout(context)
-            return Target.Builder()
-                .setOverlay(root)
-                .setOnTargetListener(object : OnTargetListener {
-                    override fun onStarted() {
-                        tourDialogLayout.findViewById<View>(R.id.tour_next_button).visibility = View.GONE
-                        tourDialogLayout.findViewById<View>(R.id.tour_skip_button).visibility = View.GONE
-                        tourDialogLayout.findViewById<View>(R.id.tour_last_step_done_button).visibility =
-                            View.VISIBLE
-                        tourDialogLayout.findViewById<TextView>(R.id.tour_dialog_text).setText(resId)
-                        popUpWindow.showAtLocation(root, Gravity.CENTER, 0, 0)
-                    }
-
-                    override fun onEnded() {
-                        Timber.i("Tour end")
-                    }
-                })
-                .build()
-        }
-
-        /**
-         * Create target with view to be highlighted
-         *
-         * @param context Context
-         * @param tourDialogLayout View with tour dialog layout
-         * @param popUpWindow PopupWindow
-         * @param highLightView View that is going to be highlighted
-         * @param resId Resource id with description for highlighted view
-         */
-        private fun createTargetWithHighlight(
-            context: Context, tourDialogLayout: View, popUpWindow: PopupWindow,
-            highLightView: View, resId: Int
-        ): Target {
-            val root = FrameLayout(context)
-            return Target.Builder()
-                .setOverlay(root)
-                .setOnTargetListener(object : OnTargetListener {
-                    override fun onStarted() {
-                        tourDialogLayout.findViewById<TextView>(R.id.tour_dialog_text).setText(resId)
-                        popUpWindow.showAsDropDown(
-                            highLightView,
-                            highLightView.width,
-                            Constants.Y_OFFSET,
-                        )
-                    }
-
-                    override fun onEnded() {
-                        Timber.i("Step ended")
-                    }
-                })
-                .setHighlightView(highLightView)
-                .build()
-        }
+                override fun onEnded() {
+                    Timber.i("Step ended")
+                }
+            })
+            .setHighlightView(highLightView)
+            .build()
     }
 
     object Constants {

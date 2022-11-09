@@ -37,9 +37,10 @@ import org.adblockplus.adblockplussbrowser.base.widget.LockableScrollView
 import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentMainPreferencesBinding
+import org.adblockplus.adblockplussbrowser.preferences.ui.tourguide.TargetInfo
 import org.adblockplus.adblockplussbrowser.preferences.ui.tourguide.TourGuide
 import org.adblockplus.adblockplussbrowser.preferences.ui.tourguide.TourGuideConfiguration
-import org.adblockplus.adblockplussbrowser.preferences.ui.tourguide.TourGuideConfiguration.Companion.createTargetInfos
+import org.adblockplus.adblockplussbrowser.preferences.ui.tourguide.TourGuideConfiguration.createTargetInfos
 import org.adblockplus.adblockplussbrowser.preferences.ui.tourguide.TourGuideListener
 import org.adblockplus.adblockplussbrowser.preferences.ui.updates.UpdateSubscriptionsViewModel
 import timber.log.Timber
@@ -51,7 +52,7 @@ internal class MainPreferencesFragment :
 
     private val viewModel: MainPreferencesViewModel by activityViewModels()
     private val updateViewModel: UpdateSubscriptionsViewModel by activityViewModels()
-    private lateinit var targetInfos: ArrayList<TourGuideConfiguration.TargetInfo>
+    private lateinit var targetInfos: ArrayList<TargetInfo>
     private lateinit var tourGuide: TourGuide
     private lateinit var popupWindow: PopupWindow
 
