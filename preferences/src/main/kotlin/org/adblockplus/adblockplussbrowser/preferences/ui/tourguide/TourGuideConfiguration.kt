@@ -44,11 +44,7 @@ object TourGuideConfiguration {
     ): Target {
         return if (targetInfo.highLightView != null) {
             createTargetWithHighlight(
-                context,
-                tourDialogLayout,
-                popUpWindow,
-                targetInfo.highLightView,
-                targetInfo.resId
+                context, tourDialogLayout, popUpWindow, targetInfo.highLightView, targetInfo.resId
             )
         } else {
             createLastTarget(context, tourDialogLayout, popUpWindow, targetInfo.resId)
@@ -109,29 +105,22 @@ object TourGuideConfiguration {
      * @param resId Resource id with description of the last step
      */
     private fun createLastTarget(
-        context: Context,
-        tourDialogLayout: View,
-        popUpWindow: PopupWindow,
-        resId: Int
+        context: Context, tourDialogLayout: View, popUpWindow: PopupWindow, resId: Int
     ): Target {
         val root = FrameLayout(context)
-        return Target.Builder()
-            .setOverlay(root)
-            .setOnTargetListener(object : OnTargetListener {
-                override fun onStarted() {
-                    tourDialogLayout.findViewById<View>(R.id.tour_next_button).visibility = View.GONE
-                    tourDialogLayout.findViewById<View>(R.id.tour_skip_button).visibility = View.GONE
-                    tourDialogLayout.findViewById<View>(R.id.tour_last_step_done_button).visibility =
-                        View.VISIBLE
-                    tourDialogLayout.findViewById<TextView>(R.id.tour_dialog_text).setText(resId)
-                    popUpWindow.showAtLocation(root, Gravity.CENTER, 0, 0)
-                }
+        return Target(null, root, object : OnTargetListener {
+            override fun onStarted() {
+                tourDialogLayout.findViewById<View>(R.id.tour_next_button).visibility = View.GONE
+                tourDialogLayout.findViewById<View>(R.id.tour_skip_button).visibility = View.GONE
+                tourDialogLayout.findViewById<View>(R.id.tour_last_step_done_button).visibility = View.VISIBLE
+                tourDialogLayout.findViewById<TextView>(R.id.tour_dialog_text).setText(resId)
+                popUpWindow.showAtLocation(root, Gravity.CENTER, 0, 0)
+            }
 
-                override fun onEnded() {
-                    Timber.i("Tour end")
-                }
-            })
-            .build()
+            override fun onEnded() {
+                Timber.i("Tour end")
+            }
+        })
     }
 
     /**
@@ -144,28 +133,23 @@ object TourGuideConfiguration {
      * @param resId Resource id with description for highlighted view
      */
     private fun createTargetWithHighlight(
-        context: Context, tourDialogLayout: View, popUpWindow: PopupWindow,
-        highLightView: View, resId: Int
+        context: Context, tourDialogLayout: View, popUpWindow: PopupWindow, highLightView: View, resId: Int
     ): Target {
         val root = FrameLayout(context)
-        return Target.Builder()
-            .setOverlay(root)
-            .setOnTargetListener(object : OnTargetListener {
-                override fun onStarted() {
-                    tourDialogLayout.findViewById<TextView>(R.id.tour_dialog_text).setText(resId)
-                    popUpWindow.showAsDropDown(
-                        highLightView,
-                        highLightView.width,
-                        Constants.Y_OFFSET,
-                    )
-                }
+        return Target(highLightView, root, object : OnTargetListener {
+            override fun onStarted() {
+                tourDialogLayout.findViewById<TextView>(R.id.tour_dialog_text).setText(resId)
+                popUpWindow.showAsDropDown(
+                    highLightView,
+                    highLightView.width,
+                    Constants.Y_OFFSET,
+                )
+            }
 
-                override fun onEnded() {
-                    Timber.i("Step ended")
-                }
-            })
-            .setHighlightView(highLightView)
-            .build()
+            override fun onEnded() {
+                Timber.i("Step ended")
+            }
+        })
     }
 
     object Constants {

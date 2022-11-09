@@ -22,45 +22,8 @@ import android.view.View
 /**
  * Target represents the spot that tour guide will cast.
  */
-class Target(
+data class Target(
     val highlightView: View?,
     val overlay: View?,
     val listener: OnTargetListener?
-) {
-
-    /**
-     * [Builder] to build a [Target].
-     * All parameters should be set in this [Builder].
-     */
-    class Builder {
-        private var overlay: View? = null
-        private var listener: OnTargetListener? = null
-        private var highlightView: View? = null
-
-
-        fun setHighlightView(highlightView: View): Builder = apply {
-            this.highlightView = highlightView
-        }
-
-
-        /**
-         * Sets [overlay] to be laid out to describe [Target].
-         */
-        fun setOverlay(overlay: View): Builder = apply {
-            this.overlay = overlay
-        }
-
-        /**
-         * Sets [OnTargetListener] to notify the state of [Target].
-         */
-        fun setOnTargetListener(listener: OnTargetListener): Builder = apply {
-            this.listener = listener
-        }
-
-        fun build() = Target(
-            highlightView = highlightView,
-            overlay = overlay,
-            listener = listener
-        )
-    }
-}
+)
