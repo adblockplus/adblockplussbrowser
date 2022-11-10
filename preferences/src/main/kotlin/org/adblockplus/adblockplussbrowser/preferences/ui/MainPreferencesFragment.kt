@@ -17,6 +17,7 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui
 
+import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +28,8 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.checkbox.MaterialCheckBox
@@ -58,6 +61,7 @@ internal class MainPreferencesFragment :
 
     override fun onBindView(binding: FragmentMainPreferencesBinding) {
         binding.viewModel = viewModel
+        lifecycle.addObserver(lifecycleEventObserver)
         val supportActionBar = (activity as AppCompatActivity).supportActionBar
         supportActionBar?.subtitle = getString(R.string.app_subtitle)
 
@@ -397,20 +401,17 @@ internal class MainPreferencesFragment :
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-        if (viewModel.isTourStarted) {
-            popupWindow.dismiss()
-            tourGuide.finish()
-        }
-    }
-
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.checkLanguagesOnboarding()
-        if (viewModel.isTourStarted) {
-            startGuide(binding!!)
+    private val lifecycleEventObserver = LifecycleEventObserver { _, event ->
+        if (event == Lifecycle.Event.ON_RESUME) {
+            viewModel.checkLanguagesOnboarding()
+            if (viewModel.isTourStarted) {
+                startGuide(binding!!)
+            }
+        } else if (event == Lifecycle.Event.ON_PAUSE) {
+            if (viewModel.isTourStarted) {
+                popupWindow.dismiss()
+                tourGuide.finish()
+            }
         }
     }
 }
