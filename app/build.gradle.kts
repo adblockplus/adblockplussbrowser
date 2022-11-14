@@ -33,6 +33,23 @@ android {
     defaultConfig {
         versionCode = versionCode()
         versionName = "0.0.0"
+        resourceConfigurations.add("en")
+        resourceConfigurations.add("ar")
+        resourceConfigurations.add("de")
+        resourceConfigurations.add("de")
+        resourceConfigurations.add("el")
+        resourceConfigurations.add("es")
+        resourceConfigurations.add("fr")
+        resourceConfigurations.add("hu")
+        resourceConfigurations.add("it")
+        resourceConfigurations.add("ja")
+        resourceConfigurations.add("ko")
+        resourceConfigurations.add("nl")
+        resourceConfigurations.add("pl")
+        resourceConfigurations.add("pt")
+        resourceConfigurations.add("ru")
+        resourceConfigurations.add("tr")
+        resourceConfigurations.add("zh-rCN")
     }
 
     createFlavorsConfig()
