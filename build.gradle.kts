@@ -100,7 +100,7 @@ afterEvaluate {
         violationRules {
             rule {
                 limit {
-                    minimum = 0.48f.toBigDecimal()
+                    minimum = 0.46F.toBigDecimal()
                 }
             }
         }

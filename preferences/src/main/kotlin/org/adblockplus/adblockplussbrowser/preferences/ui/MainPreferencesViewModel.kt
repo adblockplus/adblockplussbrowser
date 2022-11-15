@@ -49,6 +49,9 @@ internal class MainPreferencesViewModel @Inject constructor(
         settings.analyticsEnabled
     }.asLiveData()
 
+    var currentTargetIndex = 0
+    var isTourStarted = false
+
     fun toggleAnalytics() {
         viewModelScope.launch {
             when (shareEvents.value) {

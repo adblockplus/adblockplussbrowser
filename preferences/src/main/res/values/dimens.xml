@@ -20,6 +20,7 @@
 
     <dimen name="preferences_group_bg_corner_radius">20dp</dimen>
     <dimen name="margin">16dp</dimen>
+    <dimen name="tour_dialog_margin">4dp</dimen>
     <dimen name="touch_size">48dp</dimen>
 
 </resources>
