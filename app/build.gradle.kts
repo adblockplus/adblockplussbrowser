@@ -33,7 +33,8 @@ android {
     defaultConfig {
         versionCode = versionCode()
         versionName = "0.0.0"
-        val langugesSet = setOf("en", "ar", "de", "el", "es", "fr", "hu", "it", "ja", "ko", "nl", "pl", "pt", "ru", "tr", "zh-rCN")
+        val langugesSet =
+            setOf("en", "ar", "de", "el", "es", "fr", "hu", "it", "ja", "ko", "nl", "pl", "pt", "ru", "tr", "zh-rCN")
         resourceConfigurations.addAll(langugesSet)
     }
 
