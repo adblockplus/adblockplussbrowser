@@ -27,18 +27,23 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.checkbox.MaterialCheckBox
-import com.takusemba.spotlight.OnSpotlightListener
-import com.takusemba.spotlight.Spotlight
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
+import org.adblockplus.adblockplussbrowser.base.widget.LockableScrollView
 import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentMainPreferencesBinding
-import org.adblockplus.adblockplussbrowser.preferences.ui.spotlight.SpotlightConfiguration
+import org.adblockplus.adblockplussbrowser.preferences.ui.tourguide.TargetInfo
+import org.adblockplus.adblockplussbrowser.preferences.ui.tourguide.TourGuide
+import org.adblockplus.adblockplussbrowser.preferences.ui.tourguide.TourGuideConfiguration
+import org.adblockplus.adblockplussbrowser.preferences.ui.tourguide.TourGuideConfiguration.createTargetInfos
+import org.adblockplus.adblockplussbrowser.preferences.ui.tourguide.TourGuideListener
 import org.adblockplus.adblockplussbrowser.preferences.ui.updates.UpdateSubscriptionsViewModel
 import timber.log.Timber
 
@@ -48,17 +53,14 @@ internal class MainPreferencesFragment :
     DataBindingFragment<FragmentMainPreferencesBinding>(R.layout.fragment_main_preferences) {
 
     private val viewModel: MainPreferencesViewModel by activityViewModels()
-
-    // Lazy loading the UpdateSubscriptionsViewModel so it will only be used for crystal flavor here
     private val updateViewModel: UpdateSubscriptionsViewModel by activityViewModels()
-
-    /* This value will increment as the user goes through the start guide and
-        will be used to indicate last seen step */
-    private var startGuideLastStep: Int = 1
-    private var startGuideTotalSteps: Int = 1
+    private lateinit var targetInfos: ArrayList<TargetInfo>
+    private lateinit var tourGuide: TourGuide
+    private lateinit var popupWindow: PopupWindow
 
     override fun onBindView(binding: FragmentMainPreferencesBinding) {
         binding.viewModel = viewModel
+        lifecycle.addObserver(lifecycleEventObserver)
         val supportActionBar = (activity as AppCompatActivity).supportActionBar
         supportActionBar?.subtitle = getString(R.string.app_subtitle)
 
@@ -77,7 +79,6 @@ internal class MainPreferencesFragment :
         bindAdditionalLanguage(binding, supportActionBar, lifecycleOwner)
         bindOnboardingLanguages(binding, lifecycleOwner)
         bindAcceptableAds(binding, supportActionBar, lifecycleOwner)
-        bindGuide(binding, lifecycleOwner)
         bindAbout(binding, supportActionBar, lifecycleOwner)
 
         if (BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_ABP) {
@@ -95,6 +96,8 @@ internal class MainPreferencesFragment :
                 View.GONE
             binding.mainPreferencesShareEventsInclude.mainPreferencesDivider1.visibility = View.GONE
         }
+
+        bindGuide(binding, lifecycleOwner)
     }
 
     private fun bindAbout(
@@ -259,75 +262,80 @@ internal class MainPreferencesFragment :
     ) {
         binding.mainPreferencesGuideInclude.mainPreferencesGuideInclude.setDebounceOnClickListener(
             {
-                viewModel.logStartGuideStarted()
-
-                // Prepare start guide steps
-                val overlayRoot = FrameLayout(requireContext())
-                val tourDialogLayout = layoutInflater.inflate(R.layout.tour_dialog, overlayRoot)
-                val allowlistView =
-                    binding.mainPreferencesAdBlockingInclude.preferencesAllowlistTitleText
-                val disableSocialMediaView =
-                    binding.mainPreferencesAdBlockingInclude.mainPreferencesOtherSubscriptions
-                if (BuildConfig.FLAVOR_product == BuildConfig.FLAVOR_CRYSTAL) {
-                    binding.mainPreferencesScroll.scrollTo(0, disableSocialMediaView.y.toInt())
-                } else {
-                    binding.mainPreferencesScroll.scrollTo(0, allowlistView.y.toInt())
-                }
-                val popUpWindow = PopupWindow(
-                    tourDialogLayout,
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    SpotlightConfiguration.Constants.POPUP_WINDOW_HEIGHT
-                )
-                popUpWindow.isOutsideTouchable = true
-
-                val targets = SpotlightConfiguration.prepareStartGuideSteps(
-                    binding,
-                    requireContext(),
-                    tourDialogLayout,
-                    popUpWindow
-                )
-
-                // Always restart the last step value to the first step
-                startGuideLastStep = 1
-                startGuideTotalSteps = targets.size
-
-                // Create spotlight
-                val spotlight = Spotlight.Builder(requireActivity())
-                    .setTargets(targets)
-                    .setBackgroundColorRes(R.color.spotlight_background)
-                    .setOnSpotlightListener(object : OnSpotlightListener {
-                        override fun onStarted() {
-                            Timber.i("Spotlight started")
-                            binding.mainPreferencesScroll.setScrollable(false)
-                        }
-
-                        override fun onEnded() {
-                            Timber.i("Spotlight ended")
-                            binding.mainPreferencesScroll.setScrollable(true)
-                        }
-                    })
-                    .build()
-
-                setClickListeners(spotlight, tourDialogLayout, popUpWindow)
-                // Start Spotlight
-                spotlight.start()
+                viewModel.isTourStarted = true
+                startGuide(binding)
             },
             lifecycleOwner
         )
     }
 
-    private fun setClickListeners(
-        spotlight: Spotlight,
+    private fun startGuide(binding: FragmentMainPreferencesBinding) {
+        viewModel.logStartGuideStarted()
+
+        // Prepare start guide steps
+        val overlayRoot = FrameLayout(requireContext())
+        val tourDialogLayout = layoutInflater.inflate(R.layout.tour_dialog, overlayRoot)
+        val mainPreferencesScroll = binding.mainPreferencesScroll
+        targetInfos = createTargetInfos(binding)
+        scrollToHighlightedView(mainPreferencesScroll)
+
+        popupWindow = PopupWindow(
+            tourDialogLayout,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            TourGuideConfiguration.Constants.POPUP_WINDOW_HEIGHT
+        )
+        popupWindow.isOutsideTouchable = true
+
+        val target = TourGuideConfiguration.createTarget(
+            targetInfos[viewModel.currentTargetIndex],
+            requireContext(),
+            tourDialogLayout,
+            popupWindow
+        )
+
+        createTourGuide(target, binding, tourDialogLayout, popupWindow, mainPreferencesScroll)
+
+    }
+
+    private fun createTourGuide(
+        target: org.adblockplus.adblockplussbrowser.preferences.ui.tourguide.Target,
+        binding: FragmentMainPreferencesBinding,
         tourDialogLayout: View,
-        popupWindow: PopupWindow
+        popupWindow: PopupWindow,
+        mainPreferencesScroll: LockableScrollView,
+    ) {
+        tourGuide = TourGuide.Builder(requireActivity())
+            .setTarget(target)
+            .setBackgroundColorRes(R.color.tour_guide_background)
+            .setOnTourGuideListener(object : TourGuideListener {
+                override fun onStarted() {
+                    Timber.i("Tour guide started")
+                    binding.mainPreferencesScroll.setScrollable(false)
+                }
+
+                override fun onEnded() {
+                    Timber.i("Tour guide ended")
+                    binding.mainPreferencesScroll.setScrollable(true)
+                }
+            }).build()
+        setClickListeners(binding, tourGuide, tourDialogLayout, popupWindow, mainPreferencesScroll)
+        tourGuide.start()
+    }
+
+    private fun setClickListeners(
+        binding: FragmentMainPreferencesBinding,
+        tourGuide: TourGuide,
+        tourDialogLayout: View,
+        popupWindow: PopupWindow,
+        mainPreferencesScroll: LockableScrollView,
     ) {
 
         // If the user clicks outside the dialog, we stop the start guide
         popupWindow.setTouchInterceptor { v, event ->
             v.performClick()
-            if(event.action == MotionEvent.ACTION_OUTSIDE) {
+            if (event.action == MotionEvent.ACTION_OUTSIDE) {
                 skipTour()
-                spotlight.finish()
+                tourGuide.finish()
             }
             false
         }
@@ -341,36 +349,68 @@ internal class MainPreferencesFragment :
         }
 
         tourDialogLayout.findViewById<View>(R.id.tour_next_button).setOnClickListener {
-            // Increment step count
-            startGuideLastStep += 1
+            viewModel.currentTargetIndex++
+            Timber.i("viewModel.currentTargetIndex: ${viewModel.currentTargetIndex}")
             popupWindow.dismiss()
-            spotlight.next()
+            tourGuide.finish()
+            scrollToHighlightedView(mainPreferencesScroll)
+            val target = TourGuideConfiguration.createTarget(
+                targetInfos[viewModel.currentTargetIndex],
+                requireContext(),
+                tourDialogLayout,
+                popupWindow
+            )
+            createTourGuide(target, binding, tourDialogLayout, popupWindow, mainPreferencesScroll)
         }
+
         tourDialogLayout.findViewById<View>(R.id.tour_skip_button).setOnClickListener {
             skipTour()
             popupWindow.dismiss()
-            spotlight.finish()
+            tourGuide.finish()
         }
-        tourDialogLayout.findViewById<View>(R.id.tour_last_step_done_button).setOnClickListener{
+        tourDialogLayout.findViewById<View>(R.id.tour_last_step_done_button).setOnClickListener {
             viewModel.logStartGuideCompleted()
+            viewModel.currentTargetIndex = 0
+            viewModel.isTourStarted = false
             popupWindow.dismiss()
-            spotlight.finish()
+            tourGuide.finish()
+        }
+    }
+
+    private fun scrollToHighlightedView(mainPreferencesScroll: LockableScrollView) {
+        val highLightView = targetInfos[viewModel.currentTargetIndex].highLightView
+        highLightView?.let {
+            mainPreferencesScroll.scrollTo(
+                0,
+                highLightView.y.toInt()
+            )
         }
     }
 
     private fun skipTour() {
-        val skippedAt = startGuideLastStep
-        if (skippedAt == startGuideTotalSteps) {
+        viewModel.currentTargetIndex = 0
+        val skippedAt = viewModel.currentTargetIndex + 1
+        if (skippedAt == targetInfos.size) {
             /* If the user clicks outside the dialog in the last step he went through the whole guide,
             so we can assume the guide is completed */
             viewModel.logStartGuideCompleted()
         } else {
+            viewModel.isTourStarted = false
             viewModel.logStartGuideSkipped(step = skippedAt)
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.checkLanguagesOnboarding()
+    private val lifecycleEventObserver = LifecycleEventObserver { _, event ->
+        if (event == Lifecycle.Event.ON_RESUME) {
+            viewModel.checkLanguagesOnboarding()
+            if (viewModel.isTourStarted) {
+                startGuide(binding!!)
+            }
+        } else if (event == Lifecycle.Event.ON_PAUSE) {
+            if (viewModel.isTourStarted) {
+                popupWindow.dismiss()
+                tourGuide.finish()
+            }
+        }
     }
 }
