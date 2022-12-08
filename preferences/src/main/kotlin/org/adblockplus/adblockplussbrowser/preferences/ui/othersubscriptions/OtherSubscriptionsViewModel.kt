@@ -209,7 +209,7 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
                     addCustomFilterFile(filePath, context)
                 }
             } else {
-                analyticsProvider.logEvent(AnalyticsEvent.DEVICE_FILE_MANAGER_NOT_SUPPORTED_OR_CANCELED)
+                analyticsProvider.logEvent(AnalyticsEvent.FILE_MANAGER_NOT_SUPPORTED_OR_CANCELED)
                 _activityCancelledFlow.emit(Unit)
             }
         }

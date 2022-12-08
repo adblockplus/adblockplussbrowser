@@ -216,7 +216,7 @@ class OtherSubscriptionsViewModelTest {
             otherSubscriptionsViewModel.handleFilePickingResult(activityResult, applicationContext)
             assertNotNull(otherSubscriptionsViewModel.activityCancelledFlow.first())
         }
-        assertEquals(AnalyticsEvent.DEVICE_FILE_MANAGER_NOT_SUPPORTED_OR_CANCELED, analyticsProvider.event)
+        assertEquals(AnalyticsEvent.FILE_MANAGER_NOT_SUPPORTED_OR_CANCELED, analyticsProvider.event)
     }
 
     @Test
