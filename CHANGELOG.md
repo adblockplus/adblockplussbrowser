@@ -4,6 +4,16 @@ All notable changes to Adblock Plus for Samsung Internet will be documented in t
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.5.0] - 2022-12-09
+### Added
+- Issue reporter
+
+### Changed
+- Managing directors
+
+### Fixed
+- limited file manager event name length to 40 char
+
 ## [2.4.0] - 2022-09-28
 ### Fixed
 - Crashes in MainPreferencesFragment
