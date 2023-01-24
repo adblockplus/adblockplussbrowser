@@ -249,6 +249,7 @@ abp_regression:
   rules:
     - if: '$FORCE_REGRESSION == "true"'
     - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"'
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
 
 ab_regression:
   extends: .template:automation
@@ -264,6 +265,7 @@ ab_regression:
   rules:
     - if: '$FORCE_REGRESSION == "true"'
     - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"'
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
 
 crystal_regression:
   extends: .template:automation
@@ -279,6 +281,7 @@ crystal_regression:
   rules:
     - if: '$FORCE_REGRESSION == "true"'
     - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"'
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
 
 functional_tests:
   extends: .template:automation
@@ -292,7 +295,7 @@ functional_tests:
     GRADLE_TASK: "functional"
   rules:
     - if: '$FORCE_FUNCTIONAL == "true"'
-    - if: '$CI_PIPELINE_SOURCE == "schedule" && $SCHEDULE_TYPE == "functional_tests"'
+    #- if: '$CI_PIPELINE_SOURCE == "schedule" && $SCHEDULE_TYPE == "functional_tests"'
 
 samsung_filter_tests:
   stage: automated_tests
