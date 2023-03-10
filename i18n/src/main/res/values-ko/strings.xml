@@ -38,7 +38,7 @@
     <string name="acceptable_ads_distinction_title">구분</string>
     <string name="acceptable_ads_distinction_description">허용되는 광고로 표시되는 광고는 항상 분명하게 광고로 표시됩니다</string>
     <string name="acceptable_ads_size_title">사이즈</string>
-    <string name="acceptable_ads_size_description">초기 로딩 시 화면의 15% 미만을 차지합니다</string>
+    <string name="acceptable_ads_size_description">초기 로딩 시 화면의 50% 미만을 차지합니다</string>
 
     <!-- onboarding -->
     <string name="onboarding_welcome_header_title1">성가신 광고 차단에</string>

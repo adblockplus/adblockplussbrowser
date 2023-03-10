@@ -38,7 +38,7 @@
     <string name="acceptable_ads_distinction_title">التمييز</string>
     <string name="acceptable_ads_distinction_description">الإعلانات المعروضة ضمن "الإعلانات المقبولة" يتم دائمًا تمييزها بوضوح على أنها إعلانات</string>
     <string name="acceptable_ads_size_title">الحجم</string>
-    <string name="acceptable_ads_size_description">يكون نطاقها أقل من 15% من الشاشة عند التحميل المبدئي</string>
+    <string name="acceptable_ads_size_description">يكون نطاقها أقل من 50% من الشاشة عند التحميل المبدئي</string>
 
     <!-- onboarding -->
     <string name="onboarding_welcome_header_title1">مرحبًا بك إلى</string>

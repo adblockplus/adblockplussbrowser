@@ -38,7 +38,7 @@
     <string name="acceptable_ads_distinction_title">Выделение</string>
     <string name="acceptable_ads_distinction_description">Допустимая реклама всегда будет четко обозначена как реклама</string>
     <string name="acceptable_ads_size_title">Размер</string>
-    <string name="acceptable_ads_size_description">Занимает не более 15% площади экрана при начальной загрузке</string>
+    <string name="acceptable_ads_size_description">Занимает не более 50% площади экрана при начальной загрузке</string>
 
     <!-- onboarding -->
     <string name="onboarding_welcome_header_title1">Добро пожаловать в</string>

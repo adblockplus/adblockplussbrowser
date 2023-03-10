@@ -15,7 +15,7 @@
  along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- app-->
     <string name="app_name">ABP for Samsung Internet</string>
     <string name="app_subtitle">for Samsung Internet</string>
@@ -38,7 +38,9 @@
     <string name="acceptable_ads_distinction_title">Distinction</string>
     <string name="acceptable_ads_distinction_description">Ads shown with Acceptable Ads are always clearly marked as ads</string>
     <string name="acceptable_ads_size_title">Size</string>
-    <string name="acceptable_ads_size_description">Span less than 15% of the screen upon initial load</string>
+    <string name="acceptable_ads_size_description">Span less than 50% of the screen upon initial load</string>
+    <string name="acceptable_ads_standard_description" tools:ignore="MissingTranslation">See a more detailed explanation of the </string>
+    <string name="acceptable_ads_standard_link" tools:ignore="MissingTranslation">Acceptable Ads Standard</string>
 
     <!-- onboarding -->
     <string name="onboarding_welcome_header_title1">Welcome to</string>

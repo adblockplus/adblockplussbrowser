@@ -38,7 +38,7 @@
     <string name="acceptable_ads_distinction_title">Onderscheid</string>
     <string name="acceptable_ads_distinction_description">Advertenties die worden getoond bij Acceptabele advertenties worden altijd duidelijk gemarkeerd als advertenties</string>
     <string name="acceptable_ads_size_title">Grootte</string>
-    <string name="acceptable_ads_size_description">Beslaan minder dan 15% van het scherm bij het eerste laden</string>
+    <string name="acceptable_ads_size_description">Beslaan minder dan 50% van het scherm bij het eerste laden</string>
 
     <!-- onboarding -->
     <string name="onboarding_welcome_header_title1">Welkom bij</string>

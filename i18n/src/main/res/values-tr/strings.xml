@@ -38,7 +38,7 @@
     <string name="acceptable_ads_distinction_title">Ayrım</string>
     <string name="acceptable_ads_distinction_description">Kabul Edilebilir Reklamlarla gösterilen reklamlar her zaman açık bir şekilde reklam olarak işaretlenir</string>
     <string name="acceptable_ads_size_title">Boyut</string>
-    <string name="acceptable_ads_size_description">İlk yüklemede ekranın %15\'inden azını kaplar</string>
+    <string name="acceptable_ads_size_description">İlk yüklemede ekranın %50\'inden azını kaplar</string>
 
     <!-- onboarding -->
     <string name="onboarding_welcome_header_title1">Hoş geldiniz</string>

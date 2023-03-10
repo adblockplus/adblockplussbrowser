@@ -38,7 +38,7 @@
     <string name="acceptable_ads_distinction_title">Distinción</string>
     <string name="acceptable_ads_distinction_description">Los anuncios mostrados con Anuncios Aceptables están siempre señalados claramente como anuncios</string>
     <string name="acceptable_ads_size_title">Tamaño</string>
-    <string name="acceptable_ads_size_description">Ocupan menos del 15% de la pantalla en la carga inicial</string>
+    <string name="acceptable_ads_size_description">Ocupan menos del 50% de la pantalla en la carga inicial</string>
 
     <!-- onboarding -->
     <string name="onboarding_welcome_header_title1">Bienvenido/a a</string>

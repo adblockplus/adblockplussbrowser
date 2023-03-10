@@ -38,7 +38,7 @@
     <string name="acceptable_ads_distinction_title">Distinzione</string>
     <string name="acceptable_ads_distinction_description">Gli annunci mostrati come Annunci Accettabili sono sempre chiaramente contrassegnati come annunci</string>
     <string name="acceptable_ads_size_title">Dimensioni</string>
-    <string name="acceptable_ads_size_description">Coprono meno del 15% dello schermo al momento del caricamento iniziale</string>      <!-- onboarding -->     <string name="onboarding_welcome_header_title1">Ti diamo il benvenuto a</string>
+    <string name="acceptable_ads_size_description">Coprono meno del 50% dello schermo al momento del caricamento iniziale</string>      <!-- onboarding -->     <string name="onboarding_welcome_header_title1">Ti diamo il benvenuto a</string>
     <string name="onboarding_welcome_block_ads_title">Blocca gli annunci fastidiosi</string>
     <string name="onboarding_welcome_block_ads_description">Naviga senza annunci e supporta i creatori di contenuti tramite gli Annunci Accettabili</string>
     <string name="onboarding_welcome_tracking_protection_title">Protezione dal tracciamento</string>
