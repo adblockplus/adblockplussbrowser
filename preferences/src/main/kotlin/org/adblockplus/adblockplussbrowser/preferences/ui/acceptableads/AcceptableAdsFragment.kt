@@ -52,6 +52,7 @@ internal class AcceptableAdsFragment :
         binding.acceptableAdsSelectionBlock.acceptableAdsDisabled.text = SpannableStringBuilder()
             .bold { append(getString(R.string.acceptable_ads_disabled)) }
 
+        // Bind AA Standard redirection
         val acceptableAdsStandardDescription = getString(R.string.acceptable_ads_standard_description)
         val acceptableAdsStandardLink = SpannableString(getString(R.string.acceptable_ads_standard_link))
         val clickableSpan = object : ClickableSpan() {

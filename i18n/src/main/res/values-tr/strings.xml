@@ -34,11 +34,13 @@
     <string name="acceptable_ads_fair_standard_title">Adil standart</string>
     <string name="acceptable_ads_fair_standard_description">Kabul Edilebilir Reklamlarla gösterilen reklamlar hiçbir zaman görüntülü, sesli ya da açılır reklamlar değildir</string>
     <string name="acceptable_ads_placement_title">Yerleştirme</string>
-    <string name="acceptable_ads_placement_description">Doğal okuma akışını bozmaz</string>
+    <string name="acceptable_ads_placement_description">Doğal okuma akışında büyük bir kesinti olmaz</string>
     <string name="acceptable_ads_distinction_title">Ayrım</string>
     <string name="acceptable_ads_distinction_description">Kabul Edilebilir Reklamlarla gösterilen reklamlar her zaman açık bir şekilde reklam olarak işaretlenir</string>
     <string name="acceptable_ads_size_title">Boyut</string>
     <string name="acceptable_ads_size_description">İlk yüklemede ekranın %50\'inden azını kaplar</string>
+    <string name="acceptable_ads_standard_description">Daha ayrıntılı bir açıklamaya bakın</string>
+    <string name="acceptable_ads_standard_link">Kabul Edilebilir Reklamlar Standardı</string>
 
     <!-- onboarding -->
     <string name="onboarding_welcome_header_title1">Hoş geldiniz</string>

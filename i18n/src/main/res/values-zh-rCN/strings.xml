@@ -34,11 +34,13 @@
     <string name="acceptable_ads_fair_standard_title">公平标准</string>
     <string name="acceptable_ads_fair_standard_description">随可接受广告显示的广告永远不会是视频、声音或弹出广告</string>
     <string name="acceptable_ads_placement_title">放置</string>
-    <string name="acceptable_ads_placement_description">不干扰正常的阅读流</string>
+    <string name="acceptable_ads_placement_description">不会对自然阅读流程造成重大干扰</string>
     <string name="acceptable_ads_distinction_title">区分</string>
     <string name="acceptable_ads_distinction_description">随可接受广告显示的广告始终明确标示为广告</string>
     <string name="acceptable_ads_size_title">大小</string>
     <string name="acceptable_ads_size_description">初始启动时占据不到 50% 的屏幕空间</string>
+    <string name="acceptable_ads_standard_description">查看更详细的解释</string>
+    <string name="acceptable_ads_standard_link">可接受的广告标准</string>
 
     <!-- onboarding -->
     <string name="onboarding_welcome_header_title1">欢迎</string>

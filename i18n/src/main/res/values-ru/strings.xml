@@ -34,11 +34,13 @@
     <string name="acceptable_ads_fair_standard_title">Справедливый критерий</string>
     <string name="acceptable_ads_fair_standard_description">Допустимая реклама никогда не включает в себя видеорекламу, звуковую и всплывающую рекламу</string>
     <string name="acceptable_ads_placement_title">Размещение</string>
-    <string name="acceptable_ads_placement_description">Не мешает нормальному чтению текста</string>
+    <string name="acceptable_ads_placement_description">Нет серьезных нарушений естественного потока чтения</string>
     <string name="acceptable_ads_distinction_title">Выделение</string>
     <string name="acceptable_ads_distinction_description">Допустимая реклама всегда будет четко обозначена как реклама</string>
     <string name="acceptable_ads_size_title">Размер</string>
     <string name="acceptable_ads_size_description">Занимает не более 50% площади экрана при начальной загрузке</string>
+    <string name="acceptable_ads_standard_description">См. более подробное объяснение</string>
+    <string name="acceptable_ads_standard_link">Стандарт приемлемой рекламы</string>
 
     <!-- onboarding -->
     <string name="onboarding_welcome_header_title1">Добро пожаловать в</string>

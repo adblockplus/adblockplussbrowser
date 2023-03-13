@@ -31,11 +31,16 @@
     <string name="acceptable_ads_fair_standard_title">Méltányos megjelenítés</string>
     <string name="acceptable_ads_fair_standard_description">Az Elfogadható hirdetésekben megjelenített hirdetések nem video-, hang vagy felugró hirdetések</string>
     <string name="acceptable_ads_placement_title">Elhelyezés</string>
-    <string name="acceptable_ads_placement_description">Nem szakítják meg a természetes olvasás ütemét</string>
+    <string name="acceptable_ads_placement_description">Nincs jelentős fennakadás a természetes olvasási folyamatban</string>
     <string name="acceptable_ads_distinction_title">Kiemelés</string>
     <string name="acceptable_ads_distinction_description">Az Elfogadható hirdetések mindig egyértelműen hirdetésként vannak megjelölve</string>
     <string name="acceptable_ads_size_title">Méret</string>
-    <string name="acceptable_ads_size_description">A képernyő kevesebb mint 50%-át foglalják el a kezdeti betöltéskor</string>      <!-- onboarding -->     <string name="onboarding_welcome_header_title1">Üdvözöljük</string>
+    <string name="acceptable_ads_size_description">A képernyő kevesebb mint 50%-át foglalják el a kezdeti betöltéskor</string>
+    <string name="acceptable_ads_standard_description">Lásd a részletesebb magyarázatot a </string>
+    <string name="acceptable_ads_standard_link">Elfogadható hirdetések szabvány</string>
+
+    <!-- onboarding -->
+    <string name="onboarding_welcome_header_title1">Üdvözöljük</string>
     <string name="onboarding_welcome_block_ads_title">Bosszantó hirdetések blokkolása</string>
     <string name="onboarding_welcome_block_ads_description">Böngésszen hirdetésmentesen, miközben az Elfogadható hirdetésekkel támogatja a tartalomkészítőket</string>
     <string name="onboarding_welcome_tracking_protection_title">Követésvédelem</string>

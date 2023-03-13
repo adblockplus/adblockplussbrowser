@@ -34,11 +34,16 @@
     <string name="acceptable_ads_fair_standard_title">Standard equo</string>
     <string name="acceptable_ads_fair_standard_description">Gli annunci mostrati come Annunci Accettabili non sono mai di tipo video, audio o pop-up</string>
     <string name="acceptable_ads_placement_title">Posizionamento</string>
-    <string name="acceptable_ads_placement_description">Non interrompono il flusso di lettura naturale</string>
+    <string name="acceptable_ads_placement_description">Nessuna interruzione importante del flusso naturale di lettura</string>
     <string name="acceptable_ads_distinction_title">Distinzione</string>
     <string name="acceptable_ads_distinction_description">Gli annunci mostrati come Annunci Accettabili sono sempre chiaramente contrassegnati come annunci</string>
     <string name="acceptable_ads_size_title">Dimensioni</string>
-    <string name="acceptable_ads_size_description">Coprono meno del 50% dello schermo al momento del caricamento iniziale</string>      <!-- onboarding -->     <string name="onboarding_welcome_header_title1">Ti diamo il benvenuto a</string>
+    <string name="acceptable_ads_size_description">Coprono meno del 50% dello schermo al momento del caricamento iniziale</string>
+    <string name="acceptable_ads_standard_description">Vedi una spiegazione più dettagliata dello </string>
+    <string name="acceptable_ads_standard_link">Standard Annunci Accettabili</string>
+
+    <!-- onboarding -->
+    <string name="onboarding_welcome_header_title1">Ti diamo il benvenuto a</string>
     <string name="onboarding_welcome_block_ads_title">Blocca gli annunci fastidiosi</string>
     <string name="onboarding_welcome_block_ads_description">Naviga senza annunci e supporta i creatori di contenuti tramite gli Annunci Accettabili</string>
     <string name="onboarding_welcome_tracking_protection_title">Protezione dal tracciamento</string>
