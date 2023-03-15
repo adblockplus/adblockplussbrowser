@@ -17,8 +17,7 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -83,19 +82,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/acceptable_ads_selection_block" />
 
-
-            <TextView
+            <include
                 android:id="@+id/acceptable_ads_standard_redirect"
+                layout="@layout/acceptable_ads_standard_redirect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                tools:text="@string/acceptable_ads_standard_description"
-                android:textAlignment="center"
-                android:background="@drawable/preferences_group_bg_single"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/acceptable_ads_selection_bottom_space"/>
-
+                app:layout_constraintTop_toBottomOf="@id/acceptable_ads_selection_bottom_space" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
