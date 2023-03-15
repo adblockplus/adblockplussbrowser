@@ -38,7 +38,10 @@ fun bindAAStandardRedirect(textView: TextView) {
     val clickableSpan = object : ClickableSpan() {
         override fun onClick(widget: View) {
             val intent =
-                Intent(Intent.ACTION_VIEW, Uri.parse(AAStandardConstants.ACCEPTABLE_ADS_STANDARD_LINK))
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(AAStandardConstants.ACCEPTABLE_ADS_STANDARD_LINK)
+                )
             context.startActivity(intent)
         }
     }
@@ -52,6 +55,6 @@ fun bindAAStandardRedirect(textView: TextView) {
     textView.movementMethod = LinkMovementMethod.getInstance()
 }
 
-object AAStandardConstants{
+object AAStandardConstants {
     const val ACCEPTABLE_ADS_STANDARD_LINK = "https://acceptableads.com/standard/"
 }
