@@ -28,9 +28,9 @@ import android.widget.TextView
 import androidx.core.text.inSpans
 import org.adblockplus.adblockplussbrowser.base.R
 
+private const val ACCEPTABLE_ADS_STANDARD_LINK = "https://acceptableads.com/standard/"
+
 fun bindAAStandardRedirect(textView: TextView) {
-    // AA Standard Link
-    val acceptableAdsStandardLink = "https://acceptableads.com/standard/"
     // Prepare String
     val context = textView.context
     val acceptableAdsStandardDescription =
@@ -43,7 +43,7 @@ fun bindAAStandardRedirect(textView: TextView) {
             val intent =
                 Intent(
                     Intent.ACTION_VIEW,
-                    Uri.parse(acceptableAdsStandardLink)
+                    Uri.parse(ACCEPTABLE_ADS_STANDARD_LINK)
                 )
             context.startActivity(intent)
         }
