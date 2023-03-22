@@ -29,10 +29,13 @@ import androidx.core.text.inSpans
 import org.adblockplus.adblockplussbrowser.base.R
 
 fun bindAAStandardRedirect(textView: TextView) {
+    // AA Standard Link
+    val acceptableAdsStandardLink = "https://acceptableads.com/standard/"
+    // Prepare String
     val context = textView.context
     val acceptableAdsStandardDescription =
         context.getString(R.string.acceptable_ads_standard_description)
-    val acceptableAdsStandardLink =
+    val acceptableAdsStandardLinkSpan =
         SpannableString(context.getString(R.string.acceptable_ads_standard_link))
     // Redirect onClick
     val clickableSpan = object : ClickableSpan() {
@@ -40,7 +43,7 @@ fun bindAAStandardRedirect(textView: TextView) {
             val intent =
                 Intent(
                     Intent.ACTION_VIEW,
-                    Uri.parse(AAStandardConstants.ACCEPTABLE_ADS_STANDARD_LINK)
+                    Uri.parse(acceptableAdsStandardLink)
                 )
             context.startActivity(intent)
         }
@@ -50,11 +53,7 @@ fun bindAAStandardRedirect(textView: TextView) {
         .append(acceptableAdsStandardDescription)
         .append("\n")
         .inSpans(clickableSpan) {
-            append(acceptableAdsStandardLink)
+            append(acceptableAdsStandardLinkSpan)
         }
     textView.movementMethod = LinkMovementMethod.getInstance()
-}
-
-object AAStandardConstants {
-    const val ACCEPTABLE_ADS_STANDARD_LINK = "https://acceptableads.com/standard/"
 }
