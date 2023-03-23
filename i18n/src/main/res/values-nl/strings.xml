@@ -34,11 +34,13 @@
     <string name="acceptable_ads_fair_standard_title">Redelijke standaard</string>
     <string name="acceptable_ads_fair_standard_description">Advertenties die worden getoond bij acceptabele advertenties zijn nooit video-, geluids- of pop-up advertenties</string>
     <string name="acceptable_ads_placement_title">Plaatsing</string>
-    <string name="acceptable_ads_placement_description">Verstoren het natuurlijke leespatroon niet</string>
+    <string name="acceptable_ads_placement_description">Geen grote verstoring van de natuurlijke leesstroom</string>
     <string name="acceptable_ads_distinction_title">Onderscheid</string>
     <string name="acceptable_ads_distinction_description">Advertenties die worden getoond bij Acceptabele advertenties worden altijd duidelijk gemarkeerd als advertenties</string>
     <string name="acceptable_ads_size_title">Grootte</string>
-    <string name="acceptable_ads_size_description">Beslaan minder dan 15% van het scherm bij het eerste laden</string>
+    <string name="acceptable_ads_size_description">Beslaan minder dan 50% van het scherm bij het eerste laden</string>
+    <string name="acceptable_ads_standard_description">Zie een uitgebreidere uitleg van de </string>
+    <string name="acceptable_ads_standard_link">Standaard voor acceptabele advertenties</string>
 
     <!-- onboarding -->
     <string name="onboarding_welcome_header_title1">Welkom bij</string>

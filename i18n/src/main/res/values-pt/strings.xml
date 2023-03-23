@@ -34,11 +34,13 @@
     <string name="acceptable_ads_fair_standard_title">Padrão razoável</string>
     <string name="acceptable_ads_fair_standard_description">Anúncios exibidos com Anúncios Aceitáveis nunca são anúncios de vídeo, áudio ou pop-up</string>
     <string name="acceptable_ads_placement_title">Localização</string>
-    <string name="acceptable_ads_placement_description">Não interferem no fluxo natural de leitura</string>
+    <string name="acceptable_ads_placement_description">Sem grandes interrupções no fluxo de leitura natural</string>
     <string name="acceptable_ads_distinction_title">Distinção</string>
     <string name="acceptable_ads_distinction_description">Anúncios exibidos com Anúncios Aceitáveis sempre são claramente indicados como anúncios</string>
     <string name="acceptable_ads_size_title">Tamanho</string>
-    <string name="acceptable_ads_size_description">Ocupam menos de 15% da tela no carregamento inicial</string>
+    <string name="acceptable_ads_size_description">Ocupam menos de 50% da tela no carregamento inicial</string>
+    <string name="acceptable_ads_standard_description">Veja uma explicação mais detalhada sobre o</string>
+    <string name="acceptable_ads_standard_link">Padrão de anúncios aceitáveis</string>
 
     <!-- onboarding -->
     <string name="onboarding_welcome_header_title1">Bem-vindo(a) a</string>

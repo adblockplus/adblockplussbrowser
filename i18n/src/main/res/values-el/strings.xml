@@ -33,11 +33,13 @@
     <string name="acceptable_ads_fair_standard_title">Δίκαιο πρότυπο</string>
     <string name="acceptable_ads_fair_standard_description">Οι διαφημίσεις που εμφανίζονται ως Αποδεκτές Διαφημίσεις δεν είναι ποτέ διαφημίσεις βίντεο, ήχου ή αναδυόμενων παραθύρων</string>
     <string name="acceptable_ads_placement_title">Τοποθέτηση</string>
-    <string name="acceptable_ads_placement_description">Μην διακόπτετε τη φυσική ροή ανάγνωσης</string>
+    <string name="acceptable_ads_placement_description">Καμία σημαντική διαταραχή στη φυσική ροή ανάγνωσης</string>
     <string name="acceptable_ads_distinction_title">Διάκριση</string>
     <string name="acceptable_ads_distinction_description">Οι διαφημίσεις που εμφανίζονται ως Αποδεκτές Διαφημίσεις επισημαίνονται πάντα με σαφή τρόπο ως διαφημίσεις</string>
     <string name="acceptable_ads_size_title">Μέγεθος</string>
-    <string name="acceptable_ads_size_description">Εκτείνεται λιγότερο του 15% της οθόνης κατά την αρχική φόρτωση</string>
+    <string name="acceptable_ads_size_description">Εκτείνεται λιγότερο του 50% της οθόνης κατά την αρχική φόρτωση</string>
+    <string name="acceptable_ads_standard_description">Δείτε μια πιο λεπτομερή εξήγηση του </string>
+    <string name="acceptable_ads_standard_link">Πρότυπο αποδεκτών διαφημίσεων</string>
 
     <!-- onboarding -->
     <string name="onboarding_welcome_header_title1">Καλώς ήρθατε</string>

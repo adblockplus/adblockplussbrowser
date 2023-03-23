@@ -24,6 +24,7 @@ import androidx.core.text.inSpans
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
+import org.adblockplus.adblockplussbrowser.base.databinding.bindAAStandardRedirect
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentAcceptableAdsBinding
 
@@ -34,7 +35,8 @@ internal class AcceptableAdsFragment :
 
     override fun onBindView(binding: FragmentAcceptableAdsBinding) {
         binding.viewModel = viewModel
-        val textAppearance = TextAppearanceSpan(requireActivity(), R.style.TextAppearance_AppCompat_Small)
+        val textAppearance =
+            TextAppearanceSpan(requireActivity(), R.style.TextAppearance_AppCompat_Small)
         val formatted = SpannableStringBuilder()
             .bold { append(getString(R.string.preferences_acceptable_ads_action)) }
             .append("\n")
@@ -45,5 +47,11 @@ internal class AcceptableAdsFragment :
 
         binding.acceptableAdsSelectionBlock.acceptableAdsDisabled.text = SpannableStringBuilder()
             .bold { append(getString(R.string.acceptable_ads_disabled)) }
+
+        bindAAStandardRedirect(
+            binding.acceptableAdsStandardRedirect.findViewById(
+                R.id.acceptable_ads_standard_redirect_text
+            )
+        )
     }
 }

@@ -34,11 +34,13 @@
     <string name="acceptable_ads_fair_standard_title">المعيار المقبول</string>
     <string name="acceptable_ads_fair_standard_description">الإعلانات المعروضة ضمن "الإعلانات المقبولة" لا تكون أبدًا إعلانات فيديو أو صوتية أو منبثقة</string>
     <string name="acceptable_ads_placement_title">تعيين الموضع</string>
-    <string name="acceptable_ads_placement_description">عدم التشويش على التدفق الطبيعي للقراءة</string>
+    <string name="acceptable_ads_placement_description">لا يوجد اضطراب كبير في تدفق القراءة الطبيعي</string>
     <string name="acceptable_ads_distinction_title">التمييز</string>
     <string name="acceptable_ads_distinction_description">الإعلانات المعروضة ضمن "الإعلانات المقبولة" يتم دائمًا تمييزها بوضوح على أنها إعلانات</string>
     <string name="acceptable_ads_size_title">الحجم</string>
-    <string name="acceptable_ads_size_description">يكون نطاقها أقل من 15% من الشاشة عند التحميل المبدئي</string>
+    <string name="acceptable_ads_size_description">يكون نطاقها أقل من 50% من الشاشة عند التحميل المبدئي</string>
+    <string name="acceptable_ads_standard_description">شاهد شرحًا أكثر تفصيلاً لـ</string>
+    <string name="acceptable_ads_standard_link">معيار الإعلانات المقبول</string>
 
     <!-- onboarding -->
     <string name="onboarding_welcome_header_title1">مرحبًا بك إلى</string>
