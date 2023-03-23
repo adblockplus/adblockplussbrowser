@@ -34,11 +34,13 @@
     <string name="acceptable_ads_fair_standard_title">公正な基準</string>
     <string name="acceptable_ads_fair_standard_description">控えめな広告の設定で表示される広告には、動画、音声、ポップアップ広告は含まれません</string>
     <string name="acceptable_ads_placement_title">プレースメント</string>
-    <string name="acceptable_ads_placement_description">自然な閲覧の流れを邪魔しません</string>
+    <string name="acceptable_ads_placement_description">自然な読書の流れに大きな混乱は生じません</string>
     <string name="acceptable_ads_distinction_title">違い</string>
     <string name="acceptable_ads_distinction_description">控えめな広告の設定で表示される広告は、広告であることが分かるよう、常に明確に印が付けられます</string>
     <string name="acceptable_ads_size_title">サイズ</string>
-    <string name="acceptable_ads_size_description">初期読み込み時の画面占有率は15%未満です</string>
+    <string name="acceptable_ads_size_description">初期読み込み時の画面占有率は50%未満です</string>
+    <string name="acceptable_ads_standard_description">....の詳しい説明を見る</string>
+    <string name="acceptable_ads_standard_link">許容される広告基準</string>
 
     <!-- onboarding -->
     <string name="onboarding_welcome_header_title1">ようこそ</string>

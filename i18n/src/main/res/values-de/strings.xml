@@ -34,11 +34,13 @@
     <string name="acceptable_ads_fair_standard_title">Faire Standards</string>
     <string name="acceptable_ads_fair_standard_description">Bei Werbung, die mithilfe von Acceptable Ads gezeigt wird, handelt es sich niemals um Video-, Ton-, oder Pop-up-Werbung</string>
     <string name="acceptable_ads_placement_title">Platzierung</string>
-    <string name="acceptable_ads_placement_description">Unterbricht nicht den natürlichen Lesefluss</string>
+    <string name="acceptable_ads_placement_description">Keine größere Störung des natürlichen Leseflusses</string>
     <string name="acceptable_ads_distinction_title">Unterscheidung</string>
     <string name="acceptable_ads_distinction_description">Von Acceptable Ads dargestellte Werbung, wird immer als Werbung gekennzeichnet</string>
     <string name="acceptable_ads_size_title">Größe</string>
-    <string name="acceptable_ads_size_description">Sie nimmt weniger als 15 % des Bildschirms ein als zuvor</string>
+    <string name="acceptable_ads_size_description">Sie nimmt weniger als 50% des Bildschirms ein als zuvor</string>
+    <string name="acceptable_ads_standard_description">Siehe eine ausführlichere Erklärung des </string>
+    <string name="acceptable_ads_standard_link">Acceptable Ads Standard</string>
 
     <!-- onboarding -->
     <string name="onboarding_welcome_header_title1">Willkommen bei</string>
