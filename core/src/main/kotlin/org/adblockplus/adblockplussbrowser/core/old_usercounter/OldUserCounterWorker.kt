@@ -15,7 +15,7 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.adblockplus.adblockplussbrowser.core.usercounter
+package org.adblockplus.adblockplussbrowser.core.old_usercounter
 
 import android.content.Context
 import androidx.hilt.work.HiltWorker
@@ -33,13 +33,13 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltWorker
-internal class UserCounterWorker @AssistedInject constructor(
+internal class OldUserCounterWorker @AssistedInject constructor(
     @Assisted private val appContext: Context,
     @Assisted params: WorkerParameters,
 ) : CoroutineWorker(appContext, params) {
 
     @Inject
-    internal lateinit var userCounter: UserCounter
+    internal lateinit var userCounter: OldUserCounter
 
     @Inject
     internal lateinit var analyticsProvider: AnalyticsProvider
