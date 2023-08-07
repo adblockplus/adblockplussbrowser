@@ -15,17 +15,22 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.adblockplus.adblockplussbrowser.core.usercounter
+package org.adblockplus.adblockplussbrowser.core.old_usercounter
 
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
+import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
+import org.adblockplus.adblockplusbrowser.testutils.FakeSettingsRepository
 import org.adblockplus.adblockplussbrowser.core.AppInfo
 import org.adblockplus.adblockplussbrowser.core.BuildConfig
 import org.adblockplus.adblockplussbrowser.core.CallingApp
+import org.adblockplus.adblockplussbrowser.core.helpers.FakeCoreRepository
 import org.adblockplus.adblockplussbrowser.core.helpers.Fakes.HTTP_ERROR_MOCK_500
-import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter.Companion.HTTP_ERROR_LOG_HEADER_USER_COUNTER
+import org.adblockplus.adblockplussbrowser.core.helpers.Fakes.INITIAL_COUNT
+import org.adblockplus.adblockplussbrowser.core.helpers.Fakes.INITIAL_TIMESTAMP
+import org.adblockplus.adblockplussbrowser.core.old_usercounter.OkHttpOldUserCounter.Companion.HTTP_ERROR_LOG_HEADER_USER_COUNTER
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -40,19 +45,14 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
 import kotlin.time.ExperimentalTime
-import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
-import org.adblockplus.adblockplusbrowser.testutils.FakeSettingsRepository
-import org.adblockplus.adblockplussbrowser.core.helpers.FakeCoreRepository
-import org.adblockplus.adblockplussbrowser.core.helpers.Fakes.INITIAL_COUNT
-import org.adblockplus.adblockplussbrowser.core.helpers.Fakes.INITIAL_TIMESTAMP
 
 @ExperimentalTime
-class UserCountingTest {
+class OldUserCountingTest {
 
     private val mockWebServer = MockWebServer()
     private lateinit var analyticsProvider : FakeAnalyticsProvider
     private lateinit var fakeCoreRepository : FakeCoreRepository
-    private lateinit var userCounter : OkHttpUserCounter
+    private lateinit var userCounter : OkHttpOldUserCounter
     private val serverTimeZone: TimeZone = TimeZone.getTimeZone("GMT")
     private val serverDateParser = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z",
         Locale.ENGLISH)
@@ -64,7 +64,7 @@ class UserCountingTest {
         val appInfo = AppInfo()
         analyticsProvider = FakeAnalyticsProvider()
         fakeCoreRepository = FakeCoreRepository(mockWebServer.url("").toString())
-        userCounter = OkHttpUserCounter(OkHttpClient(), fakeCoreRepository, settings, appInfo,
+        userCounter = OkHttpOldUserCounter(OkHttpClient(), fakeCoreRepository, settings, appInfo,
             analyticsProvider)
         serverDateParser.timeZone = serverTimeZone
     }
@@ -77,6 +77,7 @@ class UserCountingTest {
     @Test
     fun `test counting success`() {
         val response = MockResponse()
+
             .addHeader("Date", "Thu, 23 Sep 2021 17:31:01 GMT") //202109231731
         mockWebServer.enqueue(response)
 
@@ -103,7 +104,7 @@ class UserCountingTest {
             // Given Acceptable Ads are disabled
             settings.acceptableAdsStatus = false
             // When the user is counted
-            userCounter = OkHttpUserCounter(OkHttpClient(), fakeCoreRepository, settings, appInfo,
+            userCounter = OkHttpOldUserCounter(OkHttpClient(), fakeCoreRepository, settings, appInfo,
                 analyticsProvider)
             assertTrue(userCounter.count(CallingApp("", "")) is CountUserResult.Success)
         }

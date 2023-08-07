@@ -15,7 +15,7 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.adblockplus.adblockplussbrowser.core.usercounter
+package org.adblockplus.adblockplussbrowser.core.old_usercounter
 
 import org.junit.Before
 import org.junit.runner.RunWith
@@ -38,32 +38,32 @@ import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
 
 @RunWith(RobolectricTestRunner::class)
 @ExperimentalCoroutinesApi
-class UserCounterWorkerTest {
+class OldUserCounterWorkerTest {
 
     private lateinit var context: Context
-    private lateinit var userCounter: UserCounter
+    private lateinit var oldUserCounter: OldUserCounter
 
     @Before
     fun setUp() {
         context = ApplicationProvider.getApplicationContext()
-        userCounter = Mockito.mock(UserCounter::class.java)
+        oldUserCounter = Mockito.mock(OldUserCounter::class.java)
     }
 
     private fun createWorker (params: WorkerParameters): ListenableWorker {
-        val worker = TestListenableWorkerBuilder<UserCounterWorker>(context)
+        val worker = TestListenableWorkerBuilder<OldUserCounterWorker>(context)
             .setRunAttemptCount(params.runAttemptCount)
             .build()
         worker.analyticsProvider = FakeAnalyticsProvider()
-        worker.userCounter = userCounter
+        worker.userCounter = oldUserCounter
         return worker
     }
 
-    private suspend fun whenCount() = Mockito.`when`(userCounter.count(any()))
+    private suspend fun whenCount() = Mockito.`when`(oldUserCounter.count(any()))
 
     @Test
     fun `test user counter success`() {
         runTest {
-            val worker = createWorker(WorkerParameters()) as UserCounterWorker
+            val worker = createWorker(WorkerParameters()) as OldUserCounterWorker
             whenCount().thenReturn(CountUserResult.Success())
             val result = worker.doWork()
             MatcherAssert.assertThat(result, CoreMatchers.`is`(ListenableWorker.Result.Success()))
@@ -73,7 +73,7 @@ class UserCounterWorkerTest {
     @Test
     fun `test user counter failed, worker should retry`() {
         runTest {
-            val worker = createWorker(WorkerParameters()) as UserCounterWorker
+            val worker = createWorker(WorkerParameters()) as OldUserCounterWorker
             whenCount().thenReturn(CountUserResult.Failed())
             val result = worker.doWork()
             MatcherAssert.assertThat(result, CoreMatchers.`is`(ListenableWorker.Result.Retry()))
@@ -87,7 +87,7 @@ class UserCounterWorkerTest {
  */
     @Test
     fun `test if worker has reached max attempts should fail`() {
-        val worker = createWorker(WorkerParameters(runAttemptCount = 9)) as UserCounterWorker
+        val worker = createWorker(WorkerParameters(runAttemptCount = 9)) as OldUserCounterWorker
         runTest {
             val result = worker.doWork()
             MatcherAssert.assertThat(result, CoreMatchers.`is`(ListenableWorker.Result.failure()))
@@ -96,7 +96,7 @@ class UserCounterWorkerTest {
 
     @Test
     fun `test worker CancellationException should succeed`() {
-        val worker = createWorker(WorkerParameters()) as UserCounterWorker
+        val worker = createWorker(WorkerParameters()) as OldUserCounterWorker
         runTest {
             whenCount().thenThrow(CancellationException())
             val result = worker.doWork()
@@ -106,7 +106,7 @@ class UserCounterWorkerTest {
 
     @Test
     fun `test worker catch exception should retry`() {
-        val worker = createWorker(WorkerParameters()) as UserCounterWorker
+        val worker = createWorker(WorkerParameters()) as OldUserCounterWorker
         runTest {
             whenCount().thenThrow(IndexOutOfBoundsException())
             val result = worker.doWork()

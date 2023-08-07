@@ -51,7 +51,7 @@ import org.adblockplus.adblockplussbrowser.core.extensions.periodicWorkRequestBu
 import org.adblockplus.adblockplussbrowser.core.extensions.setBackoffCriteria
 import org.adblockplus.adblockplussbrowser.core.extensions.setBackoffTime
 import org.adblockplus.adblockplussbrowser.core.extensions.setInitialDelay
-import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
+import org.adblockplus.adblockplussbrowser.core.old_usercounter.OldUserCounter
 import org.adblockplus.adblockplussbrowser.core.work.UpdateSubscriptionsWorker
 import org.adblockplus.adblockplussbrowser.core.work.UpdateSubscriptionsWorker.Companion.UPDATE_KEY_FORCE_REFRESH
 import org.adblockplus.adblockplussbrowser.core.work.UpdateSubscriptionsWorker.Companion.UPDATE_KEY_ONESHOT_WORK
@@ -63,7 +63,6 @@ import timber.log.Timber
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
-@Suppress("PropertyName")
 @ExperimentalTime
 class CoreSubscriptionsManager(
     private val appContext: Context,
@@ -73,7 +72,7 @@ class CoreSubscriptionsManager(
     private val settingsRepository: SettingsRepository
     private val coreRepository: CoreRepository
     private val downloader: Downloader
-    private val userCounter: UserCounter
+    private val oldUserCounter: OldUserCounter
 
     @EntryPoint
     @InstallIn(SingletonComponent::class)
@@ -81,7 +80,7 @@ class CoreSubscriptionsManager(
         fun getSettingsRepository(): SettingsRepository
         fun getCoreRepository(): CoreRepository
         fun getDownloader(): Downloader
-        fun getUserCounter(): UserCounter
+        fun getUserCounter(): OldUserCounter
     }
 
     override val coroutineContext = Dispatchers.Default + SupervisorJob()
@@ -105,7 +104,7 @@ class CoreSubscriptionsManager(
         settingsRepository = entryPoint.getSettingsRepository()
         coreRepository = entryPoint.getCoreRepository()
         downloader = entryPoint.getDownloader()
-        userCounter = entryPoint.getUserCounter()
+        oldUserCounter = entryPoint.getUserCounter()
     }
 
     override fun initialize() {

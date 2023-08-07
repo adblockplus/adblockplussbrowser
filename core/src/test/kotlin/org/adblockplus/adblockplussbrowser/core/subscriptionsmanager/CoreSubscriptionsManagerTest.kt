@@ -39,8 +39,7 @@ import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.di.CoreModule
 import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
 import org.adblockplus.adblockplussbrowser.core.provider.TestModule
-import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
-import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
+import org.adblockplus.adblockplussbrowser.core.old_usercounter.OldUserCounter
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.di.SettingsModule
 import org.junit.Before
@@ -61,6 +60,7 @@ import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
 import org.adblockplus.adblockplusbrowser.testutils.FakeSettingsRepository
 import org.adblockplus.adblockplussbrowser.core.helpers.FakeActivationPreferences
 import org.adblockplus.adblockplussbrowser.core.helpers.FakeCoreRepository
+import org.adblockplus.adblockplussbrowser.core.old_usercounter.OkHttpOldUserCounter
 
 @ExperimentalTime
 @Config(
@@ -99,7 +99,7 @@ class CoreSubscriptionsManagerTest {
             val lastUserCountingDate = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z")
                 .format(Date(System.currentTimeMillis()))
             coreRepository.lastUserCountingResponse =
-                OkHttpUserCounter.parseDateString(lastUserCountingDate, getAnalyticsProvider()).toLong()
+                OkHttpOldUserCounter.parseDateString(lastUserCountingDate, getAnalyticsProvider()).toLong()
             return coreRepository
         }
 
@@ -133,7 +133,7 @@ class CoreSubscriptionsManagerTest {
 
         @Provides
         @Singleton
-        fun provideUserCounter(): UserCounter = Mockito.mock(UserCounter::class.java)
+        fun provideUserCounter(): OldUserCounter = Mockito.mock(OldUserCounter::class.java)
 
         @Provides
         @Singleton

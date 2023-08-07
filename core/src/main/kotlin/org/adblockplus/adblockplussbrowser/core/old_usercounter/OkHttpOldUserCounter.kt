@@ -15,7 +15,7 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.adblockplus.adblockplussbrowser.core.usercounter
+package org.adblockplus.adblockplussbrowser.core.old_usercounter
 
 import kotlinx.coroutines.coroutineScope
 import okhttp3.HttpUrl
@@ -47,13 +47,13 @@ import org.adblockplus.adblockplussbrowser.base.data.HttpConstants
 
 
 @ExperimentalTime
-internal class OkHttpUserCounter(
+internal class OkHttpOldUserCounter(
     private val okHttpClient: OkHttpClient,
     private val repository: CoreRepository,
     private val settings: SettingsRepository,
     private val appInfo: AppInfo,
     private val analyticsProvider: AnalyticsProvider
-) : UserCounter {
+) : OldUserCounter {
 
     @Suppress("TooGenericExceptionCaught", "LongMethod")
     override suspend fun count(callingApp: CallingApp): CountUserResult = coroutineScope {
