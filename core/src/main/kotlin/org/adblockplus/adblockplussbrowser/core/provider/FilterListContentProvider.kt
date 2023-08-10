@@ -51,10 +51,10 @@ import org.adblockplus.adblockplussbrowser.base.os.PackageHelper
 import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants
 import org.adblockplus.adblockplussbrowser.base.yandex.YandexConstants
 import org.adblockplus.adblockplussbrowser.core.BuildConfig
-import org.adblockplus.adblockplussbrowser.core.CallingApp
+import org.adblockplus.adblockplussbrowser.base.os.CallingApp
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
-import org.adblockplus.adblockplussbrowser.core.extensions.currentData
-import org.adblockplus.adblockplussbrowser.core.extensions.currentSettings
+import org.adblockplus.adblockplussbrowser.core.data.currentData
+import org.adblockplus.adblockplussbrowser.settings.data.currentSettings
 import org.adblockplus.adblockplussbrowser.core.extensions.toAllowRule
 import org.adblockplus.adblockplussbrowser.core.old_usercounter.OldUserCounterWorker
 import org.adblockplus.adblockplussbrowser.core.old_usercounter.OldUserCounterWorker.Companion.BACKOFF_TIME_MINUTES

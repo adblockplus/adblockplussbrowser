@@ -35,6 +35,10 @@ buildscript {
     }
 }
 
+// Referencing `libs` raises "LibrariesForLibs'
+// can't be called in this context by implicit receiver."
+// TODO needs Gradle version update
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     jacoco
     alias(libs.plugins.detekt)

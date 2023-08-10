@@ -25,12 +25,12 @@ import okhttp3.Request
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
-import org.adblockplus.adblockplussbrowser.core.AppInfo
+import org.adblockplus.adblockplussbrowser.base.os.AppInfo
 import org.adblockplus.adblockplussbrowser.core.BuildConfig
-import org.adblockplus.adblockplussbrowser.core.CallingApp
+import org.adblockplus.adblockplussbrowser.base.os.CallingApp
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
-import org.adblockplus.adblockplussbrowser.core.extensions.currentData
-import org.adblockplus.adblockplussbrowser.core.extensions.currentSettings
+import org.adblockplus.adblockplussbrowser.core.data.currentData
+import org.adblockplus.adblockplussbrowser.settings.data.currentSettings
 import org.adblockplus.adblockplussbrowser.core.extensions.sanitizeUrl
 import org.adblockplus.adblockplussbrowser.core.retryIO
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
@@ -44,7 +44,6 @@ import java.util.Locale
 import java.util.TimeZone
 import kotlin.time.ExperimentalTime
 import org.adblockplus.adblockplussbrowser.base.data.HttpConstants
-
 
 @ExperimentalTime
 internal class OkHttpOldUserCounter(

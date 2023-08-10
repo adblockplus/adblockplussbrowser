@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+option java_package = "org.adblockplus.adblockplussbrowser.telemetry.data.proto";
+option java_multiple_files = true;
+
+message TelemetryData {
+  int64 last_user_counting_response = 1;
+  int32 user_counting_count = 2;
+}
