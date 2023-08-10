@@ -1,0 +1,74 @@
+{
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "$id": "https://schemaregistry.data.eyeo.it/topic/webextension_activeping/1",
+   "title": "WebExtension integration for client-counting",
+   "type": "object",
+   "additionalProperties": false,
+   "properties": {
+     "last_ping_tag": {
+       "description": "Tag for the received last_ping. One of the algorithms that might be used to generate this is UUID4. If a ping is retried, the same tag should be used. Example: 'be62e49f-d94e-411b-a060-1abc82d21b64'",
+       "type": "string"
+     },
+     "addon_name": {
+       "description": "Identifier of the SDK integration. Example: 'eyeo-chromium-sdk' or 'eyeo-webext'",
+       "type": "string"
+     },
+     "addon_version": {
+       "description": "Respective version corresponding to addon_name. Example: '2.0.0'",
+       "type": "string"
+     },
+     "application": {
+       "description": "Identifier of either hosting (partner's) application or product as sent by the client. Example: 'chrome'",
+       "type": "string"
+     },
+     "application_version": {
+       "description": "Respective version corresponding to application. Example: '86.0.4240.183'",
+       "type": "string"
+     },
+     "first_ping": {
+       "description": "Date of the first telemetry ping sent by the client and acknowledged by the server (as measured by the server), in timestamp format. Example: 2020-12-05T00:00:00.000000Z",
+       "type": "string",
+       "format": "date-time"
+     },
+     "last_ping": {
+       "description": "Date of the last telemetry ping sent by the client and acknowledged by the server (as measured by the server), in timestamp format. Example: 2021-01-31T00:00:00.000000Z",
+       "type": "string",
+       "format": "date-time"
+     },
+     "previous_last_ping": {
+       "description": "Date of the previous to last telemetry ping sent by the client and acknowledged by the server (as measured by the server), in timestamp format. Example: 2021-01-29T00:00:00.000000Z",
+       "type": "string",
+       "format": "date-time"
+     },
+     "aa_active": {
+       "description": "TRUE if client opted into Acceptable Ads",
+       "type": "boolean"
+     },
+     "platform": {
+       "description": "Client OS. Example 'android'",
+       "type": "string"
+     },
+     "platform_version": {
+       "description": "Respective version corresponding to OS. Example: '10'",
+       "type": "string"
+     },
+     "extension_name": {
+       "description": "Identifier of the browser extension, if applicable. Example: 'adblock-plus' or 'adblock'",
+       "type": "string"
+     },
+     "extension_version": {
+       "description": "Browser extension version, if applicable. Example: '4.24.0'",
+       "type": "string"
+     }
+   },
+   "required": [
+     "addon_name",
+     "addon_version",
+     "application",
+     "application_version",
+     "aa_active",
+     "platform",
+     "extension_name",
+     "extension_version"
+   ]
+ }

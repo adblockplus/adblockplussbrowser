@@ -15,30 +15,23 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.adblockplus.adblockplussbrowser.core.eyeometry
+package org.adblockplus.adblockplussbrowser.telemetry
 
 import kotlinx.coroutines.coroutineScope
-import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
-import org.adblockplus.adblockplussbrowser.analytics.AnalyticsUserProperty
+import org.adblockplus.adblockplussbrowser.base.BuildConfig
 import org.adblockplus.adblockplussbrowser.base.data.HttpConstants
-import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
-import org.adblockplus.adblockplussbrowser.core.AppInfo
-import org.adblockplus.adblockplussbrowser.core.BuildConfig
-import org.adblockplus.adblockplussbrowser.core.CallingApp
-import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
-import org.adblockplus.adblockplussbrowser.core.extensions.currentData
-import org.adblockplus.adblockplussbrowser.core.extensions.currentSettings
-import org.adblockplus.adblockplussbrowser.core.extensions.sanitizeUrl
-import org.adblockplus.adblockplussbrowser.core.retryIO
+import org.adblockplus.adblockplussbrowser.base.os.AppInfo
+import org.adblockplus.adblockplussbrowser.base.os.CallingApp
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
+import org.adblockplus.adblockplussbrowser.settings.data.currentSettings
+import org.adblockplus.adblockplussbrowser.telemetry.data.TelemetryRepository
 import ru.gildor.coroutines.okhttp.await
 import timber.log.Timber
 import java.net.HttpRetryException
-import java.net.HttpURLConnection.HTTP_OK
+import java.net.HttpURLConnection
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -46,17 +39,15 @@ import java.util.Locale
 import java.util.TimeZone
 import kotlin.time.ExperimentalTime
 
-
 @ExperimentalTime
-internal class OkHttpEyeometry(
+internal class OkHttpTelemetry(
     private val okHttpClient: OkHttpClient,
-    private val repository: CoreRepository,
+    private val repository: TelemetryRepository,
     private val settings: SettingsRepository,
     private val appInfo: AppInfo,
-    private val analyticsProvider: AnalyticsProvider
 ) : UserCounter {
 
-    @Suppress("TooGenericExceptionCaught", "LongMethod")
+    @Suppress("LongMethod")
     override suspend fun count(callingApp: CallingApp): Result<Unit> = coroutineScope {
         try {
             val savedLastUserCountingResponse = repository.currentData().lastUserCountingResponse
@@ -65,25 +56,18 @@ internal class OkHttpEyeometry(
                 savedLastUserCountingResponse
             )
             val acceptableAdsEnabled = settings.currentSettings().acceptableAdsEnabled
-            analyticsProvider.setUserProperty(
-                AnalyticsUserProperty.IS_AA_ENABLED,
-                acceptableAdsEnabled.toString()
-            )
-            val acceptableAdsSubscription = settings.getAcceptableAdsSubscription()
             val currentUserCountingCount = repository.currentData().userCountingCount
-            val url = createUrl(
-                acceptableAdsSubscription, acceptableAdsEnabled,
-                savedLastUserCountingResponse, currentUserCountingCount, callingApp
-            )
+            val url =
+                "https://test-telemetry.data.eyeo.it/topic/webextension_activeping/version/1".toHttpUrl()
             val request = Request.Builder().url(url).head().build()
-            val response = retryIO(description = "User counting HEAD request") {
-                okHttpClient.newCall(request).await()
-            }
+            // in the old http counter we used #retryIO method to retry the request thrice,
+            // though I don't see a reason to do it here since we are retrying after one hour
+            // if the request wasn't successful
+            val response = okHttpClient.newCall(request).await()
             val result = when (response.code) {
-                HTTP_OK -> {
+                HttpURLConnection.HTTP_OK -> {
                     val newLastVersion = parseDateString(
-                        response.headers["Date"] ?: "",
-                        analyticsProvider
+                        response.headers["Date"] ?: ""
                     )
                     Timber.d(
                         "User count saves new lastUserCountingResponse `%s`",
@@ -106,7 +90,7 @@ internal class OkHttpEyeometry(
                         response.body?.string()
                             ?.take(HttpConstants.HTTP_ERROR_MAX_BODY_SIZE) ?: ""
                     }")
-                    analyticsProvider.logError(error)
+                    // TODO analyticsProvider.logError(error)
                     Result.failure(HttpRetryException(error, response.code))
                 }
             }
@@ -122,37 +106,14 @@ internal class OkHttpEyeometry(
                 ex !is java.net.ConnectException &&
                 ex !is java.net.UnknownHostException
             ) {
-                analyticsProvider.logException(ex)
+                // TODO log to analytics
             }
             Result.failure(ex)
         }
     }
 
-    private fun Int.asDownloadCount(): String =
-        if (this < MAX_USER_COUNTING_COUNT) this.toString() else "4+"
-
-    private fun createUrl(
-        subscription: Subscription,
-        acceptableAdsEnabled: Boolean,
-        savedLastUserCountingResponse: Long,
-        currentUserCountingCount: Int,
-        callingApp: CallingApp
-    ): HttpUrl {
-        return subscription.randomizedUrl.sanitizeUrl().toHttpUrl().newBuilder().apply {
-            addQueryParameter("addonName", appInfo.addonName)
-            addQueryParameter("addonVersion", appInfo.addonVersion)
-            addQueryParameter("application", callingApp.applicationName)
-            addQueryParameter("applicationVersion", callingApp.applicationVersion)
-            addQueryParameter("platform", appInfo.platform)
-            addQueryParameter("platformVersion", appInfo.platformVersion)
-            addQueryParameter("disabled", (!acceptableAdsEnabled).toString())
-            addQueryParameter("lastVersion", savedLastUserCountingResponse.toString())
-            addQueryParameter("downloadCount", currentUserCountingCount.asDownloadCount())
-        }.build()
-    }
-
     companion object {
-        fun parseDateString(rawDate: String, analyticsProvider: AnalyticsProvider?): String {
+        fun parseDateString(rawDate: String): String {
             Timber.d("HTTP response Date header: %s", rawDate)
             lastUserCountingResponseFormat.timeZone = serverTimeZone
             return try {
@@ -162,7 +123,6 @@ internal class OkHttpEyeometry(
                 )
             } catch (ex: ParseException) {
                 Timber.e(ex)
-                analyticsProvider?.logException(ex)
                 if (BuildConfig.DEBUG) {
                     throw ex
                 } else {

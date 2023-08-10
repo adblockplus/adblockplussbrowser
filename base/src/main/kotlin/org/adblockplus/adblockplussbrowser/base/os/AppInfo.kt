@@ -15,13 +15,13 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.adblockplus.adblockplussbrowser.core
+package org.adblockplus.adblockplussbrowser.base.os
 
 import android.content.Context
 import android.os.Build
-import org.adblockplus.adblockplussbrowser.base.os.PackageHelper
+import org.adblockplus.adblockplussbrowser.base.BuildConfig
 
-internal data class AppInfo(
+data class AppInfo(
     val addonName: String = addonName(),
     val addonVersion: String? = null,
     val application: String? = null,
@@ -39,7 +39,7 @@ private const val SBROWSER_PACKAGE_NAME = "com.sec.android.app.sbrowser"
 private const val SBROWSER_BETA_PACKAGE_NAME = "com.sec.android.app.sbrowser.beta"
 private const val SBROWSER_APP_NAME = "sbrowser"
 
-internal fun Context.buildAppInfo(): AppInfo {
+fun Context.buildAppInfo(): AppInfo {
     return AppInfo(
         addonVersion = PackageHelper.version(packageManager, packageName),
         application = applicationForInstalledBrowser(this),

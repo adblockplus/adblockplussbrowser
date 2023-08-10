@@ -15,7 +15,7 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.adblockplus.adblockplussbrowser.core.eyeometry
+package org.adblockplus.adblockplussbrowser.telemetry
 
 import android.content.Context
 import androidx.hilt.work.HiltWorker
@@ -26,42 +26,28 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
-import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
-import org.adblockplus.adblockplussbrowser.core.CallingApp
-import org.adblockplus.adblockplussbrowser.core.old_usercounter.CountUserResult
-import org.adblockplus.adblockplussbrowser.core.old_usercounter.OldUserCounter
+import org.adblockplus.adblockplussbrowser.base.os.CallingApp
 import timber.log.Timber
 import javax.inject.Inject
 
 @HiltWorker
-internal class EyeometryWorker @AssistedInject constructor(
+internal class TelemetryWorker @AssistedInject constructor(
     @Assisted private val appContext: Context,
     @Assisted params: WorkerParameters,
 ) : CoroutineWorker(appContext, params) {
 
     @Inject
-    internal lateinit var oldUserCounter: OldUserCounter
-
-    @Inject
-    internal lateinit var analyticsProvider: AnalyticsProvider
+    internal lateinit var userCounter: UserCounter
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         // if it is a periodic check, force update subscriptions
         return@withContext try {
             Timber.d("USER COUNTER JOB")
 
-            if (hasReachedMaxAttempts()) {
-                Timber.i("User counting max retries reached, reporting this event to analytics")
-                analyticsProvider.logEvent(AnalyticsEvent.HEAD_REQUEST_FAILED)
-                return@withContext Result.failure()
-            }
-
             val callingApp = CallingApp(inputData)
             Timber.d("Input data: $callingApp")
 
-            val result = oldUserCounter.count(callingApp)
-            if (result is CountUserResult.Success) {
+            if (userCounter.count(callingApp).isSuccess) {
                 Timber.i("User counted")
                 return@withContext Result.success()
             }
@@ -71,15 +57,5 @@ internal class EyeometryWorker @AssistedInject constructor(
             Timber.w("User counting failed, retry scheduled")
             if (ex is CancellationException) Result.success() else Result.retry()
         }
-    }
-
-    private fun CoroutineWorker.hasReachedMaxAttempts() = runAttemptCount > RUN_ATTEMPT_MAX_COUNT
-
-    companion object {
-        //retry after about 2m, 4m, 8m, 16m, 32m, 64m, 256m
-        private const val RUN_ATTEMPT_MAX_COUNT = 8
-        const val BACKOFF_TIME_MINUTES = 2L
-
-        const val USER_COUNTER_KEY_ONESHOT_WORK = "USER_COUNTER_ONESHOT_WORK"
     }
 }

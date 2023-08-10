@@ -15,22 +15,21 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.adblockplus.adblockplussbrowser.core.extensions
+package org.adblockplus.adblockplussbrowser.telemetry.data
 
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.flow.take
-import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
-import org.adblockplus.adblockplussbrowser.core.data.model.CoreData
-import org.adblockplus.adblockplussbrowser.core.data.model.SavedState
-import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
-import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
+import org.adblockplus.adblockplussbrowser.telemetry.data.proto.TelemetryData
 
-internal suspend fun SettingsRepository.currentSettings(): Settings =
-    this.settings.take(1).single()
+internal interface TelemetryRepository {
+    val data: Flow<TelemetryData>
 
-internal suspend fun CoreRepository.currentData(): CoreData =
-    this.data.take(1).single()
+    suspend fun currentData(): TelemetryData = data.take(1).single()
 
-internal suspend fun CoreRepository.currentSavedState(): SavedState =
-    currentData().lastState
+    suspend fun updateLastUserCountingResponse(lastUserCountingResponse: Long)
+
+    suspend fun updateUserCountingCount(userCountingCount: Int)
+
+}
 

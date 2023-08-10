@@ -18,6 +18,8 @@
 package org.adblockplus.adblockplussbrowser.settings.data
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.single
+import kotlinx.coroutines.flow.take
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
 import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig
@@ -84,3 +86,6 @@ interface SettingsRepository {
 
     suspend fun checkLanguagesOnboardingCompleted()
 }
+
+suspend fun SettingsRepository.currentSettings(): Settings =
+    this.settings.take(1).single()

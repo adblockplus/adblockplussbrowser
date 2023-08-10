@@ -17,7 +17,7 @@
 
 package org.adblockplus.adblockplussbrowser.core.old_usercounter
 
-import org.adblockplus.adblockplussbrowser.core.CallingApp
+import org.adblockplus.adblockplussbrowser.base.os.CallingApp
 
 internal interface OldUserCounter {
     suspend fun count(callingApp: CallingApp): CountUserResult
