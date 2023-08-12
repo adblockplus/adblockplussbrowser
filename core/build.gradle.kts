@@ -46,7 +46,7 @@ dependencies {
     implementation(libs.okio)
     implementation(libs.okhttp3)
     implementation(libs.okhttp3.logging.interceptor)
-    implementation(libs.protobuf.kotlin.lite)
+    implementation(libs.protobuf.javalite)
     implementation(libs.timber)
     implementation(libs.xz)
 
