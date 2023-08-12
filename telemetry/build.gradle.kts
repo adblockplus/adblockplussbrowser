@@ -21,25 +21,33 @@ import com.google.protobuf.gradle.protobuf
 import com.google.protobuf.gradle.protoc
 import net.pwall.json.kotlin.codegen.gradle.JSONSchemaCodegenPlugin
 
+buildscript {
+    dependencies {
+        // this lib does not have an id, therefore cannot be used `plugin` syntax
+        classpath(libs.json.kotlin.gradle)
+    }
+}
+
 plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("kapt")
-    id("kotlin-parcelize")
+    // Referencing `libs` raises "LibrariesForLibs'
+    // can't be called in this context by implicit receiver."
+    // TODO needs Gradle version update
+    @Suppress("DSL_SCOPE_VIOLATION")
+    alias(libs.plugins.kotlinx.plugin.serialization)
     id("com.google.protobuf")
     id("dagger.hilt.android.plugin")
 }
 
 applyCommonConfig()
 
-buildscript {
-    dependencies {
-        classpath(libs.json.kotlin.gradle)
-    }
-}
+createFlavorsConfig()
+
 apply<JSONSchemaCodegenPlugin>()
 
-createFlavorsConfig()
+project.tasks.findByName("prepareKotlinBuildScriptModel")?.dependsOn(project.tasks.getByName("generate"))
 
 // if not added causing conflict during gradle build
 // similar issue https://github.com/plaid/plaid-link-android/issues/169
@@ -47,6 +55,13 @@ createFlavorsConfig()
 android {
     packagingOptions {
         resources.excludes.add("google/protobuf/*.proto")
+    }
+    sourceSets.getByName("main") {
+        java.srcDirs("build/generated-sources/kotlin")
+    }
+    compileOptions {
+        // this is needed for `OffsetDateTime` java class that is used in json serialization
+        isCoreLibraryDesugaringEnabled = true
     }
 }
 
@@ -75,10 +90,10 @@ dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.serialization.json)
     implementation(libs.okio)
     implementation(libs.okhttp3)
-//    implementation(libs.okhttp3.logging.interceptor)
-    implementation(libs.protobuf.kotlin.lite)
+    implementation(libs.protobuf.javalite)
     implementation(libs.timber)
 
     implementation(libs.androidx.hilt.common)
@@ -98,4 +113,6 @@ dependencies {
     kaptTest(libs.hilt.compiler)
     kaptTest(libs.androidx.hilt.compiler)
     kaptAndroidTest(libs.hilt.compiler)
+
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
 }

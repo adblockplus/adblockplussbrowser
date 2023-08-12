@@ -33,7 +33,7 @@ dependencies {
 
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.datastore)
-    implementation(libs.protobuf.kotlin.lite)
+    implementation(libs.protobuf.javalite)
     implementation(libs.hilt)
     kapt(libs.hilt.compiler)
     implementation(libs.timber)
