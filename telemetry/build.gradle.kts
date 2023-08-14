@@ -35,7 +35,7 @@ plugins {
     // Referencing `libs` raises "LibrariesForLibs'
     // can't be called in this context by implicit receiver."
     // TODO needs Gradle version update
-    @Suppress("DSL_SCOPE_VIOLATION")
+    @Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
     alias(libs.plugins.kotlinx.plugin.serialization)
     id("com.google.protobuf")
     id("dagger.hilt.android.plugin")
@@ -49,17 +49,13 @@ apply<JSONSchemaCodegenPlugin>()
 
 project.tasks.findByName("prepareKotlinBuildScriptModel")?.dependsOn(project.tasks.getByName("generate"))
 
-// if not added causing conflict during gradle build
-// similar issue https://github.com/plaid/plaid-link-android/issues/169
-// TODO find out what plugin has dependency to `proto-javalite`
 android {
-    packagingOptions {
-        resources.excludes.add("google/protobuf/*.proto")
-    }
+    // consumed by `json-kotlin-schema-gradle` plugin
     sourceSets.getByName("main") {
         java.srcDirs("build/generated-sources/kotlin")
     }
     compileOptions {
+        @Suppress("UnstableApiUsage")
         // this is needed for `OffsetDateTime` java class that is used in json serialization
         isCoreLibraryDesugaringEnabled = true
     }
