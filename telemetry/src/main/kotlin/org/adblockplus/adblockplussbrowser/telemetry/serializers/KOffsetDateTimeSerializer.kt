@@ -1,6 +1,7 @@
 package org.adblockplus.adblockplussbrowser.telemetry.serializers
 
 import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
@@ -23,3 +24,5 @@ object KOffsetDateTimeSerializer : KSerializer<OffsetDateTime> {
         return OffsetDateTime.parse(string)
     }
 }
+
+typealias OffsetDateTimeAsText = @Serializable(KOffsetDateTimeSerializer::class) OffsetDateTime
