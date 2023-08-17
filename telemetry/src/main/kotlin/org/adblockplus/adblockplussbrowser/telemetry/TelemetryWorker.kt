@@ -26,7 +26,7 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.adblockplus.adblockplussbrowser.base.os.CallingApp
+import org.adblockplus.adblockplussbrowser.telemetry.reporters.HttpReporter
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -37,21 +37,18 @@ internal class TelemetryWorker @AssistedInject constructor(
 ) : CoroutineWorker(appContext, params) {
 
     @Inject
-    internal lateinit var userCounter: UserCounter
+    internal lateinit var reporters: HttpReporter
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         // if it is a periodic check, force update subscriptions
         return@withContext try {
-            Timber.d("USER COUNTER JOB")
+            Timber.d("TELEMETRY JOB")
 
-            val callingApp = CallingApp(inputData)
-            Timber.d("Input data: $callingApp")
-
-            if (userCounter.count(callingApp).isSuccess) {
+            if (reporters.preparePayload().isSuccess) {
                 Timber.i("User counted")
                 return@withContext Result.success()
             }
-            Timber.w("User counting failed, retry scheduled")
+            Timber.w("Telemetry report failed, retry scheduled")
             return@withContext Result.retry()
         } catch (ex: Exception) {
             Timber.w("User counting failed, retry scheduled")

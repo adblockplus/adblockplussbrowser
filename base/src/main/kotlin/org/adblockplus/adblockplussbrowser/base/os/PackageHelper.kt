@@ -21,7 +21,11 @@ import android.content.pm.PackageManager
 import timber.log.Timber
 
 class PackageHelper private constructor() {
+    // TODO refactor to avoid multiple calls to `PackageManager` when retrieving both version and is package installed
     companion object {
+        internal const val VERSION_UNKNOWN = "0"
+
+        // TODO refactor to return `Result`
         fun isPackageInstalled(packageManager: PackageManager, packageId: String): Boolean {
             return try {
                 packageManager.getPackageInfo(packageId, 0)
@@ -31,14 +35,17 @@ class PackageHelper private constructor() {
                 false
             }
         }
-
+        // TODO refactor to return `Result`
         fun version(packageManager: PackageManager, packageId: String): String {
             return try {
                 packageManager.getPackageInfo(packageId, 0).versionName.lowercase()
             } catch (ex: Exception) {
                 Timber.e("Error retrieving app version for $packageId")
-                "0"
+                VERSION_UNKNOWN
             }
         }
+
     }
 }
+
+fun String.isVersionUnknown() = this == PackageHelper.VERSION_UNKNOWN

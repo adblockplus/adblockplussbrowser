@@ -27,9 +27,7 @@ internal interface TelemetryRepository {
 
     suspend fun currentData(): TelemetryData = data.take(1).single()
 
-    suspend fun updateLastUserCountingResponse(lastUserCountingResponse: Long)
+    suspend fun updateFirstPingIfNotSet(firstPing: Long)
 
-    suspend fun updateUserCountingCount(userCountingCount: Int)
-
+    suspend fun updateAndShiftLastPingToPreviousLast(newLastPing: Long)
 }
-
