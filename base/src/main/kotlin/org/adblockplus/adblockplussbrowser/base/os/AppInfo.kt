@@ -21,14 +21,14 @@ import android.content.Context
 import android.os.Build
 import org.adblockplus.adblockplussbrowser.base.BuildConfig
 
-data class AppInfo(
+data class AppInfo constructor(
     val addonName: String = addonName(),
-    val addonVersion: String? = null,
-    val application: String? = null,
+    val addonVersion: String,
+    val application: String?,
     val applicationVersion: String? = null,
-    val platform: String? = "android",
-    val platformVersion: String? = Build.VERSION.SDK_INT.toString(),
-    val locale: String? = "en-US"
+    val platform: String = "android",
+    val platformVersion: String = Build.VERSION.SDK_INT.toString(),
+    val locale: String = "en-US"
 )
 
 private const val ABP_ADDON_NAME = "adblockplussbrowser"
@@ -37,16 +37,17 @@ private const val CRYSTAL_ADDON_NAME = "crystalsbrowser"
 private const val DEFAULT_ADDON_NAME = ABP_ADDON_NAME
 private const val SBROWSER_PACKAGE_NAME = "com.sec.android.app.sbrowser"
 private const val SBROWSER_BETA_PACKAGE_NAME = "com.sec.android.app.sbrowser.beta"
-private const val SBROWSER_APP_NAME = "sbrowser"
 
 fun Context.buildAppInfo(): AppInfo {
+    val (app, ver) = applicationAndVersionForInstalledBrowser(this)
     return AppInfo(
         addonVersion = PackageHelper.version(packageManager, packageName),
-        application = applicationForInstalledBrowser(this),
-        applicationVersion = applicationVersion(this)
+        application = app,
+        applicationVersion = ver
     )
 }
 
+@Suppress("KotlinConstantConditions")
 private fun addonName(): String = when (BuildConfig.FLAVOR_product) {
     BuildConfig.FLAVOR_ABP -> ABP_ADDON_NAME
     BuildConfig.FLAVOR_ADBLOCK -> AB_ADDON_NAME
@@ -54,13 +55,14 @@ private fun addonName(): String = when (BuildConfig.FLAVOR_product) {
     else -> DEFAULT_ADDON_NAME
 }
 
-private fun applicationForInstalledBrowser(context: Context): String {
-    var application = ""
-    if (PackageHelper.isPackageInstalled(context.packageManager, SBROWSER_PACKAGE_NAME) ||
-        PackageHelper.isPackageInstalled(context.packageManager, SBROWSER_BETA_PACKAGE_NAME)) {
-        application += SBROWSER_APP_NAME
-    }
-    return application
-}
+private fun applicationAndVersionForInstalledBrowser(context: Context): Pair<String?, String?> {
+    val sbVer = PackageHelper.version(context.packageManager, SBROWSER_PACKAGE_NAME)
+    val sbBetaVer = PackageHelper.version(context.packageManager, SBROWSER_BETA_PACKAGE_NAME)
 
-private fun applicationVersion(context: Context) = PackageHelper.version(context.packageManager, SBROWSER_PACKAGE_NAME)
+    if (!sbVer.isVersionUnknown()) {
+        return SBROWSER_PACKAGE_NAME to sbVer
+    } else if (!sbBetaVer.isVersionUnknown()) {
+        return SBROWSER_BETA_PACKAGE_NAME to sbBetaVer
+    }
+    return null to null
+}

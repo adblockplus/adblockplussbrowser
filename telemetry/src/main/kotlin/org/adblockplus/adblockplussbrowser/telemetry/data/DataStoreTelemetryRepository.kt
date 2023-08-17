@@ -31,17 +31,18 @@ internal class DataStoreTelemetryRepository @Inject constructor(
 
     override suspend fun currentData(): TelemetryData = data.take(1).single()
 
-    override suspend fun updateLastUserCountingResponse(lastUserCountingResponse: Long) {
+    override suspend fun updateFirstPingIfNotSet(firstPing: Long) {
+        if (currentData().firstPing != 0L) return
         telemetryDataStore.updateData { data ->
-            data.toBuilder().setLastUserCountingResponse(lastUserCountingResponse).build()
+            data.toBuilder().setFirstPing(firstPing).build()
         }
     }
 
-    override suspend fun updateUserCountingCount(userCountingCount: Int) {
+    override suspend fun updateAndShiftLastPingToPreviousLast(newLastPing: Long) {
         telemetryDataStore.updateData { data ->
-            data.toBuilder().setUserCountingCount(userCountingCount).build()
+            data.toBuilder()
+                .setLastPing(newLastPing)
+                .setPreviousLastPing(data.lastPing).build()
         }
     }
-
 }
-

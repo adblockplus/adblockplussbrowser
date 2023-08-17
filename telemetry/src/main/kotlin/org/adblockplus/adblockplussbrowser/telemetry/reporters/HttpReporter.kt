@@ -15,10 +15,16 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.adblockplus.adblockplussbrowser.telemetry
+package org.adblockplus.adblockplussbrowser.telemetry.reporters
 
-import org.adblockplus.adblockplussbrowser.base.os.CallingApp
+import androidx.work.Data
 
-internal interface UserCounter {
-    suspend fun count(callingApp: CallingApp): Result<Unit>
+typealias ResultPayload = Result<String>
+typealias ReportResponse = Data
+
+internal interface HttpReporter {
+    val endpointUrl:  String
+    suspend fun preparePayload(): ResultPayload
+
+    suspend fun processResponse(response: ReportResponse): Result<Unit>
 }
