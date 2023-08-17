@@ -51,9 +51,9 @@ internal class ActivePingReporter(
     override suspend fun preparePayload(): Result<String> = coroutineScope {
         val data = repository.currentData()
 
-        val savedFirstPing = fromLongToOffsetDateTime(data.firstPing)
-        val savedLastPing = fromLongToOffsetDateTime(data.lastPing)
-        val savedPrevLastPing = fromLongToOffsetDateTime(data.previousLastPing)
+        val savedFirstPing = data.firstPing.toOffsetDateTime()
+        val savedLastPing = data.lastPing.toOffsetDateTime()
+        val savedPrevLastPing = data.previousLastPing.toOffsetDateTime()
         Timber.d(
             "Active ping saved: first ping is `%s`, last ping is `%s`, previous last ping is `%s`",
             savedFirstPing, savedLastPing, savedPrevLastPing
@@ -84,7 +84,7 @@ internal class ActivePingReporter(
         response.getString("token").let {
             if (it.isNullOrBlank()) return Result.failure(IOException("The token is empty"))
             Timber.d("Response `token` (date): %s", it)
-            val time = parseDateString(it).toEpochSecond()
+            val time = it.toOffsetDateTime().toEpochSecond()
             with(repository) {
                 updateFirstPingIfNotSet(time)
                 updateAndShiftLastPingToPreviousLast(time)
@@ -106,29 +106,30 @@ internal class ActivePingReporter(
         }.build()
 
 
-    private fun parseDateString(rawDate: String): OffsetDateTime {
-        return try {
-            // Expected date format in "token": "2023-05-18T12:50:00Z"
-            // from `Instant.parse` docs:
-            // obtains an instance of Instant from a text string such as 2007-12-03T10:15:30.00Z.
-            // so it should be good to go without a special formatter
-            OffsetDateTime.parse(rawDate)
-        } catch (ex: ParseException) {
-            Timber.e(ex)
-            if (BuildConfig.DEBUG) {
-                throw ex
-            }
-            Timber.e("Parsing 'token' failed, using client GMT time")
+}
 
-            // failed to parse, returning device time shifted to UTC (server time)
-            // this might prevent errors when the server changed time format
-            // thought should be carefully caught during testing
-            OffsetDateTime.now(ZoneOffset.UTC)
+private fun String.toOffsetDateTime(): OffsetDateTime {
+    return try {
+        // Expected date format in "token": "2023-05-18T12:50:00Z"
+        // from `Instant.parse` docs:
+        // obtains an instance of Instant from a text string such as 2007-12-03T10:15:30.00Z.
+        // so it should be good to go without a special formatter
+        OffsetDateTime.parse(this)
+    } catch (ex: ParseException) {
+        Timber.e(ex)
+        if (BuildConfig.DEBUG) {
+            throw ex
         }
-    }
+        Timber.e("Parsing 'token' failed, using client GMT time")
 
-    private fun fromLongToOffsetDateTime(millisecondsSinceEpoch: Long): OffsetDateTime {
-        val instant = Instant.ofEpochMilli(millisecondsSinceEpoch)
-        return OffsetDateTime.ofInstant(instant, ZoneOffset.UTC) // in fact same to GMT
+        // failed to parse, returning device time shifted to UTC (server time)
+        // this might prevent errors when the server changed time format
+        // thought should be carefully caught during testing
+        OffsetDateTime.now(ZoneOffset.UTC)
     }
+}
+
+private fun Long.toOffsetDateTime(): OffsetDateTime {
+    val instant = Instant.ofEpochMilli(this)
+    return OffsetDateTime.ofInstant(instant, ZoneOffset.UTC) // in fact same to GMT
 }
