@@ -327,7 +327,7 @@ samsung_filter_tests:
     - cd si_automation
     - git checkout ${GIT_AUTOMATION_BRANCH:-main}
     - OTHER_TEST_APK=$(find / -name "*app-world-abp-debug.apk")
-    - CHROMEDRIVER_EXECUTABLE=$(find / -name "*chrdlin99")
+    - CHROMEDRIVER_EXECUTABLE=$(find / -name "*chromedriverL")
     - export OTHER_TEST_APK
     - export CHROMEDRIVER_EXECUTABLE
     - echo CHROMEDRIVER_EXECUTABLE $CHROMEDRIVER_EXECUTABLE
