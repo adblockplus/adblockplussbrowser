@@ -21,18 +21,20 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.dataStoreFile
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import org.adblockplus.adblockplussbrowser.telemetry.data.DataStoreTelemetryRepository
 import org.adblockplus.adblockplussbrowser.telemetry.data.datastore.TelemetryDataSerializer
 import org.adblockplus.adblockplussbrowser.telemetry.data.proto.TelemetryData
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DataStoreModule {
+abstract class DataStoreModule {
 
     @Provides
     @Singleton
@@ -45,4 +47,11 @@ object DataStoreModule {
         ) {
             context.dataStoreFile("telemetry.pb")
         }
+
+    @Binds
+    internal abstract fun bindTelemetryRepository(
+        telemetryDataStore: DataStore<TelemetryData>,
+    ): DataStoreTelemetryRepository
+
+
 }

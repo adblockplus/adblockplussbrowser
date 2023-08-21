@@ -2,7 +2,7 @@
 desugar_jdk_libs = "1.1.5"
 robolectric = "4.7.3"
 android-plugin-gradle = "7.0.4"
-kotlin-plugin-gradle = "1.5.10"
+kotlin-plugin-gradle = "1.6.21"
 detekt = "1.18.1"
 plugin-versions = "0.39.0"
 junit = "4.13.2"
