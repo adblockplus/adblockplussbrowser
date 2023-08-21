@@ -27,43 +27,34 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import org.adblockplus.adblockplussbrowser.base.data.HttpConstants
 import org.adblockplus.adblockplussbrowser.telemetry.reporters.HttpReporter
-import org.adblockplus.adblockplussbrowser.telemetry.reporters.OkHttpReportResultConvertor
 import timber.log.Timber
 import java.net.HttpRetryException
 import java.net.HttpURLConnection
-import kotlin.time.ExperimentalTime
 
-@ExperimentalTime
-internal class OkHttpTelemetry(
+internal class HttpTelemetry(
     private val okHttpClient: OkHttpClient,
 ) {
 
-    suspend fun <T> report(reporters: List<T>): Result<Unit>
-            where T : HttpReporter,
-                  T : OkHttpReportResultConvertor =
+    suspend fun report(reporter: HttpReporter): Result<Unit> =
         coroutineScope {
-            val deferredResults = reporters.map { reporter ->
-                async {
-                    val url = reporter.endpointUrl.toHttpUrl()
-                    val requestBody = reporter.preparePayload().getOrThrow().toRequestBody()
-                    val request = Request.Builder().url(url).post(requestBody).build()
-                    okHttpClient.newCall(request).execute().use { response ->
-                        when (response.code) {
-                            HttpURLConnection.HTTP_OK -> {
-                                reporter.processResponse(reporter.convert(response))
-                            }
+            val url = reporter.configuration.endpointUrl.toHttpUrl()
+            val requestBody = reporter.preparePayload().getOrThrow().toRequestBody()
+            val request = Request.Builder().url(url).post(requestBody).build()
+            okHttpClient.newCall(request).execute().use { response ->
+                when (response.code) {
+                    HttpURLConnection.HTTP_OK -> {
+                        reporter.processResponse(reporter.convert(response))
+                    }
 
-                            else -> {
-                                val error = getHttpErrorMessage(response)
-                                return@use Result.failure(
-                                    HttpRetryException(
-                                        error,
-                                        response.code
-                                    )
-                                )
+                    else -> {
+                        val error = getHttpErrorMessage(response)
+                        return@use Result.failure(
+                            HttpRetryException(
+                                error,
+                                response.code
+                            )
+                        )
 
-                            }
-                        }
                     }
                 }
             }

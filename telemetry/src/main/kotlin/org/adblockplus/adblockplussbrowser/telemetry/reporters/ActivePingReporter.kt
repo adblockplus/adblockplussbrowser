@@ -17,8 +17,17 @@
 
 package org.adblockplus.adblockplussbrowser.telemetry.reporters
 
+import android.content.Context
+import androidx.hilt.work.HiltWorker
+import androidx.work.CoroutineWorker
 import androidx.work.Data
-import kotlinx.coroutines.coroutineScope
+import androidx.work.ListenableWorker
+import androidx.work.WorkerParameters
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
@@ -27,28 +36,46 @@ import okhttp3.Response
 import okio.IOException
 import org.adblockplus.adblockplussbrowser.base.BuildConfig
 import org.adblockplus.adblockplussbrowser.base.os.AppInfo
-import org.adblockplus.adblockplussbrowser.base.os.CallingApp
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.currentSettings
+import org.adblockplus.adblockplussbrowser.telemetry.HttpTelemetry
 import org.adblockplus.adblockplussbrowser.telemetry.data.TelemetryRepository
 import org.adblockplus.adblockplussbrowser.telemetry.schema.ActivePingSchema
 import timber.log.Timber
 import java.text.ParseException
+import java.time.Duration
 import java.time.Instant
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
 import java.util.UUID
+import javax.inject.Inject
 
-internal class ActivePingReporter(
-    private val callingApp: CallingApp,
-    private val repository: TelemetryRepository,
-    private val settings: SettingsRepository,
-    private val appInfo: AppInfo,
-) : HttpReporter, OkHttpReportResultConvertor {
-    override val endpointUrl: String
-        get() = "https://test-telemetry.data.eyeo.it/topic/webextension_activeping/version/1"
+@HiltWorker
+class ActivePingReporter @AssistedInject constructor(
+    @Assisted private val appContext: Context,
+    @Assisted params: WorkerParameters,
+) : CoroutineWorker(appContext, params), HttpReporter {
+    @Inject
+    private lateinit var repository: TelemetryRepository
 
-    override suspend fun preparePayload(): Result<String> = coroutineScope {
+    @Inject
+    private lateinit var settings: SettingsRepository
+
+    @Inject
+    private lateinit var appInfo: AppInfo
+
+    @Inject
+    internal lateinit var httpTelemetry: HttpTelemetry
+
+    override val configuration: HttpReporter.Configuration
+        get() = HttpReporter.Configuration(
+            endpointUrl = "https://test-telemetry.data.eyeo.it/topic/webextension_activeping/version/1",
+            repeatable = false,
+            backOffDelayMinutes = 2L,
+            repeatInterval = Duration.ofHours(12L)
+        )
+
+    override suspend fun preparePayload(): ResultPayload {
         val data = repository.currentData()
 
         val savedFirstPing = data.firstPing.toOffsetDateTime()
@@ -61,28 +88,28 @@ internal class ActivePingReporter(
         val acceptableAdsEnabled = settings.currentSettings().acceptableAdsEnabled
         Timber.d("AA enabled status is `%b`", acceptableAdsEnabled)
 
-        ActivePingSchema(
-            first_ping = savedFirstPing,
-            last_ping = savedLastPing,
-            previous_last_ping = savedPrevLastPing,
-            last_ping_tag = UUID.randomUUID().toString(),
-            aa_active = acceptableAdsEnabled,
-            addon_name = appInfo.addonName,
-            addon_version = appInfo.addonVersion,
-            application = appInfo.application.orEmpty(),
-            application_version = appInfo.applicationVersion.orEmpty(),
-            platform = appInfo.platform,
-            platform_version = appInfo.platformVersion,
-            extension_name = callingApp.applicationName,
-            extension_version = callingApp.applicationVersion
-        ).let {
-            Result.success(it.toString())
-        }
+        return kotlin.Result.success(
+            ActivePingSchema(
+                first_ping = savedFirstPing,
+                last_ping = savedLastPing,
+                previous_last_ping = savedPrevLastPing,
+                last_ping_tag = UUID.randomUUID().toString(),
+                aa_active = acceptableAdsEnabled,
+                addon_name = appInfo.addonName,
+                addon_version = appInfo.addonVersion.orEmpty(),
+                application = appInfo.application.orEmpty(),
+                application_version = appInfo.applicationVersion.orEmpty(),
+                platform = appInfo.platform,
+                platform_version = appInfo.platformVersion,
+                extension_name = appInfo.extensionName,
+                extension_version = appInfo.extensionVersion
+            ).toString()
+        )
     }
 
-    override suspend fun processResponse(response: ReportResponse): Result<Unit> =
+    override suspend fun processResponse(response: ReportResponse): kotlin.Result<Unit> =
         response.getString("token").let {
-            if (it.isNullOrBlank()) return Result.failure(IOException("The token is empty"))
+            if (it.isNullOrBlank()) return kotlin.Result.failure(IOException("The token is empty"))
             Timber.d("Response `token` (date): %s", it)
             val time = it.toOffsetDateTime().toEpochSecond()
             with(repository) {
@@ -90,22 +117,41 @@ internal class ActivePingReporter(
                 updateAndShiftLastPingToPreviousLast(time)
             }
 
-            Result.success(Unit)
+            kotlin.Result.success(Unit)
         }
 
-    @OptIn(ExperimentalSerializationApi::class)
-    override fun convert(httpResponse: Response): ReportResponse =
-        Data.Builder().apply {
-            httpResponse.body?.byteStream()?.use { inputStream ->
-                try {
-                    val (key, value) = Json.decodeFromStream<Pair<String, String>>(inputStream)
-                    putString(key, value)
-                } catch (ignore: SerializationException) {
+    @ExperimentalSerializationApi
+    override fun convert(httpResponse: Any): ReportResponse =
+        if (httpResponse is Response) {
+            Data.Builder().apply {
+                httpResponse.body?.byteStream()?.use { inputStream ->
+                    try {
+                        val (key, value) = Json.decodeFromStream<Pair<String, String>>(inputStream)
+                        putString(key, value)
+                    } catch (ignore: SerializationException) {
+                    }
                 }
+            }.build()
+        } else {
+            throw NotImplementedError("We only support OkHttpResponse in ActivePingReporter")
+        }
+
+    override suspend fun doWork(): ListenableWorker.Result = withContext(Dispatchers.IO) {
+        // if it is a periodic check, force update subscriptions
+        return@withContext try {
+            Timber.d("TELEMETRY JOB")
+
+            if (httpTelemetry.report(this@ActivePingReporter).isSuccess) {
+                Timber.i("Telemetry worker success")
+                return@withContext ListenableWorker.Result.success()
             }
-        }.build()
-
-
+            Timber.w("Telemetry report failed, retry scheduled")
+            return@withContext ListenableWorker.Result.retry()
+        } catch (ex: Exception) {
+            Timber.w("Telemetry report failed, retry scheduled")
+            if (ex is CancellationException) ListenableWorker.Result.success() else ListenableWorker.Result.retry()
+        }
+    }
 }
 
 private fun String.toOffsetDateTime(): OffsetDateTime {

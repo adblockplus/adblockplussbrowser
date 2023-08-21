@@ -18,13 +18,25 @@
 package org.adblockplus.adblockplussbrowser.telemetry.reporters
 
 import androidx.work.Data
+import java.time.Duration
 
 typealias ResultPayload = Result<String>
 typealias ReportResponse = Data
 
-internal interface HttpReporter {
-    val endpointUrl:  String
+interface HttpReporter {
+    val configuration: Configuration
+
     suspend fun preparePayload(): ResultPayload
 
     suspend fun processResponse(response: ReportResponse): Result<Unit>
+
+    fun convert(httpResponse: Any): ReportResponse
+
+    data class Configuration(
+        val endpointUrl: String,
+        val repeatable: Boolean,
+        val backOffDelayMinutes: Long,
+        val repeatInterval: Duration,
+    )
 }
+

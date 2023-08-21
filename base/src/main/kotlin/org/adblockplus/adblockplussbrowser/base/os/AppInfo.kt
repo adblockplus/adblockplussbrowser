@@ -19,24 +19,41 @@ package org.adblockplus.adblockplussbrowser.base.os
 
 import android.content.Context
 import android.os.Build
+import androidx.annotation.ChecksSdkIntAtLeast
 import org.adblockplus.adblockplussbrowser.base.BuildConfig
-
+import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.SBROWSER_APP_ID
+import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.SBROWSER_APP_ID_BETA
+/**
+ * Data class providing information about the application.
+ * Member names are chosen to match the names of the fields in the ActivePing schema.
+ *
+ * @param addonName Codename of the addon, e.g. "adblockplussbrowser".
+ * @param addonVersion Version of the addon. (Adblock Plus, Adblock or Crystal version)
+ * @param application Name of the application. (Samsung Internet)
+ * @param applicationVersion Version of the application. (Samsung Internet version)
+ * @param platform Name of the platform (Android).
+ * @param platformVersion Version of the platform (Android SDK version).
+ * @param locale Locale of the platform.
+ * @param extensionName Name of the extension.
+ * @param extensionVersion Version of the extension.
+ */
 data class AppInfo constructor(
     val addonName: String = addonName(),
-    val addonVersion: String,
-    val application: String?,
+    val addonVersion: String? = null, // nullable for tests
+    val application: String? = null,
     val applicationVersion: String? = null,
     val platform: String = "android",
+    @ChecksSdkIntAtLeast
     val platformVersion: String = Build.VERSION.SDK_INT.toString(),
-    val locale: String = "en-US"
+    val locale: String = "en-US",
+    val extensionName: String = BuildConfig.APPLICATION_ID,
+    val extensionVersion: String = BuildConfig.APPLICATION_VERSION,
 )
 
 private const val ABP_ADDON_NAME = "adblockplussbrowser"
 private const val AB_ADDON_NAME = "adblocksbrowser"
 private const val CRYSTAL_ADDON_NAME = "crystalsbrowser"
 private const val DEFAULT_ADDON_NAME = ABP_ADDON_NAME
-private const val SBROWSER_PACKAGE_NAME = "com.sec.android.app.sbrowser"
-private const val SBROWSER_BETA_PACKAGE_NAME = "com.sec.android.app.sbrowser.beta"
 
 fun Context.buildAppInfo(): AppInfo {
     val (app, ver) = applicationAndVersionForInstalledBrowser(this)
@@ -56,13 +73,13 @@ private fun addonName(): String = when (BuildConfig.FLAVOR_product) {
 }
 
 private fun applicationAndVersionForInstalledBrowser(context: Context): Pair<String?, String?> {
-    val sbVer = PackageHelper.version(context.packageManager, SBROWSER_PACKAGE_NAME)
-    val sbBetaVer = PackageHelper.version(context.packageManager, SBROWSER_BETA_PACKAGE_NAME)
+    val sbVer = PackageHelper.version(context.packageManager, SBROWSER_APP_ID)
+    val sbBetaVer = PackageHelper.version(context.packageManager, SBROWSER_APP_ID_BETA)
 
     if (!sbVer.isVersionUnknown()) {
-        return SBROWSER_PACKAGE_NAME to sbVer
+        return SBROWSER_APP_ID to sbVer
     } else if (!sbBetaVer.isVersionUnknown()) {
-        return SBROWSER_BETA_PACKAGE_NAME to sbBetaVer
+        return SBROWSER_APP_ID_BETA to sbBetaVer
     }
     return null to null
 }

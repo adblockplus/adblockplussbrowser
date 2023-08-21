@@ -132,6 +132,11 @@ fun Project.createFlavorsConfig() {
                     "APPLICATION_VERSION",
                     "\"${flavor.versionName}\""
                 )
+                defaultConfig.buildConfigField(
+                    "String",
+                    "APPLICATION_ID",
+                    "\"${flavor.applicationId}\""
+                )
             }
         }
     }
