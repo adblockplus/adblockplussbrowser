@@ -54,7 +54,7 @@ OR
 **Output Folder**: `src/adblock/assets`
 - ####Crystal
 ```
-    gradle :core:downloadSubscriptions -Pflavor=crystal
+    ./gradle :core:downloadSubscriptions -Pflavor=crystal
 ```
 **Output Folder**: `src/crystal/assets`
 
