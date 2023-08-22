@@ -37,6 +37,7 @@ import org.adblockplus.adblockplussbrowser.core.data.model.exists
 import org.adblockplus.adblockplussbrowser.core.data.model.ifExists
 import org.adblockplus.adblockplussbrowser.core.extensions.sanitizeUrl
 import org.adblockplus.adblockplussbrowser.core.retryIO
+import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
 import ru.gildor.coroutines.okhttp.await
 import timber.log.Timber
 import java.io.File
@@ -46,7 +47,6 @@ import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 import org.adblockplus.adblockplussbrowser.base.data.HttpConstants
 import org.adblockplus.adblockplussbrowser.base.data.SubscriptionsConstants
-import org.adblockplus.adblockplussbrowser.core.old_usercounter.OkHttpOldUserCounter
 
 
 @ExperimentalTime
@@ -90,7 +90,7 @@ internal class OkHttpDownloader(
                     context.downloadsDir().mkdirs()
                     tempFile.renameTo(downloadFile)
 
-                    val newLastVersion = OkHttpOldUserCounter.parseDateString(
+                    val newLastVersion = OkHttpUserCounter.parseDateString(
                         response.headers["Date"] ?: "",
                         analyticsProvider
                     )

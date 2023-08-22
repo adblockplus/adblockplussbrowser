@@ -55,10 +55,10 @@ import org.adblockplus.adblockplussbrowser.core.BuildConfig
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.data.currentData
 import org.adblockplus.adblockplussbrowser.core.extensions.toAllowRule
-import org.adblockplus.adblockplussbrowser.core.old_usercounter.OkHttpOldUserCounter
-import org.adblockplus.adblockplussbrowser.core.old_usercounter.OldUserCounterWorker
-import org.adblockplus.adblockplussbrowser.core.old_usercounter.OldUserCounterWorker.Companion.BACKOFF_TIME_MINUTES
-import org.adblockplus.adblockplussbrowser.core.old_usercounter.OldUserCounterWorker.Companion.USER_COUNTER_KEY_ONESHOT_WORK
+import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
+import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker
+import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker.Companion.BACKOFF_TIME_MINUTES
+import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker.Companion.USER_COUNTER_KEY_ONESHOT_WORK
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.currentSettings
 import org.adblockplus.adblockplussbrowser.telemetry.TelemetryService
@@ -134,7 +134,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
     override fun insert(uri: Uri, values: ContentValues?): Uri? = null
 
     private fun triggerUserCountingRequest(callingApp: CallingApp) {
-        val request = OneTimeWorkRequestBuilder<OldUserCounterWorker>().apply {
+        val request = OneTimeWorkRequestBuilder<UserCounterWorker>().apply {
             setConstraints(
                 Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
             )
@@ -318,7 +318,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
 
         private fun convertToTimestamp(stringToFormat: String): Long {
             return try {
-                val date: Date = OkHttpOldUserCounter.lastUserCountingResponseFormat.parse(stringToFormat)
+                val date: Date = OkHttpUserCounter.lastUserCountingResponseFormat.parse(stringToFormat)
                 date.time
             } catch (e: ParseException) {
                 0

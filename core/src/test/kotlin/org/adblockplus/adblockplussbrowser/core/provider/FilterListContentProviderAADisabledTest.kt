@@ -30,6 +30,10 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import dagger.hilt.android.testing.UninstallModules
 import dagger.hilt.components.SingletonComponent
+import java.text.SimpleDateFormat
+import java.util.Date
+import javax.inject.Singleton
+import kotlin.time.ExperimentalTime
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
@@ -44,8 +48,8 @@ import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
 import org.adblockplus.adblockplussbrowser.core.downloader.OkHttpDownloader
 import org.adblockplus.adblockplussbrowser.core.helpers.FakeActivationPreferences
 import org.adblockplus.adblockplussbrowser.core.helpers.FakeCoreRepository
-import org.adblockplus.adblockplussbrowser.core.old_usercounter.OkHttpOldUserCounter
-import org.adblockplus.adblockplussbrowser.core.old_usercounter.OldUserCounter
+import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
+import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.di.SettingsModule
 import org.junit.Assert.assertNotNull
@@ -59,10 +63,6 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowContentResolver
-import java.text.SimpleDateFormat
-import java.util.Date
-import javax.inject.Singleton
-import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
 @Config(
@@ -109,7 +109,7 @@ class FilterListContentProviderAADisabledTest {
             val lastUserCountingDate = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z")
                 .format(Date(System.currentTimeMillis()))
             coreRepository.lastUserCountingResponse =
-                OkHttpOldUserCounter.parseDateString(lastUserCountingDate, getAnalyticsProvider()).toLong()
+                OkHttpUserCounter.parseDateString(lastUserCountingDate, getAnalyticsProvider()).toLong()
             return coreRepository
         }
 
@@ -143,7 +143,7 @@ class FilterListContentProviderAADisabledTest {
 
         @Provides
         @Singleton
-        fun provideUserCounter(): OldUserCounter = Mockito.mock(OkHttpOldUserCounter::class.java)
+        fun provideUserCounter(): UserCounter = Mockito.mock(OkHttpUserCounter::class.java)
 
         @Provides
         @Singleton
