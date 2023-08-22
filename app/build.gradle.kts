@@ -59,6 +59,7 @@ dependencies {
     implementation(project(":onboarding"))
     implementation(project(":preferences"))
     implementation(project(":settings"))
+    implementation(project(":telemetry"))
 
     implementation(libs.material)
     implementation(libs.timber)

@@ -35,6 +35,7 @@ dependencies {
     implementation(project(":analytics"))
     implementation(project(":base"))
     implementation(project(":settings"))
+    implementation(project(":telemetry"))
 
     implementation(libs.androidx.datastore)
     implementation(libs.androidx.work.runtime)
