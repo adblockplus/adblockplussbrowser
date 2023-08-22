@@ -34,11 +34,11 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class DataStoreModule {
+internal object DataStoreModule {
 
     @Provides
     @Singleton
-    internal fun providesTelemetryDataStore(
+    internal fun provideTelemetryDataStore(
         @ApplicationContext context: Context,
         telemetryDataSerializer: TelemetryDataSerializer,
     ): DataStore<TelemetryData> =
@@ -48,10 +48,10 @@ abstract class DataStoreModule {
             context.dataStoreFile("telemetry.pb")
         }
 
-    @Binds
-    internal abstract fun bindTelemetryRepository(
+    @Provides
+    internal fun provideTelemetryRepository(
         telemetryDataStore: DataStore<TelemetryData>,
-    ): DataStoreTelemetryRepository
+    ) = DataStoreTelemetryRepository(telemetryDataStore)
 
 
 }

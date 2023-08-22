@@ -67,7 +67,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
     var fileName: String = ""
     var data: ReportIssueData = ReportIssueData()
 
-    val displaySnackbarMessage = MutableLiveData<@StringRes Int>(0)
+    val displaySnackbarMessage = MutableLiveData<@receiver:StringRes Int>(0)
 
     @Inject
     lateinit var reportIssueRepository: ReportIssueRepository

@@ -19,15 +19,10 @@ package org.adblockplus.adblockplussbrowser.telemetry.reporters
 
 import android.content.Context
 import androidx.hilt.work.HiltWorker
-import androidx.work.CoroutineWorker
 import androidx.work.Data
-import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
@@ -38,7 +33,7 @@ import org.adblockplus.adblockplussbrowser.base.BuildConfig
 import org.adblockplus.adblockplussbrowser.base.os.AppInfo
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.currentSettings
-import org.adblockplus.adblockplussbrowser.telemetry.HttpTelemetry
+import org.adblockplus.adblockplussbrowser.telemetry.TelemetryWorker
 import org.adblockplus.adblockplussbrowser.telemetry.data.TelemetryRepository
 import org.adblockplus.adblockplussbrowser.telemetry.schema.ActivePingSchema
 import timber.log.Timber
@@ -54,26 +49,28 @@ import javax.inject.Inject
 class ActivePingReporter @AssistedInject constructor(
     @Assisted private val appContext: Context,
     @Assisted params: WorkerParameters,
-) : CoroutineWorker(appContext, params), HttpReporter {
+) : TelemetryWorker(appContext, params) {
     @Inject
-    private lateinit var repository: TelemetryRepository
+    internal lateinit var repository: TelemetryRepository
 
     @Inject
-    private lateinit var settings: SettingsRepository
+    internal lateinit var settings: SettingsRepository
 
     @Inject
-    private lateinit var appInfo: AppInfo
+    internal lateinit var appInfo: AppInfo
 
-    @Inject
-    internal lateinit var httpTelemetry: HttpTelemetry
+    companion object {
+        val configuration: HttpReporter.Configuration
+            get() = HttpReporter.Configuration(
+                endpointUrl = "https://test-telemetry.data.eyeo.it/topic/webextension_activeping/version/1",
+                repeatable = false,
+                backOffDelayMinutes = 2L,
+                repeatInterval = Duration.ofHours(12L)
+            )
+    }
 
     override val configuration: HttpReporter.Configuration
-        get() = HttpReporter.Configuration(
-            endpointUrl = "https://test-telemetry.data.eyeo.it/topic/webextension_activeping/version/1",
-            repeatable = false,
-            backOffDelayMinutes = 2L,
-            repeatInterval = Duration.ofHours(12L)
-        )
+        get() = Companion.configuration
 
     override suspend fun preparePayload(): ResultPayload {
         val data = repository.currentData()
@@ -135,23 +132,6 @@ class ActivePingReporter @AssistedInject constructor(
         } else {
             throw NotImplementedError("We only support OkHttpResponse in ActivePingReporter")
         }
-
-    override suspend fun doWork(): ListenableWorker.Result = withContext(Dispatchers.IO) {
-        // if it is a periodic check, force update subscriptions
-        return@withContext try {
-            Timber.d("TELEMETRY JOB")
-
-            if (httpTelemetry.report(this@ActivePingReporter).isSuccess) {
-                Timber.i("Telemetry worker success")
-                return@withContext ListenableWorker.Result.success()
-            }
-            Timber.w("Telemetry report failed, retry scheduled")
-            return@withContext ListenableWorker.Result.retry()
-        } catch (ex: Exception) {
-            Timber.w("Telemetry report failed, retry scheduled")
-            if (ex is CancellationException) ListenableWorker.Result.success() else ListenableWorker.Result.retry()
-        }
-    }
 }
 
 private fun String.toOffsetDateTime(): OffsetDateTime {

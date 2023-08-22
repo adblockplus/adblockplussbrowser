@@ -23,14 +23,18 @@ import androidx.work.WorkerParameters
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.OkHttpClient
 import org.adblockplus.adblockplussbrowser.telemetry.reporters.HttpReporter
 import timber.log.Timber
-import javax.inject.Inject
- class TelemetryWorker constructor(
-    private val appContext: Context,
-    params: WorkerParameters,
-) : CoroutineWorker(appContext, params) {
 
+abstract class TelemetryWorker constructor(
+    appContext: Context,
+    params: WorkerParameters,
+) : CoroutineWorker(appContext, params), HttpReporter {
+
+    private val httpTelemetry: HttpTelemetry = HttpTelemetry(
+        OkHttpClient()
+    )
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         // if it is a periodic check, force update subscriptions

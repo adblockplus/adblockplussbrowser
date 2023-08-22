@@ -20,12 +20,15 @@ package org.adblockplus.adblockplussbrowser.app
 import android.app.Application
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
+import androidx.work.WorkManager
 import dagger.hilt.EntryPoint
 import dagger.hilt.EntryPoints
 import dagger.hilt.InstallIn
 import dagger.hilt.android.HiltAndroidApp
 import dagger.hilt.components.SingletonComponent
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
+import org.adblockplus.adblockplussbrowser.telemetry.TelemetryService
+import org.adblockplus.adblockplussbrowser.telemetry.reporters.ActivePingReporter
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -50,7 +53,10 @@ class AbpApplication : Application(), Configuration.Provider {
         super.onCreate()
 
         subscriptionsManager.initialize()
-
+        TelemetryService().apply {
+            addReporter<ActivePingReporter>(ActivePingReporter.configuration)
+            scheduleReporting(WorkManager.getInstance(this@AbpApplication))
+        }
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         } else {

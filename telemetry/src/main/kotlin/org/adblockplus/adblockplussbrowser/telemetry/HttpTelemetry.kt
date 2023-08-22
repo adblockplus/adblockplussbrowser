@@ -17,8 +17,6 @@
 
 package org.adblockplus.adblockplussbrowser.telemetry
 
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
@@ -27,7 +25,6 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import org.adblockplus.adblockplussbrowser.base.data.HttpConstants
 import org.adblockplus.adblockplussbrowser.telemetry.reporters.HttpReporter
-import timber.log.Timber
 import java.net.HttpRetryException
 import java.net.HttpURLConnection
 
@@ -58,33 +55,21 @@ internal class HttpTelemetry(
                     }
                 }
             }
-
-            if (deferredResults.awaitAll().all {
-                    if (it.isFailure) {
-                        Timber.e(it.exceptionOrNull())
-                    }
-                    it.isSuccess
-                }
-            ) {
-                Result.success(Unit)
-            } else {
-                Result.failure(Exception("Reporting failed in one of the reporters (see logs above"))
-            }
         }
 
-    private fun getHttpErrorMessage(response: Response) =
-        ("$HTTP_ERROR_LOG_HEADER_USER_COUNTER ${response.code}"
-                + "\nHeaders:\n${
-            response.headers.toString()
-                .take(HttpConstants.HTTP_ERROR_AVERAGE_HEADERS_SIZE)
-        }"
-                + "\nBody:\n${
-            response.body?.string()
-                ?.take(HttpConstants.HTTP_ERROR_MAX_BODY_SIZE) ?: ""
-        }")
-
     companion object {
-        internal const val HTTP_ERROR_LOG_HEADER_USER_COUNTER =
+        private const val HTTP_ERROR_LOG_HEADER_USER_COUNTER =
             "OkHttpUserCounter HTTP error, return code"
+
+        private fun getHttpErrorMessage(response: Response) =
+            ("$HTTP_ERROR_LOG_HEADER_USER_COUNTER ${response.code}"
+                    + "\nHeaders:\n${
+                response.headers.toString()
+                    .take(HttpConstants.HTTP_ERROR_AVERAGE_HEADERS_SIZE)
+            }"
+                    + "\nBody:\n${
+                response.body?.string()
+                    ?.take(HttpConstants.HTTP_ERROR_MAX_BODY_SIZE) ?: ""
+            }")
     }
 }
