@@ -39,8 +39,8 @@ import org.adblockplus.adblockplussbrowser.core.data.datastore.ProtoCoreDataSeri
 import org.adblockplus.adblockplussbrowser.core.data.proto.ProtoCoreData
 import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
 import org.adblockplus.adblockplussbrowser.core.downloader.OkHttpDownloader
-import org.adblockplus.adblockplussbrowser.core.old_usercounter.OkHttpOldUserCounter
-import org.adblockplus.adblockplussbrowser.core.old_usercounter.OldUserCounter
+import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
+import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import javax.inject.Qualifier
 import javax.inject.Singleton
@@ -92,8 +92,8 @@ internal object CoreModule {
         repository: CoreRepository,
         settings: SettingsRepository,
         analyticsProvider: AnalyticsProvider
-    ): OldUserCounter =
-        OkHttpOldUserCounter(okHttpClient, repository, settings, appInfo, analyticsProvider)
+    ): UserCounter =
+        OkHttpUserCounter(okHttpClient, repository, settings, appInfo, analyticsProvider)
 
     @Provides
     @CorePreferences

@@ -21,6 +21,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
+import kotlin.time.ExperimentalTime
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
@@ -34,12 +36,10 @@ import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
 import org.adblockplus.adblockplussbrowser.core.downloader.OkHttpDownloader
 import org.adblockplus.adblockplussbrowser.core.helpers.FakeActivationPreferences
 import org.adblockplus.adblockplussbrowser.core.helpers.FakeCoreRepository
-import org.adblockplus.adblockplussbrowser.core.old_usercounter.OkHttpOldUserCounter
-import org.adblockplus.adblockplussbrowser.core.old_usercounter.OldUserCounter
+import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
+import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.mockito.Mockito
-import javax.inject.Singleton
-import kotlin.time.ExperimentalTime
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -79,7 +79,7 @@ internal class TestModule {
 
     @Provides
     @Singleton
-    fun provideUserCounter(): OldUserCounter = Mockito.mock(OkHttpOldUserCounter::class.java)
+    fun provideUserCounter(): UserCounter = Mockito.mock(OkHttpUserCounter::class.java)
 
     @Provides
     @Singleton

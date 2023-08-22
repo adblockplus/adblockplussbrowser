@@ -15,11 +15,11 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.adblockplus.adblockplussbrowser.core.old_usercounter
+package org.adblockplus.adblockplussbrowser.core.usercounter
 
 import org.adblockplus.adblockplussbrowser.base.os.CallingApp
 
-internal interface OldUserCounter {
+internal interface UserCounter {
     suspend fun count(callingApp: CallingApp): CountUserResult
 }
 
