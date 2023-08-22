@@ -42,19 +42,19 @@ To run `downloadSubscriptions` a flavor must be provided. Default value is `abp`
 ```
 OR
 ```
-    ./gradle :core:downloadSubscriptions -Pflavor=abp
+    ./gradlew :core:downloadSubscriptions -Pflavor=abp
 ```
 
 **Output Folder**: `src/main/assets`
 
 - ####Adblock
 ```
-    ./gradle :core:downloadSubscriptions -Pflavor=adblock
+    ./gradlew :core:downloadSubscriptions -Pflavor=adblock
 ```
 **Output Folder**: `src/adblock/assets`
 - ####Crystal
 ```
-    ./gradle :core:downloadSubscriptions -Pflavor=crystal
+    ./gradlew :core:downloadSubscriptions -Pflavor=crystal
 ```
 **Output Folder**: `src/crystal/assets`
 
