@@ -38,7 +38,7 @@ In the `build.gradle` of the `core` module, there is a task to manually download
 To run `downloadSubscriptions` a flavor must be provided. Default value is `abp`. E.g.:
 - ####ABP
 ```
-    ./gradle :core:downloadSubscriptions
+    ./gradlew :core:downloadSubscriptions
 ```
 OR
 ```
