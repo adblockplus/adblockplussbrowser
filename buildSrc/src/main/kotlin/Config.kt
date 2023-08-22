@@ -17,7 +17,7 @@
 
 object Config {
     object Versions {
-        const val ABP = "2.5.1"
+        const val ABP = "2.5.2"
 
         const val ADBLOCK = "3.4.1"
 
