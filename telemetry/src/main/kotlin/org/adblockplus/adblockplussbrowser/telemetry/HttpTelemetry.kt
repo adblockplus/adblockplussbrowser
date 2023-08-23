@@ -24,6 +24,8 @@ import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import org.adblockplus.adblockplussbrowser.base.data.HttpConstants
+import org.adblockplus.adblockplussbrowser.base.data.HttpConstants.EYEO_TELEMETRY_ACTIVEPING_AUTH_TOKEN
+import org.adblockplus.adblockplussbrowser.base.data.HttpConstants.HTTP_HEADER_AUTHORIZATION
 import org.adblockplus.adblockplussbrowser.telemetry.reporters.HttpReporter
 import java.net.HttpRetryException
 import java.net.HttpURLConnection
@@ -36,7 +38,9 @@ internal class HttpTelemetry(
         coroutineScope {
             val url = reporter.configuration.endpointUrl.toHttpUrl()
             val requestBody = reporter.preparePayload().getOrThrow().toRequestBody()
-            val request = Request.Builder().url(url).post(requestBody).build()
+            val request = Request.Builder().url(url).addHeader(
+                HTTP_HEADER_AUTHORIZATION, "Bearer".plus(EYEO_TELEMETRY_ACTIVEPING_AUTH_TOKEN)
+            ).post(requestBody).build()
             okHttpClient.newCall(request).execute().use { response ->
                 when (response.code) {
                     HttpURLConnection.HTTP_OK -> {

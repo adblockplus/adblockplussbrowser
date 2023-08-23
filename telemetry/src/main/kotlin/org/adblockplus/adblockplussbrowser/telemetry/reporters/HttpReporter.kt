@@ -18,6 +18,7 @@
 package org.adblockplus.adblockplussbrowser.telemetry.reporters
 
 import androidx.work.Data
+import kotlinx.serialization.ExperimentalSerializationApi
 import java.time.Duration
 
 typealias ResultPayload = Result<String>
@@ -30,6 +31,7 @@ interface HttpReporter {
 
     suspend fun processResponse(response: ReportResponse): Result<Unit>
 
+    @ExperimentalSerializationApi
     fun convert(httpResponse: Any): ReportResponse
 
     data class Configuration(

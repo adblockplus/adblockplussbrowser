@@ -23,6 +23,11 @@ import androidx.work.Data
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import dagger.hilt.EntryPoint
+import dagger.hilt.EntryPoints
+import dagger.hilt.InstallIn
+import dagger.hilt.android.EntryPointAccessors.*
+import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
@@ -43,21 +48,37 @@ import java.time.Instant
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
 import java.util.UUID
-import javax.inject.Inject
 
 @HiltWorker
 class ActivePingReporter @AssistedInject constructor(
     @Assisted private val appContext: Context,
     @Assisted params: WorkerParameters,
 ) : TelemetryWorker(appContext, params) {
-    @Inject
-    internal lateinit var repository: TelemetryRepository
 
-    @Inject
-    internal lateinit var settings: SettingsRepository
+    @EntryPoint
+    @InstallIn(SingletonComponent::class)
+    interface ActivePingReporterEntryPoint {
+        fun telemetryRepository(): TelemetryRepository
+        fun settingsRepository(): SettingsRepository
+        fun appInfo(): AppInfo
+    }
 
-    @Inject
-    internal lateinit var appInfo: AppInfo
+    private var repository: TelemetryRepository
+
+    private var settings: SettingsRepository
+
+    private var appInfo: AppInfo
+
+    init {
+        EntryPoints.get(
+            appContext,
+            ActivePingReporterEntryPoint::class.java
+        ).apply {
+            repository = telemetryRepository()
+            settings = settingsRepository()
+            appInfo = appInfo()
+        }
+    }
 
     companion object {
         val configuration: HttpReporter.Configuration
@@ -132,30 +153,30 @@ class ActivePingReporter @AssistedInject constructor(
         } else {
             throw NotImplementedError("We only support OkHttpResponse in ActivePingReporter")
         }
-}
 
-private fun String.toOffsetDateTime(): OffsetDateTime {
-    return try {
-        // Expected date format in "token": "2023-05-18T12:50:00Z"
-        // from `Instant.parse` docs:
-        // obtains an instance of Instant from a text string such as 2007-12-03T10:15:30.00Z.
-        // so it should be good to go without a special formatter
-        OffsetDateTime.parse(this)
-    } catch (ex: ParseException) {
-        Timber.e(ex)
-        if (BuildConfig.DEBUG) {
-            throw ex
+    private fun String.toOffsetDateTime(): OffsetDateTime {
+        return try {
+            // Expected date format in "token": "2023-05-18T12:50:00Z"
+            // from `Instant.parse` docs:
+            // obtains an instance of Instant from a text string such as 2007-12-03T10:15:30.00Z.
+            // so it should be good to go without a special formatter
+            OffsetDateTime.parse(this)
+        } catch (ex: ParseException) {
+            Timber.e(ex)
+            if (BuildConfig.DEBUG) {
+                throw ex
+            }
+            Timber.e("Parsing 'token' failed, using client GMT time")
+
+            // failed to parse, returning device time shifted to UTC (server time)
+            // this might prevent errors when the server changed time format
+            // thought should be carefully caught during testing
+            OffsetDateTime.now(ZoneOffset.UTC)
         }
-        Timber.e("Parsing 'token' failed, using client GMT time")
-
-        // failed to parse, returning device time shifted to UTC (server time)
-        // this might prevent errors when the server changed time format
-        // thought should be carefully caught during testing
-        OffsetDateTime.now(ZoneOffset.UTC)
     }
-}
 
-private fun Long.toOffsetDateTime(): OffsetDateTime {
-    val instant = Instant.ofEpochMilli(this)
-    return OffsetDateTime.ofInstant(instant, ZoneOffset.UTC) // in fact same to GMT
+    private fun Long.toOffsetDateTime(): OffsetDateTime {
+        val instant = Instant.ofEpochMilli(this)
+        return OffsetDateTime.ofInstant(instant, ZoneOffset.UTC) // in fact same to GMT
+    }
 }

@@ -11,6 +11,10 @@ import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkRequest
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import org.adblockplus.adblockplussbrowser.telemetry.data.TelemetryRepository
 import org.adblockplus.adblockplussbrowser.telemetry.reporters.HttpReporter
 import java.util.concurrent.TimeUnit
 

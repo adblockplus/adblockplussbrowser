@@ -41,14 +41,15 @@ abstract class TelemetryWorker constructor(
         return@withContext try {
             Timber.d("TELEMETRY JOB")
 
-            if (httpTelemetry.report(this@TelemetryWorker).isSuccess) {
+            val result = httpTelemetry.report(this@TelemetryWorker)
+            if (result.isSuccess) {
                 Timber.i("Telemetry worker success")
                 return@withContext Result.success()
             }
-            Timber.w("Telemetry report failed, retry scheduled")
+            Timber.w(result.exceptionOrNull(), "Telemetry report failed, retry scheduled")
             return@withContext Result.retry()
         } catch (ex: Exception) {
-            Timber.w("Telemetry report failed, retry scheduled")
+            Timber.w(ex, "Telemetry report failed, retry scheduled")
             if (ex is CancellationException) Result.success() else Result.retry()
         }
     }
