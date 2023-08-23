@@ -21,13 +21,13 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.dataStoreFile
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import org.adblockplus.adblockplussbrowser.telemetry.data.DataStoreTelemetryRepository
+import org.adblockplus.adblockplussbrowser.telemetry.data.TelemetryRepository
 import org.adblockplus.adblockplussbrowser.telemetry.data.datastore.TelemetryDataSerializer
 import org.adblockplus.adblockplussbrowser.telemetry.data.proto.TelemetryData
 import javax.inject.Singleton
@@ -49,9 +49,12 @@ internal object DataStoreModule {
         }
 
     @Provides
+    @Singleton
     internal fun provideTelemetryRepository(
         telemetryDataStore: DataStore<TelemetryData>,
-    ) = DataStoreTelemetryRepository(telemetryDataStore)
+    ): TelemetryRepository = DataStoreTelemetryRepository(telemetryDataStore)
 
-
+    @Provides
+    @Singleton
+    internal fun provideTelemetryDataSerializer(): TelemetryDataSerializer = TelemetryDataSerializer
 }

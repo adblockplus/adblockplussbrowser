@@ -45,6 +45,10 @@ applyCommonConfig()
 
 createFlavorsConfig()
 
+kapt {
+    correctErrorTypes = true
+}
+
 apply<JSONSchemaCodegenPlugin>()
 
 project.tasks.findByName("prepareKotlinBuildScriptModel")?.dependsOn(project.tasks.getByName("generate"))
@@ -95,8 +99,6 @@ dependencies {
     implementation(libs.androidx.hilt.common)
     implementation(libs.androidx.hilt.work)
     implementation(libs.hilt)
-    testImplementation("junit:junit:4.12")
-    testImplementation("junit:junit:4.12")
     kapt(libs.hilt.compiler)
 
     testImplementation(libs.junit)

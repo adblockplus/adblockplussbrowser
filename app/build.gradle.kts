@@ -51,6 +51,11 @@ android {
     }
 }
 
+// recommended https://dagger.dev/hilt/gradle-setup.html#add-the-hilt-android-gradle-plugin
+kapt {
+    correctErrorTypes = true
+}
+
 dependencies {
     implementation(project(":analytics"))
     implementation(project(":base"))
