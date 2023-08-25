@@ -18,6 +18,7 @@
 package org.adblockplus.adblockplussbrowser.telemetry
 
 import kotlinx.coroutines.coroutineScope
+import kotlinx.serialization.ExperimentalSerializationApi
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -27,6 +28,7 @@ import org.adblockplus.adblockplussbrowser.base.data.HttpConstants
 import org.adblockplus.adblockplussbrowser.base.data.HttpConstants.EYEO_TELEMETRY_ACTIVEPING_AUTH_TOKEN
 import org.adblockplus.adblockplussbrowser.base.data.HttpConstants.HTTP_HEADER_AUTHORIZATION
 import org.adblockplus.adblockplussbrowser.telemetry.reporters.HttpReporter
+import timber.log.Timber
 import java.net.HttpRetryException
 import java.net.HttpURLConnection
 
@@ -34,16 +36,20 @@ internal class HttpTelemetry(
     private val okHttpClient: OkHttpClient,
 ) {
 
+    @ExperimentalSerializationApi
     suspend fun report(reporter: HttpReporter): Result<Unit> =
         coroutineScope {
             val url = reporter.configuration.endpointUrl.toHttpUrl()
             val requestBody = reporter.preparePayload().getOrThrow().toRequestBody()
-            val request = Request.Builder().url(url).addHeader(
-                HTTP_HEADER_AUTHORIZATION, "Bearer".plus(EYEO_TELEMETRY_ACTIVEPING_AUTH_TOKEN)
-            ).post(requestBody).build()
+            Timber.d("Sending request to $url")
+            val request = Request.Builder().url(url)
+                .addHeader(
+                    HTTP_HEADER_AUTHORIZATION, "Bearer ".plus(EYEO_TELEMETRY_ACTIVEPING_AUTH_TOKEN)
+                )
+                .post(requestBody).build()
             okHttpClient.newCall(request).execute().use { response ->
                 when (response.code) {
-                    HttpURLConnection.HTTP_OK -> {
+                    HttpURLConnection.HTTP_CREATED -> {
                         reporter.processResponse(reporter.convert(response))
                     }
 

@@ -100,6 +100,8 @@ dependencies {
     implementation(libs.androidx.hilt.work)
     implementation(libs.hilt)
     kapt(libs.hilt.compiler)
+    // required for `@HiltWorker` annotation
+    kapt(libs.androidx.hilt.compiler)
 
     testImplementation(libs.junit)
     testImplementation(libs.okhttp3.mockwebserver)
