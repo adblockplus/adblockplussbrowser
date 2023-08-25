@@ -23,15 +23,12 @@ import androidx.work.Data
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import dagger.hilt.EntryPoint
-import dagger.hilt.EntryPoints
-import dagger.hilt.InstallIn
-import dagger.hilt.android.EntryPointAccessors.*
-import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.decodeFromStream
+import kotlinx.serialization.json.jsonPrimitive
 import okhttp3.Response
 import okio.IOException
 import org.adblockplus.adblockplussbrowser.base.BuildConfig
@@ -53,32 +50,10 @@ import java.util.UUID
 class ActivePingReporter @AssistedInject constructor(
     @Assisted private val appContext: Context,
     @Assisted params: WorkerParameters,
+    private var repository: TelemetryRepository,
+    private var settings: SettingsRepository,
+    private var appInfo: AppInfo,
 ) : TelemetryWorker(appContext, params) {
-
-    @EntryPoint
-    @InstallIn(SingletonComponent::class)
-    interface ActivePingReporterEntryPoint {
-        fun telemetryRepository(): TelemetryRepository
-        fun settingsRepository(): SettingsRepository
-        fun appInfo(): AppInfo
-    }
-
-    private var repository: TelemetryRepository
-
-    private var settings: SettingsRepository
-
-    private var appInfo: AppInfo
-
-    init {
-        EntryPoints.get(
-            appContext,
-            ActivePingReporterEntryPoint::class.java
-        ).apply {
-            repository = telemetryRepository()
-            settings = settingsRepository()
-            appInfo = appInfo()
-        }
-    }
 
     companion object {
         val configuration: HttpReporter.Configuration
@@ -96,9 +71,12 @@ class ActivePingReporter @AssistedInject constructor(
     override suspend fun preparePayload(): ResultPayload {
         val data = repository.currentData()
 
-        val savedFirstPing = data.firstPing.toOffsetDateTime()
-        val savedLastPing = data.lastPing.toOffsetDateTime()
-        val savedPrevLastPing = data.previousLastPing.toOffsetDateTime()
+        fun Long.takeIfNotZero() = takeIf { it != 0L }
+
+        val savedFirstPing = data.firstPing.takeIfNotZero()?.toOffsetDateTime()
+        val savedLastPing = data.lastPing.takeIfNotZero()?.toOffsetDateTime()
+        val savedPrevLastPing = data.previousLastPing.takeIfNotZero()?.toOffsetDateTime()
+
         Timber.d(
             "Active ping saved: first ping is `%s`, last ping is `%s`, previous last ping is `%s`",
             savedFirstPing, savedLastPing, savedPrevLastPing
@@ -106,22 +84,31 @@ class ActivePingReporter @AssistedInject constructor(
         val acceptableAdsEnabled = settings.currentSettings().acceptableAdsEnabled
         Timber.d("AA enabled status is `%b`", acceptableAdsEnabled)
 
+        val activePingSchema = ActivePingSchema(
+            first_ping = savedFirstPing,
+            last_ping = savedLastPing,
+            previous_last_ping = savedPrevLastPing,
+            last_ping_tag = UUID.randomUUID().toString(),
+            aa_active = acceptableAdsEnabled,
+            addon_name = appInfo.addonName,
+            addon_version = appInfo.addonVersion.orEmpty(),
+            application = appInfo.application.orEmpty(),
+            application_version = appInfo.applicationVersion.orEmpty(),
+            platform = appInfo.platform,
+            platform_version = appInfo.platformVersion,
+            extension_name = appInfo.extensionName,
+            extension_version = appInfo.extensionVersion
+        )
         return kotlin.Result.success(
-            ActivePingSchema(
-                first_ping = savedFirstPing,
-                last_ping = savedLastPing,
-                previous_last_ping = savedPrevLastPing,
-                last_ping_tag = UUID.randomUUID().toString(),
-                aa_active = acceptableAdsEnabled,
-                addon_name = appInfo.addonName,
-                addon_version = appInfo.addonVersion.orEmpty(),
-                application = appInfo.application.orEmpty(),
-                application_version = appInfo.applicationVersion.orEmpty(),
-                platform = appInfo.platform,
-                platform_version = appInfo.platformVersion,
-                extension_name = appInfo.extensionName,
-                extension_version = appInfo.extensionVersion
-            ).toString()
+            Json.encodeToString(
+                ActivePingSchema.serializer(),
+                activePingSchema
+            ).let {
+                Timber.d("Active ping payload: %s", it)
+                // Wrapping into `payload` to match the server format
+                // (documentation is not clear about it)
+                "{\"payload\": $it}"
+            }
         )
     }
 
@@ -144,9 +131,13 @@ class ActivePingReporter @AssistedInject constructor(
             Data.Builder().apply {
                 httpResponse.body?.byteStream()?.use { inputStream ->
                     try {
-                        val (key, value) = Json.decodeFromStream<Pair<String, String>>(inputStream)
-                        putString(key, value)
-                    } catch (ignore: SerializationException) {
+                        Json.decodeFromStream<JsonObject>(inputStream)["token"].apply {
+                            val token = this?.jsonPrimitive?.content
+                                ?: throw SerializationException("Token field is null or missing")
+                            putString("token", token)
+                        }
+                    } catch (exception: SerializationException) {
+                        Timber.e("Failed to parse response: %s", exception.localizedMessage)
                     }
                 }
             }.build()
