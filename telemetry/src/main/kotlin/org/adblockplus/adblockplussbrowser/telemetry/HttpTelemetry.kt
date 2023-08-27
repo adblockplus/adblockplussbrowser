@@ -25,7 +25,6 @@ import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import org.adblockplus.adblockplussbrowser.base.data.HttpConstants
-import org.adblockplus.adblockplussbrowser.base.data.HttpConstants.EYEO_TELEMETRY_ACTIVEPING_AUTH_TOKEN
 import org.adblockplus.adblockplussbrowser.base.data.HttpConstants.HTTP_HEADER_AUTHORIZATION
 import org.adblockplus.adblockplussbrowser.telemetry.reporters.HttpReporter
 import timber.log.Timber
@@ -35,7 +34,6 @@ import java.net.HttpURLConnection
 internal class HttpTelemetry(
     private val okHttpClient: OkHttpClient,
 ) {
-
     @ExperimentalSerializationApi
     suspend fun report(reporter: HttpReporter): Result<Unit> =
         coroutineScope {
@@ -44,7 +42,8 @@ internal class HttpTelemetry(
             Timber.d("Sending request to $url")
             val request = Request.Builder().url(url)
                 .addHeader(
-                    HTTP_HEADER_AUTHORIZATION, "Bearer ".plus(EYEO_TELEMETRY_ACTIVEPING_AUTH_TOKEN)
+                    HTTP_HEADER_AUTHORIZATION,
+                    "Bearer ".plus(BuildConfig.EYEO_TELEMETRY_ACTIVEPING_AUTH_TOKEN)
                 )
                 .post(requestBody).build()
             okHttpClient.newCall(request).execute().use { response ->
