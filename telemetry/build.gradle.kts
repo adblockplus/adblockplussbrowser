@@ -20,6 +20,7 @@ import com.google.protobuf.gradle.id
 import com.google.protobuf.gradle.protobuf
 import com.google.protobuf.gradle.protoc
 import net.pwall.json.kotlin.codegen.gradle.JSONSchemaCodegenPlugin
+import org.jetbrains.kotlin.konan.properties.Properties
 
 buildscript {
     dependencies {
@@ -51,7 +52,37 @@ kapt {
 
 apply<JSONSchemaCodegenPlugin>()
 
-project.tasks.findByName("prepareKotlinBuildScriptModel")?.dependsOn(project.tasks.getByName("generate"))
+project.tasks.findByName("prepareKotlinBuildScriptModel")
+    ?.dependsOn(project.tasks.getByName("generate"))
+
+/*
+* We read environment variables and local config file, then merge them together and pass to build config.
+* All environment variables should start with `EYEO_` prefix are added to build config.
+* For example:
+* `EYEO_TELEMETRY_ENDPOINT_URL` will be added as `BuildConfig.EYEO_TELEMETRY_ENDPOINT_URL`
+* Also, any variable from local config file will be added to build config and override the same variable from environment variables.
+*
+* Local config file is `config.local.properties` and should be placed in the root of the ":telemetry" module
+*/
+System.getenv().filter { (key, _) ->
+    key.startsWith("EYEO_")
+}.toMutableMap().also { envVars ->
+    File(projectDir, "config.local.properties").takeIf { file -> file.exists() }
+        ?.let { file -> Properties().apply {
+                load(file.inputStream())
+                stringPropertyNames().forEach { key ->
+                    envVars[key] = getProperty(key)
+                }
+            }
+        }
+}.forEach { (key, value) ->
+    android.defaultConfig.buildConfigField(
+        "String",
+        key.toString(),
+        "\"$value\""
+    )
+}
+
 
 android {
     // consumed by `json-kotlin-schema-gradle` plugin
