@@ -62,7 +62,6 @@ import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker.Co
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.currentSettings
 import org.adblockplus.adblockplussbrowser.telemetry.TelemetryService
-import org.adblockplus.adblockplussbrowser.telemetry.reporters.ActivePingReporter
 import org.tukaani.xz.XZInputStream
 import timber.log.Timber
 import java.io.File
@@ -153,7 +152,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
 
     private fun triggerActivePingReport() {
         TelemetryService().apply {
-            addReporter<ActivePingReporter>(ActivePingReporter.configuration)
+            addActivePingReporter()
             scheduleReporting(workManager)
         }
     }

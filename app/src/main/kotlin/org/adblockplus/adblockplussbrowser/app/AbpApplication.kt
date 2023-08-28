@@ -24,7 +24,6 @@ import androidx.work.WorkManager
 import dagger.hilt.android.HiltAndroidApp
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.telemetry.TelemetryService
-import org.adblockplus.adblockplussbrowser.telemetry.reporters.ActivePingReporter
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -47,7 +46,7 @@ class AbpApplication : Application(), Configuration.Provider {
 
         subscriptionsManager.initialize()
         TelemetryService().apply {
-            addReporter<ActivePingReporter>(ActivePingReporter.configuration)
+            addActivePingReporter()
             scheduleReporting(WorkManager.getInstance(this@AbpApplication))
         }
         if (BuildConfig.DEBUG) {

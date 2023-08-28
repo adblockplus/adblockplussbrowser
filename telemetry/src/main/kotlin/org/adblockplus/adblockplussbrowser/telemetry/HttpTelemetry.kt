@@ -31,6 +31,12 @@ import timber.log.Timber
 import java.net.HttpRetryException
 import java.net.HttpURLConnection
 
+/**
+ * This class is responsible for sending telemetry data to the server.
+ *
+ * Theoretically, it should be possible to use it with any [HttpReporter],
+ * though, it is recommended to use [TelemetryService] instead.
+ */
 internal class HttpTelemetry(
     private val okHttpClient: OkHttpClient,
 ) {

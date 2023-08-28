@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.flow.take
 import org.adblockplus.adblockplussbrowser.telemetry.data.proto.TelemetryData
 
-interface TelemetryRepository {
+internal interface TelemetryRepository {
     val data: Flow<TelemetryData>
 
     suspend fun currentData(): TelemetryData = data.take(1).single()
