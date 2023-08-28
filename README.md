@@ -11,7 +11,7 @@ Building with Gradle
 
 - [Android SDK][2]
 - Android Build Tools 30.0.3
-- JDK 8 or above
+- JDK 11 or above
 
 #### Building
 
@@ -38,23 +38,23 @@ In the `build.gradle` of the `core` module, there is a task to manually download
 To run `downloadSubscriptions` a flavor must be provided. Default value is `abp`. E.g.:
 - ####ABP
 ```
-    gradle :core:downloadSubscriptions
+    ./gradlew :core:downloadSubscriptions
 ```
 OR
 ```
-    gradle :core:downloadSubscriptions -Pflavor=abp
+    ./gradlew :core:downloadSubscriptions -Pflavor=abp
 ```
 
 **Output Folder**: `src/main/assets`
 
 - ####Adblock
 ```
-    gradle :core:downloadSubscriptions -Pflavor=adblock
+    ./gradlew :core:downloadSubscriptions -Pflavor=adblock
 ```
 **Output Folder**: `src/adblock/assets`
 - ####Crystal
 ```
-    gradle :core:downloadSubscriptions -Pflavor=crystal
+    ./gradlew :core:downloadSubscriptions -Pflavor=crystal
 ```
 **Output Folder**: `src/crystal/assets`
 
