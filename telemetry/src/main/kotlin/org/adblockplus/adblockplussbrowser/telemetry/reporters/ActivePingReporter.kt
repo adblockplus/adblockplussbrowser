@@ -29,13 +29,14 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.decodeFromStream
 import kotlinx.serialization.json.jsonPrimitive
+import okhttp3.OkHttpClient
 import okhttp3.Response
 import okio.IOException
 import org.adblockplus.adblockplussbrowser.base.BuildConfig
 import org.adblockplus.adblockplussbrowser.base.os.AppInfo
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.currentSettings
-import org.adblockplus.adblockplussbrowser.telemetry.TelemetryWorker
+import org.adblockplus.adblockplussbrowser.telemetry.BaseTelemetryWorker
 import org.adblockplus.adblockplussbrowser.telemetry.data.TelemetryRepository
 import org.adblockplus.adblockplussbrowser.telemetry.schema.ActivePingSchema
 import timber.log.Timber
@@ -45,15 +46,13 @@ import java.time.Instant
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
 import java.util.UUID
+import javax.inject.Inject
 
-@HiltWorker
-class ActivePingReporter @AssistedInject constructor(
-    @Assisted private val appContext: Context,
-    @Assisted params: WorkerParameters,
+internal class ActivePingReporter @Inject constructor(
     private var repository: TelemetryRepository,
     private var settings: SettingsRepository,
     private var appInfo: AppInfo,
-) : TelemetryWorker(appContext, params) {
+) : HttpReporter {
 
     companion object {
         val configuration: HttpReporter.Configuration
@@ -99,7 +98,7 @@ class ActivePingReporter @AssistedInject constructor(
             extension_name = appInfo.extensionName,
             extension_version = appInfo.extensionVersion
         )
-        return kotlin.Result.success(
+        return Result.success(
             Json.encodeToString(
                 ActivePingSchema.serializer(),
                 activePingSchema
@@ -112,9 +111,9 @@ class ActivePingReporter @AssistedInject constructor(
         )
     }
 
-    override suspend fun processResponse(response: ReportResponse): kotlin.Result<Unit> =
+    override suspend fun processResponse(response: ReportResponse): Result<Unit> =
         response.getString("token").let {
-            if (it.isNullOrBlank()) return kotlin.Result.failure(IOException("The token is empty"))
+            if (it.isNullOrBlank()) return Result.failure(IOException("The token is empty"))
             Timber.d("Response `token` (date): %s", it)
             val time = it.toOffsetDateTime().toEpochSecond()
             with(repository) {
@@ -122,7 +121,7 @@ class ActivePingReporter @AssistedInject constructor(
                 updateAndShiftLastPingToPreviousLast(time)
             }
 
-            kotlin.Result.success(Unit)
+            Result.success(Unit)
         }
 
     @ExperimentalSerializationApi
@@ -171,3 +170,13 @@ class ActivePingReporter @AssistedInject constructor(
         return OffsetDateTime.ofInstant(instant, ZoneOffset.UTC) // in fact same to GMT
     }
 }
+
+// We need a dedicated worker type for every reporter
+// for the WorkerRequestBuilder to know how to build the worker
+@HiltWorker
+internal class ActivePingWorker @AssistedInject constructor(
+    @Assisted appContext: Context,
+    @Assisted params: WorkerParameters,
+    httpClient: OkHttpClient,
+    reporter: ActivePingReporter
+) : BaseTelemetryWorker(appContext, params, httpClient, reporter)

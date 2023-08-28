@@ -46,6 +46,10 @@ applyCommonConfig()
 
 createFlavorsConfig()
 
+hilt {
+    // disable if it causes error during build
+    enableAggregatingTask = true
+}
 kapt {
     correctErrorTypes = true
 }

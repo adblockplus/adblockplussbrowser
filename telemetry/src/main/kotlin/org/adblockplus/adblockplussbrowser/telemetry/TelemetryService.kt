@@ -11,10 +11,8 @@ import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkRequest
-import dagger.hilt.EntryPoint
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import org.adblockplus.adblockplussbrowser.telemetry.data.TelemetryRepository
+import org.adblockplus.adblockplussbrowser.telemetry.reporters.ActivePingReporter
+import org.adblockplus.adblockplussbrowser.telemetry.reporters.ActivePingWorker
 import org.adblockplus.adblockplussbrowser.telemetry.reporters.HttpReporter
 import java.util.concurrent.TimeUnit
 
@@ -32,12 +30,22 @@ class TelemetryService {
     var reporters: Map<HttpReporter.Configuration, WorkRequest> = mutableMapOf()
 
     /**
+     * Adds an active ping reporter to the list of reporters.
+     * The reporter will be scheduled after calling [scheduleReporting].
+     */
+    fun addActivePingReporter() = apply {
+        addReporter<ActivePingWorker>(ActivePingReporter.configuration)
+    }
+
+    /**
      * Adds a reporter to the list of reporters.
+     * Since the WorkerRequestBuilder is generic, we need to pass the worker type explicitly.
      * The reporter will be scheduled after calling [scheduleReporting].
      *
-     * @param W the reporter class.
+     * @param W the reporter worker type.
+     * @param config the reporter configuration.
      */
-    inline fun <reified W : TelemetryWorker> addReporter(config: HttpReporter.Configuration) =
+    private inline fun <reified W: BaseTelemetryWorker>addReporter(config: HttpReporter.Configuration) =
         apply {
             when (config.repeatable) {
                 true -> PeriodicWorkRequestBuilder<W>(config.repeatInterval)
