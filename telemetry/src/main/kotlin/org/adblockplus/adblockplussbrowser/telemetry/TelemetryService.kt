@@ -22,12 +22,12 @@ import java.util.concurrent.TimeUnit
  * If you'd like to implement the reporter, please refer to [HttpReporter]
  * or check the implementation of [ActivePingReporter].
  *
- * @property reporters the list of reporters.
+ * @property workRequests the list of reporters.
  */
 class TelemetryService {
     // It is public because we are using `inline fun <reified W> addReporter()`
     // which can't access private properties of the class.
-    var reporters: Map<HttpReporter.Configuration, WorkRequest> = mutableMapOf()
+    var workRequests: Map<HttpReporter.Configuration, WorkRequest> = mutableMapOf()
 
     /**
      * Adds an active ping reporter to the list of reporters.
@@ -57,7 +57,7 @@ class TelemetryService {
             ).setConstraints(
                 Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
             ).build().let {
-                reporters = reporters.plus(config to it)
+                workRequests = workRequests.plus(config to it)
             }
         }
 
@@ -69,7 +69,7 @@ class TelemetryService {
      * @param workManager the work manager instance.
      */
     fun scheduleReporting(workManager: WorkManager) {
-        reporters.forEach() { (config, request) ->
+        workRequests.forEach() { (config, request) ->
             when (config.repeatable) {
                 true -> workManager.enqueueUniquePeriodicWork(
                     config.endpointUrl,
