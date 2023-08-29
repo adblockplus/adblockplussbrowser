@@ -27,7 +27,6 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import okhttp3.OkHttpClient
 import org.adblockplus.adblockplussbrowser.telemetry.reporters.HttpReporter
 import timber.log.Timber
-import java.lang.SuppressWarnings
 
 internal open class BaseTelemetryWorker constructor(
     appContext: Context,
