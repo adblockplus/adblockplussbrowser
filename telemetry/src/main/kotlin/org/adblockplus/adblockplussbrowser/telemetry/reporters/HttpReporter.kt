@@ -37,7 +37,7 @@ interface HttpReporter {
     data class Configuration(
         val endpointUrl: String,
         val repeatable: Boolean,
-        val backOffDelayMinutes: Long,
+        val backOffDelay: Duration,
         val repeatInterval: Duration,
     )
 }

@@ -72,7 +72,8 @@ System.getenv().filter { (key, _) ->
     key.startsWith("EYEO_")
 }.toMutableMap().also { envVars ->
     File(projectDir, "config.local.properties").takeIf { file -> file.exists() }
-        ?.let { file -> Properties().apply {
+        ?.let { file ->
+            Properties().apply {
                 load(file.inputStream())
                 stringPropertyNames().forEach { key ->
                     envVars[key] = getProperty(key)
@@ -128,6 +129,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.okio)
     implementation(libs.okhttp3)
+    implementation(libs.okhttp3.logging.interceptor)
     implementation(libs.protobuf.javalite)
     implementation(libs.timber)
 
@@ -138,14 +140,16 @@ dependencies {
     // required for `@HiltWorker` annotation
     kapt(libs.androidx.hilt.compiler)
 
+    testImplementation(project(":test-utils"))
     testImplementation(libs.junit)
+    testImplementation(libs.robolectric)
     testImplementation(libs.okhttp3.mockwebserver)
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.kotlin)
-    testImplementation(libs.androidx.test.core)
-    testImplementation(libs.androidx.work.testing)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.hilt.testing)
+    testImplementation(libs.androidx.test.core)
+    testImplementation(libs.androidx.work.testing)
     testAnnotationProcessor(libs.hilt.compiler)
     kaptTest(libs.hilt.compiler)
     kaptTest(libs.androidx.hilt.compiler)

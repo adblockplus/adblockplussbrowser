@@ -52,7 +52,9 @@ class TelemetryService {
                 false -> OneTimeWorkRequestBuilder<W>()
             }.setBackoffCriteria(
                 BackoffPolicy.EXPONENTIAL,
-                config.backOffDelayMinutes,
+                // setBackoffCriteria with [Duration] is available from API 26
+                // so we need to convert it to minutes and use setBackoffCriteria with long
+                config.backOffDelay.toMinutes(),
                 TimeUnit.MINUTES
             ).setConstraints(
                 Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()

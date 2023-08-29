@@ -59,7 +59,7 @@ internal class ActivePingReporter @Inject constructor(
             get() = HttpReporter.Configuration(
                 endpointUrl = "https://test-telemetry.data.eyeo.it/topic/webextension_activeping/version/1",
                 repeatable = false,
-                backOffDelayMinutes = 2L,
+                backOffDelay = Duration.ofMinutes(2L),
                 repeatInterval = Duration.ofHours(12L)
             )
     }
