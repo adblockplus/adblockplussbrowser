@@ -36,6 +36,7 @@ class PackageHelper private constructor() {
             }
         }
         // TODO refactor to return `Result`
+        @SuppressWarnings("SwallowedException")
         fun version(packageManager: PackageManager, packageId: String): String {
             return try {
                 packageManager.getPackageInfo(packageId, 0).versionName.lowercase()

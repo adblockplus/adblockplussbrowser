@@ -57,7 +57,6 @@ internal class HttpTelemetry(
                     HttpURLConnection.HTTP_CREATED -> {
                         reporter.processResponse(reporter.convert(response))
                     }
-
                     else -> {
                         val error = getHttpErrorMessage(response)
                         return@use Result.failure(
