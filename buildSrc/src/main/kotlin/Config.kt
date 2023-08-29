@@ -17,17 +17,17 @@
 
 object Config {
     object Versions {
-        const val ABP = "2.5.1"
+        const val ABP = "2.5.2"
 
-        const val ADBLOCK = "3.4.1"
+        const val ADBLOCK = "3.4.2"
 
-        const val CRYSTAL = "2.6.2"
+        const val CRYSTAL = "2.6.3"
     }
 
-    const val COMPILE_SDK_VERSION = 31
+    const val COMPILE_SDK_VERSION = 33
     const val BUILD_TOOLS_VERSION = "30.0.3"
     const val MIN_SDK_VERSION = 21
-    const val TARGET_SDK_VERSION = 31
+    const val TARGET_SDK_VERSION = 33
 
     const val ANDROID_TEST_INSTRUMENTATION_RUNNER = "androidx.test.runner.AndroidJUnitRunner"
 }

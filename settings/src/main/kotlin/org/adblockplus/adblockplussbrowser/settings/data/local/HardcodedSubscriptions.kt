@@ -31,7 +31,7 @@ internal class HardcodedSubscriptions {
 
     val testPages = subscription {
         title = "Samsung Test Case ABP"
-        url = "https://testpages.adblockplus.org/en/abp-testcase-subscription.txt"
+        url = "https://abptestpages.org/en/abp-testcase-subscription.txt"
     }
 
     // Based on: https://gitlab.com/eyeo/adblockplus/adblockpluscore/-/blob/next/data/subscriptions.json
