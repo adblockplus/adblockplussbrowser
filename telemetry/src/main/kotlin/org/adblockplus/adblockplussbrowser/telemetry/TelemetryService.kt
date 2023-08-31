@@ -48,7 +48,7 @@ class TelemetryService {
      * @param W the reporter worker type.
      * @param config the reporter configuration.
      */
-    private inline fun <reified W: BaseTelemetryWorker>addReporter(config: HttpReporter.Configuration) =
+    private inline fun <reified W : BaseTelemetryWorker> addReporter(config: HttpReporter.Configuration) =
         apply {
             when (config.repeatable) {
                 true -> PeriodicWorkRequestBuilder<W>(config.repeatInterval)
@@ -75,8 +75,16 @@ class TelemetryService {
      *
      * @param workManager the work manager instance.
      * @return the list of work request ids.
+     * @throws IllegalStateException if no reporters added.
      */
     fun scheduleReporting(workManager: WorkManager): Collection<UUID> {
+        if (workRequests.isEmpty()) {
+            // It is fine to throw an exception here since it is a developer error
+            // and it should be caught during testing
+            throw IllegalStateException(
+                "No reporters to schedule. Add a reporter first by calling add*Reporter methods"
+            )
+        }
         val ids: MutableCollection<UUID> = mutableSetOf()
         workRequests.forEach() { (config, request) ->
             when (config.repeatable) {
