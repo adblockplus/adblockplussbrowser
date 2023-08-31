@@ -14,6 +14,7 @@ import androidx.work.WorkRequest
 import org.adblockplus.adblockplussbrowser.telemetry.reporters.ActivePingReporter
 import org.adblockplus.adblockplussbrowser.telemetry.reporters.ActivePingWorker
 import org.adblockplus.adblockplussbrowser.telemetry.reporters.HttpReporter
+import java.util.UUID
 import java.util.concurrent.TimeUnit
 
 /**
@@ -25,9 +26,11 @@ import java.util.concurrent.TimeUnit
  * @property workRequests the list of reporters.
  */
 class TelemetryService {
-    // It is public because we are using `inline fun <reified W> addReporter()`
-    // which can't access private properties of the class.
-    var workRequests: Map<HttpReporter.Configuration, WorkRequest> = mutableMapOf()
+    private var workRequests: MutableMap<HttpReporter.Configuration, WorkRequest> = mutableMapOf()
+
+    // Expose the workRequests for testing purposes
+    internal val workRequestsForTests: Collection<WorkRequest>
+        get() = workRequests.values
 
     /**
      * Adds an active ping reporter to the list of reporters.
@@ -59,18 +62,22 @@ class TelemetryService {
             ).setConstraints(
                 Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
             ).build().let {
-                workRequests = workRequests.plus(config to it)
+                workRequests[config] = it
             }
         }
 
     /**
      * Schedules all reporters.
+     * Then cleans everything added by [add*Reporter] methods
+     *
      * The default behavior is to replace the existing work if it exists for the non-repeatable reporters
      * and to keep the existing work if it exists for the repeatable reporters.
      *
      * @param workManager the work manager instance.
+     * @return the list of work request ids.
      */
-    fun scheduleReporting(workManager: WorkManager) {
+    fun scheduleReporting(workManager: WorkManager): Collection<UUID> {
+        val ids: MutableCollection<UUID> = mutableSetOf()
         workRequests.forEach() { (config, request) ->
             when (config.repeatable) {
                 true -> workManager.enqueueUniquePeriodicWork(
@@ -85,8 +92,13 @@ class TelemetryService {
                     request as OneTimeWorkRequest
                 )
             }
+            ids.add(request.id)
         }
+        // Clear the workRequests after scheduling
+        workRequests = mutableMapOf()
+        // Since the return type is immutable, no need to convert to immutable collection
+        // We just do the "typecast"
+        return ids
     }
-
 
 }
