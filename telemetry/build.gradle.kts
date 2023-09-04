@@ -60,13 +60,16 @@ project.tasks.findByName("prepareKotlinBuildScriptModel")
     ?.dependsOn(project.tasks.getByName("generate"))
 
 /*
-* We read environment variables and local config file, then merge them together and pass to build config.
+* We read environment variables and local config file, then merge them together
+* and pass to build config.
 * All environment variables should start with `EYEO_` prefix are added to build config.
 * For example:
 * `EYEO_TELEMETRY_ENDPOINT_URL` will be added as `BuildConfig.EYEO_TELEMETRY_ENDPOINT_URL`
-* Also, any variable from local config file will be added to build config and override the same variable from environment variables.
+* Also, any variable from local config file will be added to build config and override
+* the same variable from environment variables.
 *
-* Local config file is `config.local.properties` and should be placed in the root of the ":telemetry" module
+* Local config file is `config.local.properties` and should be placed
+* in the root of the ":telemetry" module
 */
 System.getenv().filter { (key, _) ->
     key.startsWith("EYEO_")

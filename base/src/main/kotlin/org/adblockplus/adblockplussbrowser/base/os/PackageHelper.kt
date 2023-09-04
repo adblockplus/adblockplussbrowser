@@ -18,6 +18,7 @@
 package org.adblockplus.adblockplussbrowser.base.os
 
 import android.content.pm.PackageManager
+import android.content.pm.PackageManager.NameNotFoundException
 import timber.log.Timber
 
 class PackageHelper private constructor() {
@@ -28,9 +29,13 @@ class PackageHelper private constructor() {
         // TODO refactor to return `Result`
         fun isPackageInstalled(packageManager: PackageManager, packageId: String): Boolean {
             return try {
+                // Google might add `PackageManagerCompat` in the future
+                // https://issuetracker.google.com/issues/246845196?pli=1
+                // For now, we use the deprecated method and suppress the warning
+                @Suppress("DEPRECATION")
                 packageManager.getPackageInfo(packageId, 0)
                 true
-            } catch (ex: PackageManager.NameNotFoundException) {
+            } catch (ex: NameNotFoundException) {
                 Timber.i("$packageId not found")
                 false
             }
@@ -38,9 +43,13 @@ class PackageHelper private constructor() {
         // TODO refactor to return `Result`
         fun version(packageManager: PackageManager, packageId: String): String {
             return try {
+                // Google might add `PackageManagerCompat` in the future
+                // https://issuetracker.google.com/issues/246845196?pli=1
+                // For now, we use the deprecated method and suppress the warning
+                @Suppress("DEPRECATION")
                 packageManager.getPackageInfo(packageId, 0).versionName.lowercase()
-            } catch (ex: Exception) {
-                Timber.e("Error retrieving app version for $packageId")
+            } catch (ex: NameNotFoundException) {
+                Timber.e(ex,"Error retrieving app version for $packageId")
                 VERSION_UNKNOWN
             }
         }

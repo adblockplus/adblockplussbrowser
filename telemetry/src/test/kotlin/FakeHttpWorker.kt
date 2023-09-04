@@ -1,16 +1,6 @@
-import android.content.Context
-import androidx.work.Data
-import androidx.work.ListenableWorker
-import androidx.work.WorkerParameters
-import kotlinx.serialization.ExperimentalSerializationApi
-import okhttp3.OkHttpClient
-import org.adblockplus.adblockplussbrowser.telemetry.BaseTelemetryWorker
-import org.adblockplus.adblockplussbrowser.telemetry.reporters.HttpReporter
-import org.mockito.Mockito
-
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2023 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -24,6 +14,16 @@ import org.mockito.Mockito
  * You should have received a copy of the GNU General Public License
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+import android.content.Context
+import androidx.work.Data
+import androidx.work.ListenableWorker
+import androidx.work.WorkerParameters
+import kotlinx.serialization.ExperimentalSerializationApi
+import okhttp3.OkHttpClient
+import org.adblockplus.adblockplussbrowser.telemetry.BaseTelemetryWorker
+import org.adblockplus.adblockplussbrowser.telemetry.reporters.HttpReporter
+import org.mockito.Mockito
 
 internal class FakeHttpWorker constructor(
     context: Context,

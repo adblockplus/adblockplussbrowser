@@ -127,24 +127,17 @@ internal class ActivePingReporter @Inject constructor(
         }
 
     @ExperimentalSerializationApi
-    override fun convert(httpResponse: Any): ReportResponse =
-        if (httpResponse is Response) {
-            Data.Builder().apply {
-                httpResponse.body?.byteStream()?.use { inputStream ->
-                    try {
-                        Json.decodeFromStream<JsonObject>(inputStream)["token"].apply {
-                            val token = this?.jsonPrimitive?.content
-                                ?: throw SerializationException("Token field is null or missing")
-                            putString("token", token)
-                        }
-                    } catch (exception: SerializationException) {
-                        Timber.e("Failed to parse response: %s", exception.localizedMessage)
-                    }
-                }
-            }.build()
-        } else {
-            throw NotImplementedError("We only support OkHttpResponse in ActivePingReporter")
+    override fun convert(httpResponse: Any): ReportResponse {
+        if (httpResponse !is Response) {
+            throw IllegalArgumentException("Expected Response, got ${httpResponse::class.java}")
         }
+        val token = httpResponse.body?.byteStream()?.use { inputStream ->
+            val jsonToken = Json.decodeFromStream<JsonObject>(inputStream)["token"]
+            jsonToken?.jsonPrimitive?.content
+                ?: throw SerializationException("JSON parsing failed: \"token\" field is null or missing")
+        }
+        return Data.Builder().putString("token", token).build()
+    }
 
     private fun String.toOffsetDateTime(): OffsetDateTime {
         return try {

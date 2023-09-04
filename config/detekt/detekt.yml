@@ -7,3 +7,12 @@ comments:
 style:
   WildcardImport:
     excludes: ['**/build.gradle.kts']
+  # Generated schema data files often have long lines, so we exclude them from the max line length check.
+  MaxLineLength:
+    excludes: ['**/build/generated-sources/**']
+
+naming:
+  # Generated schema data files have wrong naming, but since they reflect the schema,
+  # I believe it's better to exclude them from the check.
+  ConstructorParameterNaming:
+    excludes: ['**/build/generated-sources/**']

@@ -1,6 +1,6 @@
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2023 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -27,6 +27,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import okhttp3.OkHttpClient
 import org.adblockplus.adblockplussbrowser.telemetry.reporters.HttpReporter
 import timber.log.Timber
+import java.io.IOException
 
 internal open class BaseTelemetryWorker constructor(
     appContext: Context,
@@ -50,9 +51,12 @@ internal open class BaseTelemetryWorker constructor(
             }
             Timber.w(result.exceptionOrNull(), "Telemetry report failed, retry scheduled")
             return@withContext Result.retry()
-        } catch (ex: Exception) {
+        } catch (ex: CancellationException) {
+            Timber.w(ex, "Telemetry report task cancelled")
+            Result.success()
+        } catch (ex: IOException) {
             Timber.w(ex, "Telemetry report failed, retry scheduled")
-            if (ex is CancellationException) Result.success() else Result.retry()
+            Result.retry()
         }
     }
 }

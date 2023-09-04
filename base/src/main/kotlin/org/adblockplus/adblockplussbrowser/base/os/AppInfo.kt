@@ -23,6 +23,7 @@ import androidx.annotation.ChecksSdkIntAtLeast
 import org.adblockplus.adblockplussbrowser.base.BuildConfig
 import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.SBROWSER_APP_ID
 import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.SBROWSER_APP_ID_BETA
+
 /**
  * Data class providing information about the application.
  * Member names are chosen to match the names of the fields in the ActivePing schema.
@@ -76,10 +77,15 @@ private fun applicationAndVersionForInstalledBrowser(context: Context): Pair<Str
     val sbVer = PackageHelper.version(context.packageManager, SBROWSER_APP_ID)
     val sbBetaVer = PackageHelper.version(context.packageManager, SBROWSER_APP_ID_BETA)
 
-    if (!sbVer.isVersionUnknown()) {
-        return SBROWSER_APP_ID to sbVer
-    } else if (!sbBetaVer.isVersionUnknown()) {
-        return SBROWSER_APP_ID_BETA to sbBetaVer
+    return when {
+        !sbVer.isVersionUnknown() -> {
+            SBROWSER_APP_ID to sbVer
+        }
+
+        !sbBetaVer.isVersionUnknown() -> {
+            SBROWSER_APP_ID_BETA to sbBetaVer
+        }
+
+        else -> null to null
     }
-    return null to null
 }
