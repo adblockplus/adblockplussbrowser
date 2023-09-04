@@ -58,7 +58,7 @@ internal class ActivePingReporter @Inject constructor(
         val configuration: HttpReporter.Configuration
             get() = HttpReporter.Configuration(
                 endpointUrl = "https://test-telemetry.data.eyeo.it/topic/webextension_activeping/version/1",
-                repeatable = false,
+                repeatable = true,
                 backOffDelay = Duration.ofMinutes(2L),
                 repeatInterval = Duration.ofHours(12L)
             )
