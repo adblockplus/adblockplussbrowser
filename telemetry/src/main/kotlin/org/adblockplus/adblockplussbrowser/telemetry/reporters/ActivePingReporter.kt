@@ -60,7 +60,9 @@ internal class ActivePingReporter @Inject constructor(
                 endpointUrl = "https://test-telemetry.data.eyeo.it/topic/webextension_activeping/version/1",
                 repeatable = true,
                 backOffDelay = Duration.ofMinutes(2L),
-                repeatInterval = Duration.ofHours(12L)
+                repeatInterval = if (BuildConfig.DEBUG)
+                    Duration.ofMinutes(15)
+                else Duration.ofHours(12L)
             )
     }
 
@@ -178,5 +180,5 @@ internal class ActivePingWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted params: WorkerParameters,
     httpClient: OkHttpClient,
-    reporter: ActivePingReporter
+    reporter: ActivePingReporter,
 ) : BaseTelemetryWorker(appContext, params, httpClient, reporter)
