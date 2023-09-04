@@ -48,7 +48,7 @@ class TelemetryService {
      * @param W the reporter worker type.
      * @param config the reporter configuration.
      */
-    private inline fun <reified W : BaseTelemetryWorker> addReporter(config: HttpReporter.Configuration) =
+    internal inline fun <reified W : BaseTelemetryWorker> addReporter(config: HttpReporter.Configuration) =
         apply {
             when (config.repeatable) {
                 true -> PeriodicWorkRequestBuilder<W>(config.repeatInterval)
