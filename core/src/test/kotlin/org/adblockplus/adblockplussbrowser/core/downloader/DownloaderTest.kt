@@ -37,6 +37,8 @@ import org.adblockplus.adblockplussbrowser.core.data.model.SavedState
 import org.adblockplus.adblockplussbrowser.core.downloader.OkHttpDownloader.Companion.HTTP_ERROR_LOG_HEADER_DOWNLOADER
 import org.adblockplus.adblockplussbrowser.core.helpers.FakeCoreRepository
 import org.adblockplus.adblockplussbrowser.core.helpers.Fakes.HTTP_ERROR_MOCK_500
+import org.hamcrest.CoreMatchers.instanceOf
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -179,13 +181,13 @@ class DownloaderTest {
         mockWebServer.enqueue(MockResponse().setResponseCode(HTTP_OK).setBody(downloadFileContent))
         assertEquals(0, mockWebServer.requestCount)
         runBlocking {
-            assertTrue(
+            assertThat(
                 downloader.download(
                     fakeSubscription,
                     forced = false,
                     periodic = true,
                     newSubscription = true
-                ) is DownloadResult.Failed
+                ), instanceOf(DownloadResult.Failed::class.java)
             )
         }
     }
