@@ -1,4 +1,6 @@
 import android.content.Context
+import androidx.work.Data
+import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
 import kotlinx.serialization.ExperimentalSerializationApi
 import okhttp3.OkHttpClient
@@ -33,8 +35,41 @@ internal class FakeHttpWorker constructor(
     Mockito.mock(HttpReporter::class.java)
 ) {
 
+    companion object {
+        private const val PARAM_RETURN_RESULT = "ReturnResult"
+        private const val PARAM_SLEEP_DURATION = "SleepDuration"
+        private const val DEFAULT_SLEEP_DURATION = 100 //ms
+
+        fun config(returnResult: Result, sleepDurationMs: Int = DEFAULT_SLEEP_DURATION): Data {
+            return Data.Builder()
+                .putInt(PARAM_RETURN_RESULT, returnResult.toInt())
+                .putInt(PARAM_SLEEP_DURATION, sleepDurationMs)
+                .build()
+        }
+    }
+
+    @Suppress("BlockingMethodInNonBlockingContext")
     @ExperimentalSerializationApi
     override suspend fun doWork(): Result {
-        return Result.success()
+        Thread.sleep(inputData.getLong(PARAM_SLEEP_DURATION, DEFAULT_SLEEP_DURATION.toLong()))
+        return inputData.getInt(PARAM_RETURN_RESULT, 0).toResult()
+    }
+}
+
+private fun ListenableWorker.Result.toInt(): Int {
+    return when (this) {
+        is ListenableWorker.Result.Success -> 0
+        is ListenableWorker.Result.Retry -> 1
+        is ListenableWorker.Result.Failure -> 2
+        else -> 3
+    }
+}
+
+private fun Int.toResult(): ListenableWorker.Result {
+    return when (this) {
+        0 -> ListenableWorker.Result.success()
+        1 -> ListenableWorker.Result.retry()
+        2 -> ListenableWorker.Result.failure()
+        else -> ListenableWorker.Result.success()
     }
 }

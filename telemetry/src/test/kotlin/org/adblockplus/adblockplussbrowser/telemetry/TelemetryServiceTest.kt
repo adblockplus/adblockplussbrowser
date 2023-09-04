@@ -22,6 +22,7 @@ import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.testing.TestLifecycleOwner
 import androidx.test.core.app.ApplicationProvider.*
+import androidx.work.ListenableWorker
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.testing.TestDriver
@@ -91,7 +92,8 @@ class TelemetryServiceTest {
         val config = ActivePingReporter.configuration
 
         // Schedule the work request
-        val ids = telemetryService.addFakeReporter().scheduleReporting(workManager)
+        val ids = telemetryService.addFakeReporter(ListenableWorker.Result.success())
+            .scheduleReporting(workManager)
 
         // Make sure it is only one entry
         assertEquals(1, ids.size)
@@ -101,7 +103,7 @@ class TelemetryServiceTest {
         assertEquals(WorkInfo.State.ENQUEUED, workInfo.state)
 
         // Check if the work request is correctly scheduled after reschedule
-        telemetryService.addFakeReporter()
+        telemetryService.addFakeReporter(ListenableWorker.Result.success())
         // Make sure it is still one entry
         assertEquals(1, telemetryService.workRequestsForTests.size)
         telemetryService.scheduleReporting(workManager)
@@ -159,11 +161,9 @@ class TelemetryServiceTest {
     @Test
     fun `test work request enqueued and succeeded`() {
         // Schedule the work request and retrieve work ids
-        val ids = telemetryService.addFakeReporter().workRequestsForTests.map { it.id }
-
-        // Make sure it is only one entry
-        assertEquals(1, ids.size)
-        val id = ids.first()
+        val id =
+            telemetryService.addFakeReporter(ListenableWorker.Result.success()).workRequestsForTests.map { it.id }
+                .first()
 
         // We have to put the assert first before scheduling the work request
         maybeScheduleWorkAndAssertSuccess(id, true)
@@ -175,7 +175,9 @@ class TelemetryServiceTest {
     @Test
     fun `test work manager re-schedules after the repeat duration`() {
         // Schedule the work request and retrieve work ids
-        val id = telemetryService.addFakeReporter().workRequestsForTests.map { it.id }.first()
+        val id =
+            telemetryService.addFakeReporter(ListenableWorker.Result.success()).workRequestsForTests.map { it.id }
+                .first()
 
         maybeScheduleWorkAndAssertSuccess(id, true)
         // Fake constraints met
@@ -189,8 +191,25 @@ class TelemetryServiceTest {
         testDriver.setPeriodDelayMet(id)
         maybeScheduleWorkAndAssertSuccess(id, false)
     }
+
+    @Test
+    fun `test work manager re-schedules after failure`() {
+        // Schedule the work request and retrieve work ids
+        val id =
+            telemetryService.addFakeReporter(ListenableWorker.Result.retry())
+                .scheduleReporting(workManager)
+                .first()
+
+        // Check if the work request is correctly scheduled after reschedule
+        testDriver.setPeriodDelayMet(id)
+
+        assertEquals(workManager.getWorkInfoById(id).get().state, WorkInfo.State.ENQUEUED)
+    }
 }
 
-fun TelemetryService.addFakeReporter() = apply {
-    addReporter<FakeHttpWorker>(ActivePingReporter.configuration)
+fun TelemetryService.addFakeReporter(result: ListenableWorker.Result) = apply {
+    addReporter<FakeHttpWorker>(
+        ActivePingReporter.configuration,
+        FakeHttpWorker.config(result)
+    )
 }

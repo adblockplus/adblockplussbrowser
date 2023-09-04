@@ -2,6 +2,7 @@ package org.adblockplus.adblockplussbrowser.telemetry
 
 import androidx.work.BackoffPolicy
 import androidx.work.Constraints
+import androidx.work.Data
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
@@ -37,7 +38,8 @@ class TelemetryService {
      * The reporter will be scheduled after calling [scheduleReporting].
      */
     fun addActivePingReporter() = apply {
-        addReporter<ActivePingWorker>(ActivePingReporter.configuration)
+        // We don't pass any data to the ActivePingWorker
+        addReporter<ActivePingWorker>(ActivePingReporter.configuration, Data.EMPTY)
     }
 
     /**
@@ -47,8 +49,12 @@ class TelemetryService {
      *
      * @param W the reporter worker type.
      * @param config the reporter configuration.
+     * @param data data to be passed to the reporter.
      */
-    internal inline fun <reified W : BaseTelemetryWorker> addReporter(config: HttpReporter.Configuration) =
+    internal inline fun <reified W : BaseTelemetryWorker> addReporter(
+        config: HttpReporter.Configuration,
+        data: Data,
+    ) =
         apply {
             when (config.repeatable) {
                 true -> PeriodicWorkRequestBuilder<W>(config.repeatInterval)
@@ -61,7 +67,7 @@ class TelemetryService {
                 TimeUnit.MINUTES
             ).setConstraints(
                 Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
-            ).build().let {
+            ).setInputData(data).build().let {
                 workRequests[config] = it
             }
         }
