@@ -35,7 +35,7 @@ class PackageHelper private constructor() {
                 @Suppress("DEPRECATION")
                 packageManager.getPackageInfo(packageId, 0)
                 true
-            } catch (ex: NameNotFoundException) {
+            } catch (ignore: NameNotFoundException) {
                 Timber.i("$packageId not found")
                 false
             }
