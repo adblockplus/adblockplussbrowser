@@ -131,6 +131,9 @@ build:
     - cat "$GOOGLE_SERVICES_CRYSTAL_DEBUG" > "$(pwd)/app/src/worldCrystal/debug/google-services.json"
     - mkdir "app/src/worldCrystal/release"
     - cat "$GOOGLE_SERVICES_CRYSTAL_RELEASE" > "$(pwd)/app/src/worldCrystal/release/google-services.json"
+    # This is a workaround for json-codegen-gradle plugin does not generate data classes
+    # despite it launches. It works only when launched from the `telemetry` directory.
+    - cd telemetry && ../gradlew :telemetry:generateJsonSchemaDataClasses lint && cd ..
     - ./gradlew assemble # build both debug and release for all flavors
   artifacts:
     paths:
