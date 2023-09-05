@@ -48,7 +48,8 @@ checks:lint:
   extends: .template:environment
   stage: checks
   script:
-    - ./gradlew generateJsonSchemaDataClasses lint
+    - cd telemetry && ../gradlew :telemetry:generateJsonSchemaDataClasses lint && cd ..
+    - ./gradlew lint
   artifacts:
     paths:
       - ./*/build/reports/lint-results.*
@@ -60,7 +61,8 @@ checks:detekt:
   extends: .template:environment
   stage: checks
   script:
-    - ./gradlew generateJsonSchemaDataClasses detekt
+    - cd telemetry && ../gradlew :telemetry:generateJsonSchemaDataClasses lint && cd ..
+    - ./gradlew detekt
   artifacts:
     paths:
       - build/reports/detekt/detekt.*
@@ -72,7 +74,8 @@ checks:unit-tests:
   extends: .template:environment
   stage: checks
   script:
-    - ./gradlew generateJsonSchemaDataClasses testWorldAbpDebugUnitTest jacocoTestReport jacocoTestCoverageVerification
+    - cd telemetry && ../gradlew :telemetry:generateJsonSchemaDataClasses lint && cd ..
+    - ./gradlew testWorldAbpDebugUnitTest jacocoTestReport jacocoTestCoverageVerification
   artifacts:
     when: always
     paths:
