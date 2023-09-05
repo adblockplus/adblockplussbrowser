@@ -15,4 +15,4 @@ naming:
   # Generated schema data files have wrong naming, but since they reflect the schema,
   # I believe it's better to exclude them from the check.
   ConstructorParameterNaming:
-    excludes: ['**/build/generated-sources/**']
+    excludes: ['**/build/generated/source/json-schema/**']
