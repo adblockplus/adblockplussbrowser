@@ -19,7 +19,8 @@ import com.google.protobuf.gradle.generateProtoTasks
 import com.google.protobuf.gradle.id
 import com.google.protobuf.gradle.protobuf
 import com.google.protobuf.gradle.protoc
-import net.pwall.json.kotlin.codegen.gradle.JSONSchemaCodegenPlugin
+import net.pwall.json.kotlin.codegen.gradle.JSONSchemaCodegen
+import net.pwall.json.kotlin.codegen.gradle.JSONSchemaCodegenTask
 import org.jetbrains.kotlin.konan.properties.Properties
 
 buildscript {
@@ -54,10 +55,27 @@ kapt {
     correctErrorTypes = true
 }
 
-apply<JSONSchemaCodegenPlugin>()
+// Stuff for JSONSchemaCodegen plugin
+// This code has been taken from `JSONSchemaCodegenPlugin::apply` method
+// because for some reason it does not work when called
+// from inside `JSONSchemaCodegenPlugin::apply` method
+project.extensions.create<JSONSchemaCodegen>("jsonSchemaCodegen", project)
+val generateTask =
+    project.tasks.register<JSONSchemaCodegenTask>("generateJsonSchemaDataClasses") {
+        description = "Generates code for specified schemata"
+        group = "build"
+    }
+// Make sure that `JSONSchemaCodegenPlugin` task (`generate`) is executed before `assemble` task
+tasks.named("preBuild").configure {
+    dependsOn(generateTask)
+}
 
-project.tasks.findByName("prepareKotlinBuildScriptModel")
-    ?.dependsOn(project.tasks.getByName("generate"))
+@Suppress("PropertyName")
+val JSON_SCHEMA_OUTPUT_DIR = "build/generated/source/json-schema/"
+
+configure<JSONSchemaCodegen> {
+    outputDir.set(file(JSON_SCHEMA_OUTPUT_DIR))
+}
 
 /*
 * We read environment variables and local config file, then merge them together
@@ -95,7 +113,7 @@ System.getenv().filter { (key, _) ->
 android {
     // consumed by `json-kotlin-schema-gradle` plugin
     sourceSets.getByName("main") {
-        java.srcDirs("build/generated-sources/kotlin")
+        java.srcDirs(JSON_SCHEMA_OUTPUT_DIR)
     }
     compileOptions {
         @Suppress("UnstableApiUsage")
