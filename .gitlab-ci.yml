@@ -97,7 +97,7 @@ checks:unit-tests:
 checks:coverage:
   stage: checks
   needs: ["checks:unit-tests"]
-  image: registry.gitlab.com/haynes/jacoco2cobertura:1.0.8
+  image: registry.gitlab.com/haynes/jacoco2cobertura:1.0.9
   script:
     - |
       python /opt/cover2cover.py \
@@ -105,13 +105,13 @@ checks:coverage:
         $CI_PROJECT_DIR/base/src/main/kotlin \
         $CI_PROJECT_DIR/core/src/main/kotlin \
         $CI_PROJECT_DIR/preferences/src/main/kotlin \
-      > build/reports/cobertura.xml
+      > $CI_PROJECT_DIR/build/reports/cobertura.xml
   artifacts:
     when: always
     reports:
       coverage_report:
         coverage_format: cobertura
-        path: build/reports/cobertura.xml
+        path: $CI_PROJECT_DIR/build/reports/cobertura.xml
   rules:
     - when: on_success
 
