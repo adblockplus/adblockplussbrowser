@@ -48,6 +48,8 @@ checks:lint:
   extends: .template:environment
   stage: checks
   script:
+    # This is a workaround for json-codegen-gradle plugin does not generate data classes
+    # despite it launches. It works only when launched from the `telemetry` directory.
     - cd telemetry && ../gradlew :telemetry:generateJsonSchemaDataClasses lint && cd ..
     - ./gradlew lint
   artifacts:
@@ -61,6 +63,8 @@ checks:detekt:
   extends: .template:environment
   stage: checks
   script:
+    # This is a workaround for json-codegen-gradle plugin does not generate data classes
+    # despite it launches. It works only when launched from the `telemetry` directory.
     - cd telemetry && ../gradlew :telemetry:generateJsonSchemaDataClasses lint && cd ..
     - ./gradlew detekt
   artifacts:
@@ -74,6 +78,8 @@ checks:unit-tests:
   extends: .template:environment
   stage: checks
   script:
+    # This is a workaround for json-codegen-gradle plugin does not generate data classes
+    # despite it launches. It works only when launched from the `telemetry` directory.
     - cd telemetry && ../gradlew :telemetry:generateJsonSchemaDataClasses lint && cd ..
     - ./gradlew testWorldAbpDebugUnitTest jacocoTestReport jacocoTestCoverageVerification
   artifacts:
