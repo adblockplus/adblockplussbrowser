@@ -70,11 +70,10 @@ tasks.named("preBuild").configure {
     dependsOn(generateTask)
 }
 
-@Suppress("PropertyName")
-val JSON_SCHEMA_OUTPUT_DIR = "build/generated/source/json-schema/"
+val jsonSchemaOutputDir = "build/generated/source/json-schema/"
 
 configure<JSONSchemaCodegen> {
-    outputDir.set(file(JSON_SCHEMA_OUTPUT_DIR))
+    outputDir.set(file(jsonSchemaOutputDir))
 }
 
 /*
@@ -113,7 +112,7 @@ System.getenv().filter { (key, _) ->
 android {
     // consumed by `json-kotlin-schema-gradle` plugin
     sourceSets.getByName("main") {
-        java.srcDirs(JSON_SCHEMA_OUTPUT_DIR)
+        java.srcDirs(jsonSchemaOutputDir)
     }
     compileOptions {
         @Suppress("UnstableApiUsage")
