@@ -17,7 +17,6 @@
 
 package org.adblockplus.adblockplussbrowser.telemetry
 
-import FakeHttpWorker
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.testing.TestLifecycleOwner

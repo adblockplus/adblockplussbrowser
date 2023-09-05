@@ -15,13 +15,14 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+package org.adblockplus.adblockplussbrowser.telemetry
+
 import android.content.Context
 import androidx.work.Data
 import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
 import kotlinx.serialization.ExperimentalSerializationApi
 import okhttp3.OkHttpClient
-import org.adblockplus.adblockplussbrowser.telemetry.BaseTelemetryWorker
 import org.adblockplus.adblockplussbrowser.telemetry.reporters.HttpReporter
 import org.mockito.Mockito
 
