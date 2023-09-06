@@ -23,6 +23,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
@@ -129,7 +130,12 @@ class DownloaderTest {
         assertEquals(0, mockWebServer.requestCount)
         runBlocking {
             var downloadResult =
-                downloader.download(fakeSubscription, forced = false, periodic = true, newSubscription = true)
+                downloader.download(
+                    fakeSubscription,
+                    forced = false,
+                    periodic = true,
+                    newSubscription = true
+                )
             assertTrue(downloadResult is DownloadResult.Success)
             assertEquals(version, downloadResult.subscription?.version)
             assertEquals(etag, downloadResult.subscription?.etag)
@@ -138,7 +144,12 @@ class DownloaderTest {
             // We cannot test more that download status because saving subscription from
             // a previous download is done by the caller - UpdateSubscriptionsWorker.
             downloadResult =
-                downloader.download(fakeSubscription, forced = false, periodic = true, newSubscription = true)
+                downloader.download(
+                    fakeSubscription,
+                    forced = false,
+                    periodic = true,
+                    newSubscription = true
+                )
             assertTrue(downloadResult is DownloadResult.NotModified)
         }
         assertEquals(2, mockWebServer.requestCount)
@@ -160,7 +171,12 @@ class DownloaderTest {
         assertEquals(0, mockWebServer.requestCount)
         runBlocking {
             val downloadResult =
-                downloader.download(fakeSubscription, forced = false, periodic = true, newSubscription = true)
+                downloader.download(
+                    fakeSubscription,
+                    forced = false,
+                    periodic = true,
+                    newSubscription = true
+                )
             assertTrue(downloadResult is DownloadResult.Failed)
             assertNull(downloadResult.subscription)
         }
@@ -173,24 +189,26 @@ class DownloaderTest {
             }
         }
         assertEquals(0, filesCount)
-        assertEquals(analyticsProvider.error, "$HTTP_ERROR_LOG_HEADER_DOWNLOADER $HTTP_ERROR_MOCK_500")
+        assertEquals(
+            analyticsProvider.error,
+            "$HTTP_ERROR_LOG_HEADER_DOWNLOADER $HTTP_ERROR_MOCK_500"
+        )
     }
 
     @Test
-    fun `test download failure due to absence of Date header`() {
+    fun `test download failure due to absence of Date header`() = runTest {
         mockWebServer.enqueue(MockResponse().setResponseCode(HTTP_OK).setBody(downloadFileContent))
         assertEquals(0, mockWebServer.requestCount)
-        runBlocking {
-            assertThat(
-                downloader.download(
-                    fakeSubscription,
-                    forced = false,
-                    periodic = true,
-                    newSubscription = true
-                ), instanceOf(DownloadResult.Failed::class.java)
-            )
-        }
+        assertThat(
+            downloader.download(
+                fakeSubscription,
+                forced = false,
+                periodic = true,
+                newSubscription = true
+            ), instanceOf(DownloadResult.Failed::class.java)
+        )
     }
+
 
     @Test
     fun `test download success with only the Date header`() {
@@ -204,7 +222,12 @@ class DownloaderTest {
         assertEquals(0, mockWebServer.requestCount)
         runBlocking {
             val downloadResult =
-                downloader.download(fakeSubscription, forced = false, periodic = true, newSubscription = true)
+                downloader.download(
+                    fakeSubscription,
+                    forced = false,
+                    periodic = true,
+                    newSubscription = true
+                )
             assertTrue(downloadResult is DownloadResult.Success)
             assertEquals(lastModifiedInt.toString(), downloadResult.subscription?.version)
             assertEquals("", downloadResult.subscription?.etag)
@@ -228,7 +251,11 @@ class DownloaderTest {
     @Test
     fun `test GetDownloadedSubscription when the subscription is absent in coreData`() {
         val downloadedSubscription =
-            runBlocking { (downloader as OkHttpDownloader).getDownloadedSubscription(fakeSubscription) }
+            runBlocking {
+                (downloader as OkHttpDownloader).getDownloadedSubscription(
+                    fakeSubscription
+                )
+            }
         assertEquals(fakeCoreRepository.aaUrl, downloadedSubscription.url)
         assertTrue(downloadedSubscription.path.contains(Regex("tmp.filesDir.downloads")))
         assertEquals(0, downloadedSubscription.lastUpdated)
@@ -242,7 +269,13 @@ class DownloaderTest {
     fun `test GetDownloadedSubscription when the subscription is present in coreData`() {
         val testSubscriptionUrl = "http://test.url"
         val testDownloadedSubscription =
-            DownloadedSubscription(testSubscriptionUrl, "", lastModifiedInt, "lastModified", "version")
+            DownloadedSubscription(
+                testSubscriptionUrl,
+                "",
+                lastModifiedInt,
+                "lastModified",
+                "version"
+            )
         fakeCoreRepository.coreData = CoreData(
             true, 0,
             SavedState(true, listOf(""), listOf(""), listOf(""), listOf("")),
