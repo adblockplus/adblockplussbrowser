@@ -74,13 +74,17 @@ class TelemetryService {
     ) =
         apply {
             when (config.repeatable) {
-                true -> PeriodicWorkRequestBuilder<W>(config.repeatInterval)
+                true -> PeriodicWorkRequestBuilder<W>(
+                    config.repeatInterval.inWholeMinutes,
+                    TimeUnit.MINUTES
+                )
+
                 false -> OneTimeWorkRequestBuilder<W>()
             }.setBackoffCriteria(
                 BackoffPolicy.EXPONENTIAL,
                 // setBackoffCriteria with [Duration] is available from API 26
                 // so we need to convert it to minutes and use setBackoffCriteria with long
-                config.backOffDelay.toMinutes(),
+                config.backOffDelay.inWholeMinutes,
                 TimeUnit.MINUTES
             ).setConstraints(
                 Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()

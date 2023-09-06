@@ -19,7 +19,7 @@ package org.adblockplus.adblockplussbrowser.telemetry.reporters
 
 import androidx.work.Data
 import kotlinx.serialization.ExperimentalSerializationApi
-import java.time.Duration
+import kotlin.time.Duration
 
 typealias ResultPayload = Result<String>
 typealias ReportResponse = Data

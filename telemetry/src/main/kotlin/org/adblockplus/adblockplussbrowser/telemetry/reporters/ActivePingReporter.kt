@@ -41,12 +41,14 @@ import org.adblockplus.adblockplussbrowser.telemetry.data.TelemetryRepository
 import org.adblockplus.adblockplussbrowser.telemetry.schema.ActivePingSchema
 import timber.log.Timber
 import java.text.ParseException
-import java.time.Duration
 import java.time.Instant
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
 import java.util.UUID
 import javax.inject.Inject
+import kotlin.time.DurationUnit.HOURS
+import kotlin.time.DurationUnit.MINUTES
+import kotlin.time.toDuration
 
 internal class ActivePingReporter @Inject constructor(
     private var repository: TelemetryRepository,
@@ -59,10 +61,10 @@ internal class ActivePingReporter @Inject constructor(
             get() = HttpReporter.Configuration(
                 endpointUrl = "https://test-telemetry.data.eyeo.it/topic/webextension_activeping/version/1",
                 repeatable = true,
-                backOffDelay = Duration.ofMinutes(2L),
+                backOffDelay = 2.toDuration(MINUTES),
                 repeatInterval = if (BuildConfig.DEBUG)
-                    Duration.ofMinutes(15)
-                else Duration.ofHours(12L)
+                    15.toDuration(MINUTES)
+                else 12.toDuration(HOURS)
             )
     }
 
