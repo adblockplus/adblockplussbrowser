@@ -49,6 +49,12 @@ android {
             storeFile = rootProject.file("debug.keystore")
         }
     }
+    compileOptions {
+        @Suppress("UnstableApiUsage")
+        // this is needed for `OffsetDateTime` java class that is used in json serialization
+        isCoreLibraryDesugaringEnabled = true
+    }
+
 }
 
 // recommended https://dagger.dev/hilt/gradle-setup.html#add-the-hilt-android-gradle-plugin
@@ -93,6 +99,8 @@ dependencies {
     implementation(libs.okhttp3.logging.interceptor)
     implementation(libs.gms.play.services.oss.licenses)
     implementation(libs.installreferrer)
+
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
 
     testImplementation(libs.junit)
     testImplementation(libs.robolectric)

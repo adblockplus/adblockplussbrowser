@@ -114,11 +114,6 @@ android {
     sourceSets.getByName("main") {
         java.srcDirs(jsonSchemaOutputDir)
     }
-    compileOptions {
-        @Suppress("UnstableApiUsage")
-        // this is needed for `OffsetDateTime` java class that is used in json serialization
-        isCoreLibraryDesugaringEnabled = true
-    }
 }
 
 protobuf {
@@ -144,6 +139,7 @@ dependencies {
     implementation(libs.androidx.work.runtime)
     implementation(libs.gildor.coroutines.okhttp)
     implementation(libs.kotlin.stdlib)
+    implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.serialization.json)
@@ -176,6 +172,4 @@ dependencies {
     kaptTest(libs.hilt.compiler)
     kaptTest(libs.androidx.hilt.compiler)
     kaptAndroidTest(libs.hilt.compiler)
-
-    coreLibraryDesugaring(libs.desugar.jdk.libs)
 }

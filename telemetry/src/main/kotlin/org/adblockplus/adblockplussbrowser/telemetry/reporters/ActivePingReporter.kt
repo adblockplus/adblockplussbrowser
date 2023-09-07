@@ -23,6 +23,11 @@ import androidx.work.Data
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toInstant
+import kotlinx.datetime.toLocalDateTime
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
@@ -41,9 +46,6 @@ import org.adblockplus.adblockplussbrowser.telemetry.data.TelemetryRepository
 import org.adblockplus.adblockplussbrowser.telemetry.schema.ActivePingSchema
 import timber.log.Timber
 import java.text.ParseException
-import java.time.Instant
-import java.time.OffsetDateTime
-import java.time.ZoneOffset
 import java.util.UUID
 import javax.inject.Inject
 import kotlin.time.DurationUnit.HOURS
@@ -119,7 +121,7 @@ internal class ActivePingReporter @Inject constructor(
         response.getString("token").let {
             if (it.isNullOrBlank()) return Result.failure(IOException("The token is empty"))
             Timber.d("Response `token` (date): %s", it)
-            val time = it.toOffsetDateTime().toEpochSecond()
+            val time = it.toOffsetDateTime().epochSeconds
             with(repository) {
                 updateFirstPingIfNotSet(time)
                 updateAndShiftLastPingToPreviousLast(time)
@@ -141,13 +143,13 @@ internal class ActivePingReporter @Inject constructor(
         return Data.Builder().putString("token", token).build()
     }
 
-    private fun String.toOffsetDateTime(): OffsetDateTime {
+    private fun String.toOffsetDateTime(): Instant {
         return try {
             // Expected date format in "token": "2023-05-18T12:50:00Z"
             // from `Instant.parse` docs:
             // obtains an instance of Instant from a text string such as 2007-12-03T10:15:30.00Z.
             // so it should be good to go without a special formatter
-            OffsetDateTime.parse(this)
+            Instant.parse(this)
         } catch (ex: ParseException) {
             Timber.e(ex)
             if (BuildConfig.DEBUG) {
@@ -158,14 +160,12 @@ internal class ActivePingReporter @Inject constructor(
             // failed to parse, returning device time shifted to UTC (server time)
             // this might prevent errors when the server changed time format
             // thought should be carefully caught during testing
-            OffsetDateTime.now(ZoneOffset.UTC)
+            Clock.System.now().toLocalDateTime(TimeZone.UTC).toInstant(TimeZone.UTC)
         }
     }
 
-    private fun Long.toOffsetDateTime(): OffsetDateTime {
-        val instant = Instant.ofEpochMilli(this)
-        return OffsetDateTime.ofInstant(instant, ZoneOffset.UTC) // in fact same to GMT
-    }
+    private fun Long.toOffsetDateTime(): Instant = Instant.fromEpochMilliseconds(this)
+
 }
 
 // We need a dedicated worker type for every reporter

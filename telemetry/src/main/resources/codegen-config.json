@@ -13,7 +13,7 @@
   },
   "customClasses": {
     "format": {
-      "date-time": "org.adblockplus.adblockplussbrowser.telemetry.serializers.OffsetDateTimeAsText"
+      "date-time": "kotlinx.datetime.Instant"
     }
   }
 }
