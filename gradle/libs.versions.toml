@@ -1,5 +1,5 @@
 [versions]
-desugar_jdk_libs = "1.1.5"
+desugar_jdk_libs = "1.1.9"
 robolectric = "4.10.3"
 android-plugin-gradle = "7.0.4"
 kotlin-plugin-gradle = "1.6.21"
