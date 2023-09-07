@@ -113,7 +113,7 @@ class TelemetryService {
             )
         }
         val ids: MutableCollection<UUID> = mutableSetOf()
-        workRequests.forEach() { (config, request) ->
+        workRequests.forEach { (config, request) ->
             when (config.repeatable) {
                 true -> workManager.enqueueUniquePeriodicWork(
                     config.endpointUrl,
