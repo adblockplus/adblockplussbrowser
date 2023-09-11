@@ -78,15 +78,11 @@ afterEvaluate {
     val sourcePaths = coverageProjects.map {
         it.projectDir.toPath().resolve("src/main/kotlin").toFile()
     }
-    val classPaths = coverageProjects.map {
-        it.buildDir.toPath().resolve("tmp/kotlin-classes/worldAbpDebug").toFile()
-    }
     val deps = coverageProjectsPath.map { "$it:$testTaskName" }
 
     tasks.register<JacocoReport>("jacocoTestReport") {
         executionData(executionDataPaths)
         sourceDirectories.setFrom(sourcePaths)
-        classDirectories.setFrom(classPaths)
 
         reports {
             xml.required.set(true)
@@ -99,7 +95,6 @@ afterEvaluate {
     tasks.register<JacocoCoverageVerification>("jacocoTestCoverageVerification") {
         executionData(executionDataPaths)
         sourceDirectories.setFrom(sourcePaths)
-        classDirectories.setFrom(classPaths)
 
         violationRules {
             rule {
