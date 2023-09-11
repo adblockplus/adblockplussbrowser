@@ -89,6 +89,7 @@ checks:unit-tests:
       - base/build/reports/
       - preferences/build/reports/
       - core/build/reports/
+      - telemetry/build/reports/
     reports:
       junit: ./**/build/test-results/**/TEST*.xml
   rules:
@@ -105,6 +106,7 @@ checks:coverage:
         $CI_PROJECT_DIR/base/src/main/kotlin \
         $CI_PROJECT_DIR/core/src/main/kotlin \
         $CI_PROJECT_DIR/preferences/src/main/kotlin \
+        $CI_PROJECT_DIR/telemetry/src/main/kotlin \
       > build/reports/cobertura.xml
   artifacts:
     when: always

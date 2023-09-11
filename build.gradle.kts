@@ -45,7 +45,7 @@ plugins {
     alias(libs.plugins.plugin.versions)
 }
 
-val coverageProjectsPath = setOf(":base", ":core", ":preferences", ":app")
+val coverageProjectsPath = setOf(":base", ":core", ":preferences", ":app", ":telemetry")
 val testTaskName = "testWorldAbpDebugUnitTest"
 
 allprojects {
