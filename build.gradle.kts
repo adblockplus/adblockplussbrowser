@@ -64,6 +64,31 @@ testAggregation {
     }
 }
 
+afterEvaluate {
+    // TODO this code doesn't work because `JacocoCoverageVerification` has to know
+    // executionData, sourceDirectories and classDirectories before the task is executed
+    // and we have to somehow get it from
+    tasks.register<JacocoCoverageVerification>("jacocoTestCoverageVerification") {
+        // this is sort of an example, test aggregation does not add test report tasks to
+        // individual subprojects
+        subprojects.forEach{ project ->
+            project.tasks.named<JacocoReport>("jacocoTestReport").map {
+                executionData(it.executionData)
+                sourceDirectories.setFrom(it.sourceDirectories)
+                classDirectories.setFrom(it.classDirectories)
+            }
+        }
+
+        violationRules {
+            rule {
+                limit {
+                    minimum = 0.40F.toBigDecimal()
+                }
+            }
+        }
+    }
+}
+
 detekt {
     source = files(fileTree(".") {
         // On CI, we set GRADLE_USER_HOME to .gradle, this makes detekt fail
