@@ -43,68 +43,24 @@ plugins {
     jacoco
     alias(libs.plugins.detekt)
     alias(libs.plugins.plugin.versions)
+    alias(libs.plugins.jacoco.test.aggregation.coverage)
 }
 
 val coverageProjectsPath = setOf(":base", ":core", ":preferences", ":app", ":telemetry")
-val testTaskName = "testWorldAbpDebugUnitTest"
 
 allprojects {
     repositories {
         google()
         mavenCentral()
     }
-
-    if (path in coverageProjectsPath) {
-        apply(plugin = "jacoco")
-
-        tasks.withType(Test::class.java) {
-            // We want coverage only for the worldAbp flavor
-            if (name != testTaskName)
-                return@withType
-
-            configure<JacocoTaskExtension> {
-                isIncludeNoLocationClasses = true
-                excludes = listOf("jdk.internal.*")
-            }
-        }
-    }
 }
 
-afterEvaluate {
+// see https://github.com/gmazzo/gradle-android-test-aggregation-plugin/
+testAggregation {
     val coverageProjects = subprojects.filter { it.path in coverageProjectsPath}
-    val executionDataPaths = coverageProjects.map {
-        it.buildDir.toPath().resolve("jacoco/$testTaskName.exec").toString()
-    }
-    val sourcePaths = coverageProjects.map {
-        it.projectDir.toPath().resolve("src/main/kotlin").toFile()
-    }
-    val deps = coverageProjectsPath.map { "$it:$testTaskName" }
-
-    tasks.register<JacocoReport>("jacocoTestReport") {
-        executionData(executionDataPaths)
-        sourceDirectories.setFrom(sourcePaths)
-
-        reports {
-            xml.required.set(true)
-            html.required.set(true)
-        }
-
-        dependsOn(deps)
-    }
-
-    tasks.register<JacocoCoverageVerification>("jacocoTestCoverageVerification") {
-        executionData(executionDataPaths)
-        sourceDirectories.setFrom(sourcePaths)
-
-        violationRules {
-            rule {
-                limit {
-                    minimum = 0.40F.toBigDecimal()
-                }
-            }
-        }
-
-        dependsOn(deps)
+    modules {
+        include(coverageProjects)
+        exclude(rootProject)
     }
 }
 

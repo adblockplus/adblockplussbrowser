@@ -7,6 +7,7 @@ detekt = "1.18.1"
 plugin-versions = "0.42.0"
 junit = "4.13.2"
 jacoco-core = "0.8.7"
+jacoco-test-aggregation-coverage = "2.0.1"
 json-kotlin-gradle = "0.91"
 dots-indicator = "4.2"
 material = "1.3.0"
@@ -125,3 +126,4 @@ xz = { module = "org.tukaani:xz", version.ref = "xz" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 plugin-versions = { id = "com.github.ben-manes.versions", version.ref = "plugin-versions" }
 kotlinx-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+jacoco-test-aggregation-coverage = { id = "io.github.gmazzo.test.aggregation.coverage", version.ref = "jacoco-test-aggregation-coverage" }

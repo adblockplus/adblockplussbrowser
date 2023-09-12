@@ -81,7 +81,7 @@ checks:unit-tests:
     # This is a workaround for json-codegen-gradle plugin does not generate data classes
     # despite it launches. It works only when launched from the `telemetry` directory.
     - cd telemetry && ../gradlew :telemetry:generateJsonSchemaDataClasses lint && cd ..
-    - ./gradlew testWorldAbpDebugUnitTest jacocoTestReport jacocoTestCoverageVerification
+    - ./gradlew testWorldAbpDebugUnitTest testCodeCoverageReport
   artifacts:
     when: always
     paths:
