@@ -20,3 +20,7 @@ build/
 /captures
 .externalNativeBuild
 .cxx
+
+# TELEMETRY
+# variables that should be populated into BuildConfig
+/telemetry/config.local.properties
