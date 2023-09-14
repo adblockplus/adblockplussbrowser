@@ -37,11 +37,11 @@ import kotlinx.serialization.json.jsonPrimitive
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import okio.IOException
-import org.adblockplus.adblockplussbrowser.base.BuildConfig
 import org.adblockplus.adblockplussbrowser.base.os.AppInfo
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.currentSettings
 import org.adblockplus.adblockplussbrowser.telemetry.BaseTelemetryWorker
+import org.adblockplus.adblockplussbrowser.telemetry.BuildConfig
 import org.adblockplus.adblockplussbrowser.telemetry.data.TelemetryRepository
 import org.adblockplus.adblockplussbrowser.telemetry.schema.ActivePingSchema
 import timber.log.Timber
@@ -61,7 +61,7 @@ internal class ActivePingReporter @Inject constructor(
     companion object {
         val configuration: HttpReporter.Configuration
             get() = HttpReporter.Configuration(
-                endpointUrl = "https://test-telemetry.data.eyeo.it/topic/webextension_activeping/version/1",
+                endpointUrl = BuildConfig.EYEO_TELEMETRY_ACTIVEPING_URL,
                 repeatable = true,
                 backOffDelay = 2.toDuration(MINUTES),
                 repeatInterval = if (BuildConfig.DEBUG)
