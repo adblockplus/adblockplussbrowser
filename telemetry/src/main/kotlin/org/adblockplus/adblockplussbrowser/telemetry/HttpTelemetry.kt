@@ -84,20 +84,18 @@ internal class HttpTelemetry(
                 }
             }
         }
-
-    companion object {
-        private const val HTTP_ERROR_LOG_HEADER_USER_COUNTER =
-            "OkHttpUserCounter HTTP error, return code"
-
-        private fun getHttpErrorMessage(response: Response) =
-            ("$HTTP_ERROR_LOG_HEADER_USER_COUNTER ${response.code}"
-                    + "\nHeaders:\n${
-                response.headers.toString()
-                    .take(HttpConstants.HTTP_ERROR_AVERAGE_HEADERS_SIZE)
-            }"
-                    + "\nBody:\n${
-                response.body?.string()
-                    ?.take(HttpConstants.HTTP_ERROR_MAX_BODY_SIZE) ?: ""
-            }")
-    }
 }
+
+private const val HTTP_ERROR_LOG_HEADER_USER_COUNTER =
+    "OkHttpUserCounter HTTP error, return code"
+
+private fun getHttpErrorMessage(response: Response) =
+    ("$HTTP_ERROR_LOG_HEADER_USER_COUNTER ${response.code}"
+            + "\nHeaders:\n${
+        response.headers.toString()
+            .take(HttpConstants.HTTP_ERROR_AVERAGE_HEADERS_SIZE)
+    }"
+            + "\nBody:\n${
+        response.body?.string()
+            ?.take(HttpConstants.HTTP_ERROR_MAX_BODY_SIZE) ?: ""
+    }")
