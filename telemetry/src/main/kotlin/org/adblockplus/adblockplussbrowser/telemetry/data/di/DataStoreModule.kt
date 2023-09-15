@@ -32,6 +32,9 @@ import org.adblockplus.adblockplussbrowser.telemetry.data.datastore.TelemetryDat
 import org.adblockplus.adblockplussbrowser.telemetry.data.proto.TelemetryData
 import javax.inject.Singleton
 
+/**
+ * Module that provides [DataStore] instances.
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 internal object DataStoreModule {

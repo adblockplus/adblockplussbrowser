@@ -52,6 +52,43 @@ import kotlin.time.DurationUnit.HOURS
 import kotlin.time.DurationUnit.MINUTES
 import kotlin.time.toDuration
 
+/**
+ * Prepares the required payload and interprets the response for the active ping request.
+ *
+ * This is a repeatable worker, it will be rescheduled after
+ * the `ActivePingReporter.configuration.repeatInterval`.
+ *
+ * Request example:
+ * ```
+ * {
+ *   "payload": {
+ *     "first_ping": "2023-05-18T12:50:00Z",
+ *     "last_ping": "2023-05-18T12:50:00Z",
+ *     "previous_last_ping": "2023-05-18T12:50:00Z",
+ *     "last_ping_tag": "string",
+ *     "aa_active": true,
+ *     "addon_name": "string",
+ *     "addon_version": "string",
+ *     "application": "string",
+ *     "application_version": "string",
+ *     "platform": "string",
+ *     "platform_version": "string",
+ *     "extension_name": "string",
+ *     "extension_version": "string"
+ *   }
+ * }
+ * ```
+ * Response example:
+ * ```
+ * {
+ *   "token": "2023-05-18T12:50:00Z"
+ * }
+ * ```
+ * @param repository [TelemetryRepository] instance, injected by Hilt.
+ * @param settings [SettingsRepository] instance, injected by Hilt.
+ * @param appInfo [AppInfo] instance, injected by Hilt.
+ * @see schema [ActivePingSchema]
+ */
 internal class ActivePingReporter @Inject constructor(
     private var repository: TelemetryRepository,
     private var settings: SettingsRepository,
@@ -66,13 +103,20 @@ internal class ActivePingReporter @Inject constructor(
                 backOffDelay = 2.toDuration(MINUTES),
                 repeatInterval = if (BuildConfig.DEBUG)
                     15.toDuration(MINUTES)
-                else 12.toDuration(HOURS)
+                else 12.toDuration(HOURS) // required by Data team
             )
     }
 
     override val configuration: HttpReporter.Configuration
         get() = Companion.configuration
 
+    /**
+     * Prepares the payload for the active ping request.
+     *
+     * It uses [ActivePingSchema] for the payload serialization.
+     *
+     * @return [ResultPayload] that contains the payload _json_ as [String].
+     */
     override suspend fun preparePayload(): ResultPayload {
         val data = repository.currentData()
 
@@ -117,6 +161,18 @@ internal class ActivePingReporter @Inject constructor(
         )
     }
 
+    /**
+     * Processes the response for the active ping request.
+     *
+     * It updates the
+     * [org.adblockplus.adblockplussbrowser.telemetry.data.proto.TelemetryData.setFirstPing]
+     * and [org.adblockplus.adblockplussbrowser.telemetry.data.proto.TelemetryData.setLastPing]
+     * with the received token.
+     *
+     * @param response [ReportResponse] that contains the response _json_ as [String].
+     * @return [Result] that contains [Unit] if the response was processed successfully,
+     * or [IOException] if the response processing failed.
+     */
     override suspend fun processResponse(response: ReportResponse): Result<Unit> =
         response.getString("token").let {
             if (it.isNullOrBlank()) return Result.failure(IOException("The token is empty"))
@@ -130,6 +186,14 @@ internal class ActivePingReporter @Inject constructor(
             Result.success(Unit)
         }
 
+    /**
+     * Reads the http response body json and converts it to [ReportResponse].
+     *
+     * @param httpResponse [Response] instance.
+     * @return [ReportResponse] an instance of [Data] that contains the response token.
+     * @throws IllegalArgumentException if the response is not [Response].
+     * @throws SerializationException if the response cannot be parsed.
+     */
     @ExperimentalSerializationApi
     override fun convert(httpResponse: Any): ReportResponse {
         if (httpResponse !is Response) {
@@ -143,6 +207,12 @@ internal class ActivePingReporter @Inject constructor(
         return Data.Builder().putString("token", token).build()
     }
 
+    /**
+     * Parses [String] to [Instant].
+     *
+     * In case when the string cannot be parsed, it returns the current time shifted to UTC.
+     * @throws ParseException if the string cannot be parsed (only in debug mode).
+     */
     private fun String.toOffsetDateTime(): Instant {
         return try {
             // Expected date format in "token": "2023-05-18T12:50:00Z"
@@ -164,12 +234,15 @@ internal class ActivePingReporter @Inject constructor(
         }
     }
 
+    /**
+     * Converts epoch milliseconds to [Instant].
+     */
     private fun Long.toOffsetDateTime(): Instant = Instant.fromEpochMilliseconds(this)
 
 }
 
 // We need a dedicated worker type for every reporter
-// for the WorkerRequestBuilder to know how to build the worker
+// for the [WorkerRequestBuilder] to know how to build the worker
 @HiltWorker
 internal class ActivePingWorker @AssistedInject constructor(
     @Assisted appContext: Context,

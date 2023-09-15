@@ -24,6 +24,12 @@ import kotlinx.coroutines.flow.take
 import org.adblockplus.adblockplussbrowser.telemetry.data.proto.TelemetryData
 import javax.inject.Inject
 
+/**
+ * This class is responsible for storing last and previous last ping timestamps.
+ *
+ * It uses [DataStore] to store the data.
+ * @param telemetryDataStore [DataStore] instance, injected by Hilt.
+ */
 internal class DataStoreTelemetryRepository @Inject constructor(
     private val telemetryDataStore: DataStore<TelemetryData>
 ) : TelemetryRepository {

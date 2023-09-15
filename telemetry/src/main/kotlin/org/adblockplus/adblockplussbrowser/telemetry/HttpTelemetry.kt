@@ -40,6 +40,19 @@ import java.net.HttpURLConnection
 internal class HttpTelemetry(
     private val okHttpClient: OkHttpClient,
 ) {
+
+    /**
+     * Sends telemetry data to the server.
+     *
+     * It uses [HttpReporter] to prepare the payload and [HttpReporter.processResponse]
+     * to process the response.
+     *
+     *  Uses `EYEO_TELEMETRY_ACTIVEPING_AUTH_TOKEN` environment variable to authenticate.
+     *
+     * @param reporter [HttpReporter] that contains telemetry data.
+     * @return [Result] that contains [Unit] if the request was successful,
+     * or [HttpRetryException] if the request failed.
+     */
     @ExperimentalSerializationApi
     suspend fun report(reporter: HttpReporter): Result<Unit> =
         coroutineScope {

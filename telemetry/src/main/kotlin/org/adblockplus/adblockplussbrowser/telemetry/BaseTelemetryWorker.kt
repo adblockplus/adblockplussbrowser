@@ -29,6 +29,22 @@ import org.adblockplus.adblockplussbrowser.telemetry.reporters.HttpReporter
 import timber.log.Timber
 import java.io.IOException
 
+/**
+ * A base class for telemetry workers.
+ *
+ * It is expected, that all child classes shall be annotated with [androidx.hilt.work.HiltWorker]
+ * and have an [dagger.assisted.AssistedInject] constructor.
+ *
+ * The parameters _appContext_, _params_ must be annotated
+ * with [dagger.assisted.Assisted] annotation.
+ *
+ * @param appContext [Context] of the application; must be annotated
+ * with [dagger.assisted.Assisted] annotation.
+ * @param params [WorkerParameters] of the worker; must be annotated
+ * with [dagger.assisted.Assisted] annotation.
+ * @param httpClient [OkHttpClient] instance.
+ * @param reporter [HttpReporter] instance.
+ */
 internal open class BaseTelemetryWorker constructor(
     appContext: Context,
     params: WorkerParameters,

@@ -22,12 +22,25 @@ import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.flow.take
 import org.adblockplus.adblockplussbrowser.telemetry.data.proto.TelemetryData
 
+/**
+ * Storage for last and previous last ping timestamps.
+ */
 internal interface TelemetryRepository {
     val data: Flow<TelemetryData>
 
+    /**
+     * Returns the latest [TelemetryData] value from a [Flow]
+     */
     suspend fun currentData(): TelemetryData = data.take(1).single()
 
+    /**
+     * Updates [TelemetryData.setFirstPing] if it is not set.
+     */
     suspend fun updateFirstPingIfNotSet(firstPing: Long)
 
+    /**
+     * Updates [TelemetryData.setLastPing] and shifts the
+     * previous last ping to [TelemetryData.setPreviousLastPing].
+     */
     suspend fun updateAndShiftLastPingToPreviousLast(newLastPing: Long)
 }
