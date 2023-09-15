@@ -22,32 +22,30 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Base64
-import androidx.annotation.StringRes
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
+import org.adblockplus.adblockplussbrowser.base.data.SubscriptionsConstants
+import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
+import org.adblockplus.adblockplussbrowser.base.data.takeSingle
 import org.adblockplus.adblockplussbrowser.base.os.loadImage
 import org.adblockplus.adblockplussbrowser.base.os.resolveFilename
 import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.data.ReportIssueRepository
 import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData
+import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueSubscription
+import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-import kotlinx.coroutines.flow.single
-import kotlinx.coroutines.flow.take
-import kotlinx.coroutines.runBlocking
-import org.adblockplus.adblockplussbrowser.base.data.SubscriptionsConstants
-import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
-import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueSubscription
-import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 
 enum class BackgroundOperationOutcome {
     SCREENSHOT_PROCESSING_FINISHED,
@@ -207,4 +205,4 @@ private fun Bitmap.toBase64EncodedPng(): String = ByteArrayOutputStream().use { 
 }
 
 private suspend fun SettingsRepository.currentSettings() =
-    this.settings.take(1).single()
+    this.settings.takeSingle()

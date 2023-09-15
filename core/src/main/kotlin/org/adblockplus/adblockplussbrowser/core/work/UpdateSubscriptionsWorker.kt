@@ -29,17 +29,22 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.single
-import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import okio.buffer
 import okio.sink
 import okio.source
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
+import org.adblockplus.adblockplussbrowser.base.data.SubscriptionsConstants
 import org.adblockplus.adblockplussbrowser.base.data.model.CustomSubscriptionType
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.base.data.model.SubscriptionUpdateStatus
+import org.adblockplus.adblockplussbrowser.base.data.prefs.DebugPreferences
+import org.adblockplus.adblockplussbrowser.base.data.takeSingle
+import org.adblockplus.adblockplussbrowser.core.BuildConfig
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscription
 import org.adblockplus.adblockplussbrowser.core.data.proto.toSavedState
@@ -53,12 +58,6 @@ import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
 import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
-import kotlinx.coroutines.flow.first
-import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
-import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
-import org.adblockplus.adblockplussbrowser.base.data.SubscriptionsConstants
-import org.adblockplus.adblockplussbrowser.base.data.prefs.DebugPreferences
-import org.adblockplus.adblockplussbrowser.core.BuildConfig
 
 
 @HiltWorker
@@ -413,10 +412,10 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
     }
 
     private suspend fun SettingsRepository.currentSettings() =
-        this.settings.take(1).single()
+        this.settings.takeSingle()
 
     private suspend fun CoreRepository.currentSavedState() =
-        this.data.take(1).single().lastState
+        this.data.takeSingle().lastState
 
     private fun Set<String>.isPeriodic(): Boolean = this.contains(UPDATE_KEY_PERIODIC_WORK)
     private fun Set<String>.isForceRefresh(): Boolean = this.contains(UPDATE_KEY_FORCE_REFRESH)
