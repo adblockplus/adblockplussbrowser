@@ -42,11 +42,10 @@ internal object DataStoreModule {
     @Provides
     @Singleton
     internal fun provideTelemetryDataStore(
-        @ApplicationContext context: Context,
-        telemetryDataSerializer: TelemetryDataSerializer,
+        @ApplicationContext context: Context
     ): DataStore<TelemetryData> =
         DataStoreFactory.create(
-            serializer = telemetryDataSerializer
+            serializer = TelemetryDataSerializer
         ) {
             context.dataStoreFile("telemetry.pb")
         }
@@ -56,8 +55,4 @@ internal object DataStoreModule {
     internal fun provideTelemetryRepository(
         telemetryDataStore: DataStore<TelemetryData>,
     ): TelemetryRepository = DataStoreTelemetryRepository(telemetryDataStore)
-
-    @Provides
-    @Singleton
-    internal fun provideTelemetryDataSerializer(): TelemetryDataSerializer = TelemetryDataSerializer
 }
