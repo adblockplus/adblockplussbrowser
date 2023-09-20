@@ -200,7 +200,7 @@ internal class ActivePingReporter @Inject constructor(
             throw IllegalArgumentException("Expected Response, got ${httpResponse::class.java}")
         }
         val token = httpResponse.body?.byteStream()?.use { inputStream ->
-            val jsonToken = Json.decodeFromStream<JsonObject>(inputStream)["token"]
+            val jsonToken = Json.decodeFromStream(JsonObject.serializer(), inputStream)["token"]
             jsonToken?.jsonPrimitive?.content
                 ?: throw SerializationException("JSON parsing failed: \"token\" field is null or missing")
         }

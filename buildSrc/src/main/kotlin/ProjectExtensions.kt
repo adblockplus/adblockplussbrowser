@@ -83,7 +83,6 @@ fun Project.applyCommonConfig() {
                     getDefaultProguardFile("proguard-android-optimize.txt"),
                     "proguard-rules.pro"
                 )
-                consumerProguardFiles("${project.name}-proguard-rules.pro")
             }
 
             getByName("debug") {
