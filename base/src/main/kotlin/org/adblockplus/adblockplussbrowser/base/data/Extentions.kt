@@ -21,4 +21,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.flow.take
 
+/**
+ * Returns the first element emitted by the flow.
+ *
+ * @throws NoSuchElementException if the flow was empty.
+ */
 suspend fun <T> Flow<T>.takeSingle(): T = this.take(1).single()
