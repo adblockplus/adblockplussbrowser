@@ -104,6 +104,7 @@ class TelemetryService {
      * @return the list of work request ids.
      * @throws IllegalStateException if no reporters added.
      */
+    @Throws(IllegalStateException::class)
     fun scheduleReporting(workManager: WorkManager): Collection<UUID> {
         if (workRequests.isEmpty()) {
             // It is fine to throw an exception here since it is a developer error

@@ -194,6 +194,7 @@ internal class ActivePingReporter @Inject constructor(
      * @throws IllegalArgumentException if the response is not [Response].
      * @throws SerializationException if the response cannot be parsed.
      */
+    @Throws(IllegalArgumentException::class)
     @ExperimentalSerializationApi
     override fun convert(httpResponse: Any): ReportResponse {
         if (httpResponse !is Response) {
