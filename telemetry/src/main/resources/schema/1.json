@@ -9,14 +9,6 @@
        "description": "Tag for the received last_ping. One of the algorithms that might be used to generate this is UUID4. If a ping is retried, the same tag should be used. Example: 'be62e49f-d94e-411b-a060-1abc82d21b64'",
        "type": "string"
      },
-     "addon_name": {
-       "description": "Identifier of the SDK integration. Example: 'eyeo-chromium-sdk' or 'eyeo-webext'",
-       "type": "string"
-     },
-     "addon_version": {
-       "description": "Respective version corresponding to addon_name. Example: '2.0.0'",
-       "type": "string"
-     },
      "application": {
        "description": "Identifier of either hosting (partner's) application or product as sent by the client. Example: 'chrome'",
        "type": "string"
@@ -62,8 +54,6 @@
      }
    },
    "required": [
-     "addon_name",
-     "addon_version",
      "application",
      "application_version",
      "aa_active",

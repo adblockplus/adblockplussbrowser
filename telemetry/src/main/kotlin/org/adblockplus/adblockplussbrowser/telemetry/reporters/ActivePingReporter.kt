@@ -139,8 +139,6 @@ internal class ActivePingReporter @Inject constructor(
             previous_last_ping = savedPrevLastPing,
             last_ping_tag = UUID.randomUUID().toString(),
             aa_active = acceptableAdsEnabled,
-            addon_name = appInfo.addonName,
-            addon_version = appInfo.addonVersion.orEmpty(),
             application = appInfo.application.orEmpty(),
             application_version = appInfo.applicationVersion.orEmpty(),
             platform = appInfo.platform,
