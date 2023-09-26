@@ -23,6 +23,10 @@ import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.dataStoreFile
 import androidx.test.core.app.ApplicationProvider
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import org.adblockplus.adblockplusbrowser.testutils.FakeSettingsRepository
 import org.adblockplus.adblockplussbrowser.base.os.AppInfo
 import org.adblockplus.adblockplussbrowser.telemetry.data.DataStoreTelemetryRepository
@@ -34,6 +38,23 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+
+@Serializable
+data class Payload(
+    @SerialName("last_ping_tag") val lastPingTag: String,
+    @SerialName("application") val application: String,
+    @SerialName("application_version") val applicationVersion: String,
+    @SerialName("aa_active") val aaActive: Boolean,
+    @SerialName("platform") val platform: String,
+    @SerialName("platform_version") val platformVersion: String,
+    @SerialName("extension_name") val extensionName: String,
+    @SerialName("extension_version") val extensionVersion: String
+)
+
+@Serializable
+data class ActivePing(
+    var payload: Payload
+)
 
 @RunWith(RobolectricTestRunner::class)
 class ActivePingReporterTest {
@@ -63,6 +84,11 @@ class ActivePingReporterTest {
         runBlocking {
             val result = activePingReporter.preparePayload()
             assertTrue(result.isSuccess)
+            result.onSuccess { activePingPayload ->
+                val json = Json { ignoreUnknownKeys = true }
+                val activePing = json.decodeFromString<ActivePing>(activePingPayload)
+                assertTrue(activePing.payload.aaActive)
+            }
         }
     }
 }
