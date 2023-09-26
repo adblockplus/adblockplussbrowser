@@ -27,6 +27,8 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import okhttp3.mockwebserver.MockResponse
+import okhttp3.mockwebserver.MockWebServer
 import org.adblockplus.adblockplusbrowser.testutils.FakeSettingsRepository
 import org.adblockplus.adblockplussbrowser.base.os.AppInfo
 import org.adblockplus.adblockplussbrowser.telemetry.data.DataStoreTelemetryRepository
@@ -39,6 +41,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import java.net.HttpURLConnection
 
 @Serializable
 data class Payload(
@@ -60,6 +63,7 @@ data class ActivePing(
 
 @RunWith(RobolectricTestRunner::class)
 class ActivePingReporterTest {
+    private val mockWebServer = MockWebServer()
     private val testContext: Context = ApplicationProvider.getApplicationContext()
     private val telemetryDataStore: DataStore<TelemetryData> =
         DataStoreFactory.create(
@@ -97,6 +101,13 @@ class ActivePingReporterTest {
                 assertEquals("2023-08-24T02:50:03.742Z", activePing.payload.firstPing)
                 assertEquals("android", activePing.payload.platform)
             }
+            mockWebServer.start()
+            mockWebServer.enqueue(
+                MockResponse()
+                    .setHeader("Date", "Thu, 23 Sep 2021 17:31:01 GMT") //202109231731
+                    .setResponseCode(HttpURLConnection.HTTP_CREATED)
+            )
+//            activePingReporter.processResponse(activePingReporter.convert())
         }
     }
 }
