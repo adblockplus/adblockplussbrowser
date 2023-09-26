@@ -33,6 +33,7 @@ import org.adblockplus.adblockplussbrowser.telemetry.data.DataStoreTelemetryRepo
 import org.adblockplus.adblockplussbrowser.telemetry.data.datastore.TelemetryDataSerializer
 import org.adblockplus.adblockplussbrowser.telemetry.data.proto.TelemetryData
 import org.adblockplus.adblockplussbrowser.telemetry.reporters.ActivePingReporter
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -42,6 +43,7 @@ import org.robolectric.RobolectricTestRunner
 @Serializable
 data class Payload(
     @SerialName("last_ping_tag") val lastPingTag: String,
+    @SerialName("first_ping") val firstPing: String,
     @SerialName("application") val application: String,
     @SerialName("application_version") val applicationVersion: String,
     @SerialName("aa_active") val aaActive: Boolean,
@@ -72,6 +74,10 @@ class ActivePingReporterTest {
 
     @Before
     fun setUp() {
+        runBlocking {
+            val testFirstPing = 1692845403742
+            dataStoreTelemetryRepository.updateFirstPingIfNotSet(testFirstPing)
+        }
         activePingReporter = ActivePingReporter(
             dataStoreTelemetryRepository,
             settingsRepository,
@@ -88,6 +94,8 @@ class ActivePingReporterTest {
                 val json = Json { ignoreUnknownKeys = true }
                 val activePing = json.decodeFromString<ActivePing>(activePingPayload)
                 assertTrue(activePing.payload.aaActive)
+                assertEquals("2023-08-24T02:50:03.742Z", activePing.payload.firstPing)
+                assertEquals("android", activePing.payload.platform)
             }
         }
     }
