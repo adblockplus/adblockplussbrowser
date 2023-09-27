@@ -48,7 +48,7 @@ data class AppInfo constructor(
     val platformVersion: String = Build.VERSION.SDK_INT.toString(),
     val locale: String = "en-US",
     val extensionName: String = addonName(),
-    val extensionVersion: String? = null,
+    val extensionVersion: String = "",
 )
 
 private const val ABP_ADDON_NAME = "adblockplussbrowser"
