@@ -47,8 +47,8 @@ data class AppInfo constructor(
     @ChecksSdkIntAtLeast
     val platformVersion: String = Build.VERSION.SDK_INT.toString(),
     val locale: String = "en-US",
-    val extensionName: String = addonName(),
-    val extensionVersion: String? = null,
+    val extensionName: String = BuildConfig.APPLICATION_ID,
+    val extensionVersion: String = BuildConfig.APPLICATION_VERSION,
 )
 
 private const val ABP_ADDON_NAME = "adblockplussbrowser"
@@ -60,7 +60,6 @@ fun Context.buildAppInfo(): AppInfo {
     val (app, ver) = applicationAndVersionForInstalledBrowser(this)
     return AppInfo(
         addonVersion = PackageHelper.version(packageManager, packageName),
-        extensionVersion = PackageHelper.version(packageManager, packageName),
         application = app,
         applicationVersion = ver
     )
