@@ -55,7 +55,7 @@ class TelemetryRepositoryTest {
     }
 
     @Test
-    fun `test update first ping in not set`() {
+    fun `test update first ping`() {
         runBlocking {
             val testFirstPing = 1692845403742
             dataStoreTelemetryRepository.updateFirstPingIfNotSet(testFirstPing)
