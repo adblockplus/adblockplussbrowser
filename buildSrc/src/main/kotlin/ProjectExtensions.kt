@@ -127,16 +127,6 @@ fun Project.createFlavorsConfig() {
                     "FLAVOR_${flavor.name.toUpperCase(Locale.ROOT)}",
                     "\"${flavor.name}\""
                 )
-                defaultConfig.buildConfigField(
-                    "String",
-                    "APPLICATION_VERSION",
-                    "\"${flavor.versionName}\""
-                )
-                defaultConfig.buildConfigField(
-                    "String",
-                    "APPLICATION_ID",
-                    "\"${flavor.applicationId}\""
-                )
             }
         }
     }
