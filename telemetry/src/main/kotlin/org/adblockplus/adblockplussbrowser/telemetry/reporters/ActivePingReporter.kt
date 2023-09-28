@@ -143,8 +143,8 @@ internal class ActivePingReporter @Inject constructor(
             application_version = appInfo.applicationVersion.orEmpty(),
             platform = appInfo.platform,
             platform_version = appInfo.platformVersion,
-            extension_name = appInfo.extensionName,
-            extension_version = appInfo.extensionVersion
+            extension_name = appInfo.addonName,
+            extension_version = appInfo.addonVersion.orEmpty()
         )
         return Result.success(
             Json.encodeToString(

@@ -35,18 +35,9 @@ android {
     defaultConfig {
         versionCode = versionCode()
         versionName = "0.0.0"
-        val langugesSet =
+        val languagesSet =
             setOf("en", "ar", "de", "el", "es", "fr", "hu", "it", "ja", "ko", "nl", "pl", "pt", "ru", "tr", "zh-rCN")
-        resourceConfigurations.addAll(langugesSet)
-
-        // Access the name of the currently selected flavor
-        val currentFlavor = productFlavors.first()
-        // Store applicationId and versionName in a custom property
-        extra["appInfo"] = mapOf(
-            "applicationId" to currentFlavor.applicationId,
-            "versionName" to currentFlavor.versionName
-        )
-        println("appInfo: ${extra["appInfo"]}")
+        resourceConfigurations.addAll(languagesSet)
     }
 
     buildFeatures {

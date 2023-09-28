@@ -30,25 +30,6 @@ android {
     buildFeatures {
         dataBinding = true
     }
-    defaultConfig {
-        // Access the custom property from the :app module
-        val appInfo = project(":app").property("appInfo") as Map<*, *>?
-
-        // Check if appInfo is not null
-        if (appInfo != null) {
-            buildConfigField("String", "APPLICATION_ID", "\"${appInfo["applicationId"]}\"")
-            buildConfigField("String", "APPLICATION_VERSION", "\"${appInfo["versionName"]}\"")
-        } else {
-            val errorMsg = "Error: Unable to retrieve app info from :app module. " +
-                    "\tPlease, add the following snippet into app/build.gradle.kts: " +
-                    "\textra[\"appInfo\"] = mapOf(\n" +
-                    "\t\t\"applicationId\" to applicationId,\n" +
-                    "\t\t\"versionName\" to versionName\n" +
-                    "\t)"
-
-            System.err.println(errorMsg)
-        }
-    }
 }
 
 createFlavorsConfig()
