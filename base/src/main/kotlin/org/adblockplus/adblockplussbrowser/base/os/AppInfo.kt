@@ -35,8 +35,6 @@ import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInterne
  * @param platform Name of the platform (Android).
  * @param platformVersion Version of the platform (Android SDK version).
  * @param locale Locale of the platform.
- * @param extensionName Name of the extension.
- * @param extensionVersion Version of the extension.
  */
 data class AppInfo constructor(
     val addonName: String = addonName(),
@@ -47,8 +45,6 @@ data class AppInfo constructor(
     @ChecksSdkIntAtLeast
     val platformVersion: String = Build.VERSION.SDK_INT.toString(),
     val locale: String = "en-US",
-    val extensionName: String = BuildConfig.APPLICATION_ID,
-    val extensionVersion: String = BuildConfig.APPLICATION_VERSION,
 )
 
 private const val ABP_ADDON_NAME = "adblockplussbrowser"
