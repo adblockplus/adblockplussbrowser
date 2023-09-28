@@ -67,8 +67,6 @@ import kotlin.time.toDuration
  *     "previous_last_ping": "2023-05-18T12:50:00Z",
  *     "last_ping_tag": "string",
  *     "aa_active": true,
- *     "addon_name": "string",
- *     "addon_version": "string",
  *     "application": "string",
  *     "application_version": "string",
  *     "platform": "string",
