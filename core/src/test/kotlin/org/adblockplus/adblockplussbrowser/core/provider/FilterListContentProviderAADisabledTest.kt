@@ -22,6 +22,7 @@ import android.content.Context
 import android.content.pm.ProviderInfo
 import android.net.Uri
 import androidx.test.core.app.ApplicationProvider
+import androidx.work.testing.WorkManagerTestInitHelper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,10 +31,6 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import dagger.hilt.android.testing.UninstallModules
 import dagger.hilt.components.SingletonComponent
-import java.text.SimpleDateFormat
-import java.util.Date
-import javax.inject.Singleton
-import kotlin.time.ExperimentalTime
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
@@ -63,6 +60,10 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowContentResolver
+import java.text.SimpleDateFormat
+import java.util.Date
+import javax.inject.Singleton
+import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
 @Config(
@@ -86,6 +87,7 @@ class FilterListContentProviderAADisabledTest {
 
     @Before
     fun setUp() {
+        WorkManagerTestInitHelper.initializeTestWorkManager(context)
         contentResolver = context.contentResolver
         val providerInfo = ProviderInfo()
         providerInfo.authority =

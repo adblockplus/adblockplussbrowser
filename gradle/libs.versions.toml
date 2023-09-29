@@ -1,11 +1,14 @@
 [versions]
-robolectric = "4.7.3"
-android-plugin-gradle = "7.0.4"
+desugar_jdk_libs = "2.0.3"
+robolectric = "4.10.3"
+android-plugin-gradle = "7.4.2"
 kotlin-plugin-gradle = "1.6.21"
 detekt = "1.18.1"
-plugin-versions = "0.39.0"
+plugin-versions = "0.42.0"
 junit = "4.13.2"
 jacoco-core = "0.8.7"
+jacoco-test-aggregation-coverage = "2.0.1"
+json-kotlin-gradle = "0.91"
 dots-indicator = "4.2"
 material = "1.3.0"
 okio = "3.0.0-alpha.6"
@@ -18,7 +21,7 @@ gms-google-services = "4.3.8"
 gms-oss-licenses-plugin = "0.10.4"
 gms-play-services-oss-licenses = "17.0.0"
 androidx-activity-ktx = "1.2.3"
-androidx-appcompat = "1.3.0"
+androidx-appcompat = "1.6.1"
 androidx-arch-core-testing = "2.1.0"
 androidx-core-ktx = "1.8.0"
 androidx-constraintlayout = "2.0.4"
@@ -35,10 +38,10 @@ androidx-test-ext-junit = "1.1.2"
 androidx-work = "2.7.0"
 commons-validator = "1.7"
 hilt = "2.39.1"
-kotlin-gradle-plugin = "1.5.31"
-kotlin-stdlib = "1.5.31"
-kotlinx-coroutines = "1.5.0"
-kotlinx-coroutines-test = "1.6.0"
+kotlin = "1.5.31"
+kotlinx-coroutines = "1.6.0"
+kotlinx-datetime = "0.2.1"
+kotlinx-serialization = "1.3.1" # compatible with Kotlin 1.5.31
 dialogs = "3.3.0"
 okhttp3 = "4.9.1"
 gildor-coroutines-okhttp = "1.0"
@@ -49,12 +52,14 @@ mockito = "4.0.0"
 xz = "1.9"
 
 [libraries]
+desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 android-plugin-gradle = { module = "com.android.tools.build:gradle", version.ref = "android-plugin-gradle" }
 kotlin-plugin-gradle = {module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin-plugin-gradle" }
 plugin-versions = { module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "plugin-versions" }
 junit = { module = "junit:junit", version.ref = "junit" }
 jacoco-core = { module = "org.jacoco:org.jacoco.core", version.ref = "jacoco-core" }
+json-kotlin-gradle= { module = "net.pwall.json:json-kotlin-gradle", version.ref = "json-kotlin-gradle" }
 dots-indicator = { module = "com.tbuonomo:dotsindicator", version.ref = "dots-indicator" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
@@ -83,6 +88,7 @@ androidx-hilt-common = { module = "androidx.hilt:hilt-common", version.ref = "an
 androidx-hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "androidx-hilt" }
 androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-runtime-testing = { module = "androidx.lifecycle:lifecycle-runtime-testing", version.ref = "androidx-lifecycle" }
 androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidx-navigation" }
 androidx-navigation-safeargs-plugin = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "androidx-navigation" }
 androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidx-navigation" }
@@ -95,11 +101,13 @@ hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
 hilt-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
 hilt-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hilt" }
-kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin-gradle-plugin" }
-kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin-stdlib" }
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines-test" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 dialogs-core = { module = "com.afollestad.material-dialogs:core", version.ref = "dialogs" }
 dialogs-input = { module = "com.afollestad.material-dialogs:input", version.ref = "dialogs" }
 protobuf-gradle-plugin = { module = "com.google.protobuf:protobuf-gradle-plugin", version.ref = "protobuf-gradle-plugin" }
@@ -117,3 +125,5 @@ xz = { module = "org.tukaani:xz", version.ref = "xz" }
 [plugins]
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 plugin-versions = { id = "com.github.ben-manes.versions", version.ref = "plugin-versions" }
+kotlinx-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+jacoco-test-aggregation-coverage = { id = "io.github.gmazzo.test.aggregation.coverage", version.ref = "jacoco-test-aggregation-coverage" }

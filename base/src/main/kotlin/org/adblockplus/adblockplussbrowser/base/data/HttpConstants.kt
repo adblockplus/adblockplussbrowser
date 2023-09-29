@@ -21,4 +21,6 @@ object HttpConstants {
     // https://stackoverflow.com/questions/5358109/what-is-the-average-size-of-an-http-request-response-header
     const val HTTP_ERROR_AVERAGE_HEADERS_SIZE = 800
     const val HTTP_ERROR_MAX_BODY_SIZE = 500
+
+    const val HTTP_HEADER_AUTHORIZATION: String = "Authorization"
 }

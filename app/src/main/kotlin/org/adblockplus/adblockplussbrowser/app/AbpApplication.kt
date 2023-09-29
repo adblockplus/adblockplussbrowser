@@ -20,37 +20,35 @@ package org.adblockplus.adblockplussbrowser.app
 import android.app.Application
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
-import dagger.hilt.EntryPoint
-import dagger.hilt.EntryPoints
-import dagger.hilt.InstallIn
+import androidx.work.WorkManager
 import dagger.hilt.android.HiltAndroidApp
-import dagger.hilt.components.SingletonComponent
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
+import org.adblockplus.adblockplussbrowser.telemetry.TelemetryService
 import timber.log.Timber
 import javax.inject.Inject
 
 @HiltAndroidApp
 class AbpApplication : Application(), Configuration.Provider {
 
-    @EntryPoint
-    @InstallIn(SingletonComponent::class)
-    interface HiltWorkerFactoryEntryPoint {
-        fun workerFactory(): HiltWorkerFactory
-    }
+    @Inject
+    lateinit var workerFactory: HiltWorkerFactory
 
     @Inject
     lateinit var subscriptionsManager: SubscriptionsManager
 
     override fun getWorkManagerConfiguration() =
         Configuration.Builder()
-            .setWorkerFactory(EntryPoints.get(this, HiltWorkerFactoryEntryPoint::class.java).workerFactory())
+            .setWorkerFactory(workerFactory)
             .build()
 
     override fun onCreate() {
         super.onCreate()
 
         subscriptionsManager.initialize()
-
+        TelemetryService().apply {
+            addActivePingReporter()
+            scheduleReporting(WorkManager.getInstance(this@AbpApplication))
+        }
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         } else {

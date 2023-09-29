@@ -90,6 +90,21 @@ Adblock Plus for Samsung Internet has been built following the Clean Architectur
 - settings module contains the Model for the user preferences, the repository, and data sources for user preferences and configurations;
 - core module listens to changes in settings and is responsible for download/update of the filters lists accordingly. It is also responsible for scheduling and manages automatic updates and provides a unified filters list file to the Samsung Internet browser. This update mechanism is described below.
 
+API Keys/Tokens
+---------------
+We read environment variables (production) and local config file (development), then merge them together and pass to build config.
+
+#### Development
+When developing locally, it is easier to use a local config file instead of environment variables.
+Local config file is `config.local.properties` and should be placed in the root of the ":telemetry" module. It is excluded from git and should not be committed.
+Any variable (with any prefix or suffix) from local config file will be added to build config and override the same variable from environment variables.
+
+#### Production (CI)
+When building in CI, we read environment variables and pass them to build config.
+All environment variables should start with `EYEO_` prefix are added to build config.
+For example:
+`EYEO_TELEMETRY_ENDPOINT_URL` will be added as `BuildConfig.EYEO_TELEMETRY_ENDPOINT_URL`.
+
 Subscriptions updates
 ---------------------
 

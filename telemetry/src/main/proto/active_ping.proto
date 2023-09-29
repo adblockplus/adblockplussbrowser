@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option java_package = "org.adblockplus.adblockplussbrowser.telemetry.data.proto";
+option java_multiple_files = true;
+
+message TelemetryData {
+  int64 first_ping = 1;
+  int64 last_ping = 2;
+  int64 previous_last_ping = 3;
+}
