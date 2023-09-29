@@ -30,9 +30,9 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
-import org.adblockplus.adblockplussbrowser.core.AppInfo
+import org.adblockplus.adblockplussbrowser.base.os.AppInfo
 import org.adblockplus.adblockplussbrowser.core.BuildConfig
-import org.adblockplus.adblockplussbrowser.core.buildAppInfo
+import org.adblockplus.adblockplussbrowser.base.os.buildAppInfo
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.data.DataStoreCoreRepository
 import org.adblockplus.adblockplussbrowser.core.data.datastore.ProtoCoreDataSerializer

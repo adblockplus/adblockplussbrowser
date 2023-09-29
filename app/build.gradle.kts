@@ -30,15 +30,15 @@ plugins {
 applyCommonConfig()
 
 android {
+    createFlavorsConfig()
+
     defaultConfig {
         versionCode = versionCode()
         versionName = "0.0.0"
-        val langugesSet =
+        val languagesSet =
             setOf("en", "ar", "de", "el", "es", "fr", "hu", "it", "ja", "ko", "nl", "pl", "pt", "ru", "tr", "zh-rCN")
-        resourceConfigurations.addAll(langugesSet)
+        resourceConfigurations.addAll(languagesSet)
     }
-
-    createFlavorsConfig()
 
     buildFeatures {
         dataBinding = true
@@ -49,6 +49,17 @@ android {
             storeFile = rootProject.file("debug.keystore")
         }
     }
+    compileOptions {
+        @Suppress("UnstableApiUsage")
+        // this is needed for `OffsetDateTime` java class that is used in json serialization
+        isCoreLibraryDesugaringEnabled = true
+    }
+
+}
+
+// recommended https://dagger.dev/hilt/gradle-setup.html#add-the-hilt-android-gradle-plugin
+kapt {
+    correctErrorTypes = true
 }
 
 dependencies {
@@ -59,6 +70,7 @@ dependencies {
     implementation(project(":onboarding"))
     implementation(project(":preferences"))
     implementation(project(":settings"))
+    implementation(project(":telemetry"))
 
     implementation(libs.material)
     implementation(libs.timber)
@@ -87,6 +99,8 @@ dependencies {
     implementation(libs.okhttp3.logging.interceptor)
     implementation(libs.gms.play.services.oss.licenses)
     implementation(libs.installreferrer)
+
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
 
     testImplementation(libs.junit)
     testImplementation(libs.robolectric)

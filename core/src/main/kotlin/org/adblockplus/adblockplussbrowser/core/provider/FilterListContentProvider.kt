@@ -47,20 +47,21 @@ import okio.source
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
+import org.adblockplus.adblockplussbrowser.base.os.CallingApp
 import org.adblockplus.adblockplussbrowser.base.os.PackageHelper
 import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants
 import org.adblockplus.adblockplussbrowser.base.yandex.YandexConstants
 import org.adblockplus.adblockplussbrowser.core.BuildConfig
-import org.adblockplus.adblockplussbrowser.core.CallingApp
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
-import org.adblockplus.adblockplussbrowser.core.extensions.currentData
-import org.adblockplus.adblockplussbrowser.core.extensions.currentSettings
+import org.adblockplus.adblockplussbrowser.core.data.currentData
 import org.adblockplus.adblockplussbrowser.core.extensions.toAllowRule
 import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker.Companion.BACKOFF_TIME_MINUTES
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker.Companion.USER_COUNTER_KEY_ONESHOT_WORK
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
+import org.adblockplus.adblockplussbrowser.settings.data.currentSettings
+import org.adblockplus.adblockplussbrowser.telemetry.TelemetryService
 import org.tukaani.xz.XZInputStream
 import timber.log.Timber
 import java.io.File
@@ -149,6 +150,13 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         Timber.d("USER COUNTER JOB SCHEDULED")
     }
 
+    private fun triggerActivePingReport() {
+        TelemetryService().apply {
+            addActivePingReporter()
+            scheduleReporting(workManager)
+        }
+    }
+
     override fun openFile(uri: Uri, mode: String): ParcelFileDescriptor? {
         // Set as Activated... If Samsung Internet is asking for the Filters, it is enabled
         val callingApp = getCallingApp(callingPackage, context?.packageManager)
@@ -162,6 +170,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
                 Timber.d("Skip user counting")
             }
         }
+        triggerActivePingReport()
         return try {
             Timber.i("Filter list requested: $uri - $mode...")
             analyticsProvider.logEvent(AnalyticsEvent.FILTER_LIST_REQUESTED)

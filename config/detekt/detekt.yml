@@ -7,3 +7,11 @@ comments:
 style:
   WildcardImport:
     excludes: ['**/build.gradle.kts']
+  # Generated files might have issues, so we exclude them from the max line length check.
+  MaxLineLength:
+    excludes: ['**/build/**']
+
+naming:
+  # Generated files might have issues, so we exclude them from the constructor parameter naming check.
+  ConstructorParameterNaming:
+    excludes: ['**/build/generated/source/json-schema/**']

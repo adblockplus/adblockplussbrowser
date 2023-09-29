@@ -21,10 +21,15 @@ import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
-import org.adblockplus.adblockplussbrowser.core.AppInfo
+import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
+import org.adblockplus.adblockplusbrowser.testutils.FakeSettingsRepository
+import org.adblockplus.adblockplussbrowser.base.os.AppInfo
+import org.adblockplus.adblockplussbrowser.base.os.CallingApp
 import org.adblockplus.adblockplussbrowser.core.BuildConfig
-import org.adblockplus.adblockplussbrowser.core.CallingApp
+import org.adblockplus.adblockplussbrowser.core.helpers.FakeCoreRepository
 import org.adblockplus.adblockplussbrowser.core.helpers.Fakes.HTTP_ERROR_MOCK_500
+import org.adblockplus.adblockplussbrowser.core.helpers.Fakes.INITIAL_COUNT
+import org.adblockplus.adblockplussbrowser.core.helpers.Fakes.INITIAL_TIMESTAMP
 import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter.Companion.HTTP_ERROR_LOG_HEADER_USER_COUNTER
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -40,11 +45,6 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
 import kotlin.time.ExperimentalTime
-import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
-import org.adblockplus.adblockplusbrowser.testutils.FakeSettingsRepository
-import org.adblockplus.adblockplussbrowser.core.helpers.FakeCoreRepository
-import org.adblockplus.adblockplussbrowser.core.helpers.Fakes.INITIAL_COUNT
-import org.adblockplus.adblockplussbrowser.core.helpers.Fakes.INITIAL_TIMESTAMP
 
 @ExperimentalTime
 class UserCountingTest {

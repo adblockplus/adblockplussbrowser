@@ -48,6 +48,9 @@ checks:lint:
   extends: .template:environment
   stage: checks
   script:
+    # This is a workaround for json-codegen-gradle plugin does not generate data classes
+    # despite it launches. It works only when launched from the `telemetry` directory.
+    - cd telemetry && ../gradlew :telemetry:generateJsonSchemaDataClasses lint && cd ..
     - ./gradlew lint
   artifacts:
     paths:
@@ -60,6 +63,9 @@ checks:detekt:
   extends: .template:environment
   stage: checks
   script:
+    # This is a workaround for json-codegen-gradle plugin does not generate data classes
+    # despite it launches. It works only when launched from the `telemetry` directory.
+    - cd telemetry && ../gradlew :telemetry:generateJsonSchemaDataClasses lint && cd ..
     - ./gradlew detekt
   artifacts:
     paths:
@@ -72,7 +78,10 @@ checks:unit-tests:
   extends: .template:environment
   stage: checks
   script:
-    - ./gradlew testWorldAbpDebugUnitTest jacocoTestReport jacocoTestCoverageVerification
+    # This is a workaround for json-codegen-gradle plugin does not generate data classes
+    # despite it launches. It works only when launched from the `telemetry` directory.
+    - cd telemetry && ../gradlew :telemetry:generateJsonSchemaDataClasses lint && cd ..
+    - ./gradlew testWorldAbpDebugUnitTest jacocoAggregateReport
   artifacts:
     when: always
     paths:
@@ -80,6 +89,7 @@ checks:unit-tests:
       - base/build/reports/
       - preferences/build/reports/
       - core/build/reports/
+      - telemetry/build/reports/
     reports:
       junit: ./**/build/test-results/**/TEST*.xml
   rules:
@@ -92,10 +102,11 @@ checks:coverage:
   script:
     - |
       python /opt/cover2cover.py \
-        build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml \
+        build/reports/jacoco/jacocoAggregatedReport/jacocoAggregatedReport.xml \
         $CI_PROJECT_DIR/base/src/main/kotlin \
         $CI_PROJECT_DIR/core/src/main/kotlin \
         $CI_PROJECT_DIR/preferences/src/main/kotlin \
+        $CI_PROJECT_DIR/telemetry/src/main/kotlin \
       > build/reports/cobertura.xml
   artifacts:
     when: always
@@ -122,6 +133,9 @@ build:
     - cat "$GOOGLE_SERVICES_CRYSTAL_DEBUG" > "$(pwd)/app/src/worldCrystal/debug/google-services.json"
     - mkdir "app/src/worldCrystal/release"
     - cat "$GOOGLE_SERVICES_CRYSTAL_RELEASE" > "$(pwd)/app/src/worldCrystal/release/google-services.json"
+    # This is a workaround for json-codegen-gradle plugin does not generate data classes
+    # despite it launches. It works only when launched from the `telemetry` directory.
+    - cd telemetry && ../gradlew :telemetry:generateJsonSchemaDataClasses lint && cd ..
     - ./gradlew assemble # build both debug and release for all flavors
   artifacts:
     paths:

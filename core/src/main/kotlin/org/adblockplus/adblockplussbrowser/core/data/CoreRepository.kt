@@ -18,6 +18,8 @@
 package org.adblockplus.adblockplussbrowser.core.data
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.single
+import kotlinx.coroutines.flow.take
 import org.adblockplus.adblockplussbrowser.core.data.model.CoreData
 import org.adblockplus.adblockplussbrowser.core.data.model.DownloadedSubscription
 import org.adblockplus.adblockplussbrowser.core.data.model.SavedState
@@ -46,3 +48,5 @@ internal interface CoreRepository {
     }
 }
 
+internal suspend fun CoreRepository.currentData(): CoreData =
+    this.data.take(1).single()

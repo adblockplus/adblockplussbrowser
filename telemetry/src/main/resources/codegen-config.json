@@ -1,0 +1,19 @@
+{
+  "title": "Configuration for generating data classes from Web Extention schema",
+  "description": "The schema is currently published here https://gitlab.com/eyeo/data/engineering/data-infrastructure/-/blob/main/projects/eyeo-data-eyeometry/metadata/stage/schema/webextension_activeping/1.json",
+  "packageName": "org.adblockplus.adblockplussbrowser.telemetry.schema",
+  "version": "0.1",
+  "classNames": {
+    "https://schemaregistry.data.eyeo.it/topic/webextension_activeping/1": "ActivePingSchema"
+  },
+  "annotations": {
+    "classes": {
+      "kotlinx.serialization.Serializable": null
+    }
+  },
+  "customClasses": {
+    "format": {
+      "date-time": "kotlinx.datetime.Instant"
+    }
+  }
+}
