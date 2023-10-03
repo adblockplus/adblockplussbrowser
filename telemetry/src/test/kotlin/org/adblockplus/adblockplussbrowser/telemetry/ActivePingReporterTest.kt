@@ -30,6 +30,7 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import org.adblockplus.adblockplusbrowser.testutils.FakeSettingsRepository
 import org.adblockplus.adblockplussbrowser.base.os.AppInfo
+import org.adblockplus.adblockplussbrowser.telemetry.PingConstants.firstPingTime
 import org.adblockplus.adblockplussbrowser.telemetry.data.DataStoreTelemetryRepository
 import org.adblockplus.adblockplussbrowser.telemetry.data.datastore.TelemetryDataSerializer
 import org.adblockplus.adblockplussbrowser.telemetry.data.proto.TelemetryData
@@ -57,7 +58,7 @@ data class Payload(
 
 @Serializable
 data class ActivePing(
-    var payload: Payload
+    val payload: Payload
 )
 
 @RunWith(RobolectricTestRunner::class)
@@ -77,8 +78,7 @@ class ActivePingReporterTest {
     @Before
     fun setUp() {
         runBlocking {
-            val testFirstPing = 1692845403742
-            dataStoreTelemetryRepository.updateFirstPingIfNotSet(testFirstPing)
+            dataStoreTelemetryRepository.updateFirstPingIfNotSet(firstPingTime)
         }
         activePingReporter = ActivePingReporter(
             dataStoreTelemetryRepository,
