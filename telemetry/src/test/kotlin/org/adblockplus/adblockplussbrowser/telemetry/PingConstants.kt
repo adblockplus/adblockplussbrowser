@@ -18,6 +18,6 @@
 package org.adblockplus.adblockplussbrowser.telemetry
 
 object PingConstants {
-    const val firstPingTime = 1692845403742 // corresponds to 2023-08-24T02:50:03.742Z
-    const val secondPingTime = 1692845403743 // corresponds to 2023-08-24T02:50:03.743Z
+    const val FIRST_PING_TIME: Long = 1692845403742 // corresponds to 2023-08-24T02:50:03.742Z
+    const val SECOND_PING_TIME: Long = 1692845403743 // corresponds to 2023-08-24T02:50:03.743Z
 }

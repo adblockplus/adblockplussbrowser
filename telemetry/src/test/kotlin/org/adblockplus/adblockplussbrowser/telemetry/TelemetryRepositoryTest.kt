@@ -23,8 +23,8 @@ import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.dataStoreFile
 import androidx.test.core.app.ApplicationProvider
 import kotlinx.coroutines.runBlocking
-import org.adblockplus.adblockplussbrowser.telemetry.PingConstants.firstPingTime
-import org.adblockplus.adblockplussbrowser.telemetry.PingConstants.secondPingTime
+import org.adblockplus.adblockplussbrowser.telemetry.PingConstants.FIRST_PING_TIME
+import org.adblockplus.adblockplussbrowser.telemetry.PingConstants.SECOND_PING_TIME
 import org.adblockplus.adblockplussbrowser.telemetry.data.DataStoreTelemetryRepository
 import org.adblockplus.adblockplussbrowser.telemetry.data.datastore.TelemetryDataSerializer
 import org.adblockplus.adblockplussbrowser.telemetry.data.proto.TelemetryData
@@ -59,18 +59,18 @@ class TelemetryRepositoryTest {
     @Test
     fun `test update first ping`() {
         runBlocking {
-            dataStoreTelemetryRepository.updateFirstPingIfNotSet(firstPingTime)
-            assertEquals(firstPingTime, dataStoreTelemetryRepository.currentData().firstPing)
+            dataStoreTelemetryRepository.updateFirstPingIfNotSet(FIRST_PING_TIME)
+            assertEquals(FIRST_PING_TIME, dataStoreTelemetryRepository.currentData().firstPing)
         }
     }
 
     @Test
     fun `test update and shift lastPing to previousLast`() {
         runBlocking {
-            dataStoreTelemetryRepository.updateAndShiftLastPingToPreviousLast(firstPingTime)
-            dataStoreTelemetryRepository.updateAndShiftLastPingToPreviousLast(secondPingTime)
-            assertEquals(secondPingTime, dataStoreTelemetryRepository.currentData().lastPing)
-            assertEquals(firstPingTime, dataStoreTelemetryRepository.currentData().previousLastPing)
+            dataStoreTelemetryRepository.updateAndShiftLastPingToPreviousLast(FIRST_PING_TIME)
+            dataStoreTelemetryRepository.updateAndShiftLastPingToPreviousLast(SECOND_PING_TIME)
+            assertEquals(SECOND_PING_TIME, dataStoreTelemetryRepository.currentData().lastPing)
+            assertEquals(FIRST_PING_TIME, dataStoreTelemetryRepository.currentData().previousLastPing)
         }
     }
 }
