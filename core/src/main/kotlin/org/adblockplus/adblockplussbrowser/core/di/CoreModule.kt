@@ -30,6 +30,7 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
+import org.adblockplus.adblockplussbrowser.base.data.HttpConstants
 import org.adblockplus.adblockplussbrowser.base.os.AppInfo
 import org.adblockplus.adblockplussbrowser.core.BuildConfig
 import org.adblockplus.adblockplussbrowser.base.os.buildAppInfo
@@ -59,6 +60,7 @@ internal object CoreModule {
     @Singleton
     fun provideOkHttpClientLogger() =
         HttpLoggingInterceptor().apply {
+            redactHeader(HttpConstants.HTTP_HEADER_AUTHORIZATION)
             if (BuildConfig.DEBUG) {
                 level = HttpLoggingInterceptor.Level.HEADERS // The default is Level.NONE
             }
