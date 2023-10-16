@@ -96,7 +96,8 @@ internal class ActivePingReporter @Inject constructor(
     companion object {
         val configuration: HttpReporter.Configuration
             get() = HttpReporter.Configuration(
-                endpointUrl = BuildConfig.EYEO_TELEMETRY_ACTIVEPING_URL,
+                endpointUrl = if (BuildConfig.DEBUG) BuildConfig.EYEO_TELEMETRY_ACTIVEPING_URL_DEBUG
+                else BuildConfig.EYEO_TELEMETRY_ACTIVEPING_URL,
                 repeatable = true,
                 backOffDelay = 2.toDuration(MINUTES),
                 repeatInterval = if (BuildConfig.DEBUG)

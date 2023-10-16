@@ -62,7 +62,10 @@ internal class HttpTelemetry(
             val request = Request.Builder().url(url)
                 .addHeader(
                     HTTP_HEADER_AUTHORIZATION,
-                    "Bearer ".plus(BuildConfig.EYEO_TELEMETRY_ACTIVEPING_AUTH_TOKEN)
+                    "Bearer ".plus(
+                        if (BuildConfig.DEBUG) BuildConfig.EYEO_TELEMETRY_ACTIVEPING_AUTH_TOKEN_DEBUG
+                        else BuildConfig.EYEO_TELEMETRY_ACTIVEPING_AUTH_TOKEN
+                    )
                 )
                 .post(requestBody).build()
             okHttpClient.newCall(request).execute().use { response ->
