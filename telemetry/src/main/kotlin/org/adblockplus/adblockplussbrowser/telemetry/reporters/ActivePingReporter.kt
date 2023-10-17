@@ -132,11 +132,13 @@ internal class ActivePingReporter @Inject constructor(
         val acceptableAdsEnabled = settings.currentSettings().acceptableAdsEnabled
         Timber.d("AA enabled status is `%b`", acceptableAdsEnabled)
 
+        // if this is the first request, we are not sending the last ping tag
+        val lastPingTag = if (savedFirstPing != null) UUID.randomUUID().toString() else null
         val activePingSchema = ActivePingSchema(
             first_ping = savedFirstPing,
             last_ping = savedLastPing,
             previous_last_ping = savedPrevLastPing,
-            last_ping_tag = UUID.randomUUID().toString(),
+            last_ping_tag = lastPingTag,
             aa_active = acceptableAdsEnabled,
             application = appInfo.application.orEmpty(),
             application_version = appInfo.applicationVersion.orEmpty(),
