@@ -4,6 +4,10 @@ All notable changes to Crystal Adblock for Samsung will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.6.4] - 2023-10-02
+### Added
+- Eyeometry user counting for content blockers
+
 ## [2.6.3] - 2023-08-22
 ### Changed
 - Target SDK version is set to Android 13
