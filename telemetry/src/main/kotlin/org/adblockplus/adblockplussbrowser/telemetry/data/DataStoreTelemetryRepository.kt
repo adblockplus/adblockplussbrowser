@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.flow.take
 import org.adblockplus.adblockplussbrowser.telemetry.data.proto.TelemetryData
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -38,6 +39,7 @@ internal class DataStoreTelemetryRepository @Inject constructor(
     override suspend fun currentData(): TelemetryData = data.take(1).single()
 
     override suspend fun updateFirstPingIfNotSet(firstPing: Long) {
+        Timber.d("updateFirstPingIfNotSet %s", firstPing)
         if (currentData().firstPing != 0L) return
         telemetryDataStore.updateData { data ->
             data.toBuilder().setFirstPing(firstPing).build()

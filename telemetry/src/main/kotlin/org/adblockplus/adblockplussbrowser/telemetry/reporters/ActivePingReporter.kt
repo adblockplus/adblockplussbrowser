@@ -99,9 +99,9 @@ internal class ActivePingReporter @Inject constructor(
                 endpointUrl = if (BuildConfig.DEBUG) BuildConfig.EYEO_TELEMETRY_ACTIVEPING_URL_DEBUG
                 else BuildConfig.EYEO_TELEMETRY_ACTIVEPING_URL,
                 repeatable = true,
-                backOffDelay = 2.toDuration(MINUTES),
+                backOffDelay = 1.toDuration(MINUTES),
                 repeatInterval = if (BuildConfig.DEBUG)
-                    15.toDuration(MINUTES)
+                    1.toDuration(MINUTES)
                 else 12.toDuration(HOURS) // required by Data team
             )
     }
@@ -120,6 +120,12 @@ internal class ActivePingReporter @Inject constructor(
         val data = repository.currentData()
 
         fun Long.takeIfNotZero() = takeIf { it != 0L }
+
+        val firstPing = data.firstPing
+        Timber.d("firstPing %s",firstPing)
+
+        val firstPingProcessed = firstPing.takeIfNotZero()
+        Timber.d("firstPingProcessed %s", firstPingProcessed)
 
         val savedFirstPing = data.firstPing.takeIfNotZero()?.toOffsetDateTime()
         val savedLastPing = data.lastPing.takeIfNotZero()?.toOffsetDateTime()
@@ -176,7 +182,8 @@ internal class ActivePingReporter @Inject constructor(
         response.getString("token").let {
             if (it.isNullOrBlank()) return Result.failure(IOException("The token is empty"))
             Timber.d("Response `token` (date): %s", it)
-            val time = it.toOffsetDateTime().epochSeconds
+            val time = it.toOffsetDateTime().toEpochMilliseconds()
+            Timber.d("Response `token` (date) time to Epoch Mill %s", time)
             with(repository) {
                 updateFirstPingIfNotSet(time)
                 updateAndShiftLastPingToPreviousLast(time)
