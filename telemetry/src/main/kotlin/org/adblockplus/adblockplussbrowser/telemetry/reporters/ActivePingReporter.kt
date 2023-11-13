@@ -176,7 +176,7 @@ internal class ActivePingReporter @Inject constructor(
         response.getString("token").let {
             if (it.isNullOrBlank()) return Result.failure(IOException("The token is empty"))
             Timber.d("Response `token` (date): %s", it)
-            val time = it.toOffsetDateTime().epochSeconds
+            val time = it.toOffsetDateTime().toEpochMilliseconds()
             with(repository) {
                 updateFirstPingIfNotSet(time)
                 updateAndShiftLastPingToPreviousLast(time)
