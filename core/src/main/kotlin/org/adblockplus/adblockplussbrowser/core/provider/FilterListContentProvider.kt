@@ -150,14 +150,8 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         Timber.d("USER COUNTER JOB SCHEDULED")
     }
 
-    private fun triggerActivePingReport() {
-        TelemetryService().apply {
-            addActivePingReporter()
-            scheduleReporting(workManager)
-        }
-    }
-
     override fun openFile(uri: Uri, mode: String): ParcelFileDescriptor? {
+        Timber.i("Filter list requested: $uri - $mode...")
         // Set as Activated... If Samsung Internet is asking for the Filters, it is enabled
         val callingApp = getCallingApp(callingPackage, context?.packageManager)
         launch {
@@ -170,9 +164,11 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
                 Timber.d("Skip user counting")
             }
         }
-        triggerActivePingReport()
         return try {
-            Timber.i("Filter list requested: $uri - $mode...")
+            TelemetryService().apply {
+                addActivePingReporter()
+                scheduleReporting(workManager)
+            }
             analyticsProvider.logEvent(AnalyticsEvent.FILTER_LIST_REQUESTED)
             val file = getFilterFile()
             Timber.d("Open File file size ${file.length()}")

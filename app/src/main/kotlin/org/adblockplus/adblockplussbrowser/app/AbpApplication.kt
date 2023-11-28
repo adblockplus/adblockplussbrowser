@@ -22,6 +22,7 @@ import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import androidx.work.WorkManager
 import dagger.hilt.android.HiltAndroidApp
+import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.telemetry.TelemetryService
 import timber.log.Timber
@@ -29,6 +30,9 @@ import javax.inject.Inject
 
 @HiltAndroidApp
 class AbpApplication : Application(), Configuration.Provider {
+
+    @Inject
+    lateinit var analyticsProvider: AnalyticsProvider
 
     @Inject
     lateinit var workerFactory: HiltWorkerFactory
@@ -45,10 +49,16 @@ class AbpApplication : Application(), Configuration.Provider {
         super.onCreate()
 
         subscriptionsManager.initialize()
-        TelemetryService().apply {
-            addActivePingReporter()
-            scheduleReporting(WorkManager.getInstance(this@AbpApplication))
+        try {
+            TelemetryService().apply {
+                addActivePingReporter()
+                scheduleReporting(WorkManager.getInstance(this@AbpApplication))
+            }
+        } catch (ex: IllegalStateException) {
+            Timber.e(ex)
+            analyticsProvider.logException(ex)
         }
+
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         } else {
