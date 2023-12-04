@@ -19,7 +19,7 @@ object Config {
     object Versions {
         const val ABP = "2.5.4"
 
-        const val ADBLOCK = "3.4.4"
+        const val ADBLOCK = "3.4.5"
 
         const val CRYSTAL = "2.6.5"
     }
