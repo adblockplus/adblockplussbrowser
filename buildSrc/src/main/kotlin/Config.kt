@@ -21,7 +21,7 @@ object Config {
 
         const val ADBLOCK = "3.4.5"
 
-        const val CRYSTAL = "2.6.5"
+        const val CRYSTAL = "2.6.6"
     }
 
     const val COMPILE_SDK_VERSION = 33
