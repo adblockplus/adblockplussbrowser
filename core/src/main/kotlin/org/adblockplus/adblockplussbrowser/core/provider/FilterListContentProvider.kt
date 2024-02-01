@@ -23,9 +23,11 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.pm.PackageManager
 import android.database.Cursor
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.ParcelFileDescriptor
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.work.BackoffPolicy
 import androidx.work.Constraints
 import androidx.work.ExistingWorkPolicy
@@ -46,6 +48,8 @@ import okio.sink
 import okio.source
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
+import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
+import org.adblockplus.adblockplussbrowser.base.data.SubscriptionsConstants
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.base.os.CallingApp
 import org.adblockplus.adblockplussbrowser.base.os.PackageHelper
@@ -83,6 +87,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         fun getSettingsRepository(): SettingsRepository
         fun getActivationPreferences(): ActivationPreferences
         fun getAnalyticsProvider(): AnalyticsProvider
+        fun getSubscriptionManager(): SubscriptionsManager
     }
 
     private val entrypoint: FilterListContentProviderEntryPoint by lazy {
@@ -105,6 +110,10 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
 
     val analyticsProvider: AnalyticsProvider by lazy {
         entrypoint.getAnalyticsProvider()
+    }
+
+    val subscriptionsManager: SubscriptionsManager by lazy {
+        entrypoint.getSubscriptionManager()
     }
 
     private val workManager: WorkManager by lazy {
@@ -151,10 +160,19 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
     }
 
     override fun openFile(uri: Uri, mode: String): ParcelFileDescriptor? {
+        val UNMETERED_REFRESH_INTERVAL = Duration.hours(SubscriptionsConstants.UNMETERED_REFRESH_INTERVAL_HOURS)
+        val METERED_REFRESH_INTERVAL = Duration.days(SubscriptionsConstants.METERED_REFRESH_INTERVAL_DAYS)
+
+        val connectivityManager =
+            context?.let { ContextCompat.getSystemService(it, ConnectivityManager::class.java) }
         Timber.i("Filter list requested: $uri - $mode...")
         // Set as Activated... If Samsung Internet is asking for the Filters, it is enabled
         val callingApp = getCallingApp(callingPackage, context?.packageManager)
         launch {
+            val isMetered = connectivityManager?.isActiveNetworkMetered ?: false
+            val elapsed = Duration.milliseconds(System.currentTimeMillis()) - Duration.milliseconds(coreRepository.currentData().lastUpdated)
+            val interval = if (isMetered) METERED_REFRESH_INTERVAL else UNMETERED_REFRESH_INTERVAL
+            if (elapsed > interval) subscriptionsManager.scheduleImmediate(force = true)
             activationPreferences.updateLastFilterRequest(System.currentTimeMillis())
             val savedLastUserCountingResponse = coreRepository.currentData().lastUserCountingResponse
             if (!isUserCountedInCurrentCycle(savedLastUserCountingResponse)) {

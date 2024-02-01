@@ -18,9 +18,7 @@
 package org.adblockplus.adblockplussbrowser.core
 
 import android.content.Context
-import androidx.work.BackoffPolicy
 import androidx.work.Constraints
-import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
@@ -44,19 +42,15 @@ import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 import org.adblockplus.adblockplussbrowser.base.data.model.SubscriptionUpdateStatus
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
-import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
 import org.adblockplus.adblockplussbrowser.core.data.currentData
-import org.adblockplus.adblockplussbrowser.settings.data.currentSettings
-import org.adblockplus.adblockplussbrowser.core.extensions.periodicWorkRequestBuilder
-import org.adblockplus.adblockplussbrowser.core.extensions.setBackoffCriteria
+import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
 import org.adblockplus.adblockplussbrowser.core.extensions.setBackoffTime
-import org.adblockplus.adblockplussbrowser.core.extensions.setInitialDelay
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
 import org.adblockplus.adblockplussbrowser.core.work.UpdateSubscriptionsWorker
 import org.adblockplus.adblockplussbrowser.core.work.UpdateSubscriptionsWorker.Companion.UPDATE_KEY_FORCE_REFRESH
 import org.adblockplus.adblockplussbrowser.core.work.UpdateSubscriptionsWorker.Companion.UPDATE_KEY_ONESHOT_WORK
-import org.adblockplus.adblockplussbrowser.core.work.UpdateSubscriptionsWorker.Companion.UPDATE_KEY_PERIODIC_WORK
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
+import org.adblockplus.adblockplussbrowser.settings.data.currentSettings
 import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
 import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig
 import timber.log.Timber
@@ -123,7 +117,6 @@ class CoreSubscriptionsManager(
             if (!coreData.configured) {
                 Timber.d("Initializing CORE: Scheduling updates")
                 scheduleImmediate(force = true)
-                schedule(currentSettings.updateConfig)
                 coreRepository.setConfigured()
             } else {
                 Timber.d("CORE already initialized")
@@ -137,9 +130,6 @@ class CoreSubscriptionsManager(
 
             if (currentSettings.changed(settings)) {
                 scheduleImmediate()
-            }
-            if (currentSettings.changedUpdateConfig(settings)) {
-                schedule(settings.updateConfig)
             }
             currentSettings = settings
         }.launchIn(this)
@@ -162,26 +152,6 @@ class CoreSubscriptionsManager(
         workManager.enqueueUniqueWork(UPDATE_KEY_ONESHOT_WORK, ExistingWorkPolicy.REPLACE, request)
     }
 
-    private fun schedule(updateConfig: UpdateConfig) {
-        Timber.d("Scheduling periodic worker for: $updateConfig")
-        // This method is not really using new APIs, the linter can not figure out setBackoffCriteria(...)
-        // and setInitialDelay(...) to be 2 extension methods instead of the generic androidx ones.
-        @Suppress("NewApi")
-        val requestSubs = periodicWorkRequestBuilder<UpdateSubscriptionsWorker>(UPDATE_INTERVAL, FLEX_UPDATE_INTERVAL)
-            .setConstraints(Constraints.Builder().setRequiredNetworkType(updateConfig.toNetworkType()).build())
-            .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, Duration.minutes(1))
-            .addTag(UPDATE_KEY_PERIODIC_WORK)
-            .setInitialDelay(INITIAL_UPDATE_DELAY)
-            .build()
-
-        // REPLACE old enqueued works
-        workManager.enqueueUniquePeriodicWork(
-            UPDATE_KEY_PERIODIC_WORK,
-            ExistingPeriodicWorkPolicy.REPLACE, requestSubs
-        )
-        Timber.d("Scheduled %s", UPDATE_KEY_PERIODIC_WORK)
-    }
-
     override suspend fun validateSubscription(subscription: Subscription): Boolean {
         return downloader.validate(subscription)
     }
@@ -189,9 +159,6 @@ class CoreSubscriptionsManager(
     override suspend fun updateStatus(status: SubscriptionUpdateStatus) {
         _status.value = status
     }
-
-    private fun UpdateConfig.toNetworkType(): NetworkType =
-        if (this == UpdateConfig.WIFI_ONLY) NetworkType.UNMETERED else NetworkType.CONNECTED
 
     private fun Settings.changed(other: Settings): Boolean {
         return this.adblockEnabled != other.adblockEnabled ||
@@ -202,9 +169,6 @@ class CoreSubscriptionsManager(
                 this.activeOtherSubscriptions.changed(other.activeOtherSubscriptions)
     }
 
-    private fun Settings.changedUpdateConfig(other: Settings): Boolean =
-        this.updateConfig != other.updateConfig
-
     private fun List<Subscription>.changed(other: List<Subscription>): Boolean {
         val list = this.map { it.url }
         val otherList = other.map { it.url }
@@ -213,9 +177,6 @@ class CoreSubscriptionsManager(
     }
 
     private companion object {
-        private val UPDATE_INTERVAL = Duration.hours(6)
-        private val FLEX_UPDATE_INTERVAL = Duration.minutes(30)
-        private val INITIAL_UPDATE_DELAY = Duration.hours(6)
         private const val SETTINGS_CHANGES_DELAY: Long = 500
     }
 }
