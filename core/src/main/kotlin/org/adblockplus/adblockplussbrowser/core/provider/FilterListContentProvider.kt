@@ -65,6 +65,7 @@ import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker.Co
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker.Companion.USER_COUNTER_KEY_ONESHOT_WORK
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.currentSettings
+import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig
 import org.adblockplus.adblockplussbrowser.telemetry.TelemetryService
 import org.tukaani.xz.XZInputStream
 import timber.log.Timber
@@ -75,6 +76,9 @@ import java.text.ParseException
 import java.util.Date
 import java.util.concurrent.TimeUnit
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.days
+import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
@@ -160,19 +164,11 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
     }
 
     override fun openFile(uri: Uri, mode: String): ParcelFileDescriptor? {
-        val UNMETERED_REFRESH_INTERVAL = Duration.hours(SubscriptionsConstants.UNMETERED_REFRESH_INTERVAL_HOURS)
-        val METERED_REFRESH_INTERVAL = Duration.days(SubscriptionsConstants.METERED_REFRESH_INTERVAL_DAYS)
-
-        val connectivityManager =
-            context?.let { ContextCompat.getSystemService(it, ConnectivityManager::class.java) }
         Timber.i("Filter list requested: $uri - $mode...")
         // Set as Activated... If Samsung Internet is asking for the Filters, it is enabled
         val callingApp = getCallingApp(callingPackage, context?.packageManager)
         launch {
-            val isMetered = connectivityManager?.isActiveNetworkMetered ?: false
-            val elapsed = Duration.milliseconds(System.currentTimeMillis()) - Duration.milliseconds(coreRepository.currentData().lastUpdated)
-            val interval = if (isMetered) METERED_REFRESH_INTERVAL else UNMETERED_REFRESH_INTERVAL
-            if (elapsed > interval) subscriptionsManager.scheduleImmediate(force = true)
+            updateFiltersIfNeeded()
             activationPreferences.updateLastFilterRequest(System.currentTimeMillis())
             val savedLastUserCountingResponse = coreRepository.currentData().lastUserCountingResponse
             if (!isUserCountedInCurrentCycle(savedLastUserCountingResponse)) {
@@ -197,6 +193,19 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             analyticsProvider.logException(ex)
             null
         }
+    }
+
+    private suspend fun updateFiltersIfNeeded() {
+        val connectivityManager =
+            context?.let { ContextCompat.getSystemService(it, ConnectivityManager::class.java) }
+        val isMetered = connectivityManager?.isActiveNetworkMetered ?: false
+        val elapsed = System.currentTimeMillis().milliseconds - coreRepository.currentData().lastUpdated.milliseconds
+        val interval =
+            if (isMetered && settingsRepository.currentSettings().updateConfig == UpdateConfig.WIFI_ONLY)
+                SubscriptionsConstants.METERED_REFRESH_INTERVAL_DAYS.days
+            else
+                SubscriptionsConstants.UNMETERED_REFRESH_INTERVAL_HOURS.hours
+        if (elapsed > interval) subscriptionsManager.scheduleImmediate(force = true)
     }
 
     private fun getCallingApp(callingPackageName: String?, packageManager: PackageManager?): CallingApp {
