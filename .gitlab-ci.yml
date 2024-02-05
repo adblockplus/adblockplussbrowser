@@ -235,53 +235,6 @@ sign_apks:
         cat platform_version-${PLATFORM_VERSION}.log
       done
 
-abp_regression:
-  extends: .template:automation
-  needs:
-    - build # we can run this on debug apk
-  variables:
-    APK_NAME: "app-world-abp-debug.apk"
-    CURL_APK_NAME: 'name=$APK_NAME'
-    CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldAbp/debug/$APK_NAME"'
-    PLATFORM_VERSIONS: "10"
-    GRADLE_TASK: "regression"
-  rules:
-    - if: '$FORCE_REGRESSION == "true"'
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"'
-    - if: '$CI_PIPELINE_SOURCE == "schedule"'
-
-ab_regression:
-  extends: .template:automation
-  needs:
-    - build
-    - abp_regression # we can run this on debug apk
-  variables:
-    APK_NAME: "app-world-adblock-debug.apk"
-    CURL_APK_NAME: 'name=$APK_NAME'
-    CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldAdblock/debug/$APK_NAME"'
-    PLATFORM_VERSIONS: "10"
-    GRADLE_TASK: "regression"
-  rules:
-    - if: '$FORCE_REGRESSION == "true"'
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"'
-    - if: '$CI_PIPELINE_SOURCE == "schedule"'
-
-crystal_regression:
-  extends: .template:automation
-  needs:
-    - build
-    - ab_regression # we can run this on debug apk
-  variables:
-    APK_NAME: "app-world-crystal-debug.apk"
-    CURL_APK_NAME: 'name=$APK_NAME'
-    CURL_PAYLOAD: 'payload=@"app/build/outputs/apk/worldCrystal/debug/$APK_NAME"'
-    PLATFORM_VERSIONS: "10"
-    GRADLE_TASK: "regression"
-  rules:
-    - if: '$FORCE_REGRESSION == "true"'
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"'
-    - if: '$CI_PIPELINE_SOURCE == "schedule"'
-
 functional_tests:
   extends: .template:automation
   needs:
