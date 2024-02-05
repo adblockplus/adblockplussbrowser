@@ -111,15 +111,6 @@ Subscriptions updates
 #### Manual update/force refresh update now
 When the user is using the _Update now_ feature, **all** the _Subscriptions_ are downloaded, even if the user already has a fresh version of any of them.
 
-#### Periodic updates (automatic updates)
-The `UpdateSubscriptionsWorker` is scheduled to run at "no less than 6 hours" intervals. The system can delay the worker based on Connectivity criteria, battery status, etc.
-
-When doing a periodic update, each active _Subscription_ is checked for expiration based on the current connection type:
-- on **unmetered** connections (Wifi) if the last successful download occurred more than 24 hours ago or the file doesn't exist on the filesystem, it is considered **expired**;
-- on **metered** connections (3g/4g/5g) if the last successful download occurred more than 3 days ago or the file doesn't exist on the filesystem, it is considered **expired**;
-- if the _Subscription_ is expired a new version is downloaded (respecting `If-Modified-Since` and `If-None-Match` headers);
-- if the _Subscription_ is not expired and the file still exists then the current file is used.
-
 #### Configurations changes
 When the user adds or removes a _Subscription_, adds/removes domains to the allow/block lists, or changes the Acceptable Ads setting, a new `UpdateSubscriptionsWorker` is fired to run immediately.
 Configuration changes are debounced by 500ms, so if the user quickly changes more than one setting, they will be combined in just one worker. Otherwise, a new worker will be enqueued for each setting change.
@@ -132,7 +123,7 @@ If **Always** is set, they will be updated if the last update occurred 24 hours 
 ### No configuration changed since the last update
 The update is skipped if all of the following criteria are met:
 - there are no changes on Active Subscriptions, allow/block lists, and Acceptable Ads status;
-- it is not a periodic or manual update.
+- it is not a manual update.
 
 ### Adding/removing domains from the allowlist
 If the only change is on the allow/block lists, we simply check if the filters file for every active subscription is still present on the filesystem. If a file still exists - it is used, no matter how long ago it was last fetched. If a file is missing - the subscription is downloaded again.
