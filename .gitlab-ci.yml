@@ -239,7 +239,6 @@ abp_regression:
   extends: .template:automation
   needs:
     - build # we can run this on debug apk
-    - smoke_tests
   variables:
     APK_NAME: "app-world-abp-debug.apk"
     CURL_APK_NAME: 'name=$APK_NAME'
