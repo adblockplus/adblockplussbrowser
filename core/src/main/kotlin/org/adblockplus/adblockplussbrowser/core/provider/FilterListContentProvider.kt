@@ -168,7 +168,6 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         // Set as Activated... If Samsung Internet is asking for the Filters, it is enabled
         val callingApp = getCallingApp(callingPackage, context?.packageManager)
         launch {
-            updateFiltersIfNeeded()
             activationPreferences.updateLastFilterRequest(System.currentTimeMillis())
             val savedLastUserCountingResponse = coreRepository.currentData().lastUserCountingResponse
             if (!isUserCountedInCurrentCycle(savedLastUserCountingResponse)) {
@@ -177,6 +176,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             } else {
                 Timber.d("Skip user counting")
             }
+            updateFiltersIfNeeded()
         }
         return try {
             TelemetryService().apply {
@@ -206,6 +206,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             else
                 SubscriptionsConstants.UNMETERED_REFRESH_INTERVAL_HOURS.hours
         if (elapsed > interval) subscriptionsManager.scheduleImmediate(force = true)
+        else Timber.i("Subscription update is not needed")
     }
 
     private fun getCallingApp(callingPackageName: String?, packageManager: PackageManager?): CallingApp {
