@@ -18,9 +18,7 @@
 package org.adblockplus.adblockplussbrowser.core.extensions
 
 import androidx.work.BackoffPolicy
-import androidx.work.ListenableWorker
 import androidx.work.OneTimeWorkRequest
-import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkRequest
 import java.util.concurrent.TimeUnit
 import kotlin.time.Duration
@@ -33,4 +31,3 @@ internal fun WorkRequest.Builder<OneTimeWorkRequest.Builder, OneTimeWorkRequest>
     this.setBackoffCriteria(BackoffPolicy.EXPONENTIAL, duration.inWholeSeconds, TimeUnit.SECONDS)
     return this
 }
-
