@@ -87,7 +87,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
 
     private var totalSteps: Int = 0
     private var currentStep: Int = 0
-    lateinit var localFileSubscriptions: List<Subscription>
+    private lateinit var localFileSubscriptions: List<Subscription>
 
     private val settings by lazy {
         runBlocking {
@@ -115,7 +115,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
 
             // Has settings changes from last update Job???
             // Don't skip force refresh, periodic updates or retries (runAttemptCount > 0)
-            if (!changes.hasChanges() && !tags.isForceRefresh() && !tags.isPeriodic() && runAttemptCount == 0) {
+            if (!changes.hasChanges() && !tags.isForceRefresh() && runAttemptCount == 0) {
                 Timber.d("No changes from last update")
                 return@withContext Result.success()
             }
@@ -135,9 +135,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             }
             localFileSubscriptions = localFiles
             val results = downloadSubscriptions(
-                settings, downloadableActiveSubscriptions, changes, tags.isForceRefresh(),
-                tags.isPeriodic()
-            )
+                settings, downloadableActiveSubscriptions, changes, tags.isForceRefresh())
 
             if (debugPreferences.shouldAddTestPages.first()) {
                 // For debug build, add testPages list and remove easylist from active subscriptions
@@ -178,10 +176,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
         val filtersFile =
             writeFiles(subscriptions, settings.allowedDomains, settings.blockedDomains)
 
-        coreRepository.updateDownloadedSubscriptions(
-            subscriptions,
-            tags.isForceRefresh() or tags.isPeriodic()
-        )
+        coreRepository.updateDownloadedSubscriptions(subscriptions, tags.isForceRefresh())
         coreRepository.updateSavedState(settings.toSavedState())
         dispatchUpdate()
         cleanOldFiles(filtersFile)
@@ -216,7 +211,6 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
         activeSubscriptions: List<Subscription>,
         changes: Changes,
         forced: Boolean,
-        periodic: Boolean
     ): List<DownloadResult> = coroutineScope {
         // List of newly added subscriptions to Download
         val newSubscriptions = changes.newSubscriptions +
@@ -231,7 +225,7 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
             if (isStopped) throw CancellationException()
 
             val isNewSubscription = newSubscriptions.any { it.url == subscription.url }
-            val result = downloader.download(subscription, forced, periodic, isNewSubscription)
+            val result = downloader.download(subscription, forced, isNewSubscription)
             if (result is DownloadResult.Success) {
                 updateStatus(ProgressType.PROGRESS)
             }
@@ -418,7 +412,6 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
     private suspend fun CoreRepository.currentSavedState() =
         this.data.take(1).single().lastState
 
-    private fun Set<String>.isPeriodic(): Boolean = this.contains(UPDATE_KEY_PERIODIC_WORK)
     private fun Set<String>.isForceRefresh(): Boolean = this.contains(UPDATE_KEY_FORCE_REFRESH)
 
     private fun CoroutineWorker.hasReachedMaxAttempts() = runAttemptCount > RUN_ATTEMPT_MAX_COUNT
@@ -439,4 +432,3 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
 }
 
 fun String.isFilter(): Boolean = this.isNotEmpty() && this[0] != '[' && this[0] != '!'
-

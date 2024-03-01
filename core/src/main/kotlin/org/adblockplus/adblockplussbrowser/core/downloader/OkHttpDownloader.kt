@@ -64,13 +64,12 @@ internal class OkHttpDownloader(
     override suspend fun download(
         subscription: Subscription,
         forced: Boolean,
-        periodic: Boolean,
         newSubscription: Boolean,
     ): DownloadResult = coroutineScope {
         try {
             val previousDownload = getDownloadedSubscription(subscription)
 
-            if (canSkipDownload(previousDownload, forced, periodic, newSubscription)) {
+            if (canSkipDownload(previousDownload, forced, newSubscription)) {
                 Timber.d("Returning pre-downloaded subscription: ${previousDownload.url}")
                 return@coroutineScope DownloadResult.NotModified(previousDownload)
             }
@@ -132,20 +131,19 @@ internal class OkHttpDownloader(
     internal fun canSkipDownload(
         previousDownload: DownloadedSubscription,
         forced: Boolean,
-        periodic: Boolean,
         newSubscription: Boolean
     ): Boolean {
         val isMetered = connectivityManager?.isActiveNetworkMetered ?: false
         val expired = previousDownload.isExpired(newSubscription, isMetered)
         val exists = previousDownload.exists()
 
-        Timber.d("Url: %s: forced: %b, periodic: %b, new: %b, expired: %b, exists: %b, metered: %b",
-            previousDownload.url, forced, periodic, newSubscription, expired, exists, isMetered)
+        Timber.d("Url: %s: forced: %b, new: %b, expired: %b, exists: %b, metered: %b",
+            previousDownload.url, forced, newSubscription, expired, exists, isMetered)
         /* We check for some conditions here:
          *  - NEVER SKIP force refresh updates.
-         *  - If this is a new subscription or a periodic update, DO NOT SkIP if it is not expired,
+         *  - If this is a new subscription, do not skip if it is not expired
          *    AND the file still exists.
-         *  - Otherwise if the file still exists, SKIP the update
+         *  - Otherwise if the file still exists, skip the update
          *
          *  Subscription expiration logic:
          *   - New subscriptions expires in MIN_REFRESH_INTERVAL (1 hour)
@@ -154,7 +152,7 @@ internal class OkHttpDownloader(
          */
         return if (forced) {
             false
-        } else if (newSubscription || periodic) {
+        } else if (newSubscription) {
             !expired && exists
         } else {
             exists
