@@ -425,7 +425,6 @@ internal class UpdateSubscriptionsWorker @AssistedInject constructor(
         private const val DELAY_DEFAULT = 500L
         private const val RUN_ATTEMPT_MAX_COUNT = 4
 
-        internal const val UPDATE_KEY_PERIODIC_WORK = "UPDATE_PERIODIC_KEY"
         internal const val UPDATE_KEY_ONESHOT_WORK = "UPDATE_ONESHOT_WORK"
         internal const val UPDATE_KEY_FORCE_REFRESH = "UPDATE_FORCE_REFRESH"
     }
