@@ -74,7 +74,7 @@ class UpdateSubscriptionsWorkerTest {
         Dispatchers.resetMain()
     }
 
-    private suspend fun whenDownload() = Mockito.`when`(downloader.download(any(), any(), any(), any()))
+    private suspend fun whenDownload() = Mockito.`when`(downloader.download(any(), any(), any()))
 
     private fun createWorker(params: WorkerParameters): ListenableWorker {
         val worker = TestListenableWorkerBuilder<UpdateSubscriptionsWorker>(context)

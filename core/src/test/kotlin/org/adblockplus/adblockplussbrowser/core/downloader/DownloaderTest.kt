@@ -127,7 +127,7 @@ class DownloaderTest {
         assertEquals(0, mockWebServer.requestCount)
         runBlocking {
             var downloadResult =
-                downloader.download(fakeSubscription, forced = false, periodic = true, newSubscription = true)
+                downloader.download(fakeSubscription, forced = false, newSubscription = true)
             assertTrue(downloadResult is DownloadResult.Success)
             assertEquals(version, downloadResult.subscription?.version)
             assertEquals(etag, downloadResult.subscription?.etag)
@@ -136,7 +136,7 @@ class DownloaderTest {
             // We cannot test more that download status because saving subscription from
             // a previous download is done by the caller - UpdateSubscriptionsWorker.
             downloadResult =
-                downloader.download(fakeSubscription, forced = false, periodic = true, newSubscription = true)
+                downloader.download(fakeSubscription, forced = false, newSubscription = true)
             assertTrue(downloadResult is DownloadResult.NotModified)
         }
         assertEquals(2, mockWebServer.requestCount)
@@ -158,7 +158,7 @@ class DownloaderTest {
         assertEquals(0, mockWebServer.requestCount)
         runBlocking {
             val downloadResult =
-                downloader.download(fakeSubscription, forced = false, periodic = true, newSubscription = true)
+                downloader.download(fakeSubscription, forced = false, newSubscription = true)
             assertTrue(downloadResult is DownloadResult.Failed)
             assertNull(downloadResult.subscription)
         }
@@ -183,7 +183,6 @@ class DownloaderTest {
                 downloader.download(
                     fakeSubscription,
                     forced = false,
-                    periodic = true,
                     newSubscription = true
                 ) is DownloadResult.Failed
             )
@@ -202,7 +201,7 @@ class DownloaderTest {
         assertEquals(0, mockWebServer.requestCount)
         runBlocking {
             val downloadResult =
-                downloader.download(fakeSubscription, forced = false, periodic = true, newSubscription = true)
+                downloader.download(fakeSubscription, forced = false, newSubscription = true)
             assertTrue(downloadResult is DownloadResult.Success)
             assertEquals(lastModifiedInt.toString(), downloadResult.subscription?.version)
             assertEquals("", downloadResult.subscription?.etag)
