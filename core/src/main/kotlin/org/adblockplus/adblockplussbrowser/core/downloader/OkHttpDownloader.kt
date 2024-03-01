@@ -49,6 +49,7 @@ import org.adblockplus.adblockplussbrowser.base.data.HttpConstants
 import org.adblockplus.adblockplussbrowser.base.data.SubscriptionsConstants
 import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.milliseconds
 
 
 @ExperimentalTime
@@ -241,7 +242,7 @@ internal class OkHttpDownloader(
     private fun HttpUrl.toFileName(): String = "${this.toString().hashCode()}.txt"
 
     private fun DownloadedSubscription.isExpired(newSubscription: Boolean, isMetered: Boolean): Boolean {
-        val elapsed = Duration.milliseconds(System.currentTimeMillis()) - Duration.milliseconds(this.lastUpdated)
+        val elapsed = System.currentTimeMillis().milliseconds - this.lastUpdated.milliseconds
         Timber.d("Elapsed: $elapsed, newSubscription: $newSubscription, isMetered: $isMetered")
         Timber.d("Min: $MIN_REFRESH_INTERVAL, Metered: $METERED_REFRESH_INTERVAL, Wifi: $UNMETERED_REFRESH_INTERVAL")
         val interval = if (newSubscription) {
