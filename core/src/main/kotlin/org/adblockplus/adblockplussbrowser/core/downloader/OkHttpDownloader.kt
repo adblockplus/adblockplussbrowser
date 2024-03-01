@@ -43,7 +43,6 @@ import timber.log.Timber
 import java.io.File
 import java.net.HttpURLConnection.HTTP_NOT_MODIFIED
 import java.net.HttpURLConnection.HTTP_OK
-import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 import org.adblockplus.adblockplussbrowser.base.data.HttpConstants
 import org.adblockplus.adblockplussbrowser.base.data.SubscriptionsConstants
