@@ -179,7 +179,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         // Set as Activated... If Samsung Internet is asking for the Filters, it is enabled
         val callingApp = getCallingApp(callingPackage, context?.packageManager)
         launch {
-            countUsers()
+            countUsers(callingApp)
             updateFiltersIfNeeded()
         }
         return try {
@@ -199,7 +199,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         }
     }
 
-    private suspend fun countUsers() {
+    private suspend fun countUsers(callingApp: CallingApp) {
         activationPreferences.updateLastFilterRequest(System.currentTimeMillis())
         val savedLastUserCountingResponse = coreRepository.currentData().lastUserCountingResponse
         if (!isUserCountedInCurrentCycle(savedLastUserCountingResponse)) {
