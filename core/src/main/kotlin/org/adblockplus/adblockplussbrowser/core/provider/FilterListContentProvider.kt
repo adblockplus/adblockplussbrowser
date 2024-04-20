@@ -163,19 +163,23 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         Timber.d("USER COUNTER JOB SCHEDULED")
     }
 
+    /**
+     * This method is called when the Samsung Internet browser requests the filter list.
+     * It is called by the browser when the user enables the ad blocker.
+     * The method returns a file descriptor to the filter list file.
+     * The file descriptor is used by the browser to read the filter list.
+     * The method is called by the browser when the user enables the ad blocker.
+     *
+     * @param uri The URI of the content provider.
+     * @param mode The mode in which the file is opened.
+     * @return A file descriptor to the filter list file.
+     */
     override fun openFile(uri: Uri, mode: String): ParcelFileDescriptor? {
         Timber.i("Filter list requested: $uri - $mode...")
         // Set as Activated... If Samsung Internet is asking for the Filters, it is enabled
         val callingApp = getCallingApp(callingPackage, context?.packageManager)
         launch {
-            activationPreferences.updateLastFilterRequest(System.currentTimeMillis())
-            val savedLastUserCountingResponse = coreRepository.currentData().lastUserCountingResponse
-            if (!isUserCountedInCurrentCycle(savedLastUserCountingResponse)) {
-                Timber.d("User count lastUserCountingResponse saved is `%d`", savedLastUserCountingResponse)
-                triggerUserCountingRequest(callingApp)
-            } else {
-                Timber.d("Skip user counting")
-            }
+            countUsers()
             updateFiltersIfNeeded()
         }
         return try {
@@ -192,6 +196,17 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             Timber.e(ex)
             analyticsProvider.logException(ex)
             null
+        }
+    }
+
+    private suspend fun countUsers() {
+        activationPreferences.updateLastFilterRequest(System.currentTimeMillis())
+        val savedLastUserCountingResponse = coreRepository.currentData().lastUserCountingResponse
+        if (!isUserCountedInCurrentCycle(savedLastUserCountingResponse)) {
+            Timber.d("User count lastUserCountingResponse saved is `%d`", savedLastUserCountingResponse)
+            triggerUserCountingRequest(callingApp)
+        } else {
+            Timber.d("Skip user counting")
         }
     }
 
