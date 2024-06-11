@@ -24,7 +24,6 @@ internal interface Downloader {
     suspend fun download(
         subscription: Subscription,
         forced: Boolean,
-        periodic: Boolean,
         newSubscription: Boolean,
     ): DownloadResult
 

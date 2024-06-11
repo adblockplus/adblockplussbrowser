@@ -17,11 +17,11 @@
 
 object Config {
     object Versions {
-        const val ABP = "2.5.5"
+        const val ABP = "2.5.6"
 
-        const val ADBLOCK = "3.4.5"
+        const val ADBLOCK = "3.4.6"
 
-        const val CRYSTAL = "2.6.6"
+        const val CRYSTAL = "2.6.7"
     }
 
     const val COMPILE_SDK_VERSION = 33

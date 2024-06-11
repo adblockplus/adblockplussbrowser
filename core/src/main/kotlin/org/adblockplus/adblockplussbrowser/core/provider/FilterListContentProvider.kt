@@ -23,9 +23,11 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.pm.PackageManager
 import android.database.Cursor
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.ParcelFileDescriptor
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.work.BackoffPolicy
 import androidx.work.Constraints
 import androidx.work.ExistingWorkPolicy
@@ -46,6 +48,8 @@ import okio.sink
 import okio.source
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
+import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
+import org.adblockplus.adblockplussbrowser.base.data.SubscriptionsConstants
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
 import org.adblockplus.adblockplussbrowser.base.os.CallingApp
 import org.adblockplus.adblockplussbrowser.base.os.PackageHelper
@@ -61,6 +65,7 @@ import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker.Co
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounterWorker.Companion.USER_COUNTER_KEY_ONESHOT_WORK
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.currentSettings
+import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig
 import org.adblockplus.adblockplussbrowser.telemetry.TelemetryService
 import org.tukaani.xz.XZInputStream
 import timber.log.Timber
@@ -71,6 +76,9 @@ import java.text.ParseException
 import java.util.Date
 import java.util.concurrent.TimeUnit
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.days
+import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
@@ -83,6 +91,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         fun getSettingsRepository(): SettingsRepository
         fun getActivationPreferences(): ActivationPreferences
         fun getAnalyticsProvider(): AnalyticsProvider
+        fun getSubscriptionManager(): SubscriptionsManager
     }
 
     private val entrypoint: FilterListContentProviderEntryPoint by lazy {
@@ -105,6 +114,10 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
 
     val analyticsProvider: AnalyticsProvider by lazy {
         entrypoint.getAnalyticsProvider()
+    }
+
+    val subscriptionsManager: SubscriptionsManager by lazy {
+        entrypoint.getSubscriptionManager()
     }
 
     private val workManager: WorkManager by lazy {
@@ -150,19 +163,24 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         Timber.d("USER COUNTER JOB SCHEDULED")
     }
 
+    /**
+     * This method is called when the Samsung Internet browser requests the filter list.
+     * It is called by the browser when the user enables the ad blocker.
+     * The method returns a file descriptor to the filter list file.
+     * The file descriptor is used by the browser to read the filter list.
+     * The method is called by the browser when the user enables the ad blocker.
+     *
+     * @param uri The URI of the content provider.
+     * @param mode The mode in which the file is opened.
+     * @return A file descriptor to the filter list file.
+     */
     override fun openFile(uri: Uri, mode: String): ParcelFileDescriptor? {
         Timber.i("Filter list requested: $uri - $mode...")
         // Set as Activated... If Samsung Internet is asking for the Filters, it is enabled
         val callingApp = getCallingApp(callingPackage, context?.packageManager)
         launch {
-            activationPreferences.updateLastFilterRequest(System.currentTimeMillis())
-            val savedLastUserCountingResponse = coreRepository.currentData().lastUserCountingResponse
-            if (!isUserCountedInCurrentCycle(savedLastUserCountingResponse)) {
-                Timber.d("User count lastUserCountingResponse saved is `%d`", savedLastUserCountingResponse)
-                triggerUserCountingRequest(callingApp)
-            } else {
-                Timber.d("Skip user counting")
-            }
+            countUsers(callingApp)
+            updateFiltersIfNeeded()
         }
         return try {
             TelemetryService().apply {
@@ -179,6 +197,31 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             analyticsProvider.logException(ex)
             null
         }
+    }
+
+    private suspend fun countUsers(callingApp: CallingApp) {
+        activationPreferences.updateLastFilterRequest(System.currentTimeMillis())
+        val savedLastUserCountingResponse = coreRepository.currentData().lastUserCountingResponse
+        if (!isUserCountedInCurrentCycle(savedLastUserCountingResponse)) {
+            Timber.d("User count lastUserCountingResponse saved is `%d`", savedLastUserCountingResponse)
+            triggerUserCountingRequest(callingApp)
+        } else {
+            Timber.d("Skip user counting")
+        }
+    }
+
+    private suspend fun updateFiltersIfNeeded() {
+        val connectivityManager =
+            context?.let { ContextCompat.getSystemService(it, ConnectivityManager::class.java) }
+        val isMetered = connectivityManager?.isActiveNetworkMetered ?: false
+        val elapsed = System.currentTimeMillis().milliseconds - coreRepository.currentData().lastUpdated.milliseconds
+        val interval =
+            if (isMetered && settingsRepository.currentSettings().updateConfig == UpdateConfig.WIFI_ONLY)
+                SubscriptionsConstants.METERED_REFRESH_INTERVAL_DAYS.days
+            else
+                SubscriptionsConstants.UNMETERED_REFRESH_INTERVAL_HOURS.hours
+        if (elapsed > interval) subscriptionsManager.scheduleImmediate(force = true)
+        else Timber.i("Subscription update is not needed")
     }
 
     private fun getCallingApp(callingPackageName: String?, packageManager: PackageManager?): CallingApp {

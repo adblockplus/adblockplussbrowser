@@ -43,10 +43,12 @@ import timber.log.Timber
 import java.io.File
 import java.net.HttpURLConnection.HTTP_NOT_MODIFIED
 import java.net.HttpURLConnection.HTTP_OK
-import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 import org.adblockplus.adblockplussbrowser.base.data.HttpConstants
 import org.adblockplus.adblockplussbrowser.base.data.SubscriptionsConstants
+import kotlin.time.Duration.Companion.days
+import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.milliseconds
 
 
 @ExperimentalTime
@@ -64,13 +66,12 @@ internal class OkHttpDownloader(
     override suspend fun download(
         subscription: Subscription,
         forced: Boolean,
-        periodic: Boolean,
         newSubscription: Boolean,
     ): DownloadResult = coroutineScope {
         try {
             val previousDownload = getDownloadedSubscription(subscription)
 
-            if (canSkipDownload(previousDownload, forced, periodic, newSubscription)) {
+            if (canSkipDownload(previousDownload, forced, newSubscription)) {
                 Timber.d("Returning pre-downloaded subscription: ${previousDownload.url}")
                 return@coroutineScope DownloadResult.NotModified(previousDownload)
             }
@@ -132,20 +133,19 @@ internal class OkHttpDownloader(
     internal fun canSkipDownload(
         previousDownload: DownloadedSubscription,
         forced: Boolean,
-        periodic: Boolean,
         newSubscription: Boolean
     ): Boolean {
         val isMetered = connectivityManager?.isActiveNetworkMetered ?: false
         val expired = previousDownload.isExpired(newSubscription, isMetered)
         val exists = previousDownload.exists()
 
-        Timber.d("Url: %s: forced: %b, periodic: %b, new: %b, expired: %b, exists: %b, metered: %b",
-            previousDownload.url, forced, periodic, newSubscription, expired, exists, isMetered)
+        Timber.d("Url: %s: forced: %b, new: %b, expired: %b, exists: %b, metered: %b",
+            previousDownload.url, forced, newSubscription, expired, exists, isMetered)
         /* We check for some conditions here:
          *  - NEVER SKIP force refresh updates.
-         *  - If this is a new subscription or a periodic update, DO NOT SkIP if it is not expired,
+         *  - If this is a new subscription, do not skip if it is not expired
          *    AND the file still exists.
-         *  - Otherwise if the file still exists, SKIP the update
+         *  - Otherwise if the file still exists, skip the update
          *
          *  Subscription expiration logic:
          *   - New subscriptions expires in MIN_REFRESH_INTERVAL (1 hour)
@@ -154,7 +154,7 @@ internal class OkHttpDownloader(
          */
         return if (forced) {
             false
-        } else if (newSubscription || periodic) {
+        } else if (newSubscription) {
             !expired && exists
         } else {
             exists
@@ -241,7 +241,7 @@ internal class OkHttpDownloader(
     private fun HttpUrl.toFileName(): String = "${this.toString().hashCode()}.txt"
 
     private fun DownloadedSubscription.isExpired(newSubscription: Boolean, isMetered: Boolean): Boolean {
-        val elapsed = Duration.milliseconds(System.currentTimeMillis()) - Duration.milliseconds(this.lastUpdated)
+        val elapsed = System.currentTimeMillis().milliseconds - this.lastUpdated.milliseconds
         Timber.d("Elapsed: $elapsed, newSubscription: $newSubscription, isMetered: $isMetered")
         Timber.d("Min: $MIN_REFRESH_INTERVAL, Metered: $METERED_REFRESH_INTERVAL, Wifi: $UNMETERED_REFRESH_INTERVAL")
         val interval = if (newSubscription) {
@@ -256,9 +256,9 @@ internal class OkHttpDownloader(
     }
 
     companion object {
-        private val MIN_REFRESH_INTERVAL = Duration.hours(1)
-        private val UNMETERED_REFRESH_INTERVAL = Duration.hours(SubscriptionsConstants.UNMETERED_REFRESH_INTERVAL_HOURS)
-        private val METERED_REFRESH_INTERVAL = Duration.days(SubscriptionsConstants.METERED_REFRESH_INTERVAL_DAYS)
+        private val MIN_REFRESH_INTERVAL = 1.hours
+        private val UNMETERED_REFRESH_INTERVAL = SubscriptionsConstants.UNMETERED_REFRESH_INTERVAL_HOURS.hours
+        private val METERED_REFRESH_INTERVAL = SubscriptionsConstants.METERED_REFRESH_INTERVAL_DAYS.days
         internal const val HTTP_ERROR_LOG_HEADER_DOWNLOADER = "OkHttpDownloader HTTP error, return code"
     }
 }
