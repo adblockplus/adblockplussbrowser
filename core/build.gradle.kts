@@ -16,6 +16,7 @@
  */
 
 import com.google.protobuf.gradle.*
+import java.util.Locale
 
 plugins {
     id("com.android.library")
@@ -89,7 +90,7 @@ protobuf {
 }
 
 tasks.register("downloadExceptionRules", de.undercouch.gradle.tasks.download.Download::class) {
-    val flavor = project.findProperty("flavor")?.toString()?.toLowerCase() ?: "abp"
+    val flavor = project.findProperty("flavor")?.toString()?.lowercase() ?: "abp"
     val baseDir = if (flavor == "abp") "src/main/assets" else "src/$flavor/assets"
 
     val source = when (flavor) {
@@ -106,14 +107,14 @@ tasks.register("downloadExceptionRules", de.undercouch.gradle.tasks.download.Dow
 }
 
 tasks.register("downloadEasyList", de.undercouch.gradle.tasks.download.Download::class) {
-    val flavor = project.findProperty("flavor")?.toString()?.toLowerCase() ?: "abp"
+    val flavor = project.findProperty("flavor")?.toString()?.lowercase() ?: "abp"
     val baseDir = if (flavor == "abp") "src/main/assets" else "src/$flavor/assets"
     src("https://0.samsung-internet.filter-list-downloads.getadblock.com/easylist.txt")
     dest("$baseDir/easylist.txt")
 }
 
 tasks.register("packSubscriptionsFiles") {
-    val flavor = project.findProperty("flavor")?.toString()?.toLowerCase() ?: "abp"
+    val flavor = project.findProperty("flavor")?.toString()?.lowercase() ?: "abp"
     val baseDir = if (flavor == "abp") "src/main/assets" else "src/$flavor/assets"
     val xz = "xz"
 
@@ -130,7 +131,7 @@ tasks.register("packSubscriptionsFiles") {
 }
 
 tasks.register("checkSubscriptionsFiles") {
-    val flavor = project.findProperty("flavor")?.toString()?.toLowerCase() ?: "abp"
+    val flavor = project.findProperty("flavor")?.toString()?.lowercase() ?: "abp"
     val baseDir = if (flavor == "abp") "core/src/main/assets" else "core/src/$flavor/assets"
 
     doLast {

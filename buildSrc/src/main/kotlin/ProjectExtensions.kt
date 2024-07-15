@@ -15,15 +15,12 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import com.android.build.api.dsl.AndroidSourceSet
 import com.android.build.gradle.AppExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.findByType
-
-import java.util.Locale
 
 // Flavor descriptor
 internal data class Flavor(
@@ -53,6 +50,8 @@ fun Project.applyCommonConfig() {
 
     android {
         compileSdkVersion(Config.COMPILE_SDK_VERSION)
+
+        namespace = "org.adblockplus.adblockplussbrowser"
 
         defaultConfig {
             minSdk = Config.MIN_SDK_VERSION
@@ -123,7 +122,7 @@ fun Project.createFlavorsConfig() {
                 // Just add the FLAVOR_{name} constants to the BuildConfig to keep the names aligned
                 defaultConfig.buildConfigField(
                     "String",
-                    "FLAVOR_${flavor.name.toUpperCase(Locale.ROOT)}",
+                    "FLAVOR_${flavor.name.uppercase()}",
                     "\"${flavor.name}\""
                 )
                 defaultConfig.buildConfigField(
