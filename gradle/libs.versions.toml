@@ -47,7 +47,7 @@ okhttp3 = "4.9.1"
 gildor-coroutines-okhttp = "1.0"
 protobuf-gradle-plugin = "0.8.16"
 protobuf = "3.17.2"
-installreferrer = "1.1"
+installreferrer = "2.2"
 mockito = "4.0.0"
 xz = "1.9"
 
