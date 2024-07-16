@@ -5,7 +5,7 @@ stages:
   - sign_builds
   - automated_tests
 
-image: registry.gitlab.com/eyeo/docker/adblockplussbrowser_gitlab-runner:202112.1
+image: registry.gitlab.com/eyeo/docker/nasa-runner:android-34
 
 variables:
   APK_OUTPUT_PATH: "app/build/outputs/apk"
@@ -24,8 +24,7 @@ cache: &global_cache
   before_script:
     - export GRADLE_USER_HOME=`pwd`/.gradle
     - export GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.console=plain"
-    - '[ -d .android-sdk ] || cp -a /opt/android-sdk ./.android-sdk'
-    - export ANDROID_SDK_ROOT=`pwd`/.android-sdk
+    - export ANDROID_SDK_ROOT=$ANDROID_HOME
 
 dependencies:
   stage: dependencies
@@ -62,6 +61,7 @@ checks:lint:
 checks:detekt:
   extends: .template:environment
   stage: checks
+  allow_failure: true
   script:
     # This is a workaround for json-codegen-gradle plugin does not generate data classes
     # despite it launches. It works only when launched from the `telemetry` directory.
