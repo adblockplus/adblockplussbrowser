@@ -22,6 +22,7 @@ import android.net.Uri
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.media.LocalMediaPlayer
 import org.adblockplus.adblockplussbrowser.onboarding.R
+import org.adblockplus.adblockplussbrowser.i18n.R as i18n
 import org.adblockplus.adblockplussbrowser.onboarding.databinding.FragmentOnboardingEnablePageBinding
 import kotlin.math.roundToInt
 
@@ -32,9 +33,9 @@ internal class EnablePageFragment :
 
     override fun onBindView(binding: FragmentOnboardingEnablePageBinding) {
         val headerInclude = binding.onboardingDefaultPageHeaderInclude
-        headerInclude.onboardingHeaderTitle1.setText(R.string.onboarding_enable_header_title1)
-        headerInclude.onboardingHeaderTitle2.setText(R.string.onboarding_enable_header_title2)
-        headerInclude.onboardingHeaderTitle3.setText(R.string.app_subtitle)
+        headerInclude.onboardingHeaderTitle1.setText(i18n.string.onboarding_enable_header_title1)
+        headerInclude.onboardingHeaderTitle2.setText(i18n.string.onboarding_enable_header_title2)
+        headerInclude.onboardingHeaderTitle3.setText(i18n.string.app_subtitle)
         val guidesWidth = 2 * resources.getDimension(R.dimen.onboarding_guides_margin)
         val availableWidth = resources.displayMetrics.widthPixels - guidesWidth
         val videoView = binding.videoView

@@ -20,8 +20,9 @@
 plugins {
     id("com.android.library")
     kotlin("android")
-    kotlin("kapt")
     id("kotlin-parcelize")
+    kotlin("kapt")
+    alias(libs.plugins.ksp)
 }
 
 applyCommonConfig()

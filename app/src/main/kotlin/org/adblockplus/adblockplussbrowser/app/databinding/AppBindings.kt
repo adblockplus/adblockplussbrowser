@@ -20,6 +20,7 @@ package org.adblockplus.adblockplussbrowser.app.databinding
 import android.view.View
 import androidx.databinding.BindingAdapter
 import org.adblockplus.adblockplussbrowser.app.R
+import org.adblockplus.adblockplussbrowser.i18n.R as i18nR
 import org.adblockplus.adblockplussbrowser.base.data.model.SubscriptionUpdateStatus
 import org.adblockplus.adblockplussbrowser.base.widget.SnackbarContainer
 
@@ -28,17 +29,18 @@ internal fun bindUpdateStatus(snackbarContainer: SnackbarContainer, status: Subs
     when (status) {
         SubscriptionUpdateStatus.Failed -> snackbarContainer.showErrorStatus()
         SubscriptionUpdateStatus.None, SubscriptionUpdateStatus.Success -> snackbarContainer.dismiss()
+        is SubscriptionUpdateStatus.Progress -> { }
     }
 }
 
 @BindingAdapter("retryAction")
 internal fun bindRetryAction(snackbarContainer: SnackbarContainer, listener: View.OnClickListener) {
-    snackbarContainer.setActionText(R.string.update_status_retry)
+    snackbarContainer.setActionText(i18nR.string.update_status_retry)
     snackbarContainer.setActionListener(listener)
 }
 
 private fun SnackbarContainer.showErrorStatus() {
-    setText(R.string.update_status_error_message)
+    setText(i18nR.string.update_status_error_message)
     setTextDrawableStart(R.drawable.ic_baseline_error_outline_24)
     showAction()
     show()

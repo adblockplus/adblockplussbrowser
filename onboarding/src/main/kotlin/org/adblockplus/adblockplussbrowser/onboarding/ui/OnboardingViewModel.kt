@@ -22,12 +22,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.adblockplus.adblockplussbrowser.base.data.ValueWrapper
 import org.adblockplus.adblockplussbrowser.base.data.prefs.AppPreferences
-import org.adblockplus.adblockplussbrowser.onboarding.R
 import org.adblockplus.adblockplussbrowser.base.data.prefs.OnboardingPreferences
+import org.adblockplus.adblockplussbrowser.onboarding.R
+import org.adblockplus.adblockplussbrowser.i18n.R as i18nR
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -79,9 +79,9 @@ internal class OnboardingViewModel @Inject constructor(
         val pageList = mutableListOf<PageInfo>()
         pageList.add(
             PageInfo.Default(
-                R.string.onboarding_welcome_header_title1,
-                R.string.product_name,
-                R.string.app_subtitle,
+                i18nR.string.onboarding_welcome_header_title1,
+                i18nR.string.product_name,
+                i18nR.string.app_subtitle,
                 R.layout.onboarding_welcome_page
             )
         )

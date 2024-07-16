@@ -17,6 +17,7 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui.allowlist
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.net.Uri
 import android.os.Bundle
@@ -28,7 +29,7 @@ import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import dagger.hilt.android.AndroidEntryPoint
-import org.adblockplus.adblockplussbrowser.preferences.R
+import org.adblockplus.adblockplussbrowser.i18n.R
 import org.apache.commons.validator.routines.DomainValidator
 
 @AndroidEntryPoint
@@ -36,6 +37,7 @@ internal class AddDomainDialogFragment : AppCompatDialogFragment() {
 
     private val viewModel: AllowlistViewModel by activityViewModels()
 
+    @SuppressLint("CheckResult")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         MaterialDialog(requireContext()).show {
             title(R.string.allowlist_add_title)

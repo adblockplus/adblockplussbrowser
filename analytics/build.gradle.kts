@@ -18,8 +18,9 @@
 plugins {
     id("com.android.library")
     kotlin("android")
-    kotlin("kapt")
     id("dagger.hilt.android.plugin")
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.dagger.hilt.android)
 }
 
 applyCommonConfig()
@@ -27,7 +28,7 @@ applyCommonConfig()
 dependencies {
     implementation(libs.hilt)
     implementation(libs.firebase.crashlytics.ktx)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(libs.timber)

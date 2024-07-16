@@ -59,6 +59,7 @@ import javax.inject.Singleton
 import kotlin.time.ExperimentalTime
 import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
 import org.adblockplus.adblockplusbrowser.testutils.FakeSettingsRepository
+import org.adblockplus.adblockplussbrowser.core.BuildConfig
 import org.adblockplus.adblockplussbrowser.core.helpers.FakeActivationPreferences
 import org.adblockplus.adblockplussbrowser.core.helpers.FakeCoreRepository
 
@@ -144,7 +145,7 @@ class CoreSubscriptionsManagerTest {
         @Singleton
         fun provideOkHttpClientLogger() =
             HttpLoggingInterceptor().apply {
-                if (org.adblockplus.adblockplussbrowser.analytics.BuildConfig.DEBUG) {
+                if (BuildConfig.DEBUG) {
                     level = HttpLoggingInterceptor.Level.HEADERS // The default is Level.NONE
                 }
             }

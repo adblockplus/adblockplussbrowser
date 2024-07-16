@@ -18,7 +18,7 @@
 plugins {
     id("com.android.library")
     kotlin("android")
-    kotlin("kapt")
+    alias(libs.plugins.ksp)
 }
 
 applyCommonConfig()

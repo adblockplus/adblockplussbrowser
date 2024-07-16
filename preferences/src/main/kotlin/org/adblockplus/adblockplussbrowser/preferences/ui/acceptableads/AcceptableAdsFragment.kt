@@ -26,6 +26,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.databinding.bindAAStandardRedirect
 import org.adblockplus.adblockplussbrowser.preferences.R
+import org.adblockplus.adblockplussbrowser.i18n.R as i18nR
+import org.adblockplus.adblockplussbrowser.base.R as baseR
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentAcceptableAdsBinding
 
 @AndroidEntryPoint
@@ -36,21 +38,21 @@ internal class AcceptableAdsFragment :
     override fun onBindView(binding: FragmentAcceptableAdsBinding) {
         binding.viewModel = viewModel
         val textAppearance =
-            TextAppearanceSpan(requireActivity(), R.style.TextAppearance_AppCompat_Small)
+            TextAppearanceSpan(requireActivity(), android.R.style.TextAppearance_Small)
         val formatted = SpannableStringBuilder()
-            .bold { append(getString(R.string.preferences_acceptable_ads_action)) }
+            .bold { append(getString(i18nR.string.preferences_acceptable_ads_action)) }
             .append("\n")
             .inSpans(textAppearance) {
-                append(getString(R.string.acceptable_ads_enabled_line2))
+                append(getString(i18nR.string.acceptable_ads_enabled_line2))
             }
         binding.acceptableAdsSelectionBlock.acceptableAdsEnabled.text = formatted
 
         binding.acceptableAdsSelectionBlock.acceptableAdsDisabled.text = SpannableStringBuilder()
-            .bold { append(getString(R.string.acceptable_ads_disabled)) }
+            .bold { append(getString(i18nR.string.acceptable_ads_disabled)) }
 
         bindAAStandardRedirect(
             binding.acceptableAdsStandardRedirect.findViewById(
-                R.id.acceptable_ads_standard_redirect_text
+                baseR.id.acceptable_ads_standard_redirect_text
             )
         )
     }

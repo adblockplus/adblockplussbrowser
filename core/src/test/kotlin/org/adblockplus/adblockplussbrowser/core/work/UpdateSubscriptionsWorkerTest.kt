@@ -149,7 +149,7 @@ class UpdateSubscriptionsWorkerTest {
         runTest {
             whenDownload().thenReturn(DownloadResult.Success(DownloadedSubscription("")))
             val result = updateSubscriptionsWorker.run {
-                updateSubscriptionsWorker.stop()
+                updateSubscriptionsWorker.stop(0)
                 updateSubscriptionsWorker.doWork()
             }
             assertThat(result, `is`(ListenableWorker.Result.Success()))

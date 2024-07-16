@@ -40,8 +40,8 @@ class AbpApplication : Application(), Configuration.Provider {
     @Inject
     lateinit var subscriptionsManager: SubscriptionsManager
 
-    override fun getWorkManagerConfiguration() =
-        Configuration.Builder()
+    override val workManagerConfiguration: Configuration
+        get() = Configuration.Builder()
             .setWorkerFactory(workerFactory)
             .build()
 

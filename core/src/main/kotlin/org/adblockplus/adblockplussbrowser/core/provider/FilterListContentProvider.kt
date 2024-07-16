@@ -276,7 +276,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         var ins: InputStream
         if (acceptableAdsEnabled) {
             Timber.d("getFilterFile: unpacking AA")
-            val start = Duration.milliseconds(System.currentTimeMillis())
+            val start = System.currentTimeMillis().milliseconds
             ins = context.assets.open("exceptionrules.txt.xz")
             /*
                     XZInputStream params:
@@ -292,7 +292,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             }
             Timber.d(
                 "getFilterFile: unpacked AA, elapsed: %s",
-                (Duration.milliseconds(System.currentTimeMillis()) - start).toString()
+                (System.currentTimeMillis().milliseconds - start).toString()
             )
         }
 

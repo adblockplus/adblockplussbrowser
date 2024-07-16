@@ -27,10 +27,10 @@ import kotlinx.coroutines.launch
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
-import org.adblockplus.adblockplussbrowser.preferences.R
 import org.adblockplus.adblockplussbrowser.preferences.ui.layoutForIndex
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import javax.inject.Inject
+import org.adblockplus.adblockplussbrowser.i18n.R as i18nR
 
 @HiltViewModel
 internal class PrimarySubscriptionsViewModel @Inject constructor(
@@ -69,9 +69,9 @@ internal class PrimarySubscriptionsViewModel @Inject constructor(
         if (this.isNotEmpty()) {
             val headerResId =
                 if (active) {
-                    R.string.primary_subscriptions_active_category
+                    i18nR.string.primary_subscriptions_active_category
                 } else {
-                    R.string.primary_subscriptions_inactive_category
+                    i18nR.string.primary_subscriptions_inactive_category
                 }
             result.add(PrimarySubscriptionsItem.HeaderItem(headerResId))
             this.forEachIndexed { index, subscription ->

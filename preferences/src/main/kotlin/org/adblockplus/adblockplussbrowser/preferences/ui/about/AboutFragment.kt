@@ -31,6 +31,7 @@ import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
 import org.adblockplus.adblockplussbrowser.preferences.R
+import org.adblockplus.adblockplussbrowser.i18n.R as i18nR
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentAboutBinding
 import javax.inject.Inject
 
@@ -52,7 +53,7 @@ internal class AboutFragment : DataBindingFragment<FragmentAboutBinding>(R.layou
 
         val lifecycleOwner = this.viewLifecycleOwner
         binding.openSourceLicenses.setDebounceOnClickListener({
-            OssLicensesMenuActivity.setActivityTitle(getString(R.string.open_source_licenses))
+            OssLicensesMenuActivity.setActivityTitle(getString(i18nR.string.open_source_licenses))
             startActivity(Intent(activity, OssLicensesMenuActivity::class.java))
             analyticsProvider.logEvent(AnalyticsEvent.OPEN_SOURCE_LICENSES_VISITED)
         }, lifecycleOwner)
@@ -74,7 +75,7 @@ internal class AboutFragment : DataBindingFragment<FragmentAboutBinding>(R.layou
             val url = (text as Spanned).getSpans(0, text.length, URLSpan::class.java)[0].url
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         } catch (exception: ActivityNotFoundException) {
-            Toast.makeText(context, getString(R.string.no_browser_found), Toast.LENGTH_LONG).show()
+            Toast.makeText(context, getString(i18nR.string.no_browser_found), Toast.LENGTH_LONG).show()
         }
     }
 }

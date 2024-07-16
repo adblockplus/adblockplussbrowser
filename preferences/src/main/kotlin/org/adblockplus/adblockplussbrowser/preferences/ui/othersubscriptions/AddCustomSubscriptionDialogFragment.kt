@@ -17,6 +17,7 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
 import android.util.Patterns
@@ -28,13 +29,14 @@ import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import dagger.hilt.android.AndroidEntryPoint
-import org.adblockplus.adblockplussbrowser.preferences.R
+import org.adblockplus.adblockplussbrowser.i18n.R
 
 @AndroidEntryPoint
 internal class AddCustomSubscriptionDialogFragment : AppCompatDialogFragment() {
 
     private val viewModel: OtherSubscriptionsViewModel by activityViewModels()
 
+    @SuppressLint("CheckResult")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val context = requireContext()
         return MaterialDialog(context).show {

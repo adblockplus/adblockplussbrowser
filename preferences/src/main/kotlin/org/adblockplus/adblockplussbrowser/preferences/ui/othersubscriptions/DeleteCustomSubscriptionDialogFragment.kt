@@ -23,7 +23,7 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.activityViewModels
 import com.afollestad.materialdialogs.MaterialDialog
 import dagger.hilt.android.AndroidEntryPoint
-import org.adblockplus.adblockplussbrowser.preferences.R
+import org.adblockplus.adblockplussbrowser.i18n.R
 
 @AndroidEntryPoint
 internal class DeleteCustomSubscriptionDialogFragment : AppCompatDialogFragment() {

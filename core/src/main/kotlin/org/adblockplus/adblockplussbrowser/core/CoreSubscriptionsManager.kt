@@ -52,12 +52,10 @@ import org.adblockplus.adblockplussbrowser.core.work.UpdateSubscriptionsWorker.C
 import org.adblockplus.adblockplussbrowser.settings.data.SettingsRepository
 import org.adblockplus.adblockplussbrowser.settings.data.currentSettings
 import org.adblockplus.adblockplussbrowser.settings.data.model.Settings
-import org.adblockplus.adblockplussbrowser.settings.data.model.UpdateConfig
 import timber.log.Timber
-import kotlin.time.Duration
+import kotlin.time.Duration.Companion.minutes
 import kotlin.time.ExperimentalTime
 
-@Suppress("PropertyName")
 @ExperimentalTime
 class CoreSubscriptionsManager(
     private val appContext: Context,
@@ -141,7 +139,7 @@ class CoreSubscriptionsManager(
                 Constraints.Builder()
                     .setRequiredNetworkType(NetworkType.NOT_REQUIRED).build()
             )
-            setBackoffTime(Duration.minutes(1))
+            setBackoffTime(1.minutes)
             addTag(UPDATE_KEY_ONESHOT_WORK)
             if (force) {
                 addTag(UPDATE_KEY_FORCE_REFRESH)

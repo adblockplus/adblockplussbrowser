@@ -20,10 +20,11 @@ import com.google.protobuf.gradle.*
 plugins {
     id("com.android.library")
     kotlin("android")
-    kotlin("kapt")
     id("kotlin-parcelize")
     id("com.google.protobuf")
-    id("dagger.hilt.android.plugin")
+    kotlin("kapt")
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.dagger.hilt.android)
 }
 
 applyCommonConfig()
@@ -35,7 +36,7 @@ dependencies {
     implementation(libs.androidx.datastore)
     implementation(libs.protobuf.javalite)
     implementation(libs.hilt)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
     implementation(libs.timber)
 }
 
@@ -51,6 +52,23 @@ protobuf {
                 id("java") {
                     option("lite")
                 }
+            }
+        }
+    }
+}
+
+// workaround for "[ksp] NonExistentClass' could not be resolved." error
+androidComponents {
+    onVariants(selector().all()) { variant ->
+        afterEvaluate {
+            val protoTask =
+                project.tasks.getByName("generate" + variant.name.replaceFirstChar { it.uppercaseChar() } + "Proto") as GenerateProtoTask
+
+            project.tasks.getByName("ksp" + variant.name.replaceFirstChar { it.uppercaseChar() } + "Kotlin") {
+                dependsOn(protoTask)
+                (this as org.jetbrains.kotlin.gradle.tasks.AbstractKotlinCompileTool<*>).setSource(
+                    protoTask.outputBaseDir
+                )
             }
         }
     }

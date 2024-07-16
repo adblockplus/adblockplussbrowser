@@ -44,6 +44,8 @@ plugins {
     alias(libs.plugins.detekt)
     alias(libs.plugins.plugin.versions)
     alias(libs.plugins.jacoco.test.aggregation.coverage)
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.dagger.hilt.android) apply false
 }
 
 val coverageProjectsPath = setOf(":base", ":core", ":preferences", ":app", ":telemetry")
@@ -85,7 +87,7 @@ tasks.register("clean", Delete::class) {
 }
 
 fun isNonStable(version: String): Boolean {
-    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
+    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.uppercase().contains(it) }
     val regex = "^[0-9,.v-]+(-r)?$".toRegex()
     val isStable = stableKeyword || regex.matches(version)
     return isStable.not()

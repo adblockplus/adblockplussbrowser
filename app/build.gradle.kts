@@ -21,10 +21,12 @@ plugins {
     id("com.android.application")
     id("com.google.android.gms.oss-licenses-plugin")
     kotlin("android")
-    kotlin("kapt")
     id("dagger.hilt.android.plugin")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
+    kotlin("kapt")
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.dagger.hilt.android)
 }
 
 applyCommonConfig()
@@ -57,11 +59,6 @@ android {
 
 }
 
-// recommended https://dagger.dev/hilt/gradle-setup.html#add-the-hilt-android-gradle-plugin
-kapt {
-    correctErrorTypes = true
-}
-
 dependencies {
     implementation(project(":analytics"))
     implementation(project(":base"))
@@ -86,10 +83,10 @@ dependencies {
     implementation(libs.androidx.navigation.ui)
     implementation(libs.androidx.work.runtime)
     implementation(libs.hilt)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
     implementation(libs.androidx.hilt.common)
     implementation(libs.androidx.hilt.work)
-    kapt(libs.androidx.hilt.compiler)
+    ksp(libs.androidx.hilt.compiler)
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
@@ -99,7 +96,6 @@ dependencies {
     implementation(libs.okhttp3.logging.interceptor)
     implementation(libs.gms.play.services.oss.licenses)
     implementation(libs.installreferrer)
-
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 
     testImplementation(libs.junit)
@@ -109,6 +105,11 @@ dependencies {
     testImplementation(libs.mockito.kotlin)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(project(":test-utils"))
+}
+
+hilt {
+    // disable if it causes error during build
+    enableAggregatingTask = false
 }
 
 // Install commit pre-hook

@@ -160,6 +160,8 @@ internal class ReportIssueFragment :
                 BackgroundOperationOutcome.REPORT_SEND_ERROR -> {
                     Timber.d("ReportIssueFragment: Send error")
                 }
+
+                null -> { }
             }
         }
     }

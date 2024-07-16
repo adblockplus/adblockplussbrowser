@@ -16,12 +16,11 @@
  along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.adblockplus.adblockplussbrowser.onboarding">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application android:supportsRtl="true">
 
-        <activity android:name=".ui.OnboardingActivity" />
+        <activity android:name=".ui.Hilt_OnboardingActivity" />
 
     </application>
 

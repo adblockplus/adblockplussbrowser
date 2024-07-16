@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
+import com.google.protobuf.gradle.GenerateProtoTask
 import com.google.protobuf.gradle.id
 import net.pwall.json.kotlin.codegen.gradle.JSONSchemaCodegen
 import net.pwall.json.kotlin.codegen.gradle.JSONSchemaCodegenTask
@@ -29,14 +30,11 @@ buildscript {
 plugins {
     id("com.android.library")
     kotlin("android")
-    kotlin("kapt")
-    // Referencing `libs` raises "LibrariesForLibs'
-    // can't be called in this context by implicit receiver."
-    // TODO needs Gradle version update
-    @Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
     alias(libs.plugins.kotlinx.plugin.serialization)
     id("com.google.protobuf")
     id("dagger.hilt.android.plugin")
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.dagger.hilt.android)
 }
 
 applyCommonConfig()
@@ -45,10 +43,7 @@ createFlavorsConfig()
 
 hilt {
     // disable if it causes error during build
-    enableAggregatingTask = true
-}
-kapt {
-    correctErrorTypes = true
+    enableAggregatingTask = false
 }
 
 // Stuff for JSONSchemaCodegen plugin
@@ -148,9 +143,9 @@ dependencies {
     implementation(libs.androidx.hilt.common)
     implementation(libs.androidx.hilt.work)
     implementation(libs.hilt)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
     // required for `@HiltWorker` annotation
-    kapt(libs.androidx.hilt.compiler)
+    ksp(libs.androidx.hilt.compiler)
 
     testImplementation(project(":test-utils"))
     testImplementation(libs.junit)
@@ -165,7 +160,24 @@ dependencies {
     testImplementation(libs.androidx.work.testing)
     testImplementation(libs.androidx.lifecycle.runtime.testing)
     testAnnotationProcessor(libs.hilt.compiler)
-    kaptTest(libs.hilt.compiler)
-    kaptTest(libs.androidx.hilt.compiler)
-    kaptAndroidTest(libs.hilt.compiler)
+    kspTest(libs.hilt.compiler)
+    kspTest(libs.androidx.hilt.compiler)
+    kspAndroidTest(libs.hilt.compiler)
+}
+
+// workaround for "[ksp] NonExistentClass' could not be resolved." error
+androidComponents {
+    onVariants(selector().all()) { variant ->
+        afterEvaluate {
+            val protoTask =
+                project.tasks.getByName("generate" + variant.name.replaceFirstChar { it.uppercaseChar() } + "Proto") as GenerateProtoTask
+
+            project.tasks.getByName("ksp" + variant.name.replaceFirstChar { it.uppercaseChar() } + "Kotlin") {
+                dependsOn(protoTask)
+                (this as org.jetbrains.kotlin.gradle.tasks.AbstractKotlinCompileTool<*>).setSource(
+                    protoTask.outputBaseDir
+                )
+            }
+        }
+    }
 }

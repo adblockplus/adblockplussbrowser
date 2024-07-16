@@ -51,7 +51,7 @@ fun Project.applyCommonConfig() {
     android {
         compileSdkVersion(Config.COMPILE_SDK_VERSION)
 
-        namespace = "org.adblockplus.adblockplussbrowser"
+        namespace = "org.adblockplus.adblockplussbrowser.${name.replace("-", "")}"
 
         defaultConfig {
             minSdk = Config.MIN_SDK_VERSION
@@ -103,6 +103,7 @@ fun Project.applyCommonConfig() {
  */
 fun Project.createFlavorsConfig() {
     android {
+        buildFeatures.buildConfig = true
         // Check is the project is an App (not a Library)
         val isApp = this is AppExtension
         flavorDimensions(Flavors.REGION_DIMENSION, Flavors.PRODUCT_DIMENSION)
@@ -173,7 +174,7 @@ fun versionCode(): Int {
  * @param flavorName
  */
 fun Project.addFeature(featureName: String, flavorName: String) {
-    val featureDirName = "feature${featureName.capitalize()}"
+    val featureDirName = "feature${featureName.replaceFirstChar { it.uppercase() }}"
     android {
         sourceSets.find { it.name == flavorName }?.let {
             it.java.srcDir("src/$featureDirName/kotlin")

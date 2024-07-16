@@ -26,7 +26,7 @@ import android.text.style.ClickableSpan
 import android.view.View
 import android.widget.TextView
 import androidx.core.text.inSpans
-import org.adblockplus.adblockplussbrowser.base.R
+import org.adblockplus.adblockplussbrowser.i18n.R
 
 private const val ACCEPTABLE_ADS_STANDARD_LINK = "https://acceptableads.com/standard/"
 

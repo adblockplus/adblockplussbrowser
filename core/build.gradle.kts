@@ -15,17 +15,36 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import com.google.protobuf.gradle.*
-import java.util.Locale
+import com.google.protobuf.gradle.GenerateProtoTask
+import com.google.protobuf.gradle.id
 
 plugins {
     id("com.android.library")
     kotlin("android")
-    kotlin("kapt")
     id("kotlin-parcelize")
     id("com.google.protobuf")
     id("dagger.hilt.android.plugin")
-    id("de.undercouch.download")
+    alias(libs.plugins.download)
+    kotlin("kapt")
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.dagger.hilt.android)
+}
+
+// workaround for "[ksp] NonExistentClass' could not be resolved." error
+androidComponents {
+    onVariants(selector().all()) { variant ->
+        afterEvaluate {
+            val protoTask =
+                project.tasks.getByName("generate" + variant.name.replaceFirstChar { it.uppercaseChar() } + "Proto") as GenerateProtoTask
+
+            project.tasks.getByName("ksp" + variant.name.replaceFirstChar { it.uppercaseChar() } + "Kotlin") {
+                dependsOn(protoTask)
+                (this as org.jetbrains.kotlin.gradle.tasks.AbstractKotlinCompileTool<*>).setSource(
+                    protoTask.outputBaseDir
+                )
+            }
+        }
+    }
 }
 
 applyCommonConfig()
@@ -53,10 +72,10 @@ dependencies {
     implementation(libs.xz)
 
     implementation(libs.hilt)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
     implementation(libs.androidx.hilt.common)
     implementation(libs.androidx.hilt.work)
-    kapt(libs.androidx.hilt.compiler)
+    ksp(libs.androidx.hilt.compiler)
 
     testImplementation(libs.junit)
     testImplementation(libs.okhttp3.mockwebserver)
@@ -69,9 +88,9 @@ dependencies {
     testImplementation(libs.hilt.testing)
     testImplementation(project(":test-utils"))
     testAnnotationProcessor(libs.hilt.compiler)
-    kaptTest(libs.hilt.compiler)
-    kaptTest(libs.androidx.hilt.compiler)
-    kaptAndroidTest(libs.hilt.compiler)
+    kspTest(libs.hilt.compiler)
+    kspTest(libs.androidx.hilt.compiler)
+    kspAndroidTest(libs.hilt.compiler)
 }
 
 protobuf {

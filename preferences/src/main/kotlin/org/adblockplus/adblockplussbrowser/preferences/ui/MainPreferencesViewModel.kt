@@ -63,6 +63,7 @@ internal class MainPreferencesViewModel @Inject constructor(
                     analyticsProvider.enable()
                     settingsRepository.setAnalyticsEnabled(true)
                 }
+                null -> { }
             }
         }
     }
