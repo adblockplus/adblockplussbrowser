@@ -29,6 +29,7 @@ import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -122,6 +123,7 @@ class CoreSubscriptionsManager(
         }
     }
 
+    @OptIn(FlowPreview::class)
     private suspend fun listenSettingsChanges() = coroutineScope {
         settingsRepository.settings.debounce(SETTINGS_CHANGES_DELAY).onEach { settings ->
             Timber.d("Old settings: $currentSettings, new settings: $settings")

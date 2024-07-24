@@ -52,7 +52,7 @@ internal fun bindOnPageSelected(viewPager2: ViewPager2, onPageSelectedListener: 
 
 @BindingAdapter("indicatorPager2")
 internal fun bindIndicatorPager2(indicator: BaseDotsIndicator, viewPager2: ViewPager2) {
-    indicator.setViewPager2(viewPager2)
+    indicator.attachTo(viewPager2)
 }
 
 @BindingAdapter("progressPager2")

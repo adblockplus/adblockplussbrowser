@@ -66,7 +66,10 @@ fun Project.applyCommonConfig() {
         }
 
         kotlinOptions {
-            jvmTarget = JavaVersion.VERSION_17.toString()
+            jvmTarget = "17"
+            freeCompilerArgs = listOf(
+                "-Xstring-concat=inline"
+            )
         }
 
         sourceSets.all {

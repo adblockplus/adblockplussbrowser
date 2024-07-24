@@ -108,6 +108,11 @@ protobuf {
     }
 }
 
+hilt {
+    // disable if it causes error during build
+    enableAggregatingTask = false
+}
+
 tasks.register("downloadExceptionRules", de.undercouch.gradle.tasks.download.Download::class) {
     val flavor = project.findProperty("flavor")?.toString()?.lowercase() ?: "abp"
     val baseDir = if (flavor == "abp") "src/main/assets" else "src/$flavor/assets"
