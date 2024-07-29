@@ -53,7 +53,6 @@ fun Project.applyCommonConfig() {
 
     android {
         compileSdkVersion(Config.COMPILE_SDK_VERSION)
-        buildToolsVersion(Config.BUILD_TOOLS_VERSION)
 
         defaultConfig {
             minSdk = Config.MIN_SDK_VERSION

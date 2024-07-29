@@ -4,9 +4,11 @@ All notable changes to Crystal Adblock for Samsung will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.6.7] - 2024-06-11
+## [2.6.7] - 2024-07-25
 ### Fixes
 - Improve filter lists download logic
+- Update dependencies
+- Fix ANR
 
 ## [2.6.6] - 2023-12-06
 ### Fixed
