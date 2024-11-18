@@ -105,6 +105,30 @@ All environment variables should start with `EYEO_` prefix are added to build co
 For example:
 `EYEO_TELEMETRY_ENDPOINT_URL` will be added as `BuildConfig.EYEO_TELEMETRY_ENDPOINT_URL`.
 
+Pipeline Secrets
+----------------
+The job configuration for signing the APK artifacts after they got build rely on GCP secrets to be pulled.
+Secret credential files and their respective keystore files are pulled from the GCP project eyeo-apk-signing-prod before the job actually starts,
+so they can be used later.
+
+### Keystore
+The keystore files contain binary content which can be stored in GCP, but not fetched correctly by the Gitlab OIDC integration.
+There it is necessary to encode the file content before uploading it, and decode it before utilization.
+
+Example command for encoding a file:
+```
+cat keystore_file | base64 --encode
+```
+
+Example command for decoding the file in the job script:
+```
+cat $KEYSTORE_VARIABLE <(printf "\n") | base64 --decode > new_keystore_file
+```
+
+Two important things that need to be mentioned are:
+  - The keystore file path, fetched from GCP, will be stored in the CI secret variable that its defined in.
+  - `<(printf "\n")` needs to be appended to the decode command, because GCP eliminates all EOF newlines.
+
 Subscriptions updates
 ---------------------
 
