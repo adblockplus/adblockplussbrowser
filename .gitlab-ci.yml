@@ -1,3 +1,7 @@
+default:
+  tags:
+    - eyeo-medium-runner
+
 stages:
   - dependencies
   - checks
@@ -147,13 +151,68 @@ build:
 
 sign_apks:
   stage: "sign_builds"
+  image: "registry.gitlab.com/eyeo/devops/docker-apk-signing/apk-signing:latest"
   variables:
     GIT_STRATEGY: none
   cache: [ ]
+  id_tokens:
+    GCP_ID_TOKEN:
+      # `aud` must match the audience defined in the WIF Identity Pool.
+      aud: "https://iam.googleapis.com/projects/${GCP_PROJECT_NUMBER}/locations/global/workloadIdentityPools/${GCP_WORKLOAD_IDENTITY_FEDERATION_POOL_ID}/providers/${GCP_WORKLOAD_IDENTITY_FEDERATION_PROVIDER_ID}"
+  secrets:
+    ADBLOCK_CREDENTIALS:
+      gcp_secret_manager:
+        name: "8818251-ADBLOCK_CREDENTIALS"
+      token: $GCP_ID_TOKEN
+    ADBLOCK_KEYSTORE:
+      gcp_secret_manager:
+        name: "8818251-ADBLOCK_KEYSTORE"
+      token: $GCP_ID_TOKEN
+    ADBLOCKPLUS_CREDENTIALS:
+      gcp_secret_manager:
+        name: "8818251-ADBLOCKPLUS_CREDENTIALS"
+      token: $GCP_ID_TOKEN
+    ADBLOCKPLUS_KEYSTORE:
+      gcp_secret_manager:
+        name: "8818251-ADBLOCKPLUS_KEYSTORE"
+      token: $GCP_ID_TOKEN
+    CRYSTAL_CREDENTIALS:
+      gcp_secret_manager:
+        name: "8818251-CRYSTAL_CREDENTIALS"
+      token: $GCP_ID_TOKEN
+    CRYSTAL_KEYSTORE:
+      gcp_secret_manager:
+        name: "8818251-CRYSTAL_KEYSTORE"
+      token: $GCP_ID_TOKEN
+    ABPCAST_MOBILE_CREDENTIALS:
+      gcp_secret_manager:
+        name: "8818251-ABPCAST_MOBILE_CREDENTIALS"
+      token: $GCP_ID_TOKEN
+    ABPCAST_MOBILE_KEYSTORE:
+      gcp_secret_manager:
+        name: "8818251-ABPCAST_MOBILE_KEYSTORE"
+      token: $GCP_ID_TOKEN
+    ABPCAST_TV_CREDENTIALS:
+      gcp_secret_manager:
+        name: "8818251-ABPCAST_TV_CREDENTIALS"
+      token: $GCP_ID_TOKEN
+    ABPCAST_TV_KEYSTORE:
+      gcp_secret_manager:
+        name: "8818251-ABPCAST_TV_KEYSTORE"
+      token: $GCP_ID_TOKEN
   tags:
-    - "apk_signer_apk-signing-2.uplink.eyeo.it"
+    - eyeo-small-runner
   before_script:
     - "rm -fr ./*_SIGNED.apk"
+    # AdBlock
+    - "mv $ADBLOCK_CREDENTIALS /srv/signers/adblock.keystore.credentials"
+    - cat $ADBLOCK_KEYSTORE <(printf "\n") | base64 --decode > /srv/eyeo-apk-sign/adblock.keystore
+    # ABP / AdlockPlus
+    - "mv $ADBLOCKPLUS_CREDENTIALS /srv/signers/adblockplus.keystore.credentials"
+    - cat $ADBLOCKPLUS_KEYSTORE <(printf "\n") | base64 --decode > /srv/eyeo-apk-sign/android.keystore
+    # Crystal
+    - "mv $CRYSTAL_CREDENTIALS /srv/signers/crystal.keystore.credentials"
+    - cat $CRYSTAL_KEYSTORE <(printf "\n") | base64 --decode > /srv/eyeo-apk-sign/crystal.keystore
   script:
     - |
       while read flavor key; do
