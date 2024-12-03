@@ -171,8 +171,8 @@
     <string name="tour_header">Guide</string>
     <string name="take_tour_title">Faire un tour</string>
     <string name="take_tour_description">Apprenez à utiliser ABP pour une expérience de navigation plus agréable</string>
-    <string name="tour_next_button_text">Prochain</string>
-    <string name="tour_skip_button_text">Sauter</string>
+    <string name="tour_next_button_text">Suivant</string>
+    <string name="tour_skip_button_text">Passer</string>
     <string name="tour_dialog_ad_blocking_options_text">Pour une expérience de navigation optimisée, pensez à ajuster ces paramètres</string>
     <string name="tour_add_languages">Ajoutez les langues dans lesquelles vous naviguez habituellement</string>
     <string name="tour_disable_social_media_tracking">Désactiver le suivi des réseaux sociaux lors de la navigation</string>
