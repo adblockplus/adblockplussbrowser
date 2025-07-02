@@ -26,7 +26,7 @@ internal sealed class OtherSubscriptionsItem(val id: String) {
     data class CustomItem(val subscription: Subscription, val layout: GroupItemLayout) :
         OtherSubscriptionsItem(subscription.url), Serializable {
         companion object {
-            const val serialVersionUID = 1L
+            private const val serialVersionUID: Long = 1L
         }
     }
 }

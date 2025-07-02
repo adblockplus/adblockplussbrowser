@@ -17,57 +17,32 @@
 
 package org.adblockplus.adblockplussbrowser.telemetry
 
-import android.content.Context
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.testing.TestLifecycleOwner
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
-import androidx.work.ListenableWorker
-import androidx.work.WorkInfo
+import androidx.work.Data
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequest
+import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
-import androidx.work.testing.TestDriver
-import androidx.work.testing.WorkManagerTestInitHelper
 import org.adblockplus.adblockplussbrowser.telemetry.reporters.ActivePingReporter
 import org.adblockplus.adblockplussbrowser.telemetry.reporters.ActivePingWorker
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThrows
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
-import java.util.UUID
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
+import org.mockito.kotlin.argumentCaptor
+import org.mockito.kotlin.eq
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 
-@Config(manifest = Config.NONE)
-@RunWith(RobolectricTestRunner::class)
 class TelemetryServiceTest {
-    @get:Rule
-    val instantTaskExecutorRule = InstantTaskExecutorRule()
-
-    private lateinit var context: Context
-
-    private lateinit var workManager: WorkManager
-
-    private lateinit var testDriver: TestDriver
 
     private lateinit var telemetryService: TelemetryService
-
-    private lateinit var testLifecycleOwner: TestLifecycleOwner
+    private lateinit var mockWorkManager: WorkManager
 
     @Before
     fun setUp() {
-        context = getApplicationContext()
-        WorkManagerTestInitHelper.initializeTestWorkManager(context)
-        workManager = WorkManager.getInstance(context)
-        testDriver = WorkManagerTestInitHelper.getTestDriver(context)!! // if null, throw NPE
         telemetryService = TelemetryService()
-        testLifecycleOwner = TestLifecycleOwner()
-    }
-
-    private fun getWorkInfo(id: UUID): WorkInfo {
-        return workManager.getWorkInfoById(id).get()
+        mockWorkManager = mock()
     }
 
     @Test
@@ -81,134 +56,47 @@ class TelemetryServiceTest {
     @Test
     fun `test scheduleReporting throws exception if no reporters added`() {
         assertThrows(IllegalStateException::class.java) {
-            // addActivePingReporter() has not been called
-            telemetryService.scheduleReporting(workManager)
+            telemetryService.scheduleReporting(mockWorkManager)
         }
     }
 
     @Test
-    fun `test work request correctly re-scheduled after calling scheduleReporting twice`() {
-        val config = ActivePingReporter.configuration
+    fun `scheduleReporting enqueues unique periodic work for repeatable reporters`() {
+        telemetryService.addActivePingReporter() // ActivePingReporter is repeatable
 
-        // Schedule the work request
-        val ids = telemetryService.addFakeReporter(ListenableWorker.Result.success())
-            .scheduleReporting(workManager)
+        telemetryService.scheduleReporting(mockWorkManager)
 
-        // Make sure it is only one entry
-        assertEquals(1, ids.size)
-
-        // Check if the work request is correctly scheduled
-        val workInfo = getWorkInfo(ids.first())
-        assertEquals(WorkInfo.State.ENQUEUED, workInfo.state)
-
-        // Check if the work request is correctly scheduled after reschedule
-        telemetryService.addFakeReporter(ListenableWorker.Result.success())
-        // Make sure it is still one entry
-        assertEquals(1, telemetryService.workRequestsForTests.size)
-        telemetryService.scheduleReporting(workManager)
-
-        // Collect all [WorkInfo] based on the name (endpointUrl) and make sure there is only
-        // one job enqueued
-        val workInfosAfterReschedule =
-            workManager.getWorkInfosForUniqueWork(config.endpointUrl).get()
-        assertEquals(1, workInfosAfterReschedule.size)
-        // Check the status
-        val workInfoAfterReschedule = workInfosAfterReschedule.first()
-        assertEquals(WorkInfo.State.ENQUEUED, workInfoAfterReschedule.state)
-    }
-
-    private fun maybeScheduleWorkAndAssertSuccess(id: UUID, scheduleWork: Boolean) {
-        val latch = CountDownLatch(3)
-
-        // Before scheduling the work request, set observers
-        workManager.getWorkInfoByIdLiveData(id).observe(testLifecycleOwner) {
-            latch.countDown()
-            when (latch.count) {
-                // Check if the work request succeeds
-                2L -> {
-                    assertEquals(WorkInfo.State.ENQUEUED, it.state)
-                    println("Work $id request enqueued")
-
-                    // Allowing the worker to run
-                    testDriver.setAllConstraintsMet(id)
-                }
-                // Check if the work request is running
-                1L -> {
-                    assertEquals(WorkInfo.State.RUNNING, it.state)
-                    println("Work $id request is running")
-                }
-                // Check if the work request is enqueued
-                0L -> {
-                    assertEquals(WorkInfo.State.SUCCEEDED, it.state)
-                    println("Work $id request succeeded")
-                }
-            }
-        }
-        if (scheduleWork) {
-            // Schedule the work request
-            telemetryService.scheduleReporting(workManager)
-        }
-
-        latch.await(5, TimeUnit.SECONDS)
-        assertEquals(
-            "Worker did not succeed, the status didn't reach WorkInfo.State.SUCCEEDED",
-            0,
-            latch.count
+        val requestCaptor = argumentCaptor<PeriodicWorkRequest>()
+        verify(mockWorkManager).enqueueUniquePeriodicWork(
+            eq(ActivePingReporter.configuration.endpointUrl),
+            eq(ExistingPeriodicWorkPolicy.KEEP),
+            requestCaptor.capture()
         )
+        assertEquals(ActivePingWorker::class.java.name, requestCaptor.firstValue.workSpec.workerClassName)
     }
 
     @Test
-    fun `test work request enqueued and succeeded`() {
-        // Schedule the work request and retrieve work ids
-        val id =
-            telemetryService.addFakeReporter(ListenableWorker.Result.success()).workRequestsForTests.map { it.id }
-                .first()
+    fun `scheduleReporting enqueues unique work for non-repeatable reporters`() {
+        val nonRepeatableConfig = ActivePingReporter.configuration.copy(repeatable = false)
+        telemetryService.addReporter<FakeHttpWorker>(nonRepeatableConfig, Data.EMPTY)
 
-        // We have to put the assert first before scheduling the work request
-        maybeScheduleWorkAndAssertSuccess(id, true)
+        telemetryService.scheduleReporting(mockWorkManager)
 
-        // Fake constraints met
-        testDriver.setInitialDelayMet(id)
+        val requestCaptor = argumentCaptor<OneTimeWorkRequest>()
+        verify(mockWorkManager).enqueueUniqueWork(
+            eq(nonRepeatableConfig.endpointUrl),
+            eq(ExistingWorkPolicy.REPLACE),
+            requestCaptor.capture()
+        )
+        assertEquals(FakeHttpWorker::class.java.name, requestCaptor.firstValue.workSpec.workerClassName)
     }
 
     @Test
-    fun `test work manager re-schedules after the repeat duration`() {
-        // Schedule the work request and retrieve work ids
-        val id =
-            telemetryService.addFakeReporter(ListenableWorker.Result.success()).workRequestsForTests.map { it.id }
-                .first()
+    fun `scheduleReporting clears work requests after execution`() {
+        telemetryService.addActivePingReporter()
+        assertEquals(1, telemetryService.workRequestsForTests.size)
+        telemetryService.scheduleReporting(mockWorkManager)
 
-        maybeScheduleWorkAndAssertSuccess(id, true)
-        // Fake constraints met
-        testDriver.setInitialDelayMet(id)
-
-        // Wait for everything to settle down
-        // without this, the WorkManager isn't able to re-schedule the work request
-        Thread.sleep(100)
-
-        // Check if the work request is correctly scheduled after reschedule
-        testDriver.setPeriodDelayMet(id)
-        maybeScheduleWorkAndAssertSuccess(id, false)
+        assertEquals(0, telemetryService.workRequestsForTests.size)
     }
-
-    @Test
-    fun `test work manager re-schedules after failure`() {
-        // Schedule the work request and retrieve work ids
-        val id =
-            telemetryService.addFakeReporter(ListenableWorker.Result.retry())
-                .scheduleReporting(workManager)
-                .first()
-
-        // Check if the work request is correctly scheduled after reschedule
-        testDriver.setPeriodDelayMet(id)
-
-        assertEquals(workManager.getWorkInfoById(id).get().state, WorkInfo.State.ENQUEUED)
-    }
-}
-
-fun TelemetryService.addFakeReporter(result: ListenableWorker.Result) = apply {
-    addReporter<FakeHttpWorker>(
-        ActivePingReporter.configuration,
-        FakeHttpWorker.config(result)
-    )
 }

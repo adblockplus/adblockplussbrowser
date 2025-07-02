@@ -23,10 +23,22 @@ plugins {
     kotlin("kapt")
     id("kotlin-parcelize")
     id("com.google.protobuf")
-    id("dagger.hilt.android.plugin")
+    alias(libs.plugins.hilt)
 }
 
 applyCommonConfig()
+
+android {
+    namespace = "org.adblockplus.adblockplussbrowser.settings"
+    buildFeatures {
+        buildConfig = true
+    }
+    kotlinOptions {
+        freeCompilerArgs = listOf(
+            "-Xstring-concat=inline"
+        )
+    }
+}
 
 dependencies {
     implementation(project(":base"))
@@ -55,4 +67,3 @@ protobuf {
         }
     }
 }
-

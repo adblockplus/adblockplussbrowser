@@ -26,7 +26,7 @@ import androidx.annotation.ArrayRes
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
-import org.adblockplus.adblockplussbrowser.preferences.R
+import org.adblockplus.adblockplussbrowser.base.R
 
 internal class UpdateModeSpinnerAdapter(
     context: Context,

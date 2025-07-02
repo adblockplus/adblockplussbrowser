@@ -30,13 +30,9 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("kapt")
-    // Referencing `libs` raises "LibrariesForLibs'
-    // can't be called in this context by implicit receiver."
-    // TODO needs Gradle version update
-    @Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
     alias(libs.plugins.kotlinx.plugin.serialization)
     id("com.google.protobuf")
-    id("dagger.hilt.android.plugin")
+    alias(libs.plugins.hilt)
 }
 
 applyCommonConfig()
@@ -46,9 +42,6 @@ createFlavorsConfig()
 hilt {
     // disable if it causes error during build
     enableAggregatingTask = true
-}
-kapt {
-    correctErrorTypes = true
 }
 
 // Stuff for JSONSchemaCodegen plugin
@@ -106,6 +99,10 @@ System.getenv().filter { (key, _) ->
 
 
 android {
+    namespace = "org.adblockplus.adblockplussbrowser.telemetry"
+    buildFeatures {
+        buildConfig = true
+    }
     // consumed by `json-kotlin-schema-gradle` plugin
     sourceSets.getByName("main") {
         java.srcDirs(jsonSchemaOutputDir)
@@ -164,7 +161,6 @@ dependencies {
     testImplementation(libs.androidx.arch.core.testing)
     testImplementation(libs.androidx.work.testing)
     testImplementation(libs.androidx.lifecycle.runtime.testing)
-    testAnnotationProcessor(libs.hilt.compiler)
     kaptTest(libs.hilt.compiler)
     kaptTest(libs.androidx.hilt.compiler)
     kaptAndroidTest(libs.hilt.compiler)

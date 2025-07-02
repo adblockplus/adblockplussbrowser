@@ -23,7 +23,7 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.activityViewModels
 import com.afollestad.materialdialogs.MaterialDialog
 import dagger.hilt.android.AndroidEntryPoint
-import org.adblockplus.adblockplussbrowser.preferences.R
+import org.adblockplus.adblockplussbrowser.i18n.R as i18nR
 
 @AndroidEntryPoint
 internal class DeleteAllowlistItemDialogFragment : AppCompatDialogFragment() {
@@ -46,6 +46,7 @@ internal class DeleteAllowlistItemDialogFragment : AppCompatDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
+            @Suppress("DEPRECATION")
             item = it.getSerializable(ITEM_KEY) as AllowlistItem
         }
     }
@@ -54,8 +55,8 @@ internal class DeleteAllowlistItemDialogFragment : AppCompatDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         MaterialDialog(requireContext()).show {
-            title(R.string.delete_dialog_title)
-            message(0, getString(R.string.allowlist_delete_dialog_message, item.domain))
+            title(i18nR.string.delete_dialog_title)
+            message(0, getString(i18nR.string.allowlist_delete_dialog_message, item.domain))
             positiveButton(android.R.string.ok) {
                 viewModel.removeItem(item)
                 dismiss()

@@ -47,10 +47,6 @@ internal object Flavors {
 }
 
 fun Project.applyCommonConfig() {
-    // Enable or disable shrinking resource dynamically depending if this is a app or a library
-    // (libraries do not support resources shrinking)
-    val shrinkResources = this.plugins.hasPlugin("com.android.application")
-
     android {
         compileSdkVersion(Config.COMPILE_SDK_VERSION)
 
@@ -62,12 +58,8 @@ fun Project.applyCommonConfig() {
         }
 
         compileOptions {
-            sourceCompatibility = JavaVersion.VERSION_11
-            targetCompatibility = JavaVersion.VERSION_11
-        }
-
-        kotlinOptions {
-            jvmTarget = JavaVersion.VERSION_11.toString()
+            sourceCompatibility = JavaVersion.VERSION_17
+            targetCompatibility = JavaVersion.VERSION_17
         }
 
         sourceSets.all {
@@ -76,11 +68,9 @@ fun Project.applyCommonConfig() {
 
         buildTypes {
             getByName("release") {
-                isMinifyEnabled = true
-                isShrinkResources = shrinkResources
-                proguardFiles(
-                    getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro"
+                isMinifyEnabled = false
+                consumerProguardFiles(
+                    "consumer-rules.pro"
                 )
             }
 
@@ -123,7 +113,7 @@ fun Project.createFlavorsConfig() {
                 // Just add the FLAVOR_{name} constants to the BuildConfig to keep the names aligned
                 defaultConfig.buildConfigField(
                     "String",
-                    "FLAVOR_${flavor.name.toUpperCase(Locale.ROOT)}",
+                    "FLAVOR_${flavor.name.uppercase(Locale.ROOT)}",
                     "\"${flavor.name}\""
                 )
                 defaultConfig.buildConfigField(
@@ -174,7 +164,11 @@ fun versionCode(): Int {
  * @param flavorName
  */
 fun Project.addFeature(featureName: String, flavorName: String) {
-    val featureDirName = "feature${featureName.capitalize()}"
+    val featureDirName = "feature${featureName.replaceFirstChar {
+        if (it.isLowerCase()) it.titlecase(
+            Locale.getDefault()
+        ) else it.toString()
+    }}"
     android {
         sourceSets.find { it.name == flavorName }?.let {
             it.java.srcDir("src/$featureDirName/kotlin")

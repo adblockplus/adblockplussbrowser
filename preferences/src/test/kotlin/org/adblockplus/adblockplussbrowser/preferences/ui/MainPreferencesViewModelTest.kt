@@ -17,24 +17,40 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
 import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
 import org.adblockplus.adblockplusbrowser.testutils.FakeSettingsRepository
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsEvent
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class MainPreferencesViewModelTest {
 
     private lateinit var mainPreferencesViewModel: MainPreferencesViewModel
     private val analyticsProvider = FakeAnalyticsProvider()
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val testDispatcher = UnconfinedTestDispatcher()
 
     @Before
     fun setUp() {
+        Dispatchers.setMain(testDispatcher)
+
         mainPreferencesViewModel = MainPreferencesViewModel(
             settingsRepository = FakeSettingsRepository("")
         )
         mainPreferencesViewModel.analyticsProvider = analyticsProvider
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
     }
 
     @Test

@@ -47,7 +47,7 @@ class PackageHelper private constructor() {
                 // https://issuetracker.google.com/issues/246845196?pli=1
                 // For now, we use the deprecated method and suppress the warning
                 @Suppress("DEPRECATION")
-                packageManager.getPackageInfo(packageId, 0).versionName.lowercase()
+                packageManager.getPackageInfo(packageId, 0).versionName?.lowercase() ?: VERSION_UNKNOWN
             } catch (ex: NameNotFoundException) {
                 Timber.e(ex,"Error retrieving app version for $packageId")
                 VERSION_UNKNOWN

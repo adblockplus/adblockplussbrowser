@@ -38,6 +38,7 @@ import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
 import org.adblockplus.adblockplussbrowser.base.widget.LockableScrollView
 import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
 import org.adblockplus.adblockplussbrowser.preferences.R
+import org.adblockplus.adblockplussbrowser.i18n.R as i18nR
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentMainPreferencesBinding
 import org.adblockplus.adblockplussbrowser.preferences.ui.tourguide.TargetInfo
 import org.adblockplus.adblockplussbrowser.preferences.ui.tourguide.TourGuide
@@ -61,7 +62,7 @@ internal class MainPreferencesFragment :
         binding.viewModel = viewModel
         lifecycle.addObserver(lifecycleEventObserver)
         val supportActionBar = (activity as AppCompatActivity).supportActionBar
-        supportActionBar?.subtitle = getString(R.string.app_subtitle)
+        supportActionBar?.subtitle = getString(i18nR.string.app_subtitle)
 
         val lifecycleOwner = this.viewLifecycleOwner
 

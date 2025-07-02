@@ -17,6 +17,7 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui.reporter
 
+import android.app.Application
 import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
@@ -34,7 +35,8 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito
+import io.mockk.coEvery
+import io.mockk.mockk
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment.getApplication
 import org.robolectric.annotation.Config
@@ -45,15 +47,18 @@ import org.robolectric.annotation.Config
 class ReportIssueViewModelTest {
 
     private val reportIssueViewModel = ReportIssueViewModel(getApplication())
-    private val mockReportIssueRepository = Mockito.mock(ReportIssueRepository::class.java)
+    private val mockReportIssueRepository = mockk<ReportIssueRepository>()
 
     // This rule is used to be able to listen to the changes of mutable live data as it
     // runs tasks synchronously
     @get:Rule
     val instantTaskExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private suspend fun whenSendReport() = Mockito.`when`(
-        mockReportIssueRepository.sendReport(Fakes.fakeReportIssueData))
+    private fun whenSendReport(result: Result<Unit>) {
+        coEvery {
+            mockReportIssueRepository.sendReport(Fakes.fakeReportIssueData)
+        } returns result
+    }
 
     private val context = ApplicationProvider.getApplicationContext<Context>()
 
@@ -82,10 +87,10 @@ class ReportIssueViewModelTest {
     @Test
     fun `test image failed to load`() {
         // Prepare mocks to raise exception when loading image
-        val application = Mockito.mock(getApplication()::class.java)
-        val contentResolver = Mockito.mock(ContentResolver::class.java)
+        val application = mockk<Application>()
+        val contentResolver = mockk<ContentResolver>(relaxed = true)
         val fakeUri = Uri.parse("content://empty")
-        Mockito.`when`(application.contentResolver).thenReturn(contentResolver)
+        coEvery { application.contentResolver } returns contentResolver
         // Run
         val reportIssueViewModel = ReportIssueViewModel(application)
         runTest {
@@ -101,7 +106,7 @@ class ReportIssueViewModelTest {
     @Test
     fun `test send report successful`() {
         runTest {
-            whenSendReport().thenReturn(Result.success(Unit))
+            whenSendReport(Result.success(Unit))
             reportIssueViewModel.data = Fakes.fakeReportIssueData
             reportIssueViewModel.sendReport(context)
             assertEquals(
@@ -114,7 +119,7 @@ class ReportIssueViewModelTest {
     @Test
     fun `test send report failure`() {
         runTest {
-            whenSendReport().thenReturn(Result.failure(RuntimeException()))
+            whenSendReport(Result.failure(RuntimeException()))
             reportIssueViewModel.data = Fakes.fakeReportIssueData
             reportIssueViewModel.sendReport(context)
             assertEquals(

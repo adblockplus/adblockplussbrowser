@@ -23,7 +23,7 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.activityViewModels
 import com.afollestad.materialdialogs.MaterialDialog
 import dagger.hilt.android.AndroidEntryPoint
-import org.adblockplus.adblockplussbrowser.preferences.R
+import org.adblockplus.adblockplussbrowser.i18n.R as i18nR
 
 @AndroidEntryPoint
 internal class DeleteCustomSubscriptionDialogFragment : AppCompatDialogFragment() {
@@ -46,15 +46,16 @@ internal class DeleteCustomSubscriptionDialogFragment : AppCompatDialogFragment(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-             item = it.getSerializable(ITEM_KEY) as OtherSubscriptionsItem.CustomItem
+            @Suppress("DEPRECATION")
+            item = it.getSerializable(ITEM_KEY) as OtherSubscriptionsItem.CustomItem
         }
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val context = requireContext()
         return MaterialDialog(context).show {
-            title(R.string.delete_dialog_title)
-            message(0, getString(R.string.other_subscriptions_remove_custom_message, item.subscription.url))
+            title(i18nR.string.delete_dialog_title)
+            message(0, getString(i18nR.string.other_subscriptions_remove_custom_message, item.subscription.url))
             positiveButton(android.R.string.ok) {
                 viewModel.removeSubscription(item, context)
                 dismiss()

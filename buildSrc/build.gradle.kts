@@ -25,6 +25,7 @@ plugins {
 }
 
 dependencies {
+    implementation(libs.javapoet)
     implementation(libs.android.plugin.gradle)
-    implementation(libs.kotlin.plugin.gradle)
+    implementation(libs.kotlin.gradle.plugin)
 }

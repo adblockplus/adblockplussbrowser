@@ -17,7 +17,6 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.data
 
-import android.net.Uri
 import android.util.Xml
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
@@ -35,6 +34,7 @@ import java.util.Locale
 import java.util.UUID
 import javax.inject.Inject
 import org.adblockplus.adblockplussbrowser.base.data.HttpConstants
+import androidx.core.net.toUri
 
 /**
  * Contains logic of report data conversion into Xml and performing and HTTP post request to the backend.
@@ -57,7 +57,7 @@ class HttpReportIssueRepository @Inject constructor() : ReportIssueRepository {
         makeXML(data).mapCatching { makeHttpPost(it).getOrThrow() }
 
     private suspend fun makeHttpPost(xml: String): Result<Unit> {
-        val url = Uri.parse(serverUrl).buildUpon()
+        val url = serverUrl.toUri().buildUpon()
             .appendQueryParameter("version", "1")
             .appendQueryParameter("guid", UUID.randomUUID().toString()) // version 4, variant 1
             .appendQueryParameter("lang", locale.language).build().toString()

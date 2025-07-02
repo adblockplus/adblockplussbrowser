@@ -20,6 +20,7 @@ package org.adblockplus.adblockplussbrowser.core.work
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.work.ListenableWorker
+import androidx.work.WorkInfo.Companion.STOP_REASON_CANCELLED_BY_APP
 import androidx.work.testing.TestListenableWorkerBuilder
 import java.io.File
 import kotlinx.coroutines.Dispatchers
@@ -149,7 +150,7 @@ class UpdateSubscriptionsWorkerTest {
         runTest {
             whenDownload().thenReturn(DownloadResult.Success(DownloadedSubscription("")))
             val result = updateSubscriptionsWorker.run {
-                updateSubscriptionsWorker.stop()
+                updateSubscriptionsWorker.stop(STOP_REASON_CANCELLED_BY_APP)
                 updateSubscriptionsWorker.doWork()
             }
             assertThat(result, `is`(ListenableWorker.Result.Success()))
