@@ -106,12 +106,10 @@ class TelemetryService {
      */
     @Throws(IllegalStateException::class)
     fun scheduleReporting(workManager: WorkManager): Collection<UUID> {
-        if (workRequests.isEmpty()) {
-            // It is fine to throw an exception here since it is a developer error
-            // and it should be caught during testing
-            throw IllegalStateException(
-                "No reporters to schedule. Add a reporter first by calling add*Reporter methods"
-            )
+        // It is fine to throw an exception here since it is a developer error
+        // and it should be caught during testing
+        check(workRequests.isNotEmpty()) {
+            "No reporters to schedule. Add a reporter first by calling add*Reporter methods"
         }
         val ids: MutableCollection<UUID> = mutableSetOf()
         workRequests.forEach { (config, request) ->

@@ -50,16 +50,15 @@ class LocalMediaPlayer : TextureView.SurfaceTextureListener, MediaPlayer.OnPrepa
         this.repeat = repeat
         this.delay = delay
         val textureView = textureView
-        if (textureView != null) {
-            mediaPlayer = MediaPlayer().also {
-                it.setOnPreparedListener(this)
-                it.setOnCompletionListener(this)
-                it.setSurface(this.surface)
-                it.setDataSource(textureView.context, uri)
-                it.prepareAsync()
-            }
-        } else {
-            throw IllegalStateException("create() should be called before start()")
+        check(textureView != null) {
+            "create() should be called before start()"
+        }
+        mediaPlayer = MediaPlayer().also {
+            it.setOnPreparedListener(this)
+            it.setOnCompletionListener(this)
+            it.setSurface(this.surface)
+            it.setDataSource(textureView.context, uri)
+            it.prepareAsync()
         }
     }
 

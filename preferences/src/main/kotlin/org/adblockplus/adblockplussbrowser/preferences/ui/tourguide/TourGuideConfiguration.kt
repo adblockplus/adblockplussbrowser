@@ -25,6 +25,7 @@ import android.widget.PopupWindow
 import android.widget.TextView
 import org.adblockplus.adblockplussbrowser.preferences.BuildConfig
 import org.adblockplus.adblockplussbrowser.preferences.R
+import org.adblockplus.adblockplussbrowser.i18n.R as i18nR
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentMainPreferencesBinding
 import timber.log.Timber
 
@@ -60,21 +61,21 @@ object TourGuideConfiguration {
         targetInfos.add(
             TargetInfo(
                 binding.mainPreferencesAdBlockingInclude.mainPreferencesAdBlockingCategory,
-                R.string.tour_dialog_ad_blocking_options_text
+                i18nR.string.tour_dialog_ad_blocking_options_text
             )
         )
 
         targetInfos.add(
             TargetInfo(
                 binding.mainPreferencesAdBlockingInclude.mainPreferencesPrimarySubscriptions,
-                R.string.tour_add_languages
+                i18nR.string.tour_add_languages
             )
         )
 
         targetInfos.add(
             TargetInfo(
                 binding.mainPreferencesAdBlockingInclude.mainPreferencesOtherSubscriptions,
-                R.string.tour_disable_social_media_tracking
+                i18nR.string.tour_disable_social_media_tracking
             )
         )
 
@@ -82,7 +83,7 @@ object TourGuideConfiguration {
             targetInfos.add(
                 TargetInfo(
                     binding.mainPreferencesAdBlockingInclude.mainPreferencesAllowlist,
-                    R.string.tour_allowlist,
+                    i18nR.string.tour_allowlist,
                 )
             )
         }
@@ -90,7 +91,7 @@ object TourGuideConfiguration {
         targetInfos.add(
             TargetInfo(
                 null,
-                R.string.tour_last_step_description,
+                i18nR.string.tour_last_step_description,
             )
         )
         return targetInfos

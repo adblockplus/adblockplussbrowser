@@ -18,7 +18,6 @@
 package org.adblockplus.adblockplussbrowser.base.databinding
 
 import android.content.Intent
-import android.net.Uri
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.method.LinkMovementMethod
@@ -26,7 +25,8 @@ import android.text.style.ClickableSpan
 import android.view.View
 import android.widget.TextView
 import androidx.core.text.inSpans
-import org.adblockplus.adblockplussbrowser.base.R
+import org.adblockplus.adblockplussbrowser.i18n.R
+import androidx.core.net.toUri
 
 private const val ACCEPTABLE_ADS_STANDARD_LINK = "https://acceptableads.com/standard/"
 
@@ -43,7 +43,7 @@ fun bindAAStandardRedirect(textView: TextView) {
             val intent =
                 Intent(
                     Intent.ACTION_VIEW,
-                    Uri.parse(ACCEPTABLE_ADS_STANDARD_LINK)
+                    ACCEPTABLE_ADS_STANDARD_LINK.toUri()
                 )
             context.startActivity(intent)
         }

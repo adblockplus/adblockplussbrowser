@@ -37,6 +37,7 @@ object DOMParser {
     }
 }
 
+@Suppress("UseRequire")
 fun Document.getAttribute(attribute: String, tag: String = ""): String {
     return if (tag.isEmpty()) {
         // If no tag is provided then get attribute from root node

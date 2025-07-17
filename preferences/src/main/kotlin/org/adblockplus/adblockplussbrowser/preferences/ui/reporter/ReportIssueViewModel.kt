@@ -22,7 +22,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Base64
-import androidx.annotation.StringRes
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -35,6 +34,7 @@ import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.os.loadImage
 import org.adblockplus.adblockplussbrowser.base.os.resolveFilename
 import org.adblockplus.adblockplussbrowser.preferences.R
+import org.adblockplus.adblockplussbrowser.i18n.R as i18nR
 import org.adblockplus.adblockplussbrowser.preferences.data.ReportIssueRepository
 import org.adblockplus.adblockplussbrowser.preferences.data.model.ReportIssueData
 import java.io.ByteArrayOutputStream
@@ -88,17 +88,18 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
         viewModelScope.launch {
             addActiveSubscriptions(context)
             removeUrlParameters()
+            val sendReport = reportIssueRepository.sendReport(data)
             backgroundOperationOutcome.postValue(
-                if (reportIssueRepository.sendReport(data).isSuccess) {
+                if (sendReport.isSuccess) {
                     if (data.email.isBlank()) {
                         analyticsProvider.logEvent(AnalyticsEvent.SEND_ANONYMOUS_REPORT)
                     } else {
                         analyticsProvider.logEvent(AnalyticsEvent.SEND_ISSUE_REPORT_SUCCESS)
                     }
-                    displaySnackbarMessage.postValue(R.string.issueReporter_report_sent)
+                    displaySnackbarMessage.postValue(i18nR.string.issueReporter_report_sent)
                     BackgroundOperationOutcome.REPORT_SEND_SUCCESS
                 } else {
-                    displaySnackbarMessage.postValue(R.string.issueReporter_report_send_error)
+                    displaySnackbarMessage.postValue(i18nR.string.issueReporter_report_send_error)
                     analyticsProvider.logEvent(AnalyticsEvent.SEND_ISSUE_REPORT_ERROR)
                     BackgroundOperationOutcome.REPORT_SEND_ERROR
                 }
@@ -167,7 +168,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
                 val base64Bitmap = bitmap.toBase64EncodedPng()
                 if (base64Bitmap.length > IMAGE_MAX_LENGTH) {
                     clearScreenshot()
-                    displaySnackbarMessage.postValue(R.string.issueReporter_report_screenshot_too_large)
+                    displaySnackbarMessage.postValue(i18nR.string.issueReporter_report_screenshot_too_large)
                 } else {
                     fileName = cr.resolveFilename(uri)
                     data.screenshot = base64Bitmap
@@ -175,7 +176,7 @@ internal class ReportIssueViewModel @Inject constructor(application: Application
                 }
             }.onFailure {
                 clearScreenshot()
-                displaySnackbarMessage.postValue(R.string.issueReporter_report_screenshot_invalid)
+                displaySnackbarMessage.postValue(i18nR.string.issueReporter_report_screenshot_invalid)
             }
             backgroundOperationOutcome.postValue(BackgroundOperationOutcome.SCREENSHOT_PROCESSING_FINISHED)
         }

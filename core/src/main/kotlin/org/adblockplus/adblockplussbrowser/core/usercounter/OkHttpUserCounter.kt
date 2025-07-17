@@ -54,7 +54,7 @@ internal class OkHttpUserCounter(
     private val analyticsProvider: AnalyticsProvider
 ) : UserCounter {
 
-    @Suppress("TooGenericExceptionCaught", "LongMethod")
+    @Suppress("TooGenericExceptionCaught", "LongMethod", "InstanceOfCheckForException")
     override suspend fun count(callingApp: CallingApp): CountUserResult = coroutineScope {
         try {
             val savedLastUserCountingResponse = repository.currentData().lastUserCountingResponse
@@ -142,15 +142,16 @@ internal class OkHttpUserCounter(
     }
 
     companion object {
+        @Suppress("TooGenericExceptionCaught")
         fun parseDateString(rawDate: String, analyticsProvider: AnalyticsProvider?): String {
             Timber.d("HTTP response Date header: %s", rawDate)
             lastUserCountingResponseFormat.timeZone = serverTimeZone
             return try {
                 // Expected date format in "Date" header: "Thu, 23 Sep 2021 17:31:01 GMT"
                 lastUserCountingResponseFormat.format(
-                    serverDateParser.parse(rawDate)
+                    serverDateParser.parse(rawDate)!!
                 )
-            } catch (ex: ParseException) {
+            } catch (ex: Exception) {
                 Timber.e(ex)
                 analyticsProvider?.logException(ex)
                 if (BuildConfig.DEBUG) {

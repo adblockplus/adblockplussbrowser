@@ -107,7 +107,7 @@ internal class OtherSubscriptionsViewModel @Inject constructor(
     }
 
     fun toggleSocialMediaTracking() {
-        blockSocialMediaTracking.apply { value?.let { it -> value = !it } }
+        blockSocialMediaTracking.apply { value?.let { value = !it } }
         handleDefaultSubscriptions(
             blockSocialMediaTracking.value!!, socialMediaTrackingSubscription.value!!,
             AnalyticsEvent.SOCIAL_MEDIA_BUTTONS_OFF, AnalyticsEvent.SOCIAL_MEDIA_BUTTONS_ON

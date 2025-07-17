@@ -39,7 +39,7 @@
     <string name="about_terms_of_use"><a href="https://getadblock.com/terms/">이용 약관</a></string>
 
     <!-- Start Guide -->
-    <string name="tour_last_step_description">以上です！これで、AdBlock for Samsung Internet を最大限に活用する準備が整いました</string>
-    <string name="take_tour_description">より楽しいブラウジング体験のために AdBlock を使用する方法を学びます</string>
+    <string name="tour_last_step_description">그게 다입니다! AdBlock for Samsung Internet을 최대한 활용할 준비가 되었습니다.</string>
+    <string name="take_tour_description">보다 즐거운 브라우징 경험을 위해 AdBlock 사용하는 방법을 배우십시오</string>
 
 </resources>

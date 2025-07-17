@@ -196,8 +196,8 @@ internal class ActivePingReporter @Inject constructor(
     @Throws(IllegalArgumentException::class)
     @ExperimentalSerializationApi
     override fun convert(httpResponse: Any): ReportResponse {
-        if (httpResponse !is Response) {
-            throw IllegalArgumentException("Expected Response, got ${httpResponse::class.java}")
+        require(httpResponse is Response) {
+            "Expected Response, got ${httpResponse::class.java}"
         }
         val token = httpResponse.body?.byteStream()?.use { inputStream ->
             val jsonToken = Json.decodeFromStream(JsonObject.serializer(), inputStream)["token"]

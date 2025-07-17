@@ -86,6 +86,7 @@ internal class LauncherViewModel @Inject constructor(
         return navigationDirection
     }
 
+    @Suppress("InstanceOfCheckForException")
     fun checkInstallReferrer() {
         if (appPreferences.referrerAlreadyChecked) {
             Timber.d("InstallReferrer already checked")

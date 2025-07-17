@@ -44,6 +44,7 @@ internal class UserCounterWorker @AssistedInject constructor(
     @Inject
     internal lateinit var analyticsProvider: AnalyticsProvider
 
+    @Suppress("InstanceOfCheckForException")
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         // if it is a periodic check, force update subscriptions
         return@withContext try {

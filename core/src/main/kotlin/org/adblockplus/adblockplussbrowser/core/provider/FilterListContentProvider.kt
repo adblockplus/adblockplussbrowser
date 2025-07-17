@@ -75,25 +75,24 @@ import java.io.InputStream
 import java.text.ParseException
 import java.util.Date
 import java.util.concurrent.TimeUnit
-import kotlin.time.Duration
 import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.ExperimentalTime
 
+
+@EntryPoint
+@InstallIn(SingletonComponent::class)
+internal interface FilterListContentProviderEntryPoint {
+    fun getCoreRepository(): CoreRepository
+    fun getSettingsRepository(): SettingsRepository
+    fun getActivationPreferences(): ActivationPreferences
+    fun getAnalyticsProvider(): AnalyticsProvider
+    fun getSubscriptionManager(): SubscriptionsManager
+}
+
 @ExperimentalTime
 internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
-
-    @EntryPoint
-    @InstallIn(SingletonComponent::class)
-    interface FilterListContentProviderEntryPoint {
-        fun getCoreRepository(): CoreRepository
-        fun getSettingsRepository(): SettingsRepository
-        fun getActivationPreferences(): ActivationPreferences
-        fun getAnalyticsProvider(): AnalyticsProvider
-        fun getSubscriptionManager(): SubscriptionsManager
-    }
-
     private val entrypoint: FilterListContentProviderEntryPoint by lazy {
         EntryPointAccessors.fromApplication(
             requireContext(this@FilterListContentProvider),
@@ -276,7 +275,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
         var ins: InputStream
         if (acceptableAdsEnabled) {
             Timber.d("getFilterFile: unpacking AA")
-            val start = Duration.milliseconds(System.currentTimeMillis())
+            val start = System.currentTimeMillis().milliseconds
             ins = context.assets.open("exceptionrules.txt.xz")
             /*
                     XZInputStream params:
@@ -292,7 +291,7 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
             }
             Timber.d(
                 "getFilterFile: unpacked AA, elapsed: %s",
-                (Duration.milliseconds(System.currentTimeMillis()) - start).toString()
+                (System.currentTimeMillis().milliseconds - start).toString()
             )
         }
 
@@ -354,11 +353,12 @@ internal class FilterListContentProvider : ContentProvider(), CoroutineScope {
          */
         const val XZ_MEMORY_LIMIT_KB = 30 * 1024
 
+        @Suppress("SwallowedException", "TooGenericExceptionCaught")
         private fun convertToTimestamp(stringToFormat: String): Long {
             return try {
-                val date: Date = OkHttpUserCounter.lastUserCountingResponseFormat.parse(stringToFormat)
+                val date: Date = OkHttpUserCounter.lastUserCountingResponseFormat.parse(stringToFormat)!!
                 date.time
-            } catch (e: ParseException) {
+            } catch (e: Exception) {
                 0
             }
         }

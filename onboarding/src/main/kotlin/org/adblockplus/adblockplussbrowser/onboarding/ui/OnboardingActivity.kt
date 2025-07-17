@@ -41,6 +41,7 @@ class OnboardingActivity : AppCompatActivity() {
 
         viewModel.finishedEvent.observe(this) { wrapper ->
             wrapper.get()?.let {
+                @Suppress("DEPRECATION")
                 val targetActivity = intent.getSerializableExtra(TARGET_ACTIVITY_PARAM) as Class<*>
                 val intent = Intent(this, targetActivity)
                 this.startActivity(intent)

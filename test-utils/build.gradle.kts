@@ -25,6 +25,13 @@ plugins {
 
 applyCommonConfig()
 
+android {
+    namespace = "org.adblockplus.adblockplussbrowser.testutils"
+    buildFeatures {
+        buildConfig = true
+    }
+}
+
 createFlavorsConfig()
 
 dependencies {

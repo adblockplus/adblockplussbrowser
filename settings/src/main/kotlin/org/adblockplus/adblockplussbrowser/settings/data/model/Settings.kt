@@ -21,6 +21,8 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import org.adblockplus.adblockplussbrowser.base.data.model.Subscription
 
+@Suppress("ForbiddenComment")
+//TODO: ⚠️ Parcelables are not safe to use with DataStore because the data format may change between Android versions.
 @Parcelize
 data class Settings(
     val adblockEnabled: Boolean,

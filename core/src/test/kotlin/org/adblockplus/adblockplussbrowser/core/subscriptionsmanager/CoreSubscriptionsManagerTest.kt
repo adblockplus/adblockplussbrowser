@@ -31,6 +31,8 @@ import dagger.hilt.android.testing.UninstallModules
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
+import org.adblockplus.adblockplusbrowser.testutils.FakeSettingsRepository
 import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.SubscriptionsManager
 import org.adblockplus.adblockplussbrowser.base.data.prefs.ActivationPreferences
@@ -38,6 +40,8 @@ import org.adblockplus.adblockplussbrowser.core.CoreSubscriptionsManager
 import org.adblockplus.adblockplussbrowser.core.data.CoreRepository
 import org.adblockplus.adblockplussbrowser.core.di.CoreModule
 import org.adblockplus.adblockplussbrowser.core.downloader.Downloader
+import org.adblockplus.adblockplussbrowser.core.helpers.FakeActivationPreferences
+import org.adblockplus.adblockplussbrowser.core.helpers.FakeCoreRepository
 import org.adblockplus.adblockplussbrowser.core.provider.TestModule
 import org.adblockplus.adblockplussbrowser.core.usercounter.OkHttpUserCounter
 import org.adblockplus.adblockplussbrowser.core.usercounter.UserCounter
@@ -57,10 +61,6 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import javax.inject.Singleton
 import kotlin.time.ExperimentalTime
-import org.adblockplus.adblockplusbrowser.testutils.FakeAnalyticsProvider
-import org.adblockplus.adblockplusbrowser.testutils.FakeSettingsRepository
-import org.adblockplus.adblockplussbrowser.core.helpers.FakeActivationPreferences
-import org.adblockplus.adblockplussbrowser.core.helpers.FakeCoreRepository
 
 @ExperimentalTime
 @Config(

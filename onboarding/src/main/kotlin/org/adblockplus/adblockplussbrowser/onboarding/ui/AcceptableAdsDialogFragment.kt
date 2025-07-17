@@ -24,6 +24,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import org.adblockplus.adblockplussbrowser.base.databinding.bindAAStandardRedirect
 import org.adblockplus.adblockplussbrowser.onboarding.R
+import org.adblockplus.adblockplussbrowser.base.R as baseR
 
 class AcceptableAdsDialogFragment : AppCompatDialogFragment() {
 
@@ -32,7 +33,7 @@ class AcceptableAdsDialogFragment : AppCompatDialogFragment() {
             customView(viewRes = R.layout.acceptable_ads_example_explanation, scrollable = true)
                 .negativeButton(text=getString(android.R.string.ok), click = { dismiss() })
         }
-        bindAAStandardRedirect(aaDialog.findViewById(R.id.acceptable_ads_standard_redirect_text))
+        bindAAStandardRedirect(aaDialog.findViewById(baseR.id.acceptable_ads_standard_redirect_text))
         return aaDialog
     }
 }

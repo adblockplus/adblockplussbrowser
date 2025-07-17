@@ -17,8 +17,8 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui.allowlist
 
+import android.annotation.SuppressLint
 import android.app.Dialog
-import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.activityViewModels
@@ -28,29 +28,31 @@ import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import dagger.hilt.android.AndroidEntryPoint
-import org.adblockplus.adblockplussbrowser.preferences.R
+import org.adblockplus.adblockplussbrowser.i18n.R as i18nR
 import org.apache.commons.validator.routines.DomainValidator
+import androidx.core.net.toUri
 
 @AndroidEntryPoint
 internal class AddDomainDialogFragment : AppCompatDialogFragment() {
 
     private val viewModel: AllowlistViewModel by activityViewModels()
 
+    @SuppressLint("CheckResult")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         MaterialDialog(requireContext()).show {
-            title(R.string.allowlist_add_title)
+            title(i18nR.string.allowlist_add_title)
             input(
-                hintRes = R.string.allowlist_add_hint,
+                hintRes = i18nR.string.allowlist_add_hint,
                 waitForPositiveButton = false
             ) { dialog, text ->
                 val rawDomain = text.toString()
-                val domain = Uri.parse(rawDomain).host ?: rawDomain
+                val domain = rawDomain.toUri().host ?: rawDomain
                 val validDomain = DomainValidator.getInstance().isValid(domain)
                 dialog.setActionButtonEnabled(WhichButton.POSITIVE, validDomain)
             }
             positiveButton(android.R.string.ok) { dialog ->
                 val domain = dialog.getInputField().text.toString()
-                viewModel.addDomain(Uri.parse(domain).host ?: domain)
+                viewModel.addDomain(domain.toUri().host ?: domain)
             }
             negativeButton(android.R.string.cancel)
         }

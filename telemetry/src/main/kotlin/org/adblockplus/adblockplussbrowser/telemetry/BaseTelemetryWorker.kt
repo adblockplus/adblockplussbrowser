@@ -45,7 +45,7 @@ import java.io.IOException
  * @param httpClient [OkHttpClient] instance.
  * @param reporter [HttpReporter] instance.
  */
-internal open class BaseTelemetryWorker constructor(
+internal open class BaseTelemetryWorker(
     appContext: Context,
     params: WorkerParameters,
     httpClient: OkHttpClient,
