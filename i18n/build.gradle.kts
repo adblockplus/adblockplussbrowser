@@ -23,4 +23,11 @@ plugins {
 
 applyCommonConfig()
 
+android {
+    namespace = "org.adblockplus.adblockplussbrowser.i18n"
+    buildFeatures {
+        buildConfig = true
+    }
+}
+
 createFlavorsConfig()

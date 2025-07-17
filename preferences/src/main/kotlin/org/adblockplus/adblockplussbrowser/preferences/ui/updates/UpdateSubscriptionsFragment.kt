@@ -24,6 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.base.data.model.SubscriptionUpdateStatus
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.preferences.R
+import org.adblockplus.adblockplussbrowser.i18n.R as i18nR
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentUpdateSubscriptionsBinding
 import org.adblockplus.adblockplussbrowser.preferences.ui.updates.UpdateSubscriptionsViewModel.UpdateConfigType
 import timber.log.Timber
@@ -78,12 +79,12 @@ class UpdateSubscriptionsFragment :
             if (isUpdating) {
                 updatePreferencesProgress.progress = (value as SubscriptionUpdateStatus.Progress).progress
                 updatePreferencesProgress.visibility = View.VISIBLE
-                binding.updatesPreferencesUpdateNowLabel.text = getString(R.string.update_status_progress_message)
+                binding.updatesPreferencesUpdateNowLabel.text = getString(i18nR.string.update_status_progress_message)
             } else {
                 updatePreferencesProgress.progress = 0
                 updatePreferencesProgress.visibility = View.INVISIBLE
                 binding.updatesPreferencesUpdateNowLabel.text =
-                    getString(R.string.preferences_update_subscriptions_title)
+                    getString(i18nR.string.preferences_update_subscriptions_title)
             }
         }
     }

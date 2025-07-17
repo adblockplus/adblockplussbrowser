@@ -52,7 +52,7 @@ internal fun bindOnPageSelected(viewPager2: ViewPager2, onPageSelectedListener: 
 
 @BindingAdapter("indicatorPager2")
 internal fun bindIndicatorPager2(indicator: BaseDotsIndicator, viewPager2: ViewPager2) {
-    indicator.setViewPager2(viewPager2)
+    indicator.attachTo(viewPager2)
 }
 
 @BindingAdapter("progressPager2")
@@ -104,9 +104,11 @@ internal fun bindOnboardingButtonPager2(nextScreenButton: ImageButton, viewPager
 internal fun bindOnboardingPages(viewPager2: ViewPager2, pageList: List<PageInfo>?, currentItem: Int) {
     // Since we have a low number of pages for the onboarding, we load them all beforehand
     // This is to avoid flickering when animating to the next page
-    val pageCount = pageList?.size ?: 0
-    if (pageCount > 0) {
-        viewPager2.offscreenPageLimit = pageCount
+    pageList?.let {
+        val pageCount = it.size
+        if (pageCount > 0) {
+            viewPager2.offscreenPageLimit = pageCount
+        }
     }
     (viewPager2.adapter as OnboardingPagerAdapter).submitList(pageList)
     // Once we update the items, we also want to set the currentItem

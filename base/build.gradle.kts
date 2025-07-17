@@ -27,8 +27,16 @@ plugins {
 applyCommonConfig()
 
 android {
+    namespace = "org.adblockplus.adblockplussbrowser.base"
     buildFeatures {
         dataBinding = true
+        buildConfig = true
+    }
+    kotlinOptions {
+        freeCompilerArgs = listOf(
+            "-Xstring-concat=inline",
+            "-Xannotation-default-target=param-property"
+        )
     }
 }
 

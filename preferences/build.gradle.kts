@@ -21,15 +21,23 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("kapt")
-    id("dagger.hilt.android.plugin")
     id("androidx.navigation.safeargs.kotlin")
+    alias(libs.plugins.hilt)
 }
 
 applyCommonConfig()
 
 android {
+    namespace = "org.adblockplus.adblockplussbrowser.preferences"
     buildFeatures {
         dataBinding = true
+        buildConfig = true
+    }
+    kotlinOptions {
+        freeCompilerArgs = listOf(
+            "-Xstring-concat=inline",
+            "-Xannotation-default-target=param-property"
+        )
     }
 }
 
@@ -73,11 +81,11 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test )
-    testAnnotationProcessor(libs.hilt.compiler)
+    kaptTest(libs.hilt.compiler)
     testImplementation(libs.okhttp3.mockwebserver)
     testImplementation(libs.androidx.arch.core.testing)
     testImplementation(libs.androidx.test.core)
     testImplementation(project(":test-utils"))
 }
-

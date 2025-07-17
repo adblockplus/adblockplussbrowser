@@ -156,6 +156,7 @@ internal class ProtoSettingsMigration(
         return null
     }
 
+    @Suppress("CyclomaticComplexMethod")
     private fun String?.adjustUrl(): String? =
         when (this) {
             // We are now using the language subscription lists without embedding easylist to save data, but there are

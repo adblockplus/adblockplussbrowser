@@ -21,13 +21,25 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("kapt")
+    alias(libs.plugins.hilt)
     id("kotlin-parcelize")
     id("com.google.protobuf")
-    id("dagger.hilt.android.plugin")
     id("de.undercouch.download")
 }
 
 applyCommonConfig()
+
+android {
+    namespace = "org.adblockplus.adblockplussbrowser.core"
+    buildFeatures {
+        buildConfig = true
+    }
+    kotlinOptions {
+        freeCompilerArgs = listOf(
+            "-Xstring-concat=inline"
+        )
+    }
+}
 
 createFlavorsConfig()
 
@@ -52,9 +64,9 @@ dependencies {
     implementation(libs.xz)
 
     implementation(libs.hilt)
-    kapt(libs.hilt.compiler)
     implementation(libs.androidx.hilt.common)
     implementation(libs.androidx.hilt.work)
+    kapt(libs.hilt.compiler)
     kapt(libs.androidx.hilt.compiler)
 
     testImplementation(libs.junit)
@@ -67,7 +79,6 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.hilt.testing)
     testImplementation(project(":test-utils"))
-    testAnnotationProcessor(libs.hilt.compiler)
     kaptTest(libs.hilt.compiler)
     kaptTest(libs.androidx.hilt.compiler)
     kaptAndroidTest(libs.hilt.compiler)

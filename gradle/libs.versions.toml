@@ -1,61 +1,64 @@
 [versions]
-desugar_jdk_libs = "2.0.3"
+desugar_jdk_libs = "2.1.5"
+gradle-download-task = "5.6.0"
+javapoet = "1.13.0"
 robolectric = "4.10.3"
-android-plugin-gradle = "7.4.2"
-kotlin-plugin-gradle = "1.6.21"
-detekt = "1.18.1"
-plugin-versions = "0.42.0"
+android-plugin-gradle = "8.11.0"
+detekt = "1.23.8"
+plugin-versions = "0.52.0"
 junit = "4.13.2"
-jacoco-core = "0.8.7"
-jacoco-test-aggregation-coverage = "2.0.1"
-json-kotlin-gradle = "0.91"
-dots-indicator = "4.2"
-material = "1.3.0"
-okio = "3.0.0-alpha.6"
-timber = "4.7.1"
+jacoco-core = "0.8.13"
+jacoco-test-aggregation-coverage = "2.4.4"
+json-kotlin-gradle = "0.121"
+dots-indicator = "5.1.0"
+material = "1.12.0"
+okio = "3.15.0"
+timber = "5.0.1"
 speed-dial = "3.3.0"
-firebase-bom = "28.3.0"
-firebase-crashlytics-gradle = "2.7.1"
-firebase-crashlytics-ktx = "18.2.1"
-gms-google-services = "4.3.8"
-gms-oss-licenses-plugin = "0.10.4"
-gms-play-services-oss-licenses = "17.0.0"
-androidx-activity-ktx = "1.2.3"
-androidx-appcompat = "1.6.1"
-androidx-arch-core-testing = "2.1.0"
-androidx-core-ktx = "1.8.0"
-androidx-constraintlayout = "2.0.4"
-androidx-fragment-ktx = "1.3.4"
-androidx-preference-ktx = "1.1.1"
-androidx-test-core = "1.4.0"
-androidx-viewpager2 = "1.0.0"
-androidx-datastore = "1.0.0-beta01"
-androidx-hilt = "1.0.0"
-androidx-lifecycle = "2.3.1"
-androidx-navigation = "2.3.5"
-androidx-test-espresso-core = "3.3.0"
-androidx-test-ext-junit = "1.1.2"
-androidx-work = "2.8.0"
-commons-validator = "1.7"
-hilt = "2.39.1"
-kotlin = "1.5.31"
-kotlinx-coroutines = "1.6.0"
-kotlinx-datetime = "0.2.1"
-kotlinx-serialization = "1.3.1" # compatible with Kotlin 1.5.31
+firebase-bom = "33.16.0"
+firebase-crashlytics-gradle = "3.0.4"
+firebase-crashlytics-ktx = "19.4.4"
+gms-google-services = "4.4.3"
+gms-oss-licenses-plugin = "0.10.6"
+gms-play-services-oss-licenses = "17.2.0"
+androidx-activity-ktx = "1.10.1"
+androidx-appcompat = "1.7.1"
+androidx-arch-core-testing = "2.2.0"
+androidx-core-ktx = "1.16.0"
+androidx-constraintlayout = "2.2.1"
+androidx-fragment-ktx = "1.8.8"
+androidx-preference-ktx = "1.2.1"
+androidx-test-core = "1.6.1"
+androidx-viewpager2 = "1.1.0"
+androidx-datastore = "1.1.7"
+androidx-hilt = "1.2.0"
+androidx-lifecycle = "2.9.1"
+androidx-navigation = "2.9.1"
+androidx-test-espresso-core = "3.6.1"
+androidx-test-ext-junit = "1.2.1"
+androidx-work = "2.10.2"
+commons-validator = "1.9.0"
+hilt = "2.56.2"
+kotlin = "2.2.0"
+kotlinx-coroutines = "1.10.2"
+kotlinx-datetime = "0.6.2"
+kotlinx-serialization = "1.9.0"
 dialogs = "3.3.0"
-okhttp3 = "4.9.1"
+okhttp3 = "4.12.0"
 gildor-coroutines-okhttp = "1.0"
-protobuf-gradle-plugin = "0.9.4"
-protobuf = "4.27.2"
+protobuf-gradle-plugin = "0.9.5"
+protobuf = "4.31.1"
 installreferrer = "2.2"
-mockito = "4.0.0"
-xz = "1.9"
+mockito = "3.2.0"
+mockk = "1.14.4"
+xz = "1.10"
 
 [libraries]
 desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
+gradle-download-task = { module = "de.undercouch:gradle-download-task", version.ref = "gradle-download-task" }
+javapoet = { module = "com.squareup:javapoet", version.ref = "javapoet" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 android-plugin-gradle = { module = "com.android.tools.build:gradle", version.ref = "android-plugin-gradle" }
-kotlin-plugin-gradle = {module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin-plugin-gradle" }
 plugin-versions = { module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "plugin-versions" }
 junit = { module = "junit:junit", version.ref = "junit" }
 jacoco-core = { module = "org.jacoco:org.jacoco.core", version.ref = "jacoco-core" }
@@ -120,10 +123,12 @@ okhttp3-mockwebserver = { module = "com.squareup.okhttp3:mockwebserver", version
 gildor-coroutines-okhttp = { module = "ru.gildor.coroutines:kotlin-coroutines-okhttp", version.ref = "gildor-coroutines-okhttp" }
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 xz = { module = "org.tukaani:xz", version.ref = "xz" }
 
 [plugins]
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref ="hilt" }
 plugin-versions = { id = "com.github.ben-manes.versions", version.ref = "plugin-versions" }
 kotlinx-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 jacoco-test-aggregation-coverage = { id = "io.github.gmazzo.test.aggregation.coverage", version.ref = "jacoco-test-aggregation-coverage" }

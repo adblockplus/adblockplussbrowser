@@ -15,6 +15,8 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import java.util.Locale
+
 buildscript {
     repositories {
         google()
@@ -25,25 +27,23 @@ buildscript {
         classpath(libs.android.plugin.gradle)
         classpath(libs.plugin.versions)
         classpath(libs.androidx.navigation.safeargs.plugin)
-        classpath(libs.hilt.gradle.plugin)
         classpath(libs.kotlin.gradle.plugin)
         classpath(libs.protobuf.gradle.plugin)
         classpath(libs.gms.oss.licenses.plugin)
         classpath(libs.gms.google.services)
         classpath(libs.firebase.crashlytics.gradle)
         classpath(libs.jacoco.core)
+        classpath(libs.gradle.download.task)
+        classpath(libs.javapoet)
     }
 }
 
-// Referencing `libs` raises "LibrariesForLibs'
-// can't be called in this context by implicit receiver."
-// TODO needs Gradle version update
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     jacoco
     alias(libs.plugins.detekt)
     alias(libs.plugins.plugin.versions)
     alias(libs.plugins.jacoco.test.aggregation.coverage)
+    alias(libs.plugins.hilt) apply false
 }
 
 val coverageProjectsPath = setOf(":base", ":core", ":preferences", ":app", ":telemetry")
@@ -85,7 +85,8 @@ tasks.register("clean", Delete::class) {
 }
 
 fun isNonStable(version: String): Boolean {
-    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
+    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.uppercase(Locale.ROOT)
+        .contains(it) }
     val regex = "^[0-9,.v-]+(-r)?$".toRegex()
     val isStable = stableKeyword || regex.matches(version)
     return isStable.not()
@@ -113,4 +114,3 @@ tasks.named<com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask>("
         }
     }
 }
-

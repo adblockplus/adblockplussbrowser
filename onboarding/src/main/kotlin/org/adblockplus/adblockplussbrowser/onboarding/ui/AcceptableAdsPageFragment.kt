@@ -23,6 +23,7 @@ import org.adblockplus.adblockplussbrowser.analytics.AnalyticsProvider
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
 import org.adblockplus.adblockplussbrowser.onboarding.R
+import org.adblockplus.adblockplussbrowser.i18n.R as i18nR
 import org.adblockplus.adblockplussbrowser.onboarding.databinding.FragmentOnboardingAcceptableAdsPageBinding
 import javax.inject.Inject
 
@@ -35,9 +36,9 @@ class AcceptableAdsPageFragment :
 
     override fun onBindView(binding: FragmentOnboardingAcceptableAdsPageBinding) {
         val headerInclude = binding.onboardingAaHeaderInclude
-        headerInclude.onboardingHeaderTitle1.setText(R.string.onboarding_acceptable_ads_header_title1)
-        headerInclude.onboardingHeaderTitle2.setText(R.string.acceptable_ads)
-        headerInclude.onboardingHeaderTitle3.setText(R.string.onboarding_acceptable_ads_header_title3)
+        headerInclude.onboardingHeaderTitle1.setText(i18nR.string.onboarding_acceptable_ads_header_title1)
+        headerInclude.onboardingHeaderTitle2.setText(i18nR.string.acceptable_ads)
+        headerInclude.onboardingHeaderTitle3.setText(i18nR.string.onboarding_acceptable_ads_header_title3)
         val lifecycleOwner = this.viewLifecycleOwner
         binding.onboardingAaNonintrusiveAdsExample.setDebounceOnClickListener({
             AcceptableAdsDialogFragment().show(parentFragmentManager, null)

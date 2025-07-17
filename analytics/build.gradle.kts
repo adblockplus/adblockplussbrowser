@@ -19,15 +19,26 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("kapt")
-    id("dagger.hilt.android.plugin")
+    alias(libs.plugins.hilt)
 }
 
 applyCommonConfig()
 
+android {
+    namespace = "org.adblockplus.adblockplussbrowser.analytics"
+    buildFeatures {
+        buildConfig = true
+    }
+}
+
+hilt {
+    enableAggregatingTask = true
+}
+
 dependencies {
     implementation(libs.hilt)
-    implementation(libs.firebase.crashlytics.ktx)
     kapt(libs.hilt.compiler)
+    implementation(libs.firebase.crashlytics.ktx)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(libs.timber)

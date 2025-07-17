@@ -21,14 +21,29 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("kapt")
-    id("dagger.hilt.android.plugin")
+    alias(libs.plugins.hilt)
 }
 
 applyCommonConfig()
 
 android {
+    namespace = "org.adblockplus.adblockplussbrowser.onboarding"
     buildFeatures {
         dataBinding = true
+        buildConfig = true
+    }
+    kotlinOptions {
+        freeCompilerArgs = listOf(
+            "-Xannotation-default-target=param-property"
+        )
+    }
+    buildTypes {
+        getByName("release") {
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
     }
 }
 

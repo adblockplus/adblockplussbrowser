@@ -24,8 +24,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 
 @BindingAdapter("allowlistItems")
-internal fun bindAllowlistItems(recyclerView: RecyclerView, items: List<AllowlistItem>) {
-    (recyclerView.adapter as AllowlistAdapter).submitList(items)
+internal fun bindAllowlistItems(recyclerView: RecyclerView, items: List<AllowlistItem>?) {
+    (recyclerView.adapter as AllowlistAdapter).submitList(items ?: emptyList())
 }
 
 @BindingAdapter("divider")
@@ -37,6 +37,6 @@ internal fun bindDivider(recyclerView: RecyclerView, drawable: Drawable) {
 }
 
 @BindingAdapter("allowlistHeaderVisibility")
-internal fun bindAllowlistHeaderVisibility(view: View, items: List<AllowlistItem>) {
-    view.visibility = if (items.isEmpty()) View.GONE else View.VISIBLE
+internal fun bindAllowlistHeaderVisibility(view: View, items: List<AllowlistItem>?) {
+    view.visibility = if (items.isNullOrEmpty()) View.GONE else View.VISIBLE
 }

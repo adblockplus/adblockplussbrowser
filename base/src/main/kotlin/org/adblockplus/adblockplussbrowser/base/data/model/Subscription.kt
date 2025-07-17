@@ -18,7 +18,6 @@
 package org.adblockplus.adblockplussbrowser.base.data.model
 
 import android.os.Parcelable
-import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import org.adblockplus.adblockplussbrowser.base.BuildConfig
 

@@ -22,26 +22,33 @@ plugins {
     id("com.google.android.gms.oss-licenses-plugin")
     kotlin("android")
     kotlin("kapt")
-    id("dagger.hilt.android.plugin")
+    alias(libs.plugins.hilt)
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
 }
 
-applyCommonConfig()
+kotlin {
+    jvmToolchain(17)
+}
 
 android {
+    namespace = "org.adblockplus.adblockplussbrowser.app"
     createFlavorsConfig()
-
+    compileSdkVersion(Config.COMPILE_SDK_VERSION)
     defaultConfig {
+        minSdk = Config.MIN_SDK_VERSION
+        targetSdk = Config.TARGET_SDK_VERSION
         versionCode = versionCode()
         versionName = "0.0.0"
         val languagesSet =
             setOf("en", "ar", "de", "el", "es", "fr", "hu", "it", "ja", "ko", "nl", "pl", "pt", "ru", "tr", "zh-rCN")
         resourceConfigurations.addAll(languagesSet)
+        multiDexEnabled = true
     }
 
     buildFeatures {
         dataBinding = true
+        buildConfig = true
     }
 
     signingConfigs {
@@ -53,13 +60,24 @@ android {
         @Suppress("UnstableApiUsage")
         // this is needed for `OffsetDateTime` java class that is used in json serialization
         isCoreLibraryDesugaringEnabled = true
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
-}
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
 
-// recommended https://dagger.dev/hilt/gradle-setup.html#add-the-hilt-android-gradle-plugin
-kapt {
-    correctErrorTypes = true
+        getByName("debug") {
+            isMinifyEnabled = false
+        }
+    }
 }
 
 dependencies {
@@ -86,9 +104,9 @@ dependencies {
     implementation(libs.androidx.navigation.ui)
     implementation(libs.androidx.work.runtime)
     implementation(libs.hilt)
-    kapt(libs.hilt.compiler)
     implementation(libs.androidx.hilt.common)
     implementation(libs.androidx.hilt.work)
+    kapt(libs.hilt.compiler)
     kapt(libs.androidx.hilt.compiler)
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.coroutines.core)

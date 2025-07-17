@@ -18,7 +18,6 @@
 package org.adblockplus.adblockplussbrowser.app.ui
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -32,10 +31,12 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import dagger.hilt.android.AndroidEntryPoint
 import org.adblockplus.adblockplussbrowser.app.R
+import org.adblockplus.adblockplussbrowser.i18n.R as i18nR
 import org.adblockplus.adblockplussbrowser.app.databinding.ActivityMainBinding
 import org.adblockplus.adblockplussbrowser.base.navigation.navControllerFromFragmentContainerView
 import org.adblockplus.adblockplussbrowser.base.samsung.constants.SamsungInternetConstants.SBROWSER_APP_ID
 import timber.log.Timber
+import androidx.core.net.toUri
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -96,7 +97,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         viewModel.logDeviceNotSupported()
-        Toast.makeText(applicationContext, getString(R.string.device_not_supported), Toast.LENGTH_LONG)
+        Toast.makeText(applicationContext, getString(i18nR.string.device_not_supported), Toast.LENGTH_LONG)
             .show()
     }
 
@@ -104,7 +105,7 @@ class MainActivity : AppCompatActivity() {
         Timber.d("Start store with prefix: $storePrefix")
         val intent = Intent(
             Intent.ACTION_VIEW,
-            Uri.parse("$storePrefix${SBROWSER_APP_ID}")
+            "$storePrefix${SBROWSER_APP_ID}".toUri()
         )
         startActivity(intent)
     }

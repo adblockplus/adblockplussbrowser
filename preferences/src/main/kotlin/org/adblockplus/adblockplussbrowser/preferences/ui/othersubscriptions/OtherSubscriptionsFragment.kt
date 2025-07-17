@@ -17,6 +17,7 @@
 
 package org.adblockplus.adblockplussbrowser.preferences.ui.othersubscriptions
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.View
 import android.widget.Toast
@@ -34,9 +35,9 @@ import org.adblockplus.adblockplussbrowser.base.BuildConfig
 import org.adblockplus.adblockplussbrowser.base.databinding.DataBindingFragment
 import org.adblockplus.adblockplussbrowser.base.view.setDebounceOnClickListener
 import org.adblockplus.adblockplussbrowser.preferences.R
+import org.adblockplus.adblockplussbrowser.i18n.R as i18nR
 import org.adblockplus.adblockplussbrowser.preferences.databinding.FragmentOtherSubscriptionsBinding
 import org.adblockplus.adblockplussbrowser.preferences.ui.SwipeToDeleteCallback
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -61,6 +62,7 @@ internal class OtherSubscriptionsFragment :
         }
 
         val swipeToDeleteHandler = object : SwipeToDeleteCallback() {
+            @SuppressLint("NotifyDataSetChanged")
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val otherSubscriptionsAdapter =
                     binding.otherSubscriptionsList.adapter as OtherSubscriptionsAdapter
@@ -83,14 +85,14 @@ internal class OtherSubscriptionsFragment :
         lifecycleScope.launch {
             viewModel.errorFlow.collect {
                 Toast.makeText(
-                    requireContext(), R.string.other_subscriptions_error_add_custom, Toast.LENGTH_LONG).show()
+                    requireContext(), i18nR.string.other_subscriptions_error_add_custom, Toast.LENGTH_LONG).show()
             }
         }
 
         lifecycleScope.launch {
             viewModel.activityCancelledFlow.collect {
                 Toast.makeText(
-                    requireContext(), getText(R.string.file_picking_canceled), Toast.LENGTH_LONG).show()
+                    requireContext(), getText(i18nR.string.file_picking_canceled), Toast.LENGTH_LONG).show()
             }
         }
 
@@ -173,7 +175,7 @@ internal class OtherSubscriptionsFragment :
                     }.onFailure {
                         Toast.makeText(
                             requireContext(),
-                            getText(R.string.file_manager_not_found_message),
+                            getText(i18nR.string.file_manager_not_found_message),
                             Toast.LENGTH_LONG
                         ).show()
                     }
