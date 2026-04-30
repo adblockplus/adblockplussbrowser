@@ -176,7 +176,7 @@
     <string name="tour_add_languages">일반적으로 탐색하는 언어 추가</string>
     <string name="tour_disable_social_media_tracking">탐색하는 동안 소셜 미디어 추적 비활성화</string>
     <string name="tour_allowlist">웹사이트에서 계속 광고를 볼 수 있도록 허용 목록</string>
-    <string name="tour_last_step_description">그게 다입니다! ABP for 삼성 브라우저를 최대한 활용할 준비가 되었습니다.</string>
+    <string name="tour_last_step_description">그게 다입니다! 삼성 브라우저용 ABP를 최대한 활용할 준비가 되었습니다.</string>
     <string name="tour_last_step_button_done">완료</string>
 
 </resources>
