@@ -17,11 +17,11 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">Samsung Internet için ABP</string>
-    <string name="app_subtitle">Samsung Internet için</string>
-    <string name="samsung_internet_required_title">Samsung Internet gerekli</string>
-    <string name="samsung_internet_required_description">ABP, siz Samsung Internet’i kullanırken bu tarayıcı üzerinde çalışarak reklamları filtreleyen bir uygulamadır. ABP\'nin etkin biçimde çalışması için, cihazınızda Samsung Internet 4.0 ya da üstü bir sürümün kurulu olması gerekir.\nAşağıdaki düğmeye tıklayarak Samsung Internet edinebilirsiniz.</string>
-    <string name="download_samsung_internet">Samsung Internet\'i indir</string>
+    <string name="app_name">Samsung Browser için ABP</string>
+    <string name="app_subtitle">Samsung Browser için</string>
+    <string name="samsung_internet_required_title">Samsung Browser gerekli</string>
+    <string name="samsung_internet_required_description">ABP, siz Samsung Browser’i kullanırken bu tarayıcı üzerinde çalışarak reklamları filtreleyen bir uygulamadır. ABP\'nin etkin biçimde çalışması için, cihazınızda Samsung Browser 4.0 ya da üstü bir sürümün kurulu olması gerekir.\nAşağıdaki düğmeye tıklayarak Samsung Browser edinebilirsiniz.</string>
+    <string name="download_samsung_internet">Samsung Browser\'i indir</string>
     <string name="update_status_progress_message">Filtre listeleri güncellemeleri getiriliyor…</string>
     <string name="update_status_error_message">Güncelleme hatası: Lütfen tekrar deneyin</string>
     <string name="update_status_retry">Tekrar dene</string>
@@ -66,9 +66,9 @@
     <string name="onboarding_enable_header_title1">Adblock Plus\’ı</string>
     <string name="onboarding_enable_header_title2">Şöyle Etkinleştirebilirsiniz</string>
     <string name="onboarding_enable_one_step_title">Yalnızca bir adım daha kaldı</string>
-    <string name="onboarding_enable_one_step_description">Samsung Internet\’in Reklam Engelleyici Ayarlarında ABP’yi etkinleştirin</string>
+    <string name="onboarding_enable_one_step_description">Samsung Browser\’in Reklam Engelleyici Ayarlarında ABP’yi etkinleştirin</string>
 
-    <string name="open_samsung_internet">Samsung Internet\'i açın</string>
+    <string name="open_samsung_internet">Samsung Browser\'i açın</string>
     <!-- /onboarding -->
 
     <!-- preferences -->
@@ -142,7 +142,7 @@
     <string name="issueReporter_falseNegative_label">Hâlâ reklamları görüyorum</string>
 
     <string name="comment_title">Yorum (isteğe bağlı):</string>
-    <string name="make_screenshot_of_samsung_internet">Samsung Internet\'in ekran görüntüsünü alın</string>
+    <string name="make_screenshot_of_samsung_internet">Samsung Browser\'in ekran görüntüsünü alın</string>
     <string name="cancel">İptal</string>
     <string name="report_issue_enter_email_hint">E-posta girin</string>
     <string name="report_issue_enter_url_hint">URL girin</string>
@@ -176,7 +176,7 @@
     <string name="tour_add_languages">Genellikle göz attığınız dilleri ekleyin</string>
     <string name="tour_disable_social_media_tracking">Gezinirken sosyal medya takibini devre dışı bırakın</string>
     <string name="tour_allowlist">Bir web sitesinde reklam görmeye devam etmek için izin verilenler listesine ekleyin</string>
-    <string name="tour_last_step_description">Bu kadar! ABP for Samsung Internet\'i sonuna kadar kullanmaya hazırsınız</string>
+    <string name="tour_last_step_description">Bu kadar! ABP for Samsung Browser\'i sonuna kadar kullanmaya hazırsınız</string>
     <string name="tour_last_step_button_done">Tamamlandı</string>
 
 </resources>

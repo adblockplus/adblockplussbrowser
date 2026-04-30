@@ -17,8 +17,8 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">Crystal Samsung Internet</string>
-    <string name="samsung_internet_required_description">Az Crystal egy olyan alkalmazás, amely a Samsung Internetn futtatva szűri a böngészés közben megjelenő reklámokat. Az Crystal hatékony működéséhez Samsung Internet 4.0, vagy újabb változatot szükséges telepítenie eszközére.\nA Samsung Internet az alábbi gombra koppintva tekintheti meg.</string>
+    <string name="app_name">Crystal Samsung Browser</string>
+    <string name="samsung_internet_required_description">Az Crystal egy olyan alkalmazás, amely a Samsung Browsern futtatva szűri a böngészés közben megjelenő reklámokat. Az Crystal hatékony működéséhez Samsung Browser 4.0, vagy újabb változatot szükséges telepítenie eszközére.\nA Samsung Browser az alábbi gombra koppintva tekintheti meg.</string>
 
     <!-- base-->
     <string name="product_name">Crystal</string>
@@ -27,7 +27,7 @@
     <string name="onboarding_welcome_security_privacy_description">Gondmentes böngészés az Crystal alkalmazás védelmével</string>
     <string name="onboarding_welcome_language_filters_description">Blokkoljon további hirdetéseket az Crystal optimalizálásával a leggyakoribb böngészési nyelveken</string>
     <string name="onboarding_enable_header_title2">Az Crystal engedélyezését</string>
-    <string name="onboarding_enable_one_step_description">Crystal engedélyezése a Samsung Internet reklámblokkolási beállításaiban</string>
+    <string name="onboarding_enable_one_step_description">Crystal engedélyezése a Samsung Browser reklámblokkolási beállításaiban</string>
 
     <!-- preferences -->
     <string name="preferences_primary_subscriptions_summary">Blokkoljon további reklámokat az Crystal optimalizálásával a leggyakoribb böngészési nyelveken</string>
@@ -35,7 +35,7 @@
     <string name="share_events_description">Az anonimizált adatok segítségével javíthatjuk az Crystal alkalmazást, hogy még jobb böngészési élményt nyújthasson.</string>
 
     <!-- Start Guide -->
-    <string name="tour_last_step_description">Ez az! Készen áll az Crystal for Samsung Internet teljes használatára</string>
+    <string name="tour_last_step_description">Ez az! Készen áll az Crystal for Samsung Browser teljes használatára</string>
     <string name="take_tour_description">Ismerje meg, hogyan használhatja az Crystal-t a még élvezetesebb böngészés érdekében</string>
 
 </resources>

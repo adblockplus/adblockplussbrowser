@@ -17,11 +17,11 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">Samsung Internet用ABP</string>
-    <string name="app_subtitle">Samsung Internet 用</string>
-    <string name="samsung_internet_required_title">Samsung Internet が必要です</string>
-    <string name="samsung_internet_required_description">ABP (Adblock Plus) は、Samsung Internet で動作するアプリです。ABP を有効にするには、お使いのデバイスに Samsung Internet 4.0 以降がインストールされている必要があります。\nSamsung Internetを入手するには、下のボタンをタップしてください。</string>
-    <string name="download_samsung_internet">Samsung Internet をダウンロード</string>
+    <string name="app_name">Samsung Browser用ABP</string>
+    <string name="app_subtitle">Samsung Browser 用</string>
+    <string name="samsung_internet_required_title">Samsung Browser が必要です</string>
+    <string name="samsung_internet_required_description">ABP (Adblock Plus) は、Samsung Browser で動作するアプリです。ABP を有効にするには、お使いのデバイスに Samsung Browser 4.0 以降がインストールされている必要があります。\nSamsung Browserを入手するには、下のボタンをタップしてください。</string>
+    <string name="download_samsung_internet">Samsung Browser をダウンロード</string>
     <string name="update_status_progress_message">フィルターリストの更新を取得中…</string>
     <string name="update_status_error_message">更新エラー：もう一度お試しください</string>
     <string name="update_status_retry">再試行</string>
@@ -66,9 +66,9 @@
     <string name="onboarding_enable_header_title1">その方法は次の通りです</string>
     <string name="onboarding_enable_header_title2">ABPを有効にする</string>
     <string name="onboarding_enable_one_step_title">あと１つのステップで完了です</string>
-    <string name="onboarding_enable_one_step_description">Samsung Internet の Adblocker 設定で ABP を有効にする </string>
+    <string name="onboarding_enable_one_step_description">Samsung Browser の Adblocker 設定で ABP を有効にする </string>
 
-    <string name="open_samsung_internet">Samsung Internet を開く</string>
+    <string name="open_samsung_internet">Samsung Browser を開く</string>
 
     <!-- /onboarding -->
 
@@ -143,7 +143,7 @@
     <string name="issueReporter_falseNegative_label">Adblock Plus が広告をブロックしていない</string>
 
     <string name="comment_title">コメント (オプション):</string>
-    <string name="make_screenshot_of_samsung_internet">Samsung Internet のスクリーンショットを作成</string>
+    <string name="make_screenshot_of_samsung_internet">Samsung Browser のスクリーンショットを作成</string>
     <string name="cancel">キャンセル</string>
     <string name="report_issue_enter_email_hint">メールアドレスを入力</string>
     <string name="report_issue_enter_url_hint">URL を入力</string>
@@ -177,7 +177,7 @@
     <string name="tour_add_languages">普段ブラウジングする言語を追加</string>
     <string name="tour_disable_social_media_tracking">ブラウジング中にソーシャル メディアの追跡を無効にする</string>
     <string name="tour_allowlist">ウェブサイトを許可リストに登録して、広告を引き続き表示</string>
-    <string name="tour_last_step_description">以上です！これで、ABP for Samsung Internet を最大限に活用する準備が整いました</string>
+    <string name="tour_last_step_description">以上です！これで、ABP for Samsung Browser を最大限に活用する準備が整いました</string>
     <string name="tour_last_step_button_done">実行済み</string>
 
 </resources>

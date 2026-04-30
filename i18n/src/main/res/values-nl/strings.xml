@@ -17,11 +17,11 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">ABP for Samsung Internet</string>
-    <string name="app_subtitle">voor Samsung Internet</string>
-    <string name="samsung_internet_required_title">Samsung Internet vereist</string>
-    <string name="samsung_internet_required_description">ABP is een app die bovenop Samsung Internet draait om advertenties te filteren terwijl u die browser gebruikt. Om ABP goed te laten werken, moet u Samsung Internet 4.0 of hoger op uw apparaat geïnstalleerd hebben.\nU kunt Samsung Internet krijgen door op de onderstaande knop te tikken.</string>
-    <string name="download_samsung_internet">Samsung Internet downloaden</string>
+    <string name="app_name">ABP for Samsung Browser</string>
+    <string name="app_subtitle">voor Samsung Browser</string>
+    <string name="samsung_internet_required_title">Samsung Browser vereist</string>
+    <string name="samsung_internet_required_description">ABP is een app die bovenop Samsung Browser draait om advertenties te filteren terwijl u die browser gebruikt. Om ABP goed te laten werken, moet u Samsung Browser 4.0 of hoger op uw apparaat geïnstalleerd hebben.\nU kunt Samsung Browser krijgen door op de onderstaande knop te tikken.</string>
+    <string name="download_samsung_internet">Samsung Browser downloaden</string>
     <string name="update_status_progress_message">Updates filterlijsten ophalen…</string>
     <string name="update_status_error_message">Fout bij het updaten: Probeer opnieuw</string>
     <string name="update_status_retry">Opnieuw proberen</string>
@@ -66,9 +66,9 @@
     <string name="onboarding_enable_header_title1">Hier staat hoe dat moet</string>
     <string name="onboarding_enable_header_title2">ABP inschakelen</string>
     <string name="onboarding_enable_one_step_title">Nog één stap en u bent klaar</string>
-    <string name="onboarding_enable_one_step_description">ABP inschakelen in de \Adblocker-instellingen van Samsung Internet</string>
+    <string name="onboarding_enable_one_step_description">ABP inschakelen in de \Adblocker-instellingen van Samsung Browser</string>
 
-    <string name="open_samsung_internet">Samsung Internet openen</string>
+    <string name="open_samsung_internet">Samsung Browser openen</string>
     <!-- /onboarding -->
 
     <!-- preferences -->
@@ -141,7 +141,7 @@
     <string name="issueReporter_falsePositive_label">De pagina die ik probeer te bekijken werkt niet</string>
 
     <string name="comment_title">Opmerking (optioneel):</string>
-    <string name="make_screenshot_of_samsung_internet">Maak een screenshot van Samsung Internet</string>
+    <string name="make_screenshot_of_samsung_internet">Maak een screenshot van Samsung Browser</string>
     <string name="cancel">Annuleren</string>
     <string name="report_issue_enter_email_hint">Voer email in</string>
     <string name="report_issue_enter_url_hint">URL invoeren</string>
@@ -176,7 +176,7 @@
     <string name="tour_add_languages">Voeg de talen toe waarin u gewoonlijk bladert</string>
     <string name="tour_disable_social_media_tracking">Schakel het volgen van sociale media uit tijdens het browsen</string>
     <string name="tour_allowlist">Een website toestaan om advertenties erop te blijven zien</string>
-    <string name="tour_last_step_description">Dat is het! U bent klaar om ABP voor Samsung Internet ten volle te gebruiken</string>
+    <string name="tour_last_step_description">Dat is het! U bent klaar om ABP voor Samsung Browser ten volle te gebruiken</string>
     <string name="tour_last_step_button_done">Gedaan</string>
 
 </resources>

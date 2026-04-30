@@ -17,11 +17,11 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">ABP για Samsung Internet</string>
-    <string name="app_subtitle">για Samsung Internet</string>
-    <string name="samsung_internet_required_title">Απαραίτητο το Samsung Internet</string>
-    <string name="samsung_internet_required_description">Το ABP είναι μια εφαρμογή που λειτουργεί επιπλέον του Samsung Internet για να φιλτράρει τις διαφημίσεις ενώ χρησιμοποιείτε αυτό το πρόγραμμα περιήγησης. Για να είναι αποτελεσματικό το ABP, χρειάζεστε να είναι εγκατεστημένο στη συσκευή σας το Samsung Internet 4.0 ή μεταγενέστερη έκδοση.\nΜπορείτε να αποκτήσετε το Samsung Internet πατώντας στο παρακάτω κουμπί.</string>
-    <string name="download_samsung_internet">Κατεβάστε το Samsung Internet</string>
+    <string name="app_name">ABP για Samsung Browser</string>
+    <string name="app_subtitle">για Samsung Browser</string>
+    <string name="samsung_internet_required_title">Απαραίτητο το Samsung Browser</string>
+    <string name="samsung_internet_required_description">Το ABP είναι μια εφαρμογή που λειτουργεί επιπλέον του Samsung Browser για να φιλτράρει τις διαφημίσεις ενώ χρησιμοποιείτε αυτό το πρόγραμμα περιήγησης. Για να είναι αποτελεσματικό το ABP, χρειάζεστε να είναι εγκατεστημένο στη συσκευή σας το Samsung Browser 4.0 ή μεταγενέστερη έκδοση.\nΜπορείτε να αποκτήσετε το Samsung Browser πατώντας στο παρακάτω κουμπί.</string>
+    <string name="download_samsung_internet">Κατεβάστε το Samsung Browser</string>
     <string name="update_status_progress_message">Λήψη ενημερώσεων λιστών φίλτρων…</string>
     <string name="update_status_error_message">Σφάλμα κατά την ενημέρωση: Προσπαθήστε ξανά</string>
     <string name="update_status_retry">Ξαναπροσπαθήστε</string>
@@ -65,9 +65,9 @@
     <string name="onboarding_enable_header_title1">Δείτε πώς να</string>
     <string name="onboarding_enable_header_title2">Ενεργοποιήσετε το ABP</string>
     <string name="onboarding_enable_one_step_title">Ένα ακόμη βήμα και ολοκληρώσατε τη διαδικασία</string>
-    <string name="onboarding_enable_one_step_description">Ενεργοποιήστε το ABP στις Ρυθμίσεις Adblocker του Samsung Internet</string>
+    <string name="onboarding_enable_one_step_description">Ενεργοποιήστε το ABP στις Ρυθμίσεις Adblocker του Samsung Browser</string>
 
-    <string name="open_samsung_internet">Ανοίξτε το Samsung Internet</string>
+    <string name="open_samsung_internet">Ανοίξτε το Samsung Browser</string>
     <!-- /onboarding -->
 
     <!-- preferences -->
@@ -141,7 +141,7 @@
     <string name="issueReporter_falseNegative_label">Το Adblock Plus δεν φράζει μια διαφήμιση</string>
 
     <string name="comment_title">Σχόλιο (προαιρετικό):</string>
-    <string name="make_screenshot_of_samsung_internet">Κάντε στιγμιότυπο οθόνης του Samsung Internet</string>
+    <string name="make_screenshot_of_samsung_internet">Κάντε στιγμιότυπο οθόνης του Samsung Browser</string>
     <string name="cancel">Ματαίωση</string>
     <string name="report_issue_enter_email_hint">Εισάγετε ηλεκτρονική διεύθυνση</string>
     <string name="report_issue_enter_url_hint">Εισαγάγετε τη διεύθυνση URL</string>
@@ -175,7 +175,7 @@
     <string name="tour_add_languages">Προσθέστε τις γλώσσες στις οποίες συνήθως περιηγείστε</string>
     <string name="tour_disable_social_media_tracking">Απενεργοποιήστε την παρακολούθηση μέσων κοινωνικής δικτύωσης κατά την περιήγηση</string>
     <string name="tour_allowlist">Να επιτρέπεται στη λίστα ενός ιστότοπου για να συνεχίσει να βλέπει διαφημίσεις σε αυτόν</string>
-    <string name="tour_last_step_description">Αυτό είναι! Είστε έτοιμοι να χρησιμοποιήσετε το ABP για το Samsung Internet στο έπακρο</string>
+    <string name="tour_last_step_description">Αυτό είναι! Είστε έτοιμοι να χρησιμοποιήσετε το ABP για το Samsung Browser στο έπακρο</string>
     <string name="tour_last_step_button_done">Ολοκληρώθηκε</string>
 
 </resources>

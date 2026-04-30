@@ -17,8 +17,8 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">Crystal per Samsung Internet</string>
-    <string name="samsung_internet_required_description">Crystal è un\'app che funziona con Samsung Internet e filtra gli annunci mentre utilizzi il browser. Affinché Crystal sia efficace, devi avere sul tuo dispositivo Samsung Internet versione 4.0 o superiore.\nSfiora il pulsante qui sotto per scaricare Samsung Internet.</string>
+    <string name="app_name">Crystal per Samsung Browser</string>
+    <string name="samsung_internet_required_description">Crystal è un\'app che funziona con Samsung Browser e filtra gli annunci mentre utilizzi il browser. Affinché Crystal sia efficace, devi avere sul tuo dispositivo Samsung Browser versione 4.0 o superiore.\nSfiora il pulsante qui sotto per scaricare Samsung Browser.</string>
 
     <!-- base-->
     <string name="product_name">Crystal</string>
@@ -27,7 +27,7 @@
     <string name="onboarding_welcome_security_privacy_description">Naviga senza pensieri con Crystal che ti protegge dietro le quinte</string>
     <string name="onboarding_welcome_language_filters_description">Blocca un numero maggiore di annunci ottimizzando Crystal per le lingue in cui normalmente navighi</string>
     <string name="onboarding_enable_header_title2">Attivare Crystal</string>
-    <string name="onboarding_enable_one_step_description">Abilitare Crystal nelle impostazioni di ad blocking di Samsung Internet</string>
+    <string name="onboarding_enable_one_step_description">Abilitare Crystal nelle impostazioni di ad blocking di Samsung Browser</string>
 
     <!-- preferences -->
     <string name="preferences_primary_subscriptions_summary">Blocca un numero maggiore di annunci ottimizzando Crystal per la/le lingua/e in cui normalmente navighi</string>
@@ -35,7 +35,7 @@
     <string name="share_events_description">I dati anonimi ci aiutano a migliorare Crystal offrendoti una migliore esperienza di navigazione.</string>
 
     <!-- Start Guide -->
-    <string name="tour_last_step_description">È tutto! Sei pronto per utilizzare al meglio Crystal per Samsung Internet</string>
+    <string name="tour_last_step_description">È tutto! Sei pronto per utilizzare al meglio Crystal per Samsung Browser</string>
     <string name="take_tour_description">Scopri come utilizzare Crystal per un\'esperienza di navigazione più piacevole</string>
 
 </resources>

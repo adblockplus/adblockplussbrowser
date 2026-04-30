@@ -17,8 +17,8 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">AdBlock لـ Samsung Internet</string>
-    <string name="samsung_internet_required_description">AdBlock هو تطبيق  يستخدم Samsung Internet لتصفية الإعلانات أثناء استخدامك المتصفح. ولكي يعمل AdBlock بفعالية، يجب أن يكون الإصدار 4.0 أو إصدار أحدث للمتصفح Samsung Internet مُثبَّتًا على جهازك.\nويمكنك الحصول على Samsung Internet بالنقر فوق الزر أدناه.</string>
+    <string name="app_name">AdBlock لـ Samsung Browser</string>
+    <string name="samsung_internet_required_description">AdBlock هو تطبيق  يستخدم Samsung Browser لتصفية الإعلانات أثناء استخدامك المتصفح. ولكي يعمل AdBlock بفعالية، يجب أن يكون الإصدار 4.0 أو إصدار أحدث Samsung Browser مُثبَّتًا على جهازك.\nويمكنك الحصول على Samsung Browser بالنقر فوق الزر أدناه.</string>
 
     <!-- base-->
     <string name="product_name">AdBlock</string>
@@ -27,7 +27,7 @@
     <string name="onboarding_welcome_security_privacy_description">تصفَّح بدون قلق مع AdBlock الذي يحميك في الخلفية</string>
     <string name="onboarding_welcome_language_filters_description">احجب مزيدًا من الإعلانات عن طريق إختيار اللغات التي تتصفح بها عادةً</string>
     <string name="onboarding_enable_header_title2">تمكين AdBlock</string>
-    <string name="onboarding_enable_one_step_description">قم بتمكين AdBlock في إعدادات حاجب الإعلانات Samsung Internet</string>
+    <string name="onboarding_enable_one_step_description">قم بتمكين AdBlock في إعدادات حاجب الإعلانات Samsung Browser</string>
 
     <!-- preferences -->
     <string name="preferences_primary_subscriptions_summary">احجب مزيدًا من الإعلانات عن طريق AdBlock بإختيار اللغة (اللغات) التي تتصفح بها عادةً</string>
@@ -39,7 +39,7 @@
     <string name="about_terms_of_use"><a href="https://getadblock.com/terms/">شروط الاستخدام</a></string>
 
     <!-- Start Guide -->
-    <string name="tour_last_step_description">هذا هو! أنت جاهز لاستخدام AdBlock لـ Samsung Internet على أكمل وجه</string>
+    <string name="tour_last_step_description">هذا هو! أنت جاهز لاستخدام AdBlock لـ Samsung Browser على أكمل وجه</string>
     <string name="take_tour_description">تعرف على كيفية استخدام AdBlock للحصول على تجربة تصفح أكثر متعة</string>
 
 </resources>

@@ -17,8 +17,8 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">Samsung Internet için AdBlock</string>
-    <string name="samsung_internet_required_description">AdBlock, siz tarayıcıyı kullanırken reklamları filtrelemek için Samsung Internet üzerinde çalışan bir uygulamadır. AdBlock\'ın etkili olması için cihazınızda Samsung Internet 4.0 veya üzeri bir sürümün kurulu olması gerekir.\nAşağıdaki düğmeye tıklayarak Samsung Internetnı edinebilirsiniz.</string>
+    <string name="app_name">Samsung Browser için AdBlock</string>
+    <string name="samsung_internet_required_description">AdBlock, siz tarayıcıyı kullanırken reklamları filtrelemek için Samsung Browser üzerinde çalışan bir uygulamadır. AdBlock\'ın etkili olması için cihazınızda Samsung Browser 4.0 veya üzeri bir sürümün kurulu olması gerekir.\nAşağıdaki düğmeye tıklayarak Samsung Browsernı edinebilirsiniz.</string>
 
     <!-- base-->
     <string name="product_name">AdBlock</string>
@@ -27,7 +27,7 @@
     <string name="onboarding_welcome_security_privacy_description">Sizi arka planda koruyan AdBlock ile endişesiz bir gezinme deneyimi yaşayın</string>
     <string name="onboarding_welcome_language_filters_description">AdBlock\'ı en çok kullandığınız diller için optimize ederek daha fazla reklamı engelleyin</string>
     <string name="onboarding_enable_header_title2">Nasıl Etkinleştirilir</string>
-    <string name="onboarding_enable_one_step_description">Samsung Internet\'in AdBlocker Ayarlarında AdBlock\'ı Etkinleştirin</string>
+    <string name="onboarding_enable_one_step_description">Samsung Browser\'in AdBlocker Ayarlarında AdBlock\'ı Etkinleştirin</string>
 
     <!-- preferences -->
     <string name="preferences_primary_subscriptions_summary">AdBlock\'ı en çok kullandığınız dil(ler) için optimize ederek daha fazla reklamı engelleyin</string>
@@ -39,7 +39,7 @@
     <string name="about_terms_of_use"><a href="https://getadblock.com/terms/">Kullanım Şartları</a></string>
 
     <!-- Start Guide -->
-    <string name="tour_last_step_description">Bu kadar! AdBlock for Samsung Internet\'i sonuna kadar kullanmaya hazırsınız</string>
+    <string name="tour_last_step_description">Bu kadar! AdBlock for Samsung Browser\'i sonuna kadar kullanmaya hazırsınız</string>
     <string name="take_tour_description">Daha keyifli bir tarama deneyimi için AdBlock\'yi nasıl kullanacağınızı öğrenin</string>
 
 </resources>

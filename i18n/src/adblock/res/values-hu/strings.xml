@@ -17,8 +17,8 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">AdBlock Samsung Internet</string>
-    <string name="samsung_internet_required_description">Az AdBlock egy olyan alkalmazás, amely a Samsung Internetn futtatva szűri a böngészés közben megjelenő reklámokat. Az AdBlock hatékony működéséhez Samsung Internet 4.0, vagy újabb változatot szükséges telepítenie eszközére.\nA Samsung Internet az alábbi gombra koppintva tekintheti meg.</string>
+    <string name="app_name">AdBlock Samsung Browser</string>
+    <string name="samsung_internet_required_description">Az AdBlock egy olyan alkalmazás, amely a Samsung Browsern futtatva szűri a böngészés közben megjelenő reklámokat. Az AdBlock hatékony működéséhez Samsung Browser 4.0, vagy újabb változatot szükséges telepítenie eszközére.\nA Samsung Browser az alábbi gombra koppintva tekintheti meg.</string>
 
     <!-- base-->
     <string name="product_name">AdBlock</string>
@@ -27,7 +27,7 @@
     <string name="onboarding_welcome_security_privacy_description">Gondmentes böngészés az AdBlock alkalmazás védelmével</string>
     <string name="onboarding_welcome_language_filters_description">Blokkoljon további hirdetéseket az AdBlock optimalizálásával a leggyakoribb böngészési nyelveken</string>
     <string name="onboarding_enable_header_title2">Az AdBlock engedélyezését</string>
-    <string name="onboarding_enable_one_step_description">AdBlock engedélyezése a Samsung Internet reklámblokkolási beállításaiban</string>
+    <string name="onboarding_enable_one_step_description">AdBlock engedélyezése a Samsung Browser reklámblokkolási beállításaiban</string>
 
     <!-- preferences -->
     <string name="preferences_primary_subscriptions_summary">Blokkoljon további reklámokat az AdBlock optimalizálásával a leggyakoribb böngészési nyelveken</string>
@@ -39,7 +39,7 @@
     <string name="about_terms_of_use"><a href="https://getadblock.com/terms/">Használati feltételek</a></string>
 
     <!-- Start Guide -->
-    <string name="tour_last_step_description">Ez az! Készen áll az AdBlock for Samsung Internet teljes használatára</string>
+    <string name="tour_last_step_description">Ez az! Készen áll az AdBlock for Samsung Browser teljes használatára</string>
     <string name="take_tour_description">Ismerje meg, hogyan használhatja az AdBlock-t a még élvezetesebb böngészés érdekében</string>
 
 </resources>

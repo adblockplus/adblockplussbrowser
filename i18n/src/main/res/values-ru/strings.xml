@@ -17,11 +17,11 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">ABP для Samsung Internet</string>
-    <string name="app_subtitle">для Samsung Internet</string>
-    <string name="samsung_internet_required_title">Требуется Samsung Internet</string>
-    <string name="samsung_internet_required_description">ABP – это приложение, которое фильтрует рекламу в Samsung Internet, когда вы используете этот браузер. Для эффективности ABP на вашем устройстве должен быть установлен Samsung Internet 4.0 или его более поздняя версия.\nВы можете установить Samsung Internet, нажав на кнопку ниже.</string>
-    <string name="download_samsung_internet">Скачать Samsung Internet</string>
+    <string name="app_name">ABP для Samsung Browser</string>
+    <string name="app_subtitle">для Samsung Browser</string>
+    <string name="samsung_internet_required_title">Требуется Samsung Browser</string>
+    <string name="samsung_internet_required_description">ABP – это приложение, которое фильтрует рекламу в Samsung Browser, когда вы используете этот браузер. Для эффективности ABP на вашем устройстве должен быть установлен Samsung Browser 4.0 или его более поздняя версия.\nВы можете установить Samsung Browser, нажав на кнопку ниже.</string>
+    <string name="download_samsung_internet">Скачать Samsung Browser</string>
     <string name="update_status_progress_message">Обновление списков фильтров…</string>
     <string name="update_status_error_message">Ошибка обновления: попробуйте снова</string>
     <string name="update_status_retry">Повторить попытку</string>
@@ -66,9 +66,9 @@
     <string name="onboarding_enable_header_title1">Как</string>
     <string name="onboarding_enable_header_title2">Активировать ABP</string>
     <string name="onboarding_enable_one_step_title">Еще один шаг – и готово</string>
-    <string name="onboarding_enable_one_step_description">Активируйте ABP в настройках блокировщика рекламы для Samsung Internet</string>
+    <string name="onboarding_enable_one_step_description">Активируйте ABP в настройках блокировщика рекламы для Samsung Browser</string>
 
-    <string name="open_samsung_internet">Открыть Samsung Internet</string>
+    <string name="open_samsung_internet">Открыть Samsung Browser</string>
     <!-- /onboarding -->
 
     <!-- preferences -->
@@ -142,7 +142,7 @@
     <string name="issueReporter_falseNegative_label">Я всё ещё вижу рекламу</string>
 
     <string name="comment_title">Комментарий (необязательно):</string>
-    <string name="make_screenshot_of_samsung_internet">Сделать скриншот Samsung Internet</string>
+    <string name="make_screenshot_of_samsung_internet">Сделать скриншот Samsung Browser</string>
     <string name="cancel">Отмена</string>
     <string name="report_issue_enter_email_hint">Введите адрес электронной почты</string>
     <string name="report_issue_enter_url_hint">Введите URL</string>
@@ -176,7 +176,7 @@
     <string name="tour_add_languages">Добавьте языки, на которых вы обычно просматриваете</string>
     <string name="tour_disable_social_media_tracking">Отключить отслеживание социальных сетей во время просмотра</string>
     <string name="tour_allowlist">Разрешить веб-сайт, чтобы продолжать видеть рекламу на нем</string>
-    <string name="tour_last_step_description">Вот и все! Вы готовы использовать ABP для Samsung Internet на полную катушку</string>
+    <string name="tour_last_step_description">Вот и все! Вы готовы использовать ABP для Samsung Browser на полную катушку</string>
     <string name="tour_last_step_button_done">Готово</string>
 
 </resources>

@@ -17,8 +17,8 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">Samsung Internet 用 AdBlock</string>
-    <string name="samsung_internet_required_description">AdBlock は、Samsung Internet で動作するアプリです。AdBlock を有効にするには、お使いのデバイスに Samsung Internet 4.0 以降がインストールされている必要があります。\nSamsung Internetを入手するには、下のボタンをタップしてください。</string>
+    <string name="app_name">Samsung Browser 用 AdBlock</string>
+    <string name="samsung_internet_required_description">AdBlock は、Samsung Browser で動作するアプリです。AdBlock を有効にするには、お使いのデバイスに Samsung Browser 4.0 以降がインストールされている必要があります。\nSamsung Browserを入手するには、下のボタンをタップしてください。</string>
 
     <!-- base-->
     <string name="product_name">AdBlock</string>
@@ -27,7 +27,7 @@
     <string name="onboarding_welcome_security_privacy_description">AdBlock がバックグラウンドで保護を提供するため、安心してブラウザ体験ができます</string>
     <string name="onboarding_welcome_language_filters_description">通常閲覧する言語に合わせて AdBlock を最適化することで、より多くの広告をブロックできます</string>
     <string name="onboarding_enable_header_title2">AdBlock を有効にする</string>
-    <string name="onboarding_enable_one_step_description">Samsung Internet の AdBlocker 設定で AdBlock を有効にする </string>
+    <string name="onboarding_enable_one_step_description">Samsung Browser の AdBlocker 設定で AdBlock を有効にする </string>
 
     <!-- preferences -->
     <string name="preferences_primary_subscriptions_summary">通常閲覧する言語に合わせて AdBlock を最適化することで、より多くの広告をブロックできます</string>
@@ -39,7 +39,7 @@
     <string name="about_terms_of_use"><a href="https://getadblock.com/terms/">ご利用条件</a></string>
 
     <!-- Start Guide -->
-    <string name="tour_last_step_description">以上です！これで、AdBlock for Samsung Internet を最大限に活用する準備が整いました</string>
+    <string name="tour_last_step_description">以上です！これで、AdBlock for Samsung Browser を最大限に活用する準備が整いました</string>
     <string name="take_tour_description">より楽しいブラウジング体験のために AdBlock を使用する方法を学びます</string>
 
 </resources>

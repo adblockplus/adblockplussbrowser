@@ -17,11 +17,11 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">ABP لـ Samsung Internet</string>
-    <string name="app_subtitle">لـ Samsung Internet</string>
-    <string name="samsung_internet_required_title">مطلوب تطبيق Samsung Internet</string>
-    <string name="samsung_internet_required_description">ABP هو تطبيق يستخدم Samsung Internet لتصفية الإعلانات أثناء استخدامك المتصفح. ولكي يعمل ABP بفعالية، يجب أن يكون الإصدار 4.0 أو إصدار أحدث للمتصفح Samsung Internet مُثبَّتًا على جهازك.\nيمكنك الحصول على Samsung Internet بالنقر فوق الزر أدناه.</string>
-    <string name="download_samsung_internet">تحميل Samsung Internet</string>
+    <string name="app_name">ABP لـ Samsung Browser</string>
+    <string name="app_subtitle">لـ Samsung Browser</string>
+    <string name="samsung_internet_required_title">مطلوب تطبيق Samsung Browser</string>
+    <string name="samsung_internet_required_description">ABP هو تطبيق يستخدم Samsung Browser لتصفية الإعلانات أثناء استخدامك المتصفح. ولكي يعمل ABP بفعالية، يجب أن يكون الإصدار 4.0 أو إصدار أحدث Samsung Browser مُثبَّتًا على جهازك.\nيمكنك الحصول على Samsung Browser بالنقر فوق الزر أدناه.</string>
+    <string name="download_samsung_internet">تحميل Samsung Browser</string>
     <string name="update_status_progress_message">جارٍ إحضار تحديثات قوائم عوامل التصفية…</string>
     <string name="update_status_error_message">خطأ أثناء التحديث: يُرجى إعادة المحاولة</string>
     <string name="update_status_retry">إعادة المحاولة</string>
@@ -66,9 +66,9 @@
     <string name="onboarding_enable_header_title1">إليك كيفية</string>
     <string name="onboarding_enable_header_title2">تمكين ABP</string>
     <string name="onboarding_enable_one_step_title">خطوة أخيرة أمامك على الانتهاء</string>
-    <string name="onboarding_enable_one_step_description">قم بتمكين ABP في إعدادات حاجب الإعلانات Samsung Internet</string>
+    <string name="onboarding_enable_one_step_description">قم بتمكين ABP في إعدادات حاجب الإعلانات Samsung Browser</string>
 
-    <string name="open_samsung_internet">فتح Samsung Internet</string>
+    <string name="open_samsung_internet">فتح Samsung Browser</string>
 
     <!-- /onboarding -->
 
@@ -143,7 +143,7 @@
     <string name="issueReporter_falseNegative_label">.إستخدم الأدوات لتظليل كل إعلان أو إخفاء معلومات حساسة على لقطة الشاشة. تظليل الإعلانات سيساعدنا في حل المشكلة بشكل أسرع</string>
 
     <string name="comment_title">التعليق (اختياري):</string>
-    <string name="make_screenshot_of_samsung_internet">اصنع لقطة شاشة من Samsung Internet</string>
+    <string name="make_screenshot_of_samsung_internet">اصنع لقطة شاشة من Samsung Browser</string>
     <string name="cancel">يلغي</string>
     <string name="report_issue_enter_email_hint">أدخل البريد الإلكتروني</string>
     <string name="report_issue_enter_url_hint">إدخال عنوان الموقع</string>
@@ -177,7 +177,7 @@
     <string name="tour_add_languages">أضف اللغات التي تتصفح بها عادة</string>
     <string name="tour_disable_social_media_tracking">تعطيل تتبع الوسائط الاجتماعية أثناء التصفح</string>
     <string name="tour_allowlist">السماح بإدراج موقع على شبكة الإنترنت لمتابعة مشاهدة الإعلانات عليه</string>
-    <string name="tour_last_step_description">هذا هو! أنت جاهز لاستخدام ABP لـ Samsung Internet على أكمل وجه</string>
+    <string name="tour_last_step_description">هذا هو! أنت جاهز لاستخدام ABP لـ Samsung Browser على أكمل وجه</string>
     <string name="tour_last_step_button_done">فعله</string>
 
 </resources>
