@@ -17,11 +17,11 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">삼성 인터넷용 ABP</string>
-    <string name="app_subtitle">Samsung Internet용</string>
-    <string name="samsung_internet_required_title">Samsung Internet이 필요합니다</string>
-    <string name="samsung_internet_required_description">ABP는 브라우저를 사용하는 동안 광고를 필터하기 위해 삼성 인터넷 위에 실행되는 앱입니다. ABP를 효과적으로 사용하기 위해, 기기에 삼성 인터넷 4.0 이상을 설치해야 합니다.\n아래 버튼을 탭해서 삼성 인터넷 브라우저를 다운로드 받을 수 있습니다.</string>
-    <string name="download_samsung_internet">Samsung Internet 다운로드</string>
+    <string name="app_name">삼성 브라우저용 ABP</string>
+    <string name="app_subtitle">삼성 브라우저용</string>
+    <string name="samsung_internet_required_title">삼성 브라우저가 필요합니다</string>
+    <string name="samsung_internet_required_description">ABP는 브라우저를 사용하는 동안 광고를 필터하기 위해 삼성 브라우저 위에 실행되는 앱입니다. ABP를 효과적으로 사용하기 위해, 기기에 삼성 브라우저 4.0 이상을 설치해야 합니다.\n아래 버튼을 탭해서 삼성 브라우저를 다운로드 받을 수 있습니다.</string>
+    <string name="download_samsung_internet">삼성 브라우저 다운로드</string>
     <string name="update_status_progress_message">필터 목록 업데이트를 불러오는 중입니다…</string>
     <string name="update_status_error_message">업데이트 에러: 다시 시도해 주십시오</string>
     <string name="update_status_retry">재시도</string>
@@ -66,9 +66,9 @@
     <string name="onboarding_enable_header_title1">방법 안내</string>
     <string name="onboarding_enable_header_title2">ABP 활성화</string>
     <string name="onboarding_enable_one_step_title">마지막 단계만 남았습니다</string>
-    <string name="onboarding_enable_one_step_description">삼성 인터넷의 광고 차단 설정에서 ABP 활성화</string>
+    <string name="onboarding_enable_one_step_description">삼성 브라우저의 광고 차단 설정에서 ABP 활성화</string>
 
-    <string name="open_samsung_internet">Samsung Internet 열기</string>
+    <string name="open_samsung_internet">삼성 브라우저 열기</string>
     <!-- /onboarding -->
 
     <!-- preferences -->
@@ -142,7 +142,7 @@
     <string name="issueReporter_falseNegative_label">애드블록 플러스가 광고를 차단 안 함</string>
 
     <string name="comment_title">댓글(선택 사항):</string>
-    <string name="make_screenshot_of_samsung_internet">삼성 인터넷 스크린샷 만들기</string>
+    <string name="make_screenshot_of_samsung_internet">삼성 브라우저 스크린샷 만들기</string>
     <string name="cancel">취소</string>
     <string name="report_issue_enter_email_hint">이메일 입력</string>
     <string name="report_issue_enter_url_hint">URL 입력</string>
@@ -176,7 +176,7 @@
     <string name="tour_add_languages">일반적으로 탐색하는 언어 추가</string>
     <string name="tour_disable_social_media_tracking">탐색하는 동안 소셜 미디어 추적 비활성화</string>
     <string name="tour_allowlist">웹사이트에서 계속 광고를 볼 수 있도록 허용 목록</string>
-    <string name="tour_last_step_description">그게 다입니다! ABP for Samsung Internet을 최대한 활용할 준비가 되었습니다.</string>
+    <string name="tour_last_step_description">그게 다입니다! ABP for 삼성 브라우저를 최대한 활용할 준비가 되었습니다.</string>
     <string name="tour_last_step_button_done">완료</string>
 
 </resources>
