@@ -18,7 +18,7 @@
 <resources>
     <!-- app-->
     <string name="app_name">Crystal für Samsung Browser</string>
-    <string name="samsung_internet_required_description">Crystal ist eine App, die über Samsung Browser ausgeführt wird, um bei der Nutzung des Browsers die Werbung zu filtern. Samsung Browser 4.0 oder eine höhere Version muss auf deinem Gerät installiert werden, damit Crystal einwandfrei funktionieren kann.\nDer Samsung Browser-Browser kann abgerufen werden, indem du auf die nachfolgende Schaltfläche klickst.</string>
+    <string name="samsung_internet_required_description">Crystal ist eine App, die über Samsung Browser ausgeführt wird, um bei der Nutzung des Browsers die Werbung zu filtern. Samsung Browser 4.0 oder eine höhere Version muss auf deinem Gerät installiert werden, damit Crystal einwandfrei funktionieren kann.\nDer Samsung Browser kann abgerufen werden, indem du auf die nachfolgende Schaltfläche klickst.</string>
 
     <!-- base-->
     <string name="product_name">Crystal</string>

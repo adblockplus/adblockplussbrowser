@@ -18,7 +18,7 @@
 <resources>
     <!-- app-->
     <string name="app_name">Samsung Browser için AdBlock</string>
-    <string name="samsung_internet_required_description">AdBlock, siz tarayıcıyı kullanırken reklamları filtrelemek için Samsung Browser üzerinde çalışan bir uygulamadır. AdBlock\'ın etkili olması için cihazınızda Samsung Browser 4.0 veya üzeri bir sürümün kurulu olması gerekir.\nAşağıdaki düğmeye tıklayarak Samsung Browsernı edinebilirsiniz.</string>
+    <string name="samsung_internet_required_description">AdBlock, siz tarayıcıyı kullanırken reklamları filtrelemek için Samsung Browser üzerinde çalışan bir uygulamadır. AdBlock\'ın etkili olması için cihazınızda Samsung Browser 4.0 veya üzeri bir sürümün kurulu olması gerekir.\nAşağıdaki düğmeye tıklayarak Samsung Browser edinebilirsiniz.</string>
 
     <!-- base-->
     <string name="product_name">AdBlock</string>
