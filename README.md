@@ -1,7 +1,7 @@
-Adblock Plus for Samsung Internet
-=================================
+Adblock Plus for Samsung Browser
+================================
 
-Adblock Plus for Samsung Internet is an application that works as a provider of the Adblock Plus filters list for [Samsung Internet Browser][5]. It is built by following the [ad blockers development guide][6] from Samsung.
+Adblock Plus for Samsung Browser is an application that works as a provider of the Adblock Plus filters list for [Samsung Browser][5]. It is built by following the [ad blockers development guide][6] from Samsung.
 It requires [Android 5.0][9] and up.
 
 Building with Gradle
@@ -78,7 +78,7 @@ Importing into Android Studio
 
 Application Architecture
 ------------------------
-Adblock Plus for Samsung Internet has been built following the Clean Architecture Principle, [Repository Pattern][7], [MVVM Architecture][8] in the presentation layer as well as in the jetpack components.
+Adblock Plus for Samsung Browser has been built following the Clean Architecture Principle, [Repository Pattern][7], [MVVM Architecture][8] in the presentation layer as well as in the jetpack components.
 
 #### The app is comprised of the following modules:
 - app module contains the `Application` class, the launcher `Activity`, and the main `Activity` with the application navigation graph;
@@ -88,7 +88,7 @@ Adblock Plus for Samsung Internet has been built following the Clean Architectur
 - onboarding module contains all the Onboarding UI code;
 - preferences module contains all the UI code for user preferences. It communicates with the settings module, where the Model lives, and with the core via the `SubscriptionsManager` interface (from the base module);
 - settings module contains the Model for the user preferences, the repository, and data sources for user preferences and configurations;
-- core module listens to changes in settings and is responsible for download/update of the filters lists accordingly. It is also responsible for scheduling and manages automatic updates and provides a unified filters list file to the Samsung Internet browser. This update mechanism is described below.
+- core module listens to changes in settings and is responsible for download/update of the filters lists accordingly. It is also responsible for scheduling and manages automatic updates and provides a unified filters list file to Samsung Browser. This update mechanism is described below.
 
 API Keys/Tokens
 ---------------
@@ -162,7 +162,7 @@ When a worker fails to update a _Subscription_ it is marked on a `Retry` state a
 
 Testing
 -------
-To test the whole functionality of the application you will need an Android device with Android 5.0+ (Lollipop) and Samsung Internet 4.0+.
+To test the whole functionality of the application you will need an Android device with Android 5.0+ (Lollipop) and Samsung Browser 4.0+.
 
 Emulators won't help you here, unfortunately.
 
