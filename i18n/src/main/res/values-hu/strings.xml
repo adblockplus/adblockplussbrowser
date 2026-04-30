@@ -18,9 +18,9 @@
 <resources>
     <!-- app-->
     <string name="app_name">ABP Samsung Internet számára</string>
-    <string name="app_subtitle">Samsung Internet böngészőhöz</string>
+    <string name="app_subtitle">Samsung Internet</string>
     <string name="samsung_internet_required_title">Samsung Internet szükséges</string>
-    <string name="samsung_internet_required_description">Az ABPs egy olyan alkalmazás, amely a Samsung Internet böngészőn futtatva szűri a böngészés közben megjelenő reklámokat. Az ABP hatékony működéséhez Samsung Internet 4.0, vagy újabb változatot szükséges telepítenie eszközére.\nA Samsung Internet böngészőt az alábbi gombra koppintva tekintheti meg.</string>
+    <string name="samsung_internet_required_description">Az ABPs egy olyan alkalmazás, amely a Samsung Internetn futtatva szűri a böngészés közben megjelenő reklámokat. Az ABP hatékony működéséhez Samsung Internet 4.0, vagy újabb változatot szükséges telepítenie eszközére.\nA Samsung Internet az alábbi gombra koppintva tekintheti meg.</string>
     <string name="download_samsung_internet">Samsung Internet letöltése</string>
     <string name="update_status_progress_message">Szűrőlista frissítések betöltése folyamatban van…</string>
     <string name="update_status_error_message">Hiba a frissítés során: Próbálja meg újból</string>

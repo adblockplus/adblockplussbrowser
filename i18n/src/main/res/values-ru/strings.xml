@@ -20,7 +20,7 @@
     <string name="app_name">ABP для Samsung Internet</string>
     <string name="app_subtitle">для Samsung Internet</string>
     <string name="samsung_internet_required_title">Требуется Samsung Internet</string>
-    <string name="samsung_internet_required_description">ABP – это приложение, которое фильтрует рекламу в Samsung Internet, когда вы используете этот браузер. Для эффективности ABP на вашем устройстве должен быть установлен Samsung Internet 4.0 или его более поздняя версия.\nВы можете установить браузер Samsung Internet, нажав на кнопку ниже.</string>
+    <string name="samsung_internet_required_description">ABP – это приложение, которое фильтрует рекламу в Samsung Internet, когда вы используете этот браузер. Для эффективности ABP на вашем устройстве должен быть установлен Samsung Internet 4.0 или его более поздняя версия.\nВы можете установить Samsung Internet, нажав на кнопку ниже.</string>
     <string name="download_samsung_internet">Скачать Samsung Internet</string>
     <string name="update_status_progress_message">Обновление списков фильтров…</string>
     <string name="update_status_error_message">Ошибка обновления: попробуйте снова</string>

@@ -20,7 +20,7 @@
     <string name="app_name">Samsung Internet用ABP</string>
     <string name="app_subtitle">Samsung Internet 用</string>
     <string name="samsung_internet_required_title">Samsung Internet が必要です</string>
-    <string name="samsung_internet_required_description">ABP (Adblock Plus) は、Samsung Internet で動作するアプリです。ABP を有効にするには、お使いのデバイスに Samsung Internet 4.0 以降がインストールされている必要があります。\nSamsung Internet ブラウザを入手するには、下のボタンをタップしてください。</string>
+    <string name="samsung_internet_required_description">ABP (Adblock Plus) は、Samsung Internet で動作するアプリです。ABP を有効にするには、お使いのデバイスに Samsung Internet 4.0 以降がインストールされている必要があります。\nSamsung Internetを入手するには、下のボタンをタップしてください。</string>
     <string name="download_samsung_internet">Samsung Internet をダウンロード</string>
     <string name="update_status_progress_message">フィルターリストの更新を取得中…</string>
     <string name="update_status_error_message">更新エラー：もう一度お試しください</string>

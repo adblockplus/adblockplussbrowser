@@ -17,8 +17,8 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">Crystal Samsung Internet böngészőhöz</string>
-    <string name="samsung_internet_required_description">Az Crystal egy olyan alkalmazás, amely a Samsung Internet böngészőn futtatva szűri a böngészés közben megjelenő reklámokat. Az Crystal hatékony működéséhez Samsung Internet 4.0, vagy újabb változatot szükséges telepítenie eszközére.\nA Samsung Internet böngészőt az alábbi gombra koppintva tekintheti meg.</string>
+    <string name="app_name">Crystal Samsung Internet</string>
+    <string name="samsung_internet_required_description">Az Crystal egy olyan alkalmazás, amely a Samsung Internetn futtatva szűri a böngészés közben megjelenő reklámokat. Az Crystal hatékony működéséhez Samsung Internet 4.0, vagy újabb változatot szükséges telepítenie eszközére.\nA Samsung Internet az alábbi gombra koppintva tekintheti meg.</string>
 
     <!-- base-->
     <string name="product_name">Crystal</string>

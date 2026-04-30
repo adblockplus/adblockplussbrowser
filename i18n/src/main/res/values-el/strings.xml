@@ -20,7 +20,7 @@
     <string name="app_name">ABP για Samsung Internet</string>
     <string name="app_subtitle">για Samsung Internet</string>
     <string name="samsung_internet_required_title">Απαραίτητο το Samsung Internet</string>
-    <string name="samsung_internet_required_description">Το ABP είναι μια εφαρμογή που λειτουργεί επιπλέον του Samsung Internet για να φιλτράρει τις διαφημίσεις ενώ χρησιμοποιείτε αυτό το πρόγραμμα περιήγησης. Για να είναι αποτελεσματικό το ABP, χρειάζεστε να είναι εγκατεστημένο στη συσκευή σας το Samsung Internet 4.0 ή μεταγενέστερη έκδοση.\nΜπορείτε να αποκτήσετε το πρόγραμμα περιήγησης Samsung Internet πατώντας στο παρακάτω κουμπί.</string>
+    <string name="samsung_internet_required_description">Το ABP είναι μια εφαρμογή που λειτουργεί επιπλέον του Samsung Internet για να φιλτράρει τις διαφημίσεις ενώ χρησιμοποιείτε αυτό το πρόγραμμα περιήγησης. Για να είναι αποτελεσματικό το ABP, χρειάζεστε να είναι εγκατεστημένο στη συσκευή σας το Samsung Internet 4.0 ή μεταγενέστερη έκδοση.\nΜπορείτε να αποκτήσετε το Samsung Internet πατώντας στο παρακάτω κουμπί.</string>
     <string name="download_samsung_internet">Κατεβάστε το Samsung Internet</string>
     <string name="update_status_progress_message">Λήψη ενημερώσεων λιστών φίλτρων…</string>
     <string name="update_status_error_message">Σφάλμα κατά την ενημέρωση: Προσπαθήστε ξανά</string>

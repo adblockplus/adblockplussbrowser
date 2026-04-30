@@ -17,8 +17,8 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">Crystal para Internet de Samsung</string>
-    <string name="samsung_internet_required_description">Crystal es una aplicación que se ejecuta sobre Internet de Samsung para filtrar los anuncios mientras se usa ese navegador. Para que Crystal sea efectivo, necesitas tener instalada la versión 4.0 o superior de Internet de Samsung en tu dispositivo.\nPuedes obtener Internet de Samsung tocando el botón que aparece a continuación.</string>
+    <string name="app_name">Crystal para Samsung Internet</string>
+    <string name="samsung_internet_required_description">Crystal es una aplicación que se ejecuta sobre Samsung Internet para filtrar los anuncios mientras se usa ese navegador. Para que Crystal sea efectivo, necesitas tener instalada la versión 4.0 o superior de Samsung Internet en tu dispositivo.\nPuedes obtener Samsung Internet tocando el botón que aparece a continuación.</string>
 
     <!-- base-->
     <string name="product_name">Crystal</string>
@@ -27,7 +27,7 @@
     <string name="onboarding_welcome_security_privacy_description">Navega sin preocupaciones, Crystal te protege en un segundo plano</string>
     <string name="onboarding_welcome_language_filters_description">Bloquea más anuncios optimizando Crystal en los idiomas en los que navegas normalmente</string>
     <string name="onboarding_enable_header_title2">Activar Crystal</string>
-    <string name="onboarding_enable_one_step_description">Activar Crystal en los ajustes del bloqueador de anuncios de Internet de Samsung</string>
+    <string name="onboarding_enable_one_step_description">Activar Crystal en los ajustes del bloqueador de anuncios de Samsung Internet</string>
 
     <!-- preferences -->
     <string name="preferences_primary_subscriptions_summary">Bloquea más anuncios optimizando Crystal en los idiomas en los que navegas normalmente</string>

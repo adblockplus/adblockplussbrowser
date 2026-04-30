@@ -20,7 +20,7 @@
     <string name="app_name">ABP لـ Samsung Internet</string>
     <string name="app_subtitle">لـ Samsung Internet</string>
     <string name="samsung_internet_required_title">مطلوب تطبيق Samsung Internet</string>
-    <string name="samsung_internet_required_description">ABP هو تطبيق يستخدم المتصفح Samsung Internet لتصفية الإعلانات أثناء استخدامك المتصفح. ولكي يعمل ABP بفعالية، يجب أن يكون الإصدار 4.0 أو إصدار أحدث للمتصفح Samsung Internet مُثبَّتًا على جهازك.\nيمكنك الحصول على المتصفح Samsung Internet بالنقر فوق الزر أدناه.</string>
+    <string name="samsung_internet_required_description">ABP هو تطبيق يستخدم Samsung Internet لتصفية الإعلانات أثناء استخدامك المتصفح. ولكي يعمل ABP بفعالية، يجب أن يكون الإصدار 4.0 أو إصدار أحدث للمتصفح Samsung Internet مُثبَّتًا على جهازك.\nيمكنك الحصول على Samsung Internet بالنقر فوق الزر أدناه.</string>
     <string name="download_samsung_internet">تحميل Samsung Internet</string>
     <string name="update_status_progress_message">جارٍ إحضار تحديثات قوائم عوامل التصفية…</string>
     <string name="update_status_error_message">خطأ أثناء التحديث: يُرجى إعادة المحاولة</string>
@@ -66,7 +66,7 @@
     <string name="onboarding_enable_header_title1">إليك كيفية</string>
     <string name="onboarding_enable_header_title2">تمكين ABP</string>
     <string name="onboarding_enable_one_step_title">خطوة أخيرة أمامك على الانتهاء</string>
-    <string name="onboarding_enable_one_step_description">قم بتمكين ABP في إعدادات حاجب الإعلانات بالمتصفح Samsung Internet</string>
+    <string name="onboarding_enable_one_step_description">قم بتمكين ABP في إعدادات حاجب الإعلانات Samsung Internet</string>
 
     <string name="open_samsung_internet">فتح Samsung Internet</string>
 

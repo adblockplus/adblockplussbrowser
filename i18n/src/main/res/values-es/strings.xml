@@ -17,11 +17,11 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">ABP para Internet de Samsung</string>
-    <string name="app_subtitle">para Internet de Samsung</string>
-    <string name="samsung_internet_required_title">Internet de Samsung necesario</string>
-    <string name="samsung_internet_required_description">ABP es una aplicación que se ejecuta sobre Internet de Samsung para filtrar los anuncios mientras se usa ese navegador. Para que ABP sea efectivo, necesitas tener instalada la versión 4.0 o superior de Internet de Samsung en tu dispositivo.\nPuedes obtener Internet de Samsung tocando el botón que aparece a continuación.</string>
-    <string name="download_samsung_internet">Descargar Internet de Samsung</string>
+    <string name="app_name">ABP para Samsung Internet</string>
+    <string name="app_subtitle">para Samsung Internet</string>
+    <string name="samsung_internet_required_title">Samsung Internet necesario</string>
+    <string name="samsung_internet_required_description">ABP es una aplicación que se ejecuta sobre Samsung Internet para filtrar los anuncios mientras se usa ese navegador. Para que ABP sea efectivo, necesitas tener instalada la versión 4.0 o superior de Samsung Internet en tu dispositivo.\nPuedes obtener Samsung Internet tocando el botón que aparece a continuación.</string>
+    <string name="download_samsung_internet">Descargar Samsung Internet</string>
     <string name="update_status_progress_message">Obteniendo actualizaciones de listas de filtros…</string>
     <string name="update_status_error_message">Error al actualizar: inténtalo de nuevo</string>
     <string name="update_status_retry">Volver a intentar</string>
@@ -66,9 +66,9 @@
     <string name="onboarding_enable_header_title1">Así puedes</string>
     <string name="onboarding_enable_header_title2">Activar ABP</string>
     <string name="onboarding_enable_one_step_title">Un paso más y habrás acabado</string>
-    <string name="onboarding_enable_one_step_description">Activar ABP en los ajustes del bloqueador de anuncios de Internet de Samsung</string>
+    <string name="onboarding_enable_one_step_description">Activar ABP en los ajustes del bloqueador de anuncios de Samsung Internet</string>
 
-    <string name="open_samsung_internet">Abrir Internet de Samsung</string>
+    <string name="open_samsung_internet">Abrir Samsung Internet</string>
     <!-- /onboarding -->
 
     <!-- preferences -->

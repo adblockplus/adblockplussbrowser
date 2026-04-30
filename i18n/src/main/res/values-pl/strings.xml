@@ -20,7 +20,7 @@
     <string name="app_name">ABP dla Samsung Internet</string>
     <string name="app_subtitle">dla Samsung Internet</string>
     <string name="samsung_internet_required_title">Wymagany Samsung Internet</string>
-    <string name="samsung_internet_required_description">ABP to aplikacja, która działa w tle Samsung Internet oraz filtruje reklamy podczas korzystania z przeglądarki. Aby ABP była skuteczna, musisz zainstalować na swoim urządzeniu przeglądarkę Samsung Internet 4.0 lub nowszą.\nMożesz pobrać przeglądarkę Samsung Internet, wciskając poniższy przycisk.</string>
+    <string name="samsung_internet_required_description">ABP to aplikacja, która działa w tle Samsung Internet oraz filtruje reklamy podczas korzystania z przeglądarki. Aby ABP była skuteczna, musisz zainstalować na swoim urządzeniu Samsung Internet 4.0 lub nowszą.\nMożesz pobrać Samsung Internet, wciskając poniższy przycisk.</string>
     <string name="download_samsung_internet">Pobierz Samsung Internet</string>
     <string name="update_status_progress_message">Pobieram aktualizacje list filtrów…</string>
     <string name="update_status_error_message">Błąd aktualizacji: Spróbuj ponownie</string>
@@ -68,7 +68,7 @@
     <string name="onboarding_enable_one_step_title">Potrzebny jest jeszcze tylko jeden krok</string>
     <string name="onboarding_enable_one_step_description">Włącz ABP w Samsung Internet</string>
 
-    <string name="open_samsung_internet">Otwórz przeglądarkę Samsung Internet</string>
+    <string name="open_samsung_internet">Otwórz Samsung Internet</string>
     <!-- /onboarding -->
 
     <!-- preferences -->

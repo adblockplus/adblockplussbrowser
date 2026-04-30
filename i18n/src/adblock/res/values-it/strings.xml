@@ -18,7 +18,7 @@
 <resources>
     <!-- app-->
     <string name="app_name">AdBlock per Samsung Internet</string>
-    <string name="samsung_internet_required_description">AdBlock è un\'app che funziona con Samsung Internet e filtra gli annunci mentre utilizzi il browser. Affinché AdBlock sia efficace, devi avere sul tuo dispositivo Samsung Internet versione 4.0 o superiore.\nSfiora il pulsante qui sotto per scaricare il browser Samsung Internet.</string>
+    <string name="samsung_internet_required_description">AdBlock è un\'app che funziona con Samsung Internet e filtra gli annunci mentre utilizzi il browser. Affinché AdBlock sia efficace, devi avere sul tuo dispositivo Samsung Internet versione 4.0 o superiore.\nSfiora il pulsante qui sotto per scaricare Samsung Internet.</string>
 
     <!-- base-->
     <string name="product_name">AdBlock</string>

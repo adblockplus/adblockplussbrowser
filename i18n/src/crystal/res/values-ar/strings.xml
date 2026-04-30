@@ -18,7 +18,7 @@
 <resources>
     <!-- app-->
     <string name="app_name">Crystal لـ Samsung Internet</string>
-    <string name="samsung_internet_required_description">Crystal هو تطبيق  يستخدم المتصفح Samsung Internet لتصفية الإعلانات أثناء استخدامك المتصفح. ولكي يعمل Crystal بفعالية، يجب أن يكون الإصدار 4.0 أو إصدار أحدث للمتصفح Samsung Internet مُثبَّتًا على جهازك.\nويمكنك الحصول على المتصفح Samsung Internet بالنقر فوق الزر أدناه.</string>
+    <string name="samsung_internet_required_description">Crystal هو تطبيق  يستخدم Samsung Internet لتصفية الإعلانات أثناء استخدامك المتصفح. ولكي يعمل Crystal بفعالية، يجب أن يكون الإصدار 4.0 أو إصدار أحدث للمتصفح Samsung Internet مُثبَّتًا على جهازك.\nويمكنك الحصول على Samsung Internet بالنقر فوق الزر أدناه.</string>
 
     <!-- base-->
     <string name="product_name">Crystal</string>
@@ -27,7 +27,7 @@
     <string name="onboarding_welcome_security_privacy_description">تصفَّح بدون قلق مع Crystal الذي يحميك في الخلفية</string>
     <string name="onboarding_welcome_language_filters_description">احجب مزيدًا من الإعلانات عن طريق إختيار اللغات التي تتصفح بها عادةً</string>
     <string name="onboarding_enable_header_title2">تمكين Crystal</string>
-    <string name="onboarding_enable_one_step_description">قم بتمكين Crystal في إعدادات حاجب الإعلانات بالمتصفح Samsung Internet</string>
+    <string name="onboarding_enable_one_step_description">قم بتمكين Crystal في إعدادات حاجب الإعلانات Samsung Internet</string>
 
     <!-- preferences -->
     <string name="preferences_primary_subscriptions_summary">احجب مزيدًا من الإعلانات عن طريق Crystal بإختيار اللغة (اللغات) التي تتصفح بها عادةً</string>

@@ -20,7 +20,7 @@
     <string name="app_name">Samsung Internet için ABP</string>
     <string name="app_subtitle">Samsung Internet için</string>
     <string name="samsung_internet_required_title">Samsung Internet gerekli</string>
-    <string name="samsung_internet_required_description">ABP, siz Samsung Internet’i kullanırken bu tarayıcı üzerinde çalışarak reklamları filtreleyen bir uygulamadır. ABP\'nin etkin biçimde çalışması için, cihazınızda Samsung Internet 4.0 ya da üstü bir sürümün kurulu olması gerekir.\nAşağıdaki düğmeye tıklayarak Samsung Internet tarayıcıyı edinebilirsiniz.</string>
+    <string name="samsung_internet_required_description">ABP, siz Samsung Internet’i kullanırken bu tarayıcı üzerinde çalışarak reklamları filtreleyen bir uygulamadır. ABP\'nin etkin biçimde çalışması için, cihazınızda Samsung Internet 4.0 ya da üstü bir sürümün kurulu olması gerekir.\nAşağıdaki düğmeye tıklayarak Samsung Internet edinebilirsiniz.</string>
     <string name="download_samsung_internet">Samsung Internet\'i indir</string>
     <string name="update_status_progress_message">Filtre listeleri güncellemeleri getiriliyor…</string>
     <string name="update_status_error_message">Güncelleme hatası: Lütfen tekrar deneyin</string>

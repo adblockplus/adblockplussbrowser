@@ -18,7 +18,7 @@
 <resources>
     <!-- app-->
     <string name="app_name">Samsung Internet için Crystal</string>
-    <string name="samsung_internet_required_description">Crystal, siz tarayıcıyı kullanırken reklamları filtrelemek için Samsung Internet üzerinde çalışan bir uygulamadır. Crystal\'ın etkili olması için cihazınızda Samsung Internet 4.0 veya üzeri bir sürümün kurulu olması gerekir.\nAşağıdaki düğmeye tıklayarak Samsung Internet tarayıcısını edinebilirsiniz.</string>
+    <string name="samsung_internet_required_description">Crystal, siz tarayıcıyı kullanırken reklamları filtrelemek için Samsung Internet üzerinde çalışan bir uygulamadır. Crystal\'ın etkili olması için cihazınızda Samsung Internet 4.0 veya üzeri bir sürümün kurulu olması gerekir.\nAşağıdaki düğmeye tıklayarak Samsung Internetnı edinebilirsiniz.</string>
 
     <!-- base-->
     <string name="product_name">Crystal</string>
