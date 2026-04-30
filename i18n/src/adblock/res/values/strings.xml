@@ -17,8 +17,8 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">AdBlock for Samsung Internet</string>
-    <string name="samsung_internet_required_description">AdBlock is an app that runs on top of Samsung Internet to filter ads while you use that browser. For AdBlock to be effective, you need Samsung Internet 4.0 or above installed on your device.\nYou can get Samsung Internet browser by tapping on the button below.</string>
+    <string name="app_name">AdBlock for Samsung Browser</string>
+    <string name="samsung_internet_required_description">AdBlock is an app that runs on top of Samsung Browser to filter ads while you use that browser. For AdBlock to be effective, you need Samsung Browser 4.0 or above installed on your device.\nYou can get Samsung Browser by tapping on the button below.</string>
 
     <!-- base-->
     <string name="product_name">AdBlock</string>
@@ -27,7 +27,7 @@
     <string name="onboarding_welcome_security_privacy_description">Browse worry-free with AdBlock protecting you in the background</string>
     <string name="onboarding_welcome_language_filters_description">Block more ads by optimizing AdBlock for the languages you typically browse in</string>
     <string name="onboarding_enable_header_title2">Enable AdBlock</string>
-    <string name="onboarding_enable_one_step_description">Enable AdBlock in Samsung Internet\'s AdBlocker Settings</string>
+    <string name="onboarding_enable_one_step_description">Enable AdBlock in Samsung Browser\'s AdBlocker Settings</string>
 
     <!-- preferences -->
     <string name="preferences_primary_subscriptions_summary">Block more ads by optimizing AdBlock for the language(s) you typically browse in</string>
@@ -39,7 +39,7 @@
     <string name="about_terms_of_use"><a href="https://getadblock.com/terms/">Terms of Use</a></string>
 
     <!-- Start Guide -->
-    <string name="tour_last_step_description">That’s it! You are ready to use AdBlock for Samsung Internet to its fullest</string>
+    <string name="tour_last_step_description">That’s it! You are ready to use AdBlock for Samsung Browser to its fullest</string>
     <string name="take_tour_description">Learn how to use AdBlock for a more enjoyable browsing experience</string>
 
 </resources>

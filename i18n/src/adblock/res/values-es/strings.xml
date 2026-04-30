@@ -17,8 +17,8 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">AdBlock para Internet de Samsung</string>
-    <string name="samsung_internet_required_description">AdBlock es una aplicación que se ejecuta sobre Internet de Samsung para filtrar los anuncios mientras se usa ese navegador. Para que AdBlock sea efectivo, necesitas tener instalada la versión 4.0 o superior de Internet de Samsung en tu dispositivo.\nPuedes obtener Internet de Samsung tocando el botón que aparece a continuación.</string>
+    <string name="app_name">AdBlock para Samsung Browser</string>
+    <string name="samsung_internet_required_description">AdBlock es una aplicación que se ejecuta sobre Samsung Browser para filtrar los anuncios mientras se usa ese navegador. Para que AdBlock sea efectivo, necesitas tener instalada la versión 4.0 o superior de Samsung Browser en tu dispositivo.\nPuedes obtener Samsung Browser tocando el botón que aparece a continuación.</string>
 
     <!-- base-->
     <string name="product_name">AdBlock</string>
@@ -27,7 +27,7 @@
     <string name="onboarding_welcome_security_privacy_description">Navega sin preocupaciones, AdBlock te protege en un segundo plano</string>
     <string name="onboarding_welcome_language_filters_description">Bloquea más anuncios optimizando AdBlock en los idiomas en los que navegas normalmente</string>
     <string name="onboarding_enable_header_title2">Activar AdBlock</string>
-    <string name="onboarding_enable_one_step_description">Activar AdBlock en los ajustes del bloqueador de anuncios de Internet de Samsung</string>
+    <string name="onboarding_enable_one_step_description">Activar AdBlock en los ajustes del bloqueador de anuncios de Samsung Browser</string>
 
     <!-- preferences -->
     <string name="preferences_primary_subscriptions_summary">Bloquea más anuncios optimizando AdBlock en los idiomas en los que navegas normalmente</string>
@@ -39,7 +39,7 @@
     <string name="about_terms_of_use"><a href="https://getadblock.com/terms/">Términos de uso</a></string>
 
     <!-- Start Guide -->
-    <string name="tour_last_step_description">¡Eso es todo! Estás listo para usar AdBlock para Samsung Internet al máximo</string>
+    <string name="tour_last_step_description">¡Eso es todo! Estás listo para usar AdBlock para Samsung Browser al máximo</string>
     <string name="take_tour_description">Aprende a usar AdBlock para disfrutar de una experiencia de navegación más agradable</string>
 
 </resources>

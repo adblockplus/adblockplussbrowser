@@ -17,11 +17,11 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">ABP Samsung Internet számára</string>
-    <string name="app_subtitle">Samsung Internet böngészőhöz</string>
-    <string name="samsung_internet_required_title">Samsung Internet szükséges</string>
-    <string name="samsung_internet_required_description">Az ABPs egy olyan alkalmazás, amely a Samsung Internet böngészőn futtatva szűri a böngészés közben megjelenő reklámokat. Az ABP hatékony működéséhez Samsung Internet 4.0, vagy újabb változatot szükséges telepítenie eszközére.\nA Samsung Internet böngészőt az alábbi gombra koppintva tekintheti meg.</string>
-    <string name="download_samsung_internet">Samsung Internet letöltése</string>
+    <string name="app_name">ABP Samsung Browser számára</string>
+    <string name="app_subtitle">Samsung Browser</string>
+    <string name="samsung_internet_required_title">Samsung Browser szükséges</string>
+    <string name="samsung_internet_required_description">Az ABPs egy olyan alkalmazás, amely a Samsung Browsern futtatva szűri a böngészés közben megjelenő reklámokat. Az ABP hatékony működéséhez Samsung Browser 4.0, vagy újabb változatot szükséges telepítenie eszközére.\nA Samsung Browser az alábbi gombra koppintva tekintheti meg.</string>
+    <string name="download_samsung_internet">Samsung Browser letöltése</string>
     <string name="update_status_progress_message">Szűrőlista frissítések betöltése folyamatban van…</string>
     <string name="update_status_error_message">Hiba a frissítés során: Próbálja meg újból</string>
     <string name="update_status_retry">Újra</string>
@@ -63,9 +63,9 @@
     <string name="onboarding_enable_header_title1">Így végezheti el</string>
     <string name="onboarding_enable_header_title2">ABP engedélyezése</string>
     <string name="onboarding_enable_one_step_title">Még egy lépés, és elkészült</string>
-    <string name="onboarding_enable_one_step_description">ABP engedélyezése a Samsung Internet reklámblokkolási beállításaiban</string>
+    <string name="onboarding_enable_one_step_description">ABP engedélyezése a Samsung Browser reklámblokkolási beállításaiban</string>
 
-    <string name="open_samsung_internet">Samsung Internet megnyitása</string>
+    <string name="open_samsung_internet">Samsung Browser megnyitása</string>
     <!-- /onboarding -->
 
     <!-- preferences -->     <string name="preferences_ad_blocking_category">Reklámblokkolási lehetőségek</string>
@@ -138,7 +138,7 @@
     <string name="issueReporter_falseNegative_label">Az Adblock Plus nem tiltott le egy hirdetést</string>
 
     <string name="comment_title">Megjegyzés (nem kötelező):</string>
-    <string name="make_screenshot_of_samsung_internet">Készítsen képernyőképet a Samsung Internetről</string>
+    <string name="make_screenshot_of_samsung_internet">Készítsen képernyőképet a Samsung Browserről</string>
     <string name="cancel">Mégse</string>
     <string name="report_issue_enter_email_hint">Írja be az e-mail címet</string>
     <string name="report_issue_enter_url_hint">Írja be az URL-t</string>
@@ -172,7 +172,7 @@
     <string name="tour_add_languages">Adja hozzá azokat a nyelveket, amelyeken általában böngészik</string>
     <string name="tour_disable_social_media_tracking">Böngészés közben kapcsolja ki a közösségi média követését</string>
     <string name="tour_allowlist">Engedélyezze egy webhely számára, hogy továbbra is hirdetéseket jelenítsen meg rajta</string>
-    <string name="tour_last_step_description">Ez az! Készen áll az ABP for Samsung Internet teljes használatára</string>
+    <string name="tour_last_step_description">Ez az! Készen áll az ABP for Samsung Browser teljes használatára</string>
     <string name="tour_last_step_button_done">Kész</string>
 
 </resources>

@@ -142,7 +142,7 @@
     <string name="issueReporter_falseNegative_label">我还是看到了广告</string>
 
     <string name="comment_title">评论（可选）：</string>
-    <string name="make_screenshot_of_samsung_internet">制作三星互联网截图</string>
+    <string name="make_screenshot_of_samsung_internet">制作三星浏览器截图</string>
     <string name="cancel">取消</string>
     <string name="report_issue_enter_email_hint">输入电子邮件</string>
     <string name="report_issue_enter_url_hint">输入网址</string>
@@ -176,7 +176,7 @@
     <string name="tour_add_languages">添加您通常浏览的语言</string>
     <string name="tour_disable_social_media_tracking">浏览时禁用社交媒体跟踪</string>
     <string name="tour_allowlist">将网站列入白名单以继续在其上看到广告</string>
-    <string name="tour_last_step_description">就是如此！您已准备好充分利用三星互联网 ABP 了。</string>
+    <string name="tour_last_step_description">就是如此！您已准备好充分利用三星浏览器 ABP 了。</string>
     <string name="tour_last_step_button_done">完毕</string>
 
 </resources>

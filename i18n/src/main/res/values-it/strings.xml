@@ -17,11 +17,11 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">ABP per Samsung Internet</string>
-    <string name="app_subtitle">per Samsung Internet</string>
-    <string name="samsung_internet_required_title">Richiede Samsung Internet</string>
-    <string name="samsung_internet_required_description">ABP è un\'app che funziona con Samsung Internet e filtra gli annunci mentre utilizzi il browser. Affinché ABP sia efficace, devi avere sul tuo dispositivo Samsung Internet versione 4.0 o superiore.\nSfiora il pulsante qui sotto per scaricare il browser Samsung Internet.</string>
-    <string name="download_samsung_internet">Scarica Samsung Internet</string>
+    <string name="app_name">ABP per Samsung Browser</string>
+    <string name="app_subtitle">per Samsung Browser</string>
+    <string name="samsung_internet_required_title">Richiede Samsung Browser</string>
+    <string name="samsung_internet_required_description">ABP è un\'app che funziona con Samsung Browser e filtra gli annunci mentre utilizzi il browser. Affinché ABP sia efficace, devi avere sul tuo dispositivo Samsung Browser versione 4.0 o superiore.\nSfiora il pulsante qui sotto per scaricare Samsung Browser.</string>
+    <string name="download_samsung_internet">Scarica Samsung Browser</string>
     <string name="update_status_progress_message">Aggiornamento filtri in corso…</string>
     <string name="update_status_error_message">Errore durante l\'aggiornamento: Riprova</string>
     <string name="update_status_retry">Riprova</string>
@@ -66,9 +66,9 @@
     <string name="onboarding_enable_header_title1">Come si fa per</string>
     <string name="onboarding_enable_header_title2">Abilita ABP</string>
     <string name="onboarding_enable_one_step_title">Un ultimo passo e hai finito</string>
-    <string name="onboarding_enable_one_step_description">Abilita ABP nelle impostazioni di ad blocking di Samsung Internet</string>
+    <string name="onboarding_enable_one_step_description">Abilita ABP nelle impostazioni di ad blocking di Samsung Browser</string>
 
-    <string name="open_samsung_internet">Apri Samsung Internet</string>
+    <string name="open_samsung_internet">Apri Samsung Browser</string>
     <!-- /onboarding -->
 
     <!-- preferences -->
@@ -142,7 +142,7 @@
     <string name="issueReporter_falseNegative_label">Continuo a visualizzare gli annunci</string>
 
     <string name="comment_title">Commento (facoltativo):</string>
-    <string name="make_screenshot_of_samsung_internet">Fai uno screenshot di Samsung Internet</string>
+    <string name="make_screenshot_of_samsung_internet">Fai uno screenshot di Samsung Browser</string>
     <string name="cancel">Annulla</string>
     <string name="report_issue_enter_email_hint">Inserisci email</string>
     <string name="report_issue_enter_url_hint">Inserisci URL</string>
@@ -176,7 +176,7 @@
     <string name="tour_add_languages">Aggiungi le lingue in cui navighi di solito</string>
     <string name="tour_disable_social_media_tracking">Disabilita il tracciamento dei social network durante la navigazione</string>
     <string name="tour_allowlist">Consenti a un sito web di continuare a visualizzare annunci su di esso</string>
-    <string name="tour_last_step_description">È tutto! Sei pronto per utilizzare al meglio ABP per Samsung Internet</string>
+    <string name="tour_last_step_description">È tutto! Sei pronto per utilizzare al meglio ABP per Samsung Browser</string>
     <string name="tour_last_step_button_done">Fatto</string>
 
 </resources>
