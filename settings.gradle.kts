@@ -24,4 +24,4 @@ pluginManagement {
 
 include(":app", ":analytics", ":base", ":core", ":i18n", ":onboarding",
     ":preferences", ":settings", ":test-utils", ":telemetry")
-rootProject.name = "Adblock Plus for Samsung Internet"
+rootProject.name = "Adblock Plus for Samsung Browser"
