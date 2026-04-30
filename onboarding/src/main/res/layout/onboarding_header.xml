@@ -58,7 +58,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/onboarding_header_title2"
-            tools:text="for Samsung Internet" />
+            tools:text="for Samsung Browser" />
 
         <View
             android:layout_width="match_parent"

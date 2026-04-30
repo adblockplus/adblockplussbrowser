@@ -17,8 +17,8 @@
 
 <resources>
     <!-- app-->
-    <string name="app_name">AdBlock для Samsung Internet</string>
-    <string name="samsung_internet_required_description">AdBlock – это расширение для Samsung Internet для блокировки рекламы при использовании браузера. Чтобы пользоваться приложением AdBlock, установите на ваше устройство Samsung Internet версии 4.0 или выше.\nНажмите на кнопку ниже, чтобы скачать браузер Samsung Internet.</string>
+    <string name="app_name">AdBlock для Samsung Browser</string>
+    <string name="samsung_internet_required_description">AdBlock – это расширение для Samsung Browser для блокировки рекламы при использовании браузера. Чтобы пользоваться приложением AdBlock, установите на ваше устройство Samsung Browser версии 4.0 или выше.\nНажмите на кнопку ниже, чтобы скачать Samsung Browser.</string>
 
     <!-- base-->
     <string name="product_name">AdBlock</string>
@@ -27,7 +27,7 @@
     <string name="onboarding_welcome_security_privacy_description">Почувствуйте себя в безопасности благодаря защите AdBlock</string>
     <string name="onboarding_welcome_language_filters_description">Блокируйте больше рекламы, настроив AdBlock под используемые вами в браузере языки</string>
     <string name="onboarding_enable_header_title2">Активировать AdBlock</string>
-    <string name="onboarding_enable_one_step_description">Активируйте AdBlock в настройках блокиратора рекламы Samsung Internet</string>
+    <string name="onboarding_enable_one_step_description">Активируйте AdBlock в настройках блокиратора рекламы Samsung Browser</string>
 
     <!-- preferences -->
     <string name="preferences_primary_subscriptions_summary">Блокируйте больше рекламы, настроив AdBlock под используемые вами в браузере языки</string>
@@ -39,7 +39,7 @@
     <string name="about_terms_of_use"><a href="https://getadblock.com/terms/">Условия использования</a></string>
 
     <!-- Start Guide -->
-    <string name="tour_last_step_description">Вот и все! Вы готовы использовать AdBlock для Samsung Internet на полную катушку</string>
+    <string name="tour_last_step_description">Вот и все! Вы готовы использовать AdBlock для Samsung Browser на полную катушку</string>
     <string name="take_tour_description">Узнайте, как использовать AdBlock для более приятного просмотра</string>
 
 </resources>
