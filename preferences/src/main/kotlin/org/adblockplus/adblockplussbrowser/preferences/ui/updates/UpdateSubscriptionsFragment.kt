@@ -71,7 +71,7 @@ class UpdateSubscriptionsFragment :
             binding.updatesPreferencesSpinner.setSelection(configType.toPosition())
         }
 
-        viewModel.updateStatus.observe(this) { value ->
+        viewModel.updateStatus.observe(viewLifecycleOwner) { value ->
             Timber.d("Update status value: $value")
             val isUpdating = value is SubscriptionUpdateStatus.Progress
             val updatePreferencesProgress = binding.updatesPreferencesProgress
