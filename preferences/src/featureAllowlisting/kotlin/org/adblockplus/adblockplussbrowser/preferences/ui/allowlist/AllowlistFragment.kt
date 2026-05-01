@@ -57,7 +57,7 @@ internal class AllowlistFragment : DataBindingFragment<FragmentAllowlistBinding>
         val itemTouchHelper = ItemTouchHelper(swipeToDeleteHandler)
         itemTouchHelper.attachToRecyclerView(binding.allowlistList)
 
-        viewModel.items.observe(this) { items ->
+        viewModel.items.observe(viewLifecycleOwner) { items ->
             binding.allowlistHint.visibility = if (items.isEmpty()) View.INVISIBLE else View.VISIBLE
         }
     }

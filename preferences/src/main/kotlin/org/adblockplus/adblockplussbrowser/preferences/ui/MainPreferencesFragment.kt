@@ -179,7 +179,7 @@ internal class MainPreferencesFragment :
             updateViewModel.setUpdateConfigType(updateConfigType)
         }
 
-        updateViewModel.updateType.observe(this) { updateType ->
+        updateViewModel.updateType.observe(viewLifecycleOwner) { updateType ->
             if (wifiOnlyCheckbox != null) {
                 wifiOnlyCheckbox.isChecked =
                     updateType.name == UpdateSubscriptionsViewModel.UpdateConfigType.UPDATE_ALWAYS.name

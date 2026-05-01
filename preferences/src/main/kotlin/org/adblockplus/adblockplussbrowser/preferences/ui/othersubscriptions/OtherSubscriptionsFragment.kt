@@ -75,7 +75,7 @@ internal class OtherSubscriptionsFragment :
         val itemTouchHelper = ItemTouchHelper(swipeToDeleteHandler)
         itemTouchHelper.attachToRecyclerView(binding.otherSubscriptionsList)
 
-        viewModel.uiState.observe(this) { uiState ->
+        viewModel.uiState.observe(viewLifecycleOwner) { uiState ->
             when (uiState) {
                 UiState.Loading -> binding.indeterminateBar.visibility = View.VISIBLE
                 else -> binding.indeterminateBar.visibility = View.INVISIBLE
@@ -96,13 +96,13 @@ internal class OtherSubscriptionsFragment :
             }
         }
 
-        viewModel.customSubscriptions.observe(this) { otherSubscriptionsList ->
+        viewModel.customSubscriptions.observe(viewLifecycleOwner) { otherSubscriptionsList ->
             binding.otherSubscriptionsList.adapter =
                 OtherSubscriptionsAdapter(otherSubscriptionsList)
         }
 
-        viewModel.activeSubscriptions.observe(this) { activeSubscriptions ->
-            viewModel.additionalTrackingSubscription.observe(this) { subscription ->
+        viewModel.activeSubscriptions.observe(viewLifecycleOwner) { activeSubscriptions ->
+            viewModel.additionalTrackingSubscription.observe(viewLifecycleOwner) { subscription ->
                 val result =
                     activeSubscriptions.firstOrNull { active -> active.url == subscription.url }
                 viewModel.additionalTrackingLastUpdate.apply { value = result?.lastUpdate }
@@ -111,7 +111,7 @@ internal class OtherSubscriptionsFragment :
                 }
             }
 
-            viewModel.socialMediaTrackingSubscription.observe(this) { subscription ->
+            viewModel.socialMediaTrackingSubscription.observe(viewLifecycleOwner) { subscription ->
                 val result =
                     activeSubscriptions.firstOrNull { active -> active.url == subscription.url }
                 viewModel.socialMediaIconsTrackingLastUpdate.apply { value = result?.lastUpdate }
