@@ -143,7 +143,7 @@ internal class ReportIssueFragment :
     }
 
     private fun handleReportStatus() {
-        viewModel.backgroundOperationOutcome.observe(this) {
+        viewModel.backgroundOperationOutcome.observe(viewLifecycleOwner) {
             // Hide the progress bar
             binding?.indeterminateBar?.visibility = View.GONE
 
@@ -169,7 +169,7 @@ internal class ReportIssueFragment :
     }
 
     private fun handleScreenshot() {
-        viewModel.screenshot.observe(this) { screenshotBitmap ->
+        viewModel.screenshot.observe(viewLifecycleOwner) { screenshotBitmap ->
             with(screenshotPreviewViewGroup) {
                 removeAllViews()
                 if (screenshotBitmap != null) {

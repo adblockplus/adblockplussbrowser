@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Rebrand from Samsung Internet to Samsung Browser
 
+### Fixed
+- Fix crash in issue reporter and other preference screens caused by LiveData observers tied to fragment lifecycle instead of view lifecycle
+
 ## [2.5.7] - 2025-07-09
 ### Fixes
 - Fix translation issues
