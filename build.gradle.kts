@@ -68,6 +68,9 @@ detekt {
     source = files(fileTree(".") {
         // On CI, we set GRADLE_USER_HOME to .gradle, this makes detekt fail
         exclude(".gradle")
+        // Detekt would consume kapt/AGP outputs without declaring task deps,
+        // which Gradle's strictness check rejects when run alongside `check`.
+        exclude("**/build")
     })
     parallel = true
     buildUponDefaultConfig = true
