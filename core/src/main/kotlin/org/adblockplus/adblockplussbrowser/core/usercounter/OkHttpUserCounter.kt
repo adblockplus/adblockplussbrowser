@@ -143,7 +143,11 @@ internal class OkHttpUserCounter(
 
     companion object {
         @Suppress("TooGenericExceptionCaught")
-        fun parseDateString(rawDate: String, analyticsProvider: AnalyticsProvider?): String {
+        fun parseDateString(
+            rawDate: String,
+            analyticsProvider: AnalyticsProvider?,
+            strict: Boolean = BuildConfig.DEBUG,
+        ): String {
             Timber.d("HTTP response Date header: %s", rawDate)
             lastUserCountingResponseFormat.timeZone = serverTimeZone
             return try {
@@ -154,7 +158,7 @@ internal class OkHttpUserCounter(
             } catch (ex: Exception) {
                 Timber.e(ex)
                 analyticsProvider?.logException(ex)
-                if (BuildConfig.DEBUG) {
+                if (strict) {
                     throw ex
                 } else {
                     Timber.e("Parsing 'Date' from header failed, using client GMT time")

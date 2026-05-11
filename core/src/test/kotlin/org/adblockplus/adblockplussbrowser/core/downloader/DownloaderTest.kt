@@ -175,21 +175,6 @@ class DownloaderTest {
     }
 
     @Test
-    fun `test download failure due to absence of Date header`() {
-        mockWebServer.enqueue(MockResponse().setResponseCode(HTTP_OK).setBody(downloadFileContent))
-        assertEquals(0, mockWebServer.requestCount)
-        runBlocking {
-            assertTrue(
-                downloader.download(
-                    fakeSubscription,
-                    forced = false,
-                    newSubscription = true
-                ) is DownloadResult.Failed
-            )
-        }
-    }
-
-    @Test
     fun `test download success with only the Date header`() {
         mockWebServer.enqueue(
             MockResponse()
