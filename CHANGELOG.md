@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fix crash in issue reporter and other preference screens caused by LiveData observers tied to fragment lifecycle instead of view lifecycle
+- Fix crash in issue reporter caused by toolbar navigation listener and back-press callback outliving the fragment view
 
 ## [2.5.7] - 2025-07-09
 ### Fixes

@@ -29,6 +29,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.buildSpannedString
 import androidx.core.text.color
 import androidx.core.widget.addTextChangedListener
@@ -61,18 +62,28 @@ internal class ReportIssueFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // log issue reporter was opened
         viewModel.logOpenIssueReporter()
-        // Back press from phone
-        requireActivity().onBackPressedDispatcher.addCallback(this) { cancelIssueReporter() }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // log issue reporter was canceled
-        // Back press on toolbar
+        // Scope to viewLifecycleOwner so the callback is removed when the view is
+        // destroyed, not when the fragment is — prevents firing after view teardown.
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            cancelIssueReporter()
+        }
+        // Toolbar lives in the activity layout; restore the activity default in onDestroyView.
         val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.toolbar)
         toolbar.setNavigationOnClickListener { cancelIssueReporter() }
+    }
+
+    override fun onDestroyView() {
+        // Restore the activity's default toolbar handler so subsequent screens
+        // keep a working up arrow after this fragment is gone.
+        val act = activity as? AppCompatActivity
+        act?.findViewById<MaterialToolbar>(R.id.toolbar)
+            ?.setNavigationOnClickListener { act.onSupportNavigateUp() }
+        super.onDestroyView()
     }
 
     @Suppress("LongMethod")
