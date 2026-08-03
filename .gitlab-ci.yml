@@ -9,7 +9,7 @@ stages:
   - sign_builds
   - automated_tests
 
-image: registry.gitlab.com/eyeo/docker/nasa-runner:android-35
+image: registry.gitlab.com/eyeo/docker/nasa-runner:android-36
 
 variables:
   APK_OUTPUT_PATH: "app/build/outputs/apk"
