@@ -4,6 +4,10 @@ All notable changes to Crystal Adblock for Samsung will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.6.10] - 2026-08-03
+### Changed
+- Target Android 16 (API level 36)
+
 ## [2.6.9] - 2026-04-30
 ### Changed
 - Rebrand from Samsung Internet to Samsung Browser
